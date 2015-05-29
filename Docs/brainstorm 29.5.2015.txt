@@ -1,0 +1,173 @@
+Tuetut alustat
+	- Windows 7 ->
+	- Windows phone 8 ->
+	- Droid 4.0+
+		- 2.0 versioita vain ~6% Googlen mukaan, niitä on siis turha tukea
+	- Jolla (low priority)
+		- Kääntyy jos kääntyy
+	- iOS
+	- HTML ja Javascript (web)
+	- Playstation 4
+	- Box one (low priority)
+	- Ouya (low priority)
+	- nVidia Tegra 
+
+Kolmannenosapuolen kirjastot
+	- Box2D
+	- OpenGL 3.0+
+	- OpenGL ES 2.0
+	- DirectX 10+
+	- LodePNG
+	- FreeType
+	- Lua
+	- .NET wrapper
+	- Spriter
+	- Catch.h 
+	- GLM
+
+Editorin käyttämät Kolmannenosapuolen kirjastot
+	- XCeed WPF toolkit
+	- Avalondock
+
+Editorin kehittämiseen tarvittavat kolmannenosapuolen ohjelmistot
+	- DevExpress WPF Theme Editor 
+
+Alataso
+	- TODO
+Keskitaso
+	- TODO
+Ydintaso
+	- Matikka
+		- Omat vektorit, matriisit, quaterniot yms
+		- Käytetään omia vektoreita yms entityillä
+	- Loggerit
+		- TODO Makroja?
+	- Muistinhallinta
+	- Testaus
+	- Assertions
+	- Profilointi
+	- Serialisointi
+	- Random number generator
+	- Localisation
+	- Strings
+		- Regex?
+	- Configuration
+		- Oma formaatti vai valmis?
+Ylätaso
+	- TODO
+
+Content pipeline
+ 	Sama tyylinen kuin XNA:ssa, tiedostot pakataan binaaritiedostoon. 
+ 	Paketointi ei ole pakollinen, mutta sen voi tehdä. Configurationista
+ 	voidaan valita paketoidaanko tiedostot vai ei. Tämä vaikuttaa
+ 	vain release buildeihin, debug buildeissa paketointia ei suoriteta
+ 	koskaan.
+
+ 	Pakattujen binaaritiedostojen formaatti on .snb (sani binary).
+ 	Jokaisen tiedoston headeri alkaa sillä, että sinne on kirjoitettu
+ 	SNB.
+
+Editori
+	Valmis default config. Config sisältää hotkey tiedot ja teeman.
+	Pluginit editori lataa plugins kansiosta. Jos pluginin lataaminen
+	epäonnistuu, näytetään käyttäjälle virhekoodi sekä viesti. Pluginia
+	jonka lataaminen ei onnistunut ei oteta käyttöön.
+
+	Plugineita voivat ollan muunmuassa git console plugin ja vaikka kartta-
+	editori. 
+
+	Editori sisältää sublimetextin tapaisen command paletin. Command paletin
+	kautta käyttä voi minimoida hiiren käyttöä. 
+
+	Editori tukee undo ja redo komentoja.
+
+	Editorin osia (ikkunoita) voi ankkuroida ja laittaa sivulehdiksi.
+
+Koodauskäytänteet
+	- Include kansioon kaikki header filut
+	- Src kansioon kaikki cpp filut
+	- Scriptit pakataan kielikohtaisesti
+		- Esim C# käännetään suoraan .dll tiedostoon (classlib)
+		- Lua voidaan taas pakata vaikka binaaritiedostoon tai vaikka pakata suoraan
+	- Ääkkösiä tai välilyöntejä ei tule koskaan tiedostonimeen
+	
+		Aaltosulut
+			- C++:ssa aaltosulut tulevat samalle riville 
+				- Esim "if (condition) { 
+				  }"
+			- C#:pin puolella taas aaltosulut laitetaan uudelle riville
+				- Esim "if (jotain) 
+				  {	
+				  }"
+		Tila
+			- Koodin tulee mahtua yhdelle näytölle (1920x1080)
+			- Jos koodi ylittää näytöän, se tulee pilkko useammalle riville
+			- C#:pin puolella LINQ lauseita saa pilkkoa pisteiden jälkeen
+
+		Regexit
+			- Jokainen regex tulee kommentoida hyvin, koska kukaan ei muista
+			  mitä ne tekevät viikon päästä (eli toisinsanoen käytä /x)
+
+		Nimiavaruudet
+			- Globaalissa spacessa saa vain käyttää niitä mitkä tulevat 
+			  headerin kautta perittäessä .cpp filuissa
+			- Muuten pyritään jos tulee pitkiä rivejä, metodi scopessa 
+			  saa käyttää using namespacea
+			- Aliasta saa käyttää, jopa global spacessa
+			- C#:pin puolella jaotellaa moduulit nimiavaruuksilla, vältetään
+			  kuitenkin turhaa nimiavaruus bloattia
+			- Tiedostot järjestellään kansioihin nimiavaruuksien mukaan
+			  kuten C#:pin puolella
+
+		Tiedostojen nimeämiskäytännöt
+			- C++ headerit .hpp, C headerit .h
+			- C++ puolella tiedostot nimetään lowercasella ja välilyönneillä (underscore)
+				- Esim string_regex.hpp
+			- C#:pin puolella tiedostonimet aina upper camelcasella
+				- Esim NetworkManager.cs
+
+		Nimeämiskäytännöt
+			- Muuttujat lower camelcase
+			- Enumien nimet upper camelcase
+				- Jäsenet upper camelcase
+			- Luokkien nimet upper camelcase
+			- Vakiot upper camelcase
+			- Metodien nimet lower camelcase
+			- Staattiset upper camelcase
+			- Nimiavaruudet aina lower case
+				- sani
+				- Tulee tehdä alias
+			- Koodi lontooksi
+
+		Dokumentointi
+			- Koodin tärkeimmätosat tulee dokumentoida
+				- Esim EI NÄIN: int i = 0; // Set i to 0.
+				- Esim parempi: db.writeClients(db::getClients()); // Get clients from the manager and sync them with the db.
+				- Kommentointi lontooksi
+				- Jos alle viisi (5) riviä kommenttia, voi käyttää single line kommentointia ("//"),
+				  muuten multiline ("/**/")
+				- Doxygen
+
+		Patternit
+			- EI SINGLETONEJA (paitsi jos helvetin hyvät perustelut miksi sitä voisi käyttää, ei riitä että "logi system" tjs)
+			- Perinnän kanssa käytettävä järkeä
+				- Tulee olla helvetin varovainen
+			- Pyritään modulaarisuuteen
+				- Oliojen väliset yhteydet pidetään minimissä
+
+Entityt
+	- TODO
+Muistinhallinta
+	- TODO
+Pelitilat
+	- TODO
+Skriptit
+	- TODO
+Audio
+	- TODO
+Input
+	- Bindaukset voidaan lukea tiedostosta
+	- TODO
+Network
+	- TODO
+
