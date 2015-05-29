@@ -23,7 +23,6 @@ Kolmannenosapuolen kirjastot
 	- .NET wrapper
 	- Spriter
 	- Catch.h 
-	- GLM
 
 Editorin käyttämät Kolmannenosapuolen kirjastot
 	- XCeed WPF toolkit
