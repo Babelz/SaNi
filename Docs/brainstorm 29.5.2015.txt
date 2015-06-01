@@ -11,6 +11,7 @@ Tuetut alustat
 	- Box one (low priority)
 	- Ouya (low priority)
 	- nVidia Tegra 
+	- RapidXML (tai joku muu XML parsija)
 
 Kolmannenosapuolen kirjastot
 	- Box2D
@@ -36,6 +37,7 @@ Alataso
 	- TODO
 Keskitaso
 	- TODO
+
 Ydintaso
 	- Matikka
 		- Omat vektorit, matriisit, quaterniot yms
@@ -55,6 +57,26 @@ Ydintaso
 		- Oma formaatti vai valmis?
 Ylätaso
 	- TODO
+
+Service 
+	- Kokoelma luokkia jotka lisäävät moottoriin toiminnallisuutta.
+	  Esimerkkejä
+	 	- SceneManager
+	 	- AudioService
+	 	- RenderingService
+	 	- SpriteBatch
+	 	- PrimitiveBatch
+	 	- EntityManager
+	 	- ContentManager
+	 	- ProfilingService
+	 	- LoggingService
+	 	- NetworkingService (tuskin ennen joulua)
+	 	- InputService
+	 	- InputManager
+	 		- InputProvider (keyboard, mouse, touch, gamepad)
+
+	 - Käyttäjällä on pääsy näihin palveluihin moottorin kautta.
+	   Yleisesti komponentit käyttävät näitä palveluja.
 
 Content pipeline
  	Sama tyylinen kuin XNA:ssa, tiedostot pakataan binaaritiedostoon. 
@@ -155,19 +177,68 @@ Koodauskäytänteet
 			- Pyritään modulaarisuuteen
 				- Oliojen väliset yhteydet pidetään minimissä
 
-Entityt
-	- TODO
+Renderer, Primitives, Logging, Profiling,
+Random numbers, Assertions, Unit testing, Networking, Localisation,
+Memory allocation, Parsers, Serialization/RTTI/Reflection
+
 Muistinhallinta
-	- TODO
-Pelitilat
-	- TODO
-Skriptit
-	- TODO
-Audio
-	- TODO
+	- Oma reference countteri 
+	- Muistivuotojen paikantamis helppereitä
+	- Poolit ja tehtaat
+	- Bufferit
+
+Config
+	- Sisältää perus config tiedot moottorista kuten debug levelin
+	- Pelikohtaisia asetuksia kuten grafiikka-asetukset
+	- Periaatteessa osa myös projektin configgia
+
 Input
 	- Bindaukset voidaan lukea tiedostosta
-	- TODO
-Network
-	- TODO
+	- Jokaisella alustalla oma raw input listener,
+	  joka joka kuuntelee käyttöjärjestelmän kautta
+	  nappien/inputin tiloja
+	- Jokaista syöttölaitetta kohti oma input alataso,
+	  joka generoi syötetapahtumia
+	- Jokainen syöterajapinta ottaa sisään callback 
+	  funktioita joita kutsutaan kun tietty syötetapahtuma 
+	  on tapahtunut
 
+Rendering
+	- API kohtaiset wrapperit ja yksi wrapperi jonka kautta
+	  pääsy itse renderöijää
+	- Automaattinen batchaus
+	- Multi threaded
+		- Raskaat renderöinti operaatiot suoritetaan
+		  omassa säikeessä
+    - TODO: tutkitaan miten wrappaus kannattaisi toteuttaa
+      	 	ennenkuin aloitetaan suunnittelu ja toteutus 
+
+FileSystem
+	- Luokka joka wräppää alustakohtaiset tiedosto toiminnot.
+	  Perusluokkana toimii FileSystemBase josta kaikki, jopa
+	  wrapperi peritään
+
+Math
+	Tukee inttiä, floattia ja doublea
+		- Omat vektorit (2, 3, ja 4)
+		- Quaternionit
+		- Matriisit
+		- Yleiset funktiot
+		- Rectanglet/AABB
+
+Strings
+	- Ainakin regex ja perus string toiminnot kuten replace,
+	  contains, split, matches, remove. Stringin tulee olla
+	  cross platform. 
+
+Primitive types
+	- Mietitään pitääkö typedeffata primitiivi tyyppejä
+	- Typedeffataan pitkiä, argumentteina tulevia tyyppejä,
+	  kuvaavilla nimillä
+		- Esim tyyliin std::function<void(int, int)> = Func
+
+Loggaus
+	- Service 
+	- Larppaa singletonia vaikkei ole singleton
+	- Yksi rajapinta, monta loggeria
+	- Makrotetaan
