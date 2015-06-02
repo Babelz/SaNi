@@ -11,7 +11,6 @@ Tuetut alustat
 	- Box one (low priority)
 	- Ouya (low priority)
 	- nVidia Tegra 
-	- RapidXML (tai joku muu XML parsija)
 
 Kolmannenosapuolen kirjastot
 	- Box2D
@@ -24,6 +23,7 @@ Kolmannenosapuolen kirjastot
 	- .NET wrapper
 	- Spriter
 	- Catch.h 
+	- RapidXML (tai joku muu XML parsija)
 
 Editorin käyttämät Kolmannenosapuolen kirjastot
 	- XCeed WPF toolkit
