@@ -20,4 +20,14 @@
       <UniqueIdentifier>{571c6638-fde4-49e1-812c-e1a030befb24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\sani\core\math\vector2.hpp">
+      <Filter>Header Files\math</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\core\math\vector2.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>
