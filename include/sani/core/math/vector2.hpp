@@ -2,7 +2,7 @@
 
 namespace sani {
 	namespace math {
-		/// @class Vector2
+		/// @class Vector2 vector2.hpp "sani/core/math/vector2.hpp"
 		/// @author siquel
 		///
 		/// Represents a 2 component vector

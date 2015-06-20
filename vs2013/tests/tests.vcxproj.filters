@@ -14,15 +14,15 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Source Files\math">
-      <UniqueIdentifier>{86b80241-c2c8-4c3c-ab69-58457230f09c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\math">
-      <UniqueIdentifier>{571c6638-fde4-49e1-812c-e1a030befb24}</UniqueIdentifier>
+      <UniqueIdentifier>{7b101cda-3f74-426c-8936-fff459eb6e2e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\sani\core\math\vector2.hpp">
-      <Filter>Header Files\math</Filter>
-    </ClInclude>
+    <ClCompile Include="..\..\tests\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\math\vector.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
