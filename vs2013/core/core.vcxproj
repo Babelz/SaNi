@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\vector.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

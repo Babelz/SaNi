@@ -19,10 +19,19 @@
     <Filter Include="Header Files\math">
       <UniqueIdentifier>{571c6638-fde4-49e1-812c-e1a030befb24}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\math\impl">
+      <UniqueIdentifier>{1ba2fc11-16d1-483f-982d-3207fea10127}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp">
       <Filter>Header Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp">
+      <Filter>Header Files\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\vector.hpp">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
