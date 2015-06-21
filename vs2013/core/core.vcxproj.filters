@@ -30,8 +30,20 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp">
       <Filter>Header Files\math\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\vector3.hpp">
+      <Filter>Header Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp">
+      <Filter>Header Files\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\vector4.hpp">
+      <Filter>Header Files\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp">
+      <Filter>Header Files\math\impl</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\vector.hpp">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -12,8 +12,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\vector4.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{30101611-95B1-4949-8241-8C64412CD13B}</ProjectGuid>
