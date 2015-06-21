@@ -25,15 +25,32 @@ namespace sani {
 			/// Creates a new four component vector with specified components
 			/// @param x x component
 			/// @param y y component
+			/// @param z z component
+			/// @param z z component
 			Vector4(const T& x, const T& y, const T& z, const T& w);
+
+			/// Creates a new four component vector with specified components
+			/// @param vector x and y components
+			/// @param z z component
+			/// @param w w component
 			Vector4(const Vector2<T>& vector, const T& z, const T& w);
+
+			/// Creates a new four component vector with specified components
+			/// @param vec1 x and y components
+			/// @param vec2 z and w components
 			Vector4(const Vector2<T>& vec1, const Vector2<T>& vec2);
+
+			/// Creates a new four component vector with specified components
+			/// @param vector x, y and z components
+			/// @param w w component
 			Vector4(const Vector3<T>& vector, const T& w);
+
 			/// Copies components from already created vector
 			/// @param vector a vector where to copy components
 			Vector4(const Vector4& vector);
 			/// Copies components from already created vector
 			/// @param vector a vector where to copy components
+
 			template<typename U>
 			Vector4(const Vector4<U>& vector);
 			/// Initializes both components with desired value

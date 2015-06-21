@@ -19,22 +19,27 @@ namespace sani {
 			static const unsigned int Components = 3;
 			/// Creates a new three component zero vector
 			Vector3();
+
 			/// Creates a new three component vector with specified components
 			/// @param x x component
 			/// @param y y component
 			/// @param z z component
 			Vector3(const T& x, const T& y, const T& z);
+
 			/// Creates a new three component vector with specified components
 			/// @param vector x and y components
 			/// @param z z component
 			Vector3(const Vector2<T>& vector, const T& z);
+
 			/// Copies components from already created vector
 			/// @param vector a vector where to copy components
 			Vector3(const Vector3& vector);
+
 			/// Copies components from already created vector
 			/// @param vector a vector where to copy components
 			template<typename U>
 			Vector3(const Vector3<U>& vector);
+
 			/// Initializes both components with desired value
 			/// @param value The value which is assigned to both components
 			explicit Vector3(const T& value);
