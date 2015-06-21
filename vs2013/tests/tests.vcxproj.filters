@@ -24,5 +24,8 @@
     <ClCompile Include="..\..\tests\math\vector.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\math\matrix.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\main.cpp" />
+    <ClCompile Include="..\..\tests\math\matrix.cpp" />
     <ClCompile Include="..\..\tests\math\vector.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

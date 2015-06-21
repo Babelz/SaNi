@@ -23,10 +23,10 @@ namespace sani {
 			/// Creates a new four component zero vector
 			Vector4();
 			/// Creates a new four component vector with specified components
-			/// @param x x component
-			/// @param y y component
-			/// @param z z component
-			/// @param z z component
+			/// @param x X component
+			/// @param y Y component
+			/// @param z Z component
+			/// @param w W component
 			Vector4(const T& x, const T& y, const T& z, const T& w);
 
 			/// Creates a new four component vector with specified components
