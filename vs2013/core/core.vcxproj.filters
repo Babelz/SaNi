@@ -51,5 +51,11 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp">
       <Filter>Header Files\math\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\precompiled.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\forward_declare.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

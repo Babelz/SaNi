@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "android", "android\android.vcxproj", "{029D12E6-E337-4864-B8CD-823C1DFCD295}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "platform", "platform\platform.vcxproj", "{7244D440-168D-430D-9089-190B065F0D64}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Mixed Platforms = Debug|Mixed Platforms
@@ -49,6 +51,16 @@ Global
 		{029D12E6-E337-4864-B8CD-823C1DFCD295}.Release|Tegra-Android.ActiveCfg = Release|Tegra-Android
 		{029D12E6-E337-4864-B8CD-823C1DFCD295}.Release|Tegra-Android.Build.0 = Release|Tegra-Android
 		{029D12E6-E337-4864-B8CD-823C1DFCD295}.Release|Win32.ActiveCfg = Release|Tegra-Android
+		{7244D440-168D-430D-9089-190B065F0D64}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Debug|Tegra-Android.ActiveCfg = Debug|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Debug|Win32.Build.0 = Debug|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Release|Tegra-Android.ActiveCfg = Release|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Release|Win32.ActiveCfg = Release|Win32
+		{7244D440-168D-430D-9089-190B065F0D64}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

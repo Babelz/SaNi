@@ -11,22 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\vector.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\vector4.hpp" />
-    <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
-    <ClInclude Include="..\..\include\sani\precompiled.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\platform\file_manager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{30101611-95B1-4949-8241-8C64412CD13B}</ProjectGuid>
+    <ProjectGuid>{7244D440-168D-430D-9089-190B065F0D64}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>core</RootNamespace>
+    <RootNamespace>platform</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -61,10 +55,10 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>NotSet</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
