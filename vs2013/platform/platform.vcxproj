@@ -11,11 +11,18 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\include\sani\platform\base_file_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\base_graphics_device.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\linux\file_manager_linux.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\win32\file_manager_win32.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\platform\file_manager.cpp" />
+    <ClCompile Include="..\..\src\platform\base_file_manager.cpp" />
+    <ClCompile Include="..\..\src\platform\linux\file_manager_linux.cpp" />
+    <ClCompile Include="..\..\src\platform\win32\file_manager_win32.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{7244D440-168D-430D-9089-190B065F0D64}</ProjectGuid>

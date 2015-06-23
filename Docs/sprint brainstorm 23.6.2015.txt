@@ -1,0 +1,118 @@
+Game-specific subsystems
+	...
+	...
+	...
+
+Engine (engines topmost module)
+	Engine class
+
+	Service layer
+
+...
+...
+...
+...
+...
+
+Content
+	- Binaarifilut
+Core
+	Logging
+		- Tarvii filesystemin
+		- Tehdään ku fs on valmis
+	Math
+		- vektorit, matriisit, quaterniot, random, utilityjä matriisen yms vektorilaskentaan
+	Assertions
+		- Ei tarvita näillä näkymin
+	Memory 
+		- Heap allocator ja stack allocator ja block allocator
+	Parsers
+		- XML, tarvii filesystemin 
+		- Wrapperi
+		- Rapidxml
+		- Json maybe
+	Configuration
+		- XML, tarvii parserin
+
+	Localization
+		- Ei tarvi vielä
+Platform
+	File I/O
+		- Binaarilukija/writer
+		- FileManager jonka kautta voidaan pyytää tiedostoja ja hakemistoja
+		- Laskee viitteet 
+		- File* getFile(), bool closeFile(File* file), std::vector<String> readLines(File* file)
+		- File luokka joka sisältää pathin 
+
+		class File {
+			private:
+				String path;
+				int id;
+			public:
+				// Getters and setters...
+		}
+
+		class Directory {
+			private:
+				String path;
+				int id;
+			public:
+				// Getters and setters...
+		}
+		
+
+		class FileManager {
+			private:
+				std::vec<string> searchpaths;
+				std::list<File> files;
+
+
+
+			std::string readFile(File* file);
+
+			void readBytes(File* f, std::vec<uint8_t>&); // 0, end
+			void readBytes(File* f, size_t from, size_t size, std::vec<uint8_t>&);
+
+			bool isFileOpen(File*);
+
+			bool fileExists(const String& str);
+			
+			void closeFile(File* file);
+
+			File* openFile(String& name) {
+				if (isFileOpen(name)) return getFile(name);
+
+				File file;
+
+				if (internalOpenFile(&file)) return file;
+
+				throw vittu_saatana();:
+			}
+
+			virtual void listFiles(directory&, std::vec<string>&) = 0;
+		}
+
+	Env
+
+	Primitives, strings
+		- typedef std::string String
+		- namespace sani {
+			typedef __uint8 uint8;
+			typedef __uint8 byte;
+			typedef __uint16 uint16;
+			// jne
+			typedef float float;
+		}
+		// jne
+		sani::uint8
+	Graphics wrapper
+		- DXD3 11, OpenGL 3.X ja OpenGLES 2.0
+		- Api wrapper, ei piirretä mitään
+		- Wrapperistä tulee service
+		- 
+	Threading
+		- Ei tule vielä
+	Timers
+		- Structi joka pitää framen aikaa ylhäällä
+		- Stopwatch
+		- Timerit jne

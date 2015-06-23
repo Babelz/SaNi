@@ -19,17 +19,50 @@
     <Filter Include="Header Files\io">
       <UniqueIdentifier>{bb547849-9b59-4e9f-b170-c2ad6b3e89d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\win32">
+      <UniqueIdentifier>{5f360317-abc7-4902-b96f-e878c4e007fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\win32">
+      <UniqueIdentifier>{5c98c674-55e7-4153-8954-622ec0be3757}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\linux">
+      <UniqueIdentifier>{f2570fe5-1830-45b7-a6e9-786cc1ecd20d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\linux">
+      <UniqueIdentifier>{72777589-03db-4734-8806-de1e9756191f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\win32\file_manager_win32.hpp">
+      <Filter>Header Files\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\linux\file_manager_linux.hpp">
+      <Filter>Header Files\linux</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\base_file_manager.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file_manager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\base_graphics_device.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file.hpp">
       <Filter>Header Files\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\platform\file_manager.cpp">
+    <ClCompile Include="..\..\src\platform\win32\file_manager_win32.cpp">
+      <Filter>Source Files\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\linux\file_manager_linux.cpp">
+      <Filter>Source Files\linux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\base_file_manager.cpp">
       <Filter>Source Files\io</Filter>
     </ClCompile>
   </ItemGroup>
