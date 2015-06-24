@@ -45,13 +45,13 @@
     <ClInclude Include="..\..\include\sani\platform\base_file_manager.hpp">
       <Filter>Header Files\io</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\file_manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\base_graphics_device.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file_manager.hpp">
       <Filter>Header Files\io</Filter>
     </ClInclude>
   </ItemGroup>
@@ -64,6 +64,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\base_file_manager.cpp">
       <Filter>Source Files\io</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\file_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\file.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
