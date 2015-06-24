@@ -144,6 +144,7 @@ namespace sani {
 					free(buffer);
 					buffer = nullptr;
 				}
+				fileSize = 0;
 				return nullptr;
 			}
 			// The reading succeeded
