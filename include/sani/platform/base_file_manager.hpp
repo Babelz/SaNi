@@ -67,7 +67,10 @@ namespace sani {
 			/// Reads the file into string
 			/// @param[in] file Pointer to file which should be read
 			virtual String getFileDataString(const File* file) const = 0;
-			//virtual void listFiles(const std::string& path) const;
+			
+			unsigned char getByte();
+
+			virtual void getBytes(std::vector<unsigned char>& out, const File* file, size_t offset, size_t count) const = 0;
 		};
 	}
 }

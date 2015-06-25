@@ -24,9 +24,11 @@ TEST_CASE("File stuff", "[file]") {
 	REQUIRE(filemanager.isFileOpen(file));
 	size_t fsize = filemanager.getFileSize(file);
 	REQUIRE(fsize);
-
-	std::string lines = filemanager.getFileDataString(file);
+	std::vector<unsigned char> out;
+	filemanager.getBytes(out, file, 5, fsize - 5);
+	REQUIRE(out.size());
+	/*std::string lines = filemanager.getFileDataString(file);
 	REQUIRE(lines.size());
-	printf("%s\n", lines.c_str());
+	printf("%s\n", lines.c_str());*/
 
 }

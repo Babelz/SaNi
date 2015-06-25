@@ -62,6 +62,10 @@ namespace sani {
 			return impl->getFileDataString(file);
 		}
 
+		void FileManager::getBytes(std::vector<unsigned char>& out, const File* file, size_t offset, size_t count) const {
+			return impl->getBytes(out, file, offset, count);
+		}
+
 
 	}
 }

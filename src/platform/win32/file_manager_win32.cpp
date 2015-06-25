@@ -164,6 +164,16 @@ namespace sani {
 			return String((const char*)buffer);
 		}
 
+		void FileManagerWin32::getBytes(std::vector<unsigned char>& out, const File* file, size_t offset, size_t count) const {
+			HANDLE handle = handles.at(file->getPath());
+			::SetFilePointer(handle, offset, nullptr, FILE_BEGIN);
+			out.clear();
+			out.resize(count);
+
+			DWORD read = 0;
+			::ReadFile(handle, out.data(), count, &read, nullptr);
+		}
+
 	}
 }
 

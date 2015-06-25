@@ -23,6 +23,7 @@ namespace sani {
 			size_t getFileSize(const File* file) const override;
 			unsigned char* getFileData(const File* file, size_t& fileSize, bool nullTerminate = false) const override;
 			String getFileDataString(const File* file) const override;
+			void getBytes(std::vector<unsigned char>& out, const File* file, size_t offset, size_t count) const override;
 		};
 	}
 }
