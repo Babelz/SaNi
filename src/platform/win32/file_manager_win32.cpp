@@ -13,10 +13,11 @@ namespace sani {
 		}
 
 		FileManagerWin32::~FileManagerWin32() {
-			for (std::unordered_map<String, File*>::iterator it = files.begin(); it != files.end(); ) {
+			for (std::unordered_map<String, File*>::iterator it = files.begin(); it != files.end(); it++) {
 				::CloseHandle(handles[it->first]);
 				handles[it->first] = INVALID_HANDLE_VALUE;
 				delete it->second;
+				files[it->first] = nullptr;
 			}
 		}
 

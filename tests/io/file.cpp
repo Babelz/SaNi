@@ -20,6 +20,7 @@ TEST_CASE("File stuff", "[file]") {
 	const std::string path("../../tests/test.txt");
 	REQUIRE(filemanager.fileExists(path));
 	REQUIRE(filemanager.openFile(&file, path, Filemode::Read | Filemode::Write));
+	REQUIRE(filemanager.openFile(&file, path, Filemode::Read | Filemode::Write));
 	REQUIRE(filemanager.isFileOpen(file));
 	size_t fsize = filemanager.getFileSize(file);
 	REQUIRE(fsize);
@@ -28,5 +29,4 @@ TEST_CASE("File stuff", "[file]") {
 	REQUIRE(lines.size());
 	printf("%s\n", lines.c_str());
 
-	filemanager.closeFile(file);
 }
