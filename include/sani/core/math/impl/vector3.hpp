@@ -126,7 +126,7 @@ namespace sani {
 
 		template <typename T>
 		const Vector3<T> operator*(const T& lhs, const Vector3<T>& rhs) {
-			return Vector3(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
+			return Vector3<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z);
 		}
 
 		// Assignments

@@ -26,9 +26,10 @@ TEST_CASE("File stuff", "[file]") {
 	std::vector<unsigned char> out;
 	filemanager.getBytes(out, path, 5, fsize - 5);
 	REQUIRE(out.size());
-
+	printf("fropm file %s\n", out.data());
 	std::vector<String> files;
 	filemanager.listFiles(files, "../../tests");
+	printf("file count %d\n", files.size());
 	REQUIRE(files.size());
 
 }

@@ -140,7 +140,7 @@ namespace sani {
 
 		template <typename T>
 		const Vector4<T> operator*(const T& lhs, const Vector4<T>& rhs) {
-			return Vector4(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
+			return Vector4<T>(lhs * rhs.x, lhs * rhs.y, lhs * rhs.z, lhs * rhs.w);
 		}
 
 		// Assignments

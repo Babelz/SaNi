@@ -1,4 +1,5 @@
 #include "sani/platform/base_file_manager.hpp"
+#include "sani/platform/file.hpp"
 
 namespace sani {
 	namespace io {

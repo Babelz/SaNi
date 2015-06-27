@@ -1,0 +1,1 @@
+cd bin/debug && ./tests

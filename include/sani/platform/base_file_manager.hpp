@@ -1,13 +1,13 @@
 #pragma once
 
 #include "sani/precompiled.hpp"
+#include "sani/platform/file.hpp"
 #include <vector>
 #include <map>
 #include <unordered_map>
 
 namespace sani {
 	namespace io {
-		enum Filemode;
 
 		/// @class BaseFileManager base_file_manager.hpp "sani/platform/base_file_manager.hpp"
 		/// @author siquel
