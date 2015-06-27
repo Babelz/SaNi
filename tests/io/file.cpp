@@ -7,29 +7,38 @@ TEST_CASE("File stuff", "[file]") {
 	FileManager filemanager;
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-	REQUIRE(filemanager.isAbsolutePath("C:\\jeesus"));
-	REQUIRE(!filemanager.isAbsolutePath("relative\\path"));
-	REQUIRE(!filemanager.isAbsolutePath("relative/path"));
-	REQUIRE(filemanager.isAbsolutePath("C:/abs/path"));
+	SECTION("Absolute paths") {
+		CHECK(filemanager.isAbsolutePath("C:\\jeesus"));
+		CHECK(!filemanager.isAbsolutePath("relative\\path"));
+		CHECK(!filemanager.isAbsolutePath("relative/path"));
+		CHECK(filemanager.isAbsolutePath("C:/abs/path"));
+	}
 #else
-	REQUIRE(filemanager.isAbsolutePath("/dev/null"));
-	REQUIRE(!filemanager.isAbsolutePath("test123/sss"));
+	SECTION("Absolute paths") {
+		CHECK(filemanager.isAbsolutePath("/dev/null"));
+		CHECK(!filemanager.isAbsolutePath("test123/sss"));
+	}
 #endif
-	
+	size_t fsize;
 	const std::string path("../../tests/test.txt");
-	REQUIRE(filemanager.fileExists(path));
-	REQUIRE(filemanager.openFile(path, Filemode::Read | Filemode::Write));
-	REQUIRE(filemanager.openFile(path, Filemode::Read | Filemode::Write));
-	REQUIRE(filemanager.isFileOpen(path));
-	size_t fsize = filemanager.getFileSize(path);
-	REQUIRE(fsize);
-	std::vector<unsigned char> out;
-	filemanager.getBytes(out, path, 5, fsize - 5);
-	REQUIRE(out.size());
-	printf("fropm file %s\n", out.data());
-	std::vector<String> files;
-	filemanager.listFiles(files, "../../tests");
-	printf("file count %d\n", files.size());
-	REQUIRE(files.size());
+	SECTION("File access") {
+		CHECK(filemanager.fileExists(path));
+		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
+		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
+		CHECK(filemanager.isFileOpen(path));
+		CHECK((fsize = filemanager.getFileSize(path)));
+	}
+
+	SECTION("File reading") {
+		std::vector<unsigned char> out;
+		filemanager.getBytes(out, path, 5, fsize - 5);
+		CHECK(out.size());
+	}
+
+	SECTION("File listing") {
+		std::vector<String> files;
+		filemanager.listFiles(files, "../../tests");
+		CHECK(files.size());
+	}
 
 }
