@@ -35,6 +35,7 @@ TEST_CASE("File stuff", "[file]") {
 		const std::string path("../../tests/test.txt");
 		size_t fsize = filemanager.getFileSize(path);
 		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
+		CHECK(filemanager.getFileDataString(path).size());
 		std::vector<unsigned char> out;
 		filemanager.getBytes(out, path, 5, fsize - 5);
 		CHECK(out.size());
