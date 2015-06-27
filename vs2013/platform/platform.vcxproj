@@ -21,7 +21,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\base_file_manager.cpp" />
-    <ClCompile Include="..\..\src\platform\file.cpp" />
     <ClCompile Include="..\..\src\platform\file_manager.cpp" />
     <ClCompile Include="..\..\src\platform\linux\file_manager_linux.cpp" />
     <ClCompile Include="..\..\src\platform\win32\file_manager_win32.cpp" />

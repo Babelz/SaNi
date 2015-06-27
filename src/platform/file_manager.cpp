@@ -34,38 +34,38 @@ namespace sani {
 			return impl->fileExists(path);
 		}
 
-		bool FileManager::isFileOpen(const File* file) const {
-			return impl->isFileOpen(file);
+		bool FileManager::isFileOpen(const String& path) const {
+			return impl->isFileOpen(path);
 		}
 
-		bool FileManager::openFile(File** file, const String& path, const Filemode mode) {
-			return impl->openFile(file, path, mode);
+		bool FileManager::openFile(const String& path, const Filemode mode) {
+			return impl->openFile(path, mode);
 		}
 
-		void FileManager::closeFile(File* file) {
-			impl->closeFile(file);
+		void FileManager::closeFile(const String& path) {
+			impl->closeFile(path);
 		}
 
 		size_t FileManager::getFileSize(const String& path) const  {
 			return impl->getFileSize(path);
 		}
 
-		size_t FileManager::getFileSize(const File* file) const  {
-			return impl->getFileSize(file);
+		unsigned char* FileManager::getFileData(const String& path, size_t& fileSize, bool nullTerminate /*= false*/) const {
+			return impl->getFileData(path, fileSize, nullTerminate);
 		}
 
-		unsigned char* FileManager::getFileData(const File* file, size_t& fileSize, bool nullTerminate /*= false*/) const {
-			return impl->getFileData(file, fileSize, nullTerminate);
+		String FileManager::getFileDataString(const String& path) const  {
+			return impl->getFileDataString(path);
 		}
 
-		String FileManager::getFileDataString(const File* file) const  {
-			return impl->getFileDataString(file);
+		void FileManager::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
+			return impl->getBytes(out, path, offset, count);
 		}
 
-		void FileManager::getBytes(std::vector<unsigned char>& out, const File* file, size_t offset, size_t count) const {
-			return impl->getBytes(out, file, offset, count);
-		}
 
+		void FileManager::listFiles(std::vector<String>& files, const String& path) const {
+			return impl->listFiles(files, path);
+		}
 
 	}
 }

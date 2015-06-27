@@ -16,19 +16,19 @@ TEST_CASE("File stuff", "[file]") {
 	REQUIRE(!filemanager.isAbsolutePath("test123/sss"));
 #endif
 	
-	File* file = nullptr;
 	const std::string path("../../tests/test.txt");
 	REQUIRE(filemanager.fileExists(path));
-	REQUIRE(filemanager.openFile(&file, path, Filemode::Read | Filemode::Write));
-	REQUIRE(filemanager.openFile(&file, path, Filemode::Read | Filemode::Write));
-	REQUIRE(filemanager.isFileOpen(file));
-	size_t fsize = filemanager.getFileSize(file);
+	REQUIRE(filemanager.openFile(path, Filemode::Read | Filemode::Write));
+	REQUIRE(filemanager.openFile(path, Filemode::Read | Filemode::Write));
+	REQUIRE(filemanager.isFileOpen(path));
+	size_t fsize = filemanager.getFileSize(path);
 	REQUIRE(fsize);
 	std::vector<unsigned char> out;
-	filemanager.getBytes(out, file, 5, fsize - 5);
+	filemanager.getBytes(out, path, 5, fsize - 5);
 	REQUIRE(out.size());
-	/*std::string lines = filemanager.getFileDataString(file);
-	REQUIRE(lines.size());
-	printf("%s\n", lines.c_str());*/
+
+	std::vector<String> files;
+	filemanager.listFiles(files, "../../tests");
+	REQUIRE(files.size());
 
 }

@@ -13,11 +13,9 @@ namespace sani {
 		}
 
 		FileManagerWin32::~FileManagerWin32() {
-			for (std::unordered_map<String, File*>::iterator it = files.begin(); it != files.end(); it++) {
+			for (auto it = handles.begin(); it != handles.end(); it++) {
 				::CloseHandle(handles[it->first]);
 				handles[it->first] = INVALID_HANDLE_VALUE;
-				delete it->second;
-				files[it->first] = nullptr;
 			}
 		}
 
@@ -28,11 +26,10 @@ namespace sani {
 			return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && path[1] == ':');
 		}
 
-		bool FileManagerWin32::openFile(File** file, const String& path, const Filemode mode) {
+		bool FileManagerWin32::openFile(const String& path, const Filemode mode) {
 			// Check if we have file opened
 			if (handles.find(path) != handles.end()) {
 				// TODO do we need to close the handle?
-				(*file) = files[path];
 				return true;
 			}
 			
@@ -58,27 +55,20 @@ namespace sani {
 			}
 			
 			handles[path] = handle;
-			files[path] = new File(path);
-			(*file) = files[path];
 			// File is open
 			return true;
 		}
 
-		bool FileManagerWin32::isFileOpen(const File* file) const  {
-			return (handles.find(file->getPath()) != handles.end());
+		bool FileManagerWin32::isFileOpen(const String& path) const  {
+			return (handles.find(path) != handles.end());
 		}
 
-		void FileManagerWin32::closeFile(File* file) {
-			if (isFileOpen(file)) {
-				::CloseHandle(handles[file->getPath()]);
-				handles[file->getPath()] = INVALID_HANDLE_VALUE;
-				handles.erase(file->getPath());
+		void FileManagerWin32::closeFile(const String& path) {
+			if (isFileOpen(path)) {
+				::CloseHandle(handles[path]);
+				handles[path] = INVALID_HANDLE_VALUE;
+				handles.erase(path);
 			}
-			if (files.find(file->getPath()) != files.end()) {
-				files.erase(file->getPath());
-			}
-			delete file;
-			file = nullptr;
 		}
 
 		size_t FileManagerWin32::getFileSize(const String& path) const  {
@@ -103,10 +93,6 @@ namespace sani {
 			return fileSize;
 		}
 
-		size_t FileManagerWin32::getFileSize(const File* file) const  {
-			return getFileSize(file->getPath());
-		}
-
 		bool FileManagerWin32::fileExists(const String& path) const  {
 			if (path.empty()) return false;
 
@@ -120,10 +106,10 @@ namespace sani {
 			return true;
 		}
 
-		unsigned char* FileManagerWin32::getFileData(const File* file, size_t& fileSize, bool nullTerminate /* = false */) const  {
-			assert(isFileOpen(file));
+		unsigned char* FileManagerWin32::getFileData(const String& path, size_t& fileSize, bool nullTerminate /* = false */) const  {
+			assert(isFileOpen(path));
 
-			HANDLE handle = handles.at(file->getPath());
+			HANDLE handle = handles.at(path);
 
 			size_t size = ::GetFileSize(handle, nullptr);
 			DWORD sizeRead = 0;
@@ -155,23 +141,40 @@ namespace sani {
 			}
 		}
 
-		String FileManagerWin32::getFileDataString(const File* file) const  {
+		String FileManagerWin32::getFileDataString(const String& path) const  {
 			size_t size = 0;
-			unsigned char* buffer = getFileData(file, size, true);
+			unsigned char* buffer = getFileData(path, size, true);
 			if (size == 0) {
 				return "";
 			}
 			return String((const char*)buffer);
 		}
 
-		void FileManagerWin32::getBytes(std::vector<unsigned char>& out, const File* file, size_t offset, size_t count) const {
-			HANDLE handle = handles.at(file->getPath());
+		void FileManagerWin32::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
+			HANDLE handle = handles.at(path);
 			::SetFilePointer(handle, offset, nullptr, FILE_BEGIN);
 			out.clear();
 			out.resize(count);
 
 			DWORD read = 0;
 			::ReadFile(handle, out.data(), count, &read, nullptr);
+		}
+
+		void FileManagerWin32::listFiles(std::vector<String>& files, const String& path) const {
+			WIN32_FIND_DATA ffd;
+			HANDLE handle = INVALID_HANDLE_VALUE;
+
+			String dir;
+			dir.reserve(path.size() + 2);
+			dir = path + "\\*";
+			std::wstring temp = std::wstring(dir.begin(), dir.end());
+			handle = FindFirstFile(temp.c_str(), &ffd);
+
+			while (FindNextFile(handle, &ffd) != 0) {
+				std::wstring file(ffd.cFileName);
+				files.push_back(String(file.begin(), file.end()));
+			}
+			FindClose(handle);
 		}
 
 	}
