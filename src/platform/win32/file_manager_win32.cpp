@@ -86,7 +86,7 @@ namespace sani {
 				if (fileHandle == INVALID_HANDLE_VALUE) {
 					throw "Cant open file";
 				}
-				fileSize = ::GetFileSize(handles.at(path), nullptr);
+				fileSize = ::GetFileSize(fileHandle, nullptr);
 				CloseHandle(fileHandle);
 				fileHandle = INVALID_HANDLE_VALUE;
 			}

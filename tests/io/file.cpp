@@ -19,25 +19,32 @@ TEST_CASE("File stuff", "[file]") {
 		CHECK(!filemanager.isAbsolutePath("test123/sss"));
 	}
 #endif
-	size_t fsize;
-	const std::string path("../../tests/test.txt");
+
+	
 	SECTION("File access") {
+		const std::string path("../../tests/test.txt");
 		CHECK(filemanager.fileExists(path));
 		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
 		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
 		CHECK(filemanager.isFileOpen(path));
-		CHECK((fsize = filemanager.getFileSize(path)));
+		CHECK(filemanager.getFileSize(path));
+		filemanager.closeFile(path);
 	}
 
 	SECTION("File reading") {
+		const std::string path("../../tests/test.txt");
+		size_t fsize = filemanager.getFileSize(path);
+		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
 		std::vector<unsigned char> out;
 		filemanager.getBytes(out, path, 5, fsize - 5);
 		CHECK(out.size());
+		filemanager.closeFile(path);
 	}
 
 	SECTION("File listing") {
+		const std::string path("../../tests");
 		std::vector<String> files;
-		filemanager.listFiles(files, "../../tests");
+		filemanager.listFiles(files, path);
 		CHECK(files.size());
 	}
 
