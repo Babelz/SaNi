@@ -31,13 +31,16 @@
     <Filter Include="Source Files\linux">
       <UniqueIdentifier>{72777589-03db-4734-8806-de1e9756191f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\graphics">
+      <UniqueIdentifier>{13db9ffb-7006-4da9-8c0d-857b57a6471b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics">
+      <UniqueIdentifier>{c58f6ea1-5ccd-433b-a058-282ad430193e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\win32\file_manager_win32.hpp">
-      <Filter>Header Files\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\linux\file_manager_linux.hpp">
       <Filter>Header Files\linux</Filter>
@@ -45,14 +48,17 @@
     <ClInclude Include="..\..\include\sani\platform\base_file_manager.hpp">
       <Filter>Header Files\io</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\base_graphics_device.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file.hpp">
       <Filter>Header Files\io</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file_manager.hpp">
       <Filter>Header Files\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\win32\file_manager_win32.hpp">
+      <Filter>Header Files\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="base_graphics_device.h">
+      <Filter>Header Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +73,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\file_manager.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="base_graphics_device.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
