@@ -13,6 +13,8 @@ namespace sani {
 		/// DirectX (11) graphics device implementation. Mainly used with Windows systems.
 		/// For OpenGL/ES devices, see "graphics_device_opengl.hpp" and "graphics_device_opengles.hpp".
 		class GraphicsDeviceDX : public BaseGraphicsDevice {
+		private:
+
 		protected:
 			virtual bool platformInitialize() const override;
 		public:
