@@ -57,8 +57,17 @@
     <ClInclude Include="..\..\include\sani\platform\win32\file_manager_win32.hpp">
       <Filter>Header Files\win32</Filter>
     </ClInclude>
-    <ClInclude Include="base_graphics_device.h">
+    <ClInclude Include="..\..\include\sani\platform\base_graphics_device.hpp">
       <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\viewport.hpp">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\win32\graphics_device_win32.hpp">
+      <Filter>Header Files\win32</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,7 +83,10 @@
     <ClCompile Include="..\..\src\platform\file_manager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="base_graphics_device.cpp">
+    <ClCompile Include="..\..\src\platform\base_graphics_device.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\viewport.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>

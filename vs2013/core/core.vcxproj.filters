@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Source Files\math">
-      <UniqueIdentifier>{86b80241-c2c8-4c3c-ab69-58457230f09c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\math">
       <UniqueIdentifier>{571c6638-fde4-49e1-812c-e1a030befb24}</UniqueIdentifier>
     </Filter>
