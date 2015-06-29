@@ -1,4 +1,4 @@
-#include "sani/platform/base_window.hpp"
+#include "sani/platform/window.hpp"
 
 namespace sani {
 	namespace graphics {

@@ -18,12 +18,14 @@ namespace sani {
 			// Register the window class.
 			RegisterClassEx(&windowClass);
 
-			// TODO: how do i LPCWSTR to char*
+			// Convert title to wstring.
+			const std::wstring wstrTitle = std::wstring(title.begin(), title.end());
+
 			// Create the window.
-			/*handle = CreateWindowEx(
+			handle = CreateWindowEx(
 				NULL,
 				L"WindowClass",
-				const_cast<LPCWSTR>(title.c_str()),
+				wstrTitle.c_str(),
 				WS_OVERLAPPEDWINDOW,
 				x,
 				y,
@@ -32,7 +34,10 @@ namespace sani {
 				NULL,
 				NULL,
 				hInstance,
-				NULL);*/
+				NULL);
+
+			// Activates the window and displays it in its current size and position. 
+			ShowWindow(handle, SW_SHOW);
 		}
 
 		int WindowDX::getX() const {

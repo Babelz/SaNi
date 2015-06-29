@@ -28,6 +28,10 @@ namespace sani {
 			/// @returns void pointer to the handle.
 			virtual void* getHandle() const = 0;
 
+			// TODO: setters
+			//		 modes
+			//		 styles
+
 			virtual ~Window();
 		};
 	}

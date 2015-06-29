@@ -2,7 +2,7 @@
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 #include <windows.h>
-#include "sani/platform/base_window.hpp"
+#include "sani/platform/window.hpp"
 
 namespace sani {
 	namespace graphics {
