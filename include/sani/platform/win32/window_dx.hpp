@@ -15,18 +15,24 @@ namespace sani {
 		private:
 			HWND handle;				// Windows handle.
 			WNDCLASSEX windowClass;		// Information about this window.
+
+			LRESULT CALLBACK windowProc(const HWND hWnd, const UINT message, const WPARAM wParam, const LPARAM lParam);
 		public:
-			WindowDX(const uint32 width, const uint32 height, const int x, const int y, const String& title);
+			/// Creates new window.
+			/// @param[in] width Initial width of the window in pixels.
+			/// @param[in] height Initial height of the window in pixels.
+			/// @param[in] title Initial title of the window.
+			WindowDX(const HINSTANCE hInstance, const uint32 width, const uint32 height, const int x, const int y, const String& title);
 
-			virtual int getX() const override;
-			virtual int getY() const override;
+			int getX() const override;
+			int getY() const override;
 
-			virtual uint32 getWidth() const override;
-			virtual uint32 getHeight() const override;
+			uint32 getWidth() const override;
+			uint32 getHeight() const override;
+			
+			void* getHandle() const override;
 
-			virtual void* getHandle() const override;
-
-			virtual ~WindowDX() override;
+			~WindowDX() override;
 		};
 	}
 }

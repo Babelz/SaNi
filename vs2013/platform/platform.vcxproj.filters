@@ -66,8 +66,14 @@
     <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\win32\graphics_device_win32.hpp">
+    <ClInclude Include="..\..\include\sani\platform\win32\graphics_device_dx.hpp">
       <Filter>Header Files\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\win32\window_dx.hpp">
+      <Filter>Header Files\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\base_window.hpp">
+      <Filter>Header Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\viewport.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\base_window.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\win32\window_dx.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

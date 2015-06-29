@@ -10,17 +10,22 @@ namespace sani {
 		/// 
 		/// Represents a common render window.
 		class Window {
-		private:
-			String title;
 		public:
-			Window(const String& title);
+			Window();
 
 			virtual int getX() const = 0;
 			virtual int getY() const = 0;
-
+			
+			/// Return width of the window in pixels.
+			/// @returns width of the window.
 			virtual uint32 getWidth() const = 0;
+			/// Return height of the window in pixels.
+			/// @returns height of the window.
 			virtual uint32 getHeight() const = 0;
 
+			/// Return handle of this window. 
+			/// Underlying data can differ between implementations.
+			/// @returns void pointer to the handle.
 			virtual void* getHandle() const = 0;
 
 			virtual ~Window();
