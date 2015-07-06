@@ -10,22 +10,31 @@ namespace sani {
 
 		class Window::Impl {
 		public:
+			// Simple flag to keep track about the 
+			// state of the window.
 			bool initialized;
 
+			// Just store basic and long strings
+			// to their own fields.
+			
 			LPCWSTR title;
 			String cTitle;
 			
 			uint32 width;
 			uint32 height;
+			uint32 x;
+			uint32 y;
 
 			HINSTANCE hInstance;
 			HWND hwnd;
 
-			Impl() : width(800),
-					 height(600),
+			Impl() : initialized(false),
 					 title(L"Win32Window"),
 					 cTitle("Win32Window"),
-					 initialized(false) {
+					 width(800),
+					 height(600),
+					 x(300),
+					 y(300) {
 			}
 
 			~Impl() {
@@ -69,12 +78,15 @@ namespace sani {
 			return DefWindowProc(hWnd, message, wParam, lParam);
 		}
 
+		void Window::moveWindow() {
+			MoveWindow(impl->hwnd, impl->x, impl->y, impl->width, impl->height, TRUE);
+		}
+
 		// Public.
 
 		const HWND& Window::getHandle() const {
 			return impl->hwnd;
 		}
-
 
 		void Window::getTitle(String& title) const {
 			title = impl->cTitle;
@@ -106,10 +118,51 @@ namespace sani {
 			ShowWindow(impl->hwnd, SW_SHOW);
 		}
 
-		const inline uint32 Window::getWidth() {
+		void Window::setSize(const uint32 width, const uint32 height) {
+			impl->width = width;
+			impl->height = height;
+
+			if (impl->initialized) moveWindow();
+		}
+		void Window::setWidth(const uint32 width) {
+			impl->width = width;
+
+			if (impl->initialized) moveWindow();
+		}
+		void Window::setHeight(const uint32 height) {
+			impl->height = height;
+
+			if (impl->initialized) moveWindow();
+		}
+
+		void Window::setPosition(const uint32 x, const uint32 y) {
+			impl->x = x;
+			impl->y = y;
+
+			if (impl->initialized) moveWindow();
+		}
+		void Window::setX(const uint32 x) {
+			impl->x = x;
+
+			if (impl->initialized) moveWindow();
+		}
+		void Window::setY(const uint32 y) {
+			impl->y = y;
+
+			if (impl->initialized) moveWindow();
+		}
+
+		uint32 Window::getX() const {
+			return impl->x;
+		}
+		uint32 Window::getY() const {
+			return impl->y;
+		}
+
+		inline uint32 Window::getWidth() {
 			return impl->width;
 		}
-		const inline uint32 Window::getHeight() {
+		inline uint32 Window::getHeight() {
 			return impl->height;
 		}
 
@@ -170,6 +223,3 @@ namespace sani {
 }
 
 #endif
-
-
-
