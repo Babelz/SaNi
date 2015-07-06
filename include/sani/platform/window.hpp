@@ -1,40 +1,54 @@
 #pragma once
 
+#include "platform_config.hpp"
 #include "sani/precompiled.hpp"
+
+// Windows includes.
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#include <windowsx.h>
+#include <windows.h>
+#endif
 
 namespace sani {
 	namespace graphics {
-
-		/// @class Window base_window.hpp "sani/graphics/base_window.hpp"
+		
+		/// @class window.hpp "sani/platform/graphics/window.hpp"
 		/// @author voidbab
-		/// 
-		/// Represents a common render window.
+		///
+		/// Window of the game.
 		class Window {
+		private:
+			class Impl;
+
+			Impl* impl;
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+			static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+#endif
+
 		public:
-			Window();
-
-			virtual int getX() const = 0;
-			virtual int getY() const = 0;
+			// Windows members.
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+			Window(const HINSTANCE& hInstance, const uint32 width, const uint16 height);
 			
-			/// Return width of the window in pixels.
-			/// @returns width of the window.
-			virtual uint32 getWidth() const = 0;
-			/// Return height of the window in pixels.
-			/// @returns height of the window.
-			virtual uint32 getHeight() const = 0;
+			const HWND& getHandle() const;
+			
+			void setTitle(const String& title);
+#endif
 
-			/// Return handle of this window. 
-			/// Underlying data can differ between implementations.
-			/// @returns void pointer to the handle.
-			virtual void* getHandle() const = 0;
+			const inline uint32 getWidth();
+			const inline uint32 getHeight();
 
-			// TODO: setters
-			//		 modes
-			//		 styles
+			// TODO: implement get bounds and get client bounds
+			//		 once Recti class has been implemented.
+			// 
+			// inline void getBounds(Recti& bounds);
+			// inline void getClientArea(Recti& bounds);
 
-			virtual ~Window();
+			bool initialize();
+
+			~Window();
 		};
 	}
 }
-
 

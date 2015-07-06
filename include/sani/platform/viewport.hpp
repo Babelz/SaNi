@@ -20,11 +20,11 @@ namespace sani {
 			Viewport(const uint32 x, const uint32 y, const uint32 width, const uint32 height);
 			Viewport(const Viewport& viewport);
 
-			uint32 getX() const;
-			uint32 getY() const;
+			inline uint32 getX() const;
+			inline uint32 getY() const;
 
-			uint32 getWidth() const;
-			uint32 getHeight() const;
+			inline uint32 getWidth() const;
+			inline uint32 getHeight() const;
 
 			~Viewport();
 
