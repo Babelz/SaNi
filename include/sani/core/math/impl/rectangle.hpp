@@ -93,24 +93,6 @@ namespace sani {
 			}
 
 			template <typename T>
-			void Rectangle<T>::center(Vector2<T>& v) const {
-				v.x = x + (w / 2);
-				v.y = y + (h / 2);
-			}
-
-			template <typename T>
-			void Rectangle<T>::position(Vector2<T>& v) const {
-				v.x = x;
-				v.y = y;
-			}
-			
-			template <typename T>
-			void Rectangle<T>::size(Vector2<T>& v) const {
-				v.x = w;
-				v.y = h;
-			}
-
-			template <typename T>
 			bool Rectangle<T>::isEmpty() const {
 				return x == 0 && y == 0 && h == 0 && w == 0;
 			}
@@ -121,7 +103,7 @@ namespace sani {
 			}
 			
 			template <typename T>
-			bool Rectangle<T>::contains(const sani::math::Vector2<T>& v) const {
+			bool Rectangle<T>::contains(const Vector2<T>& v) const {
 				return contains(v.x, v.y);
 			}
 

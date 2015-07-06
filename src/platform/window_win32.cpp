@@ -20,10 +20,10 @@ namespace sani {
 			LPCWSTR title;
 			String cTitle;
 			
-			uint32 width;
-			uint32 height;
-			uint32 x;
-			uint32 y;
+			int32 width;
+			int32 height;
+			int32 x;
+			int32 y;
 
 			HINSTANCE hInstance;
 			HWND hwnd;
@@ -41,9 +41,7 @@ namespace sani {
 			}
 		};
 
-		Window::Window(const HINSTANCE& hInstance, const uint32 width, const uint16 height) : impl(new Impl()) {
-			impl->width = width;
-			impl->height = height;
+		Window::Window(const HINSTANCE& hInstance) : impl(new Impl()) {
 			impl->hInstance = hInstance;
 		}
 
@@ -118,56 +116,66 @@ namespace sani {
 			ShowWindow(impl->hwnd, SW_SHOW);
 		}
 
-		void Window::setSize(const uint32 width, const uint32 height) {
+		void Window::setSize(const int32 width, const int32 height) {
 			impl->width = width;
 			impl->height = height;
 
 			if (impl->initialized) moveWindow();
 		}
-		void Window::setWidth(const uint32 width) {
+		void Window::setWidth(const int32 width) {
 			impl->width = width;
 
 			if (impl->initialized) moveWindow();
 		}
-		void Window::setHeight(const uint32 height) {
+		void Window::setHeight(const int32 height) {
 			impl->height = height;
 
 			if (impl->initialized) moveWindow();
 		}
 
-		void Window::setPosition(const uint32 x, const uint32 y) {
+		void Window::setPosition(const int32 x, const int32 y) {
 			impl->x = x;
 			impl->y = y;
 
 			if (impl->initialized) moveWindow();
 		}
-		void Window::setX(const uint32 x) {
+		void Window::setX(const int32 x) {
 			impl->x = x;
 
 			if (impl->initialized) moveWindow();
 		}
-		void Window::setY(const uint32 y) {
+		void Window::setY(const int32 y) {
 			impl->y = y;
 
 			if (impl->initialized) moveWindow();
 		}
 
-		uint32 Window::getX() const {
+		int32 Window::getX() const {
 			return impl->x;
 		}
-		uint32 Window::getY() const {
+		int32 Window::getY() const {
 			return impl->y;
 		}
 
-		void Window::getClientBounds(math::Rectu32& rect) const {
+		math::Rect32 Window::getClientBounds() const {
+			RECT clntRect;
+
+			GetClientRect(impl->hwnd, &clntRect);
+
+			return math::Rect32(clntRect.left, clntRect.top, clntRect.bottom - clntRect.top, clntRect.right - clntRect.left);
 		}
-		void Window::getWindowBounds(math::Rectu32& rect) const {
+		math::Rect32 Window::getWindowBounds() const {
+			RECT wndRect;
+
+			GetWindowRect(impl->hwnd, &wndRect);
+
+			return math::Rect32(wndRect.left, wndRect.top, wndRect.bottom - wndRect.top, wndRect.right - wndRect.left);
 		}
 
-		inline uint32 Window::getWidth() {
+		inline int32 Window::getWidth() {
 			return impl->width;
 		}
-		inline uint32 Window::getHeight() {
+		inline int32 Window::getHeight() {
 			return impl->height;
 		}
 
@@ -197,8 +205,8 @@ namespace sani {
 										windowClass.lpszClassName,
 										impl->title,
 										WS_OVERLAPPED,
-										300,
-										300,
+										impl->x,
+										impl->y,
 										impl->width,
 										impl->height,
 										NULL,

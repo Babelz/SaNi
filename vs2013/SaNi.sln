@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "core", "core\core.vcxproj", "{30101611-95B1-4949-8241-8C64412CD13B}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "android", "android\android.vcxproj", "{029D12E6-E337-4864-B8CD-823C1DFCD295}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "platform", "platform\platform.vcxproj", "{7244D440-168D-430D-9089-190B065F0D64}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sandbox", "sandbox\sandbox.vcxproj", "{12A88735-7D7F-4C07-B430-415B821E4AE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,16 @@ Global
 		{7244D440-168D-430D-9089-190B065F0D64}.Release|Tegra-Android.ActiveCfg = Release|Win32
 		{7244D440-168D-430D-9089-190B065F0D64}.Release|Win32.ActiveCfg = Release|Win32
 		{7244D440-168D-430D-9089-190B065F0D64}.Release|Win32.Build.0 = Release|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Debug|Tegra-Android.ActiveCfg = Debug|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Debug|Win32.Build.0 = Debug|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Release|Tegra-Android.ActiveCfg = Release|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Release|Win32.ActiveCfg = Release|Win32
+		{12A88735-7D7F-4C07-B430-415B821E4AE2}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

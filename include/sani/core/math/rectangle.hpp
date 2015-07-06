@@ -46,14 +46,10 @@ namespace sani {
 			inline Vector2<T> position() const;
 			inline Vector2<T> size() const;
 
-			inline void center(Vector2<T>& v) const;
-			inline void position(Vector2<T>& v) const;
-			inline void size(Vector2<T>& v) const;
-
 			inline bool isEmpty() const;
 			
 			inline bool contains(const T x, const T y) const;
-			inline bool contains(const sani::math::Vector2<T>& v) const;
+			inline bool contains(const Vector2<T>& v) const;
 			
 			inline bool intersects(const Rectangle& r) const;
 
