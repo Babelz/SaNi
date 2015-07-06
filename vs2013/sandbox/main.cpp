@@ -8,9 +8,10 @@
 
 using namespace sani::graphics;
 
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	Window w(hInstance);
-	w.initialize();
+		
 
 	return 0;
 }
