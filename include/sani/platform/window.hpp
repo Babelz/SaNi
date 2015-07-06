@@ -15,25 +15,36 @@ namespace sani {
 		/// @class window.hpp "sani/platform/graphics/window.hpp"
 		/// @author voidbab
 		///
-		/// Window of the game.
+		/// Represents a window.
 		class Window {
 		private:
 			class Impl;
 
 			Impl* impl;
 
+			// Private Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 #endif
 
 		public:
-			// Windows members.
+			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			Window(const HINSTANCE& hInstance, const uint32 width, const uint16 height);
 			
 			const HWND& getHandle() const;
 			
+			/// Gets the title of the window.
+			void getTitle(String& title) const;
+			/// Sets the title of the window.
 			void setTitle(const String& title);
+
+			/// Hides the window.
+			void hide();
+			/// Minimizes the window.
+			void minimize();
+			/// Shows the window.
+			void show();
 #endif
 
 			const inline uint32 getWidth();
