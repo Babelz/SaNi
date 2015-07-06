@@ -33,6 +33,10 @@ TEST_CASE("Rectangle test cases", "[rectangle]") {
 		REQUIRE(r.position().x == 10.0f);
 		REQUIRE(r.position().y == 10.0f);
 		REQUIRE(!r.isEmpty());
+		REQUIRE(r.top() == r.y);
+		REQUIRE(r.bottom() == r.y + r.h);
+		REQUIRE(r.left() == r.x);
+		REQUIRE(r.right() == r.x + r.w);
 		
 		REQUIRE(Rectf(0.0f, 0.0f, 0.0f).isEmpty());
 
