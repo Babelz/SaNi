@@ -28,7 +28,6 @@ TEST_CASE("Mat2x2 test cases", "[matrix]") {
 		REQUIRE(mat == Mat2(3, 4, 5, 6));
 		REQUIRE((2.f * mat) == Mat2(6, 8, 10, 12));
 	}
-
 }
 
 

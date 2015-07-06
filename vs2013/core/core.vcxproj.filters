@@ -54,5 +54,11 @@
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\rectangle.hpp">
+      <Filter>Header Files\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\rectangle.hpp">
+      <Filter>Header Files\math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

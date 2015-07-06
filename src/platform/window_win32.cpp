@@ -159,6 +159,11 @@ namespace sani {
 			return impl->y;
 		}
 
+		void Window::getClientBounds(math::Rectu32& rect) const {
+		}
+		void Window::getWindowBounds(math::Rectu32& rect) const {
+		}
+
 		inline uint32 Window::getWidth() {
 			return impl->width;
 		}

@@ -7,6 +7,7 @@
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 #include <windowsx.h>
 #include <windows.h>
+#include "sani/core/math/rectangle.hpp"
 #endif
 
 namespace sani {
@@ -26,8 +27,7 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
-			void resize();
-			void reposition();
+			void moveWindow();
 #endif
 
 		public:
@@ -61,6 +61,9 @@ namespace sani {
 
 			inline uint32 getX() const;
 			inline uint32 getY() const;
+
+			void getClientBounds(math::Rectu32& rect) const;
+			void getWindowBounds(math::Rectu32& rect) const;
 #endif
 
 			inline uint32 getWidth();
