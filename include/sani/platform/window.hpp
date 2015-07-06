@@ -25,20 +25,24 @@ namespace sani {
 
 			// Private Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 			static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 			void moveWindow();
+
 #endif
 
 		public:
+
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 			Window(const HINSTANCE& hInstance);
 			
 			const HWND& getHandle() const;
 			
 			/// Gets the title of the window.
-			void getTitle(String& title) const;
+			String getTitle() const;
 			/// Sets the title of the window.
 			void setTitle(const String& title);
 
@@ -66,17 +70,15 @@ namespace sani {
 			math::Rect32 getClientBounds() const;
 			/// Returns the coordinates of the window's area.
 			math::Rect32 getWindowBounds() const;
+
 #endif
 
 			inline int32 getWidth();
 			inline int32 getHeight();
 
-			// TODO: implement get bounds and get client bounds
-			//		 once Recti class has been implemented.
-			// 
-			// inline void getBounds(Recti& bounds);
-			// inline void getClientArea(Recti& bounds);
-
+			/// Initialize the window. Returns true 
+			/// if no errors occurred during the
+			/// initialization process of the window.
 			bool initialize();
 
 			~Window();

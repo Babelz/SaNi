@@ -3,7 +3,6 @@
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/platform/window.hpp"
-#include <xstring>
 
 namespace sani {
 	namespace graphics {
@@ -86,8 +85,8 @@ namespace sani {
 			return impl->hwnd;
 		}
 
-		void Window::getTitle(String& title) const {
-			title = impl->cTitle;
+		String Window::getTitle() const {
+			return impl->cTitle;
 		}
 		void Window::setTitle(const String& title) {
 			const std::wstring stemp = std::wstring(title.begin(), title.end());
@@ -214,16 +213,7 @@ namespace sani {
 										impl->hInstance,
 										NULL);
 
-			// Could not create the window.
-			if (GetLastError() != 0) {
-				impl->initialized = false;
-			} else {
-				// Try to show the window.
-				show();
-
-				// Check for errors.
-				impl->initialized = GetLastError() == 0;
-			}
+			impl->initialized = GetLastError() == 0;
 
 			// Return results.
 			return impl->initialized;
