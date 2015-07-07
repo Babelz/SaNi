@@ -12,6 +12,7 @@ namespace sani {
 			// Simple flag to keep track about the 
 			// state of the window.
 			bool initialized;
+			bool isWindowOpen;
 
 			// Just store basic and long strings
 			// to their own fields.
@@ -28,6 +29,7 @@ namespace sani {
 			HWND hwnd;
 
 			Impl() : initialized(false),
+					 isWindowOpen(false),
 					 title(L"Win32Window"),
 					 cTitle("Win32Window"),
 					 width(800),
@@ -40,7 +42,7 @@ namespace sani {
 			}
 		};
 
-		Window::Window(const HINSTANCE& hInstance) : impl(new Impl()) {
+		Window::Window(const HINSTANCE hInstance) : impl(new Impl()) {
 			impl->hInstance = hInstance;
 		}
 
@@ -81,7 +83,7 @@ namespace sani {
 
 		// Public.
 
-		const HWND& Window::getHandle() const {
+		HWND Window::getHandle() const {
 			return impl->hwnd;
 		}
 
@@ -178,6 +180,26 @@ namespace sani {
 			return impl->height;
 		}
 
+		void Window::listen() const {
+			MSG msg;
+
+			if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE)) {
+				// translate keystroke messages into the right format
+				TranslateMessage(&msg);
+
+				// send the message to the WindowProc function
+				DispatchMessage(&msg);
+
+				if (msg.message == WM_QUIT) {
+					impl->isWindowOpen = false;
+				}
+			}
+		}
+
+		bool Window::isOpen() const {
+			return impl->isWindowOpen;
+		}
+
 		bool Window::initialize() {
 			assert(!impl->initialized);
 
@@ -203,7 +225,7 @@ namespace sani {
 			impl->hwnd = CreateWindowEx(NULL,
 										windowClass.lpszClassName,
 										impl->title,
-										WS_OVERLAPPED,
+										WS_OVERLAPPEDWINDOW,
 										impl->x,
 										impl->y,
 										impl->width,
@@ -213,7 +235,10 @@ namespace sani {
 										impl->hInstance,
 										NULL);
 
+			ShowWindow(impl->hwnd, SW_SHOW);
+
 			impl->initialized = GetLastError() == 0;
+			impl->isWindowOpen = impl->initialized;
 
 			// Return results.
 			return impl->initialized;

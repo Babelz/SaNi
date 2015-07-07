@@ -37,9 +37,9 @@ namespace sani {
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
-			Window(const HINSTANCE& hInstance);
-			
-			const HWND& getHandle() const;
+			Window(const HINSTANCE hInstance);
+
+			inline HWND getHandle() const;
 			
 			/// Gets the title of the window.
 			String getTitle() const;
@@ -71,6 +71,11 @@ namespace sani {
 			/// Returns the coordinates of the window's area.
 			math::Rect32 getWindowBounds() const;
 
+			/// Listens for windows events.
+			void listen() const;
+		
+			/// Returns true if the window is still open.
+			bool isOpen() const;
 #endif
 
 			inline int32 getWidth();

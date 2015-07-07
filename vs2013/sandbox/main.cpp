@@ -1,25 +1,16 @@
-#include <windows.h>
+#include <iostream>
+#include <stdlib.h>
+#include <Windows.h>
 #include <windowsx.h>
 
-#include "sani/platform/platform_config.hpp"
 #include "sani/platform/window.hpp"
-
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 using namespace sani::graphics;
 
-
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	Window w(hInstance);
-		
-
+int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
+	Window window(hInstance);
+	
+	window.initialize();
+	
 	return 0;
 }
-
-#elif 
-
-int main() {
-	return 0;
-}
-
-#endif
