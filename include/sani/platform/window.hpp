@@ -2,14 +2,16 @@
 
 #include "platform_config.hpp"
 #include "sani/precompiled.hpp"
+#include "sani/forward_declare.hpp"
 
 // Windows includes.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 #include <Windows.h>
-#include <windowsx.h>
-#include "sani/core/math/rectangle.hpp"
-#include "sani/assert.hpp"
+
 #endif
+
+SANI_FORWARD_DECLARE_1(math, Rect32);
 
 namespace sani {
 	namespace graphics {

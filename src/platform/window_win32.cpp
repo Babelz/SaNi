@@ -2,7 +2,10 @@
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
+#include "sani/core/math/rectangle.hpp"
+#include "sani/core/math/rectangle.hpp"
 #include "sani/platform/window.hpp"
+#include "sani/assert.hpp"
 
 namespace sani {
 	namespace graphics {

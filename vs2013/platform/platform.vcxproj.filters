@@ -89,5 +89,8 @@
     <ClCompile Include="..\..\src\platform\window_win32.cpp">
       <Filter>Source Files\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics_device_dx.cpp">
+      <Filter>Source Files\win32</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

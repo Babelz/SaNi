@@ -5,6 +5,7 @@
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/platform/window.hpp"
+#include "sani/assert.hpp"
 
 #include <Windows.h>
 #include <windowsx.h>

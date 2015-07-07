@@ -7,12 +7,12 @@ namespace sani {
 		/// @class Viewport graphics_device.hpp "sani/platform/graphics/graphics_device.hpp"
 		/// @author voidbab
 		/// 
-		/// Represents the physical graphics adapter of this machine.
+		/// A virtual representation of the physical graphics adapter of this machine.
 		class GraphicsDevice {
 		private:
 			class Impl;
 
-			Impl* impl;
+			Impl* imp
 		public:
 			GraphicsDevice();
 
