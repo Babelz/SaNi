@@ -5,9 +5,10 @@
 
 // Windows includes.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#include <Windows.h>
 #include <windowsx.h>
-#include <windows.h>
 #include "sani/core/math/rectangle.hpp"
+#include "sani/assert.hpp"
 #endif
 
 namespace sani {
@@ -26,10 +27,7 @@ namespace sani {
 			// Private Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
-			static LRESULT CALLBACK WindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
-			void moveWindow();
-
+			static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
 
 		public:
@@ -46,8 +44,6 @@ namespace sani {
 			/// Sets the title of the window.
 			void setTitle(const String& title);
 
-			/// Hides the window.
-			void hide();
 			/// Minimizes the window.
 			void minimize();
 			/// Shows the window.
@@ -76,6 +72,9 @@ namespace sani {
 		
 			/// Returns true if the window is still open.
 			bool isOpen() const;
+			
+			/// Forces the window to close.
+			void close();
 #endif
 
 			inline int32 getWidth();

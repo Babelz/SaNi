@@ -5,8 +5,6 @@
 #include <cassert>
 #include <stdint.h>
 
-#include "sani/forward_declare.hpp"
-
 /* Type definitions */
 typedef std::string String;
 

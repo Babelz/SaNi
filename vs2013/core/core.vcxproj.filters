@@ -60,5 +60,8 @@
     <ClInclude Include="..\..\include\sani\core\math\rectangle.hpp">
       <Filter>Header Files\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\assert.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
