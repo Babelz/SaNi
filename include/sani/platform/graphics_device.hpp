@@ -1,5 +1,12 @@
 #pragma once
 #include "graphics_precompiled.hpp"
+#include "sani/platform/platform_config.hpp"
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
+#include <Windows.h>
+
+#endif
 
 namespace sani {
 	namespace graphics {
@@ -8,13 +15,20 @@ namespace sani {
 		/// @author voidbab
 		/// 
 		/// A virtual representation of the physical graphics adapter of this machine.
+		/// DX contains WinDX and GL contains Linux and WinGL implementations.
 		class GraphicsDevice {
 		private:
 			class Impl;
 
-			Impl* imp
+			Impl* imp;
 		public:
-			GraphicsDevice();
+
+			// Public Win32 members.
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
+			GraphicsDevice(const HWND hwnd);
+
+#endif
 
 			/// Returns true if device has errors.
 			inline bool hasErrors() const;
