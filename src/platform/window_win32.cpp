@@ -6,6 +6,11 @@
 
 namespace sani {
 	namespace graphics {
+		
+		/*
+		 *		Some functions always require that the window is in initialized state.
+		 *	    Should this be fixed?
+		 */
 
 		class Window::Impl {
 		public:

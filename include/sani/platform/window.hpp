@@ -40,7 +40,7 @@ namespace sani {
 			inline HWND getHandle() const;
 			
 			/// Gets the title of the window.
-			String getTitle() const;
+			inline String getTitle() const;
 			/// Sets the title of the window.
 			void setTitle(const String& title);
 
