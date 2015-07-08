@@ -1,10 +1,10 @@
 #include "catch/catch.hpp"
 #include "sani/platform/platform_config.hpp"
-#include "sani/platform/file_manager.hpp"
+#include "sani/platform/file_system.hpp"
 
 TEST_CASE("File stuff", "[file]") {
 	using namespace sani::io;
-	FileManager filemanager;
+	FileSystem filemanager;
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 	SECTION("Absolute paths") {

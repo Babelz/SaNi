@@ -11,20 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\sani\platform\base_file_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file_system.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\file_manager.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics_device.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\linux\file_manager_linux.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\win32\file_manager_win32.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\platform\base_file_manager.cpp" />
-    <ClCompile Include="..\..\src\platform\file_manager.cpp" />
     <ClCompile Include="..\..\src\platform\graphics_device_dx.cpp" />
     <ClCompile Include="..\..\src\platform\linux\file_manager_linux.cpp" />
     <ClCompile Include="..\..\src\platform\viewport.cpp" />

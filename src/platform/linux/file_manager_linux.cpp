@@ -1,7 +1,7 @@
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
 
-#include "sani/platform/linux/file_manager_linux.hpp"
+#include "sani/platform/file_system.hpp"
 #include "sani/platform/file.hpp"
 #include <sys/stat.h>
 #include <dirent.h>
@@ -9,24 +9,24 @@
 namespace sani {
 	namespace io {
 
-		FileManagerLinux::FileManagerLinux() {
+		FileSystem::FileSystem() {
 
 		}
 
-		FileManagerLinux::~FileManagerLinux() {
+		FileSystem::~FileSystem() {
 
 		}
 
-		bool FileManagerLinux::fileExists(const String& path) const {
+		bool FileSystem::fileExists(const String& path) const {
 			struct stat buffer;
 			return (stat(path.c_str(), &buffer) == 0);
 		}
 
-		bool FileManagerLinux::isFileOpen(const String& path) const {
+		bool FileSystem::isFileOpen(const String& path) const {
 			return handles.find(path) != handles.end();
 		}
 
-		bool FileManagerLinux::openFile(const String& path, const Filemode mode) {
+		bool FileSystem::openFile(const String& path, const Filemode mode) {
 			if (isFileOpen(path)) return true;
 
 			char access[5] = { 0 };
@@ -49,7 +49,11 @@ namespace sani {
 			return true;
 		}
 
-		void FileManagerLinux::closeFile(const String& path) {
+		bool FileSystem::isAbsolutePath(const String& path) const {
+			return !path.empty() && path.at(0) == '/';
+		}
+
+		void FileSystem::closeFile(const String& path) {
 			if (!isFileOpen(path)) return;
 
 			FILE* handle = handles[path];
@@ -57,7 +61,7 @@ namespace sani {
 			handles.erase(path);
 		}
 
-		size_t FileManagerLinux::getFileSize(const String& path) const {
+		size_t FileSystem::getFileSize(const String& path) const {
 			// TODO if the file is opened already?
 			struct stat statbuf;
 			if (stat(path.c_str(), &statbuf) == -1) {
@@ -67,7 +71,7 @@ namespace sani {
 			return statbuf.st_size;
 		}
 
-		unsigned char* FileManagerLinux::getFileData(const String& path, size_t& fileSize, bool nullTerminate /*= false*/) const {
+		unsigned char* FileSystem::getFileData(const String& path, size_t& fileSize, bool nullTerminate /*= false*/) const {
 			assert(isFileOpen(path));
 
 			FILE* handle = handles.at(path);
@@ -96,7 +100,7 @@ namespace sani {
 			return buffer;
 		}
 
-		String FileManagerLinux::getFileDataString(const String& path) const {
+		String FileSystem::getFileDataString(const String& path) const {
 			size_t size = 0;
 			unsigned char* buffer = getFileData(path, size, true);
 			if (size == 0) {
@@ -105,7 +109,7 @@ namespace sani {
 			return String((const char*)buffer);
 		}
 
-		void FileManagerLinux::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
+		void FileSystem::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
 			assert(isFileOpen(path));
 			FILE* handle = handles.at(path);
 			fseek(handle, offset, SEEK_SET);
@@ -114,7 +118,7 @@ namespace sani {
 			
 		}
 
-		void FileManagerLinux::listFiles(std::vector<String>& files, const String& path) const {
+		void FileSystem::listFiles(std::vector<String>& files, const String& path) const {
 			DIR *d;
 			struct dirent* dir;
 			d = opendir(path.c_str());

@@ -1,32 +1,33 @@
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 
-#include "sani/platform/win32/file_manager_win32.hpp"
+#include <windows.h>
+#include "sani/platform/file_system.hpp"
 #include "sani/platform/file.hpp"
 
 namespace sani {
 	namespace io {
 
 
-		FileManagerWin32::FileManagerWin32() {
+		FileSystem::FileSystem() {
 
 		}
 
-		FileManagerWin32::~FileManagerWin32() {
+		FileSystem::~FileSystem() {
 			for (auto it = handles.begin(); it != handles.end(); it++) {
 				::CloseHandle(handles[it->first]);
 				handles[it->first] = INVALID_HANDLE_VALUE;
 			}
 		}
 
-		bool FileManagerWin32::isAbsolutePath(const String& path) const  {
+		bool FileSystem::isAbsolutePath(const String& path) const  {
 			// Should start with letter and second char should be : 
 			if (path.length() < 2) return false;
 			char c = path[0];
 			return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && path[1] == ':');
 		}
 
-		bool FileManagerWin32::openFile(const String& path, const Filemode mode) {
+		bool FileSystem::openFile(const String& path, const Filemode mode) {
 			// Check if we have file opened
 			if (handles.find(path) != handles.end()) {
 				// TODO do we need to close the handle?
@@ -59,11 +60,11 @@ namespace sani {
 			return true;
 		}
 
-		bool FileManagerWin32::isFileOpen(const String& path) const  {
+		bool FileSystem::isFileOpen(const String& path) const  {
 			return (handles.find(path) != handles.end());
 		}
 
-		void FileManagerWin32::closeFile(const String& path) {
+		void FileSystem::closeFile(const String& path) {
 			if (isFileOpen(path)) {
 				::CloseHandle(handles[path]);
 				handles[path] = INVALID_HANDLE_VALUE;
@@ -71,7 +72,7 @@ namespace sani {
 			}
 		}
 
-		size_t FileManagerWin32::getFileSize(const String& path) const  {
+		size_t FileSystem::getFileSize(const String& path) const  {
 			size_t fileSize;
 			// It is open
 			if (handles.find(path) != handles.end()) {
@@ -93,7 +94,7 @@ namespace sani {
 			return fileSize;
 		}
 
-		bool FileManagerWin32::fileExists(const String& path) const  {
+		bool FileSystem::fileExists(const String& path) const  {
 			if (path.empty()) return false;
 
 			WCHAR buf[512] = { 0 };
@@ -106,7 +107,7 @@ namespace sani {
 			return true;
 		}
 
-		unsigned char* FileManagerWin32::getFileData(const String& path, size_t& fileSize, bool nullTerminate /* = false */) const  {
+		unsigned char* FileSystem::getFileData(const String& path, size_t& fileSize, bool nullTerminate /* = false */) const  {
 			assert(isFileOpen(path));
 
 			HANDLE handle = handles.at(path);
@@ -141,7 +142,7 @@ namespace sani {
 			}
 		}
 
-		String FileManagerWin32::getFileDataString(const String& path) const  {
+		String FileSystem::getFileDataString(const String& path) const  {
 			size_t size = 0;
 			unsigned char* buffer = getFileData(path, size, true);
 			if (size == 0) {
@@ -150,7 +151,7 @@ namespace sani {
 			return String((const char*)buffer);
 		}
 
-		void FileManagerWin32::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
+		void FileSystem::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
 			HANDLE handle = handles.at(path);
 			::SetFilePointer(handle, offset, nullptr, FILE_BEGIN);
 			out.clear();
@@ -160,7 +161,7 @@ namespace sani {
 			::ReadFile(handle, out.data(), count, &read, nullptr);
 		}
 
-		void FileManagerWin32::listFiles(std::vector<String>& files, const String& path) const {
+		void FileSystem::listFiles(std::vector<String>& files, const String& path) const {
 			WIN32_FIND_DATA ffd;
 			HANDLE handle = INVALID_HANDLE_VALUE;
 

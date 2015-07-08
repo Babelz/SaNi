@@ -42,20 +42,8 @@
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\linux\file_manager_linux.hpp">
-      <Filter>Header Files\linux</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\base_file_manager.hpp">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file.hpp">
       <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\file_manager.hpp">
-      <Filter>Header Files\io</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\win32\file_manager_win32.hpp">
-      <Filter>Header Files\win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp">
       <Filter>Header Files\graphics</Filter>
@@ -69,6 +57,9 @@
     <ClInclude Include="..\..\include\sani\platform\window.hpp">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file_system.hpp">
+      <Filter>Header Files\io</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\win32\file_manager_win32.cpp">
@@ -76,12 +67,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\linux\file_manager_linux.cpp">
       <Filter>Source Files\linux</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\base_file_manager.cpp">
-      <Filter>Source Files\io</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\file_manager.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\platform\viewport.cpp">
       <Filter>Source Files\graphics</Filter>
