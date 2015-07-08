@@ -2,6 +2,7 @@
 
 #include "sani/platform/platform_config.hpp"
 
+/* TODO: maybe move to platform */
 
 /* Win32 */
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32

@@ -36,12 +36,12 @@ namespace sani {
 		// Operators.
 
 
-		Viewport& Viewport::operator =(const Viewport& other) {
-			x = other.x;
-			y = other.y;
+		Viewport& Viewport::operator =(const Viewport& rhs) {
+			x = rhs.x;
+			y = rhs.y;
 
-			width = other.width;
-			height = other.height;
+			width = rhs.width;
+			height = rhs.height;
 
 			return *this;
 		}

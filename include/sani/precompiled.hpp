@@ -5,6 +5,8 @@
 #include <cassert>
 #include <stdint.h>
 
+/* TODO: maybe move to platform */
+
 /* Type definitions */
 typedef std::string String;
 
