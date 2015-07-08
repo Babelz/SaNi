@@ -2,8 +2,6 @@
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
-#include "sani/core/math/rectangle.hpp"
-#include "sani/core/math/rectangle.hpp"
 #include "sani/platform/window.hpp"
 #include "sani/assert.hpp"
 
@@ -201,23 +199,23 @@ namespace sani {
 			return impl->y;
 		}
 
-		math::Rect32 Window::getClientBounds() const {
+		uint32 Window::getClientWidth() const {
 			assert(impl->initialized);
 
 			RECT clntRect;
 
 			GetClientRect(impl->hwnd, &clntRect);
 
-			return math::Rect32(clntRect.left, clntRect.top, clntRect.bottom - clntRect.top, clntRect.right - clntRect.left);
+			return clntRect.right- clntRect.left;
 		}
-		math::Rect32 Window::getWindowBounds() const {
+		uint32 Window::getClientHeight() const {
 			assert(impl->initialized);
 
-			RECT wndRect;
+			RECT clntRect;
 
-			GetWindowRect(impl->hwnd, &wndRect);
+			GetClientRect(impl->hwnd, &clntRect);
 
-			return math::Rect32(wndRect.left, wndRect.top, wndRect.bottom - wndRect.top, wndRect.right - wndRect.left);
+			return clntRect.bottom - clntRect.top;
 		}
 
 		inline int32 Window::getWidth() {

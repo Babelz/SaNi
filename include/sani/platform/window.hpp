@@ -64,10 +64,8 @@ namespace sani {
 			inline int32 getX() const;
 			inline int32 getY() const;
 
-			/// Returns coordinates of the window's client area.
-			math::Rect32 getClientBounds() const;
-			/// Returns the coordinates of the window's area.
-			math::Rect32 getWindowBounds() const;
+			uint32 getClientWidth() const;
+			uint32 getClientHeight() const;
 
 			/// Listens for windows events.
 			void listen() const;
