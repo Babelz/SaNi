@@ -37,6 +37,9 @@
     <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{c58f6ea1-5ccd-433b-a058-282ad430193e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\apple">
+      <UniqueIdentifier>{ce68ef41-c575-402e-9691-c24784f9eb96}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp">
@@ -76,6 +79,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp">
       <Filter>Source Files\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\file_system.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
+      <Filter>Source Files\apple</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

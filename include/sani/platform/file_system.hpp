@@ -2,6 +2,8 @@
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 #include <windows.h>
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS || SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
+#include <CoreFoundation/CoreFoundation.h>
 #endif
 
 #include "sani/precompiled.hpp"
@@ -23,6 +25,10 @@ namespace sani {
 			std::unordered_map<String, FILE*> handles;
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 			std::unordered_map<String, HANDLE> handles;
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS || SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
+			std::unordered_map<String, FILE*> handles;
+			CFBundleRef bundle;
+			CFBundleRef getBundle() const;
 #else
 #error "Not supported platform"
 #endif

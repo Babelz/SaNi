@@ -1,6 +1,6 @@
 #pragma once
 
-// All platforms we are supported
+// All platforms we are supporting
 #define SANI_PLATFORM_UNKOWN		0
 // Desktop
 #define SANI_PLATFORM_WIN32			1
@@ -38,16 +38,23 @@
 #define SANI_TARGET_PLATFORM SANI_PLATFORM_LINUX
 #endif
 
-// Mac
+// Mac and iOS
 /*
 From stackoverflow: 
 __APPLE__ is set for both OS X and iOS. 
 You can #include <TargetConditionals.h> inside #ifdef __APPLE__, which then gives you a TARGET_OS_IPHONE #define
 */
 #if defined(__APPLE__)
+#include "TargetConditionals.h"
 #undef  SANI_TARGET_PLATFORM
-#define SANI_TARGET_PLATFORM         SANI_PLATFORM_MAC
+
+#if defined(TARGET_OS_IPHONE) || defined(TARGET_IPHONE_SIMULATOR)
+#define SANI_TARGET_PLATFORM         SANI_PLATFORM_IOS
+#elif defined(TARGET_OS_MAC)
+#define SANI_TARGET_PLATFORM		SANI_PLATFORM_MAC
+#else
 #error "Don't know if it's Mac or iPhone/Pad"
+#endif
 #endif
 
 
@@ -57,13 +64,6 @@ You can #include <TargetConditionals.h> inside #ifdef __APPLE__, which then give
 #if defined(ANDROID)
 #undef  SANI_TARGET_PLATFORM
 #define SANI_TARGET_PLATFORM         SANI_PLATFORM_ANDROID
-#endif
-
-// iOS
-#if defined(__APPLE__)
-#undef  SANI_TARGET_PLATFORM
-#define SANI_TARGET_PLATFORM         SANI_PLATFORM_IOS
-#error "Don't know if it's Mac or iPhone/Pad"
 #endif
 
 // WP8 

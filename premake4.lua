@@ -9,17 +9,14 @@ solution "sani"
 	configuration { "Release" }
 		targetdir "bin/release" 
 
-	configuration { "gmake" }
-		buildoptions { "-std=c++11" }
+	buildoptions { "-std=c++11" }
 
 	project "core"
         kind "StaticLib"
 		language "C++"
 		files { "src/core/**.cpp", "include/sani/core/**.hpp" }
 		includedirs { "include" }
-
-		configuration "linux"
-			links { "platform" }
+		links { "platform" }
 
 	project "platform"
     	kind "StaticLib"
@@ -30,8 +27,7 @@ solution "sani"
 	project "tests"
 		kind "ConsoleApp"
 		language "C++"
-		files { "tests/**.cpp", "include/sani/**.hpp", "thirdparty/include/**.hpp" }
-		includedirs { "include", "thirdparty/include" }
-	configuration "linux"
-		links { "platform", "core" }
+		files { "tests/**.cpp", "include/sani/**.hpp", "thirdparty/catch/include/**.hpp" }
+		includedirs { "include", "thirdparty/catch/include" }
+		links { "platform" }
 -- TODOODODODODODOO
