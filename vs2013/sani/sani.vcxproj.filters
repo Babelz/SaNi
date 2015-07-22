@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{4df551fd-419f-4138-a1d5-53fe1fb35efc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform">
+      <UniqueIdentifier>{404b644e-a5de-4257-b83e-8c5f3dc18716}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\apple">
+      <UniqueIdentifier>{c8a93cdb-0bc8-4b15-949d-9c251a85469d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\linux">
+      <UniqueIdentifier>{c32e645b-b667-436e-aaa2-9ae004550a05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\win32">
+      <UniqueIdentifier>{29fe84a6-81a9-4f91-932f-56dfa4d5c376}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{73ace15e-46d0-4ec6-b444-4470470e0256}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core">
+      <UniqueIdentifier>{a24ea4c8-910a-4df3-9d59-47b64d87d775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform">
+      <UniqueIdentifier>{6e9262b0-c011-46e7-8a78-54a97cfd0331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform\win32">
+      <UniqueIdentifier>{b91bce75-4e52-4626-ae98-0dab4adde1b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform\linux">
+      <UniqueIdentifier>{79c8e2ba-7e7b-4b65-946d-e8a52efcc42f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\math">
+      <UniqueIdentifier>{6cfd7f9b-efc7-467f-8b50-2e968cee1649}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\math\impl">
+      <UniqueIdentifier>{e35b5fde-9d44-4b7a-a8da-e26e296c701e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\platform\file_system.cpp">
+      <Filter>src\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics_device_dx.cpp">
+      <Filter>src\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\viewport.cpp">
+      <Filter>src\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\window_win32.cpp">
+      <Filter>src\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
+      <Filter>src\platform\apple</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\linux\file_system_linux.cpp">
+      <Filter>src\platform\linux</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp">
+      <Filter>src\platform\win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\include\sani\precompiled.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\assert.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\forward_declare.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file_system.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics_device.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\platform_config.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\viewport.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\window.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\rectangle.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\vector.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\vector2.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\vector3.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\vector4.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp">
+      <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\rectangle.hpp">
+      <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp">
+      <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp">
+      <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp">
+      <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

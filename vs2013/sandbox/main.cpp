@@ -39,7 +39,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	std::cout << "MINIMIZE" << std::endl;
 
-	_sleep(1000);
+	Sleep(1000);
 
 	std::cout << "SHOW" << std::endl;
 

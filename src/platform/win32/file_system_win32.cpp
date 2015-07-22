@@ -142,15 +142,6 @@ namespace sani {
 			}
 		}
 
-		String FileSystem::getFileDataString(const String& path) const  {
-			size_t size = 0;
-			unsigned char* buffer = getFileData(path, size, true);
-			if (size == 0) {
-				return "";
-			}
-			return String((const char*)buffer);
-		}
-
 		void FileSystem::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
 			HANDLE handle = handles.at(path);
 			::SetFilePointer(handle, offset, nullptr, FILE_BEGIN);

@@ -9,18 +9,9 @@
 namespace sani {
 	namespace io {
 
-		FileSystem::FileSystem() {
+		FileSystem::FileSystem() { }
 
-		}
-
-		FileSystem::~FileSystem() {
-
-		}
-
-		bool FileSystem::fileExists(const String& path) const {
-			struct stat buffer;
-			return (stat(path.c_str(), &buffer) == 0);
-		}
+		FileSystem::~FileSystem() { }
 
 		bool FileSystem::isFileOpen(const String& path) const {
 			return handles.find(path) != handles.end();
@@ -63,16 +54,6 @@ namespace sani {
 			handles.erase(path);
 		}
 
-		size_t FileSystem::getFileSize(const String& path) const {
-			// TODO if the file is opened already?
-			struct stat statbuf;
-			if (stat(path.c_str(), &statbuf) == -1) {
-				// error
-				return 0;
-			}
-			return statbuf.st_size;
-		}
-
 		unsigned char* FileSystem::getFileData(const String& path, size_t& fileSize, bool nullTerminate /*= false*/) const {
 			assert(isFileOpen(path));
 
@@ -101,15 +82,6 @@ namespace sani {
 			// Success
 			fileSize = readBytes;
 			return buffer;
-		}
-
-		String FileSystem::getFileDataString(const String& path) const {
-			size_t size = 0;
-			unsigned char* buffer = getFileData(path, size, true);
-			if (size == 0) {
-				return "";
-			}
-			return String((const char*)buffer);
 		}
 
 		void FileSystem::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {

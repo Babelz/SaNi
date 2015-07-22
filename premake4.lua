@@ -11,23 +11,16 @@ solution "sani"
 
 	buildoptions { "-std=c++11" }
 
-	project "core"
+	project "sani"
         kind "StaticLib"
 		language "C++"
-		files { "src/core/**.cpp", "include/sani/core/**.hpp" }
-		includedirs { "include" }
-		links { "platform" }
-
-	project "platform"
-    	kind "StaticLib"
-		language "C++"
-		files { "src/platform/**.cpp", "include/sani/platform/**.hpp" }
+		files { "src/core/**.cpp", "include/**.hpp" }
 		includedirs { "include" }
 
 	project "tests"
 		kind "ConsoleApp"
 		language "C++"
-		files { "tests/**.cpp", "include/sani/**.hpp", "thirdparty/catch/include/**.hpp" }
+		files { "tests/**.cpp", "include/**.hpp", "thirdparty/catch/include/**.hpp" }
 		includedirs { "include", "thirdparty/catch/include" }
-		links { "platform" }
+		links { "sani" }
 -- TODOODODODODODOO
