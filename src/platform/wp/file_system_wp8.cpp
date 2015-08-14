@@ -1,13 +1,8 @@
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-
-#include <windows.h>
-#include "sani/platform/win32/filesystem_win32.hpp"
-#include "sani/platform/file.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 
 namespace sani {
 	namespace io {
-
 		static std::wstring stringToWstring(const String& strUtf8) {
 			std::wstring ret;
 			if (!strUtf8.empty()) {
@@ -71,7 +66,7 @@ namespace sani {
 
 		size_t FileSystemWin32::getFileSize(const String& path) const  {
 			size_t fileSize;
-			
+
 			HANDLE fileHandle = ::CreateFileW(stringToWstring(path).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
 			if (fileHandle == INVALID_HANDLE_VALUE) {
 				throw "Cant open file";
@@ -106,9 +101,7 @@ namespace sani {
 			}
 			FindClose(handle);
 		}
-
 	}
 }
-
 
 #endif

@@ -18,6 +18,7 @@
     <ClCompile Include="..\..\src\platform\viewport.cpp" />
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\window_win32.cpp" />
+    <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
@@ -39,7 +40,9 @@
     <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\win32\filesystem_win32.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\wp\file_system_wp8.hpp" />
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -78,7 +81,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

@@ -37,6 +37,12 @@
     <Filter Include="include\core\math\impl">
       <UniqueIdentifier>{e35b5fde-9d44-4b7a-a8da-e26e296c701e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\platform\wp">
+      <UniqueIdentifier>{1da9948e-eeb4-4b34-9459-7c53463d0bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\wp8">
+      <UniqueIdentifier>{e287d895-ef32-4a20-876a-c9b587e4e265}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -59,6 +65,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp">
       <Filter>src\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp">
+      <Filter>src\platform\wp8</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +133,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp">
       <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\win32\filesystem_win32.hpp">
+      <Filter>include\platform\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\wp\file_system_wp8.hpp">
+      <Filter>include\platform\wp</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

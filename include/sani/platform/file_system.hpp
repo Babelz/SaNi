@@ -20,18 +20,10 @@ namespace sani {
 		/// 
 		/// Helper for file access
 		class FileSystem {		
-		private:
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
+		protected:
 			std::unordered_map<String, FILE*> handles;
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
-			std::unordered_map<String, HANDLE> handles;
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS || SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
-			std::unordered_map<String, FILE*> handles;
-			CFBundleRef bundle;
-			CFBundleRef getBundle() const;
-#else
-#error "Not supported platform"
-#endif
+
+
 		public:
 			/// Default constructor
 			FileSystem();
@@ -41,7 +33,7 @@ namespace sani {
 			/// Checks if the file exists
 			/// @param[in] path The path where the file should be
 			/// @returns true if the file exists, false if it does not exist
-			bool fileExists(const String& path) const;
+			virtual bool fileExists(const String& path) const;
 
 			/// Checks if the file is opened for reading/writing
 			/// @param[in] path File path
@@ -60,12 +52,11 @@ namespace sani {
 
 			/// Utility for checking if path is absolute path
 			/// @param[in] path The path string which needs to be checked
-			bool isAbsolutePath(const String& path) const;
+			virtual bool isAbsolutePath(const String& path) const;
 
 			/// Gets the size of the file in bytes
 			/// @param[in] path File path
-			/// @warning If there isn't file handle opened to this path, it will be opened and then closed
-			size_t getFileSize(const String& path) const;
+			virtual size_t getFileSize(const String& path) const;
 
 			/// Reads the file into buffer
 			/// @param[in] path The file path to the file
@@ -81,7 +72,7 @@ namespace sani {
 
 			void getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const;
 
-			void listFiles(std::vector<String>& files, const String& path) const;
+			virtual void listFiles(std::vector<String>& files, const String& path) const;
 		};
 	}
 }

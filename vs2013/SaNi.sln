@@ -14,6 +14,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sandbox", "sandbox\sandbox.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sani", "sani\sani.vcxproj", "{93F10FD5-8B10-4B7D-A201-AD78F325AF97}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sandbox-wp", "sandbox-wp\sandbox-wp.vcxproj", "{0CC569E3-804D-4356-85D5-CD008E7FC49B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{93F10FD5-8B10-4B7D-A201-AD78F325AF97} = {93F10FD5-8B10-4B7D-A201-AD78F325AF97}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wp8", "wp8", "{B43DA7C0-2198-4FB0-B043-B7463A3AFFC1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
@@ -84,8 +91,33 @@ Global
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Release|Win32.ActiveCfg = Release|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Release|Win32.Build.0 = Release|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Release|x64.ActiveCfg = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|ARM.ActiveCfg = Debug|ARM
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|ARM.Build.0 = Debug|ARM
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|ARM.Deploy.0 = Debug|ARM
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|Mixed Platforms.Deploy.0 = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|Tegra-Android.ActiveCfg = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|Win32.Build.0 = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|Win32.Deploy.0 = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Debug|x64.ActiveCfg = Debug|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|ARM.ActiveCfg = Release|ARM
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|ARM.Build.0 = Release|ARM
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|ARM.Deploy.0 = Release|ARM
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|Mixed Platforms.Deploy.0 = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|Tegra-Android.ActiveCfg = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|Win32.ActiveCfg = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|Win32.Build.0 = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|Win32.Deploy.0 = Release|Win32
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0CC569E3-804D-4356-85D5-CD008E7FC49B} = {B43DA7C0-2198-4FB0-B043-B7463A3AFFC1}
 	EndGlobalSection
 EndGlobal

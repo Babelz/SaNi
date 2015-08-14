@@ -1,10 +1,18 @@
 #include "catch/catch.hpp"
 #include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#include "sani/platform/win32/filesystem_win32.hpp"
+#else
 #include "sani/platform/file_system.hpp"
+#endif 
 
 TEST_CASE("File stuff", "[file]") {
 	using namespace sani::io;
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+	FileSystemWin32 filemanager;
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
 	FileSystem filemanager;
+#endif
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 	SECTION("Absolute paths") {
