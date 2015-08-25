@@ -40,9 +40,7 @@
     <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\win32\filesystem_win32.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\wp\file_system_wp8.hpp" />
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

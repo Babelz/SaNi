@@ -91,11 +91,6 @@ namespace sani {
 			return buffer;
 		}
 
-		// This will be overwritten in Android/Windows systems
-		bool FileSystem::isAbsolutePath(const String& path) const {
-			return !path.empty() && path.at(0) == '/';
-		}
-
 		bool FileSystem::fileExists(const String& path) const {
 			struct stat buffer;
 			return (stat(path.c_str(), &buffer) == 0);
@@ -111,35 +106,6 @@ namespace sani {
 			return statbuf.st_size;
 		}
 
-		void FileSystem::getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const {
-			assert(isFileOpen(path));
-			FILE* handle = handles.at(path);
-			fseek(handle, offset, SEEK_SET);
-			out.resize(count);
-			fread(out.data(), sizeof(unsigned char), count, handle);
-
-		}
-
-#if (SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32) || (SANI_TARGET_PLATFORM != SANI_PLATFORM_WP8)
-		void FileSystem::listFiles(std::vector<String>& files, const String& path) const {
-			assert(0, "listFiles should be overwritten");
-		}
-#else
-#include <dirent.h>
-		// Unix systems
-		void FileSystem::listFiles(std::vector<String>& files, const String& path) const {
-			DIR *d;
-			struct dirent* dir;
-			d = opendir(path.c_str());
-
-			if (d) {
-				while ((dir = readdir(d)) != NULL) {
-					files.push_back(dir->d_name);
-				}
-				closedir(d);
-			}
-		}
-#endif
 	}
 }
 

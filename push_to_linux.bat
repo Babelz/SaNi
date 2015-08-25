@@ -1,6 +1,6 @@
 @echo off
 SET PATH=%PATH%;
-SET linux_host=192.168.0.107
+SET linux_host=192.168.0.25
 SET linux_user=dippi
 SET identity_file=C:\Users\root\.ssh\id_rsa
 SET linux_destination=~/sani3/

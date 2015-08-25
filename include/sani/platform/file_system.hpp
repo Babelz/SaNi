@@ -28,12 +28,12 @@ namespace sani {
 			/// Default constructor
 			FileSystem();
 			/// Default deconstructor
-			virtual ~FileSystem();
+			~FileSystem();
 
 			/// Checks if the file exists
 			/// @param[in] path The path where the file should be
 			/// @returns true if the file exists, false if it does not exist
-			virtual bool fileExists(const String& path) const;
+			bool fileExists(const String& path) const;
 
 			/// Checks if the file is opened for reading/writing
 			/// @param[in] path File path
@@ -52,11 +52,11 @@ namespace sani {
 
 			/// Utility for checking if path is absolute path
 			/// @param[in] path The path string which needs to be checked
-			virtual bool isAbsolutePath(const String& path) const;
+			bool isAbsolutePath(const String& path) const;
 
 			/// Gets the size of the file in bytes
 			/// @param[in] path File path
-			virtual size_t getFileSize(const String& path) const;
+			size_t getFileSize(const String& path) const;
 
 			/// Reads the file into buffer
 			/// @param[in] path The file path to the file
@@ -67,11 +67,10 @@ namespace sani {
 			/// Reads the file into string
 			/// @param[in] path File path to the file
 			String getFileDataString(const String& path) const;
-			
-			unsigned char getByte();
 
-			void getBytes(std::vector<unsigned char>& out, const String& path, size_t offset, size_t count) const;
-
+			/// Lists the files in directory
+			/// @param[out] files The files in directory
+			/// @param path The path where to list files
 			virtual void listFiles(std::vector<String>& files, const String& path) const;
 		};
 	}

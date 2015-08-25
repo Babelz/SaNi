@@ -1,6 +1,6 @@
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
-
+#include "sani/platform/file_system.hpp"
 namespace sani {
 	namespace io {
 		static std::wstring stringToWstring(const String& strUtf8) {
@@ -57,34 +57,11 @@ namespace sani {
 			return "";
 		}
 
-		bool FileSystemWin32::isAbsolutePath(const String& path) const  {
+		bool FileSystem::isAbsolutePath(const String& path) const  {
 			// Should start with letter and second char should be : 
 			if (path.length() < 2) return false;
 			char c = path[0];
 			return (((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) && path[1] == ':');
-		}
-
-		size_t FileSystemWin32::getFileSize(const String& path) const  {
-			size_t fileSize;
-
-			HANDLE fileHandle = ::CreateFileW(stringToWstring(path).c_str(), GENERIC_READ, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, NULL, nullptr);
-			if (fileHandle == INVALID_HANDLE_VALUE) {
-				throw "Cant open file";
-			}
-			fileSize = ::GetFileSize(fileHandle, nullptr);
-			CloseHandle(fileHandle);
-			fileHandle = INVALID_HANDLE_VALUE;
-			return fileSize;
-		}
-
-		bool FileSystemWin32::fileExists(const String& path) const  {
-			if (path.empty()) return false;
-			DWORD attribs = GetFileAttributesW(stringToWstring(path).c_str());
-			// Check if it is a file and exists
-			if (attribs == INVALID_FILE_ATTRIBUTES || (attribs & FILE_ATTRIBUTE_DIRECTORY)) return false;
-
-			// It exists
-			return true;
 		}
 
 		void FileSystemWin32::listFiles(std::vector<String>& files, const String& path) const {
