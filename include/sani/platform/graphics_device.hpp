@@ -1,5 +1,5 @@
 #pragma once
-#include "graphics_precompiled.hpp"
+#include "sani/platform/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
@@ -11,7 +11,11 @@
 namespace sani {
 	namespace graphics {
 		
-		/// @class Viewport graphics_device.hpp "sani/platform/graphics/graphics_device.hpp"
+		// Forward declarations.
+		struct Color;
+		struct Viewport;
+
+		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
 		/// 
 		/// A virtual representation of the physical graphics adapter of this machine.
@@ -20,33 +24,36 @@ namespace sani {
 		private:
 			class Impl;
 
-			Impl* imp;
+			Impl* impl;
 		public:
 
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
-			GraphicsDevice(const HWND hwnd);
+			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance);
 
+			bool isFullscreen() const;
+			void setFullscreen();
+			void setWindowed();
 #endif
-
-			/// Returns true if device has errors.
-			inline bool hasErrors() const;
-			/// Returns the next error if device has errors.
-			GraphicsErrorType getError();
+			bool hasErrors() const;
+			uint8 getError() const;
 
 			/// Sets the viewport of the device.
 			/// @param[in] viewport viewport to use
 			void setViewport(const Viewport& viewport);
 			/// Returns the current viewport to the user.
-			Viewport& getViewport();
+			const Viewport& getViewport() const;
 
 			/// Initializes the device.
-			void initialize();
+			bool initialize();
 			/// Cleans the device.
-			void cleanUp();
+			bool cleanUp();
+
 			/// Clears the device.
-			void clear();
+			void clear(const Color& color);
+			/// Draws all contents of the device.
+			void present();
 
 			~GraphicsDevice();
 		};
