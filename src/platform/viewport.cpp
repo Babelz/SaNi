@@ -10,40 +10,18 @@ namespace sani {
 		}
 		Viewport::Viewport(const Viewport& viewport) : x(viewport.x),
 													   y(viewport.y),
-													   width(viewport.getWidth()),
-													   height(viewport.getHeight()) {
+													   width(viewport.width),
+													   height(viewport.height) {
+		}
+		Viewport::Viewport() : Viewport(0, 0, 0, 0) {
 		}
 
-		// Public members.
-		
-		uint32 Viewport::getX() const {
-			return x;
-		}
-		uint32 Viewport::getY() const {
-			return y;
+		bool Viewport::isDefault() const {
+			return x == 0 && y == 0 && width == 0 && height == 0;
 		}
 
-		uint32 Viewport::getWidth() const {
-			return width;
-		}
-		uint32 Viewport::getHeight() const {
-			return height;
-		}
-
-		Viewport::~Viewport() {
-		}
-
-		// Operators.
-
-
-		Viewport& Viewport::operator =(const Viewport& rhs) {
-			x = rhs.x;
-			y = rhs.y;
-
-			width = rhs.width;
-			height = rhs.height;
-
-			return *this;
+		Viewport Viewport::operator =(const Viewport& rhs) {
+			return Viewport(rhs.x, rhs.y, rhs.width, rhs.height);
 		}
 	}
 }

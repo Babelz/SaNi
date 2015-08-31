@@ -75,6 +75,8 @@
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp">
       <Filter>src\platform\android</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\color.cpp" />
+    <ClCompile Include="..\..\src\platform\graphics_device_gl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">
@@ -140,5 +142,6 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp">
       <Filter>include\core\math\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\color.hpp" />
   </ItemGroup>
 </Project>

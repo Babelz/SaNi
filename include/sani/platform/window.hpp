@@ -16,7 +16,7 @@ SANI_FORWARD_DECLARE_1(math, Rect32);
 namespace sani {
 	namespace graphics {
 		
-		/// @class window.hpp "sani/platform/graphics/window.hpp"
+		/// @class window.hpp "sani/platform/window.hpp"
 		/// @author voidbab
 		///
 		/// Represents a window.
