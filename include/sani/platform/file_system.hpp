@@ -4,6 +4,8 @@
 #include <windows.h>
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS || SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
 #include <CoreFoundation/CoreFoundation.h>
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+#include <android/asset_manager.h>
 #endif
 
 #include "sani/precompiled.hpp"
@@ -11,6 +13,8 @@
 #include <vector>
 #include <map>
 #include <unordered_map>
+
+
 
 namespace sani {
 	namespace io {
@@ -20,9 +24,13 @@ namespace sani {
 		/// 
 		/// Helper for file access
 		class FileSystem {		
-		protected:
+		private:
 			std::unordered_map<String, FILE*> handles;
 
+		#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+			// TODO what would be the best way to initialize it?
+			AAssetManager* androidAssetMgr;
+		#endif
 
 		public:
 			/// Default constructor

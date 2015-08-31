@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file_system.cpp" />
     <ClCompile Include="..\..\src\platform\graphics_device_dx.cpp" />
