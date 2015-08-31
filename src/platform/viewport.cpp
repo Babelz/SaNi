@@ -20,6 +20,9 @@ namespace sani {
 			return x == 0 && y == 0 && width == 0 && height == 0;
 		}
 
+		Viewport::~Viewport() {
+		}
+
 		Viewport Viewport::operator =(const Viewport& rhs) {
 			return Viewport(rhs.x, rhs.y, rhs.width, rhs.height);
 		}

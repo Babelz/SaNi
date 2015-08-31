@@ -12,9 +12,10 @@ namespace sani {
 	namespace graphics {
 		
 		// Forward declarations.
-		class Color;
+		struct Color;
+		struct Viewport;
 
-		/// @class Viewport graphics_device.hpp "sani/platform/graphics_device.hpp"
+		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
 		/// 
 		/// A virtual representation of the physical graphics adapter of this machine.
@@ -31,18 +32,18 @@ namespace sani {
 
 			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance);
 
-			bool isFullscreen();
+			bool isFullscreen() const;
 			void setFullscreen();
 			void setWindowed();
 #endif
 			bool hasErrors() const;
-			int8 getError() const;
+			uint8 getError() const;
 
 			/// Sets the viewport of the device.
 			/// @param[in] viewport viewport to use
 			void setViewport(const Viewport& viewport);
 			/// Returns the current viewport to the user.
-			const Viewport& getViewport();
+			const Viewport& getViewport() const;
 
 			/// Initializes the device.
 			bool initialize();

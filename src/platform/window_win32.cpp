@@ -1,9 +1,7 @@
-#include "sani/platform/platform_config.hpp"
-
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-
 #include "sani/platform/window.hpp"
 #include "sani/assert.hpp"
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 namespace sani {
 	namespace graphics {
