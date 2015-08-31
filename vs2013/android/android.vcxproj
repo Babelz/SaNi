@@ -14,7 +14,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{029D12E6-E337-4864-B8CD-823C1DFCD295}</ProjectGuid>
+    <ProjectGuid>{0561CD7C-40E6-477F-88F7-C55E6D1CFB76}</ProjectGuid>
     <RootNamespace>android</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -27,12 +27,25 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" />
   <PropertyGroup Label="UserMacros">
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
     <ClCompile>
       <CppLanguageStandard>gnu++11</CppLanguageStandard>
     </ClCompile>
+    <AntBuild>
+      <AndroidManifestLocation>$(SolutionDir)..\src\platform\android\java\AndroidManifest.xml</AndroidManifestLocation>
+      <AntBuildPath>$(SolutionDir)..\src\platform\android\java</AntBuildPath>
+      <NativeLibDirectories>
+      </NativeLibDirectories>
+      <NativeLibDependencies>%(NativeLibDependencies)</NativeLibDependencies>
+    </AntBuild>
+    <Link>
+      <AdditionalDependencies>sani;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <ClCompile>
@@ -40,14 +53,14 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <AndroidBuild Include="AndroidManifest.xml" />
-    <AndroidBuild Include="res\values\strings.xml" />
+    <ClCompile Include="..\..\src\platform\android\jni\android.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jni\main.cpp" />
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\android.java" />
   </ItemGroup>
   <ItemGroup>
-    <JCompile Include="src\com\android\sani\sani.java" />
+    <AndroidBuild Include="..\..\src\platform\android\java\AndroidManifest.xml" />
+    <Xml Include="..\..\src\platform\android\java\res\values\strings.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

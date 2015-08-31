@@ -12,7 +12,7 @@
 #include "sani/platform/file.hpp"
 #include <vector>
 #include <map>
-#include <unordered_map>
+#include <map>
 
 
 
@@ -25,7 +25,7 @@ namespace sani {
 		/// Helper for file access
 		class FileSystem {		
 		private:
-			std::unordered_map<String, FILE*> handles;
+			std::map<String, FILE*> handles;
 
 		#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			// TODO what would be the best way to initialize it?
@@ -79,7 +79,7 @@ namespace sani {
 			/// Lists the files in directory
 			/// @param[out] files The files in directory
 			/// @param path The path where to list files
-			virtual void listFiles(std::vector<String>& files, const String& path) const;
+			void listFiles(std::vector<String>& files, const String& path) const;
 		};
 	}
 }

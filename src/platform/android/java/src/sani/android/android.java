@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.sani;
+package sani.android;
 
 import android.app.Activity;
 import android.widget.TextView;
@@ -24,13 +24,13 @@ import android.os.Bundle;
  * library, 'libandroid.so', and provides access to the
  * exposed C functions.
  * The library is packaged and installed with the application.
- * See the C file, /jni/sani.c file for the
+ * See the C file, /jni/android.c file for the
  * implementations of the native methods. 
  * 
  * For more information on JNI, see: http://java.sun.com/docs/books/jni/
  */
 
-public class sani extends Activity
+public class android extends Activity
 {
 	/** Called when the activity is first created. */
 	@Override
@@ -43,16 +43,17 @@ public class sani extends Activity
 
 	/**
 	 * An example native method.  See the library function,
-	 * <code>Java_com_android_sani_sani_saniNative</code>
+	 * <code>Java_sani_android_android_androidNative</code>
 	 * for the implementation.
 	 */
-	public native void saniNative();
+	public native void androidNative();
 
 	/* This is the static constructor used to load the
 	 * 'android' library when the class is
 	 * loaded.
 	 */
 	static {
-		System.loadLibrary("SaNi");
+		System.loadLibrary("android");
+		System.loadLibrary("sani");
 	}
 }

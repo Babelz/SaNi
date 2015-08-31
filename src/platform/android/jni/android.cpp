@@ -9,7 +9,7 @@
 */
 extern "C"
 JNIEXPORT void JNICALL
-Java_com_android_sani_sani_saniNative( JNIEnv* env, jobject thiz )
+Java_sani_android_android_androidNative( JNIEnv* env, jobject thiz )
 {
 	// Enter code here
 }

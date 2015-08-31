@@ -1,42 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="res">
-      <UniqueIdentifier>523f4152-d312-45d5-ad24-f68047a16dd2</UniqueIdentifier>
+    <Filter Include="java">
+      <UniqueIdentifier>{00ad2ee1-641b-404f-ae03-1476f0f2ee11}</UniqueIdentifier>
     </Filter>
-    <Filter Include="res\values">
-      <UniqueIdentifier>8725ea51-51a5-40fe-b204-d6a7af7311de</UniqueIdentifier>
+    <Filter Include="java\res">
+      <UniqueIdentifier>{58909d92-c541-42b0-9d0c-0c08dfef6d62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{f8585f84-3237-46f7-bc5c-372c4fe5687f}</UniqueIdentifier>
+    <Filter Include="java\src">
+      <UniqueIdentifier>{11ce8390-f390-4df5-9c8e-0560be89b57b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\com">
-      <UniqueIdentifier>{ef7d09f2-6158-4f77-a281-f66456a3f94b}</UniqueIdentifier>
+    <Filter Include="java\src\sani">
+      <UniqueIdentifier>{ac87b43b-a8c6-4636-be48-9c9e8c3b883d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\com\android">
-      <UniqueIdentifier>{19a30f70-6a2e-4a9a-9104-d577d199bc68}</UniqueIdentifier>
+    <Filter Include="java\src\sani\android">
+      <UniqueIdentifier>{9acff0a6-5aa1-4dac-a819-6e3430992fec}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\com\android\sani">
-      <UniqueIdentifier>{7ba84c7e-d29d-4457-9cc4-fe4f422c9aa8}</UniqueIdentifier>
+    <Filter Include="java\res\values">
+      <UniqueIdentifier>{9fead354-2931-4278-9371-c5afe261dcf0}</UniqueIdentifier>
     </Filter>
     <Filter Include="jni">
-      <UniqueIdentifier>{4a115f07-db0c-4d81-883b-b3b734d538d9}</UniqueIdentifier>
+      <UniqueIdentifier>{56ddd993-3f4f-4bc7-89d9-2dd6a39b5755}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <AndroidBuild Include="AndroidManifest.xml" />
-    <AndroidBuild Include="res\values\strings.xml">
-      <Filter>res\values</Filter>
-    </AndroidBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <JCompile Include="src\com\android\sani\sani.java">
-      <Filter>src\com\android\sani</Filter>
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\android.java">
+      <Filter>java\src\sani\android</Filter>
     </JCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="jni\main.cpp">
+    <Xml Include="..\..\src\platform\android\java\res\values\strings.xml">
+      <Filter>java\res\values</Filter>
+    </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\platform\android\jni\android.cpp">
       <Filter>jni</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="..\..\src\platform\android\java\AndroidManifest.xml">
+      <Filter>java</Filter>
+    </AndroidBuild>
   </ItemGroup>
 </Project>
