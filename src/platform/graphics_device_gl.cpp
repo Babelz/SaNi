@@ -9,7 +9,6 @@
 		// Win32 OpenGL implementation.
 
 #include "GL/glew.h"
-#include "GL/GL.h"
 
 namespace sani {
 	namespace graphics {

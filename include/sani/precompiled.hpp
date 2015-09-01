@@ -17,8 +17,8 @@ typedef uint16_t	uint16;
 typedef	uint32_t	uint32;
 
 // f32-64 definitions.
-typedef float_t		float32;
-typedef double_t	float64;
+typedef float		float32;
+typedef double		float64;
 
 // int8-32 assertions.
 static_assert(sizeof(int8) == 1, "sizeof(int8) != 1");

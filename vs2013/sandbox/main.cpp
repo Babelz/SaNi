@@ -1,11 +1,7 @@
 #include <iostream>
 
 #include "sani/platform/platform_config.hpp"
-
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-
-#include <Windows.h>
-#include <windowsx.h>
 
 #include "sani/platform/graphics_device.hpp"
 #include "sani/platform/window.hpp"
@@ -24,6 +20,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	w.show();
 
 	HWND hwnd = w.getHandle();
+	GraphicsDevice g(hwnd, hInstance);
 
 	while (w.isOpen()) {
 		w.listen();

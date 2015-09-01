@@ -36,7 +36,7 @@ namespace sani {
 
 			Window(const HINSTANCE hInstance);
 
-			inline HWND getHandle() const;
+			HWND getHandle() const;
 			
 			/// Gets the title of the window.
 			inline String getTitle() const;
