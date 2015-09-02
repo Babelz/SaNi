@@ -152,6 +152,7 @@ namespace sani {
 		}
 		void GraphicsDevice::present() {
 			// TODO: present shit (buffers) etc?
+			SwapBuffers(impl->deviceContext);
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

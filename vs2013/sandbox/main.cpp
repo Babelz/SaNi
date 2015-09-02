@@ -4,9 +4,11 @@
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
-#include <Windows.h>
-#include <windowsx.h>
+#pragma comment(lib, "OpenGL32.lib")
 
+#include <Windows.h>
+
+#include "sani/platform/color.hpp"
 #include "sani/platform/graphics_device.hpp"
 #include "sani/platform/window.hpp"
 #include "sani/assert.hpp"
@@ -25,9 +27,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	HWND hwnd = w.getHandle();
 
+	GraphicsDevice d(hwnd, hInstance);
+	d.initialize();
+
 	while (w.isOpen()) {
 		w.listen();
+
+		d.present();
+		d.clear(Color::white);
 	}
+
+	d.cleanUp();
 
 	return 0;
 }
