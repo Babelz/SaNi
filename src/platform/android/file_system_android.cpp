@@ -4,7 +4,9 @@
 
 namespace sani {
 	namespace io {
-
+		void FileSystem::setAssetManager(AAssetManager* assetmanager) {
+			androidAssetManager = assetmanager;
+		}
 	}
 }
 

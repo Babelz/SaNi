@@ -29,7 +29,7 @@ namespace sani {
 
 		#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			// TODO what would be the best way to initialize it?
-			AAssetManager* androidAssetMgr;
+			AAssetManager* androidAssetManager;
 		#endif
 
 		public:
@@ -80,6 +80,10 @@ namespace sani {
 			/// @param[out] files The files in directory
 			/// @param path The path where to list files
 			void listFiles(std::vector<String>& files, const String& path) const;
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+			void setAssetManager(AAssetManager* assetmanager);
+#endif
 		};
 	}
 }
