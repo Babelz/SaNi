@@ -46,6 +46,10 @@ namespace sani {
 
 			// Used to store the desktop location of the window
 			// when we are toggling fullscreen.
+			// We could also store the size information aswell
+			// but the user can resize the window or the resolution
+			// and thus the state information contained here
+			// would overwrite it.
 			uint32 windowedLocationX;
 			uint32 windowedLocationY;
 
