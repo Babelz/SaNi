@@ -4,10 +4,17 @@
 
 // Contains WindowsGL and LinuxGL implementations of the graphics device.
 
+/*
+	TODO: when creating other implementations, refactor the implementatio class and
+		  the device class as some fields and functions are common accross 
+		  implementations and APIs.
+*/
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 		// Win32 OpenGL implementation.
 
+#include "sani/platform/render_target.h"
 #include "GL/glew.h"
 
 namespace sani {
@@ -31,8 +38,9 @@ namespace sani {
 			// Application handle.
 			HINSTANCE hInstance;
 
-			Viewport viewport;
-			
+			// Should the adapter be working in fullscreen mode.
+			bool fullscreen;
+
 			// Color used to clear the screen and
 			// converted float values.
 			Color color;
@@ -40,9 +48,6 @@ namespace sani {
 			float cG;
 			float cB;
 			float cA;
-
-			// Should the adapter be working in fullscreen mode.
-			bool fullscreen;
 
 			// Used to store the desktop location of the window
 			// when we are toggling fullscreen.
@@ -53,26 +58,44 @@ namespace sani {
 			uint32 windowedLocationX;
 			uint32 windowedLocationY;
 
+			uint32 backBufferWidth;
+			uint32 backBufferHeight;
+
+			// Default backbuffer of the device.
+			// Everything gets drawn this.
+			RenderTarget2D* defaultRenderTarget;
+			RenderTarget2D* currentRenderTarget;
+
+			Viewport viewport;
+
 			Impl() : renderingContext(NULL),
 					 deviceContext(NULL),
 					 hWnd(NULL),
 					 hInstance(NULL),
 					 fullscreen(false),
 					 windowedLocationX(0),
-					 windowedLocationY(0) {
+					 windowedLocationY(0),
+					 backBufferWidth(0),
+					 backBufferHeight(0),
+					 defaultRenderTarget(nullptr),
+					 currentRenderTarget(nullptr) {
+			}
+
+			~Impl() {
+				delete defaultRenderTarget;
 			}
 		};
 
-		GraphicsDevice::GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance) : impl(new Impl())  {
+		GraphicsDevice::GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance, const int32 backBufferWidth, const int32 backBufferHeight) : impl(new Impl())  {
 			impl->hWnd = hWnd;
 			impl->hInstance = hInstance;
 			impl->deviceContext = GetDC(hWnd);
+			impl->backBufferWidth = backBufferWidth;
+			impl->backBufferHeight = backBufferHeight;
+			impl->viewport = Viewport(0, 0, impl->backBufferWidth, impl->backBufferHeight);
 		}
 
 		void GraphicsDevice::checkForErrors() {
-			// Platform size assertion.
-			static_assert(sizeof(GLuint) == sizeof(uint32), "sizeof(GLuint) != sizeof(uint32)");
-
 			GLuint error = 0;
 
 			// Get all OpenGL errors.
@@ -128,6 +151,20 @@ namespace sani {
 			MoveWindow(impl->hWnd, impl->windowedLocationX, impl->windowedLocationY, width, height, TRUE);
 		}
 
+		uint32 GraphicsDevice::getBackBufferWidth() const {
+			return impl->backBufferWidth;
+		}
+		uint32 GraphicsDevice::getBackBufferHeight() const {
+			return impl->backBufferHeight;
+		}
+
+		void GraphicsDevice::setBackBufferWidth(const uint32 newWidth) {
+			impl->backBufferWidth = newWidth;
+		}
+		void GraphicsDevice::setBackBufferHeight(const uint32 newHeight) {
+			impl->backBufferHeight = newHeight;
+		}
+
 		bool GraphicsDevice::hasErrors() const {
 			return !errorBuffer.empty();
 		}
@@ -143,10 +180,6 @@ namespace sani {
 
 		void GraphicsDevice::setViewport(const Viewport& viewport) {
 			impl->viewport = viewport;
-
-			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
-		
-			checkForErrors();
 		}
 		const Viewport& GraphicsDevice::getViewport() const {
 			return impl->viewport;
@@ -218,6 +251,16 @@ namespace sani {
 			return hasErrors();
 		}
 
+		bool GraphicsDevice::applyChanges() {
+			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
+
+			// Check for errors.
+			checkForErrors();
+			if (hasErrors()) return false;
+		
+			return true;
+		}
+
 		void GraphicsDevice::clear(const Color& color) {
 			if (impl->color != color) {
 				// Convert color components to floats.
@@ -239,6 +282,73 @@ namespace sani {
 			// TODO: present shit (buffers) etc?
 			SwapBuffers(impl->deviceContext);
 
+			checkForErrors();
+		}
+
+		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
+			if (renderTarget == nullptr) impl->currentRenderTarget = impl->defaultRenderTarget;
+			else						 impl->currentRenderTarget = renderTarget;
+		}
+
+		void GraphicsDevice::generateTexture(RenderTexture& texture, const uint32 width, const uint32 height) {
+			GLuint glTexture = 0;
+
+			// Generate the texture.
+			glGenTextures(1, &glTexture);
+			glBindTexture(GL_TEXTURE_2D, glTexture);
+			
+			glTexImage2D(GL_TEXTURE_2D,
+				0,
+				GL_RGBA,
+				width,
+				height,
+				0,
+				GL_RGBA,
+				GL_UNSIGNED_BYTE,
+				0);
+
+			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		
+			glBindTexture(GL_TEXTURE_2D, 0);
+
+			checkForErrors();
+
+			texture = static_cast<RenderTexture>(glTexture);
+		}	
+		void GraphicsDevice::generateRenderTarget2D(RenderTexture& texture, Buffer& frameBuffer, Buffer& colorBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height) {
+			// Assume that the render texture has been initialized and generated.
+			
+			// Generate frame buffer.
+			GLuint glFrameBuffer = 0;
+			glGenFramebuffers(1, &glFrameBuffer);
+			glBindFramebuffer(GL_FRAMEBUFFER, glFrameBuffer);
+
+			// Check for errors.
+			checkForErrors(); if (hasErrors()) return;
+
+			// Assume the texture is generated and in a valid state.
+			GLuint glTexture = static_cast<GLuint>(texture);
+			glBindTexture(GL_TEXTURE_2D, glTexture);
+
+			checkForErrors(); if (hasErrors()) return;
+		
+			// Generate depth buffer.
+			GLuint glDepthBuffer = 0;
+			glGenRenderbuffers(1, &glDepthBuffer);
+			glBindRenderbuffer(GL_RENDERBUFFER, glDepthBuffer);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, glDepthBuffer);
+			
+			checkForErrors(); if (hasErrors()) return;
+
+			// Set as attachement#0
+			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture, 0);
+
+			glBindRenderbuffer(GL_RENDERBUFFER, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			
 			checkForErrors();
 		}
 

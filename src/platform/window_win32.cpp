@@ -38,8 +38,8 @@ namespace sani {
 					 isMinimized(false),
 					 title(L"Win32Window"),
 					 cTitle("Win32Window"),
-					 width(800),
-					 height(600),
+					 width(1280),
+					 height(720),
 					 x(300),
 					 y(300) {
 			}

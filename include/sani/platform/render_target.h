@@ -2,49 +2,39 @@
 
 #include "sani/platform/platform_config.hpp"
 #include "sani/precompiled.hpp"
+#include "sani/platform/texture2d.h"
 
 /*
-	TODO: inherit from Texture2D when it has been implemented.
+	TODO: inherit from Texture when it has been implemented.
 */
 
 namespace sani {
 	namespace graphics {
 
 		class GraphicsDevice;
-
+		
 		/// @class RenderTarget2D "sani/platform/rendertarget.h"
 		/// @author voidbab
 		/// 
 		/// Represents a two dimensional rendertarget, wich uses 32-bit ARGB surface format.
-		class RenderTarget2D {
+		class RenderTarget2D : public Texture2D {
 		private:
 			class Impl;
 
 			Impl* impl;
 
-			uint32 frameBuffer;
-			uint32 stencilBuffer;
-			uint32 colorBuffer;
-			uint32 depthBuffer;
-
-			const uint16 width;
-			const uint16 height;
-		
-			void initialize(GraphicsDevice& device);
+			Buffer frameBuffer;
+			Buffer colorBuffer;
+			Buffer depthBuffer;
 		public:
-			RenderTarget2D(GraphicsDevice& device, const uint16 width, const uint16 height);
-
-			/// Returns the width of the rendertarget.
-			uint16 getWidth() const;
-			/// Returns the height of the rendertarget.
-			uint16 getHeight() const;
-
-			/// Returns the stencil buffer.
-			uint32 getStencilBuffer() const;
+			/// Creates new instance of the rendertarget class, generates 
+			/// all required buffers for it and initializes it.
+			RenderTarget2D(GraphicsDevice& device, const uint32 width, const uint32 height);
+			
 			/// Returns the color buffer.
-			uint32 getColorBuffer() const;
+			Buffer getColorBuffer() const;
 			/// Returns the depth buffer.
-			uint32 getDepthBuffer() const;
+			Buffer getDepthBuffer() const;
 		};
 	}
 }

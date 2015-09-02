@@ -12,12 +12,26 @@
 
 namespace sani {
 	namespace graphics {
+
+		/*
+			Viewport size is not tied to anything.
+			Default back buffer size is tied to the size of the window.
+			If window goes to fullscreen, nothing gets changed.
+
+			Viewport					- tied to nothing, can be changed
+			Default back buffer size	- tied to window size, can be changed
+
+			Clientbounds of the window	- not tied to anything, user can change this
+				- If changed, resolution of the device stays the same
+				  and viewports size stays the same
+		*/
 		
 		typedef std::stack<uint32> ErrorBuffer;
 
 		// Forward declarations.
 		struct Color;
 		struct Viewport;
+		class RenderTarget2D;
 
 		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
@@ -38,12 +52,22 @@ namespace sani {
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
-			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance);
+			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance, const int32 backBufferWidth, const int32 backBufferHeight);
 
 			bool isFullscreen() const;
 			void setFullscreen();
 			void setWindowed();
 #endif
+			/// Returns the width of the back buffer.
+			uint32 getBackBufferWidth() const;
+			/// Returns the height of the back buffer.
+			uint32 getBackBufferHeight() const;
+
+			// Sets the width of the back buffer.
+			void setBackBufferWidth(const uint32 newWidth);
+			/// Sets the height of the back buffer.
+			void setBackBufferHeight(const uint32 newHeight);
+
 			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;
 			/// Returns the next error from the error buffer.
@@ -60,10 +84,29 @@ namespace sani {
 			/// Cleans the device.
 			bool cleanUp();
 
+			/// Applies all changes done to the device.
+			bool applyChanges();
+
 			/// Clears the device.
 			void clear(const Color& color);
 			/// Draws all contents of the device.
 			void present();
+
+			/// Sets the current render target for the device.
+			/// If the value is null, default render target
+			/// will be used.
+			void setRenderTarget(RenderTarget2D* renderTarget);
+
+			/// Creates an empty RGBA color-format texture.
+			void generateTexture(RenderTexture& texture, const uint32 width, const uint32 height);
+			/// Generates new render target.
+			/// @param[in] renderTexture texture to be used with the target, call generateTexture before passing it
+			/// @param[in] colorBuffer color buffer to be generated for the target
+			/// @param[in] frameBuffer frame buffer to be generated for the target
+			/// @param[in] depthBuffer depth buffer to be generated for the target
+			/// @param[in] width width of the render target
+			/// @param[in] height of the render target
+			void generateRenderTarget2D(RenderTexture& texture, Buffer& colorBuffer, Buffer& frameBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height);
 
 			~GraphicsDevice();
 		};
