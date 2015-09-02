@@ -22,7 +22,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sandbox-wp", "sandbox-wp\sa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wp8", "wp8", "{B43DA7C0-2198-4FB0-B043-B7463A3AFFC1}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "android", "android\android.vcxproj", "{0561CD7C-40E6-477F-88F7-C55E6D1CFB76}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "android-sandbox", "android\android.vcxproj", "{0561CD7C-40E6-477F-88F7-C55E6D1CFB76}"
 	ProjectSection(ProjectDependencies) = postProject
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97} = {93F10FD5-8B10-4B7D-A201-AD78F325AF97}
 	EndProjectSection
@@ -66,7 +66,8 @@ Global
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|ARM.ActiveCfg = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Tegra-Android.ActiveCfg = Debug|Win32
+		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Tegra-Android.ActiveCfg = Debug|Tegra-Android
+		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Tegra-Android.Build.0 = Debug|Tegra-Android
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Win32.ActiveCfg = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Win32.Build.0 = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Release|ARM.ActiveCfg = Release|Win32

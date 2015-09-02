@@ -1,5 +1,5 @@
 #include "sani/platform/graphics_device.hpp"
-#include "render_target.h"
+#include "sani/platform/render_target.h"
 
 namespace sani {
 	namespace graphics {

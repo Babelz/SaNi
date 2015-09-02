@@ -81,7 +81,7 @@
     <ClCompile Include="..\..\src\platform\color.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="render_target.cpp">
+    <ClCompile Include="..\..\src\platform\render_target.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,7 +155,7 @@
     <ClInclude Include="render_target.h">
       <Filter>include\platform</Filter>
     </ClInclude>
-    <ClInclude Include="rexture2d.h">
+    <ClInclude Include="..\..\include\sani\platform\render_target.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
