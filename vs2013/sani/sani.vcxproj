@@ -61,9 +61,6 @@
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\window.hpp" />
-    <ClInclude Include="..\..\include\sani\precompiled.hpp" />
     <ClInclude Include="render_target.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
