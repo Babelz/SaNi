@@ -81,6 +81,9 @@
     <ClCompile Include="..\..\src\platform\color.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
+    <ClCompile Include="render_target.cpp">
+      <Filter>src\platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">
@@ -148,6 +151,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\color.hpp">
       <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="render_target.h">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="rexture2d.h">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

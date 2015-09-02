@@ -3,6 +3,10 @@
 #include "sani/platform/platform_config.hpp"
 #include "sani/precompiled.hpp"
 
+/*
+	TODO: inherit from Texture2D when it has been implemented.
+*/
+
 namespace sani {
 	namespace graphics {
 
@@ -18,6 +22,7 @@ namespace sani {
 
 			Impl* impl;
 
+			uint32 frameBuffer;
 			uint32 stencilBuffer;
 			uint32 colorBuffer;
 			uint32 depthBuffer;
@@ -32,7 +37,7 @@ namespace sani {
 			/// Returns the width of the rendertarget.
 			uint16 getWidth() const;
 			/// Returns the height of the rendertarget.
-			uint16 getheight() const;
+			uint16 getHeight() const;
 
 			/// Returns the stencil buffer.
 			uint32 getStencilBuffer() const;
