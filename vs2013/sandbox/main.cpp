@@ -1,7 +1,6 @@
 #include <iostream>
 
 #include "sani/platform/platform_config.hpp"
-
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #pragma comment(lib, "OpenGL32.lib")
@@ -18,26 +17,22 @@ using namespace sani::graphics;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	WIN32_ASSERT();
 
-	Window w(hInstance);
-	w.initialize();
+	Window window(hInstance);
+	window.initialize();
+	window.show();
 
-	WIN32_ASSERT();
+	GraphicsDevice graphicsDevice(window.getHandle(), hInstance);
+	graphicsDevice.initialize();
 
-	w.show();
+	while (window.isOpen()) {
+		window.listen();
 
-	HWND hwnd = w.getHandle();
+		graphicsDevice.present();
 
-	GraphicsDevice d(hwnd, hInstance);
-	d.initialize();
-
-	while (w.isOpen()) {
-		w.listen();
-
-		d.present();
-		d.clear(Color::white);
+		graphicsDevice.clear(Color::green);
 	}
 
-	d.cleanUp();
+	graphicsDevice.cleanUp();
 
 	return 0;
 }
