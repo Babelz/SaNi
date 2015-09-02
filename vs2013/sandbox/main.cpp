@@ -21,7 +21,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	window.initialize();
 	window.show();
 
-	GraphicsDevice graphicsDevice(window.getHandle(), hInstance);
+	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
 	while (window.isOpen()) {

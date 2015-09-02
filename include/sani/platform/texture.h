@@ -8,8 +8,8 @@ namespace sani {
 			TODO: create base Texture class that holds no dimensional data?
 		*/
 
-		/// @class Texture2D "sani/platform/texture2d
-		class Texture2D {
+		/// @class Texture "sani/platform/texture.hpp"
+		class Texture {
 		private:
 			// Identifier of the texture, required atleast by the OpenGL.
 			RenderTexture renderTexture;
@@ -17,7 +17,7 @@ namespace sani {
 			const uint32 width;
 			const uint32 height;
 		public:
-			Texture2D(GraphicsDevice& device, const uint32 width, const uint32 height);
+			Texture(GraphicsDevice& device, const uint32 width, const uint32 height);
 
 			// TODO: void setData(void* paskaa); ?
 

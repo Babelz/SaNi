@@ -2,7 +2,7 @@
 
 #include "sani/platform/platform_config.hpp"
 #include "sani/precompiled.hpp"
-#include "sani/platform/texture2d.h"
+#include "sani/platform/texture.h"
 
 /*
 	TODO: inherit from Texture when it has been implemented.
@@ -17,7 +17,7 @@ namespace sani {
 		/// @author voidbab
 		/// 
 		/// Represents a two dimensional rendertarget, wich uses 32-bit ARGB surface format.
-		class RenderTarget2D : public Texture2D {
+		class RenderTarget2D : public Texture {
 		private:
 			class Impl;
 
