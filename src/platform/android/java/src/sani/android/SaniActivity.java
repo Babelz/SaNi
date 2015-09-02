@@ -18,6 +18,7 @@ package sani.android;
 import android.app.Activity;
 import android.widget.TextView;
 import android.os.Bundle;
+import android.content.res.AssetManager;
 
 /**
  * This class loads the Java Native Interface (JNI)
@@ -30,8 +31,10 @@ import android.os.Bundle;
  * For more information on JNI, see: http://java.sun.com/docs/books/jni/
  */
 
-public class android extends Activity
+public class SaniActivity extends Activity
 {
+
+	private AssetManager assetManager;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -39,14 +42,14 @@ public class android extends Activity
 		super.onCreate(savedInstanceState);
 
 		// Enter code here
+		assetManager = this.getAssets();
+		setNativeContext(assetManager);
 	}
 
-	/**
-	 * An example native method.  See the library function,
-	 * <code>Java_sani_android_android_androidNative</code>
-	 * for the implementation.
+	/* Sets the context to be used in android apps
+	 * 
 	 */
-	public native void androidNative();
+	public native void setNativeContext(final AssetManager assetManager);
 
 	/* This is the static constructor used to load the
 	 * 'android' library when the class is
@@ -54,6 +57,7 @@ public class android extends Activity
 	 */
 	static {
 		System.loadLibrary("android");
-		System.loadLibrary("sani");
+		System.loadLibrary("android-sandbox");
+		//System.loadLibrary("sani");
 	}
 }

@@ -24,23 +24,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <JCompile Include="..\..\src\platform\android\java\src\sani\android\android.java">
-      <Filter>java\src\sani\android</Filter>
-    </JCompile>
-  </ItemGroup>
-  <ItemGroup>
     <Xml Include="..\..\src\platform\android\java\res\values\strings.xml">
       <Filter>java\res\values</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\platform\android\jni\android.cpp">
-      <Filter>jni</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidBuild Include="..\..\src\platform\android\java\AndroidManifest.xml">
       <Filter>java</Filter>
     </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniActivity.java">
+      <Filter>java\src\sani\android</Filter>
+    </JCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\platform\android\jni\Java_sani_android_SaniActivity.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

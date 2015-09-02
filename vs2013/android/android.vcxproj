@@ -16,6 +16,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0561CD7C-40E6-477F-88F7-C55E6D1CFB76}</ProjectGuid>
     <RootNamespace>android</RootNamespace>
+    <ProjectName>android-sandbox</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
@@ -34,6 +35,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
     <ClCompile>
       <CppLanguageStandard>gnu++11</CppLanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <AntBuild>
       <AndroidManifestLocation>$(SolutionDir)..\src\platform\android\java\AndroidManifest.xml</AndroidManifestLocation>
@@ -43,7 +45,7 @@
       <NativeLibDependencies>%(NativeLibDependencies)</NativeLibDependencies>
     </AntBuild>
     <Link>
-      <AdditionalDependencies>sani;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sani;android;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -53,10 +55,10 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\platform\android\jni\android.cpp" />
+    <ClCompile Include="..\..\src\platform\android\jni\Java_sani_android_SaniActivity.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <JCompile Include="..\..\src\platform\android\java\src\sani\android\android.java" />
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniActivity.java" />
   </ItemGroup>
   <ItemGroup>
     <AndroidBuild Include="..\..\src\platform\android\java\AndroidManifest.xml" />

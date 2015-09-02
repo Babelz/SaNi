@@ -82,9 +82,12 @@
       <Filter>src\platform</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\platform\render_target.cpp">
+<<<<<<< HEAD
       <Filter>src\platform</Filter>
     </ClCompile>
     <ClCompile Include="texture2d.cpp">
+=======
+>>>>>>> a35b40e8938179ab6f14d7b60dd88c32481f9441
       <Filter>src\platform</Filter>
     </ClCompile>
   </ItemGroup>
@@ -158,8 +161,13 @@
     <ClInclude Include="..\..\include\sani\platform\render_target.h">
       <Filter>include\platform</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="..\..\include\sani\platform\texture2d.h">
       <Filter>include\platform</Filter>
+=======
+    <ClInclude Include="..\..\include\sani\platform\render_target.h">
+      <Filter>include</Filter>
+>>>>>>> a35b40e8938179ab6f14d7b60dd88c32481f9441
     </ClInclude>
   </ItemGroup>
 </Project>
