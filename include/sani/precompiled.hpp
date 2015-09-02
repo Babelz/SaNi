@@ -31,6 +31,5 @@ static_assert(sizeof(uint16) == 2, "sizeof(uint16) != 2");
 static_assert(sizeof(uint32) == 4, "sizeof(uint32) != 4");
 
 // float32-64 assertions.
-// TODO: add definitions and assertions for 128-bit floating point numbers?
 static_assert(sizeof(float32) == 4, "sizeof(float32) != 4");
 static_assert(sizeof(float64) == 8, "sizeof(float64) != 8");

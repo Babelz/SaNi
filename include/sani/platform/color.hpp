@@ -12,6 +12,9 @@ namespace sani {
 		struct Color {
 			static const Color black;
 			static const Color white;
+			static const Color red;
+			static const Color green;
+			static const Color blue;
 			
 			uint8 r;
 			uint8 g;

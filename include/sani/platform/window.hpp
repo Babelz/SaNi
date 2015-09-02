@@ -39,7 +39,7 @@ namespace sani {
 			HWND getHandle() const;
 			
 			/// Gets the title of the window.
-			inline String getTitle() const;
+			String getTitle() const;
 			/// Sets the title of the window.
 			void setTitle(const String& title);
 
@@ -58,8 +58,8 @@ namespace sani {
 			void setX(const int32 x);
 			void setY(const int32 y);
 
-			inline int32 getX() const;
-			inline int32 getY() const;
+			int32 getX() const;
+			int32 getY() const;
 
 			uint32 getClientWidth() const;
 			uint32 getClientHeight() const;
@@ -74,8 +74,8 @@ namespace sani {
 			void close();
 #endif
 
-			inline int32 getWidth();
-			inline int32 getHeight();
+			int32 getWidth();
+			int32 getHeight();
 
 			/// Initialize the window. Returns true 
 			/// if no errors occurred during the

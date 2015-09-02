@@ -2,6 +2,8 @@
 #include "sani/platform/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
 
+#include <stack>
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include <Windows.h>
@@ -11,6 +13,8 @@
 namespace sani {
 	namespace graphics {
 		
+		typedef std::stack<uint32> ErrorBuffer;
+
 		// Forward declarations.
 		struct Color;
 		struct Viewport;
@@ -25,6 +29,10 @@ namespace sani {
 			class Impl;
 
 			Impl* impl;
+
+			ErrorBuffer errorBuffer;
+
+			void checkForErrors();
 		public:
 
 			// Public Win32 members.
@@ -36,8 +44,10 @@ namespace sani {
 			void setFullscreen();
 			void setWindowed();
 #endif
+			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;
-			uint8 getError() const;
+			/// Returns the next error from the error buffer.
+			uint32 getError();
 
 			/// Sets the viewport of the device.
 			/// @param[in] viewport viewport to use

@@ -44,11 +44,22 @@ namespace sani {
 			// Should the adapter be working in fullscreen mode.
 			bool fullscreen;
 
+			// Used to store the desktop location of the window
+			// when we are toggling fullscreen.
+			// We could also store the size information aswell
+			// but the user can resize the window or the resolution
+			// and thus the state information contained here
+			// would overwrite it.
+			uint32 windowedLocationX;
+			uint32 windowedLocationY;
+
 			Impl() : renderingContext(NULL),
 					 deviceContext(NULL),
 					 hWnd(NULL),
 					 hInstance(NULL),
-					 fullscreen(false) {
+					 fullscreen(false),
+					 windowedLocationX(0),
+					 windowedLocationY(0) {
 			}
 		};
 
@@ -58,29 +69,84 @@ namespace sani {
 			impl->deviceContext = GetDC(hWnd);
 		}
 
+		void GraphicsDevice::checkForErrors() {
+			// Platform size assertion.
+			static_assert(sizeof(GLuint) == sizeof(uint32), "sizeof(GLuint) != sizeof(uint32)");
+
+			GLuint error = 0;
+
+			// Get all OpenGL errors.
+			while ((error = glGetError()) != 0) {
+				errorBuffer.push(static_cast<uint32>(error));
+			}
+		}
+
 		bool GraphicsDevice::isFullscreen() const {
 			return impl->fullscreen;
 		}
 		void GraphicsDevice::setFullscreen() {
-			// TODO: toggle fullscreen.
+			// Just do the toggling here. Does it really matter?
+			// I think that this should be done by the window class
+			// but does it really matter? I pref that the
+			// window only holds state data and some basic functionalities.
+			
+			// Get window rect.
+			RECT wndRect;
+			GetWindowRect(impl->hWnd, &wndRect);
+
+			// Store the location of the window.
+			impl->windowedLocationX = wndRect.left;
+			impl->windowedLocationY = wndRect.top;
+			
+			// Set style to fullscreen.
+			SetWindowLongPtr(impl->hWnd, GWL_STYLE, WS_SYSMENU | WS_POPUP | WS_CLIPCHILDREN | WS_VISIBLE);
+
+			// Compute size of the window and move it.
+			// This is required for it to go in to
+			// fullscreen mode.
+			const uint32 width = wndRect.right - wndRect.left;
+			const uint32 height = wndRect.bottom - wndRect.top;
+
+			MoveWindow(impl->hWnd, 0, 0, width, height, TRUE);
 		}
 		void GraphicsDevice::setWindowed() {
-			// TODO: toggle windowed mode.
+			RECT wndRect;
+			RECT rect;
+
+			GetWindowRect(impl->hWnd, &wndRect);
+
+			const uint32 width = wndRect.right - wndRect.left;
+			const uint32 height = wndRect.bottom - wndRect.top;
+		
+			rect.left = impl->windowedLocationX;
+			rect.top = impl->windowedLocationY;
+			rect.bottom = height;
+			rect.right = width;
+
+			SetWindowLongPtr(impl->hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
+			AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
+			MoveWindow(impl->hWnd, impl->windowedLocationX, impl->windowedLocationY, width, height, TRUE);
 		}
 
 		bool GraphicsDevice::hasErrors() const {
-			// TODO: implement.
-			return false;
+			return !errorBuffer.empty();
 		}
-		uint8 GraphicsDevice::getError() const {
-			// TODO: return next error from error buffer.
-			return 0;
+		uint32 GraphicsDevice::getError() {
+			assert(hasErrors());
+
+			const uint32 nextError = errorBuffer.top();
+			
+			errorBuffer.pop();
+		
+			return nextError;
 		}
 
 		void GraphicsDevice::setViewport(const Viewport& viewport) {
 			impl->viewport = viewport;
 
 			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
+		
+			checkForErrors();
 		}
 		const Viewport& GraphicsDevice::getViewport() const {
 			return impl->viewport;
@@ -90,6 +156,11 @@ namespace sani {
 			// Create OpenGL context.
 			// No need to set the pixel format as the window should 
 			// have done it already.
+
+			// Check for pre-init errors.
+			checkForErrors();
+			
+			if (hasErrors()) return false;
 
 			// Create context and set it active.
 			// TODO: add error handling to init and context creation.
@@ -117,21 +188,34 @@ namespace sani {
 
 			// Set viewport.
 			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
+			
+			// Post-init error checks.
+			checkForErrors();
 
-			setViewport(impl->viewport);
+			if (hasErrors()) {
+				// Clean up before returning.
+				cleanUp();
 
-			// TODO: add error handling.
+				return false;
+			}
+
+			// No errors, init ok.
 			return true;
 		}
 		bool GraphicsDevice::cleanUp() {
 			// Swap context and delete it.
 			wglMakeCurrent(impl->deviceContext, NULL);
 			wglDeleteContext(impl->renderingContext);
+			
+			// Check for OpenGL errors.
+			checkForErrors();
 
+			// Check for windows errors.
 			DWORD error = GetLastError();
 
-			// If error equals zero, there are no errors.
-			return error == 0;
+			if (error != 0) errorBuffer.push(static_cast<uint32>(error));
+
+			return hasErrors();
 		}
 
 		void GraphicsDevice::clear(const Color& color) {
@@ -148,9 +232,14 @@ namespace sani {
 			}
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			checkForErrors();
 		}
 		void GraphicsDevice::present() {
 			// TODO: present shit (buffers) etc?
+			SwapBuffers(impl->deviceContext);
+
+			checkForErrors();
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

@@ -33,6 +33,7 @@
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\window_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
+    <ClCompile Include="render_target.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
@@ -57,6 +58,8 @@
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />
+    <ClInclude Include="render_target.h" />
+    <ClInclude Include="rexture2d.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{93F10FD5-8B10-4B7D-A201-AD78F325AF97}</ProjectGuid>
