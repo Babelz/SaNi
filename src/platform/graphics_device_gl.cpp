@@ -373,7 +373,7 @@ namespace sani {
 			
 			checkForErrors(); if (hasErrors()) return;
 
-			// Set as attachement#0
+			// Set as attachement#0?
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture, 0);
 
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);

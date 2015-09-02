@@ -92,6 +92,13 @@ namespace sani {
 			/// Draws all contents of the device.
 			void present();
 
+			/*
+				Texture and render target operations.
+			*/
+
+			void bindTexture(const RenderTexture texture);
+			void unbindTexture();
+			
 			/// Sets the current render target for the device.
 			/// If the value is null, default render target
 			/// will be used.
@@ -107,6 +114,28 @@ namespace sani {
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
 			void generateRenderTarget2D(RenderTexture& texture, Buffer& colorBuffer, Buffer& frameBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height);
+
+			/*
+				Shader operations.
+			*/
+
+			void compileShader(Shader& shader, const char* source);
+			void bindShader(const Shader shader);
+			void unbindShader(const Shader shader);
+			void setShaderUniform(const Shader shader, const char* name, void* data);
+
+			/*
+				Buffer functions.
+			*/
+
+			void generateVertexArray(Buffer& vertexArray);
+			void bindVertexArray(Buffer& buffer);
+
+			void generateBuffer(Buffer& buffer, const BufferType type);
+			void bindElementBuffer(Buffer& buffer, const BufferType type);
+			void setElementBufferData(Buffer& buffer, const uint32 bytes, void* data, const ElementBufferUsage usage);
+
+			void drawElements(const uint32 count, const IndicesType type, const uint32 indices);
 
 			~GraphicsDevice();
 		};
