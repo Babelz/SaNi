@@ -14,7 +14,8 @@
 
 		// Win32 OpenGL implementation.
 
-#include "sani/platform/render_target.h"
+#include "sani/platform/render_target_2d.h"
+#include "GL/wglew.h"
 #include "GL/glew.h"
 
 namespace sani {
@@ -96,7 +97,7 @@ namespace sani {
 		}
 
 		void GraphicsDevice::checkForErrors() {
-			GLuint error = 0;
+			GLint error = 0;
 
 			// Get all OpenGL errors.
 			while ((error = glGetError()) != 0) {
@@ -190,20 +191,50 @@ namespace sani {
 			// No need to set the pixel format as the window should 
 			// have done it already.
 
-			// Check for pre-init errors.
-			checkForErrors();
-			
-			if (hasErrors()) return false;
-
 			// Create context and set it active.
 			// TODO: add error handling to init and context creation.
 			impl->renderingContext = wglCreateContext(impl->deviceContext);
 			wglMakeCurrent(impl->deviceContext, impl->renderingContext);
-			
+
+			GLenum state = glewInit();
+
+			if (state != GLEW_OK) {
+				// 1282 invalid operation.
+				// TODO: translate to some human readable error messages.
+				errorBuffer.push(1282);
+			}
+
+			// TODO: use 3.3 always or just get the newest supported version?
+			// TODO: select OpenGL version to use.
+			/*GLint initAttribs[] = 
+			{
+				WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
+				WGL_CONTEXT_MINOR_VERSION_ARB, 3,
+
+				// Uncomment this for forward compatibility mode
+				//WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+				// Uncomment this for Compatibility profile
+				//WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
+
+				WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+				0
+			};
+
+			// Try set the attribs spec version of the context. Fallback to the first one if this
+			// one fails.
+			HGLRC compHRC = wglCreateContextAttribsARB(impl->deviceContext, 0, initAttribs);
+			if (compHRC && wglMakeCurrent(impl->deviceContext, compHRC)) impl->renderingContext = compHRC;
+			*/
+
+			// Check for pre-init errors.
+			checkForErrors(); if (hasErrors()) return false;
+
 			// Enable GL settings.
 			glEnable(GL_DEPTH_TEST);
 			glEnable(GL_ALPHA_TEST);
 			glEnable(GL_BLEND);
+
+			checkForErrors(); if (hasErrors()) return false;
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -342,7 +373,7 @@ namespace sani {
 			
 			checkForErrors(); if (hasErrors()) return;
 
-			// Set as attachement#0
+			// Set as attachement#0?
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture, 0);
 
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);

@@ -114,7 +114,8 @@ namespace sani {
 					int pixelFormatID = ChoosePixelFormat(hDC, &pfd);
 					SetPixelFormat(hDC, pixelFormatID, &pfd);
 
-					// TODO: add error handling.
+					WIN32_ASSERT();
+
 					return 0;
 				}
 				case WM_SIZE:
