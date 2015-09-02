@@ -84,9 +84,7 @@
     <ClCompile Include="..\..\src\platform\render_target.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\platform\texture2d.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
+    <ClCompile Include="texture2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">
@@ -161,5 +159,6 @@
     <ClInclude Include="..\..\include\sani\platform\texture2d.h">
       <Filter>include\platform</Filter>
     </ClInclude>
+    <ClInclude Include="render_target.h" />
   </ItemGroup>
 </Project>
