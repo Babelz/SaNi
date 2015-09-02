@@ -1,3 +1,5 @@
+#pragma once
+
 #include "sani/platform/platform_config.hpp"
 #include "sani/precompiled.hpp"
 
