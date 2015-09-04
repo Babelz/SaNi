@@ -28,6 +28,7 @@
     <ClCompile Include="..\..\src\platform\file_system.cpp" />
     <ClCompile Include="..\..\src\platform\graphics_device_dx.cpp" />
     <ClCompile Include="..\..\src\platform\graphics_device_gl.cpp" />
+    <ClCompile Include="..\..\src\platform\graphics_error.cpp" />
     <ClCompile Include="..\..\src\platform\linux\file_system_linux.cpp" />
     <ClCompile Include="..\..\src\platform\render_target_2d.cpp" />
     <ClCompile Include="..\..\src\platform\texture.cpp" />
@@ -54,10 +55,11 @@
     <ClInclude Include="..\..\include\sani\platform\file.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file_system.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics_device.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics_error.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\render_target_2d.h" />
-    <ClInclude Include="..\..\include\sani\platform\texture.h" />
+    <ClInclude Include="..\..\include\sani\platform\render_target_2d.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />

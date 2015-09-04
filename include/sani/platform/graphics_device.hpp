@@ -1,4 +1,5 @@
 #pragma once
+#include "sani/platform/graphics_error.hpp"
 #include "sani/platform/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
 
@@ -9,6 +10,8 @@
 #include <Windows.h>
 
 #endif
+
+#define CHECK_FOR_ERRORS() checkForErrors(__FUNCTION__, __LINE__)
 
 namespace sani {
 	namespace graphics {
@@ -26,12 +29,13 @@ namespace sani {
 				  and viewports size stays the same
 		*/
 		
-		typedef std::stack<uint32> ErrorBuffer;
-
 		// Forward declarations.
 		struct Color;
 		struct Viewport;
+		
 		class RenderTarget2D;
+		
+		typedef std::stack<GraphicsError> ErrorBuffer;
 
 		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
@@ -46,7 +50,7 @@ namespace sani {
 
 			ErrorBuffer errorBuffer;
 
-			void checkForErrors();
+			void checkForErrors(const char* func, const int32 line);
 		public:
 
 			// Public Win32 members.
@@ -71,7 +75,7 @@ namespace sani {
 			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;
 			/// Returns the next error from the error buffer.
-			uint32 getError();
+			GraphicsError getError();
 
 			/// Sets the viewport of the device.
 			/// @param[in] viewport viewport to use
@@ -96,7 +100,10 @@ namespace sani {
 				Texture and render target operations.
 			*/
 
+			/// Binds given texture.
+			/// @param[in] texture texture to bind
 			void bindTexture(const RenderTexture texture);
+			/// Unbinds current texture.
 			void unbindTexture();
 			
 			/// Sets the current render target for the device.
@@ -118,8 +125,11 @@ namespace sani {
 			/*
 				Shader operations.
 			*/
-
-			void compileShader(Shader& shader, const char* source);
+			
+			/// Attempts to compile given shader source
+			/// @param[in] shader result shader
+			/// @param[in] source source code of the shader
+			void compileShader(Shader& shader, const char* source, const ShaderType type);
 			void bindShader(const Shader shader);
 			void unbindShader(const Shader shader);
 			void setShaderUniform(const Shader shader, const char* name, void* data);

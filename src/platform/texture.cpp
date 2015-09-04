@@ -1,4 +1,4 @@
-#include "sani/platform/texture.h"
+#include "sani/platform/texture.hpp"
 
 namespace sani {
 	namespace graphics {

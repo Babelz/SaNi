@@ -2,7 +2,7 @@
 
 #include "sani/platform/platform_config.hpp"
 #include "sani/precompiled.hpp"
-#include "sani/platform/texture.h"
+#include "sani/platform/texture.hpp"
 
 /*
 	TODO: inherit from Texture when it has been implemented.

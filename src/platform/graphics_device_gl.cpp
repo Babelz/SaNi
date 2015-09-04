@@ -14,7 +14,7 @@
 
 		// Win32 OpenGL implementation.
 
-#include "sani/platform/render_target_2d.h"
+#include "sani/platform/render_target_2d.hpp"
 #include "GL/wglew.h"
 #include "GL/glew.h"
 
@@ -96,12 +96,12 @@ namespace sani {
 			impl->viewport = Viewport(0, 0, impl->backBufferWidth, impl->backBufferHeight);
 		}
 
-		void GraphicsDevice::checkForErrors() {
+		void GraphicsDevice::checkForErrors(const char* func, const int32 line) {
 			GLint error = 0;
 
 			// Get all OpenGL errors.
 			while ((error = glGetError()) != 0) {
-				errorBuffer.push(static_cast<uint32>(error));
+				errorBuffer.push(GraphicsError(error, func, line));
 			}
 		}
 
@@ -125,11 +125,9 @@ namespace sani {
 			// Set style to fullscreen.
 			SetWindowLongPtr(impl->hWnd, GWL_STYLE, WS_SYSMENU | WS_POPUP | WS_CLIPCHILDREN | WS_VISIBLE);
 
-			// Compute size of the window and move it.
-			// This is required for it to go in to
-			// fullscreen mode.
-			const uint32 width = wndRect.right - wndRect.left;
-			const uint32 height = wndRect.bottom - wndRect.top;
+			// Get current monitors size.
+			const uint32 width = GetSystemMetrics(SM_CXSCREEN);
+			const uint32 height = GetSystemMetrics(SM_CYSCREEN);
 
 			MoveWindow(impl->hWnd, 0, 0, width, height, TRUE);
 		}
@@ -169,10 +167,10 @@ namespace sani {
 		bool GraphicsDevice::hasErrors() const {
 			return !errorBuffer.empty();
 		}
-		uint32 GraphicsDevice::getError() {
+		GraphicsError GraphicsDevice::getError() {
 			assert(hasErrors());
 
-			const uint32 nextError = errorBuffer.top();
+			const GraphicsError nextError = errorBuffer.top();
 			
 			errorBuffer.pop();
 		
@@ -201,9 +199,10 @@ namespace sani {
 			if (state != GLEW_OK) {
 				// 1282 invalid operation.
 				// TODO: translate to some human readable error messages.
-				errorBuffer.push(1282);
+				errorBuffer.push(GraphicsError(1282, __FUNCTION__, __LINE__));
 			}
 
+			#pragma region OpenGL version selection
 			// TODO: use 3.3 always or just get the newest supported version?
 			// TODO: select OpenGL version to use.
 			/*GLint initAttribs[] = 
@@ -225,16 +224,17 @@ namespace sani {
 			HGLRC compHRC = wglCreateContextAttribsARB(impl->deviceContext, 0, initAttribs);
 			if (compHRC && wglMakeCurrent(impl->deviceContext, compHRC)) impl->renderingContext = compHRC;
 			*/
+			#pragma endregion
 
 			// Check for pre-init errors.
-			checkForErrors(); if (hasErrors()) return false;
+			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
 
 			// Enable GL settings.
 			glEnable(GL_DEPTH_TEST);
 			glEnable(GL_ALPHA_TEST);
 			glEnable(GL_BLEND);
 
-			checkForErrors(); if (hasErrors()) return false;
+			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -254,7 +254,7 @@ namespace sani {
 			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
 			
 			// Post-init error checks.
-			checkForErrors();
+			CHECK_FOR_ERRORS();
 
 			if (hasErrors()) {
 				// Clean up before returning.
@@ -267,17 +267,14 @@ namespace sani {
 			return true;
 		}
 		bool GraphicsDevice::cleanUp() {
+			CHECK_FOR_ERRORS();
+
 			// Swap context and delete it.
-			wglMakeCurrent(impl->deviceContext, NULL);
 			wglDeleteContext(impl->renderingContext);
-			
-			// Check for OpenGL errors.
-			checkForErrors();
+			wglMakeCurrent(impl->deviceContext, NULL);
 
 			// Check for windows errors.
 			DWORD error = GetLastError();
-
-			if (error != 0) errorBuffer.push(static_cast<uint32>(error));
 
 			return hasErrors();
 		}
@@ -286,8 +283,7 @@ namespace sani {
 			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
 
 			// Check for errors.
-			checkForErrors();
-			if (hasErrors()) return false;
+			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
 		
 			return true;
 		}
@@ -306,14 +302,23 @@ namespace sani {
 			}
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			checkForErrors();
+			
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::present() {
 			// TODO: present shit (buffers) etc?
 			SwapBuffers(impl->deviceContext);
+			
+			CHECK_FOR_ERRORS();
+		}
 
-			checkForErrors();
+		void GraphicsDevice::bindTexture(const RenderTexture texture) {
+			const GLuint glTexture = static_cast<GLuint>(texture);
+
+			glBindTexture(GL_TEXTURE_2D, glTexture);
+		}
+		void GraphicsDevice::unbindTexture() {
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
@@ -343,7 +348,7 @@ namespace sani {
 		
 			glBindTexture(GL_TEXTURE_2D, 0);
 
-			checkForErrors();
+			CHECK_FOR_ERRORS();
 
 			texture = static_cast<RenderTexture>(glTexture);
 		}	
@@ -356,13 +361,13 @@ namespace sani {
 			glBindFramebuffer(GL_FRAMEBUFFER, glFrameBuffer);
 
 			// Check for errors.
-			checkForErrors(); if (hasErrors()) return;
+			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 
 			// Assume the texture is generated and in a valid state.
 			GLuint glTexture = static_cast<GLuint>(texture);
 			glBindTexture(GL_TEXTURE_2D, glTexture);
 
-			checkForErrors(); if (hasErrors()) return;
+			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 		
 			// Generate depth buffer.
 			GLuint glDepthBuffer = 0;
@@ -371,7 +376,7 @@ namespace sani {
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, glDepthBuffer);
 			
-			checkForErrors(); if (hasErrors()) return;
+			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 
 			// Set as attachement#0?
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture, 0);
@@ -380,7 +385,37 @@ namespace sani {
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			
-			checkForErrors();
+			CHECK_FOR_ERRORS();
+		}
+
+		void GraphicsDevice::compileShader(Shader& shader, const char* source, const ShaderType type) {
+			GLint result = GL_FALSE;
+			GLuint glShader = 0;
+
+			switch (type) {
+			case ShaderType::Vertex:
+				glShader = glCreateShader(GL_VERTEX_SHADER);
+				break;
+			case ShaderType::Pixel:
+				glShader = glCreateShader(GL_FRAGMENT_SHADER);
+				break;
+			default:
+				throw std::logic_error("At GraphicsDevice::compileShader - unsupported or invalid shader type");
+			}
+
+			glShaderSource(glShader, 1, &source, nullptr);
+			glCompileShader(glShader);
+			glGetShaderiv(glShader, GL_COMPILE_STATUS, &result);
+
+			if (result != GL_TRUE) {
+				
+			}
+		}
+		void GraphicsDevice::bindShader(const Shader shader) {
+		}
+		void GraphicsDevice::unbindShader(const Shader shader) {
+		}
+		void GraphicsDevice::setShaderUniform(const Shader shader, const char* name, void* data) {
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

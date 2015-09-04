@@ -87,6 +87,9 @@
     <ClCompile Include="..\..\src\platform\render_target_2d.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics_error.cpp">
+      <Filter>src\platform</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">
@@ -155,10 +158,13 @@
     <ClInclude Include="..\..\include\sani\platform\color.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\texture.h">
+    <ClInclude Include="..\..\include\sani\platform\texture.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\render_target_2d.h">
+    <ClInclude Include="..\..\include\sani\platform\render_target_2d.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics_error.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
   </ItemGroup>

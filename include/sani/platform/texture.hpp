@@ -9,6 +9,10 @@ namespace sani {
 		*/
 
 		/// @class Texture "sani/platform/texture.hpp"
+		///
+		/// Represents an abstract texture that contains
+		/// basic information such as size and id of the
+		/// texture.
 		class Texture {
 		private:
 			// Identifier of the texture, required atleast by the OpenGL.

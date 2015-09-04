@@ -17,11 +17,11 @@ using namespace sani::graphics;
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	WIN32_ASSERT();
 
-	Window window(hInstance);
+	Window window(hInstance, 800, 600);
 	window.initialize();
 	window.show();
 
-	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
+	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 800, 600);
 	graphicsDevice.initialize();
 
 	while (window.isOpen()) {

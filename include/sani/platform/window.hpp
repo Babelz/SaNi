@@ -34,7 +34,7 @@ namespace sani {
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
-			Window(const HINSTANCE hInstance);
+			Window(const HINSTANCE hInstance, const uint32 width, const uint32 height);
 
 			HWND getHandle() const;
 			

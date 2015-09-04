@@ -34,3 +34,8 @@ enum IndicesType {
 	UShort,
 	UInt
 };
+
+enum ShaderType {
+	Vertex,
+	Pixel
+};

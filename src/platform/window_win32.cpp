@@ -38,8 +38,6 @@ namespace sani {
 					 isMinimized(false),
 					 title(L"Win32Window"),
 					 cTitle("Win32Window"),
-					 width(1280),
-					 height(720),
 					 x(300),
 					 y(300) {
 			}
@@ -48,8 +46,10 @@ namespace sani {
 			}
 		};
 
-		Window::Window(const HINSTANCE hInstance) : impl(new Impl()) {
+		Window::Window(const HINSTANCE hInstance, const uint32 width, const uint32 height) : impl(new Impl()) {
 			impl->hInstance = hInstance;
+			impl->width = width;
+			impl->height = height;
 		}
 
 		// Private.
