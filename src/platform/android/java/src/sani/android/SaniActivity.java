@@ -15,6 +15,8 @@
  */
 package sani.android;
 
+import sani.android.SaniRenderer;
+
 import android.app.Activity;
 import android.widget.TextView;
 import android.os.Bundle;
@@ -25,7 +27,6 @@ import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
 
 import android.opengl.GLSurfaceView;
-
 /**
  * This class loads the Java Native Interface (JNI)
  * library, 'libandroid.so', and provides access to the
@@ -41,32 +42,29 @@ public class SaniActivity extends Activity
 {
 
 	private AssetManager assetManager;
-	private GLSurfaceView glSurfaceView;
+	private SaniGLSurfaceView glSurfaceView;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-		ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
 
-		final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000 || isProbablyEmulator();
-
-		if (supportsEs2) {
-			glSurfaceView = new GLSurfaceView(this);
- 
-			if (isProbablyEmulator()) {
-				// Avoids crashes on startup with some emulator images.
-				glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-			}
- 
-			glSurfaceView.setEGLContextClientVersion(2);
-			// glSurfaceView.setRenderer(new XXXXX); ??
-			// setContentView(glSurfaceView); ??
-		}
+		init();
 
 		assetManager = this.getAssets();
 		setNativeContext(assetManager);
+	}
+
+	public void init() {
+		glSurfaceView = new SaniGLSurfaceView(this);
+
+		if (isProbablyEmulator()) {
+			// Avoids crashes on startup with some emulator images.
+			glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+		}
+
+		glSurfaceView.setSaniRenderer(new SaniRenderer());
+		setContentView(glSurfaceView);
 	}
 
 	private boolean isProbablyEmulator() {

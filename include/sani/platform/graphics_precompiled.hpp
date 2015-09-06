@@ -1,7 +1,6 @@
 #pragma once
 
 #include "sani/precompiled.hpp"
-#include "GL/glew.h"
 #include <functional>
 
 typedef	int32 Buffer;

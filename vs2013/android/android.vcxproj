@@ -45,7 +45,7 @@
       <NativeLibDependencies>%(NativeLibDependencies)</NativeLibDependencies>
     </AntBuild>
     <Link>
-      <AdditionalDependencies>sani;android;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sani;android;GLESv2;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)$(Platform)\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -56,6 +56,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniActivity.java" />
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniGLSurfaceView.java" />
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniRenderer.java" />
   </ItemGroup>
   <ItemGroup>
     <AndroidBuild Include="..\..\src\platform\android\java\AndroidManifest.xml" />
@@ -63,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\android\jni\Java_sani_android_SaniActivity.cpp" />
+    <ClCompile Include="..\..\src\platform\android\jni\Java_sani_android_SaniRenderer.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

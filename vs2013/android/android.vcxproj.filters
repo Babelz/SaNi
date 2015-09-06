@@ -37,9 +37,18 @@
     <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniActivity.java">
       <Filter>java\src\sani\android</Filter>
     </JCompile>
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniRenderer.java">
+      <Filter>java\src\sani\android</Filter>
+    </JCompile>
+    <JCompile Include="..\..\src\platform\android\java\src\sani\android\SaniGLSurfaceView.java">
+      <Filter>java\src\sani\android</Filter>
+    </JCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\android\jni\Java_sani_android_SaniActivity.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\android\jni\Java_sani_android_SaniRenderer.cpp">
       <Filter>jni</Filter>
     </ClCompile>
   </ItemGroup>
