@@ -19,11 +19,7 @@ namespace sani {
 		/// Represents a two dimensional rendertarget, wich uses 32-bit ARGB surface format.
 		class RenderTarget2D : public Texture {
 		private:
-			class Impl;
-
-			Impl* impl;
-
-			Buffer frameBuffer;
+			Buffer framebuffer;
 			Buffer colorBuffer;
 			Buffer depthBuffer;
 		public:
@@ -35,6 +31,7 @@ namespace sani {
 			Buffer getColorBuffer() const;
 			/// Returns the depth buffer.
 			Buffer getDepthBuffer() const;
+			Buffer getFramebuffer() const;
 		};
 	}
 }
