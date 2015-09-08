@@ -11,6 +11,25 @@ namespace sani {
 
 			translate(this->apiErrorCode);
 		}
+		GraphicsError::GraphicsError(const String& message, const String& function, const int32 lineNumber) : message(message),
+																											  function(function),
+																											  lineNumber(lineNumber),
+																											  apiErrorCode(1282) {		// Just mark custom errors with GL invalid operation.
+		}
+
+		const String& GraphicsError::getMessage() const {
+			return message;
+		}
+		const String& GraphicsError::getFunctionName() const {
+			return function;
+		}
+
+		int32 GraphicsError::getLineNumber() const {
+			return lineNumber;
+		}
+		int32 GraphicsError::getAPIErrorCode() const {
+			return apiErrorCode;
+		}
 
 		void GraphicsError::translate(const int32 apiErrorCode) {
 			// Translate error codes to strings.

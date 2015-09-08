@@ -4,9 +4,8 @@ namespace sani {
 	namespace graphics {
 
 		Texture::Texture(GraphicsDevice& device, const uint32 width, const uint32 height) : width(width),
-																							height(height) {
-			// Generate new, empty texture.
-			device.generateTexture(renderTexture, width, height);
+																							height(height),
+																							renderTexture(0) {
 		}
 
 		uint32 Texture::getID() const {

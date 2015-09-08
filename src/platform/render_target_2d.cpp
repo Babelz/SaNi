@@ -9,9 +9,11 @@ namespace sani {
 		// Win32 OpenGL implementation.
 
 		RenderTarget2D::RenderTarget2D(GraphicsDevice& device, const uint32 width, const uint32 height) : Texture(device, width, height),
-																										  frameBuffer(0),
+																										  framebuffer(0),
 																										  colorBuffer(0),
 																										  depthBuffer(0) {
+			device.generateTexture(renderTexture, width, height);
+			device.generateRenderTarget2D(renderTexture, colorBuffer, framebuffer, depthBuffer, width, height);
 		}
 
 		// TODO: add directx support.
@@ -22,6 +24,9 @@ namespace sani {
 		}
 		Buffer RenderTarget2D::getDepthBuffer() const {
 			return depthBuffer;
+		}
+		Buffer RenderTarget2D::getFramebuffer() const {
+			return framebuffer;
 		}
 	}
 }

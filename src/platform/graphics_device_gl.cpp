@@ -17,6 +17,7 @@
 #include "sani/platform/render_target_2d.hpp"
 #include "GL/wglew.h"
 #include "GL/glew.h"
+#include <sstream>
 
 namespace sani {
 	namespace graphics {
@@ -179,6 +180,11 @@ namespace sani {
 
 		void GraphicsDevice::setViewport(const Viewport& viewport) {
 			impl->viewport = viewport;
+			
+			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
+
+			// Check for errors.
+			CHECK_FOR_ERRORS(); 
 		}
 		const Viewport& GraphicsDevice::getViewport() const {
 			return impl->viewport;
@@ -199,7 +205,7 @@ namespace sani {
 			if (state != GLEW_OK) {
 				// 1282 invalid operation.
 				// TODO: translate to some human readable error messages.
-				errorBuffer.push(GraphicsError(1282, __FUNCTION__, __LINE__));
+				errorBuffer.push(GRAPHICS_ERROR(1282));
 			}
 
 			#pragma region OpenGL version selection
@@ -279,16 +285,9 @@ namespace sani {
 			return hasErrors();
 		}
 
-		bool GraphicsDevice::applyChanges() {
-			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
-
-			// Check for errors.
-			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
-		
-			return true;
-		}
-
 		void GraphicsDevice::clear(const Color& color) {
+			SwapBuffers(impl->deviceContext);
+			
 			if (impl->color != color) {
 				// Convert color components to floats.
 				impl->color = color;
@@ -305,12 +304,6 @@ namespace sani {
 			
 			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::present() {
-			// TODO: present shit (buffers) etc?
-			SwapBuffers(impl->deviceContext);
-			
-			CHECK_FOR_ERRORS();
-		}
 
 		void GraphicsDevice::bindTexture(const RenderTexture texture) {
 			const GLuint glTexture = static_cast<GLuint>(texture);
@@ -324,6 +317,22 @@ namespace sani {
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
 			if (renderTarget == nullptr) impl->currentRenderTarget = impl->defaultRenderTarget;
 			else						 impl->currentRenderTarget = renderTarget;
+
+			glBindFramebuffer(GL_FRAMEBUFFER, static_cast<GLuint>(impl->currentRenderTarget->getFramebuffer()));
+
+			/*
+				http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
+				
+				The fragment shader just needs a minor adaptation:
+				
+				Inside the fragment shader
+					layout(location = 0) out vec3 color;
+	
+				This means that when writing in the variable “color”, 
+				we will actually write in the Render Target 0, 
+				which happens to be our texure because DrawBuffers[0] is GL_COLOR_ATTACHMENTi, 
+				which is, in our case, renderedTexture.
+			*/
 		}
 
 		void GraphicsDevice::generateTexture(RenderTexture& texture, const uint32 width, const uint32 height) {
@@ -407,15 +416,90 @@ namespace sani {
 			glCompileShader(glShader);
 			glGetShaderiv(glShader, GL_COMPILE_STATUS, &result);
 
-			if (result != GL_TRUE) {
-				
+			CHECK_FOR_ERRORS();
+
+			// Push custom error code.
+			if (result != GL_TRUE) errorBuffer.push(CUSTOM_GRAPHICS_ERROR("Failed to compile shader"));
+		}
+		void GraphicsDevice::deleteShader(const Shader shader) {
+			const GLuint glShader = static_cast<GLuint>(shader);
+
+			glDeleteShader(glShader);
+
+			CHECK_FOR_ERRORS();
+		}
+
+		void GraphicsDevice::createProgram(ShaderProgram& program) {
+			GLuint glProgram = glCreateProgram();
+
+			CHECK_FOR_ERRORS();
+
+			if (glProgram == 0) {
+				errorBuffer.push(CUSTOM_GRAPHICS_ERROR("Could not create shader program"));
+
+				return;
 			}
+
+			program = static_cast<ShaderProgram>(glProgram);
 		}
-		void GraphicsDevice::bindShader(const Shader shader) {
+		void GraphicsDevice::linkToProgram(const ShaderProgram program, const Shader shader, const bool dispose) {
+			glAttachShader(program, shader);
+
+			if (dispose) deleteShader(shader);
+
+			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::unbindShader(const Shader shader) {
+		void GraphicsDevice::linkProgram(const ShaderProgram program) {
+			glLinkProgram(program);
+
+			GLint result = 0;
+
+			glGetProgramiv(program, GL_LINK_STATUS, &result);
+
+			CHECK_FOR_ERRORS();
+
+			if (result != GL_TRUE) errorBuffer.push(CUSTOM_GRAPHICS_ERROR("Failed to link shader to a program"));
 		}
-		void GraphicsDevice::setShaderUniform(const Shader shader, const char* name, void* data) {
+		
+		void GraphicsDevice::useProgram(const ShaderProgram program) {
+			glUseProgram(program);
+
+			CHECK_FOR_ERRORS();
+		}
+
+		void GraphicsDevice::setShaderUniform(const ShaderProgram shader, const char* name, void* data, const UniformType type) {
+			GLint uniformLocation = glGetUniformLocation(shader, name);
+
+			// Uniform not found.
+			if (uniformLocation == -1) {
+				CHECK_FOR_ERRORS();
+
+				std::stringstream ss;
+
+				ss << "Invalid uniform name, uniform not found. Name was \"";
+				ss << name;
+				ss << "\"";
+
+				errorBuffer.push(CUSTOM_GRAPHICS_ERROR(ss.get()));
+
+				return;
+			}
+
+			/*
+				TODO: is this just fine? support all needed uniforms an not all of them.
+			*/
+
+			// Set the uniform value.
+			switch (type) {
+			case Mat4F:
+				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, static_cast<GLfloat*>(data));
+				break;
+			case Mat3F:
+				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, static_cast<GLfloat*>(data));
+				break;
+			default:
+				throw std::logic_error("Invalid or unsupported uniform type");
+			}
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

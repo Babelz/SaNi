@@ -55,6 +55,16 @@ namespace sani {
 		// Private.
 
 		LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+			/*
+				TODO: window goes to black and stops 
+					  rendering when moved, fix it.
+
+					  When moving or resizing the window, 
+					  windows blocks the calling thread by pumping 
+					  messages to this function. Create new
+					  thread for the OpelGL to use?
+			*/
+
 			Window* window;
 
 			// Sent prior to the WM_CREATE message when a window is first created.
