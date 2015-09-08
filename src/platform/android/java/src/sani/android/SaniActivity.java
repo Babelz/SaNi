@@ -25,7 +25,7 @@ import android.content.res.AssetManager;
 import android.content.Context;
 import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
-
+import android.util.Log;
 import android.opengl.GLSurfaceView;
 /**
  * This class loads the Java Native Interface (JNI)
@@ -43,16 +43,23 @@ public class SaniActivity extends Activity
 
 	private AssetManager assetManager;
 	private SaniGLSurfaceView glSurfaceView;
+
+	private long fileSystemPtr;
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		init();
+		fileSystemPtr = nativeInitializeFileSystem();
+
+		if (fileSystemPtr == 0) {
+			Log.e("SaniActivity", "FileSystem is null!");
+		}
 
 		assetManager = this.getAssets();
-		setNativeContext(assetManager);
+		nativeSetContext(assetManager, fileSystemPtr);
+
+		init();
 	}
 
 	public void init() {
@@ -76,10 +83,11 @@ public class SaniActivity extends Activity
 						|| Build.MODEL.contains("Android SDK built for x86"));
 	}
 
+	public native long nativeInitializeFileSystem();
 	/* Sets the context to be used in android apps
 	 * 
 	 */
-	public native void setNativeContext(final AssetManager assetManager);
+	public native void nativeSetContext(final AssetManager assetManager, long fsptr);
 
 	/* This is the static constructor used to load the
 	 * 'android' library when the class is
