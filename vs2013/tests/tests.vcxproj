@@ -16,6 +16,10 @@
     <ClCompile Include="..\..\tests\math\matrix.cpp" />
     <ClCompile Include="..\..\tests\math\rectangle.cpp" />
     <ClCompile Include="..\..\tests\math\vector.cpp" />
+    <ClCompile Include="events.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="eventmath.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{8B733D44-4781-4D09-AD4C-D7DAB05D165E}</ProjectGuid>

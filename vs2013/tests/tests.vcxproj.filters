@@ -19,6 +19,9 @@
     <Filter Include="Source Files\io">
       <UniqueIdentifier>{6d98fb3d-9f6d-4998-8381-afae4059d525}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\events">
+      <UniqueIdentifier>{5b9075b8-80ed-49af-b2d5-fe2c489a796d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\main.cpp">
@@ -36,5 +39,13 @@
     <ClCompile Include="..\..\tests\math\rectangle.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
+    <ClCompile Include="events.cpp">
+      <Filter>Source Files\events</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="eventmath.h">
+      <Filter>Source Files\events</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
