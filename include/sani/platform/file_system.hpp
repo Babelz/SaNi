@@ -30,6 +30,7 @@ namespace sani {
 		#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			// TODO what would be the best way to initialize it?
 			AAssetManager* androidAssetManager;
+			std::map<String, AAsset*> assetHandles;
 		#endif
 
 		public:

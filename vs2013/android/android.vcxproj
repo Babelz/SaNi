@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="NsightTegraProject">
-    <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
+    <NsightTegraProjectRevisionNumber>11</NsightTegraProjectRevisionNumber>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Tegra-Android">
@@ -43,6 +43,7 @@
       <NativeLibDirectories>
       </NativeLibDirectories>
       <NativeLibDependencies>%(NativeLibDependencies)</NativeLibDependencies>
+      <AssetsDirectories>$(SolutionDir)..\assets</AssetsDirectories>
     </AntBuild>
     <Link>
       <AdditionalDependencies>sani;android;GLESv2;%(AdditionalDependencies)</AdditionalDependencies>
