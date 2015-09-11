@@ -39,6 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
+    <ClInclude Include="..\..\include\sani\core\events.h" />
+    <ClInclude Include="..\..\include\sani\core\func.h" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />

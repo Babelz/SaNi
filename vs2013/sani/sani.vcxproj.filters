@@ -167,5 +167,11 @@
     <ClInclude Include="..\..\include\sani\platform\graphics_error.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\events.h">
+      <Filter>include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\func.h">
+      <Filter>include\core</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
