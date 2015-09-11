@@ -80,9 +80,6 @@ namespace sani {
 
 			SANI_INIT_EVENT(onClosing, void(Window&));
 			SANI_INIT_EVENT(onClosed, void(Window&));
-			SANI_INIT_EVENT(onMinimize, void(Window&));
-			SANI_INIT_EVENT(onWindowed, void(Window&));
-			SANI_INIT_EVENT(onFullscreen, void(Window&));
 			SANI_INIT_EVENT(onMoved, void(Window&, int, int, int, int));
 			SANI_INIT_EVENT(onResize, void(Window&, int, int, int, int));
 		}
@@ -303,8 +300,10 @@ namespace sani {
 			return impl->cImpl.height;
 		}
 
-		void Window::listen() const {
+		void Window::listen() {
 			assert(impl->cImpl.initialized);
+
+			if (!impl->cImpl.isWindowOpen) return;
 
 			MSG msg;
 
@@ -315,7 +314,8 @@ namespace sani {
 				// send the message to the WindowProc function
 				DispatchMessage(&msg);
 
-				impl->cImpl.isWindowOpen = msg.message != WM_QUIT;
+				// Window was closed.
+				if (msg.message == WM_QUIT) close();
 			}
 		}
 

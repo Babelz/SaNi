@@ -39,15 +39,9 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 			// Called when the window is being closed.
-			SANI_DECLARE_EVENT(onClosing, void(Window&));
+			SANI_DECLARE_EVENT(onClosing, void(sani::graphics::Window&));
 			// Called when the window is closed.
 			SANI_DECLARE_EVENT(onClosed, void(Window&));
-			// Called when the window is being minimized.
-			SANI_DECLARE_EVENT(onMinimize, void(Window&));
-			// Called when the window is returned to the windowed mode.
-			SANI_DECLARE_EVENT(onWindowed, void(Window&));
-			// Called when the window is returned to the fullscreen mode.
-			SANI_DECLARE_EVENT(onFullscreen, void(Window&));
 			// Called when the window gets moved.
 			SANI_DECLARE_EVENT(onMoved, void(Window&, int, int, int, int));
 			// Called when the window gets resized.
@@ -84,7 +78,7 @@ namespace sani {
 			uint32 getClientHeight() const;
 
 			/// Listens for windows events.
-			void listen() const;
+			void listen();
 		
 			/// Returns true if the window is still open.
 			bool isOpen() const;
