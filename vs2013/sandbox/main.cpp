@@ -11,10 +11,6 @@
 #include "sani/platform/graphics_device.hpp"
 #include "sani/platform/window.hpp"
 #include "sani/assert.hpp"
-#include "sani/core/events.h"
-#include "sani/core/func.h"
-
-#include <functional>
 
 using namespace sani::graphics;
 

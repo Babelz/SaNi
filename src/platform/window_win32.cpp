@@ -235,7 +235,7 @@ namespace sani {
 			}
 		}
 		void Window::setWidth(const int32 width) {
-			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, impl->x, impl->y, width, impl->cImpl.height, TRUE);
+			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, impl->cImpl.x, impl->cImpl.y, width, impl->cImpl.height, TRUE);
 			else {
 				impl->cImpl.width = width;
 			}
