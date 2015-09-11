@@ -50,16 +50,6 @@ namespace sani {
 			Window(const HINSTANCE hInstance, const uint32 width, const uint32 height);
 
 			HWND getHandle() const;
-			
-			/// Gets the title of the window.
-			String getTitle() const;
-			/// Sets the title of the window.
-			void setTitle(const String& title);
-
-			/// Minimizes the window.
-			void minimize();
-			/// Shows the window.
-			void show();
 
 			/// Set size of the window.
 			void setSize(const int32 width, const int32 height);
@@ -82,10 +72,12 @@ namespace sani {
 		
 			/// Returns true if the window is still open.
 			bool isOpen() const;
-			
-			/// Forces the window to close.
-			void close();
 #endif
+
+			/// Gets the title of the window.
+			String getTitle() const;
+			/// Sets the title of the window.
+			void setTitle(const String& title);
 
 			int32 getWidth();
 			int32 getHeight();
@@ -94,6 +86,14 @@ namespace sani {
 			/// if no errors occurred during the
 			/// initialization process of the window.
 			bool initialize();
+
+			/// Forces the window to close.
+			void close();
+
+			/// Minimizes the window.
+			void minimize();
+			/// Shows the window.
+			void show();
 
 			~Window();
 		};
