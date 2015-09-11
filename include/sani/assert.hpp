@@ -16,3 +16,11 @@
 
 #endif
 
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
+#define SANI_ASSERT() WIN32_ASSERT();
+
+#endif
+
+// TODO: add assertions for all supported platforms..
+

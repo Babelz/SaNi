@@ -1,5 +1,6 @@
 #include "sani\core\events.h"
 
+// Test class for testing events.
 class EventMath {
 public:
 	SANI_DECLARE_EVENT(onAdd, void(int));
