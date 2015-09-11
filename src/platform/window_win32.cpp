@@ -1,6 +1,45 @@
 #include "sani/platform/window.hpp"
 #include "sani/assert.hpp"
 
+/*
+	Common impl class. Contains all fields
+	that are common between all platform windows.
+*/
+
+namespace sani {
+	namespace graphics {
+
+		// Common implementation. Contains basic 
+		// information about the window.
+		class Window::Cimpl {
+		public:
+			String title;
+
+			bool initialized;
+			bool isWindowOpen;
+			bool isMinimized;
+
+			int32 width;
+			int32 height;
+			int32 x;
+			int32 y;
+
+			Cimpl() : title("SaNi-Game"),
+					  initialized(false),
+					  isWindowOpen(false),
+					  isMinimized(false),
+					  width(0),
+					  height(0),
+					  x(0),
+					  y(0) {
+			}
+
+			~Cimpl() {
+			}
+		};
+	}
+}
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 namespace sani {
@@ -13,33 +52,17 @@ namespace sani {
 
 		class Window::Impl {
 		public:
-			// Simple flag to keep track about the 
-			// state of the window.
-			bool initialized;
-			bool isWindowOpen;
-			bool isMinimized;
-
-			// Just store basic and long strings
-			// to their own fields.
-			
-			LPCWSTR title;
-			String cTitle;
-			
-			int32 width;
-			int32 height;
-			int32 x;
-			int32 y;
-
+			/*
+				Win32 stuff.
+			*/
 			HINSTANCE hInstance;
 			HWND hWnd;
 
-			Impl() : initialized(false),
-					 isWindowOpen(false),
-					 isMinimized(false),
-					 title(L"Win32Window"),
-					 cTitle("Win32Window"),
-					 x(300),
-					 y(300) {
+			LPCWSTR lpcwTitle;
+			
+			Window::Cimpl cImpl;
+
+			Impl() : lpcwTitle(L"SaNi-Game") {
 			}
 
 			~Impl() {
@@ -48,8 +71,20 @@ namespace sani {
 
 		Window::Window(const HINSTANCE hInstance, const uint32 width, const uint32 height) : impl(new Impl()) {
 			impl->hInstance = hInstance;
-			impl->width = width;
-			impl->height = height;
+			impl->cImpl.width = width;
+			impl->cImpl.height = height;
+
+			/*
+				TODO: add calling logic.
+			*/
+
+			SANI_INIT_EVENT(onClosing, void(Window&));
+			SANI_INIT_EVENT(onClosed, void(Window&));
+			SANI_INIT_EVENT(onMinimize, void(Window&));
+			SANI_INIT_EVENT(onWindowed, void(Window&));
+			SANI_INIT_EVENT(onFullscreen, void(Window&));
+			SANI_INIT_EVENT(onMoved, void(Window&, int, int, int, int));
+			SANI_INIT_EVENT(onResize, void(Window&, int, int, int, int));
 		}
 
 		// Private.
@@ -134,15 +169,15 @@ namespace sani {
 
 					GetWindowRect(window->impl->hWnd, &wndRect);
 
-					window->impl->width = wndRect.right - wndRect.left;
-					window->impl->height = wndRect.bottom - wndRect.top;
+					window->impl->cImpl.width = wndRect.right - wndRect.left;
+					window->impl->cImpl.height = wndRect.bottom - wndRect.top;
 
 					return 0;
 				case WM_MOVE:
 					GetWindowRect(window->impl->hWnd, &wndRect);
 
-					window->impl->x = wndRect.left;
-					window->impl->y = wndRect.top;
+					window->impl->cImpl.x = wndRect.left;
+					window->impl->cImpl.y = wndRect.top;
 
 					return 0;
 			}
@@ -154,41 +189,41 @@ namespace sani {
 		// Public.
 
 		HWND Window::getHandle() const {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
 			return impl->hWnd;
 		}
 
 		String Window::getTitle() const {
-			return impl->cTitle;
+			return impl->cImpl.title;
 		}
 		void Window::setTitle(const String& title) {
 			const std::wstring stemp = std::wstring(title.begin(), title.end());
 
-			impl->title = stemp.c_str();
-			impl->cTitle = title;
+			impl->lpcwTitle = stemp.c_str();
+			impl->cImpl.title = title;
 
-			if (impl->initialized) {
-				SetWindowText(impl->hWnd, impl->title);
+			if (impl->cImpl.initialized) {
+				SetWindowText(impl->hWnd, impl->lpcwTitle);
 			}
 		}
 
 		void Window::minimize() {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
-			if (impl->isMinimized) return;
+			if (impl->cImpl.isMinimized) return;
 
 			ShowWindow(impl->hWnd, SW_MINIMIZE);
 			
-			impl->isMinimized = true;
+			impl->cImpl.isMinimized = true;
 		}
 		void Window::show() {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
-			if (impl->isMinimized) {
+			if (impl->cImpl.isMinimized) {
 				ShowWindow(impl->hWnd, SW_RESTORE);
 
-				impl->isMinimized = false;
+				impl->cImpl.isMinimized = false;
 			}
 			else {
 				ShowWindow(impl->hWnd, SW_SHOW);
@@ -196,54 +231,54 @@ namespace sani {
 		}
 
 		void Window::setSize(const int32 width, const int32 height) {
-			if (impl->initialized) MoveWindow(impl->hWnd, impl->x, impl->y, width, height, TRUE);
+			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, impl->cImpl.x, impl->cImpl.y, width, height, TRUE);
 			else {
-				impl->width = width;
-				impl->height = height;
+				impl->cImpl.width = width;
+				impl->cImpl.height = height;
 			}
 		}
 		void Window::setWidth(const int32 width) {
-			if (impl->initialized) MoveWindow(impl->hWnd, impl->x, impl->y, width, impl->height, TRUE);
+			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, impl->x, impl->y, width, impl->cImpl.height, TRUE);
 			else {
-				impl->width = width;
+				impl->cImpl.width = width;
 			}
 		}
 		void Window::setHeight(const int32 height) {
-			if (impl->initialized) MoveWindow(impl->hWnd, impl->x, impl->y, impl->width, height, TRUE);
+			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, impl->cImpl.x, impl->cImpl.y, impl->cImpl.width, height, TRUE);
 			else {
-				impl->height = height;
+				impl->cImpl.height = height;
 			}
 		}
 
 		void Window::setPosition(const int32 x, const int32 y) {
-			if (impl->initialized) MoveWindow(impl->hWnd, y, x, impl->width, impl->height, TRUE);
+			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, y, x, impl->cImpl.width, impl->cImpl.height, TRUE);
 			else {
-				impl->x = x;
-				impl->y = y;
+				impl->cImpl.x = x;
+				impl->cImpl.y = y;
 			}
 		}
 		void Window::setX(const int32 x) {
-			if (impl->initialized) MoveWindow(impl->hWnd, x, impl->y, impl->width, impl->height, TRUE);
+			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, x, impl->cImpl.y, impl->cImpl.width, impl->cImpl.height, TRUE);
 			else {
-				impl->x = x;
+				impl->cImpl.x = x;
 			}
 		}
 		void Window::setY(const int32 y) {
-			if (impl->initialized) MoveWindow(impl->hWnd, impl->x, y, impl->width, impl->height, TRUE);
+			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, impl->cImpl.x, y, impl->cImpl.width, impl->cImpl.height, TRUE);
 			else {
-				impl->y = y;
+				impl->cImpl.y = y;
 			}
 		}
 
 		int32 Window::getX() const {
-			return impl->x;
+			return impl->cImpl.x;
 		}
 		int32 Window::getY() const {
-			return impl->y;
+			return impl->cImpl.y;
 		}
 
 		uint32 Window::getClientWidth() const {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
 			RECT clntRect;
 
@@ -252,7 +287,7 @@ namespace sani {
 			return clntRect.right- clntRect.left;
 		}
 		uint32 Window::getClientHeight() const {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
 			RECT clntRect;
 
@@ -262,14 +297,14 @@ namespace sani {
 		}
 
 		inline int32 Window::getWidth() {
-			return impl->width;
+			return impl->cImpl.width;
 		}
 		inline int32 Window::getHeight() {
-			return impl->height;
+			return impl->cImpl.height;
 		}
 
 		void Window::listen() const {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
 			MSG msg;
 
@@ -280,26 +315,26 @@ namespace sani {
 				// send the message to the WindowProc function
 				DispatchMessage(&msg);
 
-				impl->isWindowOpen = msg.message != WM_QUIT;
+				impl->cImpl.isWindowOpen = msg.message != WM_QUIT;
 			}
 		}
 
 		bool Window::isOpen() const {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
-			return impl->isWindowOpen;
+			return impl->cImpl.isWindowOpen;
 		}
 
 		void Window::close() {
-			assert(impl->initialized);
+			assert(impl->cImpl.initialized);
 
-			if (!impl->isWindowOpen) return;
+			if (!impl->cImpl.isWindowOpen) return;
 
-			impl->isWindowOpen = false;
+			impl->cImpl.isWindowOpen = false;
 		}
 
 		bool Window::initialize() {
-			assert(!impl->initialized);
+			assert(!impl->cImpl.initialized);
 
 			// Initialize the window.
 			WNDCLASSEX windowClass;
@@ -327,12 +362,12 @@ namespace sani {
 			// Create the window.
 			impl->hWnd = CreateWindowEx(NULL,
 										windowClass.lpszClassName,
-										impl->title,
+										impl->lpcwTitle,
 										WS_OVERLAPPEDWINDOW,
-										impl->x,
-										impl->y,
-										impl->width,
-										impl->height,
+										impl->cImpl.x,
+										impl->cImpl.y,
+										impl->cImpl.width,
+										impl->cImpl.height,
 										NULL,
 										NULL,
 										impl->hInstance,
@@ -344,11 +379,11 @@ namespace sani {
 			const HBRUSH brush = CreateSolidBrush(RGB(0, 0, 0));
 			SetClassLongPtr(impl->hWnd, GCLP_HBRBACKGROUND, (LONG)brush);
 
-			impl->initialized = true;
-			impl->isWindowOpen = true;
+			impl->cImpl.initialized = true;
+			impl->cImpl.isWindowOpen = true;
 
 			// Return results.
-			return impl->initialized;
+			return impl->cImpl.initialized;
 		}
 
 		Window::~Window() {

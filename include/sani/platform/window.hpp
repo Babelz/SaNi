@@ -2,6 +2,7 @@
 
 #include "sani/platform/platform_config.hpp"
 #include "sani/precompiled.hpp"
+#include "sani/core/events.h"
 
 // Windows includes.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
@@ -19,6 +20,9 @@ namespace sani {
 		/// Represents a window.
 		class Window {
 		private:
+			// Forward declaration of common implementation living inside the 
+			// impl class.
+			class Cimpl;
 			class Impl;
 
 			Impl* impl;
@@ -33,6 +37,21 @@ namespace sani {
 
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
+			// Called when the window is being closed.
+			SANI_DECLARE_EVENT(onClosing, void(Window&));
+			// Called when the window is closed.
+			SANI_DECLARE_EVENT(onClosed, void(Window&));
+			// Called when the window is being minimized.
+			SANI_DECLARE_EVENT(onMinimize, void(Window&));
+			// Called when the window is returned to the windowed mode.
+			SANI_DECLARE_EVENT(onWindowed, void(Window&));
+			// Called when the window is returned to the fullscreen mode.
+			SANI_DECLARE_EVENT(onFullscreen, void(Window&));
+			// Called when the window gets moved.
+			SANI_DECLARE_EVENT(onMoved, void(Window&, int, int, int, int));
+			// Called when the window gets resized.
+			SANI_DECLARE_EVENT(onResize, void(Window&, int, int, int, int));
 
 			Window(const HINSTANCE hInstance, const uint32 width, const uint32 height);
 
