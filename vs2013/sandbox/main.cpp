@@ -30,12 +30,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 800, 600);
 	graphicsDevice.initialize();
 
+	Color color = Color::green;
+
 	while (window.isOpen()) {
 		window.listen();
 
-		graphicsDevice.present();
+		color.r += 1;
+		color.g -= 1;
+		color.b += 1;
 
-		graphicsDevice.clear(Color::green);
+		graphicsDevice.clear(color);
 	}
 
 	graphicsDevice.cleanUp();

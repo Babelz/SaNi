@@ -88,10 +88,8 @@ namespace sani {
 			/// Cleans the device.
 			bool cleanUp();
 
-			/// Applies all changes done to the device.
-			bool applyChanges();
-
-			/// Clears the device.
+			/// Clears the device. Swaps the back
+			/// and front buffer.
 			void clear(const Color& color);
 			/// Draws all contents of the device.
 			void present();
@@ -130,9 +128,29 @@ namespace sani {
 			/// @param[in] shader result shader
 			/// @param[in] source source code of the shader
 			void compileShader(Shader& shader, const char* source, const ShaderType type);
-			void bindShader(const Shader shader);
-			void unbindShader(const Shader shader);
-			void setShaderUniform(const Shader shader, const char* name, void* data);
+
+			/// Deletes the given shader.
+			void deleteShader(const Shader shader);
+
+			/// Creates new shader program.
+			void createProgram(ShaderProgram& program);
+			/// Links given shader to given program.
+			/// @param[in] program program where the shader is linked to
+			/// @param[in] shader shader to be linked with the program
+			/// @param[in] dispose should the shader be deleted after it has been linked with the program
+			void linkToProgram(const ShaderProgram program, const Shader shader, const bool dispose);
+			/// Links the given program.
+			void linkProgram(const ShaderProgram program);
+
+			/// Uses the given program. Passing 0 to this function
+			/// means the current program will be unbinded.
+			void useProgram(const ShaderProgram program);
+			
+			/// Sets the given shader uniform.
+			/// @param[in] shader program that contains the uniform to set
+			/// @param[in] name name of the uniform
+			/// @param[in] data data to be inserted in the uniform location
+			void setShaderUniform(const ShaderProgram shader, const char* name, void* data, const UniformType type);
 
 			/*
 				Buffer functions.

@@ -1,3 +1,6 @@
+#android shit which gets copied every time
+src/platform/android/java/assets
+
 # word temp files
 *.tmp
 ~$*

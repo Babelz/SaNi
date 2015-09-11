@@ -15,6 +15,8 @@
  */
 package sani.android;
 
+import sani.android.SaniRenderer;
+
 import android.app.Activity;
 import android.widget.TextView;
 import android.os.Bundle;
@@ -23,9 +25,8 @@ import android.content.res.AssetManager;
 import android.content.Context;
 import android.app.ActivityManager;
 import android.content.pm.ConfigurationInfo;
-
+import android.util.Log;
 import android.opengl.GLSurfaceView;
-
 /**
  * This class loads the Java Native Interface (JNI)
  * library, 'libandroid.so', and provides access to the
@@ -41,32 +42,36 @@ public class SaniActivity extends Activity
 {
 
 	private AssetManager assetManager;
-	private GLSurfaceView glSurfaceView;
+	private SaniGLSurfaceView glSurfaceView;
+
+	private long fileSystemPtr;
 	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-		ConfigurationInfo configurationInfo = activityManager.getDeviceConfigurationInfo();
 
-		final boolean supportsEs2 = configurationInfo.reqGlEsVersion >= 0x20000 || isProbablyEmulator();
+		fileSystemPtr = nativeInitializeFileSystem();
 
-		if (supportsEs2) {
-			glSurfaceView = new GLSurfaceView(this);
- 
-			if (isProbablyEmulator()) {
-				// Avoids crashes on startup with some emulator images.
-				glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-			}
- 
-			glSurfaceView.setEGLContextClientVersion(2);
-			// glSurfaceView.setRenderer(new XXXXX); ??
-			// setContentView(glSurfaceView); ??
+		if (fileSystemPtr == 0) {
+			Log.e("SaniActivity", "FileSystem is null!");
 		}
 
 		assetManager = this.getAssets();
-		setNativeContext(assetManager);
+		nativeSetContext(assetManager, fileSystemPtr);
+
+		init();
+	}
+
+	public void init() {
+		glSurfaceView = new SaniGLSurfaceView(this);
+
+		if (isProbablyEmulator()) {
+			// Avoids crashes on startup with some emulator images.
+			glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
+		}
+
+		glSurfaceView.setSaniRenderer(new SaniRenderer());
+		setContentView(glSurfaceView);
 	}
 
 	private boolean isProbablyEmulator() {
@@ -78,10 +83,11 @@ public class SaniActivity extends Activity
 						|| Build.MODEL.contains("Android SDK built for x86"));
 	}
 
+	public native long nativeInitializeFileSystem();
 	/* Sets the context to be used in android apps
 	 * 
 	 */
-	public native void setNativeContext(final AssetManager assetManager);
+	public native void nativeSetContext(final AssetManager assetManager, long fsptr);
 
 	/* This is the static constructor used to load the
 	 * 'android' library when the class is
