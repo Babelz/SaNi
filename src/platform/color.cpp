@@ -3,21 +3,21 @@
 namespace sani {
 	namespace graphics {
 
-		Color::Color(const uint8 r, const uint8 g, const uint8 b, const uint8 a) : r(r),
-																		     	   g(g),
-																			       b(b),
-																			       a(a) {
+		Color::Color(const uint8 r, const uint8 g, const uint8 b, const uint8 a) : r(static_cast<float32>(r / 255.0f)),
+																		     	   g(static_cast<float32>(g / 255.0f)),
+																				   b(static_cast<float32>(b / 255.0f)),
+																				   a(static_cast<float32>(a / 255.0f)) {
 		}
 		Color::Color(const Color& color, const uint8 a) : r(color.r),
 														  g(color.g),
 														  b(color.b),
-														  a(a) {
+														  a(static_cast<float32>(a / 255.0f)) {
 		}
 
-		Color::Color(const float32 r, const float32 g, const float32 b, const float32 a) : r(static_cast<int8>(255 * r)),
-																						   g(static_cast<int8>(255 * g)),
-																						   b(static_cast<int8>(255 * b)),
-																						   a(static_cast<int8>(255 * a)) {
+		Color::Color(const float32 r, const float32 g, const float32 b, const float32 a) : r(r),
+																						   g(g),
+																						   b(b),
+																						   a(a) {
 		}
 		Color::Color(const Color& color, const float32 a) : r(color.r),
 															g(color.g),

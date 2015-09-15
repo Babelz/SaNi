@@ -44,6 +44,7 @@ namespace sani {
 		/// DX contains WinDX and GL contains Linux and WinGL implementations.
 		class GraphicsDevice {
 		private:
+			class Cimpl;
 			class Impl;
 
 			Impl* impl;

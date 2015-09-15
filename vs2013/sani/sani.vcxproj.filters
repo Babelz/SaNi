@@ -57,9 +57,6 @@
     <ClCompile Include="..\..\src\platform\viewport.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\platform\window_win32.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
       <Filter>src\platform\apple</Filter>
     </ClCompile>
@@ -88,6 +85,9 @@
       <Filter>src\platform</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\platform\graphics_error.cpp">
+      <Filter>src\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\window.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
   </ItemGroup>
