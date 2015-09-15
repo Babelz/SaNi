@@ -1,6 +1,8 @@
+#include "sani/platform/render_target_2d.hpp"
 #include "sani/platform/graphics_device.hpp"
 #include "sani/platform/viewport.hpp"
 #include "sani/platform/color.hpp"
+#include <sstream>
 
 // Contains WindowsGL and LinuxGL implementations of the graphics device.
 
@@ -10,26 +12,55 @@
 		  implementations and APIs.
 */
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-
-		// Win32 OpenGL implementation.
-
-#include "sani/platform/render_target_2d.hpp"
-#include "GL/wglew.h"
-#include "GL/glew.h"
-#include <sstream>
-
 namespace sani {
 	namespace graphics {
 
-		/*
-			TODO: implement fullscreen and windowed modes
-				  implement OpenGL error handling 
-		*/
-		
+		class GraphicsDevice::Cimpl {
+		public:
+			uint32 backBufferWidth;
+			uint32 backBufferHeight;
+
+			// Default backbuffer of the device.
+			// Everything gets drawn this.
+			RenderTarget2D* defaultRenderTarget;
+			RenderTarget2D* currentRenderTarget;
+
+			Viewport viewport;
+
+			Cimpl() : backBufferWidth(0),
+					  backBufferHeight(0),
+					  defaultRenderTarget(nullptr),
+					  currentRenderTarget(nullptr) {
+			}
+
+			~Cimpl() {
+				delete defaultRenderTarget;
+			}
+		};
+	}
+}
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
+#include "GL/wglew.h"
+#include "GL/glew.h"
+
+// Win32 impl.
+namespace sani {
+	namespace graphics {
+
 		// Private Win32GL Impl class.
 		class GraphicsDevice::Impl {
 		public:
+			// Used to store the desktop location of the window
+			// when we are toggling fullscreen.
+			// We could also store the size information aswell
+			// but the user can resize the window or the resolution
+			// and thus the state information contained here
+			// would overwrite it.
+			uint32 windowedLocationX;
+			uint32 windowedLocationY;
+
 			// Permanent rendering context.
 			HGLRC renderingContext;
 			// Private HDI device context.
@@ -43,48 +74,16 @@ namespace sani {
 			// Should the adapter be working in fullscreen mode.
 			bool fullscreen;
 
-			// Color used to clear the screen and
-			// converted float values.
-			Color color;
-			float cR;
-			float cG;
-			float cB;
-			float cA;
-
-			// Used to store the desktop location of the window
-			// when we are toggling fullscreen.
-			// We could also store the size information aswell
-			// but the user can resize the window or the resolution
-			// and thus the state information contained here
-			// would overwrite it.
-			uint32 windowedLocationX;
-			uint32 windowedLocationY;
-
-			uint32 backBufferWidth;
-			uint32 backBufferHeight;
-
-			// Default backbuffer of the device.
-			// Everything gets drawn this.
-			RenderTarget2D* defaultRenderTarget;
-			RenderTarget2D* currentRenderTarget;
-
-			Viewport viewport;
+			// Common impl.
+			Cimpl cImpl;
 
 			Impl() : renderingContext(NULL),
-					 deviceContext(NULL),
-					 hWnd(NULL),
-					 hInstance(NULL),
-					 fullscreen(false),
-					 windowedLocationX(0),
-					 windowedLocationY(0),
-					 backBufferWidth(0),
-					 backBufferHeight(0),
-					 defaultRenderTarget(nullptr),
-					 currentRenderTarget(nullptr) {
-			}
-
-			~Impl() {
-				delete defaultRenderTarget;
+				deviceContext(NULL),
+				hWnd(NULL),
+				hInstance(NULL),
+				fullscreen(false),
+				windowedLocationX(0),
+				windowedLocationY(0) {
 			}
 		};
 
@@ -92,18 +91,9 @@ namespace sani {
 			impl->hWnd = hWnd;
 			impl->hInstance = hInstance;
 			impl->deviceContext = GetDC(hWnd);
-			impl->backBufferWidth = backBufferWidth;
-			impl->backBufferHeight = backBufferHeight;
-			impl->viewport = Viewport(0, 0, impl->backBufferWidth, impl->backBufferHeight);
-		}
-
-		void GraphicsDevice::checkForErrors(const char* func, const int32 line) {
-			GLint error = 0;
-
-			// Get all OpenGL errors.
-			while ((error = glGetError()) != 0) {
-				errorBuffer.push(GraphicsError(error, func, line));
-			}
+			impl->cImpl.backBufferWidth = backBufferWidth;
+			impl->cImpl.backBufferHeight = backBufferHeight;
+			impl->cImpl.viewport = Viewport(0, 0, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
 		}
 
 		bool GraphicsDevice::isFullscreen() const {
@@ -114,7 +104,7 @@ namespace sani {
 			// I think that this should be done by the window class
 			// but does it really matter? I pref that the
 			// window only holds state data and some basic functionalities.
-			
+
 			// Get window rect.
 			RECT wndRect;
 			GetWindowRect(impl->hWnd, &wndRect);
@@ -122,7 +112,7 @@ namespace sani {
 			// Store the location of the window.
 			impl->windowedLocationX = wndRect.left;
 			impl->windowedLocationY = wndRect.top;
-			
+
 			// Set style to fullscreen.
 			SetWindowLongPtr(impl->hWnd, GWL_STYLE, WS_SYSMENU | WS_POPUP | WS_CLIPCHILDREN | WS_VISIBLE);
 
@@ -140,7 +130,7 @@ namespace sani {
 
 			const uint32 width = wndRect.right - wndRect.left;
 			const uint32 height = wndRect.bottom - wndRect.top;
-		
+
 			rect.left = impl->windowedLocationX;
 			rect.top = impl->windowedLocationY;
 			rect.bottom = height;
@@ -149,45 +139,6 @@ namespace sani {
 			SetWindowLongPtr(impl->hWnd, GWL_STYLE, WS_OVERLAPPEDWINDOW | WS_VISIBLE);
 			AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
 			MoveWindow(impl->hWnd, impl->windowedLocationX, impl->windowedLocationY, width, height, TRUE);
-		}
-
-		uint32 GraphicsDevice::getBackBufferWidth() const {
-			return impl->backBufferWidth;
-		}
-		uint32 GraphicsDevice::getBackBufferHeight() const {
-			return impl->backBufferHeight;
-		}
-
-		void GraphicsDevice::setBackBufferWidth(const uint32 newWidth) {
-			impl->backBufferWidth = newWidth;
-		}
-		void GraphicsDevice::setBackBufferHeight(const uint32 newHeight) {
-			impl->backBufferHeight = newHeight;
-		}
-
-		bool GraphicsDevice::hasErrors() const {
-			return !errorBuffer.empty();
-		}
-		GraphicsError GraphicsDevice::getError() {
-			assert(hasErrors());
-
-			const GraphicsError nextError = errorBuffer.top();
-			
-			errorBuffer.pop();
-		
-			return nextError;
-		}
-
-		void GraphicsDevice::setViewport(const Viewport& viewport) {
-			impl->viewport = viewport;
-			
-			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
-
-			// Check for errors.
-			CHECK_FOR_ERRORS(); 
-		}
-		const Viewport& GraphicsDevice::getViewport() const {
-			return impl->viewport;
 		}
 
 		bool GraphicsDevice::initialize() {
@@ -208,21 +159,21 @@ namespace sani {
 				errorBuffer.push(GRAPHICS_ERROR(1282));
 			}
 
-			#pragma region OpenGL version selection
+#pragma region OpenGL version selection
 			// TODO: use 3.3 always or just get the newest supported version?
 			// TODO: select OpenGL version to use.
-			/*GLint initAttribs[] = 
+			/*GLint initAttribs[] =
 			{
-				WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
-				WGL_CONTEXT_MINOR_VERSION_ARB, 3,
+			WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
+			WGL_CONTEXT_MINOR_VERSION_ARB, 3,
 
-				// Uncomment this for forward compatibility mode
-				//WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
-				// Uncomment this for Compatibility profile
-				//WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
+			// Uncomment this for forward compatibility mode
+			//WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
+			// Uncomment this for Compatibility profile
+			//WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
 
-				WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
-				0
+			WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
+			0
 			};
 
 			// Try set the attribs spec version of the context. Fallback to the first one if this
@@ -230,7 +181,7 @@ namespace sani {
 			HGLRC compHRC = wglCreateContextAttribsARB(impl->deviceContext, 0, initAttribs);
 			if (compHRC && wglMakeCurrent(impl->deviceContext, compHRC)) impl->renderingContext = compHRC;
 			*/
-			#pragma endregion
+#pragma endregion
 
 			// Check for pre-init errors.
 			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
@@ -248,17 +199,17 @@ namespace sani {
 			if (impl->fullscreen) setFullscreen();
 
 			// Create default viewport if user has not given us one.
-			if (impl->viewport.isDefault()) {
+			if (impl->cImpl.viewport.isDefault()) {
 				RECT clntRect;
-				
+
 				GetClientRect(impl->hWnd, &clntRect);
-				
-				impl->viewport = Viewport(0, 0, clntRect.right - clntRect.left, clntRect.bottom - clntRect.top);
+
+				impl->cImpl.viewport = Viewport(0, 0, clntRect.right - clntRect.left, clntRect.bottom - clntRect.top);
 			}
 
 			// Set viewport.
-			glViewport(impl->viewport.x, impl->viewport.y, impl->viewport.width, impl->viewport.height);
-			
+			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y, impl->cImpl.viewport.width, impl->cImpl.viewport.height);
+
 			// Post-init error checks.
 			CHECK_FOR_ERRORS();
 
@@ -287,22 +238,89 @@ namespace sani {
 
 		void GraphicsDevice::clear(const Color& color) {
 			SwapBuffers(impl->deviceContext);
-			
-			if (impl->color != color) {
-				// Convert color components to floats.
-				impl->color = color;
-				impl->cR = color.r / 255.0f;
-				impl->cG = color.g / 255.0f;
-				impl->cB = color.b / 255.0f;
-				impl->cA = color.a / 255.0f;
-				
-				// Change clear color for the GL.
-				glClearColor(impl->cR, impl->cG, impl->cB, impl->cA);
-			}
+
+			// Change clear color for the GL.
+			glClearColor(color.r, color.g, color.b, color.a);
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			
+
 			CHECK_FOR_ERRORS();
+		}
+	}
+}
+
+#endif
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
+
+		// Linux OpenGL implementation.
+
+#endif
+
+// Contains Android GLES and iOS GLES implementations of the graphics device.
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+
+		// Android OpenGLES implementation.
+
+#endif
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS
+
+		// iOS OpenGLES implementation.
+
+#endif
+
+// Common impl of the graphics device.
+namespace sani {
+	namespace graphics {
+
+		void GraphicsDevice::checkForErrors(const char* func, const int32 line) {
+			GLint error = 0;
+
+			// Get all OpenGL errors.
+			while ((error = glGetError()) != 0) {
+				errorBuffer.push(GraphicsError(error, func, line));
+			}
+		}
+
+		uint32 GraphicsDevice::getBackBufferWidth() const {
+			return impl->cImpl.backBufferWidth;
+		}
+		uint32 GraphicsDevice::getBackBufferHeight() const {
+			return impl->cImpl.backBufferHeight;
+		}
+
+		void GraphicsDevice::setBackBufferWidth(const uint32 newWidth) {
+			impl->cImpl.backBufferWidth = newWidth;
+		}
+		void GraphicsDevice::setBackBufferHeight(const uint32 newHeight) {
+			impl->cImpl.backBufferHeight = newHeight;
+		}
+
+		bool GraphicsDevice::hasErrors() const {
+			return !errorBuffer.empty();
+		}
+		GraphicsError GraphicsDevice::getError() {
+			assert(hasErrors());
+
+			const GraphicsError nextError = errorBuffer.top();
+
+			errorBuffer.pop();
+
+			return nextError;
+		}
+
+		void GraphicsDevice::setViewport(const Viewport& viewport) {
+			impl->cImpl.viewport = viewport;
+
+			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y, impl->cImpl.viewport.width, impl->cImpl.viewport.height);
+
+			// Check for errors.
+			CHECK_FOR_ERRORS();
+		}
+		const Viewport& GraphicsDevice::getViewport() const {
+			return impl->cImpl.viewport;
 		}
 
 		void GraphicsDevice::bindTexture(const RenderTexture texture) {
@@ -315,23 +333,23 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
-			if (renderTarget == nullptr) impl->currentRenderTarget = impl->defaultRenderTarget;
-			else						 impl->currentRenderTarget = renderTarget;
+			if (renderTarget == nullptr) impl->cImpl.currentRenderTarget = impl->cImpl.defaultRenderTarget;
+			else						 impl->cImpl.currentRenderTarget = renderTarget;
 
-			glBindFramebuffer(GL_FRAMEBUFFER, static_cast<GLuint>(impl->currentRenderTarget->getFramebuffer()));
+			glBindFramebuffer(GL_FRAMEBUFFER, static_cast<GLuint>(impl->cImpl.currentRenderTarget->getFramebuffer()));
 
 			/*
-				http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
-				
-				The fragment shader just needs a minor adaptation:
-				
-				Inside the fragment shader
-					layout(location = 0) out vec3 color;
-	
-				This means that when writing in the variable “color”, 
-				we will actually write in the Render Target 0, 
-				which happens to be our texure because DrawBuffers[0] is GL_COLOR_ATTACHMENTi, 
-				which is, in our case, renderedTexture.
+			http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
+
+			The fragment shader just needs a minor adaptation:
+
+			Inside the fragment shader
+			layout(location = 0) out vec3 color;
+
+			This means that when writing in the variable “color”,
+			we will actually write in the Render Target 0,
+			which happens to be our texure because DrawBuffers[0] is GL_COLOR_ATTACHMENTi,
+			which is, in our case, renderedTexture.
 			*/
 		}
 
@@ -341,7 +359,7 @@ namespace sani {
 			// Generate the texture.
 			glGenTextures(1, &glTexture);
 			glBindTexture(GL_TEXTURE_2D, glTexture);
-			
+
 			glTexImage2D(GL_TEXTURE_2D,
 				0,
 				GL_RGBA,
@@ -354,16 +372,16 @@ namespace sani {
 
 			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		
+
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			CHECK_FOR_ERRORS();
 
 			texture = static_cast<RenderTexture>(glTexture);
-		}	
+		}
 		void GraphicsDevice::generateRenderTarget2D(RenderTexture& texture, Buffer& frameBuffer, Buffer& colorBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height) {
 			// Assume that the render texture has been initialized and generated.
-			
+
 			// Generate frame buffer.
 			GLuint glFrameBuffer = 0;
 			glGenFramebuffers(1, &glFrameBuffer);
@@ -377,14 +395,14 @@ namespace sani {
 			glBindTexture(GL_TEXTURE_2D, glTexture);
 
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
-		
+
 			// Generate depth buffer.
 			GLuint glDepthBuffer = 0;
 			glGenRenderbuffers(1, &glDepthBuffer);
 			glBindRenderbuffer(GL_RENDERBUFFER, glDepthBuffer);
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, glDepthBuffer);
-			
+
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 
 			// Set as attachement#0?
@@ -393,7 +411,7 @@ namespace sani {
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-			
+
 			CHECK_FOR_ERRORS();
 		}
 
@@ -460,7 +478,7 @@ namespace sani {
 
 			if (result != GL_TRUE) errorBuffer.push(CUSTOM_GRAPHICS_ERROR("Failed to link shader to a program"));
 		}
-		
+
 		void GraphicsDevice::useProgram(const ShaderProgram program) {
 			glUseProgram(program);
 
@@ -486,7 +504,7 @@ namespace sani {
 			}
 
 			/*
-				TODO: is this just fine? support all needed uniforms an not all of them.
+			TODO: is this just fine? support all needed uniforms an not all of them.
 			*/
 
 			// Set the uniform value.
@@ -507,26 +525,4 @@ namespace sani {
 		}
 	}
 }
-
-#endif
-
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
-
-		// Linux OpenGL implementation.
-
-#endif
-
-// Contains Android GLES and iOS GLES implementations of the graphics device.
-
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
-
-		// Android OpenGLES implementation.
-
-#endif
-
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS
-
-		// iOS OpenGLES implementation.
-
-#endif
 

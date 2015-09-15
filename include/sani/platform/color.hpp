@@ -16,10 +16,10 @@ namespace sani {
 			static const Color green;
 			static const Color blue;
 			
-			uint8 r;
-			uint8 g;
-			uint8 b;
-			uint8 a;
+			float32 r;
+			float32 g;
+			float32 b;
+			float32 a;
 
 			/// Creates new instance of the color object with given values. 255 base.
 			Color(const uint8 r, const uint8 g, const uint8 b, const uint8 a);

@@ -31,9 +31,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	while (window.isOpen()) {
 		window.listen();
 
-		color.r += 1;
-		color.g -= 1;
-		color.b += 1;
+		color.r -= 0.01f;
+		color.g += 0.01f;
+		color.b -= 0.01f;
+		color.a += 0.01f;
 
 		graphicsDevice.clear(color);
 	}
