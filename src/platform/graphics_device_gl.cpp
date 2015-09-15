@@ -260,8 +260,17 @@ namespace sani {
 // Contains Android GLES and iOS GLES implementations of the graphics device.
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
-
 		// Android OpenGLES implementation.
+
+#include <GLES2/gl2.h>
+namespace sani {
+	namespace graphics {
+		class GraphicsDevice::Impl {
+		public:
+			Cimpl cImpl;
+		};
+	}
+}
 
 #endif
 
@@ -370,9 +379,13 @@ namespace sani {
 				GL_UNSIGNED_BYTE,
 				0);
 
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+#endif
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			CHECK_FOR_ERRORS();
@@ -405,9 +418,12 @@ namespace sani {
 
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 
+
+			// TODO this is supported only in OpenGLES 3.2
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			// Set as attachement#0?
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture, 0);
-
+#endif
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);

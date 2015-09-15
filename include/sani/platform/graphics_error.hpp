@@ -31,7 +31,7 @@ namespace sani {
 			void translate(const int32 apiErrorCode);
 		public:
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			// TODO: implement API checking 
 			//       for WinGL and WinDX.
 
