@@ -173,5 +173,11 @@
     <ClInclude Include="..\..\include\sani\core\func.h">
       <Filter>include\core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp">
+      <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\matrix3.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

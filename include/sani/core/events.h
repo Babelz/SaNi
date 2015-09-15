@@ -44,12 +44,10 @@ namespace sani {
 		}
 
 		/// Adds new callback to the callback list.
-		template <typename T>
 		inline void subscribe(std::function<T> callback) {
 			callbacks.push_back(callback);
 		}
 		/// Removes given callback from the callback list.
-		template <typename T>
 		inline void unsubscribe(std::function<T> callback) {
 			callbacks.remove(callback);
 		}
@@ -61,11 +59,10 @@ namespace sani {
 		~CallbackManager() {
 		}
 
-		template <typename T>
 		void operator += (std::function<T> callback) {
 			callbacks.push_back(callback);
 		}
-		template <typename T>
+
 		void operator -= (std::function<T> callback) {
 			callbacks.remove(callback);
 		}
@@ -87,7 +84,6 @@ namespace sani {
 		~EventHandler() {
 		}
 
-		template <typename T>
 		void operator()(std::function<void(std::function<T>)> action) {
 			if (!callbackManager->hasSubscribers()) return;
 

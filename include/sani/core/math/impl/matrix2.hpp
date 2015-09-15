@@ -76,7 +76,7 @@ namespace sani {
 
 		template <typename T>
 		inline Matrix2<T>& Matrix2<T>::operator*=(const Matrix2<T>& rhs) {
-
+			return *this = *this * rhs;
 		}
 
 		template <typename T>
@@ -108,7 +108,11 @@ namespace sani {
 
 		template <typename T>
 		inline const Matrix2<T> Matrix2<T>::operator*(const Matrix2<T>& rhs) const {
-
+			return Matrix2<T>(
+				this->row1.x * rhs.row1.x + this->row1.y * rhs.row2.x,
+				this->row1.x * rhs.row1.y + this->row1.y * rhs.row2.y,
+				this->row2.x * rhs.row1.x + this->row2.y * rhs.row2.x,
+				this->row2.x * rhs.row1.y + this->row2.y * rhs.row2.y);
 		}
 
 		template <typename T>
@@ -123,7 +127,10 @@ namespace sani {
 
 		template <typename T>
 		inline const Vector2<T> Matrix2<T>::operator*(const Vector2<T>& rhs) const {
-
+			return Vector2<T>(
+				this->row1.x * rhs.x + this->row1.y * rhs.y,
+				this->row2.x * rhs.x + this->row2.y * rhs.y
+				);
 		}
 
 
@@ -135,7 +142,8 @@ namespace sani {
 
 		template<typename T>
 		inline const Vector2<T>& operator*=(Vector2<T>& lhs, const Matrix2<T>& rhs) {
-			
+			lhs = rhs * left;
+			return lhs;
 		}
 
 		// index

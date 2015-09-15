@@ -164,11 +164,13 @@
     <ClInclude Include="..\..\include\sani\core\events.h" />
     <ClInclude Include="..\..\include\sani\core\func.h" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
