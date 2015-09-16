@@ -36,7 +36,7 @@ namespace sani {
 		inline Matrix3<T>::Matrix3(const Matrix3<U>& mat)
 			:	row1(static_cast<T>(mat.m11), static_cast<T>(mat.m12), static_cast<T>(mat.m13)),
 				row2(static_cast<T>(mat.m21), static_cast<T>(mat.m22), static_cast<T>(mat.m23)),
-				rowr(static_cast<T>(mat.m31), static_cast<T>(mat.m32), static_cast<T>(mat.m33)){
+				row3(static_cast<T>(mat.m31), static_cast<T>(mat.m32), static_cast<T>(mat.m33)){
 		}
 
 		// comp
@@ -123,14 +123,20 @@ namespace sani {
 
 		template <typename T>
 		inline const Matrix3<T> Matrix3<T>::operator*(const Matrix3<T>& rhs) const {
-			/*  TODO
+			
 			return Matrix3<T>(
-				this->row1.x * rhs.row1.x + this->row1.y * rhs.row2.x,
-				this->row1.x * rhs.row1.y + this->row1.y * rhs.row2.y,
-				this->row2.x * rhs.row1.x + this->row2.y * rhs.row2.x,
-				this->row2.x * rhs.row1.y + this->row2.y * rhs.row2.y);
-				*/
-			return Matrix3<T>();
+				this->row1.x * rhs.row1.x + this->row1.y * rhs.row2.x + this->row1.z * rhs.row3.x,
+				this->row1.x * rhs.row1.y + this->row1.y * rhs.row2.y + this->row1.z * rhs.row3.y,
+				this->row1.x * rhs.row1.y + this->row1.y * rhs.row2.z + this->row1.z * rhs.row3.z,
+
+				this->row2.x * rhs.row1.x + this->row2.y * rhs.row2.x + this->row2.z * rhs.row3.x,
+				this->row2.x * rhs.row1.y + this->row2.y * rhs.row2.y + this->row2.z * rhs.row3.y,
+				this->row2.x * rhs.row1.z + this->row2.y * rhs.row2.z + this->row2.z * rhs.row3.z,
+				
+				this->row3.x * rhs.row1.x + this->row3.y * rhs.row2.x + this->row3.z * rhs.row3.x,
+				this->row3.x * rhs.row1.y + this->row3.y * rhs.row2.y + this->row3.z * rhs.row3.y,
+				this->row3.x * rhs.row1.z + this->row3.y * rhs.row2.z + this->row3.z * rhs.row3.z
+				);
 		}
 
 		template <typename T>
@@ -145,12 +151,11 @@ namespace sani {
 
 		template <typename T>
 		inline const Vector3<T> Matrix3<T>::operator*(const Vector3<T>& rhs) const {
-			/* TODO
 			return Vector3<T>(
-				this->row1.x * rhs.x + this->row1.y * rhs.y,
-				this->row2.x * rhs.x + this->row2.y * rhs.y
+				this->row1.x * rhs.x + this->row1.y * rhs.y + this->row1.z * rhs.z,
+				this->row2.x * rhs.x + this->row2.y * rhs.y + this->row2.z * rhs.z,
+				this->row3.x * rhs.x + this->row3.y * rhs.y + this->row3.z * rhs.z
 				);
-				*/
 		}
 
 

@@ -57,7 +57,9 @@ TEST_CASE("Mat3x3 tests cases", "[matrix]") {
 
 		Mat3 a(0, -1, 2, 1, 0, 3, 2, 5, 1);
 		Mat3 b(1, 2, 3, 1, 2, 3, 1, 2, 3);
-		REQUIRE((a * b) == Mat3(1, 2, 3, 4, 8, 12, 8, 16, 24));
+		Mat3 result(1, 2, 3, 4, 8, 12, 8, 16, 24);
+		Mat3 value(a * b);
+		REQUIRE(value == result);
 
 	}
 }
