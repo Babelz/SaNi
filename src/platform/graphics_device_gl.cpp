@@ -265,6 +265,7 @@ namespace sani {
 #include <GLES2/gl2.h>
 namespace sani {
 	namespace graphics {
+
 		class GraphicsDevice::Impl {
 		public:
 			Cimpl cImpl;
@@ -386,6 +387,7 @@ namespace sani {
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 #endif
+
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			CHECK_FOR_ERRORS();
@@ -418,12 +420,13 @@ namespace sani {
 
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 
-
-			// TODO this is supported only in OpenGLES 3.2
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_WIN32
 			// Set as attachement#0?
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture, 0);
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID 
+			glFramebufferTexture2D(GL_FRAME_BUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE2D, glTexture, 0);
 #endif
+
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);

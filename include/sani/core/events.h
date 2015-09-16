@@ -29,18 +29,18 @@
 namespace sani {
 
 	template <typename T>
-	class EventHandler;
+	class EventCaller;
 
 	/// @class CallbackManager "sani\events.hpp"
 	///
 	/// Generic event-callback manager class.
 	template <typename T>
-	class CallbackManager {
-	friend class EventHandler<T>;
+	class Event {
+	friend class EventCaller<T>;
 	private:
 		std::list<std::function<T>> callbacks;
 	public:
-		CallbackManager() {
+		Event() {
 		}
 
 		/// Adds new callback to the callback list.
@@ -49,14 +49,22 @@ namespace sani {
 		}
 		/// Removes given callback from the callback list.
 		inline void unsubscribe(std::function<T> callback) {
-			callbacks.remove(callback);
+			if (callbacks.size() == 0) return;
+
+			for (auto i = callbacks.begin(); i != callbacks.end(); i++) {
+				if ((*i).target<T>() == callback.target<T>()) {
+					callbacks.erase(i);
+					
+					return;
+				}
+			}
 		}
 		/// Returns true if the manager contains callbacks.
 		inline bool hasSubscribers() const {
 			return !callbacks.empty();
 		}
 	
-		~CallbackManager() {
+		~Event() {
 		}
 
 		void operator += (std::function<T> callback) {
@@ -64,7 +72,7 @@ namespace sani {
 		}
 
 		void operator -= (std::function<T> callback) {
-			callbacks.remove(callback);
+			unsubscribe(callback);
 		}
 	};
 
@@ -72,39 +80,39 @@ namespace sani {
 	///
 	/// Represents a general, generic event-handler.
 	template<typename T>
-	class EventHandler {	
+	class EventCaller {	
 	private:
-		const CallbackManager<T>* callbackManager;
+		const Event<T>* event;
 	public:
-		EventHandler(const CallbackManager<T>* callbackManager) : callbackManager(callbackManager) {
+		EventCaller(const Event<T>* event) : event(event) {
 		}
-		EventHandler() : callbackManager(nullptr) {
+		EventCaller() : event(nullptr) {
 		}
 
-		~EventHandler() {
+		~EventCaller() {
 		}
 
 		void operator()(std::function<void(std::function<T>)> action) {
-			if (!callbackManager->hasSubscribers()) return;
+			if (!event->hasSubscribers()) return;
 
-			for (std::function<T> callback : callbackManager->callbacks) action(callback);
+			for (std::function<T> callback : event->callbacks) action(callback);
 		}
 	};
 
 	// Macros for creating and initializing events.
 	// These macros should be called in the public declaration
 	// area of the class.
-	#define SANI_DECLARE_EVENT(name, signature) 			private: sani::EventHandler<signature> name##EventHandler; \
-															public:  sani::CallbackManager<signature> name		       \
+	#define SANI_DECLARE_EVENT(name, signature) 			private: sani::EventCaller<signature> name##Caller; \
+															public:  sani::Event<signature> name		        \
 
 	// Initializes given event with given signature.
-	#define SANI_INIT_EVENT(name, signature)				name##EventHandler = sani::EventHandler<signature>(&name)
+	#define SANI_INIT_EVENT(name, signature)				name##Caller = sani::EventCaller<signature>(&name)
 
-	#define SANI_CALLBACK(signature, callback)				std::function<signature>(callback)
+	#define SANI_EVENT_HANDLER(signature, callback)			std::function<signature>(callback)
 	
 	// Triggers the given event with given signature and passes given args to it.
-	#define SANI_TRIGGER_EVENT(name, signature, args)		name##EventHandler(std::function<void(std::function<signature>)>([args](std::function<signature> action) { action(args); }))
+	#define SANI_TRIGGER_EVENT(name, signature, args)		name##Caller(std::function<void(std::function<signature>)>([args](std::function<signature> action) { action(args); }))
 	
 	// Triggers the given event with given signature and passes no arguments to it.
-	#define SANI_TRIGGER_VOID_EVENT(name, signature)		name##EventHandler(std::function<void(std::function<signature>)>([](std::function<signature> action) { action(); }))
+	#define SANI_TRIGGER_VOID_EVENT(name, signature)		name##Caller(std::function<void(std::function<signature>)>([](std::function<signature> action) { action(); }))
 }
