@@ -52,7 +52,8 @@ namespace sani {
 			case GL_OUT_OF_MEMORY:
 				message = "There was not enough memory left to execute the given command";
 				break;
-#ifdef __gl_h_
+
+#if SANI_PLATFORM != SANI_PLATFORM_ANDROID	// Android does not support these errors.
 			case GL_STACK_UNDERFLOW:
 				message = "An attempt was made to perform an operation that would cause an internal stack to underflow";
 				break;
@@ -60,6 +61,7 @@ namespace sani {
 				message = "An attempt was made to perform an operation that would cause an internal stack to overflow";
 				break;
 #endif
+
 			default:
 				throw std::logic_error("Invalid OpenGL error code");
 			}
