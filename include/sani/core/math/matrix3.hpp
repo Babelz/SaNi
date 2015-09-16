@@ -3,10 +3,10 @@
 namespace sani {
 	namespace math {
 
-		/// @class Matrix3 Matrix3.hpp "sani/core/math/Matrix3.hpp"
+		/// @class Matrix3 Matrix3.hpp "sani/core/math/matrix3.hpp"
 		/// @author siquel
 		///
-		/// Represents a 2x2 matrix
+		/// Represents a 3x3 matrix
 		template <typename T>
 		class Matrix3 {
 		private:

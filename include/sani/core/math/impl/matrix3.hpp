@@ -34,9 +34,7 @@ namespace sani {
 		template <typename T>
 		template <typename U>
 		inline Matrix3<T>::Matrix3(const Matrix3<U>& mat)
-			:	row1(static_cast<T>(mat.m11), static_cast<T>(mat.m12), static_cast<T>(mat.m13)),
-				row2(static_cast<T>(mat.m21), static_cast<T>(mat.m22), static_cast<T>(mat.m23)),
-				row3(static_cast<T>(mat.m31), static_cast<T>(mat.m32), static_cast<T>(mat.m33)){
+			: row1(mat[0]), row2(mat[1]), row3(mat[2]) {
 		}
 
 		// comp
@@ -167,7 +165,7 @@ namespace sani {
 
 		template<typename T>
 		inline const Vector3<T>& operator*=(Vector3<T>& lhs, const Matrix3<T>& rhs) {
-			lhs = rhs * left;
+			lhs = rhs * lhs;
 			return lhs;
 		}
 

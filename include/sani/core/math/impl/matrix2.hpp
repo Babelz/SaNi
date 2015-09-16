@@ -29,8 +29,7 @@ namespace sani {
 		template <typename T>
 		template <typename U>
 		inline Matrix2<T>::Matrix2(const Matrix2<U>& mat)
-			: row1(static_cast<T>(mat.m11), static_cast<T>(mat.m12)),
-			  row2(static_cast<T>(mat.m21), static_cast<T>(mat.m22)) {
+			: row1(mat[0]), row2(mat[1]) {
 
 		}
 
