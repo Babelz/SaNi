@@ -37,3 +37,23 @@ static_assert(sizeof(uint64) == 8, "sizeof(uint64) != 8");
 // float32-64 assertions.
 static_assert(sizeof(float32) == 4, "sizeof(float32) != 4");
 static_assert(sizeof(float64) == 8, "sizeof(float64) != 8");
+
+/*
+	Message helper macros.
+*/
+
+/*
+	Generates a message with no category containing the
+	file, function and linenumber.
+*/
+#define SANI_INFO(message) String(message +							\
+							      " - @File: " + __FILE___ +		\
+							      " @Function: " + __FUNCTION__		\
+								  " @Line: " + __LINE__)			\
+
+// Generates a common message.
+#define SANI_MESSAGE(message)	SANI_INFO("Message: " + message)
+// Generates a warning message.
+#define SANI_WARNING(message)	SANI_INFO("Warning: " + message)
+// Generates a error message.
+#define SANI_ERROR(message)		SANI_INFO("Error: " + message)

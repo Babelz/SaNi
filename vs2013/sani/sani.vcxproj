@@ -145,7 +145,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\color.cpp" />
@@ -164,7 +166,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp" />
     <ClInclude Include="..\..\include\sani\core\events.hpp" />
     <ClInclude Include="..\..\include\sani\core\func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />
