@@ -18,6 +18,7 @@ namespace sani {
 	///
 	/// Class that will look for the include keyword and "links" the files.
 	/// Will also do recursive linkage checking.
+	/// First ("compilation") step towards constructing the cvars.
 	class CVarLinker {
 	private:
 		ErrorBuffer errorBuffer;
