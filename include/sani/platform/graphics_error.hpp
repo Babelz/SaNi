@@ -37,7 +37,7 @@ namespace sani {
 
 			/// WinGL constructor.
 			GraphicsError(const GLuint apiErrorCode, const String& function, const int32 lineNumber);
-			// Creates new instance of the GraphicsError object with a custom error message.
+			/// Creates new instance of the GraphicsError object with a custom error message.
 			GraphicsError(const String& message, const String& function, const int32 lineNumber);
 #endif
 

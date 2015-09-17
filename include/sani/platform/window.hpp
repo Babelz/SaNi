@@ -2,7 +2,7 @@
 
 #include "sani/platform/platform_config.hpp"
 #include "sani/precompiled.hpp"
-#include "sani/core/events.h"
+#include "sani/core/events.hpp"
 
 // Windows includes.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32

@@ -1,4 +1,4 @@
-#include "sani\core\events.h"
+#include "sani\core\events.hpp"
 
 // Test class for testing events.
 class EventMath {

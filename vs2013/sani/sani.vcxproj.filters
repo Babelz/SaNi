@@ -49,6 +49,15 @@
     <Filter Include="include\core\math\func">
       <UniqueIdentifier>{097ae06c-dde3-4d45-8c8c-802c13d68558}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\cvar">
+      <UniqueIdentifier>{c53a84a4-d953-44a7-bac9-621123066b52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core">
+      <UniqueIdentifier>{465dade8-7607-49ad-a37f-35596f9bfd09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\cvar">
+      <UniqueIdentifier>{5b845872-c9fc-4fbf-af56-156ae59d4cb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -92,6 +101,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\window.cpp">
       <Filter>src\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp">
+      <Filter>src\core\cvar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,12 +185,6 @@
     <ClInclude Include="..\..\include\sani\platform\graphics_error.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\events.h">
-      <Filter>include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\func.h">
-      <Filter>include\core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp">
       <Filter>include\core\math\impl</Filter>
     </ClInclude>
@@ -193,6 +202,18 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp">
       <Filter>include\core\math\func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\func.hpp">
+      <Filter>include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\events.hpp">
+      <Filter>include\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp">
+      <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp">
+      <Filter>include\core\cvar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
