@@ -58,6 +58,9 @@
     <Filter Include="src\core\cvar">
       <UniqueIdentifier>{5b845872-c9fc-4fbf-af56-156ae59d4cb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\math\func\inl">
+      <UniqueIdentifier>{d3c099e4-00c3-4e68-aad7-25869e1a3d2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -215,9 +218,37 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\func\trigonometric_func.hpp">
+      <Filter>include\core\math\func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp">
+      <Filter>include\core\math\func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\math.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\trigonometric.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\value_ptr.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
-    <None Include="..\..\include\sani\core\math\func\transform.inl" />
+    <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
+      <Filter>include\core\math\func\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\math\func\transform.inl">
+      <Filter>include\core\math\func\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\math\func\transform_2d.inl">
+      <Filter>include\core\math\func\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl">
+      <Filter>include\core\math\func\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\math\value_ptr.inl">
+      <Filter>include\core\math</Filter>
+    </None>
   </ItemGroup>
 </Project>

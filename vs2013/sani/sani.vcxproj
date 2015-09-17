@@ -167,8 +167,10 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp" />
     <ClInclude Include="..\..\include\sani\core\events.hpp" />
     <ClInclude Include="..\..\include\sani\core\func.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform_2d.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\func\trigonometric_func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix4.hpp" />
@@ -176,10 +178,13 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\math.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix4.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\rectangle.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\trigonometric.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\value_ptr.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
@@ -199,8 +204,11 @@
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
     <None Include="..\..\include\sani\core\math\func\transform.inl" />
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
+    <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
+    <None Include="..\..\include\sani\core\math\value_ptr.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

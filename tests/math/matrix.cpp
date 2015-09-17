@@ -4,6 +4,7 @@
 #include "sani/core/math/matrix4.hpp"
 #include "sani/core/math/vector.hpp"
 #include "sani/core/math/func/transform.hpp"
+#include "sani/core/math/math.hpp"
 
 using namespace sani::math;
 TEST_CASE("Mat2x2 test cases", "[matrix]") {
@@ -109,5 +110,6 @@ TEST_CASE("Arithmetic funcs", "[matrix]") {
 		Vec3 translation(5, 5, 5);
 		Mat4 translationMat(translate(mat, translation));
 		REQUIRE(translationMat[3] == Vec4(translation.x, translation.y, translation.z, 1));
+		REQUIRE(*(value_ptr(translation)) == translation.x);
 	}
 }
