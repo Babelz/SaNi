@@ -1,9 +1,20 @@
 #include "sani/core/cvar/cvar_file.hpp"
+#include <sstream>
 
 namespace sani {
 
 	CVarFile::CVarFile(const String& filename, const String& contents) : filename(filename) {
-		// TODO: parse lines from raw.
+		// Split contents to lines.
+		std::stringstream ss(contents);
+		String line;
+
+		// Split by new lines.
+		while (std::getline(ss, line, '\n')) {
+			// Remove carriage returns.
+			line = line.substr(0, line.find('\r'));
+
+			lines.push_back(line);
+		}
 	}
 
 	const String& CVarFile::getFilename() const {

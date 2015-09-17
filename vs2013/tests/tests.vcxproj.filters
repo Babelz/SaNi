@@ -20,7 +20,10 @@
       <UniqueIdentifier>{6d98fb3d-9f6d-4998-8381-afae4059d525}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\events">
-      <UniqueIdentifier>{5b9075b8-80ed-49af-b2d5-fe2c489a796d}</UniqueIdentifier>
+      <UniqueIdentifier>{7c43ff2e-feaf-4f34-b857-04fedd868b0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\cvar">
+      <UniqueIdentifier>{425f9b76-458c-426a-afb5-620a02453a65}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -39,12 +42,15 @@
     <ClCompile Include="..\..\tests\math\rectangle.cpp">
       <Filter>Source Files\math</Filter>
     </ClCompile>
-    <ClCompile Include="events.cpp">
+    <ClCompile Include="..\..\tests\events\events.cpp">
       <Filter>Source Files\events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\cvar\cvar.cpp">
+      <Filter>Source Files\cvar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="eventmath.h">
+    <ClInclude Include="..\..\tests\events\eventmath.h">
       <Filter>Source Files\events</Filter>
     </ClInclude>
   </ItemGroup>

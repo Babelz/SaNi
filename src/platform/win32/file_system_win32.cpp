@@ -101,11 +101,15 @@ namespace sani {
 			handle = FindFirstFile(stringToWstring(dir).c_str(), &ffd);
 
 			while (FindNextFile(handle, &ffd) != 0) {
-				files.push_back(wstringToString(ffd.cFileName));
+				const String filename = wstringToString(ffd.cFileName); 
+
+				if (filename == ".." || filename == ".") continue;
+				
+				files.push_back(filename);
 			}
+
 			FindClose(handle);
 		}
-
 	}
 }
 

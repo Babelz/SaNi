@@ -4,7 +4,8 @@
 
 namespace sani {
 
-	CVarLoader::CVarLoader(io::FileSystem& fileSystem) : fileSystem(fileSystem) {
+	CVarLoader::CVarLoader(const String& configurationRootFolder, io::FileSystem& fileSystem) : configurationRootFolder(configurationRootFolder),
+																								fileSystem(fileSystem) {
 	}
 
 	void CVarLoader::load(std::list<CVarFile>& files) const {
@@ -14,20 +15,23 @@ namespace sani {
 
 		// Get all the files from the root.
 		std::vector<String, std::allocator<String>> cvarFiles;
-		fileSystem.listFiles(cvarFiles, ConfigurationRootFolder);
+		fileSystem.listFiles(cvarFiles, configurationRootFolder);
 
 		// Read lines and save paths.
 		for (String& filename : cvarFiles) {
 			// Open files.
-			if (!fileSystem.isFileOpen(filename))  fileSystem.openFile(filename,  io::Filemode::Read);
+			const String path = configurationRootFolder + "\\" + filename;
+
+			if (!fileSystem.isFileOpen(path)) fileSystem.openFile(path, io::Filemode::Read);
 			
 			// Just assume the file is open.
-			const String contents = fileSystem.getFileDataString(filename);
+			const String contents = fileSystem.getFileDataString(path);
 
-			files.push_back(CVarFile(filename, contents));
+			// Create new file record from the data collected.
+			files.push_back(CVarFile(path, contents));
 
 			// Close after reading.
-			fileSystem.closeFile(filename);
+			fileSystem.closeFile(path);
 		}
 	}
 
