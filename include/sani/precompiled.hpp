@@ -48,7 +48,7 @@ static_assert(sizeof(float64) == 8, "sizeof(float64) != 8");
 */
 #define SANI_INFO(message) String(message +							\
 							      " - @File: " + __FILE___ +		\
-							      " @Function: " + __FUNCTION__		\
+							      " @Function: " + __FUNCTION__	+	\
 								  " @Line: " + __LINE__)			\
 
 // Generates a common message.
