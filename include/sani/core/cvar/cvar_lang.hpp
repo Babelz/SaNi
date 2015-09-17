@@ -6,6 +6,10 @@
 #include <regex>
 
 namespace sani {
+
+	// TODO: is this kind of stuff ok?
+	//		 ie consts in some namespace with some helpers (like a util class)
+
 	namespace cvarlang {
 
 		/*
@@ -40,7 +44,9 @@ namespace sani {
 			const std::regex regex(RequireFile);
 			const size_t strLen = str.size();
 			
-			// TODO: ads.
+			// TODO: complete.
+
+			return false;
 		}
 	}
 }

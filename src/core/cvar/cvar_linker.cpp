@@ -30,14 +30,21 @@ namespace sani {
 		for (CVarFile& file : files) {
 			// Process each line.
 			for (size_t i = 0; i < file.getLinesCount(); i++) {
-				// 1) Check for include keyword.
+				// 1) Check for require keyword.
 				// 2) Check that r.match.len == line.len
 				//		if not, push error, return
 				//		else link, continue
 
 				String line = file.lineAtIndex(i);
 				
-				// Check for includes.
+				// Check for requires.
+				if (cvarlang::startsWithRequire(line)) {
+					// Remove comments and validate.
+					if (cvarlang::containsComment(line)) cvarlang::removeComment(line);
+
+					if (!cvarlang::isValidRequire(line)) {
+					}
+				}
 			}
 		}
 	}
