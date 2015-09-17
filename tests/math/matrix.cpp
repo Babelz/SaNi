@@ -3,6 +3,8 @@
 #include "sani/core/math/matrix3.hpp"
 #include "sani/core/math/matrix4.hpp"
 #include "sani/core/math/vector.hpp"
+#include "sani/core/math/func/transform.hpp"
+
 using namespace sani::math;
 TEST_CASE("Mat2x2 test cases", "[matrix]") {
 
@@ -97,7 +99,15 @@ TEST_CASE("Mat4x4 tests cases", "[matrix]") {
 		Mat4 result(80, 70, 60, 50, 240, 214, 188, 162, 400, 358, 316, 274, 560, 502, 444, 386);
 		Mat4 value(a * b);
 		REQUIRE(value == result);
-
 	}
 }
 
+TEST_CASE("Arithmetic funcs", "[matrix]") {
+	
+	SECTION("Translation") {
+		Mat4 mat;
+		Vec3 translation(5, 5, 5);
+		Mat4 translationMat(translate(mat, translation));
+		REQUIRE(translationMat[3] == Vec4(translation.x, translation.y, translation.z, 1));
+	}
+}

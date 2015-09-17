@@ -46,6 +46,9 @@
     <Filter Include="src\platform\android">
       <UniqueIdentifier>{fc336762-ccee-4efb-abff-2987195a2034}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\math\func">
+      <UniqueIdentifier>{097ae06c-dde3-4d45-8c8c-802c13d68558}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -185,5 +188,15 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix4.hpp">
       <Filter>include\core\math\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\func\transform_2d.hpp">
+      <Filter>include\core\math\func</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp">
+      <Filter>include\core\math\func</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
+    <None Include="..\..\include\sani\core\math\func\transform.inl" />
   </ItemGroup>
 </Project>

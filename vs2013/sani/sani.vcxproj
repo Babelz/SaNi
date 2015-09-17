@@ -163,6 +163,8 @@
     <ClInclude Include="..\..\include\sani\assert.hpp" />
     <ClInclude Include="..\..\include\sani\core\events.h" />
     <ClInclude Include="..\..\include\sani\core\func.h" />
+    <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\func\transform_2d.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix4.hpp" />
@@ -191,6 +193,10 @@
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\include\sani\core\math\func\transform.inl" />
+    <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
