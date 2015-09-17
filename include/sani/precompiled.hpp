@@ -37,3 +37,23 @@ static_assert(sizeof(uint64) == 8, "sizeof(uint64) != 8");
 // float32-64 assertions.
 static_assert(sizeof(float32) == 4, "sizeof(float32) != 4");
 static_assert(sizeof(float64) == 8, "sizeof(float64) != 8");
+
+/*
+	Message helper macros.
+
+	TODO: should be moved to somewhere else?
+*/
+
+#define __SANI_INFO__(message) String(message +											\
+							          " - @File: " + __FILE__ +							\
+							          " @Function: " + __FUNCTION__	+					\
+								      " @Line: " + std::to_string(__LINE__))			\
+
+// Generates message with no category.
+#define SANI_MESSAGE(message)			__SANI_INFO__(String(message))
+// Generates a common message.
+#define SANI_GENERIC_MESSAGE(message)	__SANI_INFO__(String("Message: ") + String(message))
+// Generates a warning message.
+#define SANI_WARNING_MESSAGE(message)	__SANI_INFO__(String("Warning: ") + String(message))
+// Generates a error message.
+#define SANI_ERROR_MESSAGE(message)		__SANI_INFO__(String("Error: ") + String(message))

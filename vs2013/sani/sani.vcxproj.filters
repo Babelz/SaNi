@@ -111,6 +111,12 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\link_record.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">
@@ -232,6 +238,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\value_ptr.hpp">
       <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp">
+      <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp">
+      <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp">
+      <Filter>include\core\cvar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
