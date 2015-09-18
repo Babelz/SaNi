@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp" />
@@ -165,6 +166,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_condition.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp" />

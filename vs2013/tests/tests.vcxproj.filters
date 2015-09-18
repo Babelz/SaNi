@@ -45,6 +45,9 @@
     <ClCompile Include="..\..\tests\events\events.cpp">
       <Filter>Source Files\events</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\cvar\cvar.cpp">
+      <Filter>Source Files\cvar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\tests\events\eventmath.h">
