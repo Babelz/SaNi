@@ -24,15 +24,35 @@ namespace sani {
 	/// Represents non-generic cvar.
 	class CVar {
 	private:
+		// Wrap some value field types to union
+		// so we can save few bytes at best.
+		union {
+			int32 int32Val;
+			float32 float32Val;
+			float64 float64Val;
+		};
+
+		// TODO: could this be moved to an union by any chance?
+		String stringVal;
+
 		const CVarRequireStatement statement;
 		const cvarlang::ValueType type;
 		const String name;
-		const bool synced;
 
-		void* data;
+		const bool synced;
+		bool changed;
 	public:
 		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type, 
-			 const String& name, const bool synced, void* data);
+			 const String& name, const bool synced, const String& value);
+
+		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
+			 const String& name, const bool synced, const int32 value);
+
+		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
+ 			 const String& name, const bool synced, const float32 value);
+ 
+		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
+			 const String& name, const bool synced, const float64 value);
 
 		/// Returns the value type of this cvar.
 		cvarlang::ValueType getType() const;
@@ -41,14 +61,23 @@ namespace sani {
 		
 		/// Returns true if caller can change the value of this cvar.
 		bool canWrite() const;
+		
+		/// Returns true if the value has changed during the 
+		/// runtime.
+		bool hasChanged() const;
 		/// Returns true if this cvar should be synced.
 		bool isSynced() const;
-		
-		/// Returns the value of this cvar.
-		void* read() const;
-		/// Writes the given value to this cvar.
-		void write(void* data);
-		
+
+		void read(String& value) const;
+		void read(int32& value) const;
+		void read(float32& value) const;
+		void read(float64& value) const;
+
+		void write(const String& value);
+		void write(int32 value);
+		void write(float32 value);
+		void write(float64 value);
+
 		~CVar();
 	};
 }

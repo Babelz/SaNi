@@ -8,6 +8,7 @@ namespace sani {
 
 		enum TokenType {
 			Invalid,
+			EmptyOrComment,
 			Declaration,
 			Include,
 			Require

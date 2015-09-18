@@ -21,6 +21,11 @@ namespace sani {
 	}
 
 	void CVarTokenizer::tokenize(const std::list<CVarFile>& files, std::vector<CVarToken>& tokens) {
+		/*
+			Just tokenize all the files, don't stop if errors are found.
+			This is just to show all the errors found, not the first one.
+		*/
+		
 		// Go trough each file...
 		for (const CVarFile& file : files) {
 			// Go trough each line...
@@ -33,19 +38,28 @@ namespace sani {
 				// Check what type the line could be.
 				if (cvarlang::lang::startsWithInclude(line)) {
 					if (cvarlang::lang::isValidInclude(line)) type = cvarlang::TokenType::Include;
+					else									  pushError(SANI_ERROR_MESSAGE("invalid include statement at line " + std::to_string(i) + ", at file " + file.getFilename()));
 				}
 				else if (cvarlang::lang::startsWithRequire(line)) {
 					if (cvarlang::lang::isValidRequire(line)) type = cvarlang::TokenType::Require;
+					else									  pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + ", at file " + file.getFilename()));
 				}
 				else if (cvarlang::lang::isDeclaration(line)) {
 					if (cvarlang::lang::isValidDeclaration(line)) type = cvarlang::TokenType::Declaration;
+					else										  pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + ", at file " + file.getFilename()));
+				} else if (cvarlang::lang::isEmptyOrWhitespace(line)) {
+					type = cvarlang::TokenType::EmptyOrComment;
 				}
 
-				// Check for errors.
 				if (type == cvarlang::TokenType::Invalid) {
-					String error("");//(SANI_ERROR_MESSAGE("cvar syntax error at line " + std::to_string(i)));
+					// Push error, invalid line.
+					pushError(SANI_ERROR_MESSAGE("invalid token at line " + std::to_string(i) + ", at file " + file.getFilename()));
+				} else if (!hasErrors()) {
+					// Check for errors before creating a token, as some
+					// might have been recorded. 
 
-					//pushError(error);
+					// Should be a valid token.
+					CVarToken token = CVarToken(type, i, file.getFilename(), line);
 				}
 			}
 		}

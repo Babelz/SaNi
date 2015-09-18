@@ -47,6 +47,10 @@ namespace sani {
 				Helpers.
 				*/
 
+			inline bool isEmptyOrWhitespace(const String& str) {
+				return str.empty();
+			}
+
 			inline bool startsWithComment(const String& str) {
 				if (str.size() >= 2) return str.substr(0, 2) == "//";
 				else			     return false;
