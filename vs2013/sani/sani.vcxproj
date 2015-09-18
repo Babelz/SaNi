@@ -155,6 +155,8 @@
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
+    <ClCompile Include="..\..\src\platform\binary_reader.cpp" />
+    <ClCompile Include="..\..\src\platform\binary_writer.cpp" />
     <ClCompile Include="..\..\src\platform\color.cpp" />
     <ClCompile Include="..\..\src\platform\file_system.cpp" />
     <ClCompile Include="..\..\src\platform\graphics_device_dx.cpp" />
@@ -209,6 +211,8 @@
     <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector4.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\binary_reader.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp" />
     <ClInclude Include="..\..\include\sani\platform\color.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file_system.hpp" />

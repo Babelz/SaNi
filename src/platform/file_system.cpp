@@ -2,6 +2,8 @@
 #include "sani/platform/platform_config.hpp"
 #include "sani/platform/file_system.hpp"
 #include <sys/stat.h>
+#include "sani/platform/binary_reader.hpp"
+#include "sani/platform/binary_writer.hpp"
 
 namespace sani {
 	namespace io {
@@ -105,6 +107,23 @@ namespace sani {
 			return statbuf.st_size;
 		}
 #endif
+
+		uint8 FileSystem::readByte(const String& path) const {
+			FILE* handle = handles.at(path);
+			int value = fgetc(handle);
+			if (value == EOF) {
+				throw std::runtime_error("End of file reached");
+			}
+			return static_cast<uint8>(value);
+		}
+
+		void FileSystem::getBinaryReader(const String& file, BinaryReader* reader) const {
+			*reader = BinaryReader(this, file);
+		}
+
+		void FileSystem::getBinaryWriter(const String& file, BinaryWriter* writer) const {
+			*writer = BinaryWriter(handles.at(file));
+		}
 	}
 }
 
