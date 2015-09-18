@@ -141,6 +141,9 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_record.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_record_generator.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">

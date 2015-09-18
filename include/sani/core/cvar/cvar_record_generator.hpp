@@ -14,7 +14,8 @@ namespace sani {
 	public:
 		CVarRecordGenerator();
 
-		void generateRecords(std::vector<CVarFile>& files, std::vector<CVarRecord>& outRecords);
+		void generateRecords(const std::vector<CVarToken>& files, std::vector<CVarRecord>& outRecords);
+		void linkWithCVars(const std::vector<CVar>& cvars, std::vector<CVarRecord>& outRecords);
 
 		~CVarRecordGenerator();
 	};
