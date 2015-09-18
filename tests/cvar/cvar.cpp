@@ -16,7 +16,7 @@ TEST_CASE("CVar loading and file tests", "[cvar]") {
 
 	SECTION("Loading") {
 		FileSystem fileSystem;
-		CVarLoader cvarLoader("C:\\Users\\ttv14snikos\\Source\\Repos\\SaNi2\\vs2013\\Debug\\configuration",
+		CVarLoader cvarLoader("../../tests/configuration",
 							  fileSystem);
 
 		std::list<CVarFile> files;
@@ -24,7 +24,7 @@ TEST_CASE("CVar loading and file tests", "[cvar]") {
 		cvarLoader.load(files);
 
 		REQUIRE(files.size() != 0);
-		REQUIRE(files.begin()->getLinesCount() != 0);
+		CHECK(files.begin()->getLinesCount() != 0);
 	}
 }
 #endif

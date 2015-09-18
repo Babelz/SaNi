@@ -8,11 +8,15 @@
 #include <android/asset_manager.h>
 #endif
 
+#include "sani/forward_declare.hpp"
 #include "sani/precompiled.hpp"
 #include "sani/platform/file.hpp"
 #include <vector>
 #include <map>
 #include <map>
+
+SANI_FORWARD_DECLARE_2(sani, io, BinaryReader);
+SANI_FORWARD_DECLARE_2(sani, io, BinaryWriter);
 
 namespace sani {
 	namespace io {
@@ -80,6 +84,11 @@ namespace sani {
 			/// @param path The path where to list files
 			void listFiles(std::vector<String>& files, const String& path) const;
 
+			uint8 readByte(const String& path) const;
+
+			void getBinaryReader(const String& file, BinaryReader* reader) const;
+
+			void getBinaryWriter(const String& file, BinaryWriter* writer) const;
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			void setAssetManager(AAssetManager* assetmanager);
 #endif

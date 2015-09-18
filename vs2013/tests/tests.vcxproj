@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\tests\cvar\cvar.cpp" />
     <ClCompile Include="..\..\tests\events\events.cpp" />
     <ClCompile Include="..\..\tests\io\file.cpp" />
     <ClCompile Include="..\..\tests\main.cpp" />
