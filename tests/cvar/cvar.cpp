@@ -3,6 +3,7 @@
 // TODO: does it matter if we just with the win32 builds?
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
+#include "sani/core/cvar/cvar_statement.hpp"
 #include "sani/core/cvar/cvar_condition.hpp"
 #include "sani/core/cvar/cvar_loader.hpp"
 #include "sani/core/cvar/cvar_file.hpp"
@@ -41,12 +42,17 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 		const int c = 10;
 		const int d = 10;
 
-		CREATE_CONDITION(aEqualsBOrCEqualsD, Or, a, b, { return a == b; });
-		CREATE_CONDITION(secondPart, None, c, d, { return c == d; });
-		
+		auto aEqualsBOrCEqualsD = CVarCondition(cvarlang::Or, [a, b](){
+			return a == b; 
+		});
+
+		auto cEqualsD = CVarCondition(cvarlang::Or, [c, d](){
+			return c == d;
+		});
+
 		std::vector<CVarCondition> conditions;
 		conditions.push_back(aEqualsBOrCEqualsD);
-		conditions.push_back(secondPart);
+		conditions.push_back(cEqualsD);
 		
 		CVarRequireStatement statement(conditions);
 		

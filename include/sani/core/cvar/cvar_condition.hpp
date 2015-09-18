@@ -2,7 +2,6 @@
 
 #include "sani/precompiled.hpp"
 #include <functional>
-#include <vector>
 
 namespace sani {
 
@@ -42,24 +41,4 @@ namespace sani {
 		/// Returns whether the condition was met.
 		bool operator()() const;
 	};
-
-	/// @class CVarRequireStatement cvar_condition.hpp "sani/core/cvar/cvar_condition.hpp"
-	/// @author voidbab
-	///
-	/// Represents a set of conditions.
-	class CVarRequireStatement {
-	private:
-		std::vector<CVarCondition> statement;
-		
-		size_t capacity;
-	public:
-		CVarRequireStatement(const std::vector<CVarCondition>& statement);
-
-		~CVarRequireStatement();
-
-		/// Returns whether the condition was met.
-		bool operator()();
-	};
-
-	#define CREATE_CONDITION(name, oper, a, b, body) CVarCondition name(cvarlang::Operator::##oper, Condition([a, b] () body))
 }

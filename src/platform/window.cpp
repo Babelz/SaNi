@@ -195,7 +195,7 @@ namespace sani {
 			return impl->cImpl.title;
 		}
 		void Window::setTitle(const String& title) {
-			const std::wstring stemp = std::wstring(title.begin(), title.end());
+			const std::wstring stemp(title.begin(), title.end());
 
 			impl->lpcwTitle = stemp.c_str();
 			impl->cImpl.title = title;

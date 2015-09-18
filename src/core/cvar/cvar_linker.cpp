@@ -17,7 +17,7 @@ namespace sani {
 		return errorBuffer.size() != 0;
 	}
 	String CVarLinker::getNextError() {
-		const String error = errorBuffer.top();
+		const String error(errorBuffer.top());
 		errorBuffer.pop();
 
 		return error;
@@ -35,14 +35,11 @@ namespace sani {
 				//		if not, push error, return
 				//		else link, continue
 
-				String line = file.lineAtIndex(i);
+				const String& line = file.lineAtIndex(i);
 				
 				// Check for requires.
-				if (cvarlang::startsWithRequire(line)) {
-					// Remove comments and validate.
-					if (cvarlang::containsComment(line)) cvarlang::removeComment(line);
-
-					if (!cvarlang::isValidRequire(line)) {
+				if (cvarlang::lang::startsWithRequire(line)) {
+					if (!cvarlang::lang::isValidRequire(line)) {
 					}
 				}
 			}
