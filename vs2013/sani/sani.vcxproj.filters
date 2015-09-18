@@ -123,6 +123,9 @@
     <ClCompile Include="..\..\src\platform\binary_writer.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">
@@ -252,6 +255,12 @@
       <Filter>include\core\cvar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp">
+      <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp">
+      <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_condition.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\binary_reader.hpp">
