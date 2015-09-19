@@ -19,8 +19,6 @@ namespace sani {
 		namespace lang {
 
 			const String Require			= "require *";
-			const String Include			= "include *";
-			const String FileDeclaration	= "\".+\\.cfg\"";
 			const String Comment			= "//.+";
 
 			const String StringType			= "\".+\"";
@@ -38,14 +36,8 @@ namespace sani {
 											  DoubleType + "|" + FloatType;
 
 			/*
-				Statements.
-				*/
-
-			const String RequireFile = Include + " *?" + FileDeclaration;
-
-			/*
 				Helpers.
-				*/
+			*/
 
 			inline bool isEmptyOrWhitespace(const String& str) {
 				return str.empty();
@@ -63,18 +55,9 @@ namespace sani {
 				return std::regex_match(str, std::regex(Require));
 			}
 			inline bool isValidRequire(const String& str) {
-				const std::regex regex(RequireFile);
+				const std::regex regex(Require);
 				const size_t strLen = str.size();
 
-				// TODO: complete.
-
-				return false;
-			}
-
-			inline bool startsWithInclude(const String& str) {
-				return std::regex_match(str, std::regex(Include));
-			}
-			inline bool isValidInclude(const String& str) {
 				// TODO: complete.
 
 				return false;

@@ -111,9 +111,6 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\cvar\link_record.cpp">
-      <Filter>src\core\cvar</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\platform\binary_reader.cpp">
       <Filter>src\platform</Filter>
     </ClCompile>
@@ -142,6 +139,9 @@
       <Filter>src\core\cvar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_emitter.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
   </ItemGroup>
@@ -269,9 +269,6 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp">
-      <Filter>include\core\cvar</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
@@ -304,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp">
       <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_emitter.hpp">
+      <Filter>include\core\cvar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

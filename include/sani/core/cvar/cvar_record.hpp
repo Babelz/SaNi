@@ -13,9 +13,9 @@ namespace sani {
 	class CVarRecord {
 	private:
 		const CVarToken token;		// Tokenized cvar.
-		const CVar* cvar;			// Runtime cvar.
+		const CVar& cvar;			// Runtime cvar.
 	public:
-		CVarRecord(const CVarToken& token, const CVar* cvar);
+		CVarRecord(const CVarToken& token, const CVar& cvar);
 
 		/// Creates a synced string representation of the underlying cvar.
 		String generateSyncedStringRepresentation() const;

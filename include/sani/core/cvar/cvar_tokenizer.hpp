@@ -25,7 +25,7 @@ namespace sani {
 		String getNextError();
 
 		// Creates tokens from given files.
-		void tokenize(const std::list<CVarFile>& files, std::vector<CVarToken>& tokens);
+		void tokenize(const std::list<CVarFile>& files, std::list<CVarToken>& tokens);
 
 		~CVarTokenizer();
 	};

@@ -12,8 +12,8 @@ namespace sani {
 	public:
 		CVarContainer(const std::list<CVar>& cvars);
 
-		CVar& find(const String& name);
 		bool contains(const String& name);
+		CVar& find(const String& name);
 
 		~CVarContainer();
 	};

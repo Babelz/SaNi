@@ -3,7 +3,7 @@
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/core/cvar/cvar.hpp"
-#include <vector>
+#include <list>
 
 /*
 	Parsing steps:
@@ -27,15 +27,15 @@ namespace sani {
 		const String& configurationRootFolder;
 		io::FileSystem& fileSystem;
 
-		std::vector<CVarRecord> records;
-		std::vector<CVar> cvars;
+		std::list<CVarRecord> records;
+		std::list<CVar> cvars;
 	public:
 		CVarParser(const String& configurationRootFolder, io::FileSystem& fileSystem);
 
 		void parse();
 
-		std::vector<CVarRecord>& getRecords() const;
-		std::vector<CVar>& getCVars() const;
+		std::list<CVarRecord>& getRecords();
+		std::list<CVar>& getCVars();
 		
 		~CVarParser();
 	};

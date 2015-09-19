@@ -10,11 +10,9 @@ namespace sani {
 			Invalid,
 			EmptyOrComment,
 			Declaration,
-			Include,
 			Require
 		};
 	}
-
 
 	/// @class CVarToken cvar_token.hpp "sani/core/cvar/cvar_token.hpp"
 	/// @author

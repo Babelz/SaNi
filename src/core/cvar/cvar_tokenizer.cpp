@@ -20,7 +20,7 @@ namespace sani {
 		return error;
 	}
 
-	void CVarTokenizer::tokenize(const std::list<CVarFile>& files, std::vector<CVarToken>& tokens) {
+	void CVarTokenizer::tokenize(const std::list<CVarFile>& files, std::list<CVarToken>& tokens) {
 		/*
 			Just tokenize all the files, don't stop if errors are found.
 			This is just to show all the errors found, not the first one.
@@ -36,12 +36,7 @@ namespace sani {
 				if (line.size() == 0 || cvarlang::lang::startsWithComment(line)) continue;
 				
 				// Check what type the line could be.
-				if (cvarlang::lang::startsWithInclude(line)) {
-					if (cvarlang::lang::isValidInclude(line)) type = cvarlang::TokenType::Include;
-					else									  pushError(SANI_ERROR_MESSAGE("invalid include statement at line " + std::to_string(i) + 
-																						   ", at file " + file.getFilename()));
-				}
-				else if (cvarlang::lang::startsWithRequire(line)) {
+				if (cvarlang::lang::startsWithRequire(line)) {
 					if (cvarlang::lang::isValidRequire(line)) type = cvarlang::TokenType::Require;
 					else									  pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + 
 																						   ", at file " + file.getFilename()));

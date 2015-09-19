@@ -2,7 +2,8 @@
 
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/core/cvar/cvar_file.hpp"
-#include <vector>
+#include "sani/core/cvar/cvar.hpp"
+#include <list>
 
 namespace sani {
 
@@ -14,9 +15,10 @@ namespace sani {
 	public:
 		CVarRecordGenerator();
 
-		void generateRecords(const std::vector<CVarToken>& files, std::vector<CVarRecord>& outRecords);
-		void linkWithCVars(const std::vector<CVar>& cvars, std::vector<CVarRecord>& outRecords);
-
+		void generateRecords(const std::list<CVarToken>& tokens, 
+							 const std::list<CVar>& vars,
+							 std::list<CVarRecord>& records);
+		
 		~CVarRecordGenerator();
 	};
 }
