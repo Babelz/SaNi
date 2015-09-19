@@ -38,15 +38,18 @@ namespace sani {
 				// Check what type the line could be.
 				if (cvarlang::lang::startsWithInclude(line)) {
 					if (cvarlang::lang::isValidInclude(line)) type = cvarlang::TokenType::Include;
-					else									  pushError(SANI_ERROR_MESSAGE("invalid include statement at line " + std::to_string(i) + ", at file " + file.getFilename()));
+					else									  pushError(SANI_ERROR_MESSAGE("invalid include statement at line " + std::to_string(i) + 
+																						   ", at file " + file.getFilename()));
 				}
 				else if (cvarlang::lang::startsWithRequire(line)) {
 					if (cvarlang::lang::isValidRequire(line)) type = cvarlang::TokenType::Require;
-					else									  pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + ", at file " + file.getFilename()));
+					else									  pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + 
+																						   ", at file " + file.getFilename()));
 				}
 				else if (cvarlang::lang::isDeclaration(line)) {
 					if (cvarlang::lang::isValidDeclaration(line)) type = cvarlang::TokenType::Declaration;
-					else										  pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + ", at file " + file.getFilename()));
+					else										  pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + 
+																							   ", at file " + file.getFilename()));
 				} else if (cvarlang::lang::isEmptyOrWhitespace(line)) {
 					type = cvarlang::TokenType::EmptyOrComment;
 				}

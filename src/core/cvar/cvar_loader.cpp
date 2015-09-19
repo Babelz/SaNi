@@ -19,19 +19,25 @@ namespace sani {
 
 		// Read lines and save paths.
 		for (String& filename : cvarFiles) {
-			// Open files.
-			const String path(configurationRootFolder + "\\" + filename);
 
-			if (!fileSystem.isFileOpen(path)) fileSystem.openFile(path, io::Filemode::Read);
-			
-			// Just assume the file is open.
-			const String contents(fileSystem.getFileDataString(path));
+			// Check if the file is a .cfg, if not, don't parse it.
+			const String ending(".cfg");
 
-			// Create new file record from the data collected.
-			files.push_back(CVarFile(path, contents));
+			if (filename.substr(filename.size() - ending.size(), ending.size()) == ending) {
+				// Open files.
+				const String path(configurationRootFolder + "\\" + filename);
 
-			// Close after reading.
-			fileSystem.closeFile(path);
+				if (!fileSystem.isFileOpen(path)) fileSystem.openFile(path, io::Filemode::Read);
+
+				// Just assume the file is open.
+				const String contents(fileSystem.getFileDataString(path));
+
+				// Create new file record from the data collected.
+				files.push_back(CVarFile(path, contents));
+
+				// Close after reading.
+				fileSystem.closeFile(path);
+			}
 		}
 	}
 
