@@ -22,7 +22,7 @@ namespace sani {
 
 	SANI_FORWARD_DECLARE_1(io, FileSystem);
 
-	class CVarParser {
+	class CvarCompiler {
 	private:
 		const String& configurationRootFolder;
 		io::FileSystem& fileSystem;
@@ -30,13 +30,13 @@ namespace sani {
 		std::list<CVarRecord> records;
 		std::list<CVar> cvars;
 	public:
-		CVarParser(const String& configurationRootFolder, io::FileSystem& fileSystem);
+		CvarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem);
 
 		void parse();
 
 		std::list<CVarRecord>& getRecords();
 		std::list<CVar>& getCVars();
 		
-		~CVarParser();
+		~CvarCompiler();
 	};
 }

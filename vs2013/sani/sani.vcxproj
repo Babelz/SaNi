@@ -149,7 +149,7 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_emitter.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp" />
-    <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\cvar_compiler.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_record.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_record_generator.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_statement.cpp" />
@@ -181,7 +181,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp" />
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record_generator.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_statement.hpp" />

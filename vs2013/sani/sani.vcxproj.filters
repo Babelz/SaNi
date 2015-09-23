@@ -141,10 +141,10 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_record_generator.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp">
+    <ClCompile Include="..\..\src\core\cvar\cvar_emitter.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\cvar\cvar_emitter.cpp">
+    <ClCompile Include="..\..\src\core\cvar\cvar_compiler.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
   </ItemGroup>
@@ -281,9 +281,6 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_tokenizer.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp">
-      <Filter>include\core\cvar</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
@@ -310,6 +307,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp">
       <Filter>include\core\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp">
+      <Filter>include\core\cvar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
