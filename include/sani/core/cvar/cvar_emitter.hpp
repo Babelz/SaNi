@@ -10,6 +10,11 @@ namespace sani {
 	/// Class that is responsible for generating the cvars.
 	/// Last step of the compilation.
 	class CVarEmitter {
+	private:
+		struct RequireRecord;
+		struct IntermediateCVar;
+		struct IntermediateRequire;
+
 	public:
 		CVarEmitter();
 

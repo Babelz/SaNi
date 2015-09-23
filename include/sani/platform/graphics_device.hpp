@@ -158,9 +158,6 @@ namespace sani {
 				Buffer functions.
 			*/
 
-			void generateVertexArray(Buffer& vertexArray);
-			void bindVertexArray(Buffer& buffer);
-
 			void generateBuffer(Buffer& buffer, const BufferType type);
 			void bindElementBuffer(Buffer& buffer, const BufferType type);
 			void setElementBufferData(Buffer& buffer, const uint32 bytes, void* data, const ElementBufferUsage usage);

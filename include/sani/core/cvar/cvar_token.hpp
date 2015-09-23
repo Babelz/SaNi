@@ -1,18 +1,8 @@
 #pragma once
 
-#include "sani/precompiled.hpp"
+#include "sani/core/cvar/cvar_lang.hpp"
 
 namespace sani {
-
-	namespace cvarlang {
-
-		enum TokenType {
-			Invalid,
-			EmptyOrComment,
-			Declaration,
-			Require
-		};
-	}
 
 	/// @class CVarToken cvar_token.hpp "sani/core/cvar/cvar_token.hpp"
 	/// @author

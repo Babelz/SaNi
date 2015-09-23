@@ -5,19 +5,6 @@
 
 namespace sani {
 
-	namespace cvarlang {
-		
-		enum ValueType {
-			String,
-			// 32-bit integer.
-			Int,
-			// 32-bit floating point number.
-			Float,
-			// 64-bit floating point number.
-			Double
-		};
-	}
-
 	/// @class CVar cvar.hpp "sani/core/cvar/cvar.hpp"
 	/// @author voidbab
 	///
