@@ -263,6 +263,7 @@ namespace sani {
 		// Android OpenGLES implementation.
 
 #include <GLES2/gl2.h>
+#include <stdexcept>
 namespace sani {
 	namespace graphics {
 
@@ -270,6 +271,18 @@ namespace sani {
 		public:
 			Cimpl cImpl;
 		};
+
+		GraphicsDevice::GraphicsDevice() : impl(new Impl) {
+
+		}
+
+		void GraphicsDevice::clear(const Color& color) {
+			glClearColor(color.r, color.g, color.b, color.a);
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			CHECK_FOR_ERRORS();
+		}
 	}
 }
 
@@ -420,11 +433,11 @@ namespace sani {
 
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			// Set as attachement#0?
 			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, glTexture, 0);
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID 
-			glFramebufferTexture2D(GL_FRAME_BUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE2D, glTexture, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture, 0);
 #endif
 
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);

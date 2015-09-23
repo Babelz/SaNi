@@ -52,7 +52,7 @@ namespace sani {
 			if (callbacks.size() == 0) return;
 
 			for (auto i = callbacks.begin(); i != callbacks.end(); i++) {
-				if ((*i).target<T>() == callback.target<T>()) {
+				if ((*i).template target<T>() == callback.template target<T>()) {
 					callbacks.erase(i);
 					
 					return;

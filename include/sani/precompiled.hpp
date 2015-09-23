@@ -44,6 +44,22 @@ static_assert(sizeof(float64) == 8, "sizeof(float64) != 8");
 	TODO: should be moved to somewhere else?
 */
 
+// TODO move this somewhere?
+#include <sani/platform/platform_config.hpp>
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+#include <sstream>
+
+namespace std {
+	template <typename T>
+	String to_string(const T& value)
+	{
+		std::ostringstream os;
+		os << value;
+		return os.str();
+	}
+}
+#endif
+
 #define __SANI_INFO__(message) String(message +											\
 							          " - @File: " + __FILE__ +							\
 							          " @Function: " + __FUNCTION__	+					\

@@ -37,7 +37,7 @@ public class SaniRenderer implements GLSurfaceView.Renderer {
 
 	@Override
 	public void onDrawFrame(final GL10 gl) {
-		nativeRender();
+		nativeRender(graphicsDevicePtr);
 	}
 
 	// Initialize graphics device
@@ -48,5 +48,5 @@ public class SaniRenderer implements GLSurfaceView.Renderer {
 	// TODO: Do we need this?
 	private static native void nativeOnSurfaceChanged(final int width, final int height);
 	// Renders frame
-	private static native void nativeRender();
+	private static native void nativeRender(long graphicsDevice);
 }

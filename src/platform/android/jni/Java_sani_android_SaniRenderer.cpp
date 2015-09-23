@@ -2,6 +2,8 @@
 #include <GLES2/gl2.h>
 #include <sani/platform/graphics_device.hpp>
 #include <android/log.h>
+#include <sani/platform/viewport.hpp>
+#include <sani/platform/color.hpp>
 // TODO test
 #define  LOG_TAG    "SaniRenderer"
 
@@ -26,14 +28,18 @@ extern "C" {
 		if (!device) {
 			LOGE("Graphics device is null in C++!");
 		}
-		glClearColor(1.f, 0.f, 0.f, 1.f);
+		device->setBackBufferWidth(surfaceWidth);
+		device->setBackBufferHeight(surfaceHeight);
+		device->setViewport(Viewport( 0u, 0u, surfaceWidth, surfaceHeight) );
 	}
 
 	JNIEXPORT void JNICALL Java_sani_android_SaniRenderer_nativeOnSurfaceChanged(JNIEnv* env, jclass clazz, jint surfaceWidth, jint surfaceHeight) {
 
 	}
 
-	JNIEXPORT void JNICALL Java_sani_android_SaniRenderer_nativeRender(JNIEnv* env, jclass clazz) {
-		glClear(GL_COLOR_BUFFER_BIT);
+	JNIEXPORT void JNICALL Java_sani_android_SaniRenderer_nativeRender(JNIEnv* env, jclass clazz, jlong graphicsDevicePtr) {
+		using namespace sani::graphics;
+		GraphicsDevice* device = reinterpret_cast<GraphicsDevice*>(graphicsDevicePtr);
+		device->clear(Color::green);
 	}
 }

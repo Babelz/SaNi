@@ -53,9 +53,10 @@ namespace sani {
 
 			void checkForErrors(const char* func, const int32 line);
 		public:
-
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+			GraphicsDevice();
 			// Public Win32 members.
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance, const int32 backBufferWidth, const int32 backBufferHeight);
 

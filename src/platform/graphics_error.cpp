@@ -53,7 +53,7 @@ namespace sani {
 				message = "There was not enough memory left to execute the given command";
 				break;
 
-#if SANI_PLATFORM != SANI_PLATFORM_ANDROID	// Android does not support these errors.
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID	// Android does not support these errors.
 			case GL_STACK_UNDERFLOW:
 				message = "An attempt was made to perform an operation that would cause an internal stack to underflow";
 				break;
