@@ -34,7 +34,7 @@ namespace sani {
 			IntermediateRequirement() : lhsIsConst(false),
 										rhsIsConst(false),
 										logicalOperator(LogicalOperators::None),
-										conditionalOperator(ConditionalOperators::None) {
+										conditionalOperator(ConditionalOperators::NoOperation) {
 			}
 
 			~IntermediateRequirement() {
