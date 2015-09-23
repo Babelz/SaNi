@@ -69,7 +69,7 @@ namespace sani {
 			size_t start = 0;
 			size_t end = str.find(pattern);
 
-			while (end != std::string::npos) {
+			while (end != String::npos) {
 				const String sub = str.substr(start, end - start);
 
 				start = end + pattern.size();
