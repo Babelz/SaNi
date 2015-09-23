@@ -70,7 +70,7 @@ namespace sani {
 			size_t end = str.find(pattern);
 
 			while (end != std::string::npos) {
-				std::string sub = str.substr(start, end - start);
+				const String sub = str.substr(start, end - start);
 
 				start = end + pattern.size();
 				end = str.find(pattern, start);
@@ -80,7 +80,7 @@ namespace sani {
 				results.push_back(sub);
 			}
 
-			String sub = str.substr(start, end - start);
+			const String sub = str.substr(start, end - start);
 
 			if (sub.empty() && removeEmpty) return;
 
