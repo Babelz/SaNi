@@ -15,8 +15,6 @@ namespace sani {
 	namespace cvarlang {
 
 		enum ConditionalOperators {
-			None,
-
 			NoOperation,
 
 			// ==
@@ -39,7 +37,7 @@ namespace sani {
 		};
 
 		enum ValueType {
-			None,
+			NoValue,
 
 			StringVal,
 

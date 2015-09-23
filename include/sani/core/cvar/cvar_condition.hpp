@@ -1,5 +1,6 @@
 #pragma once 
 
+#include "sani/core/cvar/cvar_lang.hpp"
 #include "sani/precompiled.hpp"
 #include <functional>
 
