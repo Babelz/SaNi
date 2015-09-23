@@ -2,11 +2,11 @@
 
 namespace sani {
 
-	CVarCondition::CVarCondition(const cvarlang::Operator oper, const Condition condition) : oper(oper),
-																							 condition(condition) {
+	CVarCondition::CVarCondition(const cvarlang::LogicalOperators oper, const Condition condition) : oper(oper),
+																							         condition(condition) {
 	}
 
-	cvarlang::Operator CVarCondition::getOperator() const {
+	cvarlang::LogicalOperators CVarCondition::getOperator() const {
 		return oper;
 	}
 

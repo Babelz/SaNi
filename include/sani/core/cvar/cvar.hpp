@@ -8,13 +8,13 @@ namespace sani {
 	namespace cvarlang {
 		
 		enum ValueType {
-			String,
+			StringVal,
 			// 32-bit integer.
-			Int,
+			IntVal,
 			// 32-bit floating point number.
-			Float,
+			FloatVal,
 			// 64-bit floating point number.
-			Double
+			DoubleVal
 		};
 	}
 

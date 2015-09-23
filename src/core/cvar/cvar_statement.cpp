@@ -23,11 +23,11 @@ namespace sani {
 			const CVarCondition* current = &statement[i];
 			const CVarCondition* second = nullptr;
 
-			if (statement[i].getOperator() == sani::cvarlang::None) {
+			if (statement[i].getOperator() == sani::cvarlang::LogicalOperators::None) {
 				result = (*current)();
 
 				i++;
-			} else if (statement[i].getOperator() == sani::cvarlang::And) {
+			} else if (statement[i].getOperator() == sani::cvarlang::LogicalOperators::And) {
 				// Post inc to get next.
 				i++;
 
@@ -38,12 +38,12 @@ namespace sani {
 
 				// Pre inc to get first at next iteration.
 				i++;
-			} else if (statement[i].getOperator() == sani::cvarlang::Or) {
+			} else if (statement[i].getOperator() == sani::cvarlang::LogicalOperators::Or) {
 				bool orResult = false;
 				bool beforeOr = result;
 
 				// || a || b || c 
-				while (i < statement.size() || current->getOperator() == cvarlang::Operator::Or) {
+				while (i < statement.size() || current->getOperator() == cvarlang::LogicalOperators::Or) {
 					// Get cur + 1 element.
 					if (i > 0) lastResult = result;
 					else	   { i++; lastResult = statement[i](); }
@@ -62,6 +62,8 @@ namespace sani {
 
 				// Left side was true. Swap.
 				if (!orResult && beforeOr) result = beforeOr;
+
+				i++;
 			} else {
 				throw std::logic_error("Invalid or unsupported cvarlang::Operator");
 			}

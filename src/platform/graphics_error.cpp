@@ -3,7 +3,7 @@
 namespace sani {
 	namespace graphics {
 
-		// WinGL implementations of the graphics error.
+		// WinGL/Android implementations of the graphics error.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 		GraphicsError::GraphicsError(const GLuint apiErrorCode, const String& function, const int32 lineNumber) : function(function),
 																												  lineNumber(lineNumber) {

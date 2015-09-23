@@ -25,6 +25,9 @@
     <Filter Include="Source Files\cvar">
       <UniqueIdentifier>{425f9b76-458c-426a-afb5-620a02453a65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{2710ecf2-fb35-4f6e-99c6-067a9be3f5d5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\main.cpp">
@@ -47,6 +50,9 @@
     </ClCompile>
     <ClCompile Include="..\..\tests\cvar\cvar.cpp">
       <Filter>Source Files\cvar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\utils\string_utils.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

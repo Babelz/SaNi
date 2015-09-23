@@ -9,7 +9,7 @@ namespace sani {
 
 	namespace cvarlang {
 
-		enum Operator {
+		enum LogicalOperators {
 			// No operation.
 			None,
 
@@ -29,12 +29,12 @@ namespace sani {
 	class CVarCondition {
 	private:
 		const Condition condition;
-		const cvarlang::Operator oper;
+		const cvarlang::LogicalOperators oper;
 	public:
-		CVarCondition(const cvarlang::Operator oper, const Condition condition);
+		CVarCondition(const cvarlang::LogicalOperators oper, const Condition condition);
 
 		/// Returns the operator.
-		cvarlang::Operator getOperator() const;
+		cvarlang::LogicalOperators getOperator() const;
 
 		~CVarCondition();
 

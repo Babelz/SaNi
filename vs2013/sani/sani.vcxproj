@@ -211,6 +211,7 @@
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector4.hpp" />
+    <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\platform\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp" />

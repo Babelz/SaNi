@@ -1,11 +1,15 @@
 #include "sani/core/cvar/cvar_emitter.hpp"
+#include "sani/core/cvar/cvar_lang.hpp"
+#include <sstream>
 
 namespace sani {
 
-	CVarEmitter::CVarEmitter() {
-	}
+	struct RequireRecord {
+		std::function<bool(void)> Func;
+		uint32 Scope;
+	};
 
-	void CVarEmitter::emit(const std::list<CVarToken>& tokens, std::list<CVar>& cvars) const {
+	CVarEmitter::CVarEmitter() {
 	}
 
 	CVarEmitter::~CVarEmitter() {
