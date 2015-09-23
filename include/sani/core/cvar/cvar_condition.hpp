@@ -7,20 +7,6 @@ namespace sani {
 
 	typedef std::function<bool(void)> Condition;
 
-	namespace cvarlang {
-
-		enum LogicalOperators {
-			// No operation.
-			None,
-
-			// &&
-			And,
-			
-			// ||
-			Or
-		};
-	}
-
 	/// @class CVarCondition cvar_condition.hpp "sani/core/cvar/cvar_condition.hpp"
 	/// @author voidbab
 	///

@@ -4,29 +4,6 @@
 
 namespace sani {
 
-	namespace cvarlang {
-
-		enum ConditionalOperators {
-			// ==
-			Equal,
-
-			// !=
-			NotEqual,
-
-			// <
-			Smaller,
-
-			// <=
-			SmallerOrEqual,
-			
-			// >
-			Greater,
-
-			// >=
-			GreaterOrEqual
-		};
-	}
-
 	/// @class CVarEmitter cvar_emitter.hpp "sani/core/cvar/cvar_emitter.hpp"
 	/// @author voidbab
 	///

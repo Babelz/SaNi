@@ -182,6 +182,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record_generator.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_statement.hpp" />

@@ -311,6 +311,9 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp">
+      <Filter>include\core\cvar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
