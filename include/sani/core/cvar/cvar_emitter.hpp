@@ -12,8 +12,6 @@ namespace sani {
 	class CVarEmitter {
 	private:
 		struct RequireRecord;
-		struct IntermediateCVar;
-		struct IntermediateRequire;
 
 	public:
 		CVarEmitter();

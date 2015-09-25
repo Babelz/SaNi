@@ -12,6 +12,7 @@ namespace sani {
 	class CVarToken {
 	private:
 		const cvarlang::TokenType type;
+
 		const uint32 lineNumber;
 		const String filename;
 		const String line;

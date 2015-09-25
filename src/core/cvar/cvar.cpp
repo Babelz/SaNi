@@ -57,29 +57,49 @@ namespace sani {
 	}
 
 	void CVar::read(String& value) const {
+		if (type != cvarlang::ValueType::StringVal) return;
+
 		value = stringVal;
 	}
 	void CVar::read(int32& value) const {
+		if (type != cvarlang::ValueType::IntVal) return;
+
 		value = int32Val;
 	}
 	void CVar::read(float32& value) const {
+		if (type != cvarlang::ValueType::FloatVal) return;
+
 		value = float32Val;
 	}
 	void CVar::read(float64& value) const {
+		if (type != cvarlang::ValueType::DoubleVal) return;
+
 		value = float64Val;
 	}
 
 	void CVar::write(const String& value) {
-		stringVal = value; changed = true;
+		if (type != cvarlang::ValueType::StringVal) return;
+
+		stringVal = value;
+		changed = true;
 	}
 	void CVar::write(int32 value) {
-		int32Val = value; changed = true;
+		if (type != cvarlang::ValueType::IntVal) return;
+
+		int32Val = value; 
+		changed = true;
 	}
 	void CVar::write(float32 value) {
-		float32Val = value; changed = true;
+		if (type != cvarlang::ValueType::FloatVal) return;
+
+		float32Val = value; 
+		changed = true;
 	}
 	void CVar::write(float64 value) {
-		float64Val = value; changed = true;
+		if (type != cvarlang::ValueType::DoubleVal) return;
+
+		float64Val = value; 
+		changed = true;
 	}
 
 	CVar::~CVar() {

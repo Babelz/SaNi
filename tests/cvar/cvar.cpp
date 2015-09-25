@@ -9,6 +9,8 @@
 #include "sani/core/cvar/cvar_loader.hpp"
 #include "sani/core/cvar/cvar_file.hpp"
 #include "sani/platform/file_system.hpp"
+#include "sani/core/cvar/cvar_record.hpp"
+#include "sani/core/cvar/cvar.hpp"
 #include "catch/catch.hpp"
 #include <vector>
 #include <list>
@@ -124,6 +126,33 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		REQUIRE((stat1Intr.conditions[0].logicalOperator == cvarlang::LogicalOperators::And));
 
 		REQUIRE((stat1Intr.conditions[1].lhs == "b"));
+	}
+
+	SECTION("Record syncing") {
+		CVar cvar(CVarRequireStatement(std::vector<CVarCondition>()),
+				  cvarlang::ValueType::IntVal,
+				  "my_int_var",
+				  true,
+				  128);
+
+		CVarToken token(cvarlang::TokenType::Declaration, 1, "perkele.cfg", "    my_int_var 128 // heres a ebin comming");
+
+		CVarRecord record(token, cvar);
+		
+		REQUIRE(cvar.canWrite());
+		REQUIRE(!record.shouldSync());
+		
+		cvar.write(10);
+		
+		REQUIRE(record.shouldSync());
+	
+		String syncedRepresentation = record.generateSyncedStringRepresentation();
+		REQUIRE((syncedRepresentation.find("10") != syncedRepresentation.npos));
+
+		cvar.write(1024);
+
+		syncedRepresentation = record.generateSyncedStringRepresentation();
+		REQUIRE((syncedRepresentation.find("1024") != syncedRepresentation.npos));
 	}
 }
 

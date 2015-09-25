@@ -14,6 +14,9 @@ namespace sani {
 	private:
 		const CVarToken token;		// Tokenized cvar.
 		const CVar& cvar;			// Runtime cvar.
+		
+		size_t indexOfValue;
+		String originalValue;
 	public:
 		CVarRecord(const CVarToken& token, const CVar& cvar);
 
