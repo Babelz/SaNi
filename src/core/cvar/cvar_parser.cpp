@@ -11,7 +11,6 @@ namespace sani {
 		errorBuffer.push(error);
 	}
 
-
 	void CVarParser::findLogicalOperator(const String& str, size_t& pos) const {
 		if (cvarlang::lang::containsLogicalAnd(str))	pos = str.find(cvarlang::lang::And);
 		if (cvarlang::lang::containsLogicalOr(str))		pos = str.find(cvarlang::lang::Or);

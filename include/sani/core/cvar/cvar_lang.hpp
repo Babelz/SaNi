@@ -70,11 +70,16 @@ namespace sani {
 		};
 
 		/*
-			Words.
+			Regular language.
 		*/
 
 		namespace lang {
 			
+			/*
+				TODO: after the system has been implemented, remove any not
+					  needed statements and tokens.
+			*/
+
 			const String Require			= "require *";
 			const String Comment			= "//";
 
@@ -134,12 +139,6 @@ namespace sani {
 			
 			inline bool startsWithRequire(const String& str) {
 				return std::regex_match(str, std::regex(Require));
-			}
-			inline bool isValidRequire(const String& str) {
-				const std::regex regex(Require);
-				const size_t strLen = str.size();
-
-				return false;
 			}
 
 			inline bool isDeclaration(const String& str) {
