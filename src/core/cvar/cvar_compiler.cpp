@@ -57,7 +57,7 @@ namespace sani {
 				// So, the require token class has 2 variants, the one 
 				// that starts a require statement (require([condition]) and 
 				// the one that ends a block, that is just the plain require keyword in use.
-				// We need to track that the user closes the scopes before the file ends,
+				// We need to track that the user closes the scopes before the tokens end,
 				// or we are fucked.
 
 				cvarlang::IntermediateRequireStatement intermediateRequireStatement;
