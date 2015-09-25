@@ -13,6 +13,7 @@ namespace sani {
 			/// 
 			/// @author siquel
 			class ResourceReader : io::BinaryReader {
+				// TODO add functions to read matrices vectors and stuff
 			private:
 				ResourceManager& manager;
 				GraphicsDevice* graphicsDevice;

@@ -79,6 +79,12 @@
     <Filter Include="include\resource\reader">
       <UniqueIdentifier>{7b3aa4f9-8594-42f6-a02e-e7ee3c60de57}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\resource\compiler">
+      <UniqueIdentifier>{8b8e7f0d-0f59-4c41-b5a8-cc0f6fa2ee62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\resource\compiler">
+      <UniqueIdentifier>{6437e6d5-d2df-4ceb-aa2b-41f6ea2fab58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -173,6 +179,24 @@
     </ClCompile>
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp">
       <Filter>src\resource\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp">
+      <Filter>src\resource\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp">
+      <Filter>src\resource\reader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp">
+      <Filter>src\resource\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp">
+      <Filter>src\resource\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\compiler\primitive_writers.cpp">
+      <Filter>src\resource\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp">
+      <Filter>src\resource\compiler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,6 +385,27 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader_manager.hpp">
       <Filter>include\resource\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\reader\texture2d_reader.hpp">
+      <Filter>include\resource\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp">
+      <Filter>include\resource\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp">
+      <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\primitive_writers.hpp">
+      <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp">
+      <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp">
+      <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp">
+      <Filter>include\resource\compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
