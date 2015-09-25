@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/core/cvar/cvar_lang.hpp"
 #include "sani/core/cvar/cvar_token.hpp"
 #include "sani/core/cvar/cvar_file.hpp"
 #include <stack>
@@ -14,7 +15,7 @@ namespace sani {
 	///
 	/// Parse CVar tokens from files.
 	class CVarTokenizer {
-	public:
+	private:
 		ErrorBuffer errorBuffer;
 
 		void pushError(const String& error);
