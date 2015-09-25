@@ -13,7 +13,7 @@ namespace sani {
 		public:
 			BinaryReader();
 			BinaryReader(const FileSystem* fs, const String& file);
-			~BinaryReader();
+			virtual ~BinaryReader();
 			int16 readInt16();
 			int32 readInt32();
 			int64 readInt64();

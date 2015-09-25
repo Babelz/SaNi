@@ -64,6 +64,15 @@
     <Filter Include="include\core\utils">
       <UniqueIdentifier>{2173b770-f1ac-424f-9288-7e641732bf55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\resource">
+      <UniqueIdentifier>{44960ea2-07da-418a-8db0-c920987a2e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\resource">
+      <UniqueIdentifier>{f4a3f3b4-5b18-4884-aadb-33206d195790}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\resource\pipeline">
+      <UniqueIdentifier>{5160978b-4a84-4e7e-9d44-02a4b7a169c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -146,6 +155,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_compiler.cpp">
       <Filter>src\core\cvar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\resource_reader.cpp">
+      <Filter>src\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,6 +325,21 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp">
       <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp">
+      <Filter>include\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_reader.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\content_type_reader.hpp">
+      <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
