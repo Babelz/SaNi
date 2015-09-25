@@ -150,6 +150,7 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_compiler.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_record.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_record_generator.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_statement.cpp" />
