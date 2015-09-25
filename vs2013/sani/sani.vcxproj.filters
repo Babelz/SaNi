@@ -162,6 +162,12 @@
     <ClCompile Include="..\..\src\resource\resource_reader.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\resource_type_reader_manager.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\primitive_readers.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">
@@ -311,12 +317,6 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_container.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\binary_reader.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_emitter.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
@@ -341,7 +341,19 @@
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\content_type_reader.hpp">
+    <ClInclude Include="..\..\include\sani\platform\binary_reader.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_type_reader_manager.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_type_reader.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\primitive_readers.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>

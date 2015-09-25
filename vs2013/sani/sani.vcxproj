@@ -172,7 +172,9 @@
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\window.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
+    <ClCompile Include="..\..\src\resource\primitive_readers.cpp" />
     <ClCompile Include="..\..\src\resource\resource_reader.cpp" />
+    <ClCompile Include="..\..\src\resource\resource_type_reader_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
@@ -230,11 +232,13 @@
     <ClInclude Include="..\..\include\sani\platform\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\window.hpp" />
     <ClInclude Include="..\..\include\sani\precompiled.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\content_type_reader.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\primitive_readers.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\resource_type_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_reader.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\resource_type_reader_manager.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
