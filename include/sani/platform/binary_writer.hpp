@@ -11,6 +11,8 @@ namespace sani {
 			FILE* file;
 		public:
 			BinaryWriter();
+			// TODO this may need some wrapping!
+			// FileStreams maybe?
 			BinaryWriter(FILE* file);
 			~BinaryWriter();
 
