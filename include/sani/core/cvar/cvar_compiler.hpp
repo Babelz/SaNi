@@ -3,6 +3,7 @@
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/core/cvar/cvar.hpp"
+#include <stack>
 #include <list>
 
 /*
@@ -20,23 +21,29 @@
 
 namespace sani {
 
+	typedef	std::stack<String> ErrorBuffer;
+
 	SANI_FORWARD_DECLARE_1(io, FileSystem);
 
-	class CvarCompiler {
+	class CVarCompiler {
 	private:
 		const String& configurationRootFolder;
 		io::FileSystem& fileSystem;
 
-		std::list<CVarRecord> records;
-		std::list<CVar> cvars;
+		ErrorBuffer errorBuffer;
+
+		void pushError(const String& error);
+
+		void generateCVars(std::list<CVar>& cvars, std::list<CVarToken>& tokens);
+		void generateRecords(std::list<CVarRecord>& records, std::list<CVarToken>& tokens);
 	public:
-		CvarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem);
+		CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem);
 
-		void parse();
+		bool hasErrors() const;
+		String getNextError();
 
-		std::list<CVarRecord>& getRecords();
-		std::list<CVar>& getCVars();
+		void compile(std::list<CVar>& cvars, std::list<CVarRecord>& records);
 		
-		~CvarCompiler();
+		~CVarCompiler();
 	};
 }

@@ -66,7 +66,8 @@ namespace sani {
 			Invalid,
 			EmptyOrComment,
 			Declaration,
-			Require
+			Require,
+			Message
 		};
 
 		/*
@@ -80,7 +81,10 @@ namespace sani {
 					  needed statements and tokens.
 			*/
 
-			const String Require			= "require *";
+			const String RequireKeyword		= "require";
+			const String MessageKeyword		= "message";
+
+			const String Require			= RequireKeyword + " *";
 			const String Comment			= "//";
 
 			const String StringType			= "\".+\"";
@@ -91,7 +95,7 @@ namespace sani {
 			const String ConstValue			= StringType + "|" + IntType + "|" + DoubleType + 
 											  "|" + FloatType;
 
-			const String Message			= "message(.+)";
+			const String Message			= MessageKeyword + " *(.+)";
 
 			const String Declaration		= "[a-zA-Z_]+ *";
 			const String StringDeclaration  = Declaration + StringType;
@@ -100,6 +104,10 @@ namespace sani {
 			const String FloatDeclaration   = DoubleDeclaration + "f";
 
 			const String ValidDeclaration	= Declaration + ConstValue;
+
+			// Probably the worst regex EU but w/e. Can't string 
+			// like a MLG and bet never will.
+			const String ValidRequirement   = "((([a-zA-Z]|[0-9])+| *== *| *!= *| *<= *| *< *| *>= *| *> *)|(([a-zA-Z]|[0-9])+| *&& *| *\|\| *))+";
 
 			/*
 				Conditional operators.
@@ -141,8 +149,12 @@ namespace sani {
 				return std::regex_match(str, std::regex(Require));
 			}
 			inline bool isValidRequire(const String& str) {
-				// TODO: implement regex that will check the whole statement.
-				return startsWithRequire(str);
+				std::regex regex(ValidDeclaration);
+				
+				const bool match = std::regex_match(str, regex);
+				
+				if (!match) return false;
+				else	    return match && regex.mark_count() == str.size();
 			}
 
 			inline bool isDeclaration(const String& str) {

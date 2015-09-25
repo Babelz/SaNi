@@ -1,4 +1,5 @@
 #include "sani/core/cvar/cvar_tokenizer.hpp"
+#include "sani/core/utils/string_utils.hpp"
 #include "sani/core/cvar/cvar_lang.hpp"
 
 namespace sani {
@@ -36,15 +37,38 @@ namespace sani {
 				if (line.size() == 0 || cvarlang::lang::startsWithComment(line)) continue;
 				
 				// Check what type the line could be.
-				if (cvarlang::lang::startsWithRequire(line)) {
-					if (cvarlang::lang::isValidRequire(line)) type = cvarlang::TokenType::Require;
-					else									  pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + 
-																						   ", at file " + file.getFilename()));
-				}
-				else if (cvarlang::lang::isDeclaration(line)) {
-					if (cvarlang::lang::isValidDeclaration(line)) type = cvarlang::TokenType::Declaration;
-					else										  pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + 
-																							   ", at file " + file.getFilename()));
+				if (cvarlang::lang::isMessageStatement(line)) {
+					type = cvarlang::TokenType::Message;
+				} else if (cvarlang::lang::startsWithRequire(line)) {
+					// Trim the current line if a require is spotted, as if the
+					// require keyword is found alone on a line, it can
+					// mean a ending of a require block.
+					
+					// Remove possible comments and whitespace before we do the check.
+					
+					String trimmed;
+					
+					if (cvarlang::lang::containsComment(line)) trimmed = line.substr(0, line.find("//"));
+					
+					utils::trim(line, trimmed);
+
+					// If sub contains a statement, first if statement fails.
+					// Meaning that this one must be a start of an require
+					// statement.
+
+					if (trimmed.size() == cvarlang::lang::RequireKeyword.size()) {
+						type = cvarlang::Require;
+					} else if (cvarlang::lang::isValidRequire(line)) {
+						type = cvarlang::TokenType::Require;
+					} else															  {
+						pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + ", at file " + file.getFilename()));
+					}
+				} else if (cvarlang::lang::isDeclaration(line)) {
+					if (cvarlang::lang::isValidDeclaration(line)) {
+						type = cvarlang::TokenType::Declaration;
+					} else										  {
+						pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + ", at file " + file.getFilename()));
+					}
 				} else if (cvarlang::lang::isEmptyOrWhitespace(line)) {
 					type = cvarlang::TokenType::EmptyOrComment;
 				}
