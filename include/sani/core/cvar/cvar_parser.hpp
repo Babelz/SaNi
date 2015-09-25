@@ -28,7 +28,7 @@ namespace sani {
 		};
 
 		// Class that contains intermediate requirement expression representation
-		struct IntermediateCondition{
+		struct IntermediateCondition {
 			String lhs;
 			String rhs;
 
@@ -63,12 +63,22 @@ namespace sani {
 		};
 	}
 
+	/// @class CVarParser cvar_parser.hpp "sani/core/cvar/cvar_parser.hpp"
+	/// @author voidbab
+	///
+	/// Class that is responsible of transforming raw cvar file lines
+	/// to intermediate representation of the language. These
+	/// intermediate tokens then will be consumed by a emitter
+	/// that can generate cvars from them.
 	class CVarParser {
 	private:
 
 		/*
 			TODO: could move these error methods to some
 				  common interface?
+
+				  Few classes in the cvar module use the same implementation,
+				  so does the graphics device.
 		*/
 
 		ErrorBuffer errorBuffer;
@@ -92,7 +102,7 @@ namespace sani {
 		/// Parses intermediate cvar from given string.
 		void parseCvar(String str, cvarlang::IntermediateCVar& intermediateCVar);
 		/// Parses intermediate cvar requirement statement from given string.
-		void parseRequireStatement(String reqStr, const String& msgStr, cvarlang::IntermediateRequireStatement& intermediateRequirementStatement);
+		void parseRequireStatement(String reqStr, String msgStr, cvarlang::IntermediateRequireStatement& intermediateRequirementStatement);
 
 		~CVarParser();
 	};

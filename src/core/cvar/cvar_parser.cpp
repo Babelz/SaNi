@@ -48,29 +48,34 @@ namespace sani {
 		if (cvarlang::lang::containsConditionalOperators(exprStr)) {
 			// Split by operators.
 
-			size_t conPos = 0;
-			size_t logPos = 0;
-			size_t len = 0;
+			size_t conPos = 0;		// Conditional operators position.
+			size_t logPos = 0;		// Logical operators position.
+			size_t len = 0;			// Lenght of the conditional operator.
 
+			// Find conditional.
 			findConditionalOperator(exprStr, conPos, len);
 
+			// Check for logical.
 			if (cvarlang::lang::containsLogicalOperators(exprStr)) findLogicalOperator(exprStr, logPos);
 
+			// Get lhs, oper and rhs (example a == b where lhs = a, oper = == and rhs == b)
 			String lhs = exprStr.substr(0, conPos);
 			String oper = exprStr.substr(conPos, len);
 			String rhs = exprStr.substr(conPos + len, logPos - conPos - len);
 
+			// Trim values.
 			utils::trim(lhs);
 			utils::trim(oper);
 			utils::trim(rhs);
 
-			// Fill.
+			// Fill intermediate representation.
 			intermediateCondition.lhs = lhs;
 			intermediateCondition.rhs = rhs;
 			intermediateCondition.conditionalOperator = cvarlang::stringToConditionalOperator(oper);
 			intermediateCondition.lhsIsConst = cvarlang::lang::isConstValue(lhs);
 			intermediateCondition.rhsIsConst = cvarlang::lang::isConstValue(rhs);
 
+			// Remove these tokens from the input.
 			exprStr = exprStr.substr(logPos);
 		} else {
 			// Should be an constant bool expression as there are no operators.
@@ -103,6 +108,8 @@ namespace sani {
 
 			findLogicalOperator(exprStr, pos);
 
+			// Const of 2 since all logical have the same lenght of 
+			// 2 characters.
 			String oper = exprStr.substr(pos, 2);
 
 			intermediateCondition.logicalOperator = cvarlang::stringToLogicalOperator(oper);
@@ -171,11 +178,24 @@ namespace sani {
 		intermediateCVar.type = type;
 		intermediateCVar.value = value;
 	}
-	void CVarParser::parseRequireStatement(String reqStr, const String& msgStr, cvarlang::IntermediateRequireStatement& intermediateRequirementStatement) {
+	void CVarParser::parseRequireStatement(String reqStr, String msgStr, cvarlang::IntermediateRequireStatement& intermediateRequirementStatement) {
+		// Remove comments from the requirement.
 		if (cvarlang::lang::containsComment(reqStr)) {
 			const size_t len = reqStr.find(cvarlang::lang::Comment);
 
 			reqStr = reqStr.substr(0, len);
+		}
+
+		// Remove keywords from the reqstr.
+		reqStr = reqStr.substr(reqStr.find("(") + 1);
+		reqStr = reqStr.substr(0, reqStr.find_last_of(")"));
+
+		// Parse message.
+		if (msgStr.size() != 0 && cvarlang::lang::isMessageStatement(msgStr)) {
+			msgStr = msgStr.substr(msgStr.find("(") + 1);
+			msgStr = msgStr.substr(0, msgStr.find_last_of(")"));
+
+			intermediateRequirementStatement.message = msgStr;
 		}
 
 		while (reqStr.size() > 0) {

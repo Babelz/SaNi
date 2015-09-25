@@ -108,10 +108,11 @@ TEST_CASE("CVar parsing", "[cvar]") {
 	SECTION("Requirements") {
 		CVarParser parser;
 
-		String req1 = "a == 10 && b";
+		String req1 = "require (a == 10 && b)";
+		String req1msg = "message(go to home)";
 		cvarlang::IntermediateRequireStatement stat1Intr;
 	
-		parser.parseRequireStatement(req1, String(""), stat1Intr);
+		parser.parseRequireStatement(req1, req1msg, stat1Intr);
 		
 		REQUIRE(stat1Intr.conditions.size() == 2);
 		REQUIRE((stat1Intr.conditions[0].lhs == "a"));

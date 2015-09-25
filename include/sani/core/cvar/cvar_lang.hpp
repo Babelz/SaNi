@@ -91,7 +91,7 @@ namespace sani {
 			const String ConstValue			= StringType + "|" + IntType + "|" + DoubleType + 
 											  "|" + FloatType;
 
-			const String Message			= "message(\"[a-zA-Z ]\")";
+			const String Message			= "message(.+)";
 
 			const String Declaration		= "[a-zA-Z_]+ *";
 			const String StringDeclaration  = Declaration + StringType;
@@ -139,6 +139,10 @@ namespace sani {
 			
 			inline bool startsWithRequire(const String& str) {
 				return std::regex_match(str, std::regex(Require));
+			}
+			inline bool isValidRequire(const String& str) {
+				// TODO: implement regex that will check the whole statement.
+				return startsWithRequire(str);
 			}
 
 			inline bool isDeclaration(const String& str) {
@@ -200,6 +204,10 @@ namespace sani {
 			}
 			inline bool isConstBoolExpression(const String& str) {
 				return !containsConditionalOperators(str);
+			}
+
+			inline bool isMessageStatement(const String& str) {
+				return std::regex_match(str, std::regex(Message));
 			}
 		}
 
