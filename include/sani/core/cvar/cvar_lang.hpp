@@ -74,9 +74,9 @@ namespace sani {
 		*/
 
 		namespace lang {
-
+			
 			const String Require			= "require *";
-			const String Comment			= "//.+";
+			const String Comment			= "//";
 
 			const String StringType			= "\".+\"";
 			const String IntType			= "[0-9]+";
@@ -92,7 +92,7 @@ namespace sani {
 			const String StringDeclaration  = Declaration + StringType;
 			const String IntDeclaration		= Declaration + IntType;
 			const String DoubleDeclaration  = Declaration + DoubleType;
-			const String FloatDeclaration   = DoubleDeclaration + FloatType;
+			const String FloatDeclaration   = DoubleDeclaration + "f";
 
 			const String ValidDeclaration	= Declaration + ConstValue;
 
@@ -109,18 +109,12 @@ namespace sani {
 			const String Greater			= ">";
 			const String GreaterOrEqual		= ">=";
 
-			const String ConditionalOper = Equal + "|" + NotEqual + "|" + Smaller + "|" +
-										   SmallerOrEqual  + "|" + Greater  + "|" +  
-										   GreaterOrEqual;
-
 			/*
 				Logical operators.
 			*/
 
 			const String And				= "&&";
-			const String Or					= "||";
-
-			const String LogicalOper	    = And + "|" + Or;
+			const String Or					= "\\|\\|";
 
 			/*
 				Helpers.
@@ -131,11 +125,11 @@ namespace sani {
 			}
 
 			inline bool startsWithComment(const String& str) {
-				if (str.size() >= 2) return str.substr(0, 2) == "//";
+				if (str.size() >= 2) return str.substr(0, 2) == Comment;
 				else			     return false;
 			}
 			inline bool containsComment(const String& str) {
-				return std::regex_match(str, std::regex(Comment));
+				return str.find(Comment) != str.npos;
 			}
 			
 			inline bool startsWithRequire(const String& str) {
@@ -167,19 +161,46 @@ namespace sani {
 			inline bool isFloatDeclaration(const String& str) {
 				return std::regex_match(str, std::regex(FloatDeclaration));
 			}
-			
+
+			inline bool containsEqualOperator(const String& str) {
+				return str.find(Equal) != str.npos;
+			}
+			inline bool containsNotEqualOperator(const String& str) {
+				return str.find(NotEqual) != str.npos;
+			}
+			inline bool containsSmallerOperator(const String& str) {
+				return str.find(Smaller) != str.npos;
+			}
+			inline bool containsSmallerOrEqualOperator(const String& str) {
+				return str.find(SmallerOrEqual) != str.npos;
+			}
+			inline bool containsGreaterOperator(const String& str) {
+				return str.find(Greater) != str.npos;
+			}
+			inline bool containsGreaterOrEqualOperator(const String& str) {
+				return str.find(GreaterOrEqual) != str.npos;
+			}
+			inline bool containsConditionalOperators(const String& str) {
+				return containsEqualOperator(str) || containsNotEqualOperator(str) ||
+					   containsSmallerOperator(str) || containsSmallerOrEqualOperator(str) ||
+					   containsGreaterOperator(str) || containsGreaterOrEqualOperator(str);
+			}
+
+			inline bool containsLogicalOr(const String& str) {
+				return str.find(lang::Or) != str.npos;
+			}
+			inline bool containsLogicalAnd(const String& str) {
+				return str.find(lang::And) != str.npos;
+			}
+			inline bool containsLogicalOperators(const String& str) {
+				return containsLogicalOr(str) || containsLogicalAnd(str);
+			}
+
 			inline bool isConstValue(const String& str) {
 				return std::regex_match(str, std::regex(ConstValue));
 			}
-
-			inline bool containsConditionalOperators(const String& str) {
-				return std::regex_match(str, std::regex(ConditionalOper));
-			}
 			inline bool isConstBoolExpression(const String& str) {
 				return !containsConditionalOperators(str);
-			}
-			inline bool containsLogicalOperators(const String& str) {
-				return std::regex_match(str, std::regex(LogicalOper));
 			}
 		}
 
@@ -188,7 +209,21 @@ namespace sani {
 			else if (lang::isIntDeclaration(str))		return ValueType::IntVal;
 			else if (lang::isDoubleDeclaration(str))	return ValueType::DoubleVal;
 			else if (lang::isFloatDeclaration(str))		return ValueType::FloatVal;
-			else										throw std::logic_error("invalid or unsupported cvar value type");
+			else										return ValueType::NoValue;
+		}
+		inline ConditionalOperators stringToConditionalOperator(const String& str) {
+			if		(lang::containsEqualOperator(str))				return ConditionalOperators::Equal;
+			else if (lang::containsNotEqualOperator(str))			return ConditionalOperators::NotEqual;
+			else if (lang::containsSmallerOperator(str))			return ConditionalOperators::Smaller;
+			else if (lang::containsSmallerOrEqualOperator(str))		return ConditionalOperators::SmallerOrEqual;
+			else if (lang::containsGreaterOperator(str))			return ConditionalOperators::Greater;
+			else if (lang::containsGreaterOrEqualOperator(str))		return ConditionalOperators::GreaterOrEqual;
+			else													return ConditionalOperators::NoOperation;
+		}
+		inline LogicalOperators stringToLogicalOperator(const String& str) {
+			if		(lang::containsLogicalOr(str))		return LogicalOperators::Or;
+			else if (lang::containsLogicalAnd(str))		return LogicalOperators::And;
+			else										return LogicalOperators::None;
 		}
 	}
 }

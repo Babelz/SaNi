@@ -75,8 +75,7 @@ Global
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|ARM.ActiveCfg = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Mixed Platforms.Build.0 = Debug|Win32
-		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Tegra-Android.ActiveCfg = Debug|Tegra-Android
-		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Tegra-Android.Build.0 = Debug|Tegra-Android
+		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Tegra-Android.ActiveCfg = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Win32.ActiveCfg = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Debug|Win32.Build.0 = Debug|Win32
 		{93F10FD5-8B10-4B7D-A201-AD78F325AF97}.Release|ARM.ActiveCfg = Release|Win32

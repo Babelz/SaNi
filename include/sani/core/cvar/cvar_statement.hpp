@@ -11,9 +11,9 @@ namespace sani {
 	/// Represents a set of conditions.
 	class CVarRequireStatement {
 	private:
-		const std::vector<CVarCondition> statement;
+		const std::vector<CVarCondition> conditions;
 	public:
-		CVarRequireStatement(const std::vector<CVarCondition>& statement);
+		CVarRequireStatement(const std::vector<CVarCondition>& conditions);
 
 		~CVarRequireStatement();
 

@@ -2,7 +2,7 @@
 
 namespace sani {
 
-	CVarRequireStatement::CVarRequireStatement(const std::vector<CVarCondition>& statement) : statement(statement) {
+	CVarRequireStatement::CVarRequireStatement(const std::vector<CVarCondition>& conditions) : conditions(conditions) {
 	}
 
 	CVarRequireStatement::~CVarRequireStatement() {
@@ -19,34 +19,34 @@ namespace sani {
 		bool result = false;
 		size_t i = 0;
 
-		while (i < statement.size()) {
-			const CVarCondition* current = &statement[i];
+		while (i < conditions.size()) {
+			const CVarCondition* current = &conditions[i];
 			const CVarCondition* second = nullptr;
 
-			if (statement[i].getOperator() == sani::cvarlang::LogicalOperators::None) {
+			if (conditions[i].getOperator() == sani::cvarlang::LogicalOperators::None) {
 				result = (*current)();
 
 				i++;
-			} else if (statement[i].getOperator() == sani::cvarlang::LogicalOperators::And) {
+			} else if (conditions[i].getOperator() == sani::cvarlang::LogicalOperators::And) {
 				// Post inc to get next.
 				i++;
 
 				lastResult = result;
 
-				second = &statement[i];
+				second = &conditions[i];
 				result = (*current)() && (*second)();
 
 				// Pre inc to get first at next iteration.
 				i++;
-			} else if (statement[i].getOperator() == sani::cvarlang::LogicalOperators::Or) {
+			} else if (conditions[i].getOperator() == sani::cvarlang::LogicalOperators::Or) {
 				bool orResult = false;
 				bool beforeOr = result;
 
 				// || a || b || c 
-				while (i < statement.size() || current->getOperator() == cvarlang::LogicalOperators::Or) {
+				while (i < conditions.size() || current->getOperator() == cvarlang::LogicalOperators::Or) {
 					// Get cur + 1 element.
 					if (i > 0) lastResult = result;
-					else	   { i++; lastResult = statement[i](); }
+					else	   { i++; lastResult = conditions[i](); }
 
 					// True found, return.
 					if (orResult) break;
@@ -57,7 +57,7 @@ namespace sani {
 
 					// Get next. cur + 1.
 					if (i == 0)				  i++;
-					if (i < statement.size()) current = &statement[i];
+					if (i < conditions.size()) current = &conditions[i];
 				}
 
 				// Left side was true. Swap.
