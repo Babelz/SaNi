@@ -73,6 +73,12 @@
     <Filter Include="include\resource\pipeline">
       <UniqueIdentifier>{5160978b-4a84-4e7e-9d44-02a4b7a169c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\resource\reader">
+      <UniqueIdentifier>{31340b85-5bae-4d5d-8d19-e359e31785e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\resource\reader">
+      <UniqueIdentifier>{7b3aa4f9-8594-42f6-a02e-e7ee3c60de57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -159,14 +165,14 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\resource_reader.cpp">
-      <Filter>src\resource</Filter>
+    <ClCompile Include="..\..\src\resource\reader\primitive_readers.cpp">
+      <Filter>src\resource\reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\resource_type_reader_manager.cpp">
-      <Filter>src\resource</Filter>
+    <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp">
+      <Filter>src\resource\reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\primitive_readers.cpp">
-      <Filter>src\resource</Filter>
+    <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp">
+      <Filter>src\resource\reader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,9 +341,6 @@
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp">
       <Filter>include\resource\pipeline</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\resource_reader.hpp">
-      <Filter>include\resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
@@ -347,14 +350,17 @@
     <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\resource_type_reader_manager.hpp">
-      <Filter>include\resource</Filter>
+    <ClInclude Include="..\..\include\sani\resource\reader\primitive_readers.hpp">
+      <Filter>include\resource\reader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\resource_type_reader.hpp">
-      <Filter>include\resource</Filter>
+    <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp">
+      <Filter>include\resource\reader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\primitive_readers.hpp">
-      <Filter>include\resource</Filter>
+    <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader.hpp">
+      <Filter>include\resource\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader_manager.hpp">
+      <Filter>include\resource\reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
