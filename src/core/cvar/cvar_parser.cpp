@@ -186,6 +186,20 @@ namespace sani {
 			reqStr = reqStr.substr(0, len);
 		}
 
+		// Trim and do pre-checks to check if this is
+		// the ending of a certain require block.
+		utils::trim(reqStr);
+		utils::trim(msgStr);
+
+		if (reqStr.size() == cvarlang::lang::RequireKeyword.size()) {
+			// Yup, an ending.
+			if (msgStr.size() != 0 && cvarlang::lang::isMessageStatement(msgStr)) pushError(SANI_ERROR_MESSAGE("did not except a message keyword at this time"));
+
+			intermediateRequirementStatement.blockEnding = true;
+
+			return;
+		}
+
 		// Remove keywords from the reqstr.
 		reqStr = reqStr.substr(reqStr.find("(") + 1);
 		reqStr = reqStr.substr(0, reqStr.find_last_of(")"));

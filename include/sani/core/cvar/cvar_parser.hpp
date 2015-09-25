@@ -53,9 +53,10 @@ namespace sani {
 		// Class that contains intermediate require statement representation.
 		struct IntermediateRequireStatement {
 			std::vector<IntermediateCondition> conditions;
+			bool blockEnding;
 			String message;
 
-			IntermediateRequireStatement() {
+			IntermediateRequireStatement() : blockEnding(false) {
 			}
 
 			~IntermediateRequireStatement() {

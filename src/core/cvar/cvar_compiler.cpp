@@ -27,11 +27,19 @@ namespace sani {
 	}
 
 	void CVarCompiler::generateCVars(std::list<CVar>& cvars, std::list<CVarToken>& tokens) {
+		// 1) Process token
+		// 2) Parse it
+		// 3) Check for errors
+		// 4) Emit cvar or statement
+
 		CVarParser parser;
 
 		std::list<cvarlang::IntermediateCVar> intermediateCVar;
 		std::list<cvarlang::IntermediateRequireStatement> intermediateRequireStatement;
 		std::list<CVarRequireStatement> statements;
+		// Current scope level. Gets decreased when require keyword is found,
+		// and gets increased when require statement is found.
+		size_t scope = 0;		
 
 		// Go trough each token.
 		auto i = tokens.begin();
@@ -47,6 +55,11 @@ namespace sani {
 			}
 			else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
+				// that starts a require statement (require([condition]) and 
+				// the one that ends a block, that is just the plain require keyword in use.
+				// We need to track that the user closes the scopes before the file ends,
+				// or we are fucked.
+
 				cvarlang::IntermediateRequireStatement intermediateRequireStatement;
 				String message;
 
@@ -62,6 +75,10 @@ namespace sani {
 				}
 
 				parser.parseRequireStatement(i->getLine(), message, intermediateRequireStatement);
+				
+				if (intermediateRequireStatement.blockEnding) {
+					// TODO: continue with emitting.
+				}
 			}
 			else if (i->getType() == cvarlang::TokenType::Message) {
 				pushError(SANI_ERROR_MESSAGE("did not except a message statement at this time"));
