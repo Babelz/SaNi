@@ -99,6 +99,10 @@ namespace sani {
 			intermediateCondition.lhs = lhs;
 			intermediateCondition.lhsIsConst = cvarlang::lang::isConstValue(lhs);
 
+			// Resolve types.
+			intermediateCondition.rhsType = cvarlang::resolveType(intermediateCondition.rhs);
+			intermediateCondition.lhsType = cvarlang::resolveType(lhs);
+
 			exprStr = exprStr.substr(lhs.size());
 		}
 

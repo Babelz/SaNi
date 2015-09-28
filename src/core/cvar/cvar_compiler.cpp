@@ -8,12 +8,20 @@
 
 namespace sani {
 
-	CVarCompiler::CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem) : configurationRootFolder(configurationRootFolder),
-																						            fileSystem(fileSystem) {
+	CVarCompiler::CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem, const bool synced) : configurationRootFolder(configurationRootFolder),
+																													   fileSystem(fileSystem),
+																													   synced(synced) {
 	}
 
-	void CVarCompiler::pushError(const String& error) {
-		errorBuffer.push(error);
+	void CVarCompiler::copyErrors(CVarParser* parser) {
+		while (parser->hasErrors()) errorBuffer.push(parser->getNextError());
+	}
+	void CVarCompiler::copyErrors(CVarTokenizer* tokenizer) {
+		while (tokenizer->hasErrors()) errorBuffer.push(tokenizer->getNextError());
+	}
+
+	void CVarCompiler::pushError(const String& message) {
+		errorBuffer.push(message);
 	}
 
 	bool CVarCompiler::hasErrors() const {
@@ -26,11 +34,12 @@ namespace sani {
 		return error;
 	}
 
-	void CVarCompiler::generateCVars(std::list<CVar>& cvars, std::list<CVarToken>& tokens) {
+	void CVarCompiler::generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens) {
 		// 1) Process token
 		// 2) Parse it
 		// 3) Check for errors
 		// 4) Emit cvar or statement
+		// 5) generate record
 
 		CVarParser parser;
 
@@ -52,6 +61,16 @@ namespace sani {
 				cvarlang::IntermediateCVar intermediateCVar;
 
 				parser.parseCvar(i->getLine(), intermediateCVar);
+
+				if (parser.hasErrors()) copyErrors(&parser);
+
+				// Emit cvar.
+				generateCVar(cvars, statements, &intermediateCVar);
+
+				if (synced) {
+					// Emit record.
+					generateRecord(records, *i, cvars.back());
+				}
 			}
 			else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
@@ -77,8 +96,15 @@ namespace sani {
 				parser.parseRequireStatement(i->getLine(), message, intermediateRequireStatement);
 				
 				if (intermediateRequireStatement.blockEnding) {
-					// TODO: continue with emitting.
+					if (scope > 0) {
+						statements.remove(statements.back());
+						scope--;
+					}
+
+					continue;
 				}
+
+				generateRequireStatement(statements, &intermediateRequireStatement);
 			}
 			else if (i->getType() == cvarlang::TokenType::Message) {
 				pushError(SANI_ERROR_MESSAGE("did not except a message statement at this time"));
@@ -93,9 +119,49 @@ namespace sani {
 		CVarEmitter emitter;
 		emitter.emit(tokens, cvars);
 	}
-	void CVarCompiler::generateRecords(std::list<CVarRecord>& records, std::list<CVarToken>& tokens) {
+
+	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) {
+		if (intermediateCVar->type == sani::cvarlang::StringVal) {
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced,
+								 intermediateCVar->value));
+		} else if (intermediateCVar->type == sani::cvarlang::IntVal) { 
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, 
+								 std::stoi(intermediateCVar->value.c_str())));
+		} else if (intermediateCVar->type == sani::cvarlang::FloatVal) {
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced,
+								 static_cast<float32>(std::atof(intermediateCVar->value.c_str()))));
+		} else if (intermediateCVar->type == sani::cvarlang::DoubleVal) {
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced,
+								 std::atof(intermediateCVar->value.c_str())));
+		} else {
+			pushError(SANI_ERROR_MESSAGE("was not excepting a value type of NoValue at this time"));
+		}
+	}
+	void CVarCompiler::generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const {
+		records.push_back(CVarRecord(token, cvar));
 	}
 
+	void CVarCompiler::generateRequireStatement(std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement) {
+		std::vector<CVarCondition> conditions;
+
+		for (const cvarlang::IntermediateCondition& condition : intermediateRequireStatement->conditions) {
+			if (condition.lhs.size() > 0 && condition.rhs.size() > 0) {
+				if (condition.lhsIsConst && condition.rhsIsConst) {
+					// Const oper const
+				} else if (condition.rhsIsConst && !condition.lhsIsConst) {
+					// const oper cvar
+				} else if (!condition.rhsIsConst && condition.lhsIsConst) {
+					// cvar oper const
+				}
+			} else if (condition.lhs.size() > 0 && condition.rhs.size() == 0) {
+			} else {
+				pushError(SANI_ERROR_MESSAGE("invalid require expression"));
+			}
+		}
+
+		statements.push_back(CVarRequireStatement(conditions, intermediateRequireStatement->message));
+	}
+	
 	void CVarCompiler::compile(std::list<CVar>& cvars, std::list<CVarRecord>& records) {
 		// Load all files.
 		CVarLoader loader(configurationRootFolder, fileSystem);
@@ -110,14 +176,12 @@ namespace sani {
 		tokenizer.tokenize(files, tokens);
 
 		if (tokenizer.hasErrors()) {
-			while (tokenizer.hasErrors()) pushError(tokenizer.getNextError());
+			copyErrors(&tokenizer);
 
 			return;
 		}
-		
-		// Generate records.
-		CVarRecordGenerator recordGenerator;
-		recordGenerator.generateRecords(tokens, cvars, records);
+
+		generateCVars(cvars, records, tokens);
 	}
 
 	CVarCompiler::~CVarCompiler() {
