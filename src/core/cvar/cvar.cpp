@@ -114,7 +114,7 @@ namespace sani {
 			return stringVal == val;
 		}
 		else if (type == cvarlang::ValueType::IntVal) {
-			int32 val = 0.0f; other.read(val);
+			int32 val = 0; other.read(val);
 
 			return int32Val == val;
 		}
@@ -124,7 +124,7 @@ namespace sani {
 			return float32Val == val;
 		}
 		else if (type == cvarlang::ValueType::DoubleVal) {
-			float64 val = 0.0f; other.read(val);
+			float64 val = 0.0; other.read(val);
 
 			return float64Val == val;
 		}
