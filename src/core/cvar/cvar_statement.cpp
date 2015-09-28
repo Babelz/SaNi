@@ -88,4 +88,7 @@ namespace sani {
 
 		return true;
 	}
+	bool CVarRequireStatement::operator != (const CVarRequireStatement& other) const {
+		return !(*this == other);
+	}
 }

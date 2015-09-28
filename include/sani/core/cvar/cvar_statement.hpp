@@ -21,5 +21,6 @@ namespace sani {
 		bool operator()() const;
 
 		bool operator == (const CVarRequireStatement& other) const;
+		bool operator != (const CVarRequireStatement& other) const;
 	};
 }
