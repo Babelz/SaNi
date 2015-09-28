@@ -38,8 +38,6 @@ namespace sani {
 		void copyErrors(CVarParser* parser);
 		void copyErrors(CVarTokenizer* tokenizer);
 
-		void pushError(const String& message);
-
 		void generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens);
 		
 		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar);
@@ -47,11 +45,11 @@ namespace sani {
 
 		void generateRequireStatement(std::list<CVarRequireStatement>& statements, std::list<CVar>& cvars, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement);
 	
-		Condition generateConstConstExpression(const cvarlang::IntermediateCondition* condition);
-		Condition generateConstCVarExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
-		Condition generateCVarConstExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
-		Condition generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
-		Condition generateConstBoolConstExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
+		void generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition);
+		void generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		void generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		void generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		void generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
 	public:
 		CVarCompiler();
 

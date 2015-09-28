@@ -27,6 +27,8 @@ namespace sani {
 			This is just to show all the errors found, not the first one.
 		*/
 		
+		bool lastRequire = false;
+
 		// Go trough each file...
 		for (const CVarFile& file : files) {
 			// Go trough each line...
@@ -54,24 +56,35 @@ namespace sani {
 
 					// If sub contains a statement, first if statement fails.
 					// Meaning that this one must be a start of an require
-					// statement.
+					// statement, not an end.
 
 					if (trimmed.size() == cvarlang::lang::RequireKeyword.size()) {
-						type = cvarlang::Require;
+						type = cvarlang::TokenType::Require;
 					} else if (cvarlang::lang::isValidRequire(line)) {
 						type = cvarlang::TokenType::Require;
 					} else															  {
 						pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + ", at file " + file.getFilename()));
 					}
+
+					lastRequire = true;
 				} else if (cvarlang::lang::isDeclaration(line)) {
 					if (cvarlang::lang::isValidDeclaration(line)) {
 						type = cvarlang::TokenType::Declaration;
 					} else										  {
 						pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + ", at file " + file.getFilename()));
 					}
-				} else if (cvarlang::lang::isEmptyOrWhitespace(line)) {
-					type = cvarlang::TokenType::EmptyOrComment;
+
+					lastRequire = false;
+				} else if (cvarlang::lang::isMessageStatement(line)) {
+					if (!lastRequire) pushError(SANI_ERROR_MESSAGE("did not except message keyword at this time, at line " + std::to_string(i)));
+					
+					lastRequire = false;
 				}
+				else if (cvarlang::lang::isEmptyOrWhitespace(line)) {
+					type = cvarlang::TokenType::EmptyOrComment;
+
+					lastRequire = false;
+				} 
 
 				if (type == cvarlang::TokenType::Invalid) {
 					// Push error, invalid line.

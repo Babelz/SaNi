@@ -16,10 +16,6 @@ namespace sani {
 		while (tokenizer->hasErrors()) errorBuffer.push(tokenizer->getNextError());
 	}
 
-	void CVarCompiler::pushError(const String& message) {
-		errorBuffer.push(message);
-	}
-
 	bool CVarCompiler::hasErrors() const {
 		return errorBuffer.size() != 0;
 	}
@@ -102,9 +98,6 @@ namespace sani {
 
 				generateRequireStatement(statements, cvars, &intermediateRequireStatement);
 			}
-			else if (i->getType() == cvarlang::TokenType::Message) {
-				pushError(SANI_ERROR_MESSAGE("did not except a message statement at this time"));
-			}
 
 			i++;
 
@@ -122,11 +115,8 @@ namespace sani {
 		else if (intermediateCVar->type == sani::cvarlang::ValueType::FloatVal) {
 			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, static_cast<float32>(std::atof(intermediateCVar->value.c_str()))));
 		}
-		else if (intermediateCVar->type == sani::cvarlang::ValueType::DoubleVal) {
-			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, std::atof(intermediateCVar->value.c_str())));
-		}
 		else {
-			pushError(SANI_ERROR_MESSAGE("was not excepting a value type of NoValue at this time"));
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, std::atof(intermediateCVar->value.c_str())));
 		}
 	}
 	void CVarCompiler::generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const {
@@ -141,34 +131,30 @@ namespace sani {
 			They could come handy.
 		*/
 
-		for (const cvarlang::IntermediateCondition& condition : intermediateRequireStatement->conditions) {
-			if (condition.lhs.size() > 0 && condition.rhs.size() > 0) {
-				if		(condition.lhsIsConst && condition.rhsIsConst)				conditions.push_back(CVarCondition(condition.logicalOperator, generateConstConstExpression(&condition)));			 // Const oper const
-				else if (condition.rhsIsConst && !condition.lhsIsConst)				conditions.push_back(CVarCondition(condition.logicalOperator, generateConstCVarExpression(&condition, cvars)));		 // Const oper cvar
-				else if (!condition.rhsIsConst && condition.lhsIsConst)				conditions.push_back(CVarCondition(condition.logicalOperator, generateCVarConstExpression(&condition, cvars)));		 // Cvar oper const
-				else if (condition.lhs.size() > 0 && condition.rhs.size() == 0)		conditions.push_back(CVarCondition(condition.logicalOperator, generateConstCVarBoolExpression(&condition, cvars)));	 // CVar
-				else if (condition.lhs.size() > 0 && condition.lhsIsConst)			conditions.push_back(CVarCondition(condition.logicalOperator, generateConstBoolConstExpression(&condition, cvars))); // Const
+		for (const cvarlang::IntermediateCondition& intermediateCondition : intermediateRequireStatement->conditions) {
+			if (intermediateCondition.lhs.size() > 0 || intermediateCondition.rhs.size() > 0) {
+				Condition condition;
+
+				if		(intermediateCondition.lhsIsConst && intermediateCondition.rhsIsConst)			generateConstConstExpression(&intermediateCondition, condition);				 // Const oper const
+				else if (intermediateCondition.rhsIsConst && !intermediateCondition.lhsIsConst)			generateConstCVarExpression(&intermediateCondition, condition, cvars);			 // Const oper cvar
+				else if (!intermediateCondition.rhsIsConst && intermediateCondition.lhsIsConst)			generateCVarConstExpression(&intermediateCondition, condition, cvars);		     // Cvar oper const
+				else if (intermediateCondition.lhs.size() > 0 && intermediateCondition.rhs.size() == 0)	generateConstCVarBoolExpression(&intermediateCondition, condition, cvars);		 // CVar
+				else if (intermediateCondition.lhs.size() > 0 && intermediateCondition.lhsIsConst)		generateConstBoolConstExpression(&intermediateCondition, condition, cvars);		 // Const
 			}
 		}
 
 		statements.push_back(CVarRequireStatement(conditions, intermediateRequireStatement->message));
 	}
 
-	Condition generateConstConstExpression(const cvarlang::IntermediateCondition& condition) {
-		// Const oper const.
-		return Condition();
+	void CVarCompiler::generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition) {
 	}
-	Condition generateConstCVarExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars) {
-		return Condition();
+	void CVarCompiler::generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
 	}
-	Condition generateCVarConstExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars) {
-		return Condition();
+	void CVarCompiler::generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
 	}
-	Condition generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars) {
-		return Condition();
+	void CVarCompiler::generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
 	}
-	Condition generateConstBoolConstExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars) {
-		return Condition();
+	void CVarCompiler::generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
 	}
 
 	void CVarCompiler::compile(std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced) {

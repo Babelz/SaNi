@@ -38,12 +38,14 @@ namespace sani {
 		}
 
 		// Check for errors.
-		if (len == 0) pushError(SANI_WARNING_MESSAGE("invalid or unsupported operator, skipping compilation, line is \"" + str + "\""));
+		if (len == 0) pushError(SANI_ERROR_MESSAGE("invalid or unsupported operator, skipping compilation, line is \"" + str + "\""));
 	}
 
 	void CVarParser::parseConditionalExpression(String& exprStr, cvarlang::IntermediateCondition& intermediateCondition) {
 		// Trim the input just to be sure it does not contain any whitespace.
 		utils::trim(exprStr);
+		// To show in case of errors.
+		String origExpr = exprStr;
 
 		if (cvarlang::lang::containsConditionalOperators(exprStr)) {
 			// Split by operators.
@@ -104,6 +106,11 @@ namespace sani {
 			intermediateCondition.lhsType = cvarlang::resolveType(lhs);
 
 			exprStr = exprStr.substr(lhs.size());
+
+			// Check for type mismatch.
+			if (intermediateCondition.rhsType != intermediateCondition.lhsType) {
+				pushError(SANI_ERROR_MESSAGE("type mismatch between variables in a require statement, expression: " + origExpr));
+			}
 		}
 
 		// Find the possible logical operator.
@@ -120,8 +127,6 @@ namespace sani {
 
 			exprStr = exprStr.substr(2);
 		}
-
-		// TODO: test.
 	}
 
 	bool CVarParser::hasErrors() const {
@@ -150,8 +155,8 @@ namespace sani {
 
 		// Too many or too few tokens.
 		if (tokens.size() != 2) {
-			if		(tokens.size() < 2) pushError(SANI_WARNING_MESSAGE("too few tokens, skipping compilation, line is \"" + str + "\""));
-			else						pushError(SANI_WARNING_MESSAGE("too many tokens, skipping compilation, line is \"" + str + "\""));
+			if		(tokens.size() < 2) pushError(SANI_ERROR_MESSAGE("too few tokens, skipping compilation, line is \"" + str + "\""));
+			else						pushError(SANI_ERROR_MESSAGE("too many tokens, skipping compilation, line is \"" + str + "\""));
 			
 			return;
 		}
@@ -168,7 +173,7 @@ namespace sani {
 
 		// Check for invalid value string.
 		if (type == cvarlang::ValueType::NoValue) {
-			pushError(SANI_WARNING_MESSAGE("unsupported or invalid value declaration, line is \"" + str + "\""));
+			pushError(SANI_ERROR_MESSAGE("unsupported or invalid value declaration, line is \"" + str + "\""));
 
 			return;
 		}
@@ -197,8 +202,6 @@ namespace sani {
 
 		if (reqStr.size() == cvarlang::lang::RequireKeyword.size()) {
 			// Yup, an ending.
-			if (msgStr.size() != 0 && cvarlang::lang::isMessageStatement(msgStr)) pushError(SANI_ERROR_MESSAGE("did not except a message keyword at this time"));
-
 			intermediateRequirementStatement.blockEnding = true;
 
 			return;

@@ -185,6 +185,7 @@
     <ClInclude Include="..\..\include\sani\assert.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_condition.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_conditions.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
