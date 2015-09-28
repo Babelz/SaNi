@@ -1,6 +1,9 @@
 #include "sani/resource/reader/resource_type_reader_manager.hpp"
 #include "sani/resource/reader/resource_type_reader.hpp"
 #include "sani/resource/reader/primitive_readers.hpp"
+
+#include <algorithm>
+
 namespace sani {
 	namespace resource {
 		namespace reader {
@@ -28,6 +31,16 @@ namespace sani {
 				registerTypeReader<StringReader>();
 
 				registerTypeReader<ByteReader>();
+			}
+
+			ResourceTypeReader* ResoureTypeReaderManager::getReaderByName(const String& name) const {
+				auto r = std::find_if(typeReaders.begin(), typeReaders.end(), [name](ResourceTypeReader* reader) {
+					return reader->getReaderName() == name;
+				});
+
+				if (*r) return *r;
+
+				return nullptr;
 			}
 		}
 	}

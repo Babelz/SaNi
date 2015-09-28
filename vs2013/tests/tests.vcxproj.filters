@@ -28,6 +28,9 @@
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{2710ecf2-fb35-4f6e-99c6-067a9be3f5d5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\resource">
+      <UniqueIdentifier>{f561161e-eb19-4365-b488-7de7d9bec231}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\main.cpp">
@@ -53,6 +56,9 @@
     </ClCompile>
     <ClCompile Include="..\..\tests\utils\string_utils.cpp">
       <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\resource\resource.cpp">
+      <Filter>Source Files\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

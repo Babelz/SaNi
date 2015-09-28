@@ -198,6 +198,9 @@
     <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp">
       <Filter>src\resource\compiler</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\resource_manager.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\precompiled.hpp">

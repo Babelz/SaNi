@@ -107,7 +107,7 @@ namespace sani {
 
 			// Probably the worst regex EU but w/e. Can't string 
 			// like a MLG and bet never will.
-			const String ValidRequirement   = "((([a-zA-Z]|[0-9])+| *== *| *!= *| *<= *| *< *| *>= *| *> *)|(([a-zA-Z]|[0-9])+| *&& *| *\|\| *))+";
+			const String ValidRequirement   = "((([a-zA-Z]|[0-9])+| *== *| *!= *| *<= *| *< *| *>= *| *> *)|(([a-zA-Z]|[0-9])+| *&& *| *\\|\\| *))+";
 
 			/*
 				Conditional operators.

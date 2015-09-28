@@ -1,4 +1,5 @@
 #pragma once
+#include "sani/precompiled.hpp"
 #include "sani/forward_declare.hpp"
 #include <vector>
 
@@ -27,6 +28,10 @@ namespace sani {
 				}
 				/// Register all standard type readers to manager
 				void registerStandardTypes();
+
+				/// Returns the namespace qualified reader or nullptr
+				/// @param name The fully namespace qualified name
+				ResourceTypeReader* getReaderByName(const String& name) const;
 			};
 		}
 	}

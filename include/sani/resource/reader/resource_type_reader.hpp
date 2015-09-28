@@ -15,7 +15,7 @@ namespace sani {
 				/// Default constructor
 				ResourceTypeReader() = default;
 				/// Default destructor
-				virtual ~ResourceTypeReader();
+				virtual ~ResourceTypeReader() = default;
 				// TODO is this needed?
 				//virtual String getTargetType() const = 0;
 				/// Namespace prefixed reader name

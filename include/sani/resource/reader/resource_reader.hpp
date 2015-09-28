@@ -1,7 +1,7 @@
 #pragma once
 #include "sani/resource/resource_manager.hpp"
 #include <sani/platform/binary_reader.hpp>
-
+#include "sani/resource/reader/resource_type_reader_manager.hpp"
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 SANI_FORWARD_DECLARE_2(sani, io, FileSystem);
 namespace sani {
@@ -26,6 +26,11 @@ namespace sani {
 				ResourceManager& getResourceManager() const;
 				/// Gets the graphics device used in whole engine
 				GraphicsDevice* getGraphicsDevice() const;
+
+				/// Reads the whole asset, this method assumes the 
+				/// type readers are already initialized
+				/// @param readers The initialized list of all readers
+				void* readAsset(const ResoureTypeReaderManager& readers) const;
 			};
 		}
 	}

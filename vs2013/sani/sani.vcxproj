@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
+    <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
