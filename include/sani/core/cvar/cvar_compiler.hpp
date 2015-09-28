@@ -46,10 +46,10 @@ namespace sani {
 
 		void generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens);
 		
-		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const;
+		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar);
 		void generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const;
 
-		void generateRequireStatement(std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement) const;
+		void generateRequireStatement(std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement);
 	public:
 		CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem, const bool synced);
 
@@ -60,4 +60,5 @@ namespace sani {
 		
 		~CVarCompiler();
 	};
+
 }

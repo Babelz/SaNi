@@ -12,8 +12,11 @@ namespace sani {
 	class CVarRequireStatement {
 	private:
 		const std::vector<CVarCondition> conditions;
+		const String message;
 	public:
-		CVarRequireStatement(const std::vector<CVarCondition>& conditions);
+		CVarRequireStatement(const std::vector<CVarCondition>& conditions, const String& message);
+
+		const String& getMessage() const;
 
 		~CVarRequireStatement();
 

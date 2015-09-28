@@ -58,7 +58,7 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 		conditions.push_back(aEqualsBOrCEqualsD);
 		conditions.push_back(cEqualsD);
 		
-		CVarRequireStatement statement(conditions);
+		CVarRequireStatement statement(conditions, "vittu");
 		
 		REQUIRE(statement());
 	}

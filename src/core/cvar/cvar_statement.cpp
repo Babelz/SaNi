@@ -2,7 +2,12 @@
 
 namespace sani {
 
-	CVarRequireStatement::CVarRequireStatement(const std::vector<CVarCondition>& conditions) : conditions(conditions) {
+	CVarRequireStatement::CVarRequireStatement(const std::vector<CVarCondition>& conditions, const String& message) : conditions(conditions),
+																													  message(message) {
+	}
+
+	const String& CVarRequireStatement::getMessage() const {
+		return message;
 	}
 
 	CVarRequireStatement::~CVarRequireStatement() {

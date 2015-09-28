@@ -40,10 +40,15 @@ namespace sani {
 			// Conditional statement of the expression (= != < <= > >=)
 			ConditionalOperators conditionalOperator;
 
+			cvarlang::ValueType lhsType;
+			cvarlang::ValueType rhsType;
+
 			IntermediateCondition() : lhsIsConst(false),
 									  rhsIsConst(false),
 									  logicalOperator(LogicalOperators::None),
-									  conditionalOperator(ConditionalOperators::NoOperation) {
+									  conditionalOperator(ConditionalOperators::NoOperation),
+									  lhsType(cvarlang::ValueType::NoValue),
+									  rhsType(cvarlang::ValueType::NoValue) {
 			}
 
 			~IntermediateCondition() {

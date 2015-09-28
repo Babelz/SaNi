@@ -67,5 +67,8 @@ namespace sani {
 		void write(float64 value);
 
 		~CVar();
+
+		const bool operator == (const CVar& other) const;
+		const bool operator != (const CVar& other) const;
 	};
 }

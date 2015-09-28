@@ -120,19 +120,46 @@ namespace sani {
 		emitter.emit(tokens, cvars);
 	}
 
-	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const {
-
-
-		/* if (intermediateCVar->type == sani::cvarlang::StringVal) 		
-		else if (intermediateCVar->type == sani::cvarlang::IntVal)
-			else if (intermediateCVar->type == sani::cvarlang::FloatVal)
-				else if (intermediateCVar->type == sani::cvarlang::DoubleVal)
-						else pushError(SANI_ERROR_MESSAGE("was not excepting a value type of NoValue at this time"));*/
+	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) {
+		if (intermediateCVar->type == sani::cvarlang::StringVal) {
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced,
+								 intermediateCVar->value));
+		} else if (intermediateCVar->type == sani::cvarlang::IntVal) { 
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, 
+								 std::stoi(intermediateCVar->value.c_str())));
+		} else if (intermediateCVar->type == sani::cvarlang::FloatVal) {
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced,
+								 static_cast<float32>(std::atof(intermediateCVar->value.c_str()))));
+		} else if (intermediateCVar->type == sani::cvarlang::DoubleVal) {
+			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced,
+								 std::atof(intermediateCVar->value.c_str())));
+		} else {
+			pushError(SANI_ERROR_MESSAGE("was not excepting a value type of NoValue at this time"));
+		}
 	}
 	void CVarCompiler::generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const {
+		records.push_back(CVarRecord(token, cvar));
 	}
 
-	void CVarCompiler::generateRequireStatement(std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement) const {
+	void CVarCompiler::generateRequireStatement(std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement) {
+		std::vector<CVarCondition> conditions;
+
+		for (const cvarlang::IntermediateCondition& condition : intermediateRequireStatement->conditions) {
+			if (condition.lhs.size() > 0 && condition.rhs.size() > 0) {
+				if (condition.lhsIsConst && condition.rhsIsConst) {
+					// Const oper const
+				} else if (condition.rhsIsConst && !condition.lhsIsConst) {
+					// const oper cvar
+				} else if (!condition.rhsIsConst && condition.lhsIsConst) {
+					// cvar oper const
+				}
+			} else if (condition.lhs.size() > 0 && condition.rhs.size() == 0) {
+			} else {
+				pushError(SANI_ERROR_MESSAGE("invalid require expression"));
+			}
+		}
+
+		statements.push_back(CVarRequireStatement(conditions, intermediateRequireStatement->message));
 	}
 	
 	void CVarCompiler::compile(std::list<CVar>& cvars, std::list<CVarRecord>& records) {
