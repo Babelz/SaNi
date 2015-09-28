@@ -2,8 +2,8 @@
 
 namespace sani {
 
-	CVar::CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type, 
-			   const String& name, const bool synced, const String& value) : statement(statement),
+	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
+			   const String& name, const bool synced, const String& value) : statements(statements),
 																			 type(type),
 																			 name(name),
 																		     synced(synced),
@@ -11,8 +11,8 @@ namespace sani {
 																			 stringVal(value) {
 	}
 
-	CVar::CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
-			   const String& name, const bool synced, const int32 value) : statement(statement),
+	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
+			   const String& name, const bool synced, const int32 value) : statements(statements),
 																		   type(type),
 																		   name(name),
 																		   synced(synced),
@@ -20,8 +20,8 @@ namespace sani {
 																		   int32Val(value) {
 	}
 
-	CVar::CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
-			   const String& name, const bool synced, const float32 value) : statement(statement),
+	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
+			   const String& name, const bool synced, const float32 value) : statements(statements),
 																			 type(type),
 																			 name(name),
 																			 synced(synced),
@@ -29,8 +29,8 @@ namespace sani {
 																			 float32Val(value) {
 	}
 
-	CVar::CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
-			   const String& name, const bool synced, const float64 value) : statement(statement),
+	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
+			   const String& name, const bool synced, const float64 value) : statements(statements),
 																			 type(type),
 																			 name(name),
 																			 synced(synced),
@@ -46,7 +46,9 @@ namespace sani {
 	}
 
 	bool CVar::canWrite() const {
-		return statement();
+		for (const CVarRequireStatement& statement : statements) if (!statement()) return false;
+ 		
+		return true;
 	}
 	
 	bool CVar::hasChanged() const {

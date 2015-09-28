@@ -12,8 +12,15 @@ namespace sani {
 																						            fileSystem(fileSystem) {
 	}
 
-	void CVarCompiler::pushError(const String& error) {
-		errorBuffer.push(error);
+	void CVarCompiler::copyErrors(CVarParser& parser) {
+		while (parser.hasErrors()) errorBuffer.push(parser.getNextError());
+	}
+	void CVarCompiler::copyErrors(CVarTokenizer& tokenizer) {
+		while (tokenizer.hasErrors()) errorBuffer.push(tokenizer.getNextError());
+	}
+
+	void CVarCompiler::pushError(const String& message) {
+		errorBuffer.push(message);
 	}
 
 	bool CVarCompiler::hasErrors() const {
@@ -26,11 +33,12 @@ namespace sani {
 		return error;
 	}
 
-	void CVarCompiler::generateCVars(std::list<CVar>& cvars, std::list<CVarToken>& tokens) {
+	void CVarCompiler::generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens) {
 		// 1) Process token
 		// 2) Parse it
 		// 3) Check for errors
 		// 4) Emit cvar or statement
+		// 5) generate record
 
 		CVarParser parser;
 
@@ -52,6 +60,12 @@ namespace sani {
 				cvarlang::IntermediateCVar intermediateCVar;
 
 				parser.parseCvar(i->getLine(), intermediateCVar);
+
+				if (parser.hasErrors()) copyErrors(parser);
+
+				// Emit cvar.
+
+				// Emit record.
 			}
 			else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
@@ -93,9 +107,7 @@ namespace sani {
 		CVarEmitter emitter;
 		emitter.emit(tokens, cvars);
 	}
-	void CVarCompiler::generateRecords(std::list<CVarRecord>& records, std::list<CVarToken>& tokens) {
-	}
-
+	
 	void CVarCompiler::compile(std::list<CVar>& cvars, std::list<CVarRecord>& records) {
 		// Load all files.
 		CVarLoader loader(configurationRootFolder, fileSystem);
@@ -110,14 +122,12 @@ namespace sani {
 		tokenizer.tokenize(files, tokens);
 
 		if (tokenizer.hasErrors()) {
-			while (tokenizer.hasErrors()) pushError(tokenizer.getNextError());
+			copyErrors(tokenizer);
 
 			return;
 		}
-		
-		// Generate records.
-		CVarRecordGenerator recordGenerator;
-		recordGenerator.generateRecords(tokens, cvars, records);
+
+		generateCVars(cvars, records, tokens);
 	}
 
 	CVarCompiler::~CVarCompiler() {

@@ -2,6 +2,7 @@
 
 #include "sani/core/cvar/cvar_statement.hpp"
 #include "sani/precompiled.hpp"
+#include <list>
 
 namespace sani {
 
@@ -22,23 +23,23 @@ namespace sani {
 		// TODO: could this be moved to an union by any chance?
 		String stringVal;
 
-		const CVarRequireStatement statement;
+		const std::list<CVarRequireStatement> statements;
 		const cvarlang::ValueType type;
 		const String name;
 
 		const bool synced;
 		bool changed;
 	public:
-		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type, 
+		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type, 
 			 const String& name, const bool synced, const String& value);
 
-		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
+		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
 			 const String& name, const bool synced, const int32 value);
 
-		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
+		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
  			 const String& name, const bool synced, const float32 value);
  
-		CVar(const CVarRequireStatement& statement, const cvarlang::ValueType type,
+		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
 			 const String& name, const bool synced, const float64 value);
 
 		/// Returns the value type of this cvar.

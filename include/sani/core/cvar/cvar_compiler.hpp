@@ -32,10 +32,12 @@ namespace sani {
 
 		ErrorBuffer errorBuffer;
 
-		void pushError(const String& error);
+		void copyErrors(CVarParser& parser);
+		void copyErrors(CVarTokenizer& tokenizer);
 
-		void generateCVars(std::list<CVar>& cvars, std::list<CVarToken>& tokens);
-		void generateRecords(std::list<CVarRecord>& records, std::list<CVarToken>& tokens);
+		void pushError(const String& message);
+
+		void generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens);
 	public:
 		CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem);
 
