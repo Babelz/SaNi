@@ -107,7 +107,7 @@ namespace sani {
 	}
 
 	/*
-		TODO: could fix these with some delegation...
+		TODO: fix these with some delegation... Too much duplication.
 	*/
 
 	const bool CVar::operator == (const CVar& other) const {
@@ -115,18 +115,15 @@ namespace sani {
 			String val(""); other.read(val);
 
 			return stringVal == val;
-		}
-		else if (type == cvarlang::ValueType::IntVal) {
+		} else if (type == cvarlang::ValueType::IntVal) {
 			int32 val = 0; other.read(val);
 
 			return int32Val == val;
-		}
-		else if (type == cvarlang::ValueType::FloatVal) {
+		} else if (type == cvarlang::ValueType::FloatVal) {
 			float val = 0.0f; other.read(val);
 
 			return float32Val == val;
-		}
-		else if (type == cvarlang::ValueType::DoubleVal) {
+		} else if (type == cvarlang::ValueType::DoubleVal) {
 			float64 val = 0.0; other.read(val);
 
 			return float64Val == val;
@@ -142,18 +139,15 @@ namespace sani {
 			String val(""); other.read(val);
 
 			return stringVal.size() < val.size();
-		}
-		else if (type == cvarlang::ValueType::IntVal) {
+		} else if (type == cvarlang::ValueType::IntVal) {
 			int32 val = 0; other.read(val);
 
 			return int32Val < val;
-		}
-		else if (type == cvarlang::ValueType::FloatVal) {
+		} else if (type == cvarlang::ValueType::FloatVal) {
 			float val = 0.0f; other.read(val);
 
 			return float32Val < val;
-		}
-		else if (type == cvarlang::ValueType::DoubleVal) {
+		} else if (type == cvarlang::ValueType::DoubleVal) {
 			float64 val = 0.0; other.read(val);
 
 			return float64Val < val;
@@ -166,18 +160,15 @@ namespace sani {
 			String val(""); other.read(val);
 
 			return stringVal.size() <= val.size();
-		}
-		else if (type == cvarlang::ValueType::IntVal) {
+		} else if (type == cvarlang::ValueType::IntVal) {
 			int32 val = 0; other.read(val);
 
 			return int32Val <= val;
-		}
-		else if (type == cvarlang::ValueType::FloatVal) {
+		} else if (type == cvarlang::ValueType::FloatVal) {
 			float val = 0.0f; other.read(val);
 
 			return float32Val <= val;
-		}
-		else if (type == cvarlang::ValueType::DoubleVal) {
+		} else if (type == cvarlang::ValueType::DoubleVal) {
 			float64 val = 0.0; other.read(val);
 
 			return float64Val <= val;
@@ -190,18 +181,15 @@ namespace sani {
 			String val(""); other.read(val);
 
 			return stringVal.size() > val.size();
-		}
-		else if (type == cvarlang::ValueType::IntVal) {
+		} else if (type == cvarlang::ValueType::IntVal) {
 			int32 val = 0; other.read(val);
 
 			return int32Val > val;
-		}
-		else if (type == cvarlang::ValueType::FloatVal) {
+		} else if (type == cvarlang::ValueType::FloatVal) {
 			float val = 0.0f; other.read(val);
 
 			return float32Val > val;
-		}
-		else if (type == cvarlang::ValueType::DoubleVal) {
+		} else if (type == cvarlang::ValueType::DoubleVal) {
 			float64 val = 0.0; other.read(val);
 
 			return float64Val > val;
@@ -214,18 +202,15 @@ namespace sani {
 			String val(""); other.read(val);
 
 			return stringVal.size() >= val.size();
-		}
-		else if (type == cvarlang::ValueType::IntVal) {
+		} else if (type == cvarlang::ValueType::IntVal) {
 			int32 val = 0; other.read(val);
 
 			return int32Val >= val;
-		}
-		else if (type == cvarlang::ValueType::FloatVal) {
+		} else if (type == cvarlang::ValueType::FloatVal) {
 			float val = 0.0f; other.read(val);
 
 			return float32Val >= val;
-		}
-		else if (type == cvarlang::ValueType::DoubleVal) {
+		} else if (type == cvarlang::ValueType::DoubleVal) {
 			float64 val = 0.0; other.read(val);
 
 			return float64Val >= val;

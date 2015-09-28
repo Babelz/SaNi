@@ -23,7 +23,6 @@ namespace sani {
 	const size_t CVarFile::getLinesCount() const {
 		return lines.size();
 	}
-
 	const String& CVarFile::lineAtIndex(const size_t index) const {
 		return lines[index];
 	}

@@ -133,6 +133,10 @@ namespace sani {
 				Helpers.
 			*/
 
+			/*
+				Bogus regexes.. They don't fucking work, why?!
+			*/
+
 			inline bool isEmptyOrWhitespace(const String& str) {
 				return str.empty();
 			}
@@ -202,10 +206,10 @@ namespace sani {
 			}
 
 			inline bool containsLogicalOr(const String& str) {
-				return str.find(lang::Or) != str.npos;
+				return str.find(Or) != str.npos;
 			}
 			inline bool containsLogicalAnd(const String& str) {
-				return str.find(lang::And) != str.npos;
+				return str.find(And) != str.npos;
 			}
 			inline bool containsLogicalOperators(const String& str) {
 				return containsLogicalOr(str) || containsLogicalAnd(str);

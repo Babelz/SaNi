@@ -19,6 +19,16 @@
 		7) return cvar containers
 */
 
+/*
+	Error handling levels:
+		- Tokenizer handles syntax errors
+		- Parser handles logical errors
+		- Compiler keeps watch of the scope. Will emit error if 
+		  require scopes are not closed.
+
+		  Will emit error if a cvar is undefined at given compilation time.
+*/
+
 namespace sani {
 
 	typedef	std::stack<String> ErrorBuffer;

@@ -11,7 +11,9 @@
 #include "sani/platform/file_system.hpp"
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/core/cvar/cvar.hpp"
+#include "sani/core/cvar/cvar_compiler.hpp"
 #include "catch/catch.hpp"
+#include <iostream>
 #include <vector>
 #include <list>
 
@@ -153,6 +155,26 @@ TEST_CASE("CVar parsing", "[cvar]") {
 
 		syncedRepresentation = record.generateSyncedStringRepresentation();
 		REQUIRE((syncedRepresentation.find("1024") != syncedRepresentation.npos)); */
+	}
+
+	SECTION("Compiling") {
+		CVarFile file("perkele", "vittu 10\n require(vittu <= 10)\n message(jeesus)\n sv_perkele 10\n require");
+
+		std::list<CVar> cvars;
+		std::list<CVarFile> files;
+		files.push_back(file);
+
+		std::list<CVarRecord> records;
+
+		CVarCompiler compiler;
+		compiler.compile(files, cvars, records, true);
+
+		while (compiler.hasErrors())
+		{
+			String err = compiler.getNextError();
+
+			std::cout << err << std::endl;
+		}
 	}
 }
 
