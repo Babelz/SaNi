@@ -3,7 +3,6 @@
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/core/cvar/cvar_token.hpp"
 #include "sani/forward_declare.hpp"
-#include "sani/core/cvar/cvar.hpp"
 #include <stack>
 #include <list>
 
@@ -24,8 +23,8 @@ namespace sani {
 
 	typedef	std::stack<String> ErrorBuffer;
 
-	SANI_FORWARD_DECLARE_1(io, FileSystem);
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateCVar);
+	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateCondition);
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateRequireStatement);
 	
 	class CVarParser;
@@ -33,11 +32,8 @@ namespace sani {
 
 	class CVarCompiler {
 	private:
-		const String& configurationRootFolder;
-		io::FileSystem& fileSystem;
-		const bool synced;
-
 		ErrorBuffer errorBuffer;
+		bool synced;
 
 		void copyErrors(CVarParser* parser);
 		void copyErrors(CVarTokenizer* tokenizer);
@@ -49,16 +45,21 @@ namespace sani {
 		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar);
 		void generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const;
 
-		void generateRequireStatement(std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement);
+		void generateRequireStatement(std::list<CVarRequireStatement>& statements, std::list<CVar>& cvars, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement);
+	
+		Condition generateConstConstExpression(const cvarlang::IntermediateCondition* condition);
+		Condition generateConstCVarExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
+		Condition generateCVarConstExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
+		Condition generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
+		Condition generateConstBoolConstExpression(const cvarlang::IntermediateCondition* condition, std::list<CVar>& cvars);
 	public:
-		CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem, const bool synced);
+		CVarCompiler();
 
 		bool hasErrors() const;
 		String getNextError();
 
-		void compile(std::list<CVar>& cvars, std::list<CVarRecord>& records);
+		void compile(std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced);
 		
 		~CVarCompiler();
 	};
-
 }

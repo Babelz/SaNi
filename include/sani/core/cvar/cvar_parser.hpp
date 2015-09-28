@@ -13,7 +13,7 @@ namespace sani {
 
 		// Class containing intermediate cvar representation.
 		struct IntermediateCVar {
-			ValueType type;
+			cvarlang::ValueType type;
 
 			// Name of the var.
 			String name;
@@ -36,9 +36,9 @@ namespace sani {
 			bool rhsIsConst;
 
 			// Logical operator of the expression (|| &&)
-			LogicalOperators logicalOperator;
+			cvarlang::LogicalOperators logicalOperator;
 			// Conditional statement of the expression (= != < <= > >=)
-			ConditionalOperators conditionalOperator;
+			cvarlang::ConditionalOperators conditionalOperator;
 
 			cvarlang::ValueType lhsType;
 			cvarlang::ValueType rhsType;
