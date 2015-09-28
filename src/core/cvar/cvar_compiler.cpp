@@ -8,15 +8,16 @@
 
 namespace sani {
 
-	CVarCompiler::CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem) : configurationRootFolder(configurationRootFolder),
-																						            fileSystem(fileSystem) {
+	CVarCompiler::CVarCompiler(const String& configurationRootFolder, io::FileSystem& fileSystem, const bool synced) : configurationRootFolder(configurationRootFolder),
+																													   fileSystem(fileSystem),
+																													   synced(synced) {
 	}
 
-	void CVarCompiler::copyErrors(CVarParser& parser) {
-		while (parser.hasErrors()) errorBuffer.push(parser.getNextError());
+	void CVarCompiler::copyErrors(CVarParser* parser) {
+		while (parser->hasErrors()) errorBuffer.push(parser->getNextError());
 	}
-	void CVarCompiler::copyErrors(CVarTokenizer& tokenizer) {
-		while (tokenizer.hasErrors()) errorBuffer.push(tokenizer.getNextError());
+	void CVarCompiler::copyErrors(CVarTokenizer* tokenizer) {
+		while (tokenizer->hasErrors()) errorBuffer.push(tokenizer->getNextError());
 	}
 
 	void CVarCompiler::pushError(const String& message) {
@@ -61,11 +62,15 @@ namespace sani {
 
 				parser.parseCvar(i->getLine(), intermediateCVar);
 
-				if (parser.hasErrors()) copyErrors(parser);
+				if (parser.hasErrors()) copyErrors(&parser);
 
 				// Emit cvar.
+				generateCVar(cvars, statements, &intermediateCVar);
 
-				// Emit record.
+				if (synced) {
+					// Emit record.
+					generateRecord(records, *i, cvars.back());
+				}
 			}
 			else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
@@ -91,8 +96,15 @@ namespace sani {
 				parser.parseRequireStatement(i->getLine(), message, intermediateRequireStatement);
 				
 				if (intermediateRequireStatement.blockEnding) {
-					// TODO: continue with emitting.
+					if (scope > 0) {
+						statements.remove(statements.back());
+						scope--;
+					}
+
+					continue;
 				}
+
+				generateRequireStatement(statements, &intermediateRequireStatement);
 			}
 			else if (i->getType() == cvarlang::TokenType::Message) {
 				pushError(SANI_ERROR_MESSAGE("did not except a message statement at this time"));
@@ -106,6 +118,21 @@ namespace sani {
 		// Generate cvars.
 		CVarEmitter emitter;
 		emitter.emit(tokens, cvars);
+	}
+
+	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const {
+
+
+		/* if (intermediateCVar->type == sani::cvarlang::StringVal) 		
+		else if (intermediateCVar->type == sani::cvarlang::IntVal)
+			else if (intermediateCVar->type == sani::cvarlang::FloatVal)
+				else if (intermediateCVar->type == sani::cvarlang::DoubleVal)
+						else pushError(SANI_ERROR_MESSAGE("was not excepting a value type of NoValue at this time"));*/
+	}
+	void CVarCompiler::generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const {
+	}
+
+	void CVarCompiler::generateRequireStatement(std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement) const {
 	}
 	
 	void CVarCompiler::compile(std::list<CVar>& cvars, std::list<CVarRecord>& records) {
@@ -122,7 +149,7 @@ namespace sani {
 		tokenizer.tokenize(files, tokens);
 
 		if (tokenizer.hasErrors()) {
-			copyErrors(tokenizer);
+			copyErrors(&tokenizer);
 
 			return;
 		}

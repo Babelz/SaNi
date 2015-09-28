@@ -16,4 +16,11 @@ namespace sani {
 	bool CVarCondition::operator()() const {
 		return condition();
 	}
+
+	bool CVarCondition::operator == (const CVarCondition& other) const {
+		return condition.target<bool(void)>() == other.condition.target<bool(void)>();
+	}
+	bool CVarCondition::operator != (const CVarCondition& other) const {
+		return !(*this == other);
+	}
 }

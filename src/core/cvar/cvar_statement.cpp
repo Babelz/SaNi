@@ -77,4 +77,15 @@ namespace sani {
 
 		return result;
 	}
+	
+	bool CVarRequireStatement::operator == (const CVarRequireStatement& other) const {
+		for (size_t i = 0; i < conditions.size(); i++) {
+			const CVarCondition& lhs = conditions.back();
+			const CVarCondition& rhs = other.conditions.back();
+
+			if (lhs != rhs) return false;
+		}
+
+		return true;
+	}
 }

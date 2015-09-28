@@ -19,5 +19,7 @@ namespace sani {
 
 		/// Returns whether the condition was met.
 		bool operator()() const;
+
+		bool operator == (const CVarRequireStatement& other) const;
 	};
 }

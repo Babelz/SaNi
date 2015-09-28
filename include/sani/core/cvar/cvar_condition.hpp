@@ -27,5 +27,8 @@ namespace sani {
 
 		/// Returns whether the condition was met.
 		bool operator()() const;
+
+		bool operator == (const CVarCondition& other) const;
+		bool operator != (const CVarCondition& other) const;
 	};
 }
