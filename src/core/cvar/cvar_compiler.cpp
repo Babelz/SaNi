@@ -106,18 +106,7 @@ namespace sani {
 	}
 
 	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) {
-		if (intermediateCVar->type == sani::cvarlang::ValueType::StringVal) {
-			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, intermediateCVar->value));
-		}
-		else if (intermediateCVar->type == sani::cvarlang::ValueType::IntVal) {
-			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, std::atoi(intermediateCVar->value.c_str())));
-		}
-		else if (intermediateCVar->type == sani::cvarlang::ValueType::FloatVal) {
-			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, static_cast<float32>(std::atof(intermediateCVar->value.c_str()))));
-		}
-		else {
-			cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, std::atof(intermediateCVar->value.c_str())));
-		}
+		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, intermediateCVar->value));
 	}
 	void CVarCompiler::generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const {
 		records.push_back(CVarRecord(token, cvar));
@@ -147,14 +136,85 @@ namespace sani {
 	}
 
 	void CVarCompiler::generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition) {
+		// Const oper const.
+
+		/*
+			TODO: could store temps some where incase they are needed?
+		*/
+
+		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
+		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
+
+		condition = [&lhs, &rhs]() {
+			return lhs == rhs;
+		};
 	}
 	void CVarCompiler::generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
+		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
+
+		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 	void CVarCompiler::generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+		CVar& lhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
+			return cvar.getName() == intermediateCondition->lhs;
+		});
+
+		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
+
+		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 	void CVarCompiler::generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
+
+		CVar& rhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
+			return cvar.getName() == intermediateCondition->rhs;
+		});
+
+		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 	void CVarCompiler::generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+		if (intermediateCondition->lhsIsConst) {
+			CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
+			CVar rhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"));
+
+			condition = [&lhs, &rhs]() {
+				return lhs >= rhs;
+			};
+		}
+	}
+
+	void CVarCompiler::generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) {
+		if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Equal) {
+			condition = [&lhs, &rhs]() {
+				return lhs == rhs;
+			};
+		}
+		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::NotEqual) {
+			condition = [&lhs, &rhs]() {
+				return lhs != rhs;
+			};
+		}
+		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Smaller) {
+			condition = [&lhs, &rhs]() {
+				return lhs < rhs;
+			};
+		}
+		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::SmallerOrEqual) {
+			condition = [&lhs, &rhs]() {
+				return lhs <= rhs;
+			};
+		}
+		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Greater) {
+			condition = [&lhs, &rhs]() {
+				return lhs > rhs;
+			};
+		}
+		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::GreaterOrEqual) {
+			condition = [&lhs, &rhs]() {
+				return lhs >= rhs;
+			};
+		}
 	}
 
 	void CVarCompiler::compile(std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced) {

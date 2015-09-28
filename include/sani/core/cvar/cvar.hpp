@@ -29,18 +29,17 @@ namespace sani {
 
 		const bool synced;
 		bool changed;
+
+		// To share common init logic between ctors. Can't use 
+		// delegation as other ctor does not need the statement list.
+		void initialize(const String& value);
 	public:
+		CVar(const cvarlang::ValueType type, const String& name, const bool synced, const String& value);
+
 		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type, 
 			 const String& name, const bool synced, const String& value);
 
-		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
-			 const String& name, const bool synced, const int32 value);
-
-		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
- 			 const String& name, const bool synced, const float32 value);
- 
-		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
-			 const String& name, const bool synced, const float64 value);
+		CVar(const cvarlang::ValueType type, const String& name);
 
 		/// Returns the value type of this cvar.
 		cvarlang::ValueType getType() const;
@@ -70,5 +69,9 @@ namespace sani {
 
 		const bool operator == (const CVar& other) const;
 		const bool operator != (const CVar& other) const;
+		const bool operator < (const CVar& other) const;
+		const bool operator <= (const CVar& other) const;
+		const bool operator > (const CVar& other) const;
+		const bool operator >= (const CVar& other) const;
 	};
 }

@@ -2,40 +2,37 @@
 
 namespace sani {
 
+	CVar::CVar(const cvarlang::ValueType type, const String& name, const bool synced, const String& value) : type(type),
+																										     name(name),
+																											 synced(synced),
+																											 changed(false) {
+		initialize(value);
+	}
+
 	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
 			   const String& name, const bool synced, const String& value) : statements(statements),
 																			 type(type),
 																			 name(name),
-																		     synced(synced),
-																			 changed(false),
-																			 stringVal(value) {
-	}
-
-	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
-			   const String& name, const bool synced, const int32 value) : statements(statements),
-																		   type(type),
-																		   name(name),
-																		   synced(synced),
-																		   changed(false),
-																		   int32Val(value) {
-	}
-
-	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
-			   const String& name, const bool synced, const float32 value) : statements(statements),
-																			 type(type),
-																			 name(name),
 																			 synced(synced),
-																			 changed(false),
-																			 float32Val(value) {
+																			 changed(false) {
+		initialize(value);
 	}
 
-	CVar::CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
-			   const String& name, const bool synced, const float64 value) : statements(statements),
-																			 type(type),
-																			 name(name),
-																			 synced(synced),
-																			 changed(false),
-																			 float64Val(value) {
+	CVar::CVar(const cvarlang::ValueType type, const String& name) : type(type),
+																	 name(name),
+																	 synced(false),
+																	 changed(false) {
+		// Do default initialization.
+		String value = type != cvarlang::ValueType::StringVal ? String("0") : String("");
+
+		initialize(value);
+	}
+
+	void CVar::initialize(const String& value) {
+		if		(type == cvarlang::ValueType::StringVal)	stringVal = value;
+		else if (type == cvarlang::ValueType::IntVal)		int32Val = std::atoi(value.c_str());
+		else if (type == cvarlang::ValueType::FloatVal)		float32Val = static_cast<float32>(std::atof(value.c_str()));
+		else if (type == cvarlang::ValueType::DoubleVal)	float64Val = std::atof(value.c_str());
 	}
 
 	cvarlang::ValueType CVar::getType() const {
@@ -46,6 +43,8 @@ namespace sani {
 	}
 
 	bool CVar::canWrite() const {
+		if (statements.size() == 0) return true;
+
 		for (const CVarRequireStatement& statement : statements) if (!statement()) return false;
  		
 		return true;
@@ -107,9 +106,13 @@ namespace sani {
 	CVar::~CVar() {
 	}
 
+	/*
+		TODO: could fix these with some delegation...
+	*/
+
 	const bool CVar::operator == (const CVar& other) const {
 		if (type == cvarlang::ValueType::StringVal) {
-			String val = String(""); other.read(val);
+			String val(""); other.read(val);
 
 			return stringVal == val;
 		}
@@ -133,5 +136,101 @@ namespace sani {
 	}
 	const bool CVar::operator != (const CVar& other) const {
 		return !(*this == other);
+	}
+	const bool CVar::operator < (const CVar& other) const {
+		if (type == cvarlang::ValueType::StringVal) {
+			String val(""); other.read(val);
+
+			return stringVal.size() < val.size();
+		}
+		else if (type == cvarlang::ValueType::IntVal) {
+			int32 val = 0; other.read(val);
+
+			return int32Val < val;
+		}
+		else if (type == cvarlang::ValueType::FloatVal) {
+			float val = 0.0f; other.read(val);
+
+			return float32Val < val;
+		}
+		else if (type == cvarlang::ValueType::DoubleVal) {
+			float64 val = 0.0; other.read(val);
+
+			return float64Val < val;
+		}
+
+		return false;
+	}
+	const bool CVar::operator <= (const CVar& other) const {
+		if (type == cvarlang::ValueType::StringVal) {
+			String val(""); other.read(val);
+
+			return stringVal.size() <= val.size();
+		}
+		else if (type == cvarlang::ValueType::IntVal) {
+			int32 val = 0; other.read(val);
+
+			return int32Val <= val;
+		}
+		else if (type == cvarlang::ValueType::FloatVal) {
+			float val = 0.0f; other.read(val);
+
+			return float32Val <= val;
+		}
+		else if (type == cvarlang::ValueType::DoubleVal) {
+			float64 val = 0.0; other.read(val);
+
+			return float64Val <= val;
+		}
+
+		return false;
+	}
+	const bool CVar::operator > (const CVar& other) const {
+		if (type == cvarlang::ValueType::StringVal) {
+			String val(""); other.read(val);
+
+			return stringVal.size() > val.size();
+		}
+		else if (type == cvarlang::ValueType::IntVal) {
+			int32 val = 0; other.read(val);
+
+			return int32Val > val;
+		}
+		else if (type == cvarlang::ValueType::FloatVal) {
+			float val = 0.0f; other.read(val);
+
+			return float32Val > val;
+		}
+		else if (type == cvarlang::ValueType::DoubleVal) {
+			float64 val = 0.0; other.read(val);
+
+			return float64Val > val;
+		}
+
+		return false;
+	}
+	const bool CVar::operator >= (const CVar& other) const {
+		if (type == cvarlang::ValueType::StringVal) {
+			String val(""); other.read(val);
+
+			return stringVal.size() >= val.size();
+		}
+		else if (type == cvarlang::ValueType::IntVal) {
+			int32 val = 0; other.read(val);
+
+			return int32Val >= val;
+		}
+		else if (type == cvarlang::ValueType::FloatVal) {
+			float val = 0.0f; other.read(val);
+
+			return float32Val >= val;
+		}
+		else if (type == cvarlang::ValueType::DoubleVal) {
+			float64 val = 0.0; other.read(val);
+
+			return float64Val >= val;
+		}
+
+		return false;
 	}
 }
