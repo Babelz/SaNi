@@ -102,10 +102,17 @@ namespace sani {
 				}
 			}
 
+			// Do not emit warnings for invalid tokens, as the 
+			// tokenizer has done this already.
+			// (avoid duplicated error messages)
+
 			i++;
 		}
 
-		if (scope > 0) errorBuffer.push(SANI_ERROR_MESSAGE("require scope was not closed at the end of require block at file " + tokens.end()->getFilename()));
+		// Emit possible scope errors and 
+		// copy possible parsing errors to this level.
+		if (scope > 0)			errorBuffer.push(SANI_ERROR_MESSAGE("require scope was not closed at the end of require block at file " + tokens.end()->getFilename()));
+		if (parser.hasErrors()) copyErrors(&parser);
 	}
 
 	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) {
@@ -173,36 +180,20 @@ namespace sani {
 		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 	void CVarCompiler::generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
-		CVar& lhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
-			return cvar.getName() == intermediateCondition->lhs;
-		});
-
-		// No cvar with given name was found.
-		if (lhs == *cvars.end()) {
-			errorBuffer.push(SANI_WARNING_MESSAGE("no cvar with name " + intermediateCondition->lhs + " was found during this time"));
-			
-			return;
-		}
+		CVar* lhs = findCVar(cvars, intermediateCondition->rhs);
+		if (lhs == nullptr) return;
 
 		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
 
-		generateCondition(intermediateCondition, condition, lhs, rhs);
+		generateCondition(intermediateCondition, condition, *lhs, rhs);
 	}
 	void CVarCompiler::generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
 		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
 
-		CVar& rhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
-			return cvar.getName() == intermediateCondition->rhs;
-		});
+		CVar* rhs = findCVar(cvars, intermediateCondition->rhs);
+		if (rhs == nullptr) return;
 
-		// No cvar with given name was found.
-		if (rhs == *cvars.end()) {
-			errorBuffer.push(SANI_WARNING_MESSAGE("no cvar with name " + intermediateCondition->rhs + " was found during this time"));
-
-			return;
-		}
-
-		generateCondition(intermediateCondition, condition, lhs, rhs);
+		generateCondition(intermediateCondition, condition, lhs, *rhs);
 	}
 	void CVarCompiler::generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
 		if (intermediateCondition->lhsIsConst) {
@@ -215,14 +206,13 @@ namespace sani {
 		}
 	}
 	void CVarCompiler::generateCVarCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
-		CVar& lhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
-			return cvar.getName() == intermediateCondition->lhs;
-		});
-		CVar& rhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
-			return cvar.getName() == intermediateCondition->rhs;
-		});
+		CVar* lhs = findCVar(cvars, intermediateCondition->rhs);
+		if (lhs == nullptr) return;
 
-		generateCondition(intermediateCondition, condition, lhs, rhs);
+		CVar* rhs = findCVar(cvars, intermediateCondition->rhs);
+		if (rhs == nullptr) return;
+
+		generateCondition(intermediateCondition, condition, *lhs, *rhs);
 	}
 
 	void CVarCompiler::generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) {
@@ -253,6 +243,18 @@ namespace sani {
 		}
 	}
 
+	CVar* CVarCompiler::findCVar(std::list<CVar>& cvars, const String& name) {
+		for (CVar& cvar : cvars) {
+			if (cvar.getName() == name) {
+				return &cvar;
+			}
+		}
+
+		errorBuffer.push(SANI_ERROR_MESSAGE("no cvar with name " + name + " was found at this time"));
+		
+		return nullptr;
+	}
+
 	void CVarCompiler::compile(std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced) {
 		this->synced = synced;
 
@@ -265,10 +267,14 @@ namespace sani {
 		if (tokenizer.hasErrors()) {
 			copyErrors(&tokenizer);
 
-			return;
+			/*
+				Don't stop compiling even if some errors have been found. Just try to compile 
+				so that we can find all the possible errors and show them all to the user
+				at once.
+			*/
 		}
 
-		// Parse and emit.
+		// Try parse and emit.
 		generateCVars(cvars, records, tokens);
 	}
 

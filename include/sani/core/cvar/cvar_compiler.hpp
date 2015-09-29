@@ -63,6 +63,8 @@ namespace sani {
 		void generateCVarCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
 
 		void generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs);
+		
+		CVar* findCVar(std::list<CVar>& cvars, const String& name);
 	public:
 		CVarCompiler();
 

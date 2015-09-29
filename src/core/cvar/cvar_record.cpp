@@ -14,13 +14,15 @@ namespace sani {
 		std::vector<String> tokens;
 		utils::split(token.getLine(), String(" "), tokens, true);
 
-		originalValue = tokens[1];
-		indexOfValue = token.getLine().find(originalValue);
+		if (tokens.size() >= 2) {
+			originalValue = tokens[1];
+			indexOfValue = token.getLine().find(originalValue);
 
-		// Remove comments, trim.
-		if (cvarlang::lang::containsComment(originalValue)) originalValue = originalValue.substr(0, originalValue.find("//"));
-
-		utils::trim(originalValue);
+			// Remove comments, trim.
+			if (cvarlang::lang::containsComment(originalValue)) originalValue = originalValue.substr(0, originalValue.find("//"));
+			
+			utils::trim(originalValue);
+		}
 	}
 
 	String CVarRecord::generateSyncedStringRepresentation() const {

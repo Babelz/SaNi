@@ -159,10 +159,23 @@ namespace sani {
 			str = str.substr(0, len);
 		}
 
-		const size_t sepPos = str.find(String(" "));
+		const size_t sepPos = str.find(String("\""));
 
-		tokens.push_back(str.substr(0, sepPos));
-		tokens.push_back(str.substr(sepPos + 1));
+		// String statement parsing.
+		if (sepPos != str.npos) {
+			// Check for invalid string declaration.
+			if (str[str.size() - 1] != '"') {
+				pushError(SANI_ERROR_MESSAGE("invalid string declaration, line is " + str));
+
+				return;
+			}
+
+			tokens.push_back(str.substr(0, sepPos));
+			tokens.push_back(str.substr(sepPos + 1, str.size() - sepPos - 2));
+		} else {
+			// Split by whitespaces.
+			utils::split(str, String(" "), tokens, true);
+		}
 
 		utils::trim(str);
 

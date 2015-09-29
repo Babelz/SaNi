@@ -23,17 +23,6 @@ using namespace sani::io;
 TEST_CASE("CVar loading and file tests", "[cvar]") {
 
 	SECTION("Loading") {
-		/*
-		FileSystem fileSystem;
-		CVarLoader cvarLoader("../../tests/configuration",
-							  fileSystem);
-
-		std::list<CVarFile> files;
-
-		cvarLoader.load(files);
-
-		REQUIRE(files.size() != 0);
-		CHECK(files.begin()->getLinesCount() != 0);*/
 	}
 }
 
@@ -48,6 +37,10 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 		const int c = 10;
 		const int d = 10;
 
+		/*
+			TODO: not supported by the system yet, implement.
+		*/
+
 		auto aEqualsBOrCEqualsD = CVarCondition(cvarlang::Or, [a, b](){
 			return a == b; 
 		});
@@ -60,7 +53,7 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 		conditions.push_back(aEqualsBOrCEqualsD);
 		conditions.push_back(cEqualsD);
 		
-		CVarRequireStatement statement(conditions, "vittu");
+		CVarRequireStatement statement(conditions, String(""));
 		
 		REQUIRE(statement());
 	}
@@ -82,7 +75,7 @@ TEST_CASE("CVar parsing", "[cvar]") {
 			"a 10\n"
 			"b 20\n"
 			"require (a == b)\n"
-			"message(can't access my_secret_str until while a does not equal b)\n"
+			"message(can't access my_secret_str while a does not equal b)\n"
 			""
 			"	my_secret_str \"hello, world!\"\n"
 			"require\n");
@@ -114,10 +107,64 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		REQUIRE(a != b);
 		REQUIRE(!my_secret_str.canWrite());
 		
+		std::vector<String> messages;
+		my_secret_str.getRequireStatementMessages(messages);
+
+		REQUIRE(messages.size() == 1);
+
+		for (String& message : messages) std::cout << message << std::endl;
+		messages.clear();
+
 		a.write(10);
 		b.write(10);
 
 		REQUIRE(my_secret_str.canWrite());
+		
+		my_secret_str.getRequireStatementMessages(messages);
+
+		REQUIRE(messages.size() == 0);
+	}
+
+	SECTION("Compiling error catching") {
+		const String prog(
+			"a10\n"
+			"gg 10 // this should be just fine\n"
+			"b_ \"20dfasd\n"
+			"b 10 20 30 40 50\n"
+			"require (a == b && gg != 9)\n"
+			"message(can't access my_secret_str while a does not equal b)\n"
+			""
+			"	my_secret_str \"hello, world!\"\n"
+			"// scope not closed, should throw and error\n");
+
+		CVarFile file("perkele", prog);
+
+		std::list<CVar> cvars;
+		std::list<CVarFile> files;
+		std::list<CVarRecord> records;
+
+		files.push_back(file);
+
+		CVarCompiler compiler;
+		compiler.compile(files, cvars, records, true);
+
+		REQUIRE(compiler.hasErrors());
+
+		while (compiler.hasErrors()) {
+			std::cout << compiler.getNextError() << std::endl;
+		}
+	}
+
+	SECTION("Operators") {
+		CVar a(cvarlang::ValueType::StringVal, String("__TEMP__"), false, "\"short_str\"");
+		CVar b(cvarlang::ValueType::StringVal, String("__TEMP__"), false, "\"loooong_str\"");	
+		
+		REQUIRE(!(a == b));
+		REQUIRE(a != b);
+		REQUIRE(a < b);
+		REQUIRE(!(a > b));
+		REQUIRE(a <= b);
+		REQUIRE(!(a >= b));
 	}
 }
 
