@@ -85,6 +85,9 @@
     <Filter Include="src\resource\compiler">
       <UniqueIdentifier>{6437e6d5-d2df-4ceb-aa2b-41f6ea2fab58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\resource\processor">
+      <UniqueIdentifier>{3d7fbea1-f926-4464-9ff3-a150f6096c41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -193,6 +196,9 @@
       <Filter>src\resource\compiler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\resource\resource_manager.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\texture2d.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
   </ItemGroup>
@@ -400,6 +406,18 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_conditions.hpp">
       <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\serialization.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\texture2d.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp">
+      <Filter>include\resource\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp">
+      <Filter>include\resource\processor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,10 @@ namespace sani {
 
 		BinaryWriter::~BinaryWriter() {}
 
+		void BinaryWriter::write(uint8 value) {
+			fwrite((unsigned char*)&value, sizeof(uint8), 1, file);
+		}
+
 		void BinaryWriter::write(uint16 value) {
 			fwrite((unsigned char*)&value, sizeof(uint16), 1, file);
 		}
@@ -20,6 +24,10 @@ namespace sani {
 
 		void BinaryWriter::write(uint64 value) {
 			fwrite((unsigned char*)&value, sizeof(uint64), 1, file);
+		}
+
+		void BinaryWriter::write(int8 value) {
+			fwrite((unsigned char*)&value, sizeof(int8), 1, file);
 		}
 
 		void BinaryWriter::write(int16 value) {

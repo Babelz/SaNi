@@ -180,6 +180,7 @@
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
+    <ClCompile Include="..\..\src\resource\texture2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
@@ -242,6 +243,8 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\primitive_readers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
@@ -250,6 +253,8 @@
     <ClInclude Include="..\..\include\sani\resource\reader\texture2d_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\serialization.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
