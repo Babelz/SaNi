@@ -83,12 +83,14 @@ namespace sani {
 					if ((next)->getType() == cvarlang::TokenType::Message) {
 						message = (next)->getLine();
 
+						parser.parseRequireStatement(i->getLine(), message, intermediateRequireStatement);
+
 						i++;
 					}
+				} else {
+					parser.parseRequireStatement(i->getLine(), message, intermediateRequireStatement);
 				}
-
-				parser.parseRequireStatement(i->getLine(), message, intermediateRequireStatement);
-
+				
 				if (intermediateRequireStatement.blockEnding) {
 					if (scope > 0) {
 						statements.remove(statements.back());
@@ -96,6 +98,7 @@ namespace sani {
 					}
 				} else {
 					generateRequireStatement(statements, cvars, &intermediateRequireStatement);
+					scope++;
 				}
 			}
 
@@ -139,6 +142,9 @@ namespace sani {
 				} else if (!intermediateCondition.rhsIsConst && intermediateCondition.lhsIsConst) {
 					// CVar oper const
 					generateCVarConstExpression(&intermediateCondition, condition, cvars);		     
+				} else if (!intermediateCondition.rhsIsConst && !intermediateCondition.lhsIsConst) {
+					// Cvar oper cvar
+					generateCVarCVarExpression(&intermediateCondition, condition, cvars);
 				}
 
 				conditions.push_back(CVarCondition(intermediateCondition.logicalOperator, condition));
@@ -207,6 +213,16 @@ namespace sani {
 				return lhs >= rhs;
 			};
 		}
+	}
+	void CVarCompiler::generateCVarCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+		CVar& lhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
+			return cvar.getName() == intermediateCondition->lhs;
+		});
+		CVar& rhs = *std::find_if(cvars.begin(), cvars.end(), [&intermediateCondition](const CVar& cvar) {
+			return cvar.getName() == intermediateCondition->rhs;
+		});
+
+		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 
 	void CVarCompiler::generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) {

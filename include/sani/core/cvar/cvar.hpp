@@ -75,4 +75,6 @@ namespace sani {
 		const bool operator > (const CVar& other) const;
 		const bool operator >= (const CVar& other) const;
 	};
+
+	#define EXEC_OPER()
 }

@@ -23,18 +23,18 @@ namespace sani {
 		} else if (cvarlang::lang::containsNotEqualOperator(str)) {
 			pos = str.find(cvarlang::lang::NotEqual);
 			len = cvarlang::lang::NotEqual.size();
-		} else if (cvarlang::lang::containsSmallerOperator(str)) {
-			pos = str.find(cvarlang::lang::Smaller);
-			len = cvarlang::lang::Smaller.size();
 		} else if (cvarlang::lang::containsSmallerOrEqualOperator(str)) {
 			pos = str.find(cvarlang::lang::SmallerOrEqual);
 			len = cvarlang::lang::SmallerOrEqual.size();
-		} else if (cvarlang::lang::containsGreaterOperator(str)) {
-			pos = str.find(cvarlang::lang::Greater);
-			len = cvarlang::lang::Greater.size();
+		} else if (cvarlang::lang::containsSmallerOperator(str)) {
+			pos = str.find(cvarlang::lang::Smaller);
+			len = cvarlang::lang::Smaller.size();
 		} else if (cvarlang::lang::containsGreaterOrEqualOperator(str)) {
 			pos = str.find(cvarlang::lang::GreaterOrEqual);
 			len = cvarlang::lang::GreaterOrEqual.size();
+		} else if (cvarlang::lang::containsGreaterOperator(str)) {
+			pos = str.find(cvarlang::lang::Greater);
+			len = cvarlang::lang::Greater.size();
 		}
 
 		// Check for errors.
@@ -78,7 +78,9 @@ namespace sani {
 			intermediateCondition.rhsIsConst = cvarlang::lang::isConstValue(rhs);
 
 			// Remove these tokens from the input.
-			exprStr = exprStr.substr(logPos);
+			const size_t subLen = logPos == 0 ? exprStr.size() : logPos;
+
+			exprStr = exprStr.substr(subLen);
 		} else {
 			// Should be an constant bool expression as there are no operators.
 			String lhs;
@@ -143,6 +145,13 @@ namespace sani {
 		// Split into tokens. Should be splitted by whitespace.
 		std::vector<String> tokens;
 
+		// Remove tabs.
+		while (cvarlang::lang::containsTabs(str)) {
+			const size_t pos = str.find(cvarlang::lang::Tab);
+
+			str.erase(pos, 1);
+		}
+
 		// Remove any comments, we don't need them here.
 		if (cvarlang::lang::containsComment(str)) {
 			const size_t len = str.find(cvarlang::lang::Comment);
@@ -150,7 +159,11 @@ namespace sani {
 			str = str.substr(0, len);
 		}
 
-		utils::split(str, String(" "), tokens, true);
+		const size_t sepPos = str.find(String(" "));
+
+		tokens.push_back(str.substr(0, sepPos));
+		tokens.push_back(str.substr(sepPos + 1));
+
 		utils::trim(str);
 
 		// Too many or too few tokens.
@@ -188,6 +201,13 @@ namespace sani {
 		intermediateCVar.value = value;
 	}
 	void CVarParser::parseRequireStatement(String reqStr, String msgStr, cvarlang::IntermediateRequireStatement& intermediateRequirementStatement) {
+		// Remove tabs.
+		while (cvarlang::lang::containsTabs(reqStr)) {
+			const size_t pos = reqStr.find(cvarlang::lang::Tab);
+
+			reqStr.erase(pos);
+		}
+
 		// Remove comments from the requirement.
 		if (cvarlang::lang::containsComment(reqStr)) {
 			const size_t len = reqStr.find(cvarlang::lang::Comment);
