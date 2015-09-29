@@ -84,7 +84,6 @@ namespace sani {
 			const String RequireKeyword		= "require";
 			const String MessageKeyword		= "message";
 
-			const String Require			= RequireKeyword + " *";
 			const String Comment			= "//";
 
 			const String StringType			= "\".+\"";
@@ -92,12 +91,12 @@ namespace sani {
 			const String DoubleType			= "[0-9]+\\.[0-9]+";
 			const String FloatType			= DoubleType + "f";
 
-			const String ConstValue			= StringType + "|" + IntType + "|" + DoubleType + 
-											  "|" + FloatType;
+			const String ConstValue			= "(" + StringType + "|" + IntType + "|" + DoubleType + 
+											  "|" + FloatType + ")";
 
 			const String Message			= MessageKeyword + " *(.+)";
 
-			const String Declaration		= "[a-zA-Z_]+ *";
+			const String Declaration		= "[_\\w]+ ";
 			const String StringDeclaration  = Declaration + StringType;
 			const String IntDeclaration		= Declaration + IntType;
 			const String DoubleDeclaration  = Declaration + DoubleType;
@@ -107,7 +106,12 @@ namespace sani {
 
 			// Probably the worst regex EU but w/e. Can't string 
 			// like a MLG and bet never will.
-			const String ValidRequirement   = "((([a-zA-Z]|[0-9])+| *== *| *!= *| *<= *| *< *| *>= *| *> *)|(([a-zA-Z]|[0-9])+| *&& *| *\\|\\| *))+";
+
+			/*
+				TODO: document the regex
+				TODO: make the regex hit multiple expressions
+			*/
+			const String ValidRequirement   = "require\\s*\\(\\s*[\\w\\d]+\\s*(?:(?=<=|>=|==|\\|\\||&&|< |> )(?:.{2}\\s*[\\w\\d]+\\s*\\))|(?:(?=<|>).\\s*[\\w\\d]+\\s*)\\)|\\))";
 
 			/*
 				Conditional operators.
@@ -130,11 +134,28 @@ namespace sani {
 			const String Or					= "\\|\\|";
 
 			/*
-				Helpers.
+				Misc.
 			*/
 
+			const String Tab				= "\t";
+
 			/*
-				Bogus regexes.. They don't fucking work, why?!
+				Regular expressions.
+			*/
+
+			const static std::regex RequireRegex			= std::regex(RequireKeyword + " *");
+			const static std::regex DeclarationRegex		= std::regex(Declaration);
+			const static std::regex ValidDeclarationRegex	= std::regex(ValidDeclaration);
+			const static std::regex StringDeclarationRegex	= std::regex(StringDeclaration);
+			const static std::regex IntDeclarationRegex		= std::regex(IntDeclaration);
+			const static std::regex DoubleDeclarationRegex	= std::regex(DoubleDeclaration);
+			const static std::regex FloatDeclarationRegex	= std::regex(FloatDeclaration);
+			const static std::regex ConstValueRegex			= std::regex(ConstValue);
+			const static std::regex MessageRegex			= std::regex(Message);
+			const static std::regex ValidRequirementRegex	= std::regex(ValidRequirement);
+
+			/*
+				Helpers.
 			*/
 
 			inline bool isEmptyOrWhitespace(const String& str) {
@@ -148,37 +169,35 @@ namespace sani {
 			inline bool containsComment(const String& str) {
 				return str.find(Comment) != str.npos;
 			}
-			
+			inline bool containsTabs(const String& str) {
+				return str.find(Tab) != str.npos;
+			}
+
 			inline bool startsWithRequire(const String& str) {
-				return std::regex_match(str, std::regex(Require));
+				return std::regex_search(str, RequireRegex);
 			}
 			inline bool isValidRequire(const String& str) {
-				std::regex regex(ValidDeclaration);
-				
-				const bool match = std::regex_match(str, regex);
-				
-				if (!match) return false;
-				else	    return match && regex.mark_count() == str.size();
+				return std::regex_search(str, ValidRequirementRegex);
 			}
 
 			inline bool isDeclaration(const String& str) {
-				return std::regex_match(str, std::regex(Declaration));
+				return std::regex_search(str, DeclarationRegex);
 			}
 			inline bool isValidDeclaration(const String& str) {
-				return std::regex_match(str, std::regex(ValidDeclaration));
+				return std::regex_search(str, ValidDeclarationRegex);
 			}
 
 			inline bool isStringDeclaration(const String& str) {
-				return std::regex_match(str, std::regex(StringDeclaration));
+				return std::regex_search(str, StringDeclarationRegex);
 			}
 			inline bool isIntDeclaration(const String& str) {
-				return std::regex_match(str, std::regex(IntDeclaration));
+				return std::regex_search(str, IntDeclarationRegex);
 			}
 			inline bool isDoubleDeclaration(const String& str) {
-				return std::regex_match(str, std::regex(DoubleDeclaration));
+				return std::regex_search(str, DoubleDeclarationRegex);
 			}
 			inline bool isFloatDeclaration(const String& str) {
-				return std::regex_match(str, std::regex(FloatDeclaration));
+				return std::regex_search(str, FloatDeclarationRegex);
 			}
 
 			inline bool containsEqualOperator(const String& str) {
@@ -216,14 +235,14 @@ namespace sani {
 			}
 
 			inline bool isConstValue(const String& str) {
-				return std::regex_match(str, std::regex(ConstValue));
+				return std::regex_search(str, ConstValueRegex);
 			}
 			inline bool isConstBoolExpression(const String& str) {
 				return !containsConditionalOperators(str);
 			}
 
 			inline bool isMessageStatement(const String& str) {
-				return std::regex_match(str, std::regex(Message));
+				return std::regex_search(str, MessageRegex);
 			}
 		}
 

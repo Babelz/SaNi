@@ -23,17 +23,6 @@ using namespace sani::io;
 TEST_CASE("CVar loading and file tests", "[cvar]") {
 
 	SECTION("Loading") {
-		/*
-		FileSystem fileSystem;
-		CVarLoader cvarLoader("../../tests/configuration",
-							  fileSystem);
-
-		std::list<CVarFile> files;
-
-		cvarLoader.load(files);
-
-		REQUIRE(files.size() != 0);
-		CHECK(files.begin()->getLinesCount() != 0);*/
 	}
 }
 
@@ -48,6 +37,10 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 		const int c = 10;
 		const int d = 10;
 
+		/*
+			TODO: not supported by the system yet, implement.
+		*/
+
 		auto aEqualsBOrCEqualsD = CVarCondition(cvarlang::Or, [a, b](){
 			return a == b; 
 		});
@@ -60,7 +53,7 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 		conditions.push_back(aEqualsBOrCEqualsD);
 		conditions.push_back(cEqualsD);
 		
-		CVarRequireStatement statement(conditions, "vittu");
+		CVarRequireStatement statement(conditions, String(""));
 		
 		REQUIRE(statement());
 	}
@@ -68,113 +61,122 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 
 TEST_CASE("CVar parsing", "[cvar]") {
 
-	SECTION("CVar declarations") {
-		CVarParser parser;
-
-		String var1 = "string_var \"jeesus\"";
-		String var2 = "invalid bool var 1";
-		String var3 = "bool_var 0";
-		String var4 = "int_var 128";
-		String var5 = "float_var 0.2f";
-		String var6 = "double_var 55.0 // comment...";
-		String var7 = "other_int_var_with_very_long_name_and_value and with_some_syntax_errors 23242424";
-
-		cvarlang::IntermediateCVar var1Intr;
-		parser.parseCvar(var1, var1Intr);
-		REQUIRE((var1Intr.name == "string_var" && var1Intr.type == cvarlang::ValueType::StringVal && var1Intr.value == "\"jeesus\""));
-
-		cvarlang::IntermediateCVar var2Intr;
-		parser.parseCvar(var2, var2Intr);
-		REQUIRE(parser.hasErrors());
-		parser.getNextError();
-
-		cvarlang::IntermediateCVar var3Intr;
-		parser.parseCvar(var3, var3Intr);
-		REQUIRE((var3Intr.name == "bool_var" && var3Intr.value == "0" && var3Intr.type == cvarlang::ValueType::IntVal));
-
-		cvarlang::IntermediateCVar var4Intr;
-		parser.parseCvar(var4, var4Intr);
-		REQUIRE((var4Intr.name == "int_var" && var4Intr.value == "128" && var4Intr.type == cvarlang::ValueType::IntVal));
-
-		cvarlang::IntermediateCVar var5Intr;
-		parser.parseCvar(var5, var5Intr);
-		REQUIRE((var5Intr.name == "float_var" && var5Intr.value == "0.2f" && var5Intr.type == cvarlang::ValueType::FloatVal));
-
-		cvarlang::IntermediateCVar var6Intr;
-		parser.parseCvar(var6, var6Intr);
-		REQUIRE((var6Intr.name == "double_var" && var6Intr.value == "55.0" && var6Intr.type == cvarlang::ValueType::DoubleVal));
-
-		cvarlang::IntermediateCVar var7Intr;
-		parser.parseCvar(var7, var7Intr);
-		REQUIRE(parser.hasErrors());
-	}
-
-	SECTION("Requirements") {
-		CVarParser parser;
-
-		String req1 = "require (a == 10 && b)";
-		String req1msg = "message(go to home)";
-		cvarlang::IntermediateRequireStatement stat1Intr;
-	
-		parser.parseRequireStatement(req1, req1msg, stat1Intr);
-		
-		REQUIRE(stat1Intr.conditions.size() == 2);
-		REQUIRE((stat1Intr.conditions[0].lhs == "a"));
-		REQUIRE((stat1Intr.conditions[0].rhs == "10"));
-		REQUIRE((stat1Intr.conditions[0].conditionalOperator == cvarlang::ConditionalOperators::Equal));
-		REQUIRE((stat1Intr.conditions[0].logicalOperator == cvarlang::LogicalOperators::And));
-		REQUIRE((!stat1Intr.conditions[0].lhsIsConst));
-		REQUIRE((stat1Intr.conditions[0].rhsIsConst));
-		REQUIRE((stat1Intr.conditions[0].logicalOperator == cvarlang::LogicalOperators::And));
-
-		REQUIRE((stat1Intr.conditions[1].lhs == "b"));
-	}
-
 	SECTION("Record syncing") {
-		/*Var cvar(CVarRequireStatement(std::vector<CVarCondition>()),
-				  cvarlang::ValueType::IntVal,
-				  "my_int_var",
-				  true,
-				  128);
-
-		CVarToken token(cvarlang::TokenType::Declaration, 1, "perkele.cfg", "    my_int_var 128 // heres a ebin comming");
+		String line = String("			my_int_var 10 // uncle ebons reiseronis comments          ");
+		String syncReq = String("			my_int_var 128 // uncle ebons reiseronis comments          ");
+		CVar cvar(cvarlang::ValueType::IntVal, "my_int_var", true, "10");
+		CVarToken token(cvarlang::TokenType::Declaration, 123, "perkele", line);
 
 		CVarRecord record(token, cvar);
-		
-		REQUIRE(cvar.canWrite());
-		REQUIRE(!record.shouldSync());
-		
-		cvar.write(10);
-		
-		REQUIRE(record.shouldSync());
 	
-		String syncedRepresentation = record.generateSyncedStringRepresentation();
-		REQUIRE((syncedRepresentation.find("10") != syncedRepresentation.npos));
+		cvar.write(128);
+		
+		String synced = record.generateSyncedStringRepresentation();
 
-		cvar.write(1024);
-
-		syncedRepresentation = record.generateSyncedStringRepresentation();
-		REQUIRE((syncedRepresentation.find("1024") != syncedRepresentation.npos)); */
+		REQUIRE(synced == syncReq);
 	}
 
 	SECTION("Compiling") {
-		CVarFile file("perkele", "vittu 10\n require(vittu <= 10)\n message(jeesus)\n sv_perkele 10\n require");
+		const String prog(
+			"a 10\n"
+			"b 20\n"
+			"require (a == b)\n"
+			"message(can't access my_secret_str while a does not equal b)\n"
+			""
+			"	my_secret_str \"hello, world!\"\n"
+			"require\n");
+
+		CVarFile file("perkele", prog);
 
 		std::list<CVar> cvars;
 		std::list<CVarFile> files;
-		files.push_back(file);
-
 		std::list<CVarRecord> records;
+
+		files.push_back(file);
 
 		CVarCompiler compiler;
 		compiler.compile(files, cvars, records, true);
 
-		while (compiler.hasErrors())
-		{
-			String err = compiler.getNextError();
+		REQUIRE(!compiler.hasErrors());
+		REQUIRE(cvars.size() == 3);
 
-			std::cout << err << std::endl;
+		std::list<CVar>::iterator i = cvars.begin();
+
+		CVar& a = *i;
+		std::advance(i, 1);
+
+		CVar& b = *i;
+		std::advance(i, 1);
+
+		CVar& my_secret_str = *i;
+
+		REQUIRE(a != b);
+		REQUIRE(!my_secret_str.canWrite());
+		
+		std::vector<String> messages;
+		my_secret_str.getRequireStatementMessages(messages);
+
+		REQUIRE(messages.size() == 1);
+
+		for (String& message : messages) std::cout << message << std::endl;
+		messages.clear();
+
+		a.write(10);
+		b.write(10);
+
+		REQUIRE(my_secret_str.canWrite());
+		
+		my_secret_str.getRequireStatementMessages(messages);
+
+		REQUIRE(messages.size() == 0);
+	}
+
+	SECTION("Compiling error catching") {
+		const String prog(
+			"a10\n"																// First error.
+			"gg 10 // this should be just fine\n"					
+			"b_ \"20dfasd\n"													// Second.
+			"b 10 20 30 40 50\n"												// Third error.
+			"require (jiijii)\n"												// Undefined cvar jiijii.
+			"require (a == b && gg != 9)\n"										// Fourth error. System supports statements like this but does not have
+			"\n"																// required regex to parse them.
+			"message(can't access my_secret_str while a does not equal b)\n"	
+			"\n"
+			"	my_secret_str \"hello, world!\"\n"
+			"// scope not closed, should throw and error\n");					// Fifth error.
+
+		CVarFile file("perkele", prog);
+
+		std::list<CVar> cvars;
+		std::list<CVarFile> files;
+		std::list<CVarRecord> records;
+
+		files.push_back(file);
+
+		CVarCompiler compiler;
+		compiler.compile(files, cvars, records, true);
+
+		REQUIRE(compiler.hasErrors());
+		
+		size_t i = 0;
+		while (compiler.hasErrors()) {
+			i++;
+			std::cout << compiler.getNextError() << std::endl;
 		}
+
+		REQUIRE(i == 7);
+	}
+
+	SECTION("Operators") {
+		CVar a(cvarlang::ValueType::StringVal, String("__TEMP__"), false, "\"short_str\"");
+		CVar b(cvarlang::ValueType::StringVal, String("__TEMP__"), false, "\"loooong_str\"");	
+		
+		REQUIRE(!(a == b));
+		REQUIRE(a != b);
+		REQUIRE(a < b);
+		REQUIRE(!(a > b));
+		REQUIRE(a <= b);
+		REQUIRE(!(a >= b));
 	}
 }
 

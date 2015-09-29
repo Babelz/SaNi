@@ -36,8 +36,8 @@ namespace sani {
 	public:
 		CVar(const cvarlang::ValueType type, const String& name, const bool synced, const String& value);
 
-		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type, 
-			 const String& name, const bool synced, const String& value);
+		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
+			const String& name, const bool synced, const String& value);
 
 		/// Creates a new cvar with default value of given value type.
 		CVar(const cvarlang::ValueType type, const String& name);
@@ -46,10 +46,10 @@ namespace sani {
 		cvarlang::ValueType getType() const;
 		/// Returns the name of this cvar.
 		const String& getName() const;
-		
+
 		/// Returns true if caller can change the value of this cvar.
 		bool canWrite() const;
-		
+
 		/// Returns true if the value has changed during the 
 		/// runtime.
 		bool hasChanged() const;
@@ -65,6 +65,8 @@ namespace sani {
 		void write(int32 value);
 		void write(float32 value);
 		void write(float64 value);
+
+		void getRequireStatementMessages(std::vector<String>& messages);
 
 		~CVar();
 

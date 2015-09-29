@@ -29,7 +29,7 @@ namespace sani {
 	}
 
 	void CVar::initialize(const String& value) {
-		if		(type == cvarlang::ValueType::StringVal)	stringVal = value;
+		if		(type == cvarlang::ValueType::StringVal)	stringVal = value.substr(1, value.size() - 2);
 		else if (type == cvarlang::ValueType::IntVal)		int32Val = std::atoi(value.c_str());
 		else if (type == cvarlang::ValueType::FloatVal)		float32Val = static_cast<float32>(std::atof(value.c_str()));
 		else if (type == cvarlang::ValueType::DoubleVal)	float64Val = std::atof(value.c_str());
@@ -101,6 +101,10 @@ namespace sani {
 
 		float64Val = value; 
 		changed = true;
+	}
+
+	void CVar::getRequireStatementMessages(std::vector<String>& messages) {
+		for (const CVarRequireStatement& statement : statements) if (!statement()) messages.push_back(statement.getMessage());
 	}
 
 	CVar::~CVar() {
@@ -177,45 +181,9 @@ namespace sani {
 		return false;
 	}
 	const bool CVar::operator > (const CVar& other) const {
-		if (type == cvarlang::ValueType::StringVal) {
-			String val(""); other.read(val);
-
-			return stringVal.size() > val.size();
-		} else if (type == cvarlang::ValueType::IntVal) {
-			int32 val = 0; other.read(val);
-
-			return int32Val > val;
-		} else if (type == cvarlang::ValueType::FloatVal) {
-			float val = 0.0f; other.read(val);
-
-			return float32Val > val;
-		} else if (type == cvarlang::ValueType::DoubleVal) {
-			float64 val = 0.0; other.read(val);
-
-			return float64Val > val;
-		}
-
-		return false;
+		return !(*this < other);
 	}
 	const bool CVar::operator >= (const CVar& other) const {
-		if (type == cvarlang::ValueType::StringVal) {
-			String val(""); other.read(val);
-
-			return stringVal.size() >= val.size();
-		} else if (type == cvarlang::ValueType::IntVal) {
-			int32 val = 0; other.read(val);
-
-			return int32Val >= val;
-		} else if (type == cvarlang::ValueType::FloatVal) {
-			float val = 0.0f; other.read(val);
-
-			return float32Val >= val;
-		} else if (type == cvarlang::ValueType::DoubleVal) {
-			float64 val = 0.0; other.read(val);
-
-			return float64Val >= val;
-		}
-
-		return false;
+		return !(*this < other) || *this == other;
 	}
 }
