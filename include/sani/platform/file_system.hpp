@@ -86,6 +86,8 @@ namespace sani {
 
 			uint8 readByte(const String& path) const;
 
+			uint32 readBytes(const String& path, unsigned char* buffer, const uint32 size) const;
+
 			void getBinaryReader(const String& file, BinaryReader* reader) const;
 
 			void getBinaryWriter(const String& file, BinaryWriter* writer) const;

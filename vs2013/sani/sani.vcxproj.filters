@@ -88,6 +88,9 @@
     <Filter Include="include\resource\processor">
       <UniqueIdentifier>{3d7fbea1-f926-4464-9ff3-a150f6096c41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\resource\pipeline">
+      <UniqueIdentifier>{b57ddd7e-c5c7-4db5-8b4b-97cc78e294a0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\file_system.cpp">
@@ -418,6 +421,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp">
       <Filter>include\resource\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp">
+      <Filter>include\resource\pipeline</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

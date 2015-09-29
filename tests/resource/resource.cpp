@@ -7,6 +7,7 @@
 #include "sani/resource/texture2d.hpp"
 #include "sani/resource/compiler/texture2d_writer.hpp"
 #include "sani/resource/processor/texture2d_processor.hpp"
+#include "sani/resource/pipeline/texture2d_importer.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 #include <Windows.h>
 
@@ -32,6 +33,8 @@ TEST_CASE("Resource deserialization compile time constants", "[resource]") {
 	compiler::Texture2DWriter writer;
 	processor::Texture2DProcessor proc;
 	proc.process(nullptr);
+	pipeline::Texture2DImporterImpl importer;
+	importer.import("../../assets/tuksu.png", &fs);
 }
 
 
