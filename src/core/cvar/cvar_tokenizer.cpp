@@ -88,10 +88,7 @@ namespace sani {
 				if (type == cvarlang::TokenType::Invalid) {
 					// Push error, invalid line.
 					pushError(SANI_ERROR_MESSAGE("invalid token at line " + std::to_string(i) + ", at file " + file.getFilename()));
-				} else if (!hasErrors()) {
-					// Check for errors before creating a token, as some
-					// might have been recorded. 
-
+				} else {
 					// Should be a valid token.
 					tokens.push_back(CVarToken(type, i, file.getFilename(), line));
 				}

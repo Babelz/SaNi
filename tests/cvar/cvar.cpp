@@ -61,13 +61,19 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 
 TEST_CASE("CVar parsing", "[cvar]") {
 
-	SECTION("CVar declarations") {
-	}
-
-	SECTION("Requirements") {
-	}
-
 	SECTION("Record syncing") {
+		String line = String("			my_int_var 10 // uncle ebons reiseronis comments          ");
+		String syncReq = String("			my_int_var 128 // uncle ebons reiseronis comments          ");
+		CVar cvar(cvarlang::ValueType::IntVal, "my_int_var", true, "10");
+		CVarToken token(cvarlang::TokenType::Declaration, 123, "perkele", line);
+
+		CVarRecord record(token, cvar);
+	
+		cvar.write(128);
+		
+		String synced = record.generateSyncedStringRepresentation();
+
+		REQUIRE(synced == syncReq);
 	}
 
 	SECTION("Compiling") {
@@ -127,15 +133,17 @@ TEST_CASE("CVar parsing", "[cvar]") {
 
 	SECTION("Compiling error catching") {
 		const String prog(
-			"a10\n"
-			"gg 10 // this should be just fine\n"
-			"b_ \"20dfasd\n"
-			"b 10 20 30 40 50\n"
-			"require (a == b && gg != 9)\n"
-			"message(can't access my_secret_str while a does not equal b)\n"
-			""
+			"a10\n"																// First error.
+			"gg 10 // this should be just fine\n"					
+			"b_ \"20dfasd\n"													// Second.
+			"b 10 20 30 40 50\n"												// Third error.
+			"require (jiijii)\n"												// Undefined cvar jiijii.
+			"require (a == b && gg != 9)\n"										// Fourth error. System supports statements like this but does not have
+			"\n"																// required regex to parse them.
+			"message(can't access my_secret_str while a does not equal b)\n"	
+			"\n"
 			"	my_secret_str \"hello, world!\"\n"
-			"// scope not closed, should throw and error\n");
+			"// scope not closed, should throw and error\n");					// Fifth error.
 
 		CVarFile file("perkele", prog);
 
@@ -149,10 +157,14 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		compiler.compile(files, cvars, records, true);
 
 		REQUIRE(compiler.hasErrors());
-
+		
+		size_t i = 0;
 		while (compiler.hasErrors()) {
+			i++;
 			std::cout << compiler.getNextError() << std::endl;
 		}
+
+		REQUIRE(i == 7);
 	}
 
 	SECTION("Operators") {

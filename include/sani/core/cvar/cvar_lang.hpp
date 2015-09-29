@@ -91,12 +91,12 @@ namespace sani {
 			const String DoubleType			= "[0-9]+\\.[0-9]+";
 			const String FloatType			= DoubleType + "f";
 
-			const String ConstValue			= StringType + "|" + IntType + "|" + DoubleType + 
-											  "|" + FloatType;
+			const String ConstValue			= "(" + StringType + "|" + IntType + "|" + DoubleType + 
+											  "|" + FloatType + ")";
 
 			const String Message			= MessageKeyword + " *(.+)";
 
-			const String Declaration		= "[_\\w]+ *";
+			const String Declaration		= "[_\\w]+ ";
 			const String StringDeclaration  = Declaration + StringType;
 			const String IntDeclaration		= Declaration + IntType;
 			const String DoubleDeclaration  = Declaration + DoubleType;

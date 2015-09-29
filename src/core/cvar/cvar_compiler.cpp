@@ -111,7 +111,13 @@ namespace sani {
 
 		// Emit possible scope errors and 
 		// copy possible parsing errors to this level.
-		if (scope > 0)			errorBuffer.push(SANI_ERROR_MESSAGE("require scope was not closed at the end of require block at file " + tokens.end()->getFilename()));
+		if (scope > 0)			{
+			auto last = tokens.begin();
+			std::advance(last, tokens.size() - 1);
+
+			errorBuffer.push(SANI_ERROR_MESSAGE("require scope was not closed at the end of require block at file " + last->getFilename()));
+		}
+
 		if (parser.hasErrors()) copyErrors(&parser);
 	}
 
@@ -180,7 +186,7 @@ namespace sani {
 		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 	void CVarCompiler::generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
-		CVar* lhs = findCVar(cvars, intermediateCondition->rhs);
+		CVar* lhs = findCVar(cvars, intermediateCondition->lhs);
 		if (lhs == nullptr) return;
 
 		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
@@ -206,7 +212,7 @@ namespace sani {
 		}
 	}
 	void CVarCompiler::generateCVarCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
-		CVar* lhs = findCVar(cvars, intermediateCondition->rhs);
+		CVar* lhs = findCVar(cvars, intermediateCondition->lhs);
 		if (lhs == nullptr) return;
 
 		CVar* rhs = findCVar(cvars, intermediateCondition->rhs);
