@@ -425,6 +425,9 @@
     <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp">
       <Filter>include\resource\pipeline</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file_stream.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

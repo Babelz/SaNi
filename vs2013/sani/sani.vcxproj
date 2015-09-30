@@ -231,6 +231,7 @@
     <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp" />
     <ClInclude Include="..\..\include\sani\platform\color.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file_stream.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file_system.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics_device.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics_error.hpp" />
