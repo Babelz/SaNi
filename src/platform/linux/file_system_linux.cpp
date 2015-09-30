@@ -1,6 +1,6 @@
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
-#include "sani/platform/file_system.hpp"
+#include "sani/platform/file/file_system.hpp"
 #include <dirent.h>
 
 namespace sani {

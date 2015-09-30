@@ -1,4 +1,4 @@
-#include "sani/platform/graphics_error.hpp"
+#include "sani/platform/graphics/graphics_error.hpp"
 
 namespace sani {
 	namespace graphics {

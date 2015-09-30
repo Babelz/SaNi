@@ -1,5 +1,5 @@
 #pragma once
-#include "sani/platform/binary_writer.hpp"
+#include "sani/platform/file/binary_writer.hpp"
 #include "sani/core/math/math.hpp"
 SANI_FORWARD_DECLARE_2(sani, io, FileSystem);
 namespace sani {

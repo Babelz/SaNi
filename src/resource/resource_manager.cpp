@@ -1,6 +1,6 @@
 #include "sani/resource/resource_manager.hpp"
-#include "sani/platform/file_system.hpp"
-#include "sani/platform/graphics_device.hpp"
+#include "sani/platform/file/file_system.hpp"
+#include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
 namespace sani {
 	namespace resource {

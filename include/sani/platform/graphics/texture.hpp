@@ -1,5 +1,5 @@
 #include "sani/precompiled.hpp"
-#include "sani/platform/graphics_device.hpp"
+#include "sani/platform/graphics/graphics_device.hpp"
 
 namespace sani {
 	namespace graphics {

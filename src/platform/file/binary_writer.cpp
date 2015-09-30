@@ -1,5 +1,5 @@
-#include "sani/platform/binary_writer.hpp"
-#include "sani/platform/file_system.hpp"
+#include "sani/platform/file/binary_writer.hpp"
+#include "sani/platform/file/file_system.hpp"
 
 namespace sani {
 	namespace io {

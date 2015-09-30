@@ -60,7 +60,7 @@ namespace sani {
 		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const;
 		/// Generates a record for given cvar.
 		void generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const;
-		
+
 		/// Generates a require statement.
 		void generateRequireStatement(std::list<CVarRequireStatement>& statements, std::list<CVar>& cvars, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement);
 		/// Generates an expression using two constant values.
@@ -71,11 +71,13 @@ namespace sani {
 		void generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
 		/// Generates a const bool cvar expression.
 		void generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
-		/// Generates a constant bool expression using constant value.
+		/// Generates a const bool const expression.
 		void generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const;
-
-		/// Generates a condition from given condition using given cvars.
+		void generateCVarCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		
 		void generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const;
+
+		CVar* findCVar(std::list<CVar>& cvars, const String& name);
 	public:
 		CVarCompiler();
 
