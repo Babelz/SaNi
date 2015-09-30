@@ -40,6 +40,11 @@ namespace sani {
 	class CVarParser;
 	class CVarTokenizer;
 
+	/// @class CVarCompiler cvar_compiler.hpp "sani/core/cvar/cvar_compiler.hpp"
+	/// @author voidbab
+	///
+	/// Class that turns configuration source data into usable
+	/// cvars and requirements.
 	class CVarCompiler {
 	private:
 		ErrorBuffer errorBuffer;
@@ -48,27 +53,41 @@ namespace sani {
 		void copyErrors(CVarParser* parser);
 		void copyErrors(CVarTokenizer* tokenizer);
 
+		/// Generates cvars and records.
 		void generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens);
 		
-		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar);
+		/// Generates a cvar.
+		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const;
+		/// Generates a record for given cvar.
 		void generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const;
-
+		
+		/// Generates a require statement.
 		void generateRequireStatement(std::list<CVarRequireStatement>& statements, std::list<CVar>& cvars, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement);
-	
-		void generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition);
-		void generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		/// Generates an expression using two constant values.
+		void generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition) const;
+		/// Generates a const cvar expression.
+		void generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const;
+		/// Generates a cvar const expression.
 		void generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		/// Generates a const bool cvar expression.
 		void generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
-		void generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		/// Generates a constant bool expression using constant value.
+		void generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const;
 
-		void generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs);
+		/// Generates a condition from given condition using given cvars.
+		void generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const;
 	public:
 		CVarCompiler();
 
 		bool hasErrors() const;
 		String getNextError();
 
-		void compile(std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced);
+		/// Compiles all given files.
+		/// @param[in] files files to compile
+		/// @param[in] cvars generated cvars
+		/// @param[in] records generated records
+		/// @param[in] synced should records be synced for this set.
+		void compile(const std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced);
 		
 		~CVarCompiler();
 	}; 

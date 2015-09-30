@@ -105,7 +105,7 @@ namespace sani {
 		if (scope > 0) errorBuffer.push(SANI_ERROR_MESSAGE("require scope was not closed at the end of require block at file " + tokens.end()->getFilename()));
 	}
 
-	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) {
+	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const {
 		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, intermediateCVar->value));
 	}
 	void CVarCompiler::generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const {
@@ -148,7 +148,7 @@ namespace sani {
 		statements.push_back(CVarRequireStatement(conditions, intermediateRequireStatement->message));
 	}
 
-	void CVarCompiler::generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition) {
+	void CVarCompiler::generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition) const {
 		/*
 			TODO: could store temps somewhere in case they are needed?
 		*/
@@ -160,7 +160,7 @@ namespace sani {
 			return lhs == rhs;
 		};
 	}
-	void CVarCompiler::generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+	void CVarCompiler::generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const {
 		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
 		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
 
@@ -198,7 +198,7 @@ namespace sani {
 
 		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
-	void CVarCompiler::generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+	void CVarCompiler::generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const {
 		if (intermediateCondition->lhsIsConst) {
 			CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
 			CVar rhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"));
@@ -209,7 +209,7 @@ namespace sani {
 		}
 	}
 
-	void CVarCompiler::generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) {
+	void CVarCompiler::generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const {
 		if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Equal) {
 			condition = [&lhs, &rhs]() {
 				return lhs == rhs;
@@ -237,7 +237,7 @@ namespace sani {
 		}
 	}
 
-	void CVarCompiler::compile(std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced) {
+	void CVarCompiler::compile(const std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced) {
 		this->synced = synced;
 
 		// Generate tokens from lines.
