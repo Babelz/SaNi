@@ -7,20 +7,18 @@ namespace sani {
 
 	CVarRecord::CVarRecord(const CVarToken& token, const CVar& cvar) : token(token),
 																	   cvar(cvar) {
-		// Just find the original value, no need to do
-		// any validation as we can except that the 
-		// parsing system will fail at some point anyways 
-		// if this token is invalid.
-		std::vector<String> tokens;
-		utils::split(token.getLine(), String(" "), tokens, true);
+		const String line = token.getLine();
+		const size_t spos = line.find(' ');
 
-		originalValue = tokens[1];
-		indexOfValue = token.getLine().find(originalValue);
+		if (spos != line.npos) {
+			originalValue = line.substr(spos + 1, line.size() - spos);
+			indexOfValue = spos + 1;
 
-		// Remove comments, trim.
-		if (cvarlang::lang::containsComment(originalValue)) originalValue = originalValue.substr(0, originalValue.find("//"));
+			// Remove comments, trim.
+			if (cvarlang::lang::containsComment(originalValue)) originalValue = originalValue.substr(0, originalValue.find("//"));
 
-		utils::trim(originalValue);
+			utils::trim(originalValue);
+		}
 	}
 
 	String CVarRecord::generateSyncedStringRepresentation() const {

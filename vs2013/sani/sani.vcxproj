@@ -61,16 +61,20 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Glew.props" />
+    <Import Project="..\propertysheets\libpng.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\propertysheets\libpng.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Glew.props" />
+    <Import Project="..\propertysheets\libpng.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\propertysheets\libpng.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -80,7 +84,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
@@ -180,6 +184,7 @@
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
+    <ClCompile Include="..\..\src\resource\texture2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\assert.hpp" />
@@ -241,6 +246,9 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\primitive_readers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
@@ -249,6 +257,8 @@
     <ClInclude Include="..\..\include\sani\resource\reader\texture2d_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\serialization.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />

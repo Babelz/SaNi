@@ -117,6 +117,12 @@ namespace sani {
 			return static_cast<uint8>(value);
 		}
 
+		uint32 FileSystem::readBytes(const String& path, unsigned char* buffer, const uint32 size) const {
+			FILE* handle = handles.at(path);
+			uint32 readBytes = fread(buffer, 1, size, handle);
+			return readBytes;
+		}
+
 		void FileSystem::getBinaryReader(const String& file, BinaryReader* reader) const {
 			*reader = BinaryReader(this, file);
 		}

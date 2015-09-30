@@ -79,8 +79,7 @@ namespace sani {
 					if (!lastRequire) pushError(SANI_ERROR_MESSAGE("did not except message keyword at this time, at line " + std::to_string(i)));
 					
 					lastRequire = false;
-				}
-				else if (cvarlang::lang::isEmptyOrWhitespace(line)) {
+				} else if (cvarlang::lang::isEmptyOrWhitespace(line)) {
 					type = cvarlang::TokenType::EmptyOrComment;
 
 					lastRequire = false;
@@ -89,12 +88,9 @@ namespace sani {
 				if (type == cvarlang::TokenType::Invalid) {
 					// Push error, invalid line.
 					pushError(SANI_ERROR_MESSAGE("invalid token at line " + std::to_string(i) + ", at file " + file.getFilename()));
-				} else if (!hasErrors()) {
-					// Check for errors before creating a token, as some
-					// might have been recorded. 
-
+				} else {
 					// Should be a valid token.
-					CVarToken token = CVarToken(type, i, file.getFilename(), line);
+					tokens.push_back(CVarToken(type, i, file.getFilename(), line));
 				}
 			}
 		}

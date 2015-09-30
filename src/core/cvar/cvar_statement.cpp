@@ -67,7 +67,7 @@ namespace sani {
 					result = orResult;
 
 					// Get next. cur + 1.
-					if (i == 0)				  i++;
+					if (i == 0)				   i++;
 					if (i < conditions.size()) current = &conditions[i];
 				}
 
