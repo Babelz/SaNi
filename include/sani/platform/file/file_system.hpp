@@ -10,7 +10,7 @@
 
 #include "sani/forward_declare.hpp"
 #include "sani/precompiled.hpp"
-#include "sani/platform/file/file.hpp"
+#include "sani/platform/file/file_stream.hpp"
 #include <vector>
 #include <map>
 #include <map>

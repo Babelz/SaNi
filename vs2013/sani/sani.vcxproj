@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_writer.cpp" />
+    <ClCompile Include="..\..\src\platform\file\file_stream.cpp" />
     <ClCompile Include="..\..\src\platform\file\file_system.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\color.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_device_gl.cpp" />
@@ -227,7 +228,7 @@
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\file\file.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_system.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp" />
