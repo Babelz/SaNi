@@ -1,9 +1,9 @@
 // This file should contain all common stuff
 #include "sani/platform/platform_config.hpp"
-#include "sani/platform/file_system.hpp"
+#include "sani/platform/file/file_system.hpp"
 #include <sys/stat.h>
-#include "sani/platform/binary_reader.hpp"
-#include "sani/platform/binary_writer.hpp"
+#include "sani/platform/file/binary_reader.hpp"
+#include "sani/platform/file/binary_writer.hpp"
 
 namespace sani {
 	namespace io {

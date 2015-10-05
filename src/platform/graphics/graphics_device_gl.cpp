@@ -1,7 +1,7 @@
-#include "sani/platform/render_target_2d.hpp"
-#include "sani/platform/graphics_device.hpp"
-#include "sani/platform/viewport.hpp"
-#include "sani/platform/color.hpp"
+#include "sani/platform/graphics/render_target_2d.hpp"
+#include "sani/platform/graphics/graphics_device.hpp"
+#include "sani/platform/graphics/viewport.hpp"
+#include "sani/platform/graphics/color.hpp"
 #include <sstream>
 
 // Contains WindowsGL and LinuxGL implementations of the graphics device.

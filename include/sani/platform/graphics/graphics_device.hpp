@@ -1,6 +1,6 @@
 #pragma once
-#include "sani/platform/graphics_error.hpp"
-#include "sani/platform/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_error.hpp"
+#include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
 
 #include <stack>

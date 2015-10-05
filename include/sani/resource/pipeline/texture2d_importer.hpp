@@ -1,7 +1,7 @@
 #pragma once
 #include "sani/resource/pipeline/content_importer.hpp"
 #include "sani/resource/texture2d.hpp"
-#include "sani/platform/file_system.hpp"
+#include "sani/platform/file/file_system.hpp"
 #include <vector>
 #include <iostream>
 #include <algorithm>

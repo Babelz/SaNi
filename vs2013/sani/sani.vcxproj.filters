@@ -85,23 +85,23 @@
     <Filter Include="src\resource\compiler">
       <UniqueIdentifier>{6437e6d5-d2df-4ceb-aa2b-41f6ea2fab58}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\resource\processor">
-      <UniqueIdentifier>{3d7fbea1-f926-4464-9ff3-a150f6096c41}</UniqueIdentifier>
+    <Filter Include="src\platform\graphics">
+      <UniqueIdentifier>{5464db1b-8ef4-4cb8-a2df-a455b4c54927}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\resource\pipeline">
-      <UniqueIdentifier>{b57ddd7e-c5c7-4db5-8b4b-97cc78e294a0}</UniqueIdentifier>
+    <Filter Include="src\platform\file">
+      <UniqueIdentifier>{5ce1747e-9455-4e84-bb2b-7b210afa634f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform\graphics">
+      <UniqueIdentifier>{eaacadd0-c812-4388-940a-2e7cd93504ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform\file">
+      <UniqueIdentifier>{c9657f4b-ca60-40c0-8c71-3b81dea489c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\resource\processor">
+      <UniqueIdentifier>{0ed13d6e-6f09-40cb-a91e-ca467937e856}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\platform\file_system.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\graphics_device_dx.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\viewport.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
       <Filter>src\platform\apple</Filter>
     </ClCompile>
@@ -117,35 +117,11 @@
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp">
       <Filter>src\platform\android</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\platform\graphics_device_gl.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\color.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\texture.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\render_target_2d.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\graphics_error.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\window.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp">
       <Filter>src\core\cvar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\binary_reader.cpp">
-      <Filter>src\platform</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\binary_writer.cpp">
-      <Filter>src\platform</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp">
       <Filter>src\core\cvar</Filter>
@@ -201,6 +177,36 @@
     <ClCompile Include="..\..\src\resource\resource_manager.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\graphics_device_gl.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\graphics_error.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\render_target_2d.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\texture.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\viewport.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\window.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\color.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\file\binary_writer.cpp">
+      <Filter>src\platform\file</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\file\file_system.cpp">
+      <Filter>src\platform\file</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\file\binary_reader.cpp">
+      <Filter>src\platform\file</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\resource\texture2d.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
@@ -215,25 +221,7 @@
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\file.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\file_system.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics_device.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics_precompiled.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\viewport.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\window.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp">
@@ -268,18 +256,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp">
       <Filter>include\core\math\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\color.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\texture.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\render_target_2d.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics_error.hpp">
-      <Filter>include\platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp">
       <Filter>include\core\math\impl</Filter>
@@ -368,12 +344,6 @@
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\binary_reader.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\binary_writer.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\primitive_readers.hpp">
       <Filter>include\resource\reader</Filter>
     </ClInclude>
@@ -407,8 +377,47 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp">
       <Filter>include\resource\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_conditions.hpp">
-      <Filter>include\core\cvar</Filter>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\texture.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp">
+      <Filter>include\platform\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file\file.hpp">
+      <Filter>include\platform\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file\file_system.hpp">
+      <Filter>include\platform\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp">
+      <Filter>include\platform\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp">
+      <Filter>include\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp">
+      <Filter>include\resource</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\serialization.hpp">
       <Filter>include\resource</Filter>
@@ -416,17 +425,8 @@
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp">
-      <Filter>include\resource\processor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp">
       <Filter>include\resource\processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp">
-      <Filter>include\resource\pipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\file_stream.hpp">
-      <Filter>include\platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
