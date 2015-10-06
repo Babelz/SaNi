@@ -26,8 +26,11 @@ namespace sani {
 			if (filename.substr(filename.size() - ending.size(), ending.size()) == ending) {
 				// Open files.
 				const String path(configurationRootFolder + "\\" + filename);
-
-				if (!fileSystem.isFileOpen(path)) fileSystem.openFile(path, io::Filemode::Read);
+				
+				if (!fileSystem.isFileOpen(path)) {
+					sani::io::FileStream* stream;
+					fileSystem.openFile(path, io::Filemode::Read, &stream);
+				}
 
 				// Just assume the file is open.
 				const String contents(fileSystem.getFileDataString(path));

@@ -27,7 +27,7 @@ namespace sani {
 		/// Helper for file access
 		class FileSystem {		
 		private:
-			std::map<String, FILE*> handles;
+			std::map<String, FileStream*> handles;
 
 		#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			// TODO what would be the best way to initialize it?
@@ -55,7 +55,7 @@ namespace sani {
 			/// @param[in] path The file path
 			/// @param[in] mode The mode how file should be opened
 			/// @returns true if the file opening succeeded, otherwise false
-			bool openFile(const String& path, const Filemode mode);
+			bool openFile(const String& path, const Filemode mode, FileStream** stream);
 
 			/// Closes the file in path
 			/// @param[in] path File path
@@ -73,7 +73,7 @@ namespace sani {
 			/// @param[in] path The file path to the file
 			/// @param[out] fileSize How many bytes were read
 			/// @param[in] nullTerminate Should the buffer be null terminated
-			unsigned char* getFileData(const String& path, size_t& fileSize, bool nullTerminate = false) const;
+			unsigned char* getFileData(const String& path, int64& fileSize, bool nullTerminate = false) const;
 
 			/// Reads the file into string
 			/// @param[in] path File path to the file
@@ -84,13 +84,6 @@ namespace sani {
 			/// @param path The path where to list files
 			void listFiles(std::vector<String>& files, const String& path) const;
 
-			uint8 readByte(const String& path) const;
-
-			uint32 readBytes(const String& path, unsigned char* buffer, const uint32 size) const;
-
-			void getBinaryReader(const String& file, BinaryReader* reader) const;
-
-			void getBinaryWriter(const String& file, BinaryWriter* writer) const;
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			void setAssetManager(AAssetManager* assetmanager);
 #endif

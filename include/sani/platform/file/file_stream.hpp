@@ -35,6 +35,7 @@ namespace sani {
 			const Filemode mode;
 			FILE* handle;
 		public:
+			
 			FileStream(const String& filePath, const Filemode mode, FILE* handle);
 			~FileStream();
 			// disable copying

@@ -52,7 +52,8 @@ namespace sani {
 					if (pngInfo == nullptr) {
 						throw std::runtime_error("Failed to initialize png info struct");
 					}
-					fileSystem->openFile(filename, Filemode::Read);
+					sani::io::FileStream* stream;
+					fileSystem->openFile(filename, Filemode::Read, &stream);
 					Test asd{ fileSystem, filename };
 					png_set_read_fn(pngStructure, &asd, read);
 					
@@ -80,5 +81,5 @@ namespace sani {
 void read(png_struct* pngStructure, unsigned char* buffer, uint32 size) {
 	using namespace sani::io;
 	Test* test = static_cast<Test*>(png_get_io_ptr(pngStructure));
-	test->fs->readBytes(test->filename, buffer, size);
+	//test->fs->readBytes(test->filename, buffer, size);
 }

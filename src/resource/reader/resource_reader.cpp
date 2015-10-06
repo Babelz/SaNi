@@ -1,11 +1,11 @@
 #include "sani/resource/reader/resource_reader.hpp"
-
+#include "sani/platform/file/file_stream.hpp"
 namespace sani {
 	namespace resource {
 		namespace reader {
-			ResourceReader::ResourceReader(const FileSystem* fs,
-				const String& file, ResourceManager& manager, GraphicsDevice* device)
-				: BinaryReader(fs, file), manager(manager), graphicsDevice(device) {
+			ResourceReader::ResourceReader(const FileStream* stream,
+				ResourceManager& manager, GraphicsDevice* device)
+				: BinaryReader(stream), manager(manager), graphicsDevice(device) {
 
 			}
 
