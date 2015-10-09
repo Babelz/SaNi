@@ -71,6 +71,11 @@ namespace sani {
 			/// @param seekpos What position is used as the origin
 			/// @param offset How many bytes are traversed
 			void seek(const SeekPosition seekpos, const long offset) const;
+
+			inline Filemode getOpenMode() const;
+			inline const String& getPath() const;
 		};
 	}
 }
+
+#include "inl/file_stream.inl"
