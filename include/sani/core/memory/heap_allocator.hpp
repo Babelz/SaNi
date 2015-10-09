@@ -6,54 +6,36 @@
 
 namespace sani {
 
+	enum AllocationPolicy {
+		// Always keep the efficiency in mind when allocation
+		// at the cost of speed.
+		Efficiency,
+		
+		// Always keep the time in mind when allocating
+		// at the cost of efficiency.
+		LinearTimeAllocations,
+
+		// Causes the allocator to use twice as much 
+		// memory as it should but reduces allocation
+		// times to constant.
+		ConstantTimeAllocation
+	};
+
+	class Allocator {
+	private:
+		char* memory;
+	public:
+	};
+
 	/// @class HeapAllocator heap_allocator.hpp "sani/core/memory/heap_allocator.hpp"
 	/// @author voidbab
 	///
 	/// Basic heap allocator with defragmentation support.
 	class HeapAllocator {
 	private:
-		struct Chunk {
-			uint32 size;
-			char* handle;
-
-			Chunk() : size(0),
-					  handle(nullptr) {
-			}
-
-			~Chunk() {
-			}
-		};
-
-		const int64 heapStart;
-		int64		heapEnd;
-		int64		size;
-
-		// The heap pointer.
-		uint64 hp;
-		// Memory region of the allocator.
-		char* memory;
-
-		std::list<Chunk> occupiedChunks;
-		std::list<Chunk> releasedChunks;
-
-		// Used to for quick lookups to find the address of an element.
-		std::vector<char*> transitions;
-
-		void resize();
+		Allocator allocator;
 	public:
 		HeapAllocator(const uint64 bytes);
-		HeapAllocator();
-
-		template<typename T> 
-		T* allocate(...) {
-			return nullptr;
-
-			// new (val) T(...);
-		}
-
-		template<typename T>
-		void deallocate(T* element) {
-		}
 
 		~HeapAllocator();
 
