@@ -100,6 +100,12 @@
     <Filter Include="include\resource\processor">
       <UniqueIdentifier>{0ed13d6e-6f09-40cb-a91e-ca467937e856}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\platform\file\inl">
+      <UniqueIdentifier>{76fd8a10-0301-49ed-acfb-0f08bd06cc45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\resource\pipeline">
+      <UniqueIdentifier>{add112ea-3b41-4fbd-b884-b52f6aa79e11}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -212,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\file\file_stream.cpp">
       <Filter>src\platform\file</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp">
+      <Filter>src\resource\pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -431,6 +440,9 @@
     <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp">
       <Filter>include\platform\file</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -447,6 +459,9 @@
     </None>
     <None Include="..\..\include\sani\core\math\value_ptr.inl">
       <Filter>include\core\math</Filter>
+    </None>
+    <None Include="..\..\include\sani\platform\file\inl\file_stream.inl">
+      <Filter>include\platform\file\inl</Filter>
     </None>
   </ItemGroup>
 </Project>

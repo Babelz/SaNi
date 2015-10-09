@@ -30,11 +30,11 @@ TEST_CASE("Resource .png loading", "[resource]") {
 
 TEST_CASE("Resource deserialization compile time constants", "[resource]") {
 	CHECK(DeserializableWith<sani::resource::Texture2D>::value() == "sani::resource::reader::Texture2DReader");
-/*	compiler::Texture2DWriter writer;
+	compiler::Texture2DWriter writer;
 	processor::Texture2DProcessor proc;
 	proc.process(nullptr);
 	pipeline::Texture2DImporterImpl importer;
-	importer.import("../../assets/tuksu.png", &fs);*/
+	importer.import("../../assets/tuksu.png", &fs);
 }
 
 
