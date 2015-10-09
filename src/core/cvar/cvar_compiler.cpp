@@ -36,7 +36,7 @@ namespace sani {
 
 		statementGenerators.push_back(
 			GEN_REQUIRE_STATEMENT_GENERATOR(!intermediateCondition.rhsIsConst && !intermediateCondition.lhsIsConst,
-			std::bind(&sani::CVarCompiler::generateCVarConstExpression, this, _1, _2, _3)));
+			std::bind(&sani::CVarCompiler::generateCVarCVarExpression, this, _1, _2, _3)));
 	}
 
 	void CVarCompiler::copyErrors(CVarParser* parser) {
@@ -117,8 +117,7 @@ namespace sani {
 
 						i++;
 					}
-				}
-				else {
+				} else {
 					parser.parseRequireStatement(i->getLine(), message, intermediateRequireStatement);
 				}
 
@@ -164,8 +163,8 @@ namespace sani {
 		std::vector<CVarCondition> conditions;
 
 		/*
-		TODO: missing the boolean not (!) operator for bool expressions.
-		They could come handy.
+			TODO: missing the boolean not (!) operator for bool expressions.
+			They could come handy.
 		*/
 
 		for (const cvarlang::IntermediateCondition& intermediateCondition : intermediateRequireStatement->conditions) {
