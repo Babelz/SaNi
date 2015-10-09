@@ -26,7 +26,7 @@ namespace sani {
 		return error;
 	}
 
-	void CVarCompiler::generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens) {
+	void CVarCompiler::generateCVars(CVarList& cvars, RecordList& records, TokenList& tokens) {
 		// 1) Process token
 		// 2) Parse it
 		// 3) Check for errors
@@ -36,7 +36,7 @@ namespace sani {
 		CVarParser parser;
 
 		std::list<cvarlang::IntermediateCVar> intermediateCVar;
-		std::list<cvarlang::IntermediateRequireStatement> intermediateRequireStatement;
+		std::list<IntermediateRequireStatement> intermediateRequireStatement;
 		std::list<CVarRequireStatement> statements;
 		// Current scope level. Gets decreased when require keyword is found,
 		// and gets increased when require statement is found.
@@ -73,7 +73,7 @@ namespace sani {
 				// We need to track that the user closes the scopes before the tokens end,
 				// or we are fucked.
 
-				cvarlang::IntermediateRequireStatement intermediateRequireStatement;
+				IntermediateRequireStatement intermediateRequireStatement;
 				String message;
 
 				// Check if the next one is a message statement.
@@ -123,14 +123,14 @@ namespace sani {
 		if (parser.hasErrors()) copyErrors(&parser);
 	}
 
-	void CVarCompiler::generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const  {
+	void CVarCompiler::generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const  {
 		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, intermediateCVar->value));
 	}
-	void CVarCompiler::generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const {
+	void CVarCompiler::generateRecord(RecordList& records, const CVarToken& token, const CVar& cvar) const {
 		records.push_back(CVarRecord(token, cvar));
 	}
 
-	void CVarCompiler::generateRequireStatement(std::list<CVarRequireStatement>& statements, std::list<CVar>& cvars, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement) {
+	void CVarCompiler::generateRequireStatement(std::list<CVarRequireStatement>& statements, CVarList& cvars, const IntermediateRequireStatement* intermediateRequireStatement) {
 		std::vector<CVarCondition> conditions;
 
 		/*
@@ -174,7 +174,7 @@ namespace sani {
 		statements.push_back(CVarRequireStatement(conditions, intermediateRequireStatement->message));
 	}
 
-	void CVarCompiler::generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition) const  {
+	void CVarCompiler::generateConstConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition) const  {
 		/*
 		TODO: could store temps somewhere in case they are needed?
 		*/
@@ -186,13 +186,13 @@ namespace sani {
 			return lhs == rhs;
 		};
 	}
-	void CVarCompiler::generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const  {
+	void CVarCompiler::generateConstCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const  {
 		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
 		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
 
 		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
-	void CVarCompiler::generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+	void CVarCompiler::generateCVarConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) {
 		CVar* lhs = findCVar(cvars, intermediateCondition->lhs);
 		if (lhs == nullptr) return;
 
@@ -200,7 +200,7 @@ namespace sani {
 
 		generateCondition(intermediateCondition, condition, *lhs, rhs);
 	}
-	void CVarCompiler::generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) {
+	void CVarCompiler::generateConstCVarBoolExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) {
 		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
 
 		CVar* rhs = findCVar(cvars, intermediateCondition->rhs);
@@ -208,7 +208,7 @@ namespace sani {
 
 		generateCondition(intermediateCondition, condition, lhs, *rhs);
 	}
-	void CVarCompiler::generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const  {
+	void CVarCompiler::generateConstBoolConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const  {
 		if (intermediateCondition->lhsIsConst) {
 			CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
 			CVar rhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"));
@@ -218,7 +218,7 @@ namespace sani {
 			};
 		}
 	}
-	void CVarCompiler::generateCVarCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars)  {
+	void CVarCompiler::generateCVarCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars)  {
 		CVar* lhs = findCVar(cvars, intermediateCondition->lhs);
 		if (lhs == nullptr) return;
 
@@ -228,7 +228,7 @@ namespace sani {
 		generateCondition(intermediateCondition, condition, *lhs, *rhs);
 	}
 
-	void CVarCompiler::generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const  {
+	void CVarCompiler::generateCondition(const IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const  {
 		if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Equal) {
 			condition = [&lhs, &rhs]() {
 				return lhs == rhs;
@@ -261,7 +261,7 @@ namespace sani {
 		}
 	}
 
-	CVar* CVarCompiler::findCVar(std::list<CVar>& cvars, const String& name) {
+	CVar* CVarCompiler::findCVar(CVarList& cvars, const String& name) {
 		for (CVar& cvar : cvars) {
 			if (cvar.getName() == name) {
 				return &cvar;

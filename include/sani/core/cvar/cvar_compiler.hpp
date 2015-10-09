@@ -31,7 +31,13 @@
 
 namespace sani {
 
+	using namespace sani::cvarlang;
+
+	typedef std::list<CVarRequireStatement> StatementList;
+	typedef std::list<CVarRecord> RecordList;
+	typedef std::list<CVarToken> TokenList;
 	typedef	std::stack<String> ErrorBuffer;
+	typedef std::list<CVar> CVarList;
 
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateCVar);
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateCondition);
@@ -54,30 +60,30 @@ namespace sani {
 		void copyErrors(CVarTokenizer* tokenizer);
 
 		/// Generates cvars and records.
-		void generateCVars(std::list<CVar>& cvars, std::list<CVarRecord>& records, std::list<CVarToken>& tokens);
+		void generateCVars(CVarList& cvars, RecordList& records, TokenList& tokens);
 		
 		/// Generates a cvar.
-		void generateCVar(std::list<CVar>& cvars, std::list<CVarRequireStatement>& statements, const cvarlang::IntermediateCVar* intermediateCVar) const;
+		void generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const;
 		/// Generates a record for given cvar.
-		void generateRecord(std::list<CVarRecord>& records, const CVarToken& token, const CVar& cvar) const;
+		void generateRecord(RecordList& records, const CVarToken& token, const CVar& cvar) const;
 
 		/// Generates a require statement.
-		void generateRequireStatement(std::list<CVarRequireStatement>& statements, std::list<CVar>& cvars, const cvarlang::IntermediateRequireStatement* intermediateRequireStatement);
+		void generateRequireStatement(StatementList& statements, CVarList& cvars, const IntermediateRequireStatement* intermediateRequireStatement);
 		/// Generates an expression using two constant values.
-		void generateConstConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition) const;
+		void generateConstConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition) const;
 		/// Generates a const cvar expression.
-		void generateConstCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const;
+		void generateConstCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const;
 		/// Generates a cvar const expression.
-		void generateCVarConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		void generateCVarConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars);
 		/// Generates a const bool cvar expression.
-		void generateConstCVarBoolExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		void generateConstCVarBoolExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars);
 		/// Generates a const bool const expression.
-		void generateConstBoolConstExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars) const;
-		void generateCVarCVarExpression(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, std::list<CVar>& cvars);
+		void generateConstBoolConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const;
+		void generateCVarCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars);
 		
-		void generateCondition(const cvarlang::IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const;
+		void generateCondition(const IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const;
 
-		CVar* findCVar(std::list<CVar>& cvars, const String& name);
+		CVar* findCVar(CVarList& cvars, const String& name);
 	public:
 		CVarCompiler();
 
@@ -93,4 +99,10 @@ namespace sani {
 		
 		~CVarCompiler();
 	}; 
+	
+	#define IS_CONST_CVAR_BOOL_EXPRESSION(intermediateCondition) 
+	#define IS_CONST_BOOL_CONST_EXPRESSION(intermediateCondition) 
+	#define IS_CONST_CONST_EXPRESSION(intermediateCondition) 
+	#define IS_CONST_CVAR_EXPRESSION(intermediateCondition) 
+	#define IS_CVAR_CVAR_EXPRESSION(intermediateCondition) 
 }
