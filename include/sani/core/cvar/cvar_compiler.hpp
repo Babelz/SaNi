@@ -53,6 +53,18 @@ namespace sani {
 	/// cvars and requirements.
 	class CVarCompiler {
 	private:
+		struct RequireStatementGenerator {
+			const std::function<bool(const IntermediateCondition&)> condition;
+			const std::function<void(const IntermediateCondition&, Condition&, CVarList&)> generate;
+
+			RequireStatementGenerator(const std::function<bool(const IntermediateCondition&)> condition,
+									  std::function<void(const IntermediateCondition&, Condition&, CVarList&)> generate) : condition(condition),
+																														   generate(generate) {
+			}
+		};
+
+		std::list<RequireStatementGenerator> statementGenerators;
+
 		ErrorBuffer errorBuffer;
 		bool synced;
 
@@ -70,20 +82,22 @@ namespace sani {
 		/// Generates a require statement.
 		void generateRequireStatement(StatementList& statements, CVarList& cvars, const IntermediateRequireStatement* intermediateRequireStatement);
 		/// Generates an expression using two constant values.
-		void generateConstConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition) const;
+		void generateConstConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const;
 		/// Generates a const cvar expression.
-		void generateConstCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const;
+		void generateConstCVarExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const;
 		/// Generates a cvar const expression.
-		void generateCVarConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars);
+		void generateCVarConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars);
 		/// Generates a const bool cvar expression.
-		void generateConstCVarBoolExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars);
+		void generateConstCVarBoolExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars);
 		/// Generates a const bool const expression.
-		void generateConstBoolConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const;
-		void generateCVarCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars);
+		void generateConstBoolConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const;
+		void generateCVarCVarExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars);
 		
-		void generateCondition(const IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const;
+		void generateCondition(const IntermediateCondition& intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const;
 
 		CVar* findCVar(CVarList& cvars, const String& name);
+	
+		void generateStatementGenerators();
 	public:
 		CVarCompiler();
 
@@ -100,9 +114,5 @@ namespace sani {
 		~CVarCompiler();
 	}; 
 	
-	#define IS_CONST_CVAR_BOOL_EXPRESSION(intermediateCondition) 
-	#define IS_CONST_BOOL_CONST_EXPRESSION(intermediateCondition) 
-	#define IS_CONST_CONST_EXPRESSION(intermediateCondition) 
-	#define IS_CONST_CVAR_EXPRESSION(intermediateCondition) 
-	#define IS_CVAR_CVAR_EXPRESSION(intermediateCondition) 
+	#define GEN_REQUIRE_STATEMENT_GENERATOR(condition, generate) RequireStatementGenerator([](const IntermediateCondition& intermediateCondition) { return condition; }, generate) 
 }

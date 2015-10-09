@@ -7,6 +7,35 @@
 namespace sani {
 
 	CVarCompiler::CVarCompiler() : synced(false) {
+		generateStatementGenerators();
+	}
+
+	void CVarCompiler::generateStatementGenerators() {
+		using namespace std::placeholders;
+
+		statementGenerators.push_back(
+			GEN_REQUIRE_STATEMENT_GENERATOR(intermediateCondition.lhs.size() > 0 && intermediateCondition.rhs.size() == 0,
+			std::bind(&sani::CVarCompiler::generateConstCVarBoolExpression, this, _1, _2, _3)));
+
+		statementGenerators.push_back(
+			GEN_REQUIRE_STATEMENT_GENERATOR(intermediateCondition.lhs.size() > 0 && intermediateCondition.lhsIsConst && intermediateCondition.rhs.size() == 0,
+			std::bind(&sani::CVarCompiler::generateConstBoolConstExpression, this, _1, _2, _3)));
+		
+		statementGenerators.push_back(
+			GEN_REQUIRE_STATEMENT_GENERATOR(intermediateCondition.lhsIsConst && intermediateCondition.rhsIsConst,
+			std::bind(&sani::CVarCompiler::generateConstConstExpression, this, _1, _2, _3)));
+
+		statementGenerators.push_back(
+			GEN_REQUIRE_STATEMENT_GENERATOR(intermediateCondition.rhsIsConst && !intermediateCondition.lhsIsConst,
+			std::bind(&sani::CVarCompiler::generateConstCVarExpression, this, _1, _2, _3)));
+
+		statementGenerators.push_back(
+			GEN_REQUIRE_STATEMENT_GENERATOR(!intermediateCondition.rhsIsConst && intermediateCondition.lhsIsConst,
+			std::bind(&sani::CVarCompiler::generateCVarConstExpression, this, _1, _2, _3)));
+
+		statementGenerators.push_back(
+			GEN_REQUIRE_STATEMENT_GENERATOR(!intermediateCondition.rhsIsConst && !intermediateCondition.lhsIsConst,
+			std::bind(&sani::CVarCompiler::generateCVarConstExpression, this, _1, _2, _3)));
 	}
 
 	void CVarCompiler::copyErrors(CVarParser* parser) {
@@ -142,29 +171,10 @@ namespace sani {
 			if (intermediateCondition.lhs.size() > 0 || intermediateCondition.rhs.size() > 0) {
 				Condition condition;
 
-				if (intermediateCondition.lhs.size() > 0 && intermediateCondition.rhs.size() == 0) {
-					// CVar const.
-					generateConstCVarBoolExpression(&intermediateCondition, condition, cvars);
-				}
-				else if (intermediateCondition.lhs.size() > 0 && intermediateCondition.lhsIsConst && intermediateCondition.rhs.size() == 0) {
-					// Const
-					generateConstBoolConstExpression(&intermediateCondition, condition, cvars);
-				}
-				else if (intermediateCondition.lhsIsConst && intermediateCondition.rhsIsConst) {
-					// Const oper const
-					generateConstConstExpression(&intermediateCondition, condition);
-				}
-				else if (intermediateCondition.rhsIsConst && !intermediateCondition.lhsIsConst) {
-					// Const oper cvar
-					generateConstCVarExpression(&intermediateCondition, condition, cvars);
-				}
-				else if (!intermediateCondition.rhsIsConst && intermediateCondition.lhsIsConst) {
-					// CVar oper const
-					generateCVarConstExpression(&intermediateCondition, condition, cvars);
-				}
-				else if (!intermediateCondition.rhsIsConst && !intermediateCondition.lhsIsConst) {
-					// Cvar oper cvar
-					generateCVarCVarExpression(&intermediateCondition, condition, cvars);
+				for (RequireStatementGenerator& generator : statementGenerators) {
+					if (generator.condition(intermediateCondition)) {
+						generator.generate(intermediateCondition, condition, cvars);
+					}
 				}
 
 				conditions.push_back(CVarCondition(intermediateCondition.logicalOperator, condition));
@@ -174,87 +184,87 @@ namespace sani {
 		statements.push_back(CVarRequireStatement(conditions, intermediateRequireStatement->message));
 	}
 
-	void CVarCompiler::generateConstConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition) const  {
+	void CVarCompiler::generateConstConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const  {
 		/*
 		TODO: could store temps somewhere in case they are needed?
 		*/
 
-		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
-		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
+		CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
+		CVar rhs(intermediateCondition.rhsType, String("___TEMP_CVAR___"), false, intermediateCondition.rhs);
 
 		condition = [&lhs, &rhs]() {
 			return lhs == rhs;
 		};
 	}
-	void CVarCompiler::generateConstCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const  {
-		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
-		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
+	void CVarCompiler::generateConstCVarExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const  {
+		CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
+		CVar rhs(intermediateCondition.rhsType, String("___TEMP_CVAR___"), false, intermediateCondition.rhs);
 
 		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
-	void CVarCompiler::generateCVarConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) {
-		CVar* lhs = findCVar(cvars, intermediateCondition->lhs);
+	void CVarCompiler::generateCVarConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) {
+		CVar* lhs = findCVar(cvars, intermediateCondition.lhs);
 		if (lhs == nullptr) return;
 
-		CVar rhs(intermediateCondition->rhsType, String("___TEMP_CVAR___"), false, intermediateCondition->rhs);
+		CVar rhs(intermediateCondition.rhsType, String("___TEMP_CVAR___"), false, intermediateCondition.rhs);
 
 		generateCondition(intermediateCondition, condition, *lhs, rhs);
 	}
-	void CVarCompiler::generateConstCVarBoolExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) {
-		CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
+	void CVarCompiler::generateConstCVarBoolExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) {
+		CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
 
-		CVar* rhs = findCVar(cvars, intermediateCondition->rhs);
+		CVar* rhs = findCVar(cvars, intermediateCondition.rhs);
 		if (rhs == nullptr) return;
 
 		generateCondition(intermediateCondition, condition, lhs, *rhs);
 	}
-	void CVarCompiler::generateConstBoolConstExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars) const  {
-		if (intermediateCondition->lhsIsConst) {
-			CVar lhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"), false, intermediateCondition->lhs);
-			CVar rhs(intermediateCondition->lhsType, String("___TEMP_CVAR___"));
+	void CVarCompiler::generateConstBoolConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const  {
+		if (intermediateCondition.lhsIsConst) {
+			CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
+			CVar rhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"));
 
 			condition = [&lhs, &rhs]() {
 				return lhs >= rhs;
 			};
 		}
 	}
-	void CVarCompiler::generateCVarCVarExpression(const IntermediateCondition* intermediateCondition, Condition& condition, CVarList& cvars)  {
-		CVar* lhs = findCVar(cvars, intermediateCondition->lhs);
+	void CVarCompiler::generateCVarCVarExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars)  {
+		CVar* lhs = findCVar(cvars, intermediateCondition.lhs);
 		if (lhs == nullptr) return;
 
-		CVar* rhs = findCVar(cvars, intermediateCondition->rhs);
+		CVar* rhs = findCVar(cvars, intermediateCondition.rhs);
 		if (rhs == nullptr) return;
 
 		generateCondition(intermediateCondition, condition, *lhs, *rhs);
 	}
 
-	void CVarCompiler::generateCondition(const IntermediateCondition* intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const  {
-		if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Equal) {
+	void CVarCompiler::generateCondition(const IntermediateCondition& intermediateCondition, Condition& condition, CVar& lhs, CVar& rhs) const  {
+		if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::Equal) {
 			condition = [&lhs, &rhs]() {
 				return lhs == rhs;
 			};
 		}
-		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::NotEqual) {
+		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::NotEqual) {
 			condition = [&lhs, &rhs]() {
 				return lhs != rhs;
 			};
 		}
-		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Smaller) {
+		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::Smaller) {
 			condition = [&lhs, &rhs]() {
 				return lhs < rhs;
 			};
 		}
-		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::SmallerOrEqual) {
+		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::SmallerOrEqual) {
 			condition = [&lhs, &rhs]() {
 				return lhs <= rhs;
 			};
 		}
-		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::Greater) {
+		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::Greater) {
 			condition = [&lhs, &rhs]() {
 				return lhs > rhs;
 			};
 		}
-		else if (intermediateCondition->conditionalOperator == cvarlang::ConditionalOperators::GreaterOrEqual) {
+		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::GreaterOrEqual) {
 			condition = [&lhs, &rhs]() {
 				return lhs >= rhs;
 			};
@@ -262,6 +272,8 @@ namespace sani {
 	}
 
 	CVar* CVarCompiler::findCVar(CVarList& cvars, const String& name) {
+		if (name.size() == 0) return nullptr;
+
 		for (CVar& cvar : cvars) {
 			if (cvar.getName() == name) {
 				return &cvar;

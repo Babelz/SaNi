@@ -13,6 +13,7 @@
 #include "sani/core/cvar/cvar.hpp"
 #include "sani/core/cvar/cvar_compiler.hpp"
 #include "catch/catch.hpp"
+#include <Windows.h>
 #include <iostream>
 #include <vector>
 #include <list>
@@ -132,6 +133,15 @@ TEST_CASE("CVar parsing", "[cvar]") {
 	}
 
 	SECTION("Compiling error catching") {
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+		system("mode 650");
+
+		HWND consoleWindow = GetConsoleWindow();
+
+		SetWindowPos(consoleWindow, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
+#endif
+
 		const String prog(
 			"a10\n"																// First error.
 			"gg 10 // this should be just fine\n"					
@@ -164,7 +174,7 @@ TEST_CASE("CVar parsing", "[cvar]") {
 			std::cout << compiler.getNextError() << std::endl;
 		}
 
-		REQUIRE(i == 7);
+		REQUIRE(i == 8);
 	}
 
 	SECTION("Operators") {
