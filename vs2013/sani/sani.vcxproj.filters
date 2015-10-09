@@ -431,6 +431,12 @@
     <ClInclude Include="..\..\include\sani\core\memory\heap_allocator.hpp">
       <Filter>include\core\memory</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\heap_page.hpp">
+      <Filter>include\core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\heap_block.hpp">
+      <Filter>include\core\memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
