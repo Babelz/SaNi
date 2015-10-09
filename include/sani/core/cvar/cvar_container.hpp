@@ -6,15 +6,21 @@
 
 namespace sani {
 
+	// TODO: implement.
+
 	class CVarContainer {
 	private:
 		std::list<CVar> cvars;
 	public:
-		CVarContainer(const std::list<CVar>& cvars);
+		CVarContainer(const std::list<CVar>&& cvars);
 
 		bool contains(const String& name);
 		CVar& find(const String& name);
 
 		~CVarContainer();
+
+		CVarContainer& operator =(CVarContainer& other) = delete;
+		CVarContainer& operator = (CVarContainer&& other) = delete;
+		CVarContainer(CVarContainer& other) = delete;
 	};
 }

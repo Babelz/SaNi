@@ -196,6 +196,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_record_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_statement.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_token.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_tokenizer.hpp" />
