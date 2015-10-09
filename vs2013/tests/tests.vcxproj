@@ -18,6 +18,7 @@
     <ClCompile Include="..\..\tests\math\matrix.cpp" />
     <ClCompile Include="..\..\tests\math\rectangle.cpp" />
     <ClCompile Include="..\..\tests\math\vector.cpp" />
+    <ClCompile Include="..\..\tests\memory\heap.cpp" />
     <ClCompile Include="..\..\tests\resource\resource.cpp" />
     <ClCompile Include="..\..\tests\utils\string_utils.cpp" />
   </ItemGroup>

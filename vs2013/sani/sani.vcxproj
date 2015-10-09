@@ -158,6 +158,7 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_statement.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_token.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_tokenizer.cpp" />
+    <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector4.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\heap_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
