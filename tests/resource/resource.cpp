@@ -22,7 +22,7 @@ TEST_CASE("Resource .png loading", "[resource]") {
 	window = new Window(GetModuleHandle(NULL), 800, 600);
 	window->initialize();
 	device = new GraphicsDevice(window->getHandle(), GetModuleHandle(NULL), 800, 600);
-	REQUIRE(device->initialize());
+	CHECK(device->initialize());
 	manager = new ResourceManager(&fs, device);
 	manager->load("../../assets/tuksu.png");
 

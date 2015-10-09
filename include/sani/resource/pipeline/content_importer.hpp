@@ -14,7 +14,7 @@ namespace sani {
 			public:
 				ContentImporter() = default;
 				~ContentImporter() = default;
-				ContentType* import(const String& filename, FileSystem* fileSystem) const {
+				ContentType* import(const String& filename, io::FileSystem* fileSystem) const {
 					return impl.import(filename, fileSystem);
 				}
 			private:

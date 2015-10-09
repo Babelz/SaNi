@@ -2,17 +2,14 @@
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 
-SANI_FORWARD_DECLARE_2(sani, io, FileSystem);
+SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 namespace sani {
 	namespace io {
 		class BinaryReader {
 		private:
-			const FileSystem* fs;
-			String file;
-
+			const FileStream* stream;
 		public:
-			BinaryReader();
-			BinaryReader(const FileSystem* fs, const String& file);
+			BinaryReader(const FileStream* stream);
 			virtual ~BinaryReader();
 			int16 readInt16();
 			int32 readInt32();
