@@ -2,8 +2,10 @@
 User friendly 2D game engine.
 Version 0.0.1
 
+WARNING: will contain spelling errors.
+
 # About
-SaNi written in C++ and is aimed to be a powerful cross-platform 2D game engine. At the current 
+SaNi is written in C++ and is aimed to be a powerful cross-platform 2D game engine. At the current 
 state it is not viable for game development. 
 
 In the future the engine will have an editor which is used to create the games.
