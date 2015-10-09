@@ -1,3 +1,4 @@
+#include "sani/debug.hpp"
 #include "../matrix2.hpp"
 
 namespace sani {
@@ -157,7 +158,7 @@ namespace sani {
 
 		template <typename T>
 		inline const Vector2<T>& Matrix2<T>::operator[](const unsigned int i) const {
-			assert(i < Rows);
+			SANI_ASSERT(i < Rows);
 			return (&row1)[i];
 		}
 

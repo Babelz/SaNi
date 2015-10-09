@@ -1,6 +1,5 @@
 #pragma once
 
-#include "sani/precompiled.hpp"
 #include <list>
 #include <functional>
 

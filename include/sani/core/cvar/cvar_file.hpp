@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include <vector>
 
 namespace sani {

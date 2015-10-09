@@ -207,12 +207,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\sani\precompiled.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\assert.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
       <Filter>include</Filter>
     </ClInclude>
@@ -415,6 +409,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record_container.hpp">
       <Filter>include\core\cvar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\types.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\platform.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\debug.hpp">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

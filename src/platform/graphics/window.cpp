@@ -1,5 +1,5 @@
 #include "sani/platform/graphics/window.hpp"
-#include "sani/assert.hpp"
+#include "sani/debug.hpp"
 
 /*
 	Common impl class. Contains all fields
@@ -206,7 +206,7 @@ namespace sani {
 		}
 
 		void Window::minimize() {
-			assert(impl->cImpl.initialized);
+			SANI_ASSERT(impl->cImpl.initialized);
 
 			if (impl->cImpl.isMinimized) return;
 
@@ -215,7 +215,7 @@ namespace sani {
 			impl->cImpl.isMinimized = true;
 		}
 		void Window::show() {
-			assert(impl->cImpl.initialized);
+			SANI_ASSERT(impl->cImpl.initialized);
 
 			if (impl->cImpl.isMinimized) {
 				ShowWindow(impl->hWnd, SW_RESTORE);
@@ -275,7 +275,7 @@ namespace sani {
 		}
 
 		uint32 Window::getClientWidth() const {
-			assert(impl->cImpl.initialized);
+			SANI_ASSERT(impl->cImpl.initialized);
 
 			RECT clntRect;
 
@@ -284,7 +284,7 @@ namespace sani {
 			return clntRect.right- clntRect.left;
 		}
 		uint32 Window::getClientHeight() const {
-			assert(impl->cImpl.initialized);
+			SANI_ASSERT(impl->cImpl.initialized);
 
 			RECT clntRect;
 
@@ -301,7 +301,7 @@ namespace sani {
 		}
 
 		void Window::listen() {
-			assert(impl->cImpl.initialized);
+			SANI_ASSERT(impl->cImpl.initialized);
 
 			if (!impl->cImpl.isWindowOpen) return;
 
@@ -320,13 +320,13 @@ namespace sani {
 		}
 
 		bool Window::isOpen() const {
-			assert(impl->cImpl.initialized);
+			SANI_ASSERT(impl->cImpl.initialized);
 
 			return impl->cImpl.isWindowOpen;
 		}
 
 		void Window::close() {
-			assert(impl->cImpl.initialized);
+			SANI_ASSERT(impl->cImpl.initialized);
 
 			if (!impl->cImpl.isWindowOpen) return;
 
@@ -334,7 +334,7 @@ namespace sani {
 		}
 
 		bool Window::initialize() {
-			assert(!impl->cImpl.initialized);
+			SANI_ASSERT(!impl->cImpl.initialized);
 
 			// Initialize the window.
 			WNDCLASSEX windowClass;

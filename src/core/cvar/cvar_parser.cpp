@@ -1,5 +1,6 @@
 ﻿#include "sani/core/cvar/cvar_parser.hpp"
 #include "sani/core/utils/string_utils.hpp"
+#include "sani/debug.hpp"
 #include <list>
 
 namespace sani {

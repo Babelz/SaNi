@@ -1,9 +1,10 @@
 // This file should contain all common stuff
 #include "sani/platform/platform_config.hpp"
 #include "sani/platform/file/file_system.hpp"
-#include <sys/stat.h>
 #include "sani/platform/file/binary_reader.hpp"
 #include "sani/platform/file/binary_writer.hpp"
+#include "sani/debug.hpp"
+#include <sys/stat.h>
 
 namespace sani {
 	namespace io {
@@ -63,7 +64,7 @@ namespace sani {
 		}
 #if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 		unsigned char* FileSystem::getFileData(const String& path, size_t& fileSize, bool nullTerminate /*= false*/) const {
-			assert(isFileOpen(path));
+			SANI_ASSERT(isFileOpen(path));
 
 			FILE* handle = handles.at(path);
 			size_t fsize = getFileSize(path);

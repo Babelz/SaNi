@@ -2,6 +2,7 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/color.hpp"
+#include "sani/debug.hpp"
 #include <sstream>
 
 // Contains WindowsGL and LinuxGL implementations of the graphics device.
@@ -325,7 +326,7 @@ namespace sani {
 			return !errorBuffer.empty();
 		}
 		GraphicsError GraphicsDevice::getError() {
-			assert(hasErrors());
+			SANI_ASSERT(hasErrors());
 
 			const GraphicsError nextError = errorBuffer.top();
 

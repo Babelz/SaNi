@@ -4,7 +4,7 @@
 	Contains the regular language of the cvar system.
 */
 
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include <regex>
 
 namespace sani {

@@ -1,5 +1,5 @@
 #pragma once
-#include "sani/precompiled.hpp"
+
 #include "sani/resource/compiler/resource_type_writer.hpp"
 
 namespace sani {

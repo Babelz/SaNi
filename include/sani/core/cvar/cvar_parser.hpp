@@ -2,7 +2,7 @@
 
 #include "sani/core/cvar/cvar_lang.hpp"
 #include "sani/core/cvar/cvar_token.hpp"
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include <stack>
 
 namespace sani {

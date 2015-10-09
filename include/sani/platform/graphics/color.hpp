@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 
 namespace sani {
 	namespace graphics {

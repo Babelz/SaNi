@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include <functional>
 
 typedef	int32 Buffer;
@@ -14,6 +14,7 @@ typedef int32 ShaderProgram;
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 #include <GLES2/gl2.h>
 #endif
+
 // Static assertions.
 static_assert(sizeof(GLuint) == sizeof(uint32), "sizeof(GLuint) != sizeof(uint32)");
 static_assert(sizeof(GLuint) == sizeof(Shader), "sizeof(GLuint) != sizeof(Shader)");

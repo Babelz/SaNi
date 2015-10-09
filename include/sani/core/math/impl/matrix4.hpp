@@ -208,7 +208,7 @@ namespace sani {
 
 		template <typename T>
 		inline const Vector4<T>& Matrix4<T>::operator[](const unsigned int i) const {
-			assert(i < Rows);
+			SANI_ASSERT(i < Rows);
 			return (&row1)[i];
 		}
 	}

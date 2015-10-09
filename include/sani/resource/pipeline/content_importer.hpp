@@ -1,10 +1,14 @@
 #pragma once
-#include "sani/precompiled.hpp"
+
+#include "sani/types.hpp"
 #include "sani/platform/file/file_system.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace pipeline {
+
 			template <typename ContentType, class Implementer>
 			class ContentImporter {
 			public:

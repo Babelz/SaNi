@@ -1,8 +1,9 @@
 #pragma once
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/resource/reader/resource_type_reader_manager.hpp"
 #include <map>
+
 SANI_FORWARD_DECLARE_2(sani, resource, Resource);
 SANI_FORWARD_DECLARE_2(sani, io, FileSystem);
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);

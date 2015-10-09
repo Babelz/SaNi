@@ -1,5 +1,6 @@
 #include "../vector2.hpp"
-#include <cassert>
+#include "sani/debug.hpp"
+
 namespace sani {
 	namespace math {
 		template <typename T> 
@@ -174,7 +175,7 @@ namespace sani {
 		// Indexer
 		template <typename T>
 		inline const T& Vector2<T>::operator[](unsigned int i) const {
-			assert(i < Components);
+			SANI_ASSERT(i < Components);
 			return (&x)[i];
 		}
 

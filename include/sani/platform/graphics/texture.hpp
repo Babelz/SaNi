@@ -1,4 +1,4 @@
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 
 namespace sani {

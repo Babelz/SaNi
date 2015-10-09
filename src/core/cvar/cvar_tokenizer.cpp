@@ -1,6 +1,7 @@
 #include "sani/core/cvar/cvar_tokenizer.hpp"
 #include "sani/core/utils/string_utils.hpp"
 #include "sani/core/cvar/cvar_lang.hpp"
+#include "sani/debug.hpp"
 
 namespace sani {
 

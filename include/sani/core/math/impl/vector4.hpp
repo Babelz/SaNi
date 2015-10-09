@@ -212,7 +212,7 @@ namespace sani {
 		// Indexer
 		template <typename T>
 		inline const T& Vector4<T>::operator[](unsigned int i) const {
-			assert(i < Components);
+			SANI_ASSERT(i < Components);
 			return (&x)[i];
 		}
 

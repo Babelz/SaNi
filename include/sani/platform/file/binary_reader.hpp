@@ -1,5 +1,5 @@
 #pragma once 
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 
 SANI_FORWARD_DECLARE_2(sani, io, FileSystem);

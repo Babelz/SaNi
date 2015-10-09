@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/platform/platform_config.hpp"
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include "sani/core/events.hpp"
 
 // Windows includes.

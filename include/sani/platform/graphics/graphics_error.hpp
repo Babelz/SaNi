@@ -1,6 +1,6 @@
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 
 namespace sani {
 	namespace graphics {

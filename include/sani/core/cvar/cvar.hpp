@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/core/cvar/cvar_statement.hpp"
-#include "sani/precompiled.hpp"
+#include "sani/types.hpp"
 #include <list>
 
 namespace sani {
