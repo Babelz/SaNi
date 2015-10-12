@@ -1,9 +1,10 @@
 #pragma once
 #include "sani/platform/file/binary_writer.hpp"
 #include "sani/core/math/math.hpp"
-SANI_FORWARD_DECLARE_2(sani, io, FileSystem);
+SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 namespace sani {
 	using namespace math;
+	using namespace io;
 	namespace resource {
 		namespace compiler {
 			class ResourceWriter : public io::BinaryWriter {
@@ -14,7 +15,7 @@ namespace sani {
 				// TODO add functions to write matrices vectors and stuff
 				// TODO this may need some wrapping
 				// This assumes the file is opened already!
-				ResourceWriter(FILE* file);
+				ResourceWriter(const FileStream* stream);
 				~ResourceWriter();
 
 				/// Writes the header which consists of

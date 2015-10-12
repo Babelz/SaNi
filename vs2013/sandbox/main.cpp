@@ -10,7 +10,7 @@
 #include "sani/platform/graphics/color.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/window.hpp"
-#include "sani/assert.hpp"
+#include "sani/debug.hpp"
 
 using namespace sani::graphics;
 

@@ -160,25 +160,7 @@ namespace sani {
 		return false;
 	}
 	const bool CVar::operator <= (const CVar& other) const {
-		if (type == cvarlang::ValueType::StringVal) {
-			String val(""); other.read(val);
-
-			return stringVal.size() <= val.size();
-		} else if (type == cvarlang::ValueType::IntVal) {
-			int32 val = 0; other.read(val);
-
-			return int32Val <= val;
-		} else if (type == cvarlang::ValueType::FloatVal) {
-			float val = 0.0f; other.read(val);
-
-			return float32Val <= val;
-		} else if (type == cvarlang::ValueType::DoubleVal) {
-			float64 val = 0.0; other.read(val);
-
-			return float64Val <= val;
-		}
-
-		return false;
+		return *this < other || *this == other;
 	}
 	const bool CVar::operator > (const CVar& other) const {
 		return !(*this < other);

@@ -1,15 +1,11 @@
 #include "sani/platform/file/binary_reader.hpp"
-#include "sani/platform/file/file_system.hpp"
+#include "sani/platform/file/file_stream.hpp"
 namespace sani {
 	namespace io {
 
-		BinaryReader::BinaryReader() 
-			: fs(nullptr), file("") {
-
-		}
-		BinaryReader::BinaryReader(const FileSystem* fs, const String& file) 
-			: fs(fs), file(file) {
-
+		BinaryReader::BinaryReader(const FileStream* stream) 
+			: stream(stream) {
+			//assert(stream->)
 		}
 
 		BinaryReader::~BinaryReader() {}
@@ -57,7 +53,9 @@ namespace sani {
 		}
 
 		uint8 BinaryReader::readByte() {
-			return fs->readByte(file);
+			unsigned char buffer[1];
+			stream->read(buffer, 1);
+			return static_cast<uint8>(buffer[0]);
 		}
 
 		float32 BinaryReader::readSingle() {

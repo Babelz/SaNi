@@ -27,17 +27,19 @@ TEST_CASE("File stuff", "[file]") {
 	SECTION("File access") {
 		const std::string path("../../tests/test.txt");
 		CHECK(filemanager.fileExists(path));
-		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
-		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
+		FileStream* stream;
+		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write, &stream));
+		//CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
 		CHECK(filemanager.isFileOpen(path));
 		CHECK(filemanager.getFileSize(path));
 		filemanager.closeFile(path);
 	}
 
 	SECTION("File reading") {
+		FileStream* stream;
 		const std::string path("../../tests/test.txt");
 		size_t fsize = filemanager.getFileSize(path);
-		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
+		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write, &stream));
 		CHECK(filemanager.getFileDataString(path).size());
 		filemanager.closeFile(path);
 	}
@@ -50,10 +52,10 @@ TEST_CASE("File stuff", "[file]") {
 	}
 	
 	SECTION("Binary writing") {
+		FileStream* stream = nullptr;
 		const std::string path("../../tests/teststring.bin");
-		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write));
-		BinaryWriter writer;
-		filemanager.getBinaryWriter(path, &writer);
+		CHECK(filemanager.openFile(path, Filemode::Read | Filemode::Write, &stream));
+		BinaryWriter writer(stream);
 		//writer.write7BitEncodedInt(uint32(1337));
 		//writer.write(uint32(1337));
 		writer.write("Jeesuksen perse");
@@ -61,10 +63,10 @@ TEST_CASE("File stuff", "[file]") {
 	}
 	
 	SECTION("Binary reading") {
+		FileStream* stream = nullptr;
 		const std::string path("../../tests/teststring.bin");
-		CHECK(filemanager.openFile(path, Filemode::Read));
-		BinaryReader reader;
-		filemanager.getBinaryReader(path, &reader);
+		CHECK(filemanager.openFile(path, Filemode::Read, &stream));
+		BinaryReader reader(stream);
 		//uint64 byte = reader.readUint64();
 		//uint64 byte2 = reader.readUint64();
 		//CHECK(byte == uint64(1337));

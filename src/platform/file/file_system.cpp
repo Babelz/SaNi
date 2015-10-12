@@ -21,8 +21,10 @@ namespace sani {
 			return handles.find(path) != handles.end();
 		}
 
-		bool FileSystem::openFile(const String& path, const Filemode mode) {
-			if (isFileOpen(path)) return true;
+		bool FileSystem::openFile(const String& path, const Filemode mode, FileStream** stream) {
+			if (isFileOpen(path)) {
+				throw std::logic_error("Not implemented reference counting yet");
+			}
 
 			char access[5] = { 0 };
 
@@ -40,7 +42,8 @@ namespace sani {
 
 			if (!handle) return false;
 
-			handles[path] = handle;
+			handles[path] = new FileStream(path, mode, handle);
+			*stream = handles[path];
 
 			// File open succeeded
 			return true;
@@ -49,13 +52,14 @@ namespace sani {
 		void FileSystem::closeFile(const String& path) {
 			if (!isFileOpen(path)) return;
 
-			FILE* handle = handles[path];
-			fclose(handle);
+			FileStream* handle = handles[path];
+			delete handle;
+			handle = nullptr;
 			handles.erase(path);
 		}
 #endif
 		String FileSystem::getFileDataString(const String& path) const  {
-			size_t size = 0;
+			int64 size = 0;
 			unsigned char* buffer = getFileData(path, size, true);
 			if (size == 0) {
 				return "";
@@ -63,10 +67,10 @@ namespace sani {
 			return String((const char*)buffer);
 		}
 #if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
-		unsigned char* FileSystem::getFileData(const String& path, size_t& fileSize, bool nullTerminate /*= false*/) const {
-			SANI_ASSERT(isFileOpen(path));
+		unsigned char* FileSystem::getFileData(const String& path, int64& fileSize, bool nullTerminate /*= false*/) const {
+			assert(isFileOpen(path));
 
-			FILE* handle = handles.at(path);
+			FileStream* handle = handles.at(path);
 			size_t fsize = getFileSize(path);
 			unsigned char* buffer = nullptr;
 			if (nullTerminate) {
@@ -76,8 +80,15 @@ namespace sani {
 			else {
 				buffer = (unsigned char*)malloc(fsize);
 			}
+			int64 readBytes = 0;
+			try {
+				readBytes = handle->read(buffer, fsize);
+			}
+			catch (std::exception& ex) {
+				(void)ex;
+				throw;
+			}
 
-			size_t readBytes = fread(buffer, sizeof(unsigned char), fsize, handle);
 			// Failed
 			if (readBytes != fsize) {
 				if (buffer) {
@@ -108,29 +119,6 @@ namespace sani {
 			return statbuf.st_size;
 		}
 #endif
-
-		uint8 FileSystem::readByte(const String& path) const {
-			FILE* handle = handles.at(path);
-			int value = fgetc(handle);
-			if (value == EOF) {
-				throw std::runtime_error("End of file reached");
-			}
-			return static_cast<uint8>(value);
-		}
-
-		uint32 FileSystem::readBytes(const String& path, unsigned char* buffer, const uint32 size) const {
-			FILE* handle = handles.at(path);
-			uint32 readBytes = fread(buffer, 1, size, handle);
-			return readBytes;
-		}
-
-		void FileSystem::getBinaryReader(const String& file, BinaryReader* reader) const {
-			*reader = BinaryReader(this, file);
-		}
-
-		void FileSystem::getBinaryWriter(const String& file, BinaryWriter* writer) const {
-			*writer = BinaryWriter(handles.at(file));
-		}
 	}
 }
 

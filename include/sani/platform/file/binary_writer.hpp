@@ -3,17 +3,15 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 #include <cstdio>
+SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 
 namespace sani {
 	namespace io {
 		class BinaryWriter {
 		private:
-			FILE* file;
+			const FileStream* stream;
 		public:
-			BinaryWriter();
-			// TODO this may need some wrapping!
-			// FileStreams maybe?
-			BinaryWriter(FILE* file);
+			BinaryWriter(const FileStream* stream);
 			~BinaryWriter();
 
 			void write(uint8 value);

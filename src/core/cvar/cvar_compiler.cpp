@@ -68,8 +68,7 @@ namespace sani {
 		std::list<cvarlang::IntermediateCVar> intermediateCVar;
 		std::list<IntermediateRequireStatement> intermediateRequireStatement;
 		std::list<CVarRequireStatement> statements;
-		// Current scope level. Gets decreased when require keyword is found,
-		// and gets increased when require statement is found.
+		// Current scope level.
 		size_t scope = 0;
 
 		// Go trough each token.
@@ -78,9 +77,7 @@ namespace sani {
 		while (i != tokens.end()) {
 			// Only process declaration and require tokens.
 			// Anything but these are just pure garbage.
-			// We still keep these tokens for the parsing process.
-			// Who knows if we need them some day (when the lexical analyzer evolves OSLT)
-			// (and no need to clear the stack until the compilation process is complete)
+
 			if (i->getType() == cvarlang::TokenType::Declaration) {
 				cvarlang::IntermediateCVar intermediateCVar;
 
@@ -95,8 +92,7 @@ namespace sani {
 					// Emit record.
 					generateRecord(records, *i, cvars.back());
 				}
-			}
-			else if (i->getType() == cvarlang::TokenType::Require) {
+			} else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
 				// that starts a require statement (require([condition]) and 
 				// the one that ends a block, that is just the plain require keyword in use.
@@ -126,8 +122,7 @@ namespace sani {
 						statements.remove(statements.back());
 						scope--;
 					}
-				}
-				else {
+				} else {
 					generateRequireStatement(statements, cvars, &intermediateRequireStatement);
 					scope++;
 				}
@@ -142,7 +137,7 @@ namespace sani {
 
 		// Emit possible scope errors and 
 		// copy possible parsing errors to this level.
-		if (scope > 0)			{
+		if (scope > 0) {
 			auto last = tokens.begin();
 			std::advance(last, tokens.size() - 1);
 
@@ -185,10 +180,6 @@ namespace sani {
 	}
 
 	void CVarCompiler::generateConstConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const  {
-		/*
-		TODO: could store temps somewhere in case they are needed?
-		*/
-
 		CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
 		CVar rhs(intermediateCondition.rhsType, String("___TEMP_CVAR___"), false, intermediateCondition.rhs);
 
@@ -243,28 +234,23 @@ namespace sani {
 			condition = [&lhs, &rhs]() {
 				return lhs == rhs;
 			};
-		}
-		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::NotEqual) {
+		} else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::NotEqual) {
 			condition = [&lhs, &rhs]() {
 				return lhs != rhs;
 			};
-		}
-		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::Smaller) {
+		} else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::Smaller) {
 			condition = [&lhs, &rhs]() {
 				return lhs < rhs;
 			};
-		}
-		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::SmallerOrEqual) {
+		} else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::SmallerOrEqual) {
 			condition = [&lhs, &rhs]() {
 				return lhs <= rhs;
 			};
-		}
-		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::Greater) {
+		} else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::Greater) {
 			condition = [&lhs, &rhs]() {
 				return lhs > rhs;
 			};
-		}
-		else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::GreaterOrEqual) {
+		} else if (intermediateCondition.conditionalOperator == cvarlang::ConditionalOperators::GreaterOrEqual) {
 			condition = [&lhs, &rhs]() {
 				return lhs >= rhs;
 			};
@@ -296,12 +282,6 @@ namespace sani {
 
 		if (tokenizer.hasErrors()) {
 			copyErrors(&tokenizer);
-
-			/*
-				Don't stop compiling even if some errors have been found. Just try to compile
-				so that we can find all the possible errors and show them all to the user
-				at once.
-			*/
 		}
 
 		// Try parse and emit.

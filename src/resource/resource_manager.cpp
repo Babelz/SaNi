@@ -13,17 +13,20 @@ namespace sani {
 			if (resources.find(asset) != resources.end()) return resources[asset];
 
 			using namespace reader;
-			if (!fileSystem->openFile(asset, Filemode::Read)) {
+			FileStream* stream;
+			if (!fileSystem->openFile(asset, Filemode::Read, &stream)) {
 				throw std::runtime_error("File not found!");
 			}
 			
 			try {
-				ResourceReader reader(fileSystem, asset, *this, graphicsDevice);
-				void* asset = reader.readAsset(typeReaders);
+				ResourceReader reader(stream, *this, graphicsDevice);
+				void* a = reader.readAsset(typeReaders);
 			}
 			catch (const std::exception& ex) {
 				(void)ex;
+				throw;
 			}
+			fileSystem->closeFile(asset);
 			return nullptr;
 		}
 	}

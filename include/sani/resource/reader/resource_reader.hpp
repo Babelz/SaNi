@@ -19,7 +19,7 @@ namespace sani {
 				GraphicsDevice* graphicsDevice;
 			public:
 				/// Initializes new resource reader
-				ResourceReader(const FileSystem* fs, const String& file, ResourceManager& manager, GraphicsDevice* device);
+				ResourceReader(const FileStream* stream, ResourceManager& manager, GraphicsDevice* device);
 				~ResourceReader();
 
 				/// Gets the global resource manager used in whole engine

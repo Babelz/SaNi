@@ -39,10 +39,6 @@ namespace sani {
 
 		template<class T> 
 		inline T* allocate() {
-			// 1) Check if there is any "unallocated" memory left.
-			// 2) Check if we have enough memory for this allocation.
-			//	  - If not, check if there are any released blocks we can use
-
 			const size_t size = sizeof(T);
 
 			if (pagepointer + size > this->size) {

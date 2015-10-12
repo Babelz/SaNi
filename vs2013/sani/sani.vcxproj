@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_writer.cpp" />
+    <ClCompile Include="..\..\src\platform\file\file_stream.cpp" />
     <ClCompile Include="..\..\src\platform\file\file_system.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\color.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_device_gl.cpp" />
@@ -178,6 +179,7 @@
     <ClCompile Include="..\..\src\resource\compiler\primitive_writers.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp" />
+    <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\primitive_readers.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
@@ -187,7 +189,6 @@
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\platform.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_condition.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_container.hpp" />
@@ -231,9 +232,10 @@
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
+    <ClInclude Include="..\..\include\sani\platform.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\file\file.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_system.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp" />
@@ -263,7 +265,8 @@
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
     <ClInclude Include="..\..\include\sani\resource\serialization.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
-    <ClInclude Include="..\..\include\types.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
+    <ClInclude Include="..\..\include\sani\types.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
@@ -271,6 +274,7 @@
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
+    <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

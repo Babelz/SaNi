@@ -3,6 +3,7 @@
 
 #include <ppltasks.h>
 #include "sani/platform/file/file_system.hpp"
+#include "sani/platform/file/file_stream.hpp"
 using namespace sandbox_wp;
 
 using namespace concurrency;
@@ -22,8 +23,9 @@ int main(Platform::Array<Platform::String^>^)
 	using namespace sani::io;
 	FileSystem fs;
 	const std::string path("test.txt");
+	FileStream* stream = nullptr;
 	if (fs.fileExists(path)) {
-		fs.openFile(path, Filemode::Read);
+		fs.openFile(path, Filemode::Read, &stream);
 		std::string contents = fs.getFileDataString(path);
 		assert(contents.size());
 	}
