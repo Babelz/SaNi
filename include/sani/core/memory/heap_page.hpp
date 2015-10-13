@@ -23,13 +23,19 @@ namespace sani {
 		const uint32 size;
 		char* memory;
 
+		uint32 failedAllocations;
+
 		std::priority_queue<HeapBlock> releasedBlocks;
 		std::list<HeapBlock> blocks;
 
 		uint32 pagepointer;
+
+		void joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks);
+		void generateNewReleasedQueue(std::list<HeapBlock>& newReleasedBlocks);
 	public:
 		HeapPage(const uint32 size) : size(size),
-									  pagepointer(0) {
+									  pagepointer(0),
+									  failedAllocations(0) {
 			memory = new char[size];
 		}
 
@@ -47,21 +53,23 @@ namespace sani {
 				HeapBlock& releasedBlock = releasedBlocks.top();
 
 				// Check if we can allocate from released blocks.
-				if (releasedBlock.getSize() <= size) releasedBlocks.pop();
-				else			        			return nullptr;
+				if (size <= releasedBlock.getSize()) releasedBlocks.pop();
+				else			        			 { failedAllocations++; return nullptr; }
 
 				// Allocate.
 				const uint32 diff = releasedBlock.getSize() - size;
+				releasedBlock.reserve();
 
 				if (diff > 0) {
-					// Insert new block.
+					// Create new block size of diff.
 					/*
 					HeapBlock block(releasedBlock.getHandle() + diff, diff);
 					
 					blocks.insert(releasedBlock, block);
 					releasedBlocks.push(block);
 					
-					releasedBlock.shrink(diff);*/
+					releasedBlock.shrink(diff);
+					*/
 				}
 
 				return reinterpret_cast<T*>(releasedBlock.getHandle());
@@ -82,7 +90,11 @@ namespace sani {
 
 			for (HeapBlock& block : blocks) {
 				if (block.getHandle() == handle) {
+					element->~T();
+					
 					releasedBlocks.push(block);
+					
+					block.release();
 
 					return true;
 				}
@@ -91,7 +103,8 @@ namespace sani {
 			return false;
 		}
 
-		// TODO: implement defragmentation logic.
+		bool fragmented() const;
+		void defragment();
 
 		~HeapPage() {
 			delete[] memory;

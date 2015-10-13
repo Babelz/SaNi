@@ -133,15 +133,6 @@ TEST_CASE("CVar parsing", "[cvar]") {
 	}
 
 	SECTION("Compiling error catching") {
-
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-		system("mode 650");
-
-		HWND consoleWindow = GetConsoleWindow();
-
-		SetWindowPos(consoleWindow, 0, 0, 0, 0, 0, SWP_NOSIZE | SWP_NOZORDER);
-#endif
-
 		const String prog(
 			"a10\n"																// First error.
 			"gg 10 // this should be just fine\n"					

@@ -20,6 +20,15 @@ namespace sani {
 		for (uint32 i = 0; i < initialPages; i++) pages.push_back(new HeapPage(pageSize));
 	}
 
+	void HeapAllocator::defragment() {
+		for (HeapPage* page : pages) page->defragment();
+	}
+	bool HeapAllocator::fragmented() const {
+		for (HeapPage* page : pages) if (page->fragmented()) return true;
+
+		return false;
+	}
+
 	HeapAllocator::~HeapAllocator() {
 		for (HeapPage* page : pages) delete page;
 	}

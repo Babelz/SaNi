@@ -1,6 +1,8 @@
 #pragma once
 
 #include "sani/core/memory/heap_page.hpp"
+#include "sani/core/memory/memory.hpp"
+#include "sani/contracts.hpp"
 #include "sani/types.hpp"
 #include "sani/debug.hpp"
 #include <list>
@@ -34,14 +36,29 @@ namespace sani {
 		template<class T>
 		inline T* allocate() {
 			const size_t size = sizeof(T);
-
-			// TODO: runtime assert this?
-			SANI_ASSERT(size < pageSize);
+			T* element = nullptr;
 
 			for (HeapPage* page : pages) {
-				if (page->canAllocate(size)) return page->allocate<T>();
+				if (!page->canAllocate(size)) continue;
+
+				element = page->allocate<T>();
+
+				if (element == nullptr) {
+					// Could not allocate, see if we could defrag this
+					// page and try to allocate again. Defrag, alloc. 
+					// If we get the element allocated, just return it.
+					page->defragment();
+
+					element = page->allocate<T>();
+					
+					if (element != nullptr) return element;
+				} else {
+					return element;
+				}
 			}
-			
+
+			// If we still could not allocate, just 
+			// create new page and allocate from there.
 			HeapPage* page = new HeapPage(pageSize);
 			pages.push_back(page);
 
@@ -58,7 +75,8 @@ namespace sani {
 			return pages.size();
 		}
 
-		// TODO: implement defragmentation logic.
+		void defragment();
+		bool fragmented() const;
 
 		~HeapAllocator();
 

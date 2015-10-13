@@ -231,6 +231,9 @@
     <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp">
       <Filter>src\resource\pipeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\memory\heap_page.cpp">
+      <Filter>src\core\memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -465,6 +468,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\types.hpp">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\memory.hpp">
+      <Filter>include\core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\contracts.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

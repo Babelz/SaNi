@@ -10,11 +10,13 @@ namespace sani {
 	/// Partition of the heap page memory.
 	class HeapBlock {
 	private:
+		bool released;
 		char* handle;
 		uint32 size;
 	public:
 		HeapBlock(char* handle, const uint32 size) : handle(handle),
-												   size(size) {
+												     size(size),
+													 released(false) {
 		}
 
 		inline void shrink(const uint32 bytes) {
@@ -29,6 +31,16 @@ namespace sani {
 		}
 		inline char* getHandle() const {
 			return handle;
+		}
+
+		inline bool isReleased() const {
+			return released;
+		}
+		inline void release() {
+			released = true;
+		}
+		inline void reserve() {
+			released = false;
 		}
 
 		~HeapBlock() {
