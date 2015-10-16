@@ -21,15 +21,5 @@ namespace sani {
 
 		Viewport::~Viewport() {
 		}
-
-		Viewport& Viewport::operator =(const Viewport& rhs) {
-			x = rhs.x;
-			y = rhs.y;
-			
-			width = rhs.width;
-			height = rhs.height;
-
-			return *this;
-		}
 	}
 }

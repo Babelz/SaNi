@@ -94,7 +94,6 @@ namespace sani {
 			impl->deviceContext = GetDC(hWnd);
 			impl->cImpl.backBufferWidth = backBufferWidth;
 			impl->cImpl.backBufferHeight = backBufferHeight;
-			impl->cImpl.viewport = Viewport(0, 0, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
 		}
 
 		bool GraphicsDevice::isFullscreen() const {
@@ -195,6 +194,15 @@ namespace sani {
 			if (impl->fullscreen) setFullscreen();
 
 			// Set viewport.
+			RECT clntRect;
+			GetClientRect(impl->hWnd, &clntRect);
+
+			impl->cImpl.viewport.x = 0;
+			impl->cImpl.viewport.y = 0;
+
+			impl->cImpl.viewport.width = clntRect.right - clntRect.left;
+			impl->cImpl.viewport.height = clntRect.bottom - clntRect.top;
+
 			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y, impl->cImpl.viewport.width, impl->cImpl.viewport.height);
 
 			// Post-init error checks.

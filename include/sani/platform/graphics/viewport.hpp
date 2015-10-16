@@ -21,8 +21,6 @@ namespace sani {
 			Viewport();
 
 			~Viewport();
-
-			Viewport& operator =(const Viewport& rhs);
 		};
 	}
 }

@@ -78,10 +78,7 @@ namespace sani {
 				TODO: add calling logic.
 			*/
 
-			SANI_INIT_EVENT(onClosing, void(Window&));
-			SANI_INIT_EVENT(onClosed, void(Window&));
-			SANI_INIT_EVENT(onMoved, void(Window&, int, int, int, int));
-			SANI_INIT_EVENT(onResize, void(Window&, int, int, int, int));
+			SANI_INIT_EVENT(sizeChanged, void());
 		}
 
 		// Private.
@@ -166,8 +163,7 @@ namespace sani {
 
 					GetWindowRect(window->impl->hWnd, &wndRect);
 
-					window->impl->cImpl.width = wndRect.right - wndRect.left;
-					window->impl->cImpl.height = wndRect.bottom - wndRect.top;
+					window->setSize(wndRect.right - wndRect.left, wndRect.bottom - wndRect.top);
 
 					return 0;
 				case WM_MOVE:
@@ -228,8 +224,14 @@ namespace sani {
 		}
 
 		void Window::setSize(const int32 width, const int32 height) {
-			if (impl->cImpl.initialized) MoveWindow(impl->hWnd, impl->cImpl.x, impl->cImpl.y, width, height, TRUE);
-			else {
+			if (impl->cImpl.initialized) {
+				const uint32 oldWidth = impl->cImpl.width;
+				const uint32 oldHeight = impl->cImpl.height;
+
+				SANI_TRIGGER_VOID_EVENT(sizeChanged, void());
+
+				MoveWindow(impl->hWnd, impl->cImpl.x, impl->cImpl.y, width, height, TRUE);
+			} else {
 				impl->cImpl.width = width;
 				impl->cImpl.height = height;
 			}

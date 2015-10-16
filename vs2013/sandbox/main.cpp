@@ -11,6 +11,7 @@
 #include "sani/platform/graphics/color.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/window.hpp"
+#include "sani/platform/graphics/viewport.hpp"
 #include "sani/debug.hpp"
 
 using namespace sani::graphics;
@@ -100,6 +101,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	graphicsDevice.enableVertexAttributePointer(desc.location);
 	graphicsDevice.createVertexAttributePointer(desc);
+
+	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice]() {
+		Viewport viewport;
+		viewport.x = 0;
+		viewport.y = 0;
+
+		viewport.width = window.getClientWidth();
+		viewport.height = window.getClientHeight();
+
+		graphicsDevice.setViewport(viewport);
+	}));
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;

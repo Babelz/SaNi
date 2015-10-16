@@ -37,15 +37,7 @@ namespace sani {
 
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-
-			// Called when the window is being closed.
-			SANI_DECLARE_EVENT(onClosing, void(sani::graphics::Window&));
-			// Called when the window is closed.
-			SANI_DECLARE_EVENT(onClosed, void(Window&));
-			// Called when the window gets moved.
-			SANI_DECLARE_EVENT(onMoved, void(Window&, int, int, int, int));
-			// Called when the window gets resized.
-			SANI_DECLARE_EVENT(onResize, void(Window&, int, int, int, int));
+			SANI_DECLARE_EVENT(sizeChanged, void());
 
 			Window(const HINSTANCE hInstance, const uint32 width, const uint32 height);
 
