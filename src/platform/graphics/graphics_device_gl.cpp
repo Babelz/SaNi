@@ -2,7 +2,6 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/color.hpp"
-#include "sani/platform/graphics/api_converter.hpp"
 #include "sani/debug.hpp"
 #include <sstream>
 
@@ -359,7 +358,7 @@ namespace sani {
 
 			This means that when writing in the variable “color”,
 			we will actually write in the Render Target 0,
-			which happens to be our texure because DrawBuffers[0] is GL_COLOR_ATTACHMENTi,
+			which happens to be our texture because DrawBuffers[0] is GL_COLOR_ATTACHMENTi,
 			which is, in our case, renderedTexture.
 
 			*/
@@ -367,7 +366,7 @@ namespace sani {
 
 		void GraphicsDevice::generateTexture(RenderTexture& texture, const uint32 width, const uint32 height) {
 			// Generate the texture.
-			glGenTextures(1, texture);
+			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
 			glTexImage2D(GL_TEXTURE_2D,
@@ -512,7 +511,7 @@ namespace sani {
 			}
 
 			/*
-			TODO: is this just fine? support all needed uniforms an not all of them.
+				TODO: is this just fine? support all needed uniforms an not all of them.
 			*/
 
 			// Set the uniform value.
@@ -549,16 +548,18 @@ namespace sani {
 		}
 
 		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {
-			// TODO: mod to support diff types.
-			glDrawArrays(GL_TRIANGLES, first, last);
+			glDrawArrays(mode, first, last);
+		}
+		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
+			glDrawElements(mode, count, type, (void*)indices);
 		}
 
 		void GraphicsDevice::createVertexAttributePointer(const VertexAttributePointerDescription& description) {
 			glVertexAttribPointer(
 				description.location,
-				description.elementsCount,
-				SaNiTypeToAPIType(description.type),
-				SaNiBoolToAPIBool(description.normalized),
+				description.count,
+				description.type,
+				description.normalized,
 				description.stride,
 				(void*)description.offset);
 		}

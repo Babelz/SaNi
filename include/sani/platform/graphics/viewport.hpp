@@ -9,8 +9,7 @@ namespace sani {
 		/// @author voidbab
 		/// 
 		/// Basic viewport implementation.
-		class Viewport {
-		public:
+		struct Viewport {
 			uint32 x;
 			uint32 y;
 

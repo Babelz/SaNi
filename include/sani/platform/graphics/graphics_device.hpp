@@ -93,9 +93,7 @@ namespace sani {
 			/// Clears the device. Swaps the back
 			/// and front buffer.
 			void clear(const Color& color);
-			/// Draws all contents of the device.
-			void present();
-
+			
 			/*
 				Texture and render target operations.
 			*/
@@ -174,8 +172,9 @@ namespace sani {
 			void setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
 
 			/// Draws array elements.
-			void drawArrays(const uint32 first, const uint32 last);
-			void drawElements()
+
+			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
 
 			void createVertexAttributePointer(const VertexAttributePointerDescription& description);
 			void enableVertexAttributePointer(const uint32 location);

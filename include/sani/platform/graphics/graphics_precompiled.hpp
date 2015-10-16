@@ -46,10 +46,10 @@ enum BufferUsage {
 	*/
 	
 	// Buffers data will be modified once and used many times.
-	Static	= 0x88E4,
+	Static	= GL_STATIC_DRAW,
 
 	// Buffers data will be modified repeatedly and used many times.
-	Dynamic = 0x88E8
+	Dynamic = GL_DYNAMIC_DRAW
 };
 
 enum BufferType {
@@ -58,8 +58,8 @@ enum BufferType {
 		#define GL_ELEMENT_ARRAY_BUFFER 0x8893
 	*/
 
-	ElementArrayBuffer	= 0x8893,
-	ArrayBuffer			= 0x8892
+	ElementArrayBuffer	= GL_ELEMENT_ARRAY_BUFFER,
+	ArrayBuffer			= GL_ARRAY_BUFFER
 };
 
 enum PrimitiveType {
@@ -74,14 +74,14 @@ enum PrimitiveType {
 		#define GL_DOUBLE			0x140A
 	*/
 
-	Byte	= 0x1400,
-	UByte	= 0x1401,
-	Short	= 0x1402,
-	UShort	= 0x1403,
-	Int		= 0x1404,
-	UInt	= 0x1405,
-	Float	= 0x1406,
-	Double	= 0x140A
+	Byte	= GL_BYTE,
+	UByte	= GL_UNSIGNED_BYTE,
+	Short	= GL_SHORT,
+	UShort	= GL_UNSIGNED_SHORT,
+	Int		= GL_INT,
+	UInt	= GL_UNSIGNED_INT,
+	Float	= GL_FLOAT,
+	Double	= GL_DOUBLE
 };
 
 enum ShaderType {
@@ -90,8 +90,8 @@ enum ShaderType {
 		#define GL_VERTEX_SHADER	0x8B31
 	*/
 
-	Vertex	 = 0x8B31,
-	Fragment = 0x8B30
+	Vertex	 = GL_VERTEX_SHADER,
+	Fragment = GL_FRAGMENT_SHADER
 };
 
 enum UniformType {
@@ -104,27 +104,31 @@ enum UniformType {
 
 enum RenderMode {
 	/*
-		#define GL_POINTS 0x0000
-		#define GL_LINES 0x0001
-		#define GL_LINE_LOOP 0x0002
-		#define GL_LINE_STRIP 0x0003
-		#define GL_TRIANGLES 0x0004
-		#define GL_TRIANGLE_STRIP 0x0005
-		#define GL_TRIANGLE_FAN 0x0006
+		#define GL_POINTS						0x0000
+		#define GL_LINES						0x0001
+		#define GL_LINE_LOOP					0x0002
+		#define GL_LINE_STRIP					0x0003
+		#define GL_TRIANGLES					0x0004
+		#define GL_TRIANGLE_STRIP				0x0005
+		#define GL_TRIANGLE_FAN					0x0006
+		#define GL_LINES_ADJACENCY				0x000A
+		#define GL_LINE_STRIP_ADJACENCY			0x000B
+		#define GL_TRIANGLES_ADJACENCY			0x000C
+		#define GL_TRIANGLE_STRIP_ADJACENCY		0x000D
 	*/
 
-	Points = 0x0000,
-	LineStrip = 0x0003,
-	LineLoop = 0x0002,
-	Lines = 0x0001,
-	LineStripAdjacency = ,
-	LinesAdjacency = ,
-	TriangleStrip = GL_TRIANGLE_STRIP,
-	TriangleFan = GL_TRIANGLE_FAN,
-	Triangles = ,
-	TriangleStripAdjacency = ,
-	TrianglesAdjancency = ,
-	Patches =
+	Points =				 GL_LINES,
+	LineStrip =				 GL_LINE_STRIP,
+	LineLoop =				 GL_LINE_LOOP,
+	Lines =					 GL_LINES,
+	LineStripAdjacency =	 GL_LINE_STRIP_ADJACENCY,
+	LinesAdjacency =		 GL_LINES_ADJACENCY,
+	TriangleStrip =			 GL_TRIANGLE_STRIP,
+	TriangleFan =			 GL_TRIANGLE_FAN,
+	Triangles =				 GL_TRIANGLES,
+	TriangleStripAdjacency = GL_TRIANGLE_STRIP_ADJACENCY,
+	TrianglesAdjancency =	 GL_TRIANGLES_ADJACENCY,
+	Patches =				 GL_PATCHES
 };
 
 struct VertexAttributePointerDescription  {
