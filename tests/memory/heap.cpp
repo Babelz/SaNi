@@ -51,7 +51,7 @@ struct Kek {
 TEST_CASE("Memory", "[memory]") {
 
 	SECTION("Heap allocator pages") {
-		sani::HeapAllocator allocator(8, 1);
+		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::Manual);
 
 		int32* a = allocator.allocate<int32>();
 		int32* b = allocator.allocate<int32>();
@@ -61,7 +61,7 @@ TEST_CASE("Memory", "[memory]") {
 	}
 
 	SECTION("Realloc at first released") {
-		sani::HeapAllocator allocator(8, 1);
+		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::Manual);
 
 		int32* a = allocator.allocate<int32>();
 		int32* b = allocator.allocate<int32>();
@@ -77,7 +77,7 @@ TEST_CASE("Memory", "[memory]") {
 	}
 
 	SECTION("Alloc diff types") {
-		sani::HeapAllocator allocator(16, 1);
+		sani::HeapAllocator allocator(16, 1, sani::DefragmentationPolicy::Manual);
 
 		Foo* foo = allocator.allocate<Foo>();
 		Kek* kek = allocator.allocate<Kek>();
@@ -111,7 +111,7 @@ TEST_CASE("Memory", "[memory]") {
 	}
 
 	SECTION("Alloc diff types") {
-		sani::HeapAllocator allocator(16, 1);
+		sani::HeapAllocator allocator(16, 1, sani::DefragmentationPolicy::Manual);
 
 		// Heap: | 4 | 4 | 4 | 4 |
 		int* a = allocator.allocate<int>();
@@ -135,5 +135,51 @@ TEST_CASE("Memory", "[memory]") {
 
 		BigFoo* foo = allocator.allocate<BigFoo>();
 		REQUIRE(allocator.fragmented());
+	}
+
+	SECTION("Fragmentation") {
+		sani::HeapAllocator allocator(64, 1, sani::DefragmentationPolicy::Manual);
+		REQUIRE(!allocator.fragmented());
+
+		// Fill.
+		// First 32-bytes.
+		Foo* a = allocator.allocate<Foo>();
+		Foo* b = allocator.allocate<Foo>();
+		Foo* c = allocator.allocate<Foo>();
+		Foo* d = allocator.allocate<Foo>();
+
+		// Second 32-bytes. Page is now full.
+		Foo* e = allocator.allocate<Foo>();
+		Foo* f = allocator.allocate<Foo>();
+		Foo* g = allocator.allocate<Foo>();
+		Foo* h = allocator.allocate<Foo>();
+
+		REQUIRE(allocator.pagesCount() == 1);
+		REQUIRE(!allocator.fragmented());
+
+		// Release c, d, e and f to make some fragmentation.
+		allocator.deallocate(c);
+		allocator.deallocate(d);
+		allocator.deallocate(e);
+		allocator.deallocate(f);
+
+		REQUIRE(allocator.fragmented());
+		REQUIRE(!allocator.shouldDefragment());
+
+		// Do some failed allocations.
+		BigFoo* fA = allocator.allocate<BigFoo>();
+		BigFoo* fB = allocator.allocate<BigFoo>();
+		BigFoo* fC = allocator.allocate<BigFoo>();
+		BigFoo* fD = allocator.allocate<BigFoo>();
+
+		REQUIRE(allocator.shouldDefragment());
+		REQUIRE(allocator.pagesCount() > 1);
+		REQUIRE(allocator.getFragmentation() == 1.0f);
+
+		std::cout << "Fragmentation with " << allocator.pagesCount() << " pages: " << allocator.getFragmentation() << std::endl;
+
+		allocator.defragment();
+
+		std::cout << "Fragmentation after defrag: " << allocator.getFragmentation() << std::endl;
 	}
 }

@@ -228,6 +228,7 @@
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector4.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\defragmentation_policy.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_block.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_page.hpp" />

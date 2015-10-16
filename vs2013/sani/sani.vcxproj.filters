@@ -476,6 +476,9 @@
     <ClInclude Include="..\..\include\sani\contracts.hpp">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\defragmentation_policy.hpp">
+      <Filter>include\core\memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

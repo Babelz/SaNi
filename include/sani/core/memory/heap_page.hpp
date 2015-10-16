@@ -23,7 +23,11 @@ namespace sani {
 		const uint32 size;
 		char* memory;
 
-		uint32 failedAllocations;
+		// Bytes missed when we tried to allocate.
+		uint32 missedBytes;
+		// Fragmentation in percents.
+		// missedBytes / size.
+		float32 fragmentation;
 
 		std::priority_queue<HeapBlock> releasedBlocks;
 		std::list<HeapBlock> blocks;
@@ -35,8 +39,13 @@ namespace sani {
 	public:
 		HeapPage(const uint32 size) : size(size),
 									  pagepointer(0),
-									  failedAllocations(0) {
+									  missedBytes(0),
+									  fragmentation(0.0f) {
 			memory = new char[size];
+		}
+
+		inline float32 getFragmentation() const {
+			return fragmentation;
 		}
 
 		inline bool canAllocate(const size_t size) {
@@ -47,14 +56,22 @@ namespace sani {
 		inline T* allocate() {
 			const size_t size = sizeof(T);
 
+			// Free memory has been used, check for blocks.
 			if (pagepointer + size > this->size) {
 				if (releasedBlocks.size() == 0) return nullptr;
 
 				HeapBlock& releasedBlock = releasedBlocks.top();
 
 				// Check if we can allocate from released blocks.
-				if (size <= releasedBlock.getSize()) releasedBlocks.pop();
-				else			        			 { failedAllocations++; return nullptr; }
+				if (size <= releasedBlock.getSize()) {
+					releasedBlocks.pop();
+				} else {
+					missedBytes += size;
+
+					fragmentation = missedBytes / static_cast<float32>(this->size);
+
+					return nullptr;
+				}
 
 				// Allocate.
 				const uint32 diff = releasedBlock.getSize() - size;
@@ -62,14 +79,13 @@ namespace sani {
 
 				if (diff > 0) {
 					// Create new block size of diff.
-					/*
 					HeapBlock block(releasedBlock.getHandle() + diff, diff);
-					
-					blocks.insert(releasedBlock, block);
-					releasedBlocks.push(block);
-					
 					releasedBlock.shrink(diff);
-					*/
+
+					auto pos = std::find(blocks.begin(), blocks.end(), releasedBlock);
+
+					blocks.insert(pos, block);
+					releasedBlocks.push(block);
 				}
 
 				return reinterpret_cast<T*>(releasedBlock.getHandle());
@@ -103,6 +119,7 @@ namespace sani {
 			return false;
 		}
 
+		bool shouldDefragment() const;
 		bool fragmented() const;
 		void defragment();
 
