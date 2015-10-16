@@ -27,11 +27,7 @@ namespace sani {
 				std::cout << "PNG WARNING " << msg << std::endl;
 			}
 
-			Texture2DImporterImpl::Texture2DImporterImpl() {
-				supportedFileTypes.push_back(".png");
-			}
-
-			Texture2DContent* Texture2DImporterImpl::import(const String& filename, FileSystem* fileSystem) {
+			Texture2DContent* Texture2DImporterImpl::import(const String& filename, FileSystem* fileSystem) const {
 				std::cout << "Texture2DImporterImpl::import(String&) invoked" << std::endl;
 				size_t index = filename.rfind(".");
 				if (index == String::npos) {
@@ -58,7 +54,10 @@ namespace sani {
 					throw std::runtime_error("Failed to initialize png info struct");
 				}
 				sani::io::FileStream* stream;
-				fileSystem->openFile(filename, Filemode::Read, &stream);
+				if (!fileSystem->openFile(filename, Filemode::Read, &stream)) {
+					// TODO proper exceptions
+					throw std::exception("File opening failed @Texture2DImporter");
+				}
 				
 				png_set_read_fn(pngStructure, stream, read);
 

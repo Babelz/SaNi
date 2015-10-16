@@ -112,6 +112,9 @@
     <Filter Include="include\resource\processor">
       <UniqueIdentifier>{09d385b1-76c3-47ff-8912-92585c26d1ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\resource\processor">
+      <UniqueIdentifier>{134b7d47-eaf1-43e0-a0ee-7e51dcaa65c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -233,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp">
       <Filter>src\core\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp">
+      <Filter>src\resource\processor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
