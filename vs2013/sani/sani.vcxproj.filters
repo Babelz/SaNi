@@ -112,6 +112,12 @@
     <Filter Include="include\resource\processor">
       <UniqueIdentifier>{09d385b1-76c3-47ff-8912-92585c26d1ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\rendering">
+      <UniqueIdentifier>{5da1c551-0793-4ee6-8cca-ba64c611d01c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\rendering">
+      <UniqueIdentifier>{b734f28e-0ae7-4ea1-a518-cedb92f9daee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -233,6 +239,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp">
       <Filter>src\core\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rendering\camera2d.cpp">
+      <Filter>src\rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -484,6 +493,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp">
       <Filter>include\core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rendering\camera2d.hpp">
+      <Filter>include\rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rendering\renderer.hpp">
+      <Filter>include\rendering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -83,6 +83,7 @@ namespace sani {
 					releasedBlock.shrink(diff);
 
 					auto pos = std::find(blocks.begin(), blocks.end(), releasedBlock);
+					std::advance(pos, 1);
 
 					blocks.insert(pos, block);
 					releasedBlocks.push(block);

@@ -48,7 +48,49 @@ struct Kek {
 	}
 };
 
+struct DynamicFoo {
+	int* a;
+	int* b;
+	int* c;
+	int* d;
+
+	DynamicFoo() {
+		a = new int;
+		b = new int;
+		c = new int;
+		d = new int;
+	}
+
+	~DynamicFoo() {
+		delete a;
+		delete b;
+		delete c;
+		delete d;
+	}
+};
+
 TEST_CASE("Heap", "[heap]") {
+
+	SECTION("Heap with dynamic memory") {
+		sani::HeapAllocator allocator(sizeof(DynamicFoo) * 4, 1, sani::DefragmentationPolicy::Manual);
+
+		DynamicFoo* a = allocator.allocate<DynamicFoo>();
+		NEW_DYNAMIC_DEFAULT(DynamicFoo, a);
+
+		DynamicFoo* b = allocator.allocate<DynamicFoo>();
+		NEW_DYNAMIC_DEFAULT(DynamicFoo, b);
+
+		DynamicFoo* c = allocator.allocate<DynamicFoo>();
+		NEW_DYNAMIC_DEFAULT(DynamicFoo, c);
+
+		DynamicFoo* d = allocator.allocate<DynamicFoo>();
+		NEW_DYNAMIC_DEFAULT(DynamicFoo, d);
+
+		allocator.deallocate(a);
+		allocator.deallocate(b);
+		allocator.deallocate(c);
+		allocator.deallocate(d);
+	}
 
 	SECTION("Heap allocator pages") {
 		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::Manual);
