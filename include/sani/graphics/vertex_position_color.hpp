@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/platform/graphics/color.hpp"
-#include "sani/core/math/vector2.hpp"
+#include "sani/core/math/vector3.hpp"
 
 using namespace sani::math;
 
@@ -10,7 +10,7 @@ namespace sani {
 	namespace graphics {
 
 		struct VertexPositionColor {
-			Vec2f position;
+			Vec3f position;
 			Color color;
 
 			VertexPositionColor() {

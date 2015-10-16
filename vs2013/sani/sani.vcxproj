@@ -250,7 +250,7 @@
     <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_system.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\graphics\converter.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\api_converter.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp" />

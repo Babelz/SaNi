@@ -21,7 +21,7 @@ namespace sani {
 			case Float:
 				return GL_FLOAT;
 			default:
-				return GL_UNSIGNED_BYTE;
+				throw std::logic_error("unsupported or invalid value type");
 			}
 		}
 
@@ -36,7 +36,29 @@ namespace sani {
 			case Pixel:
 				return GL_FRAGMENT_SHADER;
 			default:
-				return GL_VERTEX_SHADER;
+				throw std::logic_error("unsupported or invalid shader type");
+			}
+		}
+
+		inline GLuint SaNiBufferToAPIBuffer(const BufferType type) {
+			switch (type) {
+			case ElementArrayBuffer:
+				return GL_ELEMENT_ARRAY_BUFFER;
+			case ArrayBuffer:
+				return GL_ARRAY_BUFFER;
+			default:
+				throw std::logic_error("unsupported or invalid buffer type");
+			}
+		}
+
+		inline GLenum SaNiUsageToAPIUsage(const BufferUsage usage) {
+			switch (usage) {
+			case Static:
+				return GL_STATIC_DRAW;
+			case Dynamic:
+				return GL_DYNAMIC_DRAW;
+			default:
+				throw std::logic_error("unsupported or invalid buffer usage");
 			}
 		}
 	}

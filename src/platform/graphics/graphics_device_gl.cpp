@@ -2,7 +2,7 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/color.hpp"
-#include "sani/platform/graphics/converter.hpp"
+#include "sani/platform/graphics/api_converter.hpp"
 #include "sani/debug.hpp"
 #include <sstream>
 
@@ -23,7 +23,7 @@ namespace sani {
 			uint32 backBufferHeight;
 
 			// Default backbuffer of the device.
-			// Everything gets drawn this.
+			// Everything gets drawn to this.
 			RenderTarget2D* defaultRenderTarget;
 			RenderTarget2D* currentRenderTarget;
 
@@ -199,15 +199,6 @@ namespace sani {
 
 			// Set the window full screen. Default is windowed.
 			if (impl->fullscreen) setFullscreen();
-
-			// Create default viewport if user has not given us one.
-			if (impl->cImpl.viewport.isDefault()) {
-				RECT clntRect;
-
-				GetClientRect(impl->hWnd, &clntRect);
-
-				impl->cImpl.viewport = Viewport(0, 0, clntRect.right - clntRect.left, clntRect.bottom - clntRect.top);
-			}
 
 			// Set viewport.
 			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y, impl->cImpl.viewport.width, impl->cImpl.viewport.height);
@@ -545,14 +536,51 @@ namespace sani {
 			}
 		}
 
+		void GraphicsDevice::generateVertexArray(Buffer& buffer) {
+			GLuint glBuffer = 0;
+
+			glGenVertexArrays(1, &glBuffer);
+
+			buffer = static_cast<Buffer>(glBuffer);
+		}
+		void GraphicsDevice::bindVertexArray(Buffer& buffer) {
+			GLuint glBuffer = static_cast<GLuint>(buffer);
+
+			glBindVertexArray(glBuffer);
+		}
+
+		void GraphicsDevice::generateBuffer(Buffer& buffer) {
+			GLuint glBuffer = static_cast<GLuint>(buffer);
+			
+			glGenBuffers(1, &glBuffer);
+
+			buffer = static_cast<Buffer>(glBuffer);
+		}
+		void GraphicsDevice::bindBuffer(Buffer& buffer, const BufferType type) {
+			GLuint glBuffer = static_cast<GLuint>(buffer);
+
+			glBindBuffer(SaNiBufferToAPIBuffer(type), glBuffer);
+		}
+		void GraphicsDevice::unbindBuffer(const BufferType type) {
+			glBindBuffer(SaNiBufferToAPIBuffer(type), 0);
+		}
+		void GraphicsDevice::setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
+			glBufferData(SaNiBufferToAPIBuffer(type), bytes, data, SaNiUsageToAPIUsage(usage));
+		}
+
+		void GraphicsDevice::drawElements(const uint32 first, const uint32 last) {
+			// TODO: mod to support diff types.
+			glDrawArrays(GL_TRIANGLES, first, last);
+		}
+
 		void GraphicsDevice::createVertexAttributePointer(const VertexAttributeDescription& description) {
 			glVertexAttribPointer(
 				description.location,
 				description.elementsCount,
 				SaNiTypeToAPIType(description.type),
 				SaNiBoolToAPIBool(description.normalized),
-				description.structSize,
-				(void*)description.elementsOffset);
+				description.stride,
+				(void*)description.offset);
 		}
 		void GraphicsDevice::enableVertexAttributePointer(const uint32 location) {
 			glEnableVertexAttribArray(static_cast<GLuint>(location));

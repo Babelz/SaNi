@@ -13,18 +13,23 @@ namespace sani {
 													   width(viewport.width),
 													   height(viewport.height) {
 		}
-		Viewport::Viewport() : Viewport(0, 0, 0, 0) {
-		}
-
-		bool Viewport::isDefault() const {
-			return x == 0 && y == 0 && width == 0 && height == 0;
+		Viewport::Viewport() : x(0),
+							   y(0),
+							   width(0),
+							   height(0) {
 		}
 
 		Viewport::~Viewport() {
 		}
 
-		Viewport Viewport::operator =(const Viewport& rhs) {
-			return Viewport(rhs.x, rhs.y, rhs.width, rhs.height);
+		Viewport& Viewport::operator =(const Viewport& rhs) {
+			x = rhs.x;
+			y = rhs.y;
+			
+			width = rhs.width;
+			height = rhs.height;
+
+			return *this;
 		}
 	}
 }

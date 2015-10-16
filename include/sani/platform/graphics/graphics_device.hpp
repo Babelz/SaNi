@@ -158,11 +158,15 @@ namespace sani {
 				Buffer operations.
 			*/
 
-			void generateBuffer(Buffer& buffer, const BufferType type);
-			void bindElementBuffer(Buffer& buffer, const BufferType type);
-			void setElementBufferData(Buffer& buffer, const uint32 bytes, void* data, const ElementBufferUsage usage);
+			void generateVertexArray(Buffer& buffer);
+			void bindVertexArray(Buffer& buffer);
 
-			void drawElements(const uint32 count, const Type indicesType, const uint32 indices);
+			void generateBuffer(Buffer& buffer);
+			void bindBuffer(Buffer& buffer, const BufferType type);
+			void unbindBuffer(const BufferType type);
+			void setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
+
+			void drawElements(const uint32 first, const uint32 last);
 
 			void createVertexAttributePointer(const VertexAttributeDescription& description);
 			void enableVertexAttributePointer(const uint32 location);

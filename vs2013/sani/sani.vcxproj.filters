@@ -509,7 +509,7 @@
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\converter.hpp">
+    <ClInclude Include="..\..\include\sani\platform\graphics\api_converter.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
   </ItemGroup>

@@ -22,7 +22,7 @@ static_assert(sizeof(GLuint) == sizeof(Buffer), "sizeof(GLuint) != sizeof(Buffer
 static_assert(sizeof(GLuint) == sizeof(RenderTexture), "sizeof(GLuint) != sizeof(RenderTexture)");
 
 
-enum ElementBufferUsage {
+enum BufferUsage {
 	// Buffers data will be modified once and used many times.
 	Static,
 	// Buffers data will be modified repearedly and used many times.
@@ -54,22 +54,23 @@ enum UniformType {
 };
 
 struct VertexAttributeDescription {
-	bool normalized;
-
 	uint32 location;
-
-	uint32 elementsOffset;
 	uint32 elementsCount;
-	uint32 structSize;
 
 	Type type;
 
-	VertexAttributeDescription() : normalized(false),
-								   location(0),
-								   elementsOffset(0),
+	bool normalized;
+
+	uint32 stride;
+	uint32 offset;
+	
+	
+	VertexAttributeDescription() : location(0),
 								   elementsCount(0),
 								   type(Type::UByte),
-								   structSize(0) {
+								   normalized(false),
+								   stride(0),
+								   offset(0) {
 	}
 
 	~VertexAttributeDescription() {
