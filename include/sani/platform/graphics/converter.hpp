@@ -28,5 +28,16 @@ namespace sani {
 		GLboolean SaNiBoolToAPIBool(const bool value) {
 			return static_cast<GLboolean>(value);
 		}
+
+		GLuint SaNiShaderToAPIShader(const ShaderType type) {
+			switch (type) {
+			case Vertex:
+				return GL_VERTEX_SHADER;
+			case Pixel:
+				return GL_FRAGMENT_SHADER;
+			default:
+				return GL_VERTEX_SHADER;
+			}
+		}
 	}
 }

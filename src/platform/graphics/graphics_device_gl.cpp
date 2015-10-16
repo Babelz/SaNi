@@ -453,16 +453,7 @@ namespace sani {
 			GLint result = GL_FALSE;
 			GLuint glShader = 0;
 
-			switch (type) {
-			case ShaderType::Vertex:
-				glShader = glCreateShader(GL_VERTEX_SHADER);
-				break;
-			case ShaderType::Pixel:
-				glShader = glCreateShader(GL_FRAGMENT_SHADER);
-				break;
-			default:
-				throw std::logic_error("At GraphicsDevice::compileShader - unsupported or invalid shader type");
-			}
+			glShader = glCreateShader(SaNiShaderToAPIShader(type));
 
 			glShaderSource(glShader, 1, &source, nullptr);
 			glCompileShader(glShader);
