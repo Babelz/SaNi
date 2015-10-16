@@ -15,6 +15,9 @@
 
 using namespace sani::graphics;
 
+/*
+	To test if our window, context etc even work.
+*/
 void glDraw() {
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
