@@ -1,10 +1,9 @@
 #include "sani/core/memory/heap_page.hpp"
+#include "sani/core/memory/memory.hpp"
 
 namespace sani {
 
 	#define FRAGMENTATION_THRESHOLD 0.10f
-
-	typedef uintptr_t IntPtr;
 
 	void HeapPage::joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks) {
 		// Copy new blocks.

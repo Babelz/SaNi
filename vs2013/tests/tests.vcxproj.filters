@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\tests\memory\heap.cpp">
       <Filter>Source Files\memory</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\memory\pool.cpp">
+      <Filter>Source Files\memory</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\tests\events\eventmath.h">

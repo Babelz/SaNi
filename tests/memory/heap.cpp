@@ -48,7 +48,7 @@ struct Kek {
 	}
 };
 
-TEST_CASE("Memory", "[memory]") {
+TEST_CASE("Heap", "[heap]") {
 
 	SECTION("Heap allocator pages") {
 		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::Manual);
