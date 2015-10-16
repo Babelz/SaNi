@@ -34,10 +34,11 @@ enum BufferType {
 	ArrayBuffer
 };
 
-enum IndicesType {
+enum Type {
 	UByte,
 	UShort,
-	UInt
+	UInt,
+	Float
 };
 
 enum ShaderType {
@@ -50,4 +51,21 @@ enum UniformType {
 	Mat4F,
 	// Data type excepted: float 3 * 3.
 	Mat3F
+};
+
+struct VertexAttributeDescription {
+	bool normalized;
+
+	uint32 location;
+	uint32 count;
+	Type type;
+
+	uint32 offset;
+	uint32 size;
+
+	VertexAttributeDescription() {
+	}
+
+	~VertexAttributeDescription() {
+	}
 };

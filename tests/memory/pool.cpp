@@ -1,5 +1,5 @@
-#include "catch/catch.hpp"
 #include "sani/core/memory/page_pool_allocator.hpp"
+#include "catch/catch.hpp"
 
 namespace pool {
 

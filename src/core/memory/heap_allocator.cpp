@@ -1,4 +1,5 @@
 #include "sani/core/memory/heap_allocator.hpp"
+#include "sani/debug.hpp"
 
 #define TWO_MEGABYTES 2097152 
 

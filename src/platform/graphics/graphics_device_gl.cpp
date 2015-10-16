@@ -553,6 +553,9 @@ namespace sani {
 			}
 		}
 
+		void createVertexAttribute(VertexAttributeDescription& vertexAttributeDescription) {
+		}
+
 		GraphicsDevice::~GraphicsDevice() {
 			delete impl;
 		}

@@ -3,9 +3,7 @@
 #include "sani/core/memory/defragmentation_policy.hpp"
 #include "sani/core/memory/heap_page.hpp"
 #include "sani/core/memory/memory.hpp"
-#include "sani/contracts.hpp"
 #include "sani/types.hpp"
-#include "sani/debug.hpp"
 #include <list>
 
 namespace sani {

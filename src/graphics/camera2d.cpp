@@ -1,5 +1,5 @@
 #include "sani/core/math/func/transform_2d.hpp"
-#include "sani/rendering/camera2d.hpp"
+#include "sani/graphics/camera2d.hpp"
 
 namespace sani {
 

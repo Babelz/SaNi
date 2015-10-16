@@ -155,14 +155,16 @@ namespace sani {
 			void setShaderUniform(const ShaderProgram shader, const char* name, void* data, const UniformType type);
 
 			/*
-				Buffer functions.
+				Buffer operations.
 			*/
 
 			void generateBuffer(Buffer& buffer, const BufferType type);
 			void bindElementBuffer(Buffer& buffer, const BufferType type);
 			void setElementBufferData(Buffer& buffer, const uint32 bytes, void* data, const ElementBufferUsage usage);
 
-			void drawElements(const uint32 count, const IndicesType type, const uint32 indices);
+			void drawElements(const uint32 count, const Type indicesType, const uint32 indices);
+
+			void createVertexAttribute(VertexAttributeDescription& vertexAttributeDescription);
 
 			~GraphicsDevice();
 		};
