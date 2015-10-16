@@ -99,6 +99,7 @@ namespace sani {
 			/*
 				Texture and render target operations.
 			*/
+			
 
 			/// Binds given texture.
 			/// @param[in] texture texture to bind
@@ -112,7 +113,7 @@ namespace sani {
 			void setRenderTarget(RenderTarget2D* renderTarget);
 
 			/// Creates an empty RGBA color-format texture.
-			void generateTexture(RenderTexture& texture, const TextureDescription& description);
+			void generateTexture(RenderTexture& texture, const uint32 width, const uint32 height);
 			/// Generates new render target.
 			/// @param[in] renderTexture texture to be used with the target, call generateTexture before passing it
 			/// @param[in] colorBuffer color buffer to be generated for the target
@@ -120,12 +121,12 @@ namespace sani {
 			/// @param[in] depthBuffer depth buffer to be generated for the target
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
-			void generateRenderTarget2D(RenderTexture& texture, Buffer& colorBuffer, Buffer& frameBuffer, Buffer& depthBuffer, const TextureDescription& description);
+			void generateRenderTarget2D(RenderTexture& texture, Buffer& colorBuffer, Buffer& frameBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height);
 
 			/*
 				Shader operations.
 			*/
-			
+
 			/// Attempts to compile given shader source
 			/// @param[in] shader result shader
 			/// @param[in] source source code of the shader
@@ -158,17 +159,25 @@ namespace sani {
 				Buffer operations.
 			*/
 
+			/// Generates a vertex array.
 			void generateVertexArray(Buffer& buffer);
+			/// Binds given vertex array.
 			void bindVertexArray(Buffer& buffer);
 
+			/// Generates a buffer.
 			void generateBuffer(Buffer& buffer);
+			/// Binds given buffer.
 			void bindBuffer(Buffer& buffer, const BufferType type);
+			/// Unbinds given type buffer.
 			void unbindBuffer(const BufferType type);
+			/// Sets given buffers data.
 			void setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
 
-			void drawElements(const uint32 first, const uint32 last);
+			/// Draws array elements.
+			void drawArrays(const uint32 first, const uint32 last);
+			void drawElements()
 
-			void createVertexAttributePointer(const VertexAttributeDescription& description);
+			void createVertexAttributePointer(const VertexAttributePointerDescription& description);
 			void enableVertexAttributePointer(const uint32 location);
 			void disableVertexAttributePointer(const uint32 location);
 

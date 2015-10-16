@@ -55,7 +55,7 @@ void glDraw() {
 		);
 
 	// Draw the triangle !
-	glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+	//glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
 	glDisableVertexAttribArray(0);
 
@@ -73,6 +73,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 800, 600);
 	graphicsDevice.initialize();
 
+	/*
 	Vec3 v1(-1.0f, -1.0f, 0.0f);
 	Vec3 v2(1.0f, -1.0f, 0.0f);
 	Vec3 v3(0.0f, 1.0f, 0.0f);
@@ -99,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	desc.offset = 0;
 
 	graphicsDevice.enableVertexAttributePointer(desc.location);
-	graphicsDevice.createVertexAttributePointer(desc);
+	graphicsDevice.createVertexAttributePointer(desc);*/
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -108,7 +109,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		graphicsDevice.clear(Color::green);
 
-		graphicsDevice.drawElements(0, 3);
 	}
 
 	graphicsDevice.cleanUp();
