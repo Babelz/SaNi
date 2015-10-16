@@ -57,15 +57,33 @@ struct VertexAttributeDescription {
 	bool normalized;
 
 	uint32 location;
-	uint32 count;
+
+	uint32 elementsOffset;
+	uint32 elementsCount;
+	uint32 structSize;
+
 	Type type;
 
-	uint32 offset;
-	uint32 size;
-
-	VertexAttributeDescription() {
+	VertexAttributeDescription() : normalized(false),
+								   location(0),
+								   elementsOffset(0),
+								   elementsCount(0),
+								   type(Type::UByte),
+								   structSize(0) {
 	}
 
 	~VertexAttributeDescription() {
+	}
+};
+
+struct TextureDescription {
+	uint32 width;
+	uint32 height;
+
+	TextureDescription() : width(0),
+						   height(0) {
+	}
+
+	~TextureDescription() {
 	}
 };

@@ -509,6 +509,9 @@
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\converter.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

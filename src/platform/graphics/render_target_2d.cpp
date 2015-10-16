@@ -12,8 +12,12 @@ namespace sani {
 																										  framebuffer(0),
 																										  colorBuffer(0),
 																										  depthBuffer(0) {
-			device.generateTexture(renderTexture, width, height);
-			device.generateRenderTarget2D(renderTexture, colorBuffer, framebuffer, depthBuffer, width, height);
+			TextureDescription description;
+			description.width = width;
+			description.height = height;
+			
+			device.generateTexture(renderTexture, description);
+			device.generateRenderTarget2D(renderTexture, colorBuffer, framebuffer, depthBuffer, description);
 		}
 
 		// TODO: add directx support.

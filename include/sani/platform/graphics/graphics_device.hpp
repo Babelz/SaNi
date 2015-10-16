@@ -112,7 +112,7 @@ namespace sani {
 			void setRenderTarget(RenderTarget2D* renderTarget);
 
 			/// Creates an empty RGBA color-format texture.
-			void generateTexture(RenderTexture& texture, const uint32 width, const uint32 height);
+			void generateTexture(RenderTexture& texture, const TextureDescription& description);
 			/// Generates new render target.
 			/// @param[in] renderTexture texture to be used with the target, call generateTexture before passing it
 			/// @param[in] colorBuffer color buffer to be generated for the target
@@ -120,7 +120,7 @@ namespace sani {
 			/// @param[in] depthBuffer depth buffer to be generated for the target
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
-			void generateRenderTarget2D(RenderTexture& texture, Buffer& colorBuffer, Buffer& frameBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height);
+			void generateRenderTarget2D(RenderTexture& texture, Buffer& colorBuffer, Buffer& frameBuffer, Buffer& depthBuffer, const TextureDescription& description);
 
 			/*
 				Shader operations.
@@ -164,7 +164,9 @@ namespace sani {
 
 			void drawElements(const uint32 count, const Type indicesType, const uint32 indices);
 
-			void createVertexAttribute(VertexAttributeDescription& vertexAttributeDescription);
+			void createVertexAttributePointer(const VertexAttributeDescription& description);
+			void enableVertexAttributePointer(const uint32 location);
+			void disableVertexAttributePointer(const uint32 location);
 
 			~GraphicsDevice();
 		};

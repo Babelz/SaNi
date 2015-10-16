@@ -2,6 +2,7 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/color.hpp"
+#include "sani/platform/graphics/converter.hpp"
 #include "sani/debug.hpp"
 #include <sstream>
 
@@ -377,7 +378,7 @@ namespace sani {
 			*/
 		}
 
-		void GraphicsDevice::generateTexture(RenderTexture& texture, const uint32 width, const uint32 height) {
+		void GraphicsDevice::generateTexture(RenderTexture& texture, const TextureDescription& description) {
 			GLuint glTexture = 0;
 
 			// Generate the texture.
@@ -387,8 +388,8 @@ namespace sani {
 			glTexImage2D(GL_TEXTURE_2D,
 				0,
 				GL_RGBA,
-				width,
-				height,
+				description.width,
+				description.height,
 				0,
 				GL_RGBA,
 				GL_UNSIGNED_BYTE,
@@ -408,7 +409,7 @@ namespace sani {
 
 			texture = static_cast<RenderTexture>(glTexture);
 		}
-		void GraphicsDevice::generateRenderTarget2D(RenderTexture& texture, Buffer& frameBuffer, Buffer& colorBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height) {
+		void GraphicsDevice::generateRenderTarget2D(RenderTexture& texture, Buffer& frameBuffer, Buffer& colorBuffer, Buffer& depthBuffer, const TextureDescription& description) {
 			// Assume that the render texture has been initialized and generated.
 
 			// Generate frame buffer.
@@ -429,7 +430,7 @@ namespace sani {
 			GLuint glDepthBuffer = 0;
 			glGenRenderbuffers(1, &glDepthBuffer);
 			glBindRenderbuffer(GL_RENDERBUFFER, glDepthBuffer);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, description.width, description.height);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, glDepthBuffer);
 
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
@@ -553,7 +554,20 @@ namespace sani {
 			}
 		}
 
-		void createVertexAttribute(VertexAttributeDescription& vertexAttributeDescription) {
+		void GraphicsDevice::createVertexAttributePointer(const VertexAttributeDescription& description) {
+			glVertexAttribPointer(
+				description.location,
+				description.elementsCount,
+				SaNiTypeToAPIType(description.type),
+				SaNiBoolToAPIBool(description.normalized),
+				description.structSize,
+				(void*)description.elementsOffset);
+		}
+		void GraphicsDevice::enableVertexAttributePointer(const uint32 location) {
+			glEnableVertexAttribArray(static_cast<GLuint>(location));
+		}
+		void GraphicsDevice::disableVertexAttributePointer(const uint32 location) {
+			glDisableVertexAttribArray(static_cast<GLuint>(location));
 		}
 
 		GraphicsDevice::~GraphicsDevice() {
