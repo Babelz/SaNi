@@ -10,7 +10,7 @@ namespace sani {
 			TODO: add platform wrappers.
 		*/
 
-		GLenum SaNiTypeToAPIType(const Type type) {
+		inline GLenum SaNiTypeToAPIType(const Type type) {
 			switch (type) {
 			case UByte:
 				return GL_UNSIGNED_BYTE;
@@ -25,11 +25,11 @@ namespace sani {
 			}
 		}
 
-		GLboolean SaNiBoolToAPIBool(const bool value) {
+		inline GLboolean SaNiBoolToAPIBool(const bool value) {
 			return static_cast<GLboolean>(value);
 		}
 
-		GLuint SaNiShaderToAPIShader(const ShaderType type) {
+		inline GLuint SaNiShaderToAPIShader(const ShaderType type) {
 			switch (type) {
 			case Vertex:
 				return GL_VERTEX_SHADER;
