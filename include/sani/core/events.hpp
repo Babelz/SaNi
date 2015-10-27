@@ -110,7 +110,7 @@ namespace sani {
 	#define SANI_EVENT_HANDLER(signature, callback)			std::function<signature>(callback)
 	
 	// Triggers the given event with given signature and passes given args to it.
-	#define SANI_TRIGGER_EVENT(name, signature, args)		name##Caller(std::function<void(std::function<signature>)>([args](std::function<signature> action) { action(args); }))
+	#define SANI_TRIGGER_EVENT(name, signature, args)		name##Caller([args](std::function<signature> func) { func(args); })
 	
 	// Triggers the given event with given signature and passes no arguments to it.
 	#define SANI_TRIGGER_VOID_EVENT(name, signature)		name##Caller(std::function<void(std::function<signature>)>([](std::function<signature> action) { action(); }))
