@@ -1,9 +1,10 @@
 #pragma once
 
-#include <vector>
+#include "sani/core/cvar/cvar_file.hpp"
+#include <stack>
 
 namespace sani {
-	
+
 	class CVarFile;
 
 	/// @class LinkRecord link_record.hpp "sani/core/cvar/link_record.hpp"
@@ -13,18 +14,18 @@ namespace sani {
 	/// linkages. Used to compile the files in correct order.
 	class LinkRecord {
 	private:
-		std::vector<CVarFile*> links;
+		std::stack<CVarFile*> links;
 		CVarFile* root;
 	public:
 		LinkRecord();
 
-		void setRoot(CVarFile* root);
+		void recordRoot(CVarFile* root);
 		void recordLink(CVarFile* link);
 
 		const CVarFile* getRoot() const;
 		
-		uint32 linksCount() const;
-		CVarFile* fileAtIndex(const uint32 index);
+		bool hasLinks() const;
+		CVarFile* getNextLink();
 
 		~LinkRecord();
 	};

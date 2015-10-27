@@ -6,19 +6,16 @@
 #include <list>
 
 namespace sani {
-
-	typedef std::stack<String> ErrorBuffer;
 	
-	struct LinkRecord {
-		std::list<CVarFile*> links;
-		CVarFile* file;
+	typedef std::stack<String> ErrorBuffer;
 
-		LinkRecord() : file(nullptr) {
-		}
+	class LinkRecord;
 
-		~LinkRecord() = default;
-	};
-
+	/// @class CVarLinker cvar_linker.hpp "sani/core/cvar/cvar_linker.hpp"
+	/// @author voidbab
+	/// 
+	/// Class responsible of linking files with
+	/// given root file.
 	class CVarLinker {
 	private:
 		ErrorBuffer errorBuffer;
@@ -41,7 +38,7 @@ namespace sani {
 		bool hasErrors() const;
 		String getNextError();
 
-		void link(const String& filename, std::list<CVarFile>& files, LinkRecord& record);
+		void link(const String& filename, std::list<CVarFile>& files, LinkRecord* record);
 
 		~CVarLinker();
 	};

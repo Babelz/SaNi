@@ -3,6 +3,7 @@
 // TODO: does it matter if we just with the win32 builds?
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
+#include "sani/core/cvar/link_record.hpp"
 #include "sani/core/cvar/cvar_linker.hpp"
 #include "sani/core/cvar/cvar_parser.hpp"
 #include "sani/core/cvar/cvar_statement.hpp"
@@ -211,7 +212,7 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		CVarLinker linker;
 		LinkRecord record;
 
-		linker.link("main.cfg", files, record);
+		linker.link("main.cfg", files, &record);
 
 		REQUIRE(linker.hasErrors());
 

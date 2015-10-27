@@ -1,5 +1,6 @@
 #include "sani/core/utils/string_utils.hpp"
 #include "sani/core/cvar/cvar_linker.hpp"
+#include "sani/core/cvar/link_record.hpp"
 #include "sani/core/cvar/cvar_lang.hpp"
 #include "sani/debug.hpp"
 #include <algorithm>
@@ -8,7 +9,6 @@ namespace sani {
 
 	CVarLinker::CVarLinker() {
 	}
-
 
 	CVarFile* CVarLinker::findFile(const String& filename, std::list<CVarFile>& files) {
 		auto file = std::find_if(files.begin(), files.end(), [&filename](const CVarFile& other) {
@@ -48,7 +48,7 @@ namespace sani {
 
 		// "Link"
 		file->removeLineAtIndex(lineIndex);
-		rootRecord->links.push_back(other);
+		rootRecord->recordLink(other);
 	}
 	void CVarLinker::linkFile(CVarFile* file, String& line, std::list<CVarFile>& files) {
 		// Begin by looking if the file we are linking needs to be linked.
@@ -73,7 +73,6 @@ namespace sani {
 
 		// Link other files with this one.
 		linkFiles(other, files);
-		rootRecord->links.push_back(other);
 	}
 
 	void CVarLinker::updateScope(const String& line) {
@@ -100,13 +99,13 @@ namespace sani {
 		return message;
 	}
 
-	void CVarLinker::link(const String& filename, std::list<CVarFile>& files, LinkRecord& linkRecord) {
+	void CVarLinker::link(const String& filename, std::list<CVarFile>& files, LinkRecord* linkRecord) {
 		CVarFile* file = findFile(filename, files);
 
 		if (hasErrors()) return;
 
-		rootRecord = &linkRecord;
-		rootRecord->file = file;
+		rootRecord = linkRecord;
+		rootRecord->recordRoot(file);
 
 		linkFiles(file, files);
 	}

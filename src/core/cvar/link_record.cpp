@@ -1,27 +1,29 @@
 #include "sani/core/cvar/link_record.hpp"
-#include "sani/core/cvar/cvar_file.hpp"
 
 namespace sani {
 
 	LinkRecord::LinkRecord() : root(nullptr) {
 	}
 
-	void LinkRecord::setRoot(CVarFile* root) {
+	void LinkRecord::recordRoot(CVarFile* root) {
 		this->root = root;
 	}
 	void LinkRecord::recordLink(CVarFile* link) {
-		links.push_back(link);
+		links.push(link);
 	}
 
 	const CVarFile* LinkRecord::getRoot() const {
-		return root;
+		return nullptr;
 	}
 
-	uint32 LinkRecord::linksCount() const {
-		return links.size();
+	bool LinkRecord::hasLinks() const {
+		return !links.empty();
 	}
-	CVarFile* LinkRecord::fileAtIndex(const uint32 index) {
-		return links[index];
+	CVarFile* LinkRecord::getNextLink(){
+		CVarFile* link = links.top();
+		links.pop();
+
+		return link;
 	}
 
 	LinkRecord::~LinkRecord() {
