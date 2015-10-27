@@ -16,13 +16,13 @@ public:
 	void add(int a, int b) {
 		const int result = a + b;
 
-		SANI_TRIGGER_EVENT(onAdd, void(int), result);
+		//SANI_TRIGGER_EVENT(onAdd, void(int), result);
 		SANI_TRIGGER_VOID_EVENT(onOper, void(void));
 	}
 	void sub(int a, int b) {
 		const int result = a - b;
 
-		SANI_TRIGGER_EVENT(onSub, void(int), result);
+		//SANI_TRIGGER_EVENT(onSub, void(int), result);
 		SANI_TRIGGER_VOID_EVENT(onOper, void(void));
 	}
 

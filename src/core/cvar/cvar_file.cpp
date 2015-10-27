@@ -20,7 +20,7 @@ namespace sani {
 	const String& CVarFile::getFilename() const {
 		return filename;
 	}
-	const size_t CVarFile::getLinesCount() const {
+	const uint32 CVarFile::getLinesCount() const {
 		return lines.size();
 	}
 	const String& CVarFile::lineAtIndex(const size_t index) const {

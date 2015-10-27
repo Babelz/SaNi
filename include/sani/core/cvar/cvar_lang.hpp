@@ -83,6 +83,7 @@ namespace sani {
 
 			const String RequireKeyword		= "require";
 			const String MessageKeyword		= "message";
+			const String IncludeKeyword		= "include";
 
 			const String Comment			= "//";
 

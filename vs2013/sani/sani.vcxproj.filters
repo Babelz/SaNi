@@ -246,6 +246,9 @@
     <ClCompile Include="..\..\src\sani\rendering\renderer.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -509,6 +512,9 @@
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp">
+      <Filter>include\core\cvar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -529,5 +535,10 @@
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl">
       <Filter>include\platform\file\inl</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\include\sani\core\cvar\TODO.txt">
+      <Filter>include\core\cvar</Filter>
+    </Text>
   </ItemGroup>
 </Project>

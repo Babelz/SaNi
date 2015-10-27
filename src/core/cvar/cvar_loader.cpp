@@ -29,6 +29,7 @@ namespace sani {
 				
 				if (!fileSystem.isFileOpen(path)) {
 					sani::io::FileStream* stream;
+
 					fileSystem.openFile(path, io::Filemode::Read, &stream);
 				}
 

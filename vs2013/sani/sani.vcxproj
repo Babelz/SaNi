@@ -151,6 +151,7 @@
     <ClCompile Include="..\..\src\core\cvar\cvar.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_compiler.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp" />
@@ -287,6 +289,9 @@
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\include\sani\core\cvar\TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

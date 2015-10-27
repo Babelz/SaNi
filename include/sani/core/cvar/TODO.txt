@@ -1,0 +1,4 @@
+- add linking
+- emit errors from redeclarations
+- add command blocks
+- refactor the compiler to compile from one file
