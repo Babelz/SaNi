@@ -165,7 +165,7 @@ TEST_CASE("CVar parsing", "[cvar]") {
 			std::cout << compiler.getNextError() << std::endl;
 		}
 
-		REQUIRE(i == 8);
+		REQUIRE(i == 7);
 	}
 
 	SECTION("Operators") {

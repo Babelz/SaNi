@@ -28,7 +28,6 @@ namespace sani {
 	}
 
 	float32 HeapAllocator::getFragmentation() const {
-		// Frag% = sum of page frag%
 		float32 fragmentation = 0.0f;
 
 		for (const HeapPage* page : pages) fragmentation += page->getFragmentation();

@@ -53,13 +53,15 @@ namespace sani {
 	/// cvars and requirements.
 	class CVarCompiler {
 	private:
-		struct RequireStatementGenerator {
-			const std::function<bool(const IntermediateCondition&)> condition;
-			const std::function<void(const IntermediateCondition&, Condition&, CVarList&)> generate;
+		typedef std::function<bool(const IntermediateCondition&)> StatementGeneratorCondition;
+		typedef std::function<void(const IntermediateCondition&, Condition&, CVarList&)> StatementGenerator;
 
-			RequireStatementGenerator(const std::function<bool(const IntermediateCondition&)> condition,
-									  std::function<void(const IntermediateCondition&, Condition&, CVarList&)> generate) : condition(condition),
-																														   generate(generate) {
+		struct RequireStatementGenerator {
+			const StatementGeneratorCondition condition;
+			const StatementGenerator generate;
+
+			RequireStatementGenerator(const StatementGeneratorCondition condition, StatementGenerator generate) : condition(condition),
+																												  generate(generate) {
 			}
 		};
 
@@ -72,7 +74,7 @@ namespace sani {
 		void copyErrors(CVarTokenizer* tokenizer);
 
 		/// Generates cvars and records.
-		void generateCVars(CVarList& cvars, RecordList& records, TokenList& tokens);
+		void compile(CVarList& cvars, RecordList& records, TokenList& tokens);
 		
 		/// Generates a cvar.
 		void generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const;
