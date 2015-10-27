@@ -12,8 +12,9 @@ namespace sani {
 				uint32 height = input->height;
 				std::vector<Texture2DContent*> mipmapChain;
 
-				Image::Image();
-				Blob data(input->pixels.data(), input->pixels.size());
+				Image img;
+				img.magick("PNG");
+				
 
 				while (width > 1 && height > 1) {
 					width /= 2;
