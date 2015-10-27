@@ -48,7 +48,19 @@ namespace sani {
 
 		// "Link"
 		file->removeLineAtIndex(lineIndex);
-		rootRecord->recordLink(other);
+
+		CVarFile* root = rootRecord->getRoot();
+
+		if (other != root) {
+			if (rootRecord->isLinked(other)) {
+				// TODO: how do i recursive include guard.
+				errorBuffer.push(SANI_ERROR_MESSAGE("found unneeded include of file " + other->getFilename()));
+				
+				return;
+			} 
+
+			rootRecord->recordLink(other);
+		}
 	}
 	void CVarLinker::linkFile(CVarFile* file, String& line, std::list<CVarFile>& files) {
 		// Begin by looking if the file we are linking needs to be linked.
@@ -106,6 +118,8 @@ namespace sani {
 
 		rootRecord = linkRecord;
 		rootRecord->recordRoot(file);
+
+		if (files.size() == 1) return;
 
 		linkFiles(file, files);
 	}

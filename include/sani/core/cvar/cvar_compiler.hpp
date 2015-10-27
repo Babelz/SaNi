@@ -45,6 +45,7 @@ namespace sani {
 	
 	class CVarParser;
 	class CVarTokenizer;
+	class CVarLinker;
 
 	/// @class CVarCompiler cvar_compiler.hpp "sani/core/cvar/cvar_compiler.hpp"
 	/// @author voidbab
@@ -66,10 +67,10 @@ namespace sani {
 		std::list<RequireStatementGenerator> statementGenerators;
 
 		ErrorBuffer errorBuffer;
-		bool synced;
 
 		void copyErrors(CVarParser* parser);
 		void copyErrors(CVarTokenizer* tokenizer);
+		void copyErrors(CVarLinker* linker);
 
 		/// Generates cvars and records.
 		void generateCVars(CVarList& cvars, RecordList& records, TokenList& tokens);
@@ -105,11 +106,11 @@ namespace sani {
 		String getNextError();
 
 		/// Compiles all given files.
-		/// @param[in] files files to compile
+		/// @param[in] file file that should be compiled
+		/// @param[in] files cvar source files
 		/// @param[in] cvars generated cvars
 		/// @param[in] records generated records
-		/// @param[in] synced should records be synced for this set.
-		void compile(const std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced);
+		void compile(const String& filename, std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records);
 		
 		~CVarCompiler();
 	}; 

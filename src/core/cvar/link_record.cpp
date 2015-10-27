@@ -9,21 +9,25 @@ namespace sani {
 		this->root = root;
 	}
 	void LinkRecord::recordLink(CVarFile* link) {
-		links.push(link);
+		links.push_back(link);
 	}
 
-	const CVarFile* LinkRecord::getRoot() const {
-		return nullptr;
+	CVarFile* LinkRecord::getRoot() const {
+		return root;
 	}
 
 	bool LinkRecord::hasLinks() const {
 		return !links.empty();
 	}
-	CVarFile* LinkRecord::getNextLink(){
-		CVarFile* link = links.top();
-		links.pop();
+	CVarFile* LinkRecord::getNextLink() {
+		auto link = links.end();
+		links.erase(link);
 
-		return link;
+		return *link;
+	}
+
+	bool LinkRecord::isLinked(CVarFile* link) const {
+		return std::find(links.begin(), links.end(), link) != links.end();
 	}
 
 	LinkRecord::~LinkRecord() {

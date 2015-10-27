@@ -1,5 +1,7 @@
 #include "sani/core/cvar/cvar_tokenizer.hpp"
 #include "sani/core/cvar/cvar_compiler.hpp"
+#include "sani/core/cvar/cvar_linker.hpp"
+#include "sani/core/cvar/link_record.hpp"
 #include "sani/core/cvar/cvar_loader.hpp"
 #include "sani/core/cvar/cvar_parser.hpp"
 #include "sani/core/cvar/cvar_lang.hpp"
@@ -7,7 +9,7 @@
 
 namespace sani {
 
-	CVarCompiler::CVarCompiler() : synced(false) {
+	CVarCompiler::CVarCompiler() {
 		generateStatementGenerators();
 	}
 
@@ -44,6 +46,9 @@ namespace sani {
 	}
 	void CVarCompiler::copyErrors(CVarTokenizer* tokenizer) {
 		while (tokenizer->hasErrors()) errorBuffer.push(tokenizer->getNextError());
+	}
+	void CVarCompiler::copyErrors(CVarLinker* linker) {
+		while (linker->hasErrors()) errorBuffer.push(linker->getNextError());
 	}
 
 	bool CVarCompiler::hasErrors() const {
@@ -88,10 +93,17 @@ namespace sani {
 				// Emit cvar.
 				generateCVar(cvars, statements, &intermediateCVar);
 
-				if (synced) {
-					// Emit record.
-					generateRecord(records, *i, cvars.back());
-				}
+				/*
+							TODO
+
+					Add volatile keyword checking
+					for synced variables
+
+				*/
+
+				// Emit record.
+				generateRecord(records, *i, cvars.back());
+				
 			} else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
 				// that starts a require statement (require([condition]) and 
@@ -148,7 +160,8 @@ namespace sani {
 	}
 
 	void CVarCompiler::generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const  {
-		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, intermediateCVar->value));
+		// TODO: add volatile keyword checks for synced cvars.
+		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, true, intermediateCVar->value));
 	}
 	void CVarCompiler::generateRecord(RecordList& records, const CVarToken& token, const CVar& cvar) const {
 		records.push_back(CVarRecord(token, cvar));
@@ -271,14 +284,27 @@ namespace sani {
 		return nullptr;
 	}
 
-	void CVarCompiler::compile(const std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced) {
-		this->synced = synced;
+	void CVarCompiler::compile(const String& filename, std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records) {
+		// Link files.
+		CVarLinker linker;
+		LinkRecord linkRecord;
+		linker.link(filename, files, &linkRecord);
 
-		// Generate tokens from lines.
+		if (linker.hasErrors()) {
+			copyErrors(&linker);
+		}
+
+		// Get linked files.
+		std::list<CVarFile*> linkedFiles;
+		linkedFiles.push_back(linkRecord.getRoot());
+
+		while (linkRecord.hasLinks()) linkedFiles.push_back(linkRecord.getNextLink());
+
+		// Generate tokens from linked files.
 		CVarTokenizer tokenizer;
 
 		std::list<CVarToken> tokens;
-		tokenizer.tokenize(files, tokens);
+		tokenizer.tokenize(linkedFiles, tokens);
 
 		if (tokenizer.hasErrors()) {
 			copyErrors(&tokenizer);

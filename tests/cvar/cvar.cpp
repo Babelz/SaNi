@@ -98,7 +98,7 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		files.push_back(file);
 
 		CVarCompiler compiler;
-		compiler.compile(files, cvars, records, true);
+		compiler.compile("perkele", files, cvars, records);
 
 		REQUIRE(!compiler.hasErrors());
 		REQUIRE(cvars.size() == 3);
@@ -157,7 +157,7 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		files.push_back(file);
 
 		CVarCompiler compiler;
-		compiler.compile(files, cvars, records, true);
+		compiler.compile("perkele", files, cvars, records);
 
 		REQUIRE(compiler.hasErrors());
 		
