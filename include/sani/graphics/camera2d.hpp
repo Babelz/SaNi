@@ -12,17 +12,13 @@ namespace sani {
 		private:
 			math::Mat3f transform;
 			Viewport viewport;
-			
+		public:
 			math::Vec2f zoom;
 
 			float rotation;
-		public:
+
 			math::Vec2f position;
 			math::Vec2f origin;
-
-			inline void setZoom(const float zoom) {
-
-			}
 
 			Camera2D(Viewport& viewport);
 
