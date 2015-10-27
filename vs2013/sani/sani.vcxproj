@@ -212,6 +212,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp" />
     <ClInclude Include="..\..\include\sani\core\events.hpp" />
     <ClInclude Include="..\..\include\sani\core\func.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform_2d.hpp" />
