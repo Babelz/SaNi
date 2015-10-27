@@ -30,11 +30,6 @@ namespace sani {
 	void CVarFile::removeLineAtIndex(const size_t index) {
 		lines.erase(lines.begin() + index);
 	}
-	void CVarFile::insertLines(const size_t index, const std::vector<String>& lines) {
-		for (size_t i = 0; i < lines.size(); i++) {
-			this->lines.insert(this->lines.begin() + index + i, lines[i]);
-		}
-	}
 
 	CVarFile::~CVarFile() {
 	}

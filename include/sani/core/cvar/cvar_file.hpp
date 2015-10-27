@@ -28,8 +28,6 @@ namespace sani {
 		
 		/// Removes line at given index from the "file".
 		void removeLineAtIndex(const size_t index);
-		/// Inserts given lines starting from a given index.
-		void insertLines(const size_t index, const std::vector<String>& lines);
 
 		~CVarFile();
 	};

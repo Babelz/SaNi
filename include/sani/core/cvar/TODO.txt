@@ -2,3 +2,5 @@
 - emit errors from redeclarations
 - add command blocks
 - refactor the compiler to compile from one file
+- volatile keyword (aka synced)
+- const			   (constants)

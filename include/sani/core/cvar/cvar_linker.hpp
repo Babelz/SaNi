@@ -8,14 +8,32 @@
 namespace sani {
 
 	typedef std::stack<String> ErrorBuffer;
+	
+	struct LinkRecord {
+		std::list<CVarFile*> links;
+		CVarFile* file;
+
+		LinkRecord() : file(nullptr) {
+		}
+
+		~LinkRecord() = default;
+	};
 
 	class CVarLinker {
 	private:
 		ErrorBuffer errorBuffer;
 
-		CVarFile* findFile(const String& fileName, std::list<CVarFile>& files);
+		LinkRecord* rootRecord;
+		uint32 scope;
+
+		CVarFile* findFile(const String& filename, std::list<CVarFile>& files);
 		void linkFiles(CVarFile* file, std::list<CVarFile>& files);
 
+		void copyContents(CVarFile* file, const uint32 lineIndex, const String& line, std::list<CVarFile>& files);
+		void linkFile(CVarFile* file, String& line, std::list<CVarFile>& files);
+
+		void updateScope(const String& line);
+		
 		void pushError(const String& message);
 	public:
 		CVarLinker();
@@ -23,7 +41,7 @@ namespace sani {
 		bool hasErrors() const;
 		String getNextError();
 
-		void link(const String& fileName, std::list<CVarFile>& files);
+		void link(const String& filename, std::list<CVarFile>& files, LinkRecord& record);
 
 		~CVarLinker();
 	};

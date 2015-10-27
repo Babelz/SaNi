@@ -3,6 +3,7 @@
 // TODO: does it matter if we just with the win32 builds?
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
+#include "sani/core/cvar/cvar_linker.hpp"
 #include "sani/core/cvar/cvar_parser.hpp"
 #include "sani/core/cvar/cvar_statement.hpp"
 #include "sani/core/cvar/cvar_condition.hpp"
@@ -178,6 +179,43 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		REQUIRE(!(a > b));
 		REQUIRE(a <= b);
 		REQUIRE(!(a >= b));
+	}
+
+	SECTION("Linking") {
+		const String mainContents(
+			"a 10\n"
+			"b 20\n"
+			"include other.cfg\n");
+
+		const String someOtherContents(
+			"string_var \"hello world\"\n"
+			"require(string_var == \"foo\"\n"
+			"	e 20\n"
+			"	include other.cfg\n"
+			"require\n");
+
+		const String otherContents(
+			"include someother.cfg\n"
+			"c 20\n"
+			"d 30\n");
+
+		CVarFile main("main.cfg", mainContents);
+		CVarFile someOther("someother.cfg", someOtherContents);
+		CVarFile other("other.cfg", otherContents);
+		
+		std::list<CVarFile> files;
+		files.push_back(main);
+		files.push_back(someOther);
+		files.push_back(other);
+		
+		CVarLinker linker;
+		LinkRecord record;
+
+		linker.link("main.cfg", files, record);
+
+		REQUIRE(linker.hasErrors());
+
+		while (linker.hasErrors()) std::cout << linker.getNextError() << std::endl;
 	}
 }
 

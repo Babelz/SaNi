@@ -175,7 +175,7 @@ namespace sani {
 			}
 
 			inline bool startsWithRequire(const String& str) {
-				return std::regex_search(str, RequireRegex);
+				return str.find(RequireKeyword) == 0;
 			}
 			inline bool isValidRequire(const String& str) {
 				return std::regex_search(str, ValidRequirementRegex);
@@ -244,6 +244,10 @@ namespace sani {
 
 			inline bool isMessageStatement(const String& str) {
 				return std::regex_search(str, MessageRegex);
+			}
+
+			inline bool startsWithInclude(const String& str) {
+				return str.find(IncludeKeyword) != str.npos;
 			}
 		}
 

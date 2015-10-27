@@ -63,11 +63,9 @@ namespace sani {
 						TODO: add logic to support multiple operators here?
 					*/
 
-					if (trimmed.size() == cvarlang::lang::RequireKeyword.size()) {
+					if (trimmed.size() == cvarlang::lang::RequireKeyword.size() || cvarlang::lang::isValidRequire(line)) {
 						type = cvarlang::TokenType::Require;
-					} else if (cvarlang::lang::isValidRequire(line)) {
-						type = cvarlang::TokenType::Require;
-					} else															  {
+					} else {														  
 						pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + ", at file " + file.getFilename()));
 					}
 
