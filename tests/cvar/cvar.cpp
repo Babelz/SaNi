@@ -182,7 +182,7 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		REQUIRE(!(a >= b));
 	}
 
-	SECTION("Linking") {
+	SECTION("Include keyword and linking") {
 		const String mainContents(
 			"a 10\n"
 			"b 20\n"
@@ -217,6 +217,32 @@ TEST_CASE("CVar parsing", "[cvar]") {
 		REQUIRE(linker.hasErrors());
 
 		while (linker.hasErrors()) std::cout << linker.getNextError() << std::endl;
+	}
+
+	SECTION("Volatile keyword") {
+		String program(
+				"volatile a 10\n"
+				"b 20\n"
+				"volatile gg 10\n");
+
+		CVarFile file("foo", program);
+
+		std::list<CVar> cvars;
+		std::list<CVarFile> files;
+		std::list<CVarRecord> records;
+
+		files.push_back(file);
+
+		CVarCompiler compiler;
+		compiler.compile("foo", files, cvars, records);
+
+		CVar* cvar = &*std::find_if(cvars.begin(), cvars.end(), [](const CVar& v) { return v.getName() == "a";  });
+		
+		REQUIRE(cvar->isSynced());
+	
+		cvar = &*std::find_if(cvars.begin(), cvars.end(), [](const CVar& v) { return v.getName() == "b";  });
+		
+		REQUIRE(!cvar->isSynced());
 	}
 }
 

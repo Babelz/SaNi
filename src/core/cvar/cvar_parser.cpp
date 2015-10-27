@@ -180,12 +180,27 @@ namespace sani {
 
 		utils::trim(str);
 
-		// Too many or too few tokens.
+		bool isVolatile = false;
+
+		// Volatile, too many or too few tokens.
 		if (tokens.size() != 2) {
-			if		(tokens.size() < 2) pushError(SANI_ERROR_MESSAGE("too few tokens, skipping compilation, line is \"" + str + "\""));
-			else						pushError(SANI_ERROR_MESSAGE("too many tokens, skipping compilation, line is \"" + str + "\""));
-			
-			return;
+			// Too few tokens.
+			if (tokens.size() < 2) {
+				pushError(SANI_ERROR_MESSAGE("too few tokens, skipping compilation, line is \"" + str + "\""));
+
+				return;
+			} else if (tokens.size() > 2) {
+				// Too many tokens.
+				if (*tokens.begin() != cvarlang::lang::VolatileKeyword) {
+					pushError(SANI_ERROR_MESSAGE("too many tokens, skipping compilation, line is \"" + str + "\""));
+
+					return;
+				} 
+
+				// Volatile decl.
+				tokens.erase(tokens.begin());
+				isVolatile = true;
+			}
 		}
 
 		cvarlang::ValueType type = cvarlang::ValueType::NoValue;
@@ -213,6 +228,7 @@ namespace sani {
 		intermediateCVar.name = name;
 		intermediateCVar.type = type;
 		intermediateCVar.value = value;
+		intermediateCVar.isVolatile = isVolatile;
 	}
 	void CVarParser::parseRequireStatement(String reqStr, String msgStr, cvarlang::IntermediateRequireStatement& intermediateRequirementStatement) {
 		// Remove tabs.

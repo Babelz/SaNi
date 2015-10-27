@@ -93,16 +93,10 @@ namespace sani {
 				// Emit cvar.
 				generateCVar(cvars, statements, &intermediateCVar);
 
-				/*
-							TODO
-
-					Add volatile keyword checking
-					for synced variables
-
-				*/
-
-				// Emit record.
-				generateRecord(records, *i, cvars.back());
+				if (intermediateCVar.isVolatile) {
+					// Emit record is volatile decl.
+					generateRecord(records, *i, cvars.back());
+				}
 				
 			} else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
@@ -160,8 +154,7 @@ namespace sani {
 	}
 
 	void CVarCompiler::generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const  {
-		// TODO: add volatile keyword checks for synced cvars.
-		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, true, intermediateCVar->value));
+		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, intermediateCVar->isVolatile, intermediateCVar->value));
 	}
 	void CVarCompiler::generateRecord(RecordList& records, const CVarToken& token, const CVar& cvar) const {
 		records.push_back(CVarRecord(token, cvar));

@@ -84,6 +84,7 @@ namespace sani {
 			const String RequireKeyword		= "require";
 			const String MessageKeyword		= "message";
 			const String IncludeKeyword		= "include";
+			const String VolatileKeyword	= "volatile";
 
 			const String Comment			= "//";
 
@@ -248,6 +249,10 @@ namespace sani {
 
 			inline bool startsWithInclude(const String& str) {
 				return str.find(IncludeKeyword) != str.npos;
+			}
+
+			inline bool isVolatileDeclaration(const String& str) {
+				return str.find(VolatileKeyword) == 0;
 			}
 		}
 

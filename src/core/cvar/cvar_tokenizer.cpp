@@ -35,6 +35,7 @@ namespace sani {
 			// Go trough each line...
 			for (size_t i = 0; i < file->getLinesCount(); i++) {
 				const String& line = file->lineAtIndex(i);
+
 				cvarlang::TokenType type = cvarlang::TokenType::Invalid;
 
 				if (line.size() == 0 || cvarlang::lang::startsWithComment(line)) continue;

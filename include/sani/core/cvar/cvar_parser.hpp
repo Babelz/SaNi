@@ -19,8 +19,10 @@ namespace sani {
 			String name;
 			// Value string of the val.
 			String value;
+			bool isVolatile;
 			
-			IntermediateCVar() : type(cvarlang::ValueType::NoValue) {
+			IntermediateCVar() : type(cvarlang::ValueType::NoValue),
+							   	 isVolatile(false) {
 			}
 
 			~IntermediateCVar() {
