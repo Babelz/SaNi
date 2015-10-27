@@ -51,6 +51,22 @@ namespace sani {
 		while (linker->hasErrors()) errorBuffer.push(linker->getNextError());
 	}
 
+	void CVarCompiler::checkIfIsRedeclaration(CVarList& cvars, CVarToken& token, IntermediateCVar& intermediateCVar) {
+		if (containsCVar(cvars,intermediateCVar.name)) {
+			const String message = SANI_ERROR_MESSAGE("redeclaration of cvar " + intermediateCVar.name + " at file " + token.getFilename() +
+													  " at line " + std::to_string(token.getLineNumber()));
+
+			errorBuffer.push(message);
+		}
+	}
+	bool CVarCompiler::containsCVar(CVarList& cvars, const String& name) const {
+		for (const CVar& cvar : cvars) {
+			if (cvar.getName() == name) return true;
+		}
+
+		return false;
+	}
+
 	bool CVarCompiler::hasErrors() const {
 		return errorBuffer.size() != 0;
 	}
@@ -88,6 +104,8 @@ namespace sani {
 
 				parser.parseCvar(i->getLine(), intermediateCVar);
 
+				checkIfIsRedeclaration(cvars, *i, intermediateCVar);
+
 				if (parser.hasErrors()) copyErrors(&parser);
 
 				// Emit cvar.
@@ -97,7 +115,6 @@ namespace sani {
 					// Emit record is volatile decl.
 					generateRecord(records, *i, cvars.back());
 				}
-				
 			} else if (i->getType() == cvarlang::TokenType::Require) {
 				// So, the require token class has 2 variants, the one 
 				// that starts a require statement (require([condition]) and 

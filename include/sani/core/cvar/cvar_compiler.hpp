@@ -72,6 +72,9 @@ namespace sani {
 		void copyErrors(CVarTokenizer* tokenizer);
 		void copyErrors(CVarLinker* linker);
 
+		void checkIfIsRedeclaration(CVarList& cvars, CVarToken& token, IntermediateCVar& intermediateCVar);
+		bool containsCVar(CVarList& cvars, const String& name) const;
+
 		/// Generates cvars and records.
 		void generateCVars(CVarList& cvars, RecordList& records, TokenList& tokens);
 		
