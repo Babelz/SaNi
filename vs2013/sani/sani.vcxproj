@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_statement.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_token.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_tokenizer.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_statement.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_token.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_tokenizer.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp" />
     <ClInclude Include="..\..\include\sani\core\events.hpp" />
     <ClInclude Include="..\..\include\sani\core\func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
