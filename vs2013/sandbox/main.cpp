@@ -150,7 +150,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Shader fragment = 0;
 	Shader program = 0;
 
-	Camera2D camera(graphicsDevice.getRealViewport());
+	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
 
 	graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
@@ -176,30 +176,30 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.setBackBufferWidth(viewport.width);
 		graphicsDevice.setBackBufferHeight(viewport.height);
 
-		camera.setViewport(graphicsDevice.getRealViewport());
+		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
 	camera.zoom.x = 1.0f;
 	camera.zoom.y = 1.0f;
 	camera.zoom.z = 1.0f;
 	camera.rotation = 0.0f;
-
-	camera.position.x = 400;
-	camera.position.y = 400;
+	
+	camera.position.x = 300;
+	camera.position.y = 300;
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
 		window.listen();
 
-		graphicsDevice.clear(Color::green);
+		graphicsDevice.clear(Color::black);
 
 		graphicsDevice.drawArrays(RenderMode::Triangles, 0, 6);
 
 		camera.computeTransformation();
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
-		camera.rotation += 0.0001f;
+		camera.position.x += 0.1f;
 	}
 
 	graphicsDevice.cleanUp();

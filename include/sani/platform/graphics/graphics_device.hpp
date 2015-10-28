@@ -90,12 +90,7 @@ namespace sani {
 			/// @param[in] viewport viewport to use
 			void setViewport(const Viewport& viewport);
 			/// Returns the current viewport to the user.
-			Viewport getPreferedViewport() const;
-			/// Returns the real viewport to the user.
-			/// This similiar viewport to the prefered, 
-			/// but it has been modified to keep the aspect ratio at
-			/// correct size.
-			Viewport getRealViewport() const;
+			Viewport getViewport() const;
 
 			/// Initializes the device.
 			bool initialize();
