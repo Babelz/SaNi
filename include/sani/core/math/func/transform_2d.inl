@@ -8,7 +8,7 @@ namespace sani {
 		Matrix3<T> scale(Matrix3<T> const& mat, Vector2<T> const& vec) {
 			Matrix3<T> result;
 			result[0] = mat[0] * vec[0];
-			result[1] = mat[1] * vec[1]:
+			result[1] = mat[1] * vec[1];
 			result[2] = mat[2];
 			return result;
 		}

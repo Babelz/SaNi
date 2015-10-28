@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/platform/graphics/viewport.hpp"
-#include "sani/core/math/matrix3.hpp"
+#include "sani/core/math/matrix4.hpp"
 #include "sani/core/math/vector3.hpp"
 
 namespace sani {
@@ -10,22 +10,22 @@ namespace sani {
 
 		class Camera2D {
 		private:
-			math::Mat3f transform;
+			math::Mat4f transform;
 			Viewport viewport;
 		public:
-			math::Vec2f zoom;
+			math::Vec3f zoom;
 
 			float rotation;
 
-			math::Vec2f position;
-			math::Vec2f origin;
+			math::Vec3f position;
+			math::Vec3f origin;
 
 			Camera2D(Viewport& viewport);
 
 			const Viewport& getViewport() const;
 			void setViewport(const Viewport& viewport);
 
-			const math::Mat3f& transformation() const;
+			const math::Mat4f& transformation() const;
 			void computeTransformation();
 
 			~Camera2D();

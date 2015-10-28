@@ -23,19 +23,20 @@ namespace sani {
 
 			// Default back buffer of the device.
 			// Everything gets drawn to this.
-			RenderTarget2D* defaultRenderTarget;
+			RenderTarget2D* backbuffer;
 			RenderTarget2D* currentRenderTarget;
 
 			Viewport viewport;
+			Viewport preferedViewport;
 
 			Cimpl() : backBufferWidth(0),
 					  backBufferHeight(0),
-					  defaultRenderTarget(nullptr),
+					  backbuffer(nullptr),
 					  currentRenderTarget(nullptr) {
 			}
 
 			~Cimpl() {
-				delete defaultRenderTarget;
+				delete backbuffer;
 			}
 		};
 	}
@@ -197,13 +198,7 @@ namespace sani {
 			RECT clntRect;
 			GetClientRect(impl->hWnd, &clntRect);
 
-			impl->cImpl.viewport.x = 0;
-			impl->cImpl.viewport.y = 0;
-
-			impl->cImpl.viewport.width = clntRect.right - clntRect.left;
-			impl->cImpl.viewport.height = clntRect.bottom - clntRect.top;
-
-			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y, impl->cImpl.viewport.width, impl->cImpl.viewport.height);
+			Viewport viewport(0, 0, clntRect.right - clntRect.left, clntRect.bottom - clntRect.top);
 
 			// Post-init error checks.
 			CHECK_FOR_ERRORS();
@@ -214,6 +209,12 @@ namespace sani {
 
 				return false;
 			}
+
+			// Initialize backbuffer.
+			impl->cImpl.backbuffer = new RenderTarget2D(*this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
+			setRenderTarget(nullptr);
+
+			setViewport(viewport);
 
 			// No errors, init ok.
 			return true;
@@ -232,6 +233,10 @@ namespace sani {
 		}
 
 		void GraphicsDevice::clear(const Color& color) {
+			/*
+				TODO: implement drawing from the backbuffer once some rendering can be done.
+			*/
+
 			SwapBuffers(impl->deviceContext);
 
 			// Change clear color for the GL.
@@ -315,6 +320,24 @@ namespace sani {
 		void GraphicsDevice::setBackBufferHeight(const uint32 newHeight) {
 			impl->cImpl.backBufferHeight = newHeight;
 		}
+		void GraphicsDevice::applyBackbufferChanges() {
+			const GLuint textures[] = { impl->cImpl.backbuffer->getID() };
+			glDeleteTextures(1, textures);
+			
+			const GLuint buffers[] = { impl->cImpl.backbuffer->getFramebuffer(),
+									   impl->cImpl.backbuffer->getColorBuffer(),
+									   impl->cImpl.backbuffer->getDepthBuffer() };
+			glDeleteBuffers(3, buffers);
+
+			delete impl->cImpl.backbuffer;
+
+			impl->cImpl.backbuffer = new RenderTarget2D(*this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
+			setRenderTarget(nullptr);
+
+			setViewport(impl->cImpl.preferedViewport);
+
+			CHECK_FOR_ERRORS();
+		}
 
 		bool GraphicsDevice::hasErrors() const {
 			return !errorBuffer.empty();
@@ -329,15 +352,37 @@ namespace sani {
 			return nextError;
 		}
 
+#include "GL\glew.h"
+
 		void GraphicsDevice::setViewport(const Viewport& viewport) {
-			impl->cImpl.viewport = viewport;
+			impl->cImpl.preferedViewport = viewport;
 
-			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y, impl->cImpl.viewport.width, impl->cImpl.viewport.height);
+			float32 targetAspectRatio = impl->cImpl.backBufferWidth / impl->cImpl.backBufferHeight;
+			
+			int32 width = viewport.width;
+			int32 height = static_cast<int32>(width / targetAspectRatio + 0.5f);
 
-			// Check for errors.
+			if (height > viewport.height) {
+				// Does not fit, we must switch to pillarbox then.
+				height = viewport.height;
+				width = static_cast<int32>(height * targetAspectRatio + 0.5f);
+			}
+
+			const int32 x = (viewport.width / 2) - (width / 2);
+			const int32 y = (viewport.height / 2) - (height / 2);
+
+			Viewport croppedViewport(x, y, width, height);
+			impl->cImpl.viewport = croppedViewport;
+
+			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y,
+				       impl->cImpl.viewport.width, impl->cImpl.viewport.height);
+
 			CHECK_FOR_ERRORS();
 		}
-		const Viewport& GraphicsDevice::getViewport() const {
+		Viewport GraphicsDevice::getPreferedViewport() const {
+			return impl->cImpl.preferedViewport;
+		}
+		Viewport GraphicsDevice::getRealViewport() const {
 			return impl->cImpl.viewport;
 		}
 
@@ -351,25 +396,28 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
-			if (renderTarget == nullptr) impl->cImpl.currentRenderTarget = impl->cImpl.defaultRenderTarget;
+			if (renderTarget == nullptr) impl->cImpl.currentRenderTarget = impl->cImpl.backbuffer;
 			else						 impl->cImpl.currentRenderTarget = renderTarget;
 
 			glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getFramebuffer());
 
 			/*
-			http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 
-			The fragment shader just needs a minor adaptation:
+				http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
 
-			Inside the fragment shader
-			layout(location = 0) out vec3 color;
+				The fragment shader just needs a minor adaptation:
 
-			This means that when writing in the variable “color”,
-			we will actually write in the Render Target 0,
-			which happens to be our texture because DrawBuffers[0] is GL_COLOR_ATTACHMENTi,
-			which is, in our case, renderedTexture.
+				Inside the fragment shader
+				layout(location = 0) out vec3 color;
+
+				This means that when writing in the variable “color”,
+				we will actually write in the Render Target 0,
+				which happens to be our texture because DrawBuffers[0] is GL_COLOR_ATTACHMENTi,
+				which is, in our case, renderedTexture.
 
 			*/
+
+			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::generateTexture(RenderTexture& texture, const uint32 width, const uint32 height) {
@@ -387,13 +435,8 @@ namespace sani {
 				GL_UNSIGNED_BYTE,
 				0);
 
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
-			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-#endif
 
 			glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -427,6 +470,8 @@ namespace sani {
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture, 0);
 #endif
+			GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+			glDrawBuffers(1, drawBuffers);
 
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			glBindTexture(GL_TEXTURE_2D, 0);
@@ -456,7 +501,7 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 
 			// Push custom error code.
-			if (result != GL_TRUE) errorBuffer.push(CUSTOM_GRAPHICS_ERROR("Failed to compile shader"));
+			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to compile shader", __FUNCTION__, __LINE__));
 		}
 		void GraphicsDevice::deleteShader(const Shader shader) {
 			glDeleteShader(shader);
@@ -470,7 +515,7 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 
 			if (program == 0) {
-				errorBuffer.push(CUSTOM_GRAPHICS_ERROR("Could not create shader program"));
+				errorBuffer.push(GraphicsError("Could not create shader program", __FUNCTION__, __LINE__));
 
 				return;
 			}
@@ -491,7 +536,7 @@ namespace sani {
 
 			CHECK_FOR_ERRORS();
 
-			if (result != GL_TRUE) errorBuffer.push(CUSTOM_GRAPHICS_ERROR("Failed to link shader to a program"));
+			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to link shader to a program", __FUNCTION__, __LINE__));
 		}
 
 		void GraphicsDevice::useProgram(const ShaderProgram program) {
@@ -513,7 +558,7 @@ namespace sani {
 				ss << name;
 				ss << "\"";
 
-				errorBuffer.push(CUSTOM_GRAPHICS_ERROR(ss.get()));
+				errorBuffer.push(GraphicsError(ss.get(), __FUNCTION__, __LINE__));
 
 				return;
 			}
@@ -525,44 +570,62 @@ namespace sani {
 			// Set the uniform value.
 			switch (type) {
 			case Mat4F:
-				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, static_cast<GLfloat*>(data));
+				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
 				break;
 			case Mat3F:
-				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, static_cast<GLfloat*>(data));
+				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
 				break;
 			default:
 				throw std::logic_error("Invalid or unsupported uniform type");
 			}
+
+			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::generateVertexArray(Buffer& buffer) {
 			glGenVertexArrays(1, &buffer);
+
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::bindVertexArray(Buffer& buffer) {
 			glBindVertexArray(buffer);
+
+			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::generateBuffer(Buffer& buffer) {
 			glGenBuffers(1, &buffer);
+
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::bindBuffer(Buffer& buffer, const BufferType type) {
 			glBindBuffer(type, buffer);
 		}
 		void GraphicsDevice::unbindBuffer(const BufferType type) {
 			glBindBuffer(type, 0);
+
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
 			glBufferData(type, bytes, data, usage);
+
+			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {
 			glDrawArrays(mode, first, last);
+
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
 			glDrawElements(mode, count, type, (void*)indices);
+
+			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::createVertexAttributePointer(const VertexAttributePointerDescription& description) {
+			glEnableVertexAttribArray(description.location);
+
 			glVertexAttribPointer(
 				description.location,
 				description.count,
@@ -570,12 +633,13 @@ namespace sani {
 				description.normalized,
 				description.stride,
 				(void*)description.offset);
-		}
-		void GraphicsDevice::enableVertexAttributePointer(const uint32 location) {
-			glEnableVertexAttribArray(static_cast<GLuint>(location));
+
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::disableVertexAttributePointer(const uint32 location) {
-			glDisableVertexAttribArray(static_cast<GLuint>(location));
+			glDisableVertexAttribArray(location);
+			
+			CHECK_FOR_ERRORS();
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

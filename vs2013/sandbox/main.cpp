@@ -12,7 +12,9 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/window.hpp"
 #include "sani/platform/graphics/viewport.hpp"
+#include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/debug.hpp"
+#include "sani/graphics/camera2d.hpp"
 
 using namespace sani::graphics;
 
@@ -74,12 +76,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 800, 600);
 	graphicsDevice.initialize();
 
-	Vec3 v1(-1.0f, -1.0f, 0.0f);
-	Vec3 v2(1.0f, -1.0f, 0.0f);
-	Vec3 v3(0.0f, 1.0f, 0.0f);
+	Vec3 v1(-0.5f, -0.5f, 0.0f);
+	Vec3 v2(0.5f, -0.5f, 0.0f);
+	Vec3 v3(0.5f, 0.5f, 0.0f);
 	
+	Vec3 v4(0.5f, 0.5f, 0.0f);
+	Vec3 v5(-0.5f, 0.5f, 0.0f);
+	Vec3 v6(-0.5f, -0.5f, 0.0f);
+
+	Vec3 color(1.0f, 0.0f, 1.0f);
+
 	Vec3 vert[] =  {
-		v1, v2, v3
+		v1, color,
+		v2, color,
+		v3, color,
+		v4, color,
+		v5, color,
+		v6, color
 	};
 
 	Buffer vertexArray;
@@ -96,22 +109,80 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	desc.count = 3;
 	desc.type = PrimitiveType::Float;
 	desc.normalized = false;
-	desc.stride = 0;
+	desc.stride = sizeof(float) * 6;
 	desc.offset = 0;
 
-	graphicsDevice.enableVertexAttributePointer(desc.location);
-	graphicsDevice.createVertexAttributePointer(desc);
+	VertexAttributePointerDescription colorDesc;
+	colorDesc.location = 1;
+	colorDesc.count = 3;
+	colorDesc.type = PrimitiveType::Float;
+	colorDesc.normalized = false;
+	colorDesc.stride = sizeof(float) * 6;
+	colorDesc.offset = sizeof(float) * 3;
 
-	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice]() {
+	graphicsDevice.createVertexAttributePointer(desc);
+	assert(!graphicsDevice.hasErrors());
+
+	graphicsDevice.createVertexAttributePointer(colorDesc);
+	assert(!graphicsDevice.hasErrors());
+
+	char* vertexSource =
+		"#version 330 core\n"
+		"layout(location = 0) in vec3 vertex_position;"
+		"layout(location = 1) in vec3 color;"
+		"out vec3 out_color;"
+		"uniform mat4 transform;"
+		"void main() {"
+		""
+		"	gl_Position = transform * vec4(vertex_position, 1.0);"
+		"	out_color = color;"
+		"}";
+
+	char* fragmentSource =
+		"#version 330 core\n"
+		"in vec3 out_color;"
+		"out vec3 vertex_color;"
+		"void main(){"
+		"vertex_color = out_color;"
+		"}";
+
+	Shader vertex = 0;
+	Shader fragment = 0;
+	Shader program = 0;
+
+	Camera2D camera(graphicsDevice.getPreferedViewport());
+	camera.computeTransformation();
+
+	graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
+	assert(!graphicsDevice.hasErrors());
+
+	graphicsDevice.compileShader(fragment, fragmentSource, ShaderType::Fragment);
+	assert(!graphicsDevice.hasErrors());
+
+	graphicsDevice.createProgram(program);
+	graphicsDevice.linkToProgram(program, vertex, true);
+	graphicsDevice.linkToProgram(program, fragment, true);
+	graphicsDevice.linkProgram(program);
+	graphicsDevice.useProgram(program);
+
+	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice, &camera]() {
 		Viewport viewport;
-		viewport.x = 0;
-		viewport.y = 0;
 
 		viewport.width = window.getClientWidth();
 		viewport.height = window.getClientHeight();
-
+		
 		graphicsDevice.setViewport(viewport);
+
+		graphicsDevice.setBackBufferWidth(viewport.width);
+		graphicsDevice.setBackBufferHeight(viewport.height);
+
+		camera.setViewport(graphicsDevice.getPreferedViewport());
 	}));
+
+	camera.zoom.x = 0.25f;
+	camera.zoom.y = 0.25f;
+	camera.zoom.z = 1.0f;
+	camera.rotation = 0.0f;
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -120,7 +191,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		graphicsDevice.clear(Color::green);
 
-		graphicsDevice.drawArrays(RenderMode::Triangles, 0, 3);
+		graphicsDevice.drawArrays(RenderMode::Triangles, 0, 6);
+
+		camera.computeTransformation();
+		sani::math::Mat4f transform = camera.transformation();
+		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
+		
+		//camera.rotation += 0.001f;
+
+		camera.position.x = graphicsDevice.getBackBufferWidth() / 2.0f;
+		camera.position.y = graphicsDevice.getBackBufferHeight() / 2.0f;
 	}
 
 	graphicsDevice.cleanUp();

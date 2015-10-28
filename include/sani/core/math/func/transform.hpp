@@ -29,10 +29,8 @@ namespace sani {
 		template <typename T>
 		Matrix4<T> scale(Matrix4<T> const& mat, Vector3<T> const& vec);
 
-		/* TODO Projection matrices
 		template <typename T>
-		Matrix4<T> ortho()
-		*/
+		Matrix4<T> ortho(const T left, const T right, const T bottom, const T top, const T zNear, const T zFar);
 	}
 }
 

@@ -9,9 +9,6 @@ namespace sani {
 		// API error code to custom message.
 		#define GRAPHICS_ERROR(apiErrorCode) GraphicsError(apiErrorCode, __FUNCTION__, __LINE__)
 
-		// Creates new instance of the graphics error using a custom message.
-		#define CUSTOM_GRAPHICS_ERROR(message) GraphicsError(message, __FUNCTION__, __LINE__)
-
 		/// @class GraphicsError "sani/platform/graphics_error.hpp"
 		///
 		/// Represents a generic graphics error used by the graphics apis.
@@ -35,7 +32,6 @@ namespace sani {
 			// TODO: implement API checking 
 			//       for WinGL and WinDX.
 
-			/// WinGL constructor.
 			GraphicsError(const GLuint apiErrorCode, const String& function, const int32 lineNumber);
 			/// Creates new instance of the GraphicsError object with a custom error message.
 			GraphicsError(const String& message, const String& function, const int32 lineNumber);

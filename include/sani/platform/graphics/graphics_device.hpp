@@ -27,6 +27,11 @@ namespace sani {
 			Clientbounds of the window	- not tied to anything, user can change this
 				- If changed, resolution of the device stays the same
 				  and viewports size stays the same
+
+			Virtual resolution
+				- size of the back buffer
+			Resolution
+				- size of the windows client area 
 		*/
 		
 		// Forward declarations.
@@ -74,6 +79,8 @@ namespace sani {
 			/// Sets the height of the back buffer.
 			void setBackBufferHeight(const uint32 newHeight);
 
+			void GraphicsDevice::applyBackbufferChanges();
+
 			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;
 			/// Returns the next error from the error buffer.
@@ -83,7 +90,12 @@ namespace sani {
 			/// @param[in] viewport viewport to use
 			void setViewport(const Viewport& viewport);
 			/// Returns the current viewport to the user.
-			const Viewport& getViewport() const;
+			Viewport getPreferedViewport() const;
+			/// Returns the real viewport to the user.
+			/// This similiar viewport to the prefered, 
+			/// but it has been modified to keep the aspect ratio at
+			/// correct size.
+			Viewport getRealViewport() const;
 
 			/// Initializes the device.
 			bool initialize();
@@ -97,7 +109,6 @@ namespace sani {
 			/*
 				Texture and render target operations.
 			*/
-			
 
 			/// Binds given texture.
 			/// @param[in] texture texture to bind
@@ -177,7 +188,6 @@ namespace sani {
 			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
 
 			void createVertexAttributePointer(const VertexAttributePointerDescription& description);
-			void enableVertexAttributePointer(const uint32 location);
 			void disableVertexAttributePointer(const uint32 location);
 
 			~GraphicsDevice();
