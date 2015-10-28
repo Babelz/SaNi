@@ -39,6 +39,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{FB72433A-6143-408C-BCCC-897225EE0A7E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pipeline-compiler", "tools\pipeline-compiler\pipeline-compiler.vcxproj", "{507F05B5-E87D-4295-BF27-2406A336C899}"
+	ProjectSection(ProjectDependencies) = postProject
+		{93F10FD5-8B10-4B7D-A201-AD78F325AF97} = {93F10FD5-8B10-4B7D-A201-AD78F325AF97}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

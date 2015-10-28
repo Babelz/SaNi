@@ -193,6 +193,7 @@
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
+    <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\contracts.hpp" />

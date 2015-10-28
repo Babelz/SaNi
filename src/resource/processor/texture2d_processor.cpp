@@ -1,5 +1,6 @@
 #include "sani/resource/processor/texture2d_processor.hpp"
 #include <Magick++.h>
+#include <sstream>
 namespace sani {
 	namespace resource {
 		namespace processor {
@@ -8,18 +9,7 @@ namespace sani {
 				std::cout << "Texture2dProcessorImpl::process() invoked" << std::endl;
 				// TODO color keys etc
 
-				uint32 width = input->width;
-				uint32 height = input->height;
-				std::vector<Texture2DContent*> mipmapChain;
-
-				Image img;
-				img.magick("PNG");
-				
-
-				while (width > 1 && height > 1) {
-					width /= 2;
-					height /= 2;
-				}
+				input->generateMipmaps(false);
 
 				return input;
 			}

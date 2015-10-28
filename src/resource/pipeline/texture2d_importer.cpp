@@ -4,13 +4,14 @@
 #include "sani/debug.hpp"
 #include <iostream>
 #include <algorithm>
-#include <png.h>
+//#include <png.h>
+#include <Magick++.h>
 
 namespace sani {
 	namespace resource {
 		namespace pipeline {
 
-			static void read(png_struct* pngStructure, unsigned char* buffer, uint32 size) {
+/*			static void read(png_struct* pngStructure, unsigned char* buffer, uint32 size) {
 				using namespace sani::io;
 				FileStream* stream = static_cast<FileStream*>(png_get_io_ptr(pngStructure));
 				stream->read(buffer, size);
@@ -26,7 +27,7 @@ namespace sani {
 				// TODO LOG
 				std::cout << "PNG WARNING " << msg << std::endl;
 			}
-
+			*/
 			Texture2DContent* Texture2DImporterImpl::import(const String& filename, FileSystem* fileSystem) const {
 				std::cout << "Texture2DImporterImpl::import(String&) invoked" << std::endl;
 				size_t index = filename.rfind(".");
@@ -38,6 +39,8 @@ namespace sani {
 				if (std::find(supportedFileTypes.begin(), supportedFileTypes.end(), extension) == supportedFileTypes.end()) {
 					throw std::runtime_error("File extension isn't supported!");
 				}
+				
+				/*
 				// TODO error reporting!!!!
 				png_structp pngStructure = png_create_read_struct(
 					PNG_LIBPNG_VER_STRING,
@@ -81,7 +84,23 @@ namespace sani {
 					std::copy(rows[i], rows[i] + rowByteCount, txc->pixels.data() + i * rowByteCount);
 				}
 
-				png_destroy_read_struct(&pngStructure, &pngInfo, nullptr);
+				png_destroy_read_struct(&pngStructure, &pngInfo, nullptr);*/
+				Magick::Image img;
+				img.read(filename);
+				
+				
+				size_t w = img.columns();
+				size_t h = img.rows();
+			
+				std::vector<unsigned char> pixels(w * h * 4);
+				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, pixels.data());
+
+				Texture2DContent* txc = new Texture2DContent(
+					w,
+					h,
+					pixels
+				);
+				
 				return txc;
 			}
 		}
