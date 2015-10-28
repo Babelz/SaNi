@@ -365,7 +365,7 @@ namespace sani {
 			impl->hWnd = CreateWindowEx(NULL,
 										windowClass.lpszClassName,
 										impl->lpcwTitle,
-										WS_SYSMENU,
+										WS_OVERLAPPEDWINDOW,
 										impl->cImpl.x,
 										impl->cImpl.y,
 										impl->cImpl.width,

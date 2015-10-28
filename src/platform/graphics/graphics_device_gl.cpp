@@ -352,12 +352,13 @@ namespace sani {
 			return nextError;
 		}
 
-#include "GL\glew.h"
-
 		void GraphicsDevice::setViewport(const Viewport& viewport) {
 			impl->cImpl.preferedViewport = viewport;
+			impl->cImpl.viewport = viewport;
 
-			float32 targetAspectRatio = impl->cImpl.backBufferWidth / impl->cImpl.backBufferHeight;
+			
+
+			/*float32 targetAspectRatio = (float)impl->cImpl.backBufferWidth / (float)impl->cImpl.backBufferHeight;
 			
 			int32 width = viewport.width;
 			int32 height = static_cast<int32>(width / targetAspectRatio + 0.5f);
@@ -372,7 +373,7 @@ namespace sani {
 			const int32 y = (viewport.height / 2) - (height / 2);
 
 			Viewport croppedViewport(x, y, width, height);
-			impl->cImpl.viewport = croppedViewport;
+			impl->cImpl.viewport = croppedViewport;*/
 
 			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y,
 				       impl->cImpl.viewport.width, impl->cImpl.viewport.height);

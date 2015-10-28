@@ -31,6 +31,9 @@ namespace sani {
 
 		template <typename T>
 		Matrix4<T> ortho(const T left, const T right, const T bottom, const T top, const T zNear, const T zFar);
+		
+		template <typename T>
+		Matrix4<T> perspective(const float fovy, const float ar, const float znear, const float zfar);
 	}
 }
 

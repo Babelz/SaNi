@@ -67,13 +67,13 @@ void glDraw() {
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	WIN32_ASSERT();
 
-	Window window(hInstance, 800, 600);
+	Window window(hInstance, 1280, 720);
 	window.initialize();
 	window.show();
 
 	WIN32_ASSERT();
 
-	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 800, 600);
+	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
 	Vec3 v1(-0.5f, -0.5f, 0.0f);
@@ -87,12 +87,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Vec3 color(1.0f, 0.0f, 1.0f);
 
 	Vec3 vert[] =  {
-		v1, color,
-		v2, color,
-		v3, color,
-		v4, color,
-		v5, color,
-		v6, color
+		v1, Vec3(1, 0, 0),
+		v2, Vec3(0, 1, 0),
+		v3, Vec3(1, 0, 0),
+		v4, Vec3(0, 0, 1),
+		v5, Vec3(1, 0, 0),
+		v6, Vec3(1, 1, 0)
 	};
 
 	Buffer vertexArray;
@@ -150,7 +150,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Shader fragment = 0;
 	Shader program = 0;
 
-	Camera2D camera(graphicsDevice.getPreferedViewport());
+	Camera2D camera(graphicsDevice.getRealViewport());
 	camera.computeTransformation();
 
 	graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
@@ -176,13 +176,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.setBackBufferWidth(viewport.width);
 		graphicsDevice.setBackBufferHeight(viewport.height);
 
-		camera.setViewport(graphicsDevice.getPreferedViewport());
+		camera.setViewport(graphicsDevice.getRealViewport());
 	}));
 
-	camera.zoom.x = 0.25f;
-	camera.zoom.y = 0.25f;
+	camera.zoom.x = 1.0f;
+	camera.zoom.y = 1.0f;
 	camera.zoom.z = 1.0f;
 	camera.rotation = 0.0f;
+
+	camera.position.x = 400;
+	camera.position.y = 400;
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -196,11 +199,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.computeTransformation();
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
-		
-		//camera.rotation += 0.001f;
-
-		camera.position.x = graphicsDevice.getBackBufferWidth() / 2.0f;
-		camera.position.y = graphicsDevice.getBackBufferHeight() / 2.0f;
+		camera.rotation += 0.0001f;
 	}
 
 	graphicsDevice.cleanUp();
