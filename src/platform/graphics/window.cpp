@@ -143,7 +143,9 @@ namespace sani {
 						0,																// Number of Aux buffers in the framebuffer.
 						PFD_MAIN_PLANE,
 						0,
-						0, 0, 0
+						0, 
+						0, 
+						0
 					};
 
 					// Handle to device.

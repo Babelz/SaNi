@@ -182,6 +182,7 @@ namespace sani {
 			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
 
 			// Enable GL settings.
+			glEnable(GL_MULTISAMPLE);
 			glEnable(GL_DEPTH_TEST);
 			glEnable(GL_ALPHA_TEST);
 			glEnable(GL_BLEND);
@@ -419,6 +420,10 @@ namespace sani {
 		}
 		void GraphicsDevice::generateRenderTarget2D(RenderTexture& texture, Buffer& frameBuffer, Buffer& colorBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height) {
 			// Assume that the render texture has been initialized and generated.
+
+			/*
+				TODO: impl multisampling.
+			*/
 
 			// Generate frame buffer.
 			glGenFramebuffers(1, &frameBuffer);

@@ -25,7 +25,7 @@ namespace sani {
 			const float32 ar = static_cast<float32>(viewport.width) / viewport.height;
 
 			transform = math::ortho<float32>(0.0f, static_cast<float32>(viewport.width), static_cast<float32>(viewport.height), 0.0f, znear, zfar);
-			transform = math::translate(transform, position);
+			transform = math::translate(transform, -position);
 			transform = math::perspective<float32>(60.0f, ar, znear, zfar) * transform;
 		    transform = math::rotate(transform, rotation, math::Vec3f(0.0f, 0.0f, 1.0f));
 			transform = math::scale(transform, zoom);

@@ -196,9 +196,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.computeTransformation();
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
-		
-		camera.position.x += 0.1f;
-		camera.position.y += 0.1f;
+
+		camera.position.x = -(graphicsDevice.getViewport().width / 2.0f);
+		camera.position.y = -(graphicsDevice.getViewport().height / 2.0f);
+		camera.rotation += 0.0001f;
 	}
 
 	graphicsDevice.cleanUp();
