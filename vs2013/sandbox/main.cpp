@@ -179,11 +179,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	camera.zoom.x = 1.0f;
-	camera.zoom.y = 1.0f;
-	camera.zoom.z = 1.0f;
-	camera.rotation = 0.0f;
-
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
@@ -197,9 +192,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
-		camera.position.x = -(graphicsDevice.getViewport().width / 2.0f);
-		camera.position.y = -(graphicsDevice.getViewport().height / 2.0f);
-		camera.rotation += 0.0001f;
+		camera.setX(-(graphicsDevice.getViewport().width / 2.0f));
+		camera.setY(-(graphicsDevice.getViewport().height / 2.0f));
+		camera.rotateBy(0.0001f);
 	}
 
 	graphicsDevice.cleanUp();

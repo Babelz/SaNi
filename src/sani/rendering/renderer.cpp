@@ -8,16 +8,7 @@ namespace sani {
 		Renderer::Renderer(GraphicsDevice* graphicsDevice) : graphicsDevice(graphicsDevice) {
 		}
 
-		bool Renderer::initialize() {
-			return true;
-		}
-
-		void Renderer::renderPrimitives(PrimitiveComponentList& components) {
-		}
-
-		void Renderer::begin() {
-		}
-		void Renderer::end() {
+		Renderer::~Renderer() {
 		}
 	}
 }

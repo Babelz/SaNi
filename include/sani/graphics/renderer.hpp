@@ -1,6 +1,8 @@
 #pragma once
 
+
 #include "sani/graphics/vertex_position_color_texture.hpp"
+#include "sani/graphics/render_state.hpp"
 #include "sani/types.hpp"
 #include <vector>
 
@@ -10,39 +12,26 @@ namespace sani {
 
 		class GraphicsDevice;
 
-		typedef std::vector<VertexPositionColorTexture> PrimitiveComponentList;
-		typedef std::vector<float32> VertexBuffer;
-		typedef std::vector<uint32>	IndexBuffer;
-
+		/// @class Renderer renderer.hpp "sani/graphics/renderer.hpp"
+		/// @author voidbab
+		///
+		/// Low-level renderer of the rendering module. Uses different states
+		/// to determine what will be rendered.
 		class Renderer {
 		private:
 			GraphicsDevice* graphicsDevice;
-		public:
-			/*
-				Don't have a clear vision of how
-				i want to use this low-level 
-				renderer yet...
-			*/
 
+			RenderState renderState;
+		public:
 			Renderer(GraphicsDevice* graphicsDevice);
 
-			bool initialize();
+			void beginRendering(const RenderState state);
+			void endRendering(const RenderState state);
 
-			void renderPrimitives(PrimitiveComponentList& components);
-
-			void begin();
-			void end();
-
-			// void enableEffect(Effect* effect)
-			// void disableEffects()
-
-			// void beginTextRendering();
-			//
-			// void renderText(String& text, Vec2 position, Color color)
-			// void setTextStyling(Styling styling)
-			// void resetTextStyling()
-			//
-			// void endTextRendering();
+			// void renderUserPrimitives(const UserPrimitives& primitives);
+			// void renderPrimitives(const Primitive& primitive);
+			// void renderText()
+			// void renderRichText()
 
 			~Renderer();
 		};

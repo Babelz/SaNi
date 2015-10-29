@@ -245,8 +245,11 @@
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\buffer_type.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform.hpp" />
