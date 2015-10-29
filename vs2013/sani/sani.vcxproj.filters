@@ -121,6 +121,9 @@
     <Filter Include="include\core\logging">
       <UniqueIdentifier>{a1d7f012-e16c-4b13-95d2-596aea786efa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\graphics\inl">
+      <UniqueIdentifier>{3cc51374-a639-44a2-83ec-cae290c76133}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -546,6 +549,9 @@
     </None>
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl">
       <Filter>include\platform\file\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\camera2d.inl">
+      <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
