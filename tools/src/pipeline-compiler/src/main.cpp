@@ -47,8 +47,6 @@ int main(int argc, char** argv) {
 			return 1;
 		}
 
-		std::cout << "Importing file " << filePath << std::endl;
-		// ../../../assets/tuksu.png
 		Texture2DContent* content = importer.import(filePath, &fs);
 		content = proc.process(content);
 
@@ -59,7 +57,6 @@ int main(int argc, char** argv) {
 			std::cerr << "Cant open file " << filePath << std::endl;
 			return 1;
 		}
-
 
 		sc::ResourceWriter* writer = new sc::ResourceWriter(file);
 		writer->writeHeader();
