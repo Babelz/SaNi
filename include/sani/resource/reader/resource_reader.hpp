@@ -12,7 +12,7 @@ namespace sani {
 			/// The class that handles reading single asset
 			/// 
 			/// @author siquel
-			class ResourceReader : io::BinaryReader {
+			class ResourceReader : public io::BinaryReader {
 				// TODO add functions to read matrices vectors and stuff
 			private:
 				ResourceManager& manager;
