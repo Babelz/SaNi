@@ -34,6 +34,10 @@ namespace sani {
 			vertexDescription.normalized = false;
 			vertexDescription.stride = sizeof(float32) * vertices;
 			vertexDescription.offset = 0;
+			
+			/*
+				TODO: change to RGBA (at the moment RGB)
+			*/
 
 			VertexAttributePointerDescription colorDescription;
 			colorDescription.location = 1;

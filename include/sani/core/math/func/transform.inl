@@ -72,17 +72,19 @@ namespace sani {
 			return result;
 		}
 
+		static float asd = 0.0f;
+
 		template <typename T>
 		Matrix4<T> perspective(const float fovy, const float ar, const float znear, const float zfar) {
-			const float tanhf = math::tan(fovy / 2.0f);
+			const T tanhf = math::tan(fovy / static_cast<T>(2));
 
 			math::Mat4f perspective;
 
-			perspective[0][0] = 1.0f / (ar * tanhf);
-			perspective[1][1] = 1.0f / tanhf;
+			perspective[0][0] = static_cast<T>(1) / (ar * tanhf);
+			perspective[1][1] = static_cast<T>(1) / tanhf;
 			perspective[2][2] = (zfar + znear) / (zfar - znear);
-			perspective[2][3] = 1.0f;
-			perspective[3][2] -(2.0f * zfar * znear) / (zfar - znear);
+			perspective[2][3] = static_cast<T>(1);
+			perspective[3][2] = -(static_cast<T>(2) * zfar * znear) / (zfar - znear);
 
 			return perspective;
 		}

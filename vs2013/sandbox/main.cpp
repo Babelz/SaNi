@@ -157,17 +157,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
+	camera.setZoom(1.0f);
+
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
 		window.listen();
 
-		graphicsDevice.clear(Color::black);
-
 		camera.computeTransformation();
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
+		graphicsDevice.clear(Color::black);
+		
 		renderer.beginRenderingUserPrimitives(transform, 6, RenderMode::Triangles);
 
 		renderer.renderUserPrimitives(vertices);
@@ -176,7 +178,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		camera.setX(-(graphicsDevice.getViewport().width / 2.0f));
 		camera.setY(-(graphicsDevice.getViewport().height / 2.0f));
-		//camera.rotateBy(0.0001f);
+		camera.rotateBy(0.001f);
 	}
 
 	graphicsDevice.cleanUp();

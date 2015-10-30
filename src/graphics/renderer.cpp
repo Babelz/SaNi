@@ -22,7 +22,7 @@ namespace sani {
 		}
 
 		void Renderer::generateRenderSetups() {
-			renderSetups = new RenderSetup*[STATES_COUNT];
+			renderSetups = new RenderSetup*[RENDER_STATES_COUNT];
 			
 			renderSetups[RenderState::Waiting]		  = nullptr;												// Waiting render state.
 			renderSetups[RenderState::UserPrimitives] = new UserPrimitiveRenderSetup(&graphicsDevice);		    // User primitive render state.
@@ -50,13 +50,7 @@ namespace sani {
 
 			renderSetup = renderSetups[index];
 		}
-
-		void Renderer::beginRendering(const RenderState state, const math::Mat4f& transform) {
-			if (this->state != RenderState::Waiting) throw std::runtime_error("end rendering must be called before begin");
-
-			this->state = state;
-			this->transform = transform;
-
+		void Renderer::checkBufferSize() {
 			if (verticesSize != vertices.getSize()) {
 				// Vertices size changed, rebind it.
 				graphicsDevice.setBufferData(vertexBuffer,
@@ -64,14 +58,25 @@ namespace sani {
 											 vertices.getSize() * sizeof(float32),
 											 vertices.pointer(),
 											 BufferUsage::Dynamic);
-				
+
 				verticesSize = vertices.getSize();
 			}
+		}
+
+		void Renderer::beginRendering(const RenderState state, const math::Mat4f& transform) {
+			if (this->state != RenderState::Waiting) throw std::runtime_error("end rendering must be called before begin");
+
+			this->state = state;
+			this->transform = transform;
+			
+			checkBufferSize();
 		}
 		void Renderer::endRendering(const RenderState state) {
 			if (state == RenderState::Waiting) throw std::runtime_error("begin rendering must be called before end");
 
 			this->state = RenderState::Waiting;
+			
+			renderSetup->clear();
 		}
 
 		void Renderer::presentUserPrimitives() {
@@ -89,6 +94,7 @@ namespace sani {
 
 		void Renderer::beginRenderingUserPrimitives(const math::Mat4f& transform, const uint32 vertices, const RenderMode renderMode) {
 			beginRendering(RenderState::UserPrimitives, transform);
+
 			swapRenderSetup();
 
 			UserPrimitiveRenderSetup* renderSetup = static_cast<UserPrimitiveRenderSetup*>(this->renderSetup);
@@ -99,10 +105,10 @@ namespace sani {
 		void Renderer::renderUserPrimitives(Buffer<float32>& vertices) {
 			REQUIRE_STATE(RenderState::UserPrimitives);
 
-			UserPrimitiveRenderSetup* renderSetup = static_cast<UserPrimitiveRenderSetup*>(this->renderSetup);
+			checkBufferSize();
 
-			// Check size.
-			if ((vertices.getElementsCount() % renderSetup->getVertices()) != 0) throw std::runtime_error("invalid operation, trying to render too many or too few vertices");
+			UserPrimitiveRenderSetup* renderSetup = static_cast<UserPrimitiveRenderSetup*>(this->renderSetup);
+			if ((vertices.getElementsCount() % renderSetup->getVertices()) != 0) throw std::runtime_error("too few or too many vertices");
 
 			// Copy data.
 			this->vertices.copy(vertices);
@@ -126,13 +132,11 @@ namespace sani {
 				throw std::runtime_error("invalid or unsupported state");
 			}
 
-			renderSetup->clear();
-
 			endRendering(state);
 		}
 
 		Renderer::~Renderer() {
-			for (uint32 i = 0; i < STATES_COUNT; i++) delete renderSetups[i];
+			for (uint32 i = 0; i < RENDER_STATES_COUNT; i++) delete renderSetups[i];
 			
 			delete[]renderSetups;
 		}

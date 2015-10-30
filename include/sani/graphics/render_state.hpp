@@ -6,7 +6,7 @@ namespace sani {
 
 	namespace graphics {
 
-		#define STATES_COUNT 6
+		#define RENDER_STATES_COUNT 6
 
 		enum RenderState : uint32 {
 			// Renderer is waiting for user commands.

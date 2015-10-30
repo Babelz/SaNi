@@ -43,6 +43,7 @@ namespace sani {
 			void generateBuffers();
 
 			void swapRenderSetup();
+			void checkBufferSize();
 			
 			void beginRendering(const RenderState state, const math::Mat4f& transform);
 			void endRendering(const RenderState state);
@@ -53,6 +54,9 @@ namespace sani {
 
 			bool initialize();
 
+			/// @param[in] transformation transformation
+			/// @param[in] vertices how many vertices each object has
+			/// @param[in] renderMode render mode
 			void beginRenderingUserPrimitives(const math::Mat4f& transform, const uint32 vertices, const RenderMode renderMode);
 			void renderUserPrimitives(Buffer<float32>& vertices);
 
