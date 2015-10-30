@@ -9,7 +9,7 @@ TEST_CASE("Buffer", "[buffer]") {
 
 		for (uint32 i = 0; i < buffer.getSize(); i++) buffer.push(i);
 
-		uint32* headPtr = buffer.pointer();
+		uint32* headPtr = buffer.head();
 
 		for (uint32 i = 0; i < buffer.getSize(); i++) REQUIRE(headPtr[i] == i);
 	}
