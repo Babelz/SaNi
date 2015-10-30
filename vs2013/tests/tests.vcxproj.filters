@@ -34,6 +34,9 @@
     <Filter Include="Source Files\memory">
       <UniqueIdentifier>{2142532a-d70d-4842-9501-2f226418dd10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\graphics">
+      <UniqueIdentifier>{25bb1743-e86d-4a2c-a791-e0d1afccea47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\main.cpp">
@@ -68,6 +71,9 @@
     </ClCompile>
     <ClCompile Include="..\..\tests\memory\pool.cpp">
       <Filter>Source Files\memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\graphics\graphics.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

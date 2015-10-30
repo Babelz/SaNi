@@ -252,14 +252,14 @@
     <ClCompile Include="..\..\src\graphics\camera2d.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sani\rendering\renderer.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp">
       <Filter>src\core\cvar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderer.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
