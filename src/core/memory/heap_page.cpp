@@ -1,8 +1,9 @@
 #include "sani/core/memory/heap_page.hpp"
+#include "sani/core/memory/memory.hpp"
 
 namespace sani {
 
-	typedef uintptr_t IntPtr;
+	#define FRAGMENTATION_THRESHOLD 0.10f
 
 	void HeapPage::joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks) {
 		// Copy new blocks.
@@ -48,8 +49,11 @@ namespace sani {
 		releasedBlocks = newReleasedBlocksQueue;
 	}
 
+	bool HeapPage::shouldDefragment() const {
+		return fragmentation >= FRAGMENTATION_THRESHOLD && fragmented();
+	}
 	bool HeapPage::fragmented() const {
-		return failedAllocations != 0;
+		return missedBytes > 0 || releasedBlocks.size() > 0;
 	}
 	void HeapPage::defragment() {
 		if (releasedBlocks.size() == 0) return;
@@ -97,6 +101,7 @@ namespace sani {
 			generateNewReleasedQueue(newReleasedBlocks);
 		}
 
-		failedAllocations = 0;
+		fragmentation = 0.0f;
+		missedBytes = 0;
 	}
 }

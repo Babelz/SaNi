@@ -27,6 +27,11 @@ namespace sani {
 			Clientbounds of the window	- not tied to anything, user can change this
 				- If changed, resolution of the device stays the same
 				  and viewports size stays the same
+
+			Virtual resolution
+				- size of the back buffer
+			Resolution
+				- size of the windows client area 
 		*/
 		
 		// Forward declarations.
@@ -74,6 +79,8 @@ namespace sani {
 			/// Sets the height of the back buffer.
 			void setBackBufferHeight(const uint32 newHeight);
 
+			void GraphicsDevice::applyBackbufferChanges();
+
 			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;
 			/// Returns the next error from the error buffer.
@@ -83,7 +90,7 @@ namespace sani {
 			/// @param[in] viewport viewport to use
 			void setViewport(const Viewport& viewport);
 			/// Returns the current viewport to the user.
-			const Viewport& getViewport() const;
+			Viewport getViewport() const;
 
 			/// Initializes the device.
 			bool initialize();
@@ -93,9 +100,7 @@ namespace sani {
 			/// Clears the device. Swaps the back
 			/// and front buffer.
 			void clear(const Color& color);
-			/// Draws all contents of the device.
-			void present();
-
+			
 			/*
 				Texture and render target operations.
 			*/
@@ -125,7 +130,7 @@ namespace sani {
 			/*
 				Shader operations.
 			*/
-			
+
 			/// Attempts to compile given shader source
 			/// @param[in] shader result shader
 			/// @param[in] source source code of the shader
@@ -155,14 +160,30 @@ namespace sani {
 			void setShaderUniform(const ShaderProgram shader, const char* name, void* data, const UniformType type);
 
 			/*
-				Buffer functions.
+				Buffer operations.
 			*/
 
-			void generateBuffer(Buffer& buffer, const BufferType type);
-			void bindElementBuffer(Buffer& buffer, const BufferType type);
-			void setElementBufferData(Buffer& buffer, const uint32 bytes, void* data, const ElementBufferUsage usage);
+			/// Generates a vertex array.
+			void generateVertexArray(Buffer& buffer);
+			/// Binds given vertex array.
+			void bindVertexArray(Buffer& buffer);
 
-			void drawElements(const uint32 count, const IndicesType type, const uint32 indices);
+			/// Generates a buffer.
+			void generateBuffer(Buffer& buffer);
+			/// Binds given buffer.
+			void bindBuffer(Buffer& buffer, const BufferType type);
+			/// Unbinds given type buffer.
+			void unbindBuffer(const BufferType type);
+			/// Sets given buffers data.
+			void setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
+
+			/// Draws array elements.
+
+			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
+
+			void createVertexAttributePointer(const VertexAttributePointerDescription& description);
+			void disableVertexAttributePointer(const uint32 location);
 
 			~GraphicsDevice();
 		};

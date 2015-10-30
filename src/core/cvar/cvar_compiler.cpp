@@ -1,5 +1,7 @@
 #include "sani/core/cvar/cvar_tokenizer.hpp"
 #include "sani/core/cvar/cvar_compiler.hpp"
+#include "sani/core/cvar/cvar_linker.hpp"
+#include "sani/core/cvar/link_record.hpp"
 #include "sani/core/cvar/cvar_loader.hpp"
 #include "sani/core/cvar/cvar_parser.hpp"
 #include "sani/core/cvar/cvar_lang.hpp"
@@ -7,7 +9,7 @@
 
 namespace sani {
 
-	CVarCompiler::CVarCompiler() : synced(false) {
+	CVarCompiler::CVarCompiler() {
 		generateStatementGenerators();
 	}
 
@@ -45,6 +47,25 @@ namespace sani {
 	void CVarCompiler::copyErrors(CVarTokenizer* tokenizer) {
 		while (tokenizer->hasErrors()) errorBuffer.push(tokenizer->getNextError());
 	}
+	void CVarCompiler::copyErrors(CVarLinker* linker) {
+		while (linker->hasErrors()) errorBuffer.push(linker->getNextError());
+	}
+
+	void CVarCompiler::checkIfIsRedeclaration(CVarList& cvars, CVarToken& token, IntermediateCVar& intermediateCVar) {
+		if (containsCVar(cvars,intermediateCVar.name)) {
+			const String message = SANI_ERROR_MESSAGE("redeclaration of cvar " + intermediateCVar.name + " at file " + token.getFilename() +
+													  " at line " + std::to_string(token.getLineNumber()));
+
+			errorBuffer.push(message);
+		}
+	}
+	bool CVarCompiler::containsCVar(CVarList& cvars, const String& name) const {
+		for (const CVar& cvar : cvars) {
+			if (cvar.getName() == name) return true;
+		}
+
+		return false;
+	}
 
 	bool CVarCompiler::hasErrors() const {
 		return errorBuffer.size() != 0;
@@ -56,7 +77,7 @@ namespace sani {
 		return error;
 	}
 
-	void CVarCompiler::generateCVars(CVarList& cvars, RecordList& records, TokenList& tokens) {
+	void CVarCompiler::compile(CVarList& cvars, RecordList& records, TokenList& tokens) {
 		// 1) Process token
 		// 2) Parse it
 		// 3) Check for errors
@@ -68,7 +89,6 @@ namespace sani {
 		std::list<cvarlang::IntermediateCVar> intermediateCVar;
 		std::list<IntermediateRequireStatement> intermediateRequireStatement;
 		std::list<CVarRequireStatement> statements;
-		// Current scope level.
 		size_t scope = 0;
 
 		// Go trough each token.
@@ -83,13 +103,15 @@ namespace sani {
 
 				parser.parseCvar(i->getLine(), intermediateCVar);
 
+				checkIfIsRedeclaration(cvars, *i, intermediateCVar);
+
 				if (parser.hasErrors()) copyErrors(&parser);
 
 				// Emit cvar.
 				generateCVar(cvars, statements, &intermediateCVar);
 
-				if (synced) {
-					// Emit record.
+				if (intermediateCVar.isVolatile) {
+					// Emit record is volatile decl.
 					generateRecord(records, *i, cvars.back());
 				}
 			} else if (i->getType() == cvarlang::TokenType::Require) {
@@ -106,6 +128,7 @@ namespace sani {
 				auto next = std::next(i, 1);
 
 				if (next != tokens.end()) {
+					// Check if the next line contains a message statement.
 					if ((next)->getType() == cvarlang::TokenType::Message) {
 						message = (next)->getLine();
 
@@ -148,7 +171,7 @@ namespace sani {
 	}
 
 	void CVarCompiler::generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const  {
-		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, synced, intermediateCVar->value));
+		cvars.push_back(CVar(statements, intermediateCVar->type, intermediateCVar->name, intermediateCVar->isVolatile, intermediateCVar->value));
 	}
 	void CVarCompiler::generateRecord(RecordList& records, const CVarToken& token, const CVar& cvar) const {
 		records.push_back(CVarRecord(token, cvar));
@@ -163,17 +186,17 @@ namespace sani {
 		*/
 
 		for (const cvarlang::IntermediateCondition& intermediateCondition : intermediateRequireStatement->conditions) {
-			if (intermediateCondition.lhs.size() > 0 || intermediateCondition.rhs.size() > 0) {
-				Condition condition;
+			if (intermediateCondition.lhs.size() == 0 || intermediateCondition.rhs.size() == 0) continue;
 
-				for (RequireStatementGenerator& generator : statementGenerators) {
-					if (generator.condition(intermediateCondition)) {
-						generator.generate(intermediateCondition, condition, cvars);
-					}
+			Condition condition;
+
+			for (RequireStatementGenerator& generator : statementGenerators) {
+				if (generator.condition(intermediateCondition)) {
+					generator.generate(intermediateCondition, condition, cvars);
 				}
-
-				conditions.push_back(CVarCondition(intermediateCondition.logicalOperator, condition));
 			}
+
+			conditions.push_back(CVarCondition(intermediateCondition.logicalOperator, condition));
 		}
 
 		statements.push_back(CVarRequireStatement(conditions, intermediateRequireStatement->message));
@@ -183,9 +206,7 @@ namespace sani {
 		CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
 		CVar rhs(intermediateCondition.rhsType, String("___TEMP_CVAR___"), false, intermediateCondition.rhs);
 
-		condition = [&lhs, &rhs]() {
-			return lhs == rhs;
-		};
+		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 	void CVarCompiler::generateConstCVarExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const  {
 		CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
@@ -210,14 +231,12 @@ namespace sani {
 		generateCondition(intermediateCondition, condition, lhs, *rhs);
 	}
 	void CVarCompiler::generateConstBoolConstExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars) const  {
-		if (intermediateCondition.lhsIsConst) {
-			CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
-			CVar rhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"));
+		if (!intermediateCondition.lhsIsConst) return;
 
-			condition = [&lhs, &rhs]() {
-				return lhs >= rhs;
-			};
-		}
+		CVar lhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"), false, intermediateCondition.lhs);
+		CVar rhs(intermediateCondition.lhsType, String("___TEMP_CVAR___"));
+
+		generateCondition(intermediateCondition, condition, lhs, rhs);
 	}
 	void CVarCompiler::generateCVarCVarExpression(const IntermediateCondition& intermediateCondition, Condition& condition, CVarList& cvars)  {
 		CVar* lhs = findCVar(cvars, intermediateCondition.lhs);
@@ -271,21 +290,32 @@ namespace sani {
 		return nullptr;
 	}
 
-	void CVarCompiler::compile(const std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced) {
-		this->synced = synced;
+	void CVarCompiler::compile(const String& filename, std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records) {
+		// Link files.
+		CVarLinker linker;
+		LinkRecord linkRecord;
+		linker.link(filename, files, &linkRecord);
 
-		// Generate tokens from lines.
+		if (linker.hasErrors()) {
+			copyErrors(&linker);
+		}
+
+		// Get linked files.
+		std::list<CVarFile*> linkedFiles;
+		linkedFiles.push_back(linkRecord.getRoot());
+
+		while (linkRecord.hasLinks()) linkedFiles.push_back(linkRecord.getNextLink());
+
+		// Generate tokens from linked files.
 		CVarTokenizer tokenizer;
 
 		std::list<CVarToken> tokens;
-		tokenizer.tokenize(files, tokens);
+		tokenizer.tokenize(linkedFiles, tokens);
 
-		if (tokenizer.hasErrors()) {
-			copyErrors(&tokenizer);
-		}
+		if (tokenizer.hasErrors()) copyErrors(&tokenizer);
 
 		// Try parse and emit.
-		generateCVars(cvars, records, tokens);
+		compile(cvars, records, tokens);
 	}
 
 	CVarCompiler::~CVarCompiler() {

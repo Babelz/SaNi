@@ -21,15 +21,13 @@ namespace sani {
 		/// Returns the filename.
 		const String& getFilename() const;
 		/// Returns the count of lines.
-		const size_t getLinesCount() const;
+		const uint32 getLinesCount() const;
 
 		/// Returns given line at given index.
 		const String& lineAtIndex(const size_t index) const;
 		
 		/// Removes line at given index from the "file".
 		void removeLineAtIndex(const size_t index);
-		/// Inserts given lines starting from a given index.
-		void insertLines(const size_t index, const std::vector<String>& lines);
 
 		~CVarFile();
 	};

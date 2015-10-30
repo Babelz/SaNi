@@ -155,6 +155,7 @@
     <ClCompile Include="..\..\src\core\cvar\cvar.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_compiler.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp" />
@@ -162,8 +163,11 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_statement.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_token.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_tokenizer.cpp" />
+    <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
+    <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -202,6 +206,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp" />
@@ -210,8 +215,10 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_statement.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_token.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_tokenizer.hpp" />
+    <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp" />
     <ClInclude Include="..\..\include\sani\core\events.hpp" />
     <ClInclude Include="..\..\include\sani\core\func.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform_2d.hpp" />
@@ -234,13 +241,23 @@
     <ClInclude Include="..\..\include\sani\core\math\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\vector4.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\defragmentation_policy.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_block.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\buffer_type.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\buffer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
@@ -283,8 +300,12 @@
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
+    <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
     <None Include="..\..\include\sani\resource\compiler\resource_writer.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\include\sani\core\cvar\TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

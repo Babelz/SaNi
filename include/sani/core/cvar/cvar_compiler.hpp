@@ -45,6 +45,7 @@ namespace sani {
 	
 	class CVarParser;
 	class CVarTokenizer;
+	class CVarLinker;
 
 	/// @class CVarCompiler cvar_compiler.hpp "sani/core/cvar/cvar_compiler.hpp"
 	/// @author voidbab
@@ -53,26 +54,31 @@ namespace sani {
 	/// cvars and requirements.
 	class CVarCompiler {
 	private:
-		struct RequireStatementGenerator {
-			const std::function<bool(const IntermediateCondition&)> condition;
-			const std::function<void(const IntermediateCondition&, Condition&, CVarList&)> generate;
+		typedef std::function<bool(const IntermediateCondition&)> StatementGeneratorCondition;
+		typedef std::function<void(const IntermediateCondition&, Condition&, CVarList&)> StatementGenerator;
 
-			RequireStatementGenerator(const std::function<bool(const IntermediateCondition&)> condition,
-									  std::function<void(const IntermediateCondition&, Condition&, CVarList&)> generate) : condition(condition),
-																														   generate(generate) {
+		struct RequireStatementGenerator {
+			const StatementGeneratorCondition condition;
+			const StatementGenerator generate;
+
+			RequireStatementGenerator(const StatementGeneratorCondition condition, StatementGenerator generate) : condition(condition),
+																												  generate(generate) {
 			}
 		};
 
 		std::list<RequireStatementGenerator> statementGenerators;
 
 		ErrorBuffer errorBuffer;
-		bool synced;
 
 		void copyErrors(CVarParser* parser);
 		void copyErrors(CVarTokenizer* tokenizer);
+		void copyErrors(CVarLinker* linker);
+
+		void checkIfIsRedeclaration(CVarList& cvars, CVarToken& token, IntermediateCVar& intermediateCVar);
+		bool containsCVar(CVarList& cvars, const String& name) const;
 
 		/// Generates cvars and records.
-		void generateCVars(CVarList& cvars, RecordList& records, TokenList& tokens);
+		void compile(CVarList& cvars, RecordList& records, TokenList& tokens);
 		
 		/// Generates a cvar.
 		void generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const;
@@ -105,11 +111,11 @@ namespace sani {
 		String getNextError();
 
 		/// Compiles all given files.
-		/// @param[in] files files to compile
+		/// @param[in] file file that should be compiled
+		/// @param[in] files cvar source files
 		/// @param[in] cvars generated cvars
 		/// @param[in] records generated records
-		/// @param[in] synced should records be synced for this set.
-		void compile(const std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records, const bool synced);
+		void compile(const String& filename, std::list<CVarFile>& files, std::list<CVar>& cvars, std::list<CVarRecord>& records);
 		
 		~CVarCompiler();
 	}; 

@@ -20,7 +20,7 @@ namespace sani {
 	const String& CVarFile::getFilename() const {
 		return filename;
 	}
-	const size_t CVarFile::getLinesCount() const {
+	const uint32 CVarFile::getLinesCount() const {
 		return lines.size();
 	}
 	const String& CVarFile::lineAtIndex(const size_t index) const {
@@ -29,11 +29,6 @@ namespace sani {
 	
 	void CVarFile::removeLineAtIndex(const size_t index) {
 		lines.erase(lines.begin() + index);
-	}
-	void CVarFile::insertLines(const size_t index, const std::vector<String>& lines) {
-		for (size_t i = 0; i < lines.size(); i++) {
-			this->lines.insert(this->lines.begin() + index + i, lines[i]);
-		}
 	}
 
 	CVarFile::~CVarFile() {
