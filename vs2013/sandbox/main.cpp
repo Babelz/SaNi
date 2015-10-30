@@ -79,27 +79,29 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
-	Vec3 v1(-0.5f, -0.5f, 0.0f);
-	Vec3 v2(0.5f, -0.5f, 0.0f);
-	Vec3 v3(0.5f, 0.5f, 0.0f);
-	
-	Vec3 v4(0.5f, 0.5f, 0.0f);
-	Vec3 v5(-0.5f, 0.5f, 0.0f);
-	Vec3 v6(-0.5f, -0.5f, 0.0f);
+	Buffer<float32> vertices(1024, BufferSizing::Dynamic);
 
-	Vec3 color(1.0f, 0.0f, 1.0f);
+	for (size_t i = 0; i < 33; i++)
+	{
+		Vec3 v1(-0.5f + i, -0.5f + i, 0.0f);
+		Vec3 v2(0.5f + i, -0.5f + i, 0.0f);
+		Vec3 v3(0.5f + i, 0.5f + i, 0.0f);
 
-	Vec3 vert[] =  {
-		v1, Vec3(1, 0, 0),
-		v2, Vec3(0, 1, 0),
-		v3, Vec3(1, 0, 0),
-		v4, Vec3(0, 0, 1),
-		v5, Vec3(1, 0, 0),
-		v6, Vec3(1, 1, 0)
-	};
+		Vec3 v4(0.5f + i, 0.5f + i, 0.0f);
+		Vec3 v5(-0.5f + i , 0.5f + i, 0.0f);
+		Vec3 v6(-0.5f + i, -0.5f + i, 0.0f);
 
-	Buffer<float32> vertices(36, BufferSizing::Static);
-	vertices.push(reinterpret_cast<float32*>(vert), 36);
+		Vec3 vert[] = {
+			v1, Vec3(1, 0, 0),
+			v2, Vec3(0, 1, 0),
+			v3, Vec3(1, 0, 0),
+			v4, Vec3(0, 0, 1),
+			v5, Vec3(1, 0, 0),
+			v6, Vec3(1, 1, 0)
+		};
+
+		vertices.push(reinterpret_cast<float32*>(vert), 36);
+	}
 
 	char* vertexSource =
 		"#version 330 core\n"

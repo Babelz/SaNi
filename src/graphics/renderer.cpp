@@ -70,7 +70,6 @@ namespace sani {
 			
 			renderSetup->clear();
 		}
-		vitt
 		void Renderer::presentUserPrimitives() {
 			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 			
