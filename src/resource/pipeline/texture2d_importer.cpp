@@ -85,6 +85,7 @@ namespace sani {
 				}
 
 				png_destroy_read_struct(&pngStructure, &pngInfo, nullptr);*/
+
 				Magick::Image img;
 				img.read(filename);
 				
