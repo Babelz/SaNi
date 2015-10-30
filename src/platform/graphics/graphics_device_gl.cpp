@@ -562,17 +562,6 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::generateVertexArray(uint32& buffer) {
-			glGenVertexArrays(1, &buffer);
-
-			CHECK_FOR_ERRORS();
-		}
-		void GraphicsDevice::bindVertexArray(uint32& buffer) {
-			glBindVertexArray(buffer);
-
-			CHECK_FOR_ERRORS();
-		}
-
 		void GraphicsDevice::generateBuffer(uint32& buffer) {
 			glGenBuffers(1, &buffer);
 
@@ -586,8 +575,13 @@ namespace sani {
 
 			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::setBufferData(uint32& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
+		void GraphicsDevice::setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
 			glBufferData(type, bytes, data, usage);
+
+			CHECK_FOR_ERRORS();
+		}
+		void GraphicsDevice::setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data) {
+			glBufferSubData(type, offset, bytes, data);
 
 			CHECK_FOR_ERRORS();
 		}

@@ -20,32 +20,35 @@ namespace sani {
 		class Buffer {
 		private:
 			const BufferSizing bufferSizing;
+
+			uint32 bufferPointer;
+			uint32 size;
+			T* memory;
 			
-			std::vector<T> memory;
-			
-			uint32 elementPointer;
-			
-			inline void checkSize(const uint32 newElementsCount) {
+			inline void checkSize(const uint32 offset) {
 				if (bufferSizing == BufferSizing::Static) {
-					if (elementPointer + newElementsCount > memory.size()) throw std::runtime_error("Buffer overflow");
+					if (bufferPointer + offset > size) throw std::runtime_error("Buffer overflow");
 				} else if (bufferSizing == BufferSizing::Dynamic) {
-					if (elementPointer + newElementsCount > memory.size()) {
-						const uint32 oldSize = memory.size();
-						const uint32 newSize = memory.size() * 2;
+					if (bufferPointer + offset > size) {
+						const uint32 oldSize = size;
+						const uint32 newSize = size * 2;
 						const uint32 diff = newSize - oldSize;
 
-						memory.reserve(newSize);
+						T* newMemory = new T[newSize];
+						std::move(memory, memory + oldSize, newMemory);
 
-						for (uint32 i = 0; i < diff; i++) memory.push_back(T());
+						delete memory;
+
+						memory = newMemory;
+						size = newSize;
 					}
 				}
 			}
 		public:
 			Buffer(const uint32 initialSize, const BufferSizing bufferSizing) : bufferSizing(bufferSizing),
-																			    elementPointer(0) {
-				memory.reserve(initialSize);
-
-				for (uint32 i = 0; i < initialSize; i++) memory.push_back(T());
+																			    bufferPointer(0),
+																				memory(new T[initialSize]),
+																				size(initialSize) {
 			}
 		
 			/// Returns the type of the buffer. 
@@ -57,9 +60,9 @@ namespace sani {
 			inline void push(T element) {
 				checkSize(1);
 
-				memory[elementPointer] = element;
+				memory[bufferPointer] = element;
 				
-				elementPointer++;
+				bufferPointer++;
 			}
 			/// Push given elements to the buffer.
 			/// @param [in] elements elements to push
@@ -67,38 +70,39 @@ namespace sani {
 			inline void push(T* elements, const uint32 count) {
 				checkSize(count);
 
-				for (uint32 i = 0; i < count; i++) memory[i + elementPointer] = elements[i];
+				for (uint32 i = 0; i < count; i++) memory[i + bufferPointer] = elements[i];
 
-				elementPointer += count;
+				bufferPointer += count;
 			}
 
 			/// Returns the size of this buffer.
 			inline uint32 getSize() const {
-				return memory.size();
+				return size;
 			}
-			/// Returns the count of elements in this buffer.
-			inline uint32 getElementsCount() const {
-				return elementPointer;
+			/// Returns the location of the buffer pointer.
+			inline uint32 getBufferPointerLocation() const {
+				return bufferPointer;
 			}
 
 			/// Copies the contents of another buffer to this buffer.
 			inline void copy(Buffer<T>& other) {
-				checkSize(other.getElementsCount());
+				checkSize(other.getBufferPointerLocation());
 
-				push(other.pointer(), other.getElementsCount());
+				push(other.head(), other.getBufferPointerLocation());
 			}
 
 			/// Returns pointer to the beginning of the buffer.
-			inline T* pointer() {
+			inline T* head() {
 				return &memory[0];
 			}
 
-			/// Clears the buffer.
-			inline void clear() {
-				elementPointer = 0;
+			/// Sets the buffer pointers value to zero.
+			inline void resetBufferPointer() {
+				bufferPointer = 0;
 			}
 		
 			~Buffer() {
+				delete[] memory;
 			}
 		};
 	}

@@ -28,7 +28,6 @@ namespace sani {
 			RenderSetup* renderSetup;
 			
 			// API buffers.
-			uint32 vertexArray;
 			uint32 vertexBuffer;
 
 			// Renderer buffers.
@@ -40,14 +39,14 @@ namespace sani {
 			RenderState state;
 
 			void generateRenderSetups();
+			void updateVertexBuffer();
 			void generateBuffers();
 
 			void swapRenderSetup();
-			void checkBufferSize();
-			
+
 			void beginRendering(const RenderState state, const math::Mat4f& transform);
 			void endRendering(const RenderState state);
-			
+
 			void presentUserPrimitives();
 		public:
 			Renderer(GraphicsDevice& graphicsDevice);

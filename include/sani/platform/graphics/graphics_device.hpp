@@ -163,11 +163,6 @@ namespace sani {
 				Buffer operations.
 			*/
 
-			/// Generates a vertex array.
-			void generateVertexArray(uint32& buffer);
-			/// Binds given vertex array.
-			void bindVertexArray(uint32& buffer);
-
 			/// Generates a buffer.
 			void generateBuffer(uint32& buffer);
 			/// Binds given buffer.
@@ -175,7 +170,8 @@ namespace sani {
 			/// Unbinds given type buffer.
 			void unbindBuffer(const BufferType type);
 			/// Sets given buffers data.
-			void setBufferData(uint32& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
+			void setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
+			void setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data);
 
 			/// Draws array elements.
 
