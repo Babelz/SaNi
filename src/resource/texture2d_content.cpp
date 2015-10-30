@@ -9,7 +9,7 @@ namespace sani {
 		}
 
 		void Texture2DContent::generateMipmaps(bool overwrite) {
-//			if (!overwrite && !faces.empty()) return;
+			if (!overwrite && faces.size() > 1) return;
 			if (overwrite) throw std::logic_error("not implemented");
 			uint32 w = width;
 			uint32 h = height;
@@ -26,6 +26,16 @@ namespace sani {
 				faces.push_back(PixelData(w * h * 4));
 				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, faces[faces.size() - 1].data());
 			}
+		}
+		
+		const std::vector<std::vector<unsigned char>>& Texture2DContent::getMipmaps() const {
+			return faces;
+		}
+		const uint32 Texture2DContent::getWidth() const {
+			return width;
+		}
+		const uint32 Texture2DContent::getHeight() const {
+			return height;
 		}
 	}
 }

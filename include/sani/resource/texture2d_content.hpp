@@ -14,6 +14,8 @@ namespace sani {
 			Texture2DContent(const uint32 width, const uint32 height, const PixelData&);
 			void generateMipmaps(bool overwrite = false);
 			const MipmapChain& getMipmaps() const;
+			const uint32 getWidth() const;
+			const uint32 getHeight() const;
 		};
 	}
 }
