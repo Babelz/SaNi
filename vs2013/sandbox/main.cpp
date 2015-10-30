@@ -15,8 +15,11 @@
 #include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/debug.hpp"
 #include "sani/graphics/camera2d.hpp"
+#include "sani/graphics/renderer.hpp"
+#include "sani/core/math/vector.hpp"
 
 using namespace sani::graphics;
+using namespace sani::math;
 
 /*
 	To test if our window, context etc even work.
@@ -95,36 +98,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		v6, Vec3(1, 1, 0)
 	};
 
-	Buffer vertexArray;
-	graphicsDevice.generateVertexArray(vertexArray);
-	graphicsDevice.bindVertexArray(vertexArray);
-
-	Buffer vertexBuffer;
-	graphicsDevice.generateBuffer(vertexBuffer);
-	graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
-	graphicsDevice.setBufferData(vertexBuffer, BufferType::ArrayBuffer, sizeof(vert), &vert, BufferUsage::Static);
-
-	VertexAttributePointerDescription desc;
-	desc.location = 0;
-	desc.count = 3;
-	desc.type = PrimitiveType::Float;
-	desc.normalized = false;
-	desc.stride = sizeof(float) * 6;
-	desc.offset = 0;
-
-	VertexAttributePointerDescription colorDesc;
-	colorDesc.location = 1;
-	colorDesc.count = 3;
-	colorDesc.type = PrimitiveType::Float;
-	colorDesc.normalized = false;
-	colorDesc.stride = sizeof(float) * 6;
-	colorDesc.offset = sizeof(float) * 3;
-
-	graphicsDevice.createVertexAttributePointer(desc);
-	assert(!graphicsDevice.hasErrors());
-
-	graphicsDevice.createVertexAttributePointer(colorDesc);
-	assert(!graphicsDevice.hasErrors());
+	Buffer<float32> vertices(36, BufferSizing::Static);
+	vertices.push(reinterpret_cast<float32*>(vert), 36);
 
 	char* vertexSource =
 		"#version 330 core\n"
@@ -146,9 +121,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		"vertex_color = out_color;"
 		"}";
 
-	Shader vertex = 0;
-	Shader fragment = 0;
-	Shader program = 0;
+	uint32 vertex = 0;
+	uint32 fragment = 0;
+	uint32 program = 0;
 
 	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
@@ -164,6 +139,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	graphicsDevice.linkToProgram(program, fragment, true);
 	graphicsDevice.linkProgram(program);
 	graphicsDevice.useProgram(program);
+
+	Renderer renderer(graphicsDevice);
+	renderer.initialize();
 
 	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice, &camera]() {
 		Viewport viewport;
@@ -186,15 +164,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		graphicsDevice.clear(Color::black);
 
-		graphicsDevice.drawArrays(RenderMode::Triangles, 0, 6);
-
 		camera.computeTransformation();
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
+		renderer.beginRenderingUserPrimitives(transform, 6, RenderMode::Triangles);
+
+		renderer.renderUserPrimitives(vertices);
+
+		renderer.endRendering();
+
 		camera.setX(-(graphicsDevice.getViewport().width / 2.0f));
 		camera.setY(-(graphicsDevice.getViewport().height / 2.0f));
-		camera.rotateBy(0.0001f);
+		//camera.rotateBy(0.0001f);
 	}
 
 	graphicsDevice.cleanUp();

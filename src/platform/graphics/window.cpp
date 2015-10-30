@@ -108,8 +108,7 @@ namespace sani {
 				if (!SetWindowLongPtr(hWnd, GWL_USERDATA, reinterpret_cast<LONG_PTR>(window))) {
 					if (GetLastError() != 0) return FALSE;
 				}
-			}
-			else {
+			} else {
 				window = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWL_USERDATA));
 			}
 
@@ -126,7 +125,7 @@ namespace sani {
 				{
 					// Initialize for OpenGL, set pixel format.
 					// TODO: select between OpenGL and DX.
-					PIXELFORMATDESCRIPTOR pfd =
+					PIXELFORMATDESCRIPTOR pfd = 
 					{
 						sizeof(PIXELFORMATDESCRIPTOR),
 						1,
@@ -152,7 +151,7 @@ namespace sani {
 					HDC hDC = GetDC(hWnd);
 
 					// Set pixel format.
-					int pixelFormatID = ChoosePixelFormat(hDC, &pfd);
+					const int32 pixelFormatID = ChoosePixelFormat(hDC, &pfd);
 					SetPixelFormat(hDC, pixelFormatID, &pfd);
 
 					WIN32_ASSERT();
@@ -343,7 +342,7 @@ namespace sani {
 			// Initialize the window.
 			WNDCLASSEX windowClass;
 
-			const size_t wndSize = sizeof(WNDCLASSEX);
+			const uint32 wndSize = sizeof(WNDCLASSEX);
 			
 			ZeroMemory(&windowClass, wndSize);
 			WIN32_ASSERT();

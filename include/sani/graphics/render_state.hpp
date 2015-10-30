@@ -1,27 +1,31 @@
 #pragma once
 
+#include "sani/types.hpp"
+
 namespace sani {
 
 	namespace graphics {
 
-		enum RenderState {
+		#define STATES_COUNT 6
+
+		enum RenderState : uint32 {
 			// Renderer is waiting for user commands.
-			Waiting,
+			Waiting				= 0,
 
 			// Rendering user defined primitives.
-			UserPrimitives,
+			UserPrimitives		= 1,
 
 			// Rendering predefined primitives.
-			Primitives,
+			Primitives			= 2,
 			
 			// Rendering images.
-			Images,
+			Textures			= 3,
 			
 			// Rendering simple text.
-			Text,
+			Text				= 4,
 
 			// Rendering rich text.
-			RichText
+			RichText			= 5
 		};
 	}
 }

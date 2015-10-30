@@ -3,11 +3,6 @@
 #include "sani/types.hpp"
 #include <functional>
 
-typedef	uint32 Buffer;
-typedef uint32 Shader;
-typedef uint32 RenderTexture;
-typedef uint32 ShaderProgram;
-
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 #include "GL/glew.h"
