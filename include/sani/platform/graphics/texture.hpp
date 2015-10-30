@@ -1,5 +1,5 @@
-#include "sani/types.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
+#include "sani/types.hpp"
 
 namespace sani {
 	namespace graphics {
@@ -19,7 +19,7 @@ namespace sani {
 			const uint32 height;
 		protected:
 			// Identifier of the texture, required atleast by the OpenGL.
-			RenderTexture renderTexture;
+			uint32 renderTexture;
 		public:
 			Texture(GraphicsDevice& device, const uint32 width, const uint32 height);
 

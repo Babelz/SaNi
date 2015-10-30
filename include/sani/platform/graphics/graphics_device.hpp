@@ -107,7 +107,7 @@ namespace sani {
 
 			/// Binds given texture.
 			/// @param[in] texture texture to bind
-			void bindTexture(const RenderTexture texture);
+			void bindTexture(const uint32 texture);
 			/// Unbinds current texture.
 			void unbindTexture();
 			
@@ -117,7 +117,7 @@ namespace sani {
 			void setRenderTarget(RenderTarget2D* renderTarget);
 
 			/// Creates an empty RGBA color-format texture.
-			void generateTexture(RenderTexture& texture, const uint32 width, const uint32 height);
+			void generateTexture(uint32& texture, const uint32 width, const uint32 height);
 			/// Generates new render target.
 			/// @param[in] renderTexture texture to be used with the target, call generateTexture before passing it
 			/// @param[in] colorBuffer color buffer to be generated for the target
@@ -125,7 +125,7 @@ namespace sani {
 			/// @param[in] depthBuffer depth buffer to be generated for the target
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
-			void generateRenderTarget2D(RenderTexture& texture, Buffer& colorBuffer, Buffer& frameBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height);
+			void generateRenderTarget2D(uint32& texture, uint32& colorBuffer, uint32& frameBuffer, uint32& depthBuffer, const uint32 width, const uint32 height);
 
 			/*
 				Shader operations.
@@ -134,48 +134,48 @@ namespace sani {
 			/// Attempts to compile given shader source
 			/// @param[in] shader result shader
 			/// @param[in] source source code of the shader
-			void compileShader(Shader& shader, const char* source, const ShaderType type);
+			void compileShader(uint32& shader, const char* source, const ShaderType type);
 
 			/// Deletes the given shader.
-			void deleteShader(const Shader shader);
+			void deleteShader(const uint32 shader);
 
 			/// Creates new shader program.
-			void createProgram(ShaderProgram& program);
+			void createProgram(uint32& program);
 			/// Links given shader to given program.
 			/// @param[in] program program where the shader is linked to
 			/// @param[in] shader shader to be linked with the program
 			/// @param[in] dispose should the shader be deleted after it has been linked with the program
-			void linkToProgram(const ShaderProgram program, const Shader shader, const bool dispose);
+			void linkToProgram(const uint32 program, const uint32 shader, const bool dispose);
 			/// Links the given program.
-			void linkProgram(const ShaderProgram program);
+			void linkProgram(const uint32 program);
 
 			/// Uses the given program. Passing 0 to this function
 			/// means the current program will be unbinded.
-			void useProgram(const ShaderProgram program);
+			void useProgram(const uint32 program);
 			
 			/// Sets the given shader uniform.
 			/// @param[in] shader program that contains the uniform to set
 			/// @param[in] name name of the uniform
 			/// @param[in] data data to be inserted in the uniform location
-			void setShaderUniform(const ShaderProgram shader, const char* name, void* data, const UniformType type);
+			void setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type);
 
 			/*
 				Buffer operations.
 			*/
 
 			/// Generates a vertex array.
-			void generateVertexArray(Buffer& buffer);
+			void generateVertexArray(uint32& buffer);
 			/// Binds given vertex array.
-			void bindVertexArray(Buffer& buffer);
+			void bindVertexArray(uint32& buffer);
 
 			/// Generates a buffer.
-			void generateBuffer(Buffer& buffer);
+			void generateBuffer(uint32& buffer);
 			/// Binds given buffer.
-			void bindBuffer(Buffer& buffer, const BufferType type);
+			void bindBuffer(uint32& buffer, const BufferType type);
 			/// Unbinds given type buffer.
 			void unbindBuffer(const BufferType type);
 			/// Sets given buffers data.
-			void setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
+			void setBufferData(uint32& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
 
 			/// Draws array elements.
 

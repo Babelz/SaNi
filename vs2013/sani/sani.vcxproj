@@ -168,6 +168,8 @@
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
+    <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
+    <ClCompile Include="..\..\src\graphics\setups\user_primitive_render_setup.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -251,11 +253,14 @@
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\buffer_type.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\setups\render_setup.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\setups\render_setups.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\setups\user_primitive_render_setup.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform.hpp" />

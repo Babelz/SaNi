@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/graphics/buffer_type.hpp"
+#include "sani/graphics/buffer_sizing.hpp"
 #include "sani/types.hpp"
 #include <vector>
 
@@ -19,16 +19,16 @@ namespace sani {
 		template<typename T>
 		class Buffer {
 		private:
-			const BufferType bufferType;
+			const BufferSizing bufferSizing;
 			
 			std::vector<T> memory;
 			
 			uint32 elementPointer;
 			
 			inline void checkSize(const uint32 newElementsCount) {
-				if (bufferType == BufferType::Static) {
+				if (bufferSizing == BufferSizing::Static) {
 					if (elementPointer + newElementsCount > memory.size()) throw std::runtime_error("Buffer overflow");
-				} else if (bufferType == BufferType::Dynamic) {
+				} else if (bufferSizing == BufferSizing::Dynamic) {
 					if (elementPointer + newElementsCount > memory.size()) {
 						const uint32 oldSize = memory.size();
 						const uint32 newSize = memory.size() * 2;
@@ -41,16 +41,16 @@ namespace sani {
 				}
 			}
 		public:
-			Buffer(const uint32 initialSize, const BufferType bufferType) : bufferType(bufferType),
-																			elementPointer(0) {
+			Buffer(const uint32 initialSize, const BufferSizing bufferSizing) : bufferSizing(bufferSizing),
+																			    elementPointer(0) {
 				memory.reserve(initialSize);
 
 				for (uint32 i = 0; i < initialSize; i++) memory.push_back(T());
 			}
 		
 			/// Returns the type of the buffer. 
-			inline BufferType getBufferType() const {
-				return bufferType;
+			inline BufferSizing getBufferSizing() const {
+				return bufferSizing;
 			}
 
 			/// Push a given element to the buffer.
@@ -79,6 +79,13 @@ namespace sani {
 			/// Returns the count of elements in this buffer.
 			inline uint32 getElementsCount() const {
 				return elementPointer;
+			}
+
+			/// Copies the contents of another buffer to this buffer.
+			inline void copy(Buffer<T>& other) {
+				checkSize(other.getElementsCount());
+
+				push(other.pointer(), other.getElementsCount());
 			}
 
 			/// Returns pointer to the beginning of the buffer.

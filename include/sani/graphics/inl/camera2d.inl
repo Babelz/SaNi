@@ -82,8 +82,8 @@ namespace sani {
 			return transform;
 		}
 		void Camera2D::computeTransformation() {
-			const float32 zNear = -1.0f;
-			const float32 zFar = 1.0f;
+			const float32 zNear = 0.0f;
+			const float32 zFar = 100.0f;
 			const float32 aspectRatio = static_cast<float32>(viewport.width) / viewport.height;
 
 			transform = math::ortho<float32>(0.0f, static_cast<float32>(viewport.width), static_cast<float32>(viewport.height), 0.0f, zNear, zFar);

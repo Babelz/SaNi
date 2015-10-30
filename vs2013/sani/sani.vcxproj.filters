@@ -267,6 +267,12 @@
     <ClCompile Include="..\..\src\graphics\camera2d.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\setups\user_primitive_render_setup.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -527,9 +533,6 @@
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\buffer_type.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp">
       <Filter>include\core\memory</Filter>
     </ClInclude>
@@ -547,6 +550,18 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp">
       <Filter>include\core\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\setups\render_setup.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\setups\render_setups.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\setups\user_primitive_render_setup.hpp">
+      <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

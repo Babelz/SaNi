@@ -19,13 +19,13 @@ namespace sani {
 		// TODO: add directx support.
 #endif
 
-		Buffer RenderTarget2D::getColorBuffer() const {
+		uint32 RenderTarget2D::getColorBuffer() const {
 			return colorBuffer;
 		}
-		Buffer RenderTarget2D::getDepthBuffer() const {
+		uint32 RenderTarget2D::getDepthBuffer() const {
 			return depthBuffer;
 		}
-		Buffer RenderTarget2D::getFramebuffer() const {
+		uint32 RenderTarget2D::getFramebuffer() const {
 			return framebuffer;
 		}
 	}

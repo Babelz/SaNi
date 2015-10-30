@@ -362,7 +362,7 @@ namespace sani {
 			return impl->cImpl.viewport;
 		}
 
-		void GraphicsDevice::bindTexture(const RenderTexture texture) {
+		void GraphicsDevice::bindTexture(const uint32 texture) {
 			const GLuint glTexture = static_cast<GLuint>(texture);
 
 			glBindTexture(GL_TEXTURE_2D, glTexture);
@@ -396,7 +396,7 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::generateTexture(RenderTexture& texture, const uint32 width, const uint32 height) {
+		void GraphicsDevice::generateTexture(uint32& texture, const uint32 width, const uint32 height) {
 			// Generate the texture.
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
@@ -418,7 +418,7 @@ namespace sani {
 
 			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::generateRenderTarget2D(RenderTexture& texture, Buffer& frameBuffer, Buffer& colorBuffer, Buffer& depthBuffer, const uint32 width, const uint32 height) {
+		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
 			// Assume that the render texture has been initialized and generated.
 
 			/*
@@ -460,7 +460,7 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::compileShader(Shader& shader, const char* source, const ShaderType type) {
+		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {
 			switch (type) {
 			case ShaderType::Vertex:
 				shader = glCreateShader(GL_VERTEX_SHADER);
@@ -483,13 +483,13 @@ namespace sani {
 			// Push custom error code.
 			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to compile shader", __FUNCTION__, __LINE__));
 		}
-		void GraphicsDevice::deleteShader(const Shader shader) {
+		void GraphicsDevice::deleteShader(const uint32 shader) {
 			glDeleteShader(shader);
 
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::createProgram(ShaderProgram& program) {
+		void GraphicsDevice::createProgram(uint32& program) {
 			program = glCreateProgram();
 
 			CHECK_FOR_ERRORS();
@@ -500,14 +500,14 @@ namespace sani {
 				return;
 			}
 		}
-		void GraphicsDevice::linkToProgram(const ShaderProgram program, const Shader shader, const bool dispose) {
+		void GraphicsDevice::linkToProgram(const uint32 program, const uint32 shader, const bool dispose) {
 			glAttachShader(program, shader);
 
 			if (dispose) deleteShader(shader);
 
 			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::linkProgram(const ShaderProgram program) {
+		void GraphicsDevice::linkProgram(const uint32 program) {
 			glLinkProgram(program);
 
 			GLint result = 0;
@@ -519,13 +519,13 @@ namespace sani {
 			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to link shader to a program", __FUNCTION__, __LINE__));
 		}
 
-		void GraphicsDevice::useProgram(const ShaderProgram program) {
+		void GraphicsDevice::useProgram(const uint32 program) {
 			glUseProgram(program);
 
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::setShaderUniform(const ShaderProgram shader, const char* name, void* data, const UniformType type) {
+		void GraphicsDevice::setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type) {
 			GLint uniformLocation = glGetUniformLocation(shader, name);
 
 			// Uniform not found.
@@ -562,23 +562,23 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::generateVertexArray(Buffer& buffer) {
+		void GraphicsDevice::generateVertexArray(uint32& buffer) {
 			glGenVertexArrays(1, &buffer);
 
 			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::bindVertexArray(Buffer& buffer) {
+		void GraphicsDevice::bindVertexArray(uint32& buffer) {
 			glBindVertexArray(buffer);
 
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::generateBuffer(Buffer& buffer) {
+		void GraphicsDevice::generateBuffer(uint32& buffer) {
 			glGenBuffers(1, &buffer);
 
 			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::bindBuffer(Buffer& buffer, const BufferType type) {
+		void GraphicsDevice::bindBuffer(uint32& buffer, const BufferType type) {
 			glBindBuffer(type, buffer);
 		}
 		void GraphicsDevice::unbindBuffer(const BufferType type) {
@@ -586,7 +586,7 @@ namespace sani {
 
 			CHECK_FOR_ERRORS();
 		}
-		void GraphicsDevice::setBufferData(Buffer& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
+		void GraphicsDevice::setBufferData(uint32& buffer, const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
 			glBufferData(type, bytes, data, usage);
 
 			CHECK_FOR_ERRORS();
