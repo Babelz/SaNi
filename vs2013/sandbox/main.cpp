@@ -21,6 +21,19 @@
 using namespace sani::graphics;
 using namespace sani::math;
 
+#include "sani/platform/file/file_system.hpp"
+#include "sani/platform/file/file_stream.hpp"
+#include "sani/resource/resources.hpp"
+#include "sani/resource/texture2d.hpp"
+using namespace sani::resource;
+
+Texture2D* tuksu = nullptr;
+ResourceManager* resourceManager = nullptr;
+FileSystem* fileSystem = new FileSystem();
+
+void initResource(GraphicsDevice* gdevice) {
+	resourceManager = new ResourceManager(fileSystem, gdevice);
+}
 /*
 	To test if our window, context etc even work.
 */
@@ -79,8 +92,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
+	initResource(&graphicsDevice);
+	tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
+
 	Buffer<float32> vertices(1024, BufferSizing::Dynamic);
 
+	Vec3 v1(-0.5f, -0.5f, 0.0f);
+	Vec3 v2(0.5f, -0.5f, 0.0f);
+	Vec3 v3(0.5f, 0.5f, 0.0f);
+	
 	for (size_t i = 0; i < 33; i++)
 	{
 		Vec3 v1(-0.5f + i, -0.5f + i, 0.0f);
@@ -92,15 +112,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Vec3 v6(-0.5f + i, -0.5f + i, 0.0f);
 
 		Vec3 vert[] = {
-			v1, Vec3(1, 0, 0),
-			v2, Vec3(0, 1, 0),
-			v3, Vec3(1, 0, 0),
-			v4, Vec3(0, 0, 1),
-			v5, Vec3(1, 0, 0),
-			v6, Vec3(1, 1, 0)
-		};
+		v1, Vec3(1, 0, 0),
+		v2, Vec3(0, 1, 0),
+		v3, Vec3(1, 0, 0),
+		v4, Vec3(0, 0, 1),
+		v5, Vec3(1, 0, 0),
+		v6, Vec3(1, 1, 0)
+	};
 
-		vertices.push(reinterpret_cast<float32*>(vert), 36);
+	vertices.push(reinterpret_cast<float32*>(vert), 36);
 	}
 
 	char* vertexSource =

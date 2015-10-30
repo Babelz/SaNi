@@ -91,6 +91,9 @@
     <Filter Include="src\platform\file">
       <UniqueIdentifier>{5ce1747e-9455-4e84-bb2b-7b210afa634f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\platform\graphics">
+      <UniqueIdentifier>{eaacadd0-c812-4388-940a-2e7cd93504ed}</UniqueIdentifier>
+    </Filter>
     <Filter Include="include\platform\file">
       <UniqueIdentifier>{c9657f4b-ca60-40c0-8c71-3b81dea489c5}</UniqueIdentifier>
     </Filter>
@@ -109,29 +112,20 @@
     <Filter Include="include\resource\processor">
       <UniqueIdentifier>{09d385b1-76c3-47ff-8912-92585c26d1ef}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\graphics">
-      <UniqueIdentifier>{0da9388a-a359-45a7-8c37-4f957381ca97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\platform\graphics">
-      <UniqueIdentifier>{994c9e8d-bd7a-4858-93a7-63b1cb9fe788}</UniqueIdentifier>
+    <Filter Include="src\resource\processor">
+      <UniqueIdentifier>{134b7d47-eaf1-43e0-a0ee-7e51dcaa65c5}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\graphics">
-      <UniqueIdentifier>{92c50558-5bf5-491b-940c-2f6bd51bd3eb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\core\logging">
-      <UniqueIdentifier>{a1d7f012-e16c-4b13-95d2-596aea786efa}</UniqueIdentifier>
+      <UniqueIdentifier>{689349e9-81b8-4bf8-bdd3-9991d338ca97}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\graphics\inl">
-      <UniqueIdentifier>{3cc51374-a639-44a2-83ec-cae290c76133}</UniqueIdentifier>
+      <UniqueIdentifier>{dc0b8bf3-e8f4-4418-8345-8e7955d0010e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\graphics\renderers">
-      <UniqueIdentifier>{0156d952-d6c0-459e-9337-d199109d1392}</UniqueIdentifier>
+    <Filter Include="src\graphics">
+      <UniqueIdentifier>{9870d9bd-6054-4de6-ae81-fe3d7aa500f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\graphics\setups">
-      <UniqueIdentifier>{7747358c-a8d3-466f-84ae-294e6d636145}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\graphics\setups">
-      <UniqueIdentifier>{32be1caa-d02f-48a6-aa0e-d508fc049c4f}</UniqueIdentifier>
+    <Filter Include="include\core\logging">
+      <UniqueIdentifier>{cf7587a5-0333-41c2-a85b-c2cc1131df1a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -255,23 +249,29 @@
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp">
       <Filter>src\core\memory</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\camera2d.cpp">
-      <Filter>src\graphics</Filter>
+    <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp">
+      <Filter>src\resource\processor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp">
-      <Filter>src\core\cvar</Filter>
+    <ClCompile Include="..\..\src\resource\texture2d_content.cpp">
+      <Filter>src\resource</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp">
+      <Filter>src\core\cvar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderer.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp">
-      <Filter>src\graphics\setups</Filter>
+    <ClCompile Include="..\..\src\graphics\camera2d.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\setups\user_primitive_render_setup.cpp">
-      <Filter>src\graphics\setups</Filter>
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +434,30 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp">
       <Filter>include\resource\compiler</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\texture.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp">
       <Filter>include\platform\file</Filter>
     </ClInclude>
@@ -491,8 +515,23 @@
     <ClInclude Include="..\..\include\sani\contracts.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\memory\defragmentation_policy.hpp">
-      <Filter>include\core\memory</Filter>
+    <ClInclude Include="..\..\include\sani\graphics\buffer.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_state.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp">
+      <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp">
       <Filter>include\core\memory</Filter>
@@ -500,41 +539,8 @@
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp">
       <Filter>include\core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\texture.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp">
-      <Filter>include\graphics</Filter>
+    <ClInclude Include="..\..\include\sani\core\memory\defragmentation_policy.hpp">
+      <Filter>include\core\memory</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp">
       <Filter>include\core\cvar</Filter>
@@ -545,23 +551,20 @@
     <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp">
       <Filter>include\core\logging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\render_state.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\buffer.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\setups\render_setup.hpp">
-      <Filter>include\graphics\setups</Filter>
+      <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\setups\render_setups.hpp">
-      <Filter>include\graphics\setups</Filter>
+      <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\setups\user_primitive_render_setup.hpp">
-      <Filter>include\graphics\setups</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp">
       <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resources.hpp">
+      <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -583,13 +586,14 @@
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl">
       <Filter>include\platform\file\inl</Filter>
     </None>
+    <None Include="..\..\include\sani\resource\compiler\resource_writer.inl">
+      <Filter>include\resource\compiler</Filter>
+    </None>
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\include\sani\core\cvar\TODO.txt">
-      <Filter>include\core\cvar</Filter>
-    </Text>
+    <Text Include="..\..\include\sani\core\cvar\TODO.txt" />
   </ItemGroup>
 </Project>

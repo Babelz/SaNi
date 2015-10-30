@@ -62,19 +62,23 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Glew.props" />
     <Import Project="..\propertysheets\libpng.props" />
+    <Import Project="..\propertysheets\magick++.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\propertysheets\libpng.props" />
+    <Import Project="..\propertysheets\magick++.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Glew.props" />
     <Import Project="..\propertysheets\libpng.props" />
+    <Import Project="..\propertysheets\magick++.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\propertysheets\libpng.props" />
+    <Import Project="..\propertysheets\magick++.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -187,6 +191,7 @@
     <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp" />
     <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp" />
+    <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\primitive_readers.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
@@ -194,6 +199,7 @@
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
+    <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\contracts.hpp" />
@@ -287,6 +293,7 @@
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader_manager.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\texture2d_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\resources.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
     <ClInclude Include="..\..\include\sani\resource\serialization.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
@@ -301,6 +308,7 @@
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
+    <None Include="..\..\include\sani\resource\compiler\resource_writer.inl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt" />

@@ -1,5 +1,7 @@
 #android shit which gets copied every time
 src/platform/android/java/assets
+#tools .dll
+tools/binary/*.dll
 
 # word temp files
 *.tmp

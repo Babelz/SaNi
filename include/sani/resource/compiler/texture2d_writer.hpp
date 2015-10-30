@@ -5,6 +5,7 @@ namespace sani {
 	namespace resource {
 		namespace compiler {
 			class Texture2DWriter : public ResourceTypeWriter {
+			public:
 				void write(ResourceWriter* writer, void* value) override;
 			};
 		}

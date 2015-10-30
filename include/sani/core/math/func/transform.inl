@@ -72,8 +72,6 @@ namespace sani {
 			return result;
 		}
 
-		static float asd = 0.0f;
-
 		template <typename T>
 		Matrix4<T> perspective(const float fovy, const float ar, const float znear, const float zfar) {
 			const T tanhf = math::tan(fovy / static_cast<T>(2));
