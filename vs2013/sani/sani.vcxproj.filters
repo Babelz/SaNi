@@ -505,5 +505,8 @@
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl">
       <Filter>include\platform\file\inl</Filter>
     </None>
+    <None Include="..\..\include\sani\resource\compiler\resource_writer.inl">
+      <Filter>include\resource\compiler</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,6 +1,7 @@
 #pragma once
 #include "sani/platform/file/binary_writer.hpp"
 #include "sani/core/math/math.hpp"
+#include <vector>
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 namespace sani {
 	using namespace math;
@@ -22,7 +23,29 @@ namespace sani {
 				/// first 3 magic bytes S, N, B, then platform name
 				/// and Version number
 				void writeHeader();
+
+				template <class T>
+				void writeContainer(const std::vector<T>& v);
+
+				template <class T>
+				void writeMatrix(const math::Matrix2<T>& mat);
+
+				template <class T>
+				void writeMatrix(const math::Matrix3<T>& mat);
+
+				template <class T>
+				void writeMatrix(const math::Matrix4<T>& mat);
+
+				template <class T>
+				void writeVector(const math::Vector2<T>& vec);
+
+				template <class T>
+				void writeVector(const math::Vector3<T>& vec);
+
+				template <class T>
+				void writeVector(const math::Vector4<T>& vec);
 			};
 		}
 	}
 }
+#include "resource_writer.inl"
