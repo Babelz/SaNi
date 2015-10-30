@@ -30,8 +30,14 @@ namespace sani {
 			}
 		}
 
+		void FileStream::flush() const {
+			assert(mode & Filemode::Write || mode & Filemode::Truncate);
+			fflush(handle);
+		}
+
 		// TODO reference counting
 		FileStream::~FileStream() {
+			// flcose flushes the buffer
 			fclose(handle);
 		}
 

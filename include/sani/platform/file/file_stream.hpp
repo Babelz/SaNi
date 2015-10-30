@@ -75,6 +75,8 @@ namespace sani {
 
 			inline Filemode getOpenMode() const;
 			inline const String& getPath() const;
+
+			void flush() const;
 		};
 	}
 }
