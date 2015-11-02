@@ -34,6 +34,9 @@ namespace sani {
 		
 		template <typename T>
 		Matrix4<T> perspective(const float fovy, const float ar, const float znear, const float zfar);
+
+		template <typename T>
+		Matrix4<T> lookAt(const Vector3<T>& eye, const Vector3<T>& center, const Vector3<T>& up);
 	}
 }
 

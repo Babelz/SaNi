@@ -21,9 +21,6 @@ namespace sani {
 	}
 
 	void HeapAllocator::initialize(const uint32 initialPages) {
-		SANI_ASSERT(pageSize > 0);
-		SANI_ASSERT(initialPages > 0);
-
 		for (uint32 i = 0; i < initialPages; i++) pages.push_back(new HeapPage(pageSize));
 	}
 

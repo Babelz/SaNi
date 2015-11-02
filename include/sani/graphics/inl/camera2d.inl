@@ -36,6 +36,10 @@ namespace sani {
 			this->position.x = position.x;
 			this->position.y = position.y;
 		}
+		void Camera2D::setPosition(const float32 x, const float32 y) {
+			this->position.x = x;
+			this->position.y = y;
+		}
 
 		void Camera2D::setOriginX(const float32 x) {
 			origin.x = x;
@@ -82,15 +86,15 @@ namespace sani {
 			return transform;
 		}
 		void Camera2D::computeTransformation() {
-			const float32 zNear = 0.0f;
+			const float32 zNear = 0.1f;
 			const float32 zFar = 100.0f;
-			const float32 aspectRatio = static_cast<float32>(viewport.width) / viewport.height;
+			const math::Vec3f npos(-position.x, position.y, position.z);
 
 			transform = math::ortho<float32>(0.0f, static_cast<float32>(viewport.width), static_cast<float32>(viewport.height), 0.0f, zNear, zFar);
-			transform = math::translate(transform, -position);
-			transform = math::perspective<float32>(60.0f, aspectRatio, zNear, zFar) * transform;
+			transform = math::translate(transform, npos) * transform;
 			transform = math::rotate(transform, rotation, math::Vec3f(0.0f, 0.0f, 1.0f));
 			transform = math::scale(transform, zoom);
+			transform = math::translate(transform, origin) * transform;
 		}
 	}
 }

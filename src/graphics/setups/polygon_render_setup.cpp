@@ -1,5 +1,5 @@
-#include "sani/graphics/setups/user_primitive_render_setup.hpp"
 #include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/graphics/setups/polygon_render_setup.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/types.hpp"
 
@@ -7,26 +7,26 @@ namespace sani {
 
 	namespace graphics {
 
-		UserPrimitiveRenderSetup::UserPrimitiveRenderSetup(GraphicsDevice* const graphicsDevice) : RenderSetup(graphicsDevice),
-																								   renderMode(RenderMode::Triangles),
-																								   vertices(0) {
+		PolygonRenderSetup::PolygonRenderSetup(GraphicsDevice* const graphicsDevice) : RenderSetup(graphicsDevice),
+																					   renderMode(RenderMode::Triangles),
+																					   vertices(0) {
 		}
 
-		void UserPrimitiveRenderSetup::setRenderMode(const RenderMode renderMode) {
+		void PolygonRenderSetup::setRenderMode(const RenderMode renderMode) {
 			this->renderMode = renderMode;
 		}
-		RenderMode UserPrimitiveRenderSetup::getRenderMode() const {
+		RenderMode PolygonRenderSetup::getRenderMode() const {
 			return renderMode;
 		}
 
-		void UserPrimitiveRenderSetup::setVertices(const uint32 vertices) {
+		void PolygonRenderSetup::setVertices(const uint32 vertices) {
 			this->vertices = vertices;
 		}
-		uint32 UserPrimitiveRenderSetup::getVertices() const {
+		uint32 PolygonRenderSetup::getVertices() const {
 			return vertices;
 		}
 
-		void UserPrimitiveRenderSetup::use() {
+		void PolygonRenderSetup::use() {
 			VertexAttributePointerDescription vertexDescription;
 			vertexDescription.location = 0;
 			vertexDescription.count = 3;
@@ -52,7 +52,7 @@ namespace sani {
 			graphicsDevice->createVertexAttributePointer(colorDescription);
 		}
 
-		void UserPrimitiveRenderSetup::clear() {
+		void PolygonRenderSetup::clear() {
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();
 			graphicsDevice->disableVertexAttributePointer(0);
 			graphicsDevice->disableVertexAttributePointer(1);

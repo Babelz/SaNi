@@ -600,13 +600,12 @@ namespace sani {
 		void GraphicsDevice::createVertexAttributePointer(const VertexAttributePointerDescription& description) {
 			glEnableVertexAttribArray(description.location);
 
-			glVertexAttribPointer(
-				description.location,
-				description.count,
-				description.type,
-				description.normalized,
-				description.stride,
-				(void*)description.offset);
+			glVertexAttribPointer(description.location,
+								  description.count,
+								  description.type,
+								  description.normalized,
+								  description.stride,
+								  (void*)description.offset);
 
 			CHECK_FOR_ERRORS();
 		}

@@ -6,26 +6,20 @@ namespace sani {
 
 	namespace graphics {
 
-		#define RENDER_STATES_COUNT 6
+		#define RENDER_STATES_COUNT 4
 
 		enum RenderState : uint32 {
 			// Renderer is waiting for user commands.
 			Waiting				= 0,
 
-			// Rendering user defined primitives.
-			UserPrimitives		= 1,
-
 			// Rendering predefined primitives.
-			Primitives			= 2,
+			Polygons			= 1,
 			
 			// Rendering images.
-			Textures			= 3,
+			TexturedPolygons	= 2,
 			
 			// Rendering simple text.
-			Text				= 4,
-
-			// Rendering rich text.
-			RichText			= 5
+			Text				= 3
 		};
 	}
 }

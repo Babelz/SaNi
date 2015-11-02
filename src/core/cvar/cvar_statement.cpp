@@ -15,7 +15,7 @@ namespace sani {
 
 	bool CVarRequireStatement::operator()() const {
 		/*
-			TODO: idk, looks kinda funkeyyYY, maybe refactor?
+			TODO: idk, looks kinda funkeyy, maybe refactor?
 				  could fix with a transition table.
 		*/
 
@@ -84,9 +84,11 @@ namespace sani {
 	}
 	
 	bool CVarRequireStatement::operator == (const CVarRequireStatement& other) const {
+		if (conditions.size() != other.conditions.size()) return false;
+
 		for (size_t i = 0; i < conditions.size(); i++) {
-			const CVarCondition& lhs = conditions.back();
-			const CVarCondition& rhs = other.conditions.back();
+			const CVarCondition& lhs = conditions[i];
+			const CVarCondition& rhs = other.conditions[i];
 
 			if (lhs != rhs) return false;
 		}

@@ -37,6 +37,7 @@ namespace sani {
 			inline void setX(const float32 x);
 			inline void setY(const float32 y);
 			inline void setPosition(const math::Vec2f& position);
+			inline void setPosition(const float32 x, const float32 y);
 
 			inline void setOriginX(const float32 x);
 			inline void setOriginY(const float32 y);

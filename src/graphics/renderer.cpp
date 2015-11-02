@@ -7,52 +7,48 @@ namespace sani {
 
 	namespace graphics {
 
-		#define INITIAL_VERTICES_COUNT 32768
+		#define INITIAL_BUFFER_ELEMENTS_COUNT 32768
 		#define REQUIRE_STATE(requiredState) if (state != requiredState) throw std::runtime_error("can't call function " + String(__FUNCTION__) + " in current state");
 
 		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
 		// Keep the buffer usage as dynamic (memory as the limit).
 
 		Renderer::Renderer(GraphicsDevice& graphicsDevice) : graphicsDevice(graphicsDevice),
-															 vertices(INITIAL_VERTICES_COUNT, BufferSizing::Dynamic),
-															 state(RenderState::Waiting),
-															 vertexBuffer(0) {
+															 vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+															 indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+															 renderState(RenderState::Waiting),
+															 vertexBuffer(0),
+															 indexBuffer(0) {
 		}
 
 		void Renderer::generateRenderSetups() {
 			renderSetups = new RenderSetup*[RENDER_STATES_COUNT];
 			
-			renderSetups[RenderState::Waiting]		  = nullptr;												// Waiting render state.
-			renderSetups[RenderState::UserPrimitives] = new UserPrimitiveRenderSetup(&graphicsDevice);		    // User primitive render state.
-			renderSetups[RenderState::Primitives]	  =	nullptr;												// Primitives render state.
-			renderSetups[RenderState::Textures]		  = nullptr;												// Textures render state.
-			renderSetups[RenderState::Text]			  = nullptr;												// Text render state.
-			renderSetups[RenderState::RichText]		  = nullptr;												// Rich text render state.
+			renderSetups[RenderState::Waiting]			= nullptr;												
+			renderSetups[RenderState::Polygons]			= new PolygonRenderSetup(&graphicsDevice); 		
+			renderSetups[RenderState::TexturedPolygons]	= new TexturedPolygonRenderSetup(&graphicsDevice);												
+			renderSetups[RenderState::Text]				= new TexturedPolygonRenderSetup(&graphicsDevice);												
 		}
 		void Renderer::generateBuffers() {
 			graphicsDevice.generateBuffer(vertexBuffer);
 			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 
+			graphicsDevice.generateBuffer(indexBuffer);
+			graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
+
 			graphicsDevice.setBufferData(BufferType::ArrayBuffer,
+										 vertices.getSize() * sizeof(float32),
+										 vertices.head(),
+										 BufferUsage::Stream);
+
+
+			graphicsDevice.setBufferData(BufferType::ElementArrayBuffer,
 										 vertices.getSize() * sizeof(float32),
 										 vertices.head(),
 										 BufferUsage::Stream);
 		}
 
-		void Renderer::swapRenderSetup() {
-			const uint32 index = static_cast<uint32>(state);
-
-			renderSetup = renderSetups[index];
-		}
-		
-		void Renderer::beginRendering(const RenderState state, const math::Mat4f& transform) {
-			if (this->state != RenderState::Waiting) throw std::runtime_error("end rendering must be called before begin");
-
-			this->state = state;
-			this->transform = transform;
-			
-			vertices.resetBufferPointer();
-			
+		void Renderer::updateVertexBufferSize() {
 			// Rebind buffer if it's size has changed.
 			if (verticesSize != vertices.getSize()) {
 				graphicsDevice.setBufferData(BufferType::ArrayBuffer,
@@ -63,24 +59,59 @@ namespace sani {
 				verticesSize = vertices.getSize();
 			}
 		}
-		void Renderer::endRendering(const RenderState state) {
-			if (state == RenderState::Waiting) throw std::runtime_error("begin rendering must be called before end");
+		void Renderer::swapRenderSetup() {
+			const uint32 index = static_cast<uint32>(renderState);
 
-			this->state = RenderState::Waiting;
+			renderSetup = renderSetups[index];
+		}
+		
+		void Renderer::prepareRendering(const RenderState renderState, const math::Mat4f& transform, const VertexMode vertexMode) {
+			if (this->renderState != RenderState::Waiting) throw std::runtime_error("end rendering must be called before begin");
+
+			this->renderState = renderState;
+			this->transform = transform;
+			this->vertexMode = vertexMode;
+			
+			vertices.resetBufferPointer();
+		}
+		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 vertices) {
+			swapRenderSetup();
+
+			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
+			polygonRenderSetup->setRenderMode(renderMode);
+			polygonRenderSetup->setVertices(vertices);
+		}
+		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 vertices) {
+			prepareRenderingPolygons(renderMode, vertices);
+			
+			TexturedPolygonRenderSetup* const polygonRenderSetup = static_cast<TexturedPolygonRenderSetup*>(renderSetup);
+			polygonRenderSetup->setTexture(texture);
+		}
+
+		void Renderer::endRendering(const RenderState renderState) {
+			if (renderState == RenderState::Waiting) throw std::runtime_error("begin rendering must be called before end");
+
+			this->renderState = RenderState::Waiting;
 			
 			renderSetup->clear();
 		}
-		void Renderer::presentUserPrimitives() {
+
+		void Renderer::presentPolygons() {
 			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 			
+			updateVertexBufferSize();
+
 			graphicsDevice.setBufferSubData(BufferType::ArrayBuffer,
 											0,
 											vertices.getBufferPointerLocation() * sizeof(float32),
 											vertices.head());
 
-			UserPrimitiveRenderSetup* renderSetup = static_cast<UserPrimitiveRenderSetup*>(this->renderSetup);
+			PolygonRenderSetup* renderSetup = static_cast<PolygonRenderSetup*>(this->renderSetup);
 
 			graphicsDevice.drawArrays(renderSetup->getRenderMode(), 0, vertices.getBufferPointerLocation() / renderSetup->getVertices());
+		}
+		void Renderer::presentIndexedPolygons() {
+			throw std::runtime_error("not implemented");
 		}
 
 		bool Renderer::initialize() {
@@ -90,45 +121,59 @@ namespace sani {
 			return graphicsDevice.hasErrors();
 		}
 
-		void Renderer::beginRenderingUserPrimitives(const math::Mat4f& transform, const uint32 vertices, const RenderMode renderMode) {
-			beginRendering(RenderState::UserPrimitives, transform);
+		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertices, const RenderMode renderMode) {
+			SANI_ASSERT(vertices != 0);
 
-			swapRenderSetup();
-
-			UserPrimitiveRenderSetup* renderSetup = static_cast<UserPrimitiveRenderSetup*>(this->renderSetup);
-			renderSetup->setRenderMode(renderMode);
-			renderSetup->setVertices(vertices);
+			prepareRendering(RenderState::TexturedPolygons, transform, VertexMode::NoIndexing);
+			prepareRenderingPolygons(renderMode, texture, vertices);
+			
 			renderSetup->use();
 		}
-		void Renderer::renderUserPrimitives(Buffer<float32>& vertices) {
-			REQUIRE_STATE(RenderState::UserPrimitives);
+		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 vertices, const RenderMode renderMode) {
+			SANI_ASSERT(vertices != 0);
+			
+			prepareRendering(RenderState::Polygons, transform, VertexMode::NoIndexing);
+			prepareRenderingPolygons(renderMode, vertices);
 
-			UserPrimitiveRenderSetup* renderSetup = static_cast<UserPrimitiveRenderSetup*>(this->renderSetup);
-			if ((vertices.getBufferPointerLocation() % renderSetup->getVertices()) != 0) throw std::runtime_error("too few or too many vertices");
+			renderSetup->use();
+		}
+		
+		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertices, const uint32* indices, const RenderMode renderMode) {
+			throw std::runtime_error("not implemented");
+		}
+		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertices, const uint32* indices, const RenderMode renderMode) {
+			throw std::runtime_error("not implemented");
+		}
+		
+		void Renderer::renderPolygons(const float32* vertices, const uint32 count) {
+			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
+			
+			this->vertices.push(vertices, count * polygonRenderSetup->getVertices());
 
-			// Copy data.
-			this->vertices.copy(vertices);
+			// TODO: make indices.
+		}
+		void Renderer::renderPolygon(const float32* vertices) {
+			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
+
+			this->vertices.push(vertices, polygonRenderSetup->getVertices());
+
+			// TODO: make indices.
 		}
 
-		//void Renderer::beginRenderingPredefinedPrimitives(const math::Mat4f& transform);
-		//void Renderer::beginRenderingTextures(const math::Mat4f& transform);
-		//void Renderer::beginRenderingText(const math::Mat4f& transform);
-		//void Renderer::beginRenderingRichText(const math::Mat4f& transform);
-
 		void Renderer::endRendering() {
-			switch (state) {
-			case sani::graphics::UserPrimitives:
-				presentUserPrimitives();
+			switch (renderState) {
+			case sani::graphics::RenderState::Polygons:
+				if (vertexMode == VertexMode::NoIndexing) presentPolygons();
+				else                                      presentIndexedPolygons();
 				break;
-			case sani::graphics::Primitives:
-			case sani::graphics::Textures:
-			case sani::graphics::Text:
-			case sani::graphics::RichText:
+			case sani::graphics::RenderState::TexturedPolygons:
+			case sani::graphics::RenderState::Waiting:
+			case sani::graphics::RenderState::Text:
 			default:
 				throw std::runtime_error("invalid or unsupported state");
 			}
 
-			endRendering(state);
+			endRendering(renderState);
 		}
 
 		Renderer::~Renderer() {

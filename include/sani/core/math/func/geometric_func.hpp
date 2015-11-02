@@ -78,6 +78,9 @@ namespace sani {
 		/// @param b The second vector
 		template <typename T>
 		T dot(const Vector4<T>& a, const Vector4<T>& b);
+		
+		template <typename T>
+		Vector3<T> cross(const Vector3<T>& a, const Vector3<T>& b);
 
 		// TODO cross, distance etc
 	}

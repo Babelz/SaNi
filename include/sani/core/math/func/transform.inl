@@ -2,16 +2,17 @@
 
 #include "transform.hpp"
 #include "trigonometric_func.hpp"
+#include "geometric_func.hpp"
 
 namespace sani {
 	namespace math {
 		template <typename T>
 		Matrix4<T> translate(Matrix4<T> const& mat, Vector3<T> const& vec) {
 			/*
-				For programming purposes, OpenGL matrices are 16-value arrays with base vectors laid out contiguously in memory. 
+				For programming purposes, OpenGL matrices are 16-value arrays with base vectors laid out contiguously in memory.
 				The translation components occupy the 13th, 14th, and 15th elements of the 16-element matrix
 				TODO: DirectX has the same memory layout?
-			*/
+				*/
 			Matrix4<T> result;
 			result[3] = mat[0] * vec[0] + mat[1] * vec[1] + mat[2] * vec[2] + mat[3];
 			return result;
@@ -72,8 +73,6 @@ namespace sani {
 			return result;
 		}
 
-		static float asd = 0.0f;
-
 		template <typename T>
 		Matrix4<T> perspective(const float fovy, const float ar, const float znear, const float zfar) {
 			const T tanhf = math::tan(fovy / static_cast<T>(2));
@@ -88,6 +87,30 @@ namespace sani {
 
 			return perspective;
 		}
+
+
+		template <typename T>
+		Matrix4<T> lookAt(const Vector3<T>& eye, const Vector3<T>& center, const Vector3<T>& up) {
+			Vector3<T> const f(normalize(center - eye));
+			Vector3<T> const s(normalize(cross(up, f)));
+			Vector3<T> const u(cross(f, s));
+
+			Matrix4<T> result;
+
+			result[0][0] = s.x;
+			result[1][0] = s.y;
+			result[2][0] = s.z;
+			result[0][1] = u.x;
+			result[1][1] = u.y;
+			result[2][1] = u.z;
+			result[0][2] = f.x;
+			result[1][2] = f.y;
+			result[2][2] = f.z;
+			result[3][0] = -dot(s, eye);
+			result[3][1] = -dot(u, eye);
+			result[3][2] = -dot(f, eye);
+
+			return result;
+		}
 	}
 }
-

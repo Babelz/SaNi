@@ -9,13 +9,13 @@ namespace sani {
 	namespace graphics {
 
 		/// @class 
-		class UserPrimitiveRenderSetup : public RenderSetup {
+		class PolygonRenderSetup : public RenderSetup {
 		private:
 			RenderMode renderMode;
 
 			uint32 vertices;
 		public:
-			UserPrimitiveRenderSetup(GraphicsDevice* const graphicsDevice);
+			PolygonRenderSetup(GraphicsDevice* const graphicsDevice);
 
 			void setRenderMode(const RenderMode renderMode);
 			RenderMode getRenderMode() const;

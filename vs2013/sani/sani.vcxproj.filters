@@ -124,9 +124,6 @@
     <Filter Include="include\graphics\inl">
       <UniqueIdentifier>{3cc51374-a639-44a2-83ec-cae290c76133}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\graphics\renderers">
-      <UniqueIdentifier>{0156d952-d6c0-459e-9337-d199109d1392}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\graphics\setups">
       <UniqueIdentifier>{7747358c-a8d3-466f-84ae-294e6d636145}</UniqueIdentifier>
     </Filter>
@@ -270,7 +267,10 @@
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp">
       <Filter>src\graphics\setups</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\setups\user_primitive_render_setup.cpp">
+    <ClCompile Include="..\..\src\graphics\setups\polygon_render_setup.cpp">
+      <Filter>src\graphics\setups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp">
       <Filter>src\graphics\setups</Filter>
     </ClCompile>
   </ItemGroup>
@@ -557,10 +557,19 @@
     <ClInclude Include="..\..\include\sani\graphics\setups\render_setups.hpp">
       <Filter>include\graphics\setups</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\setups\user_primitive_render_setup.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\transformable.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\setups\polygon_render_setup.hpp">
       <Filter>include\graphics\setups</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\setups\textured_polygon_render_setup.hpp">
+      <Filter>include\graphics\setups</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\vertex_mode.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>

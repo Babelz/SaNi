@@ -32,7 +32,6 @@ namespace sani {
 					if (bufferPointer + offset > size) {
 						const uint32 oldSize = size;
 						const uint32 newSize = size * 2;
-						const uint32 diff = newSize - oldSize;
 
 						T* newMemory = new T[newSize];
 						std::move(memory, memory + oldSize, newMemory);
@@ -67,7 +66,7 @@ namespace sani {
 			/// Push given elements to the buffer.
 			/// @param [in] elements elements to push
 			/// @param [in] count count of elements to push
-			inline void push(T* elements, const uint32 count) {
+			inline void push(const T* elements, const uint32 count) {
 				checkSize(count);
 
 				for (uint32 i = 0; i < count; i++) memory[i + bufferPointer] = elements[i];

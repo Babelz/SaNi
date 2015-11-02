@@ -24,12 +24,12 @@ namespace sani {
 		}
 
 		template <typename T>
-		T length(const Vector2<T>& a) {
+		T length(const Vector3<T>& a) {
 			return std::sqrt(dot(a, a));
 		}
 
 		template <typename T>
-		T length(const Vector2<T>& a) {
+		T length(const Vector4<T>& a) {
 			return std::sqrt(dot(a, a));
 		}
 
@@ -66,6 +66,16 @@ namespace sani {
 			return temp.x + temp.y + temp.z + temp.w;
 		}
 
+		template <typename T>
+		Vector3<T> cross(const Vector3<T>& a, const Vector3<T>& b) {
+			Vector3<T> result;
+
+			result.x = a.y * b.z - a.z * b.z;
+			result.y = -(a.x * b.z - a.z * b.x);
+			result.z = (a.x * b.y - a.y * b.x);
+
+			return result;
+		}
 	}
 }
 
