@@ -10,12 +10,6 @@ namespace sani {
 		/// 
 		/// Mutable 32-bit color.
 		struct Color {
-			static const Color black;
-			static const Color white;
-			static const Color red;
-			static const Color green;
-			static const Color blue;
-			
 			float32 r;
 			float32 g;
 			float32 b;
@@ -36,6 +30,12 @@ namespace sani {
 			Color& operator =(const Color& rhs);
 			bool operator ==(const Color& rhs);
 			bool operator !=(const Color& rhs);
+		
+			#define black	Color(0.0f, 0.0f, 0.0f, 1.0f)
+			#define white	Color(1.0f, 1.0f, 1.0f, 1.0f)
+			#define red		Color(1.0f, 0.0f, 0.0f, 1.0f)
+			#define green	Color(0.0f, 1.0f, 0.0f, 1.0f)
+			#define blue	Color(0.0f, 0.0f, 1.0f, 1.0f)
 		};
 	}
 }

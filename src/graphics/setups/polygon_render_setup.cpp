@@ -41,7 +41,7 @@ namespace sani {
 
 			VertexAttributePointerDescription colorDescription;
 			colorDescription.location = 1;
-			colorDescription.count = 3;
+			colorDescription.count = 4;
 			colorDescription.type = PrimitiveType::Float;
 			colorDescription.normalized = false;
 			colorDescription.stride = sizeof(float32) * vertices;

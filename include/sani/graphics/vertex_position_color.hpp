@@ -13,6 +13,9 @@ namespace sani {
 			Vec3f position;
 			Color color;
 
+			VertexPositionColor(const Vec3f& position, const Color& color) : position(position),
+																			 color(color) {
+			}
 			VertexPositionColor() {
 			}
 

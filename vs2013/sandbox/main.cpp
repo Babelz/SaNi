@@ -16,7 +16,9 @@
 #include "sani/debug.hpp"
 #include "sani/graphics/camera2d.hpp"
 #include "sani/graphics/renderer.hpp"
+#include "sani/graphics/vertex_position_color.hpp"
 #include "sani/core/math/vector.hpp"
+#include "sani/platform/graphics/color.hpp"
 
 using namespace sani::graphics;
 using namespace sani::math;
@@ -95,57 +97,45 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//initResource(&graphicsDevice);
 	//tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
 
-	Buffer<float32> vertices(1024, BufferSizing::Dynamic);
+	Buffer<float32> vertices(21, BufferSizing::Static);
 
-	/*for (size_t i = 0; i < 32; i++)
+	VertexPositionColor v1(Vec3f(32.0f, 0.0f, 0.0f), Color::red);
+	VertexPositionColor v2(Vec3f(64.0f, 64.0f, 0.0f), Color::red);
+	VertexPositionColor v3(Vec3f(0.0f, 64.0f, 0.0f), Color::red);
+
+	VertexPositionColor vert[] = 
 	{
-		Vec3 v1(-32 * i, -32 * i, 0.0f);
-		Vec3 v2(32 * i, -32 * i, 0.0f);
-		Vec3 v3(32 * i, 32 * i, 0.0f);
-
-		Vec3 v4(32 * i, 32 * i, 0.0f);
-		Vec3 v5(-32 * i , 32 * i, 0.0f);
-		Vec3 v6(-32 * i, -32 * i, 0.0f);
-
-		Vec3 vert[] = {
-			v1, Vec3(1, 0, 0),
-			v2, Vec3(0, 1, 0),
-			v3, Vec3(1, 0, 0),
-			v4, Vec3(0, 0, 1),
-			v5, Vec3(1, 0, 0),
-			v6, Vec3(1, 1, 0)
-		};
-
-		vertices.push(reinterpret_cast<float32*>(vert), 36);
-	}
-	*/
-
-	Vec3 vert[] = {
-		Vec3(0.5f * 8.0f, 0, 0), Vec3(1, 0, 0),
-		Vec3(1.0f * 8.0f, -1.0f * 8.0f, 0), Vec3(0, 1, 0),
-		Vec3(1.0f * 8.0f, -1.0f* 8.0f, 0), Vec3(1, 0, 0)
+		v1,
+		v2,
+		v3
 	};
 
-	vertices.push(reinterpret_cast<float32*>(vert), 18);
+	vertices.push(reinterpret_cast<float32*>(vert), 21);
 
 	char* vertexSource =
 		"#version 330 core\n"
 		"layout(location = 0) in vec3 vertex_position;"
-		"layout(location = 1) in vec3 color;"
-		"out vec3 out_color;"
+		"layout(location = 1) in vec4 color;"
+		""
+		"out vec4 out_color;"
 		"uniform mat4 transform;"
+		""
 		"void main() {"
 		""
 		"	gl_Position = transform * vec4(vertex_position, 1.0);"
 		"	out_color = color;"
+		""
 		"}";
 
 	char* fragmentSource =
 		"#version 330 core\n"
-		"in vec3 out_color;"
-		"out vec3 vertex_color;"
+		"in vec4 out_color;"
+		"out vec4 vertex_color;"
+		""
 		"void main(){"
-		"vertex_color = out_color;"
+		""
+		"	vertex_color = out_color;"
+		""
 		"}";
 
 	uint32 vertex = 0;
@@ -184,8 +174,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	camera.setZoom(1.0f);
-
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
@@ -197,7 +185,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		graphicsDevice.clear(Color::black);
 		
-		renderer.beginRenderingPolygons(transform, 6, RenderMode::Triangles);
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 
 		renderer.renderPolygons(vertices.head(), vertices.getBufferPointerLocation());
 
