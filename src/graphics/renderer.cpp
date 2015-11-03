@@ -39,7 +39,7 @@ namespace sani {
 
 			graphicsDevice.setBufferData(BufferType::ArrayBuffer,
 										 vertices.getSize() * sizeof(float32),
-										 vertices.head(),
+										 vertices.data(),
 										 BufferUsage::Stream);
 
 
@@ -58,7 +58,7 @@ namespace sani {
 
 				graphicsDevice.setBufferData(BufferType::ArrayBuffer,
 											 vertices.getSize() * sizeof(float32),
-											 vertices.head(),
+											 vertices.data(),
 											 BufferUsage::Stream);
 
 				verticesSize = vertices.getSize();
@@ -79,15 +79,15 @@ namespace sani {
 			
 			vertices.resetBufferPointer();
 		}
-		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 vertices) {
+		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 elements) {
 			swapRenderSetup();
 
 			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
 			polygonRenderSetup->setRenderMode(renderMode);
-			polygonRenderSetup->setVertices(vertices);
+			polygonRenderSetup->setElements(elements);
 		}
-		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 vertices) {
-			prepareRenderingPolygons(renderMode, vertices);
+		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 elements) {
+			prepareRenderingPolygons(renderMode, elements);
 			
 			TexturedPolygonRenderSetup* const polygonRenderSetup = static_cast<TexturedPolygonRenderSetup*>(renderSetup);
 			polygonRenderSetup->setTexture(texture);
@@ -110,12 +110,12 @@ namespace sani {
 
 				graphicsDevice.setBufferSubData(BufferType::ArrayBuffer,
 												0,
-												vertices.getBufferPointerLocation() * sizeof(float32),
-												vertices.head());
+												vertices.getElementsCount() * sizeof(float32),
+												vertices.data());
 
 				PolygonRenderSetup* renderSetup = static_cast<PolygonRenderSetup*>(this->renderSetup);
 
-				graphicsDevice.drawArrays(renderSetup->getRenderMode(), 0, vertices.getBufferPointerLocation() / renderSetup->getVertices());
+				graphicsDevice.drawArrays(renderSetup->getRenderMode(), 0, vertices.getElementsCount() / renderSetup->getElements());
 			} else {
 				throw std::runtime_error("not implemented");
 			}
@@ -131,34 +131,34 @@ namespace sani {
 			return graphicsDevice.hasErrors();
 		}
 
-		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertices, const RenderMode renderMode) {
-			SANI_ASSERT(vertices != 0);
+		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 elements, const RenderMode renderMode) {
+			SANI_ASSERT(elements != 0);
 
 			prepareRendering(RenderState::TexturedPolygons, transform, VertexMode::NoIndexing);
-			prepareRenderingPolygons(renderMode, texture, vertices);
+			prepareRenderingPolygons(renderMode, texture, elements);
 			
 			renderSetup->use();
 		}
-		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 vertices, const RenderMode renderMode) {
-			SANI_ASSERT(vertices != 0);
+		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 elements, const RenderMode renderMode) {
+			SANI_ASSERT(elements != 0);
 			
 			prepareRendering(RenderState::Polygons, transform, VertexMode::NoIndexing);
-			prepareRenderingPolygons(renderMode, vertices);
+			prepareRenderingPolygons(renderMode, elements);
 
 			renderSetup->use();
 		}
 		
-		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertices, const uint32* indices, const RenderMode renderMode) {
+		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 elements, const uint32* indices, const RenderMode renderMode) {
 			throw std::runtime_error("not implemented");
 		}
-		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertices, const uint32* indices, const RenderMode renderMode) {
+		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 elements, const uint32* indices, const RenderMode renderMode) {
 			throw std::runtime_error("not implemented");
 		}
 		
 		void Renderer::renderPolygons(const float32* vertices, const uint32 count) {
 			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
 			
-			SANI_ASSERT((count % polygonRenderSetup->getVertices()) == 0);
+			SANI_ASSERT((count % polygonRenderSetup->getElements()) == 0);
 
 			this->vertices.push(vertices, count);
 
@@ -170,7 +170,7 @@ namespace sani {
 		void Renderer::renderPolygon(const float32* vertices) {
 			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
 
-			this->vertices.push(vertices, polygonRenderSetup->getVertices());
+			this->vertices.push(vertices, polygonRenderSetup->getElements());
 
 			// TODO: make indices.
 			if (vertexMode == VertexMode::Indexed) {

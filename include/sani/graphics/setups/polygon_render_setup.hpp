@@ -13,15 +13,15 @@ namespace sani {
 		private:
 			RenderMode renderMode;
 
-			uint32 vertices;
+			uint32 elements;
 		public:
 			PolygonRenderSetup(GraphicsDevice* const graphicsDevice);
 
 			void setRenderMode(const RenderMode renderMode);
 			RenderMode getRenderMode() const;
 
-			void setVertices(const uint32 vertices);
-			uint32 getVertices() const;
+			void setElements(const uint32 elements);
+			uint32 getElements() const;
 			
 			virtual void use() override;
 

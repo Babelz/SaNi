@@ -9,7 +9,7 @@ namespace sani {
 
 		PolygonRenderSetup::PolygonRenderSetup(GraphicsDevice* const graphicsDevice) : RenderSetup(graphicsDevice),
 																					   renderMode(RenderMode::Triangles),
-																					   vertices(0) {
+																					   elements(0) {
 		}
 
 		void PolygonRenderSetup::setRenderMode(const RenderMode renderMode) {
@@ -19,11 +19,11 @@ namespace sani {
 			return renderMode;
 		}
 
-		void PolygonRenderSetup::setVertices(const uint32 vertices) {
-			this->vertices = vertices;
+		void PolygonRenderSetup::setElements(const uint32 elements) {
+			this->elements = elements;
 		}
-		uint32 PolygonRenderSetup::getVertices() const {
-			return vertices;
+		uint32 PolygonRenderSetup::getElements() const {
+			return elements;
 		}
 
 		void PolygonRenderSetup::use() {
@@ -32,7 +32,7 @@ namespace sani {
 			vertexDescription.count = 3;
 			vertexDescription.type = PrimitiveType::Float;
 			vertexDescription.normalized = false;
-			vertexDescription.stride = sizeof(float32) * vertices;
+			vertexDescription.stride = sizeof(float32) * elements;
 			vertexDescription.offset = 0;
 			
 			/*
@@ -44,7 +44,7 @@ namespace sani {
 			colorDescription.count = 4;
 			colorDescription.type = PrimitiveType::Float;
 			colorDescription.normalized = false;
-			colorDescription.stride = sizeof(float32) * vertices;
+			colorDescription.stride = sizeof(float32) * elements;
 			colorDescription.offset = sizeof(float32) * 3;
 
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();

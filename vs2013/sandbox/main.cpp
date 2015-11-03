@@ -187,7 +187,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 
-		renderer.renderPolygons(vertices.head(), vertices.getBufferPointerLocation());
+		renderer.renderPolygons(vertices.data(), vertices.getElementsCount());
 
 		renderer.endRendering();
 	}

@@ -79,7 +79,7 @@ namespace sani {
 				return size;
 			}
 			/// Returns the location of the buffer pointer.
-			inline uint32 getBufferPointerLocation() const {
+			inline uint32 getElementsCount() const {
 				return bufferPointer;
 			}
 
@@ -87,11 +87,11 @@ namespace sani {
 			inline void copy(Buffer<T>& other) {
 				checkSize(other.getBufferPointerLocation());
 
-				push(other.head(), other.getBufferPointerLocation());
+				push(other.data(), other.getBufferPointerLocation());
 			}
 
 			/// Returns pointer to the beginning of the buffer.
-			inline T* head() {
+			inline T* data() {
 				return &memory[0];
 			}
 
