@@ -101,7 +101,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Vec3 v2(0.5f, -0.5f, 0.0f);
 	Vec3 v3(0.5f, 0.5f, 0.0f);
 	
-	for (size_t i = 0; i < 33; i++)
+	for (size_t i = 0; i < 32; i++)
 	{
 		Vec3 v1(-0.5f + i, -0.5f + i, 0.0f);
 		Vec3 v2(0.5f + i, -0.5f + i, 0.0f);
@@ -197,10 +197,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		renderer.renderPolygons(vertices.head(), vertices.getBufferPointerLocation());
 
 		renderer.endRendering();
-
-		camera.setX(-(graphicsDevice.getViewport().width / 2.0f));
-		camera.setY(-(graphicsDevice.getViewport().height / 2.0f));
-		camera.rotateBy(0.001f);
 	}
 
 	graphicsDevice.cleanUp();

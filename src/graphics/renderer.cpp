@@ -34,8 +34,8 @@ namespace sani {
 			graphicsDevice.generateBuffer(vertexBuffer);
 			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 
-			graphicsDevice.generateBuffer(indexBuffer);
-			graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
+			//graphicsDevice.generateBuffer(indexBuffer);
+			//graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
 			graphicsDevice.setBufferData(BufferType::ArrayBuffer,
 										 vertices.getSize() * sizeof(float32),
@@ -43,10 +43,12 @@ namespace sani {
 										 BufferUsage::Stream);
 
 
-			graphicsDevice.setBufferData(BufferType::ElementArrayBuffer,
-										 vertices.getSize() * sizeof(float32),
-										 vertices.head(),
-										 BufferUsage::Stream);
+			//graphicsDevice.setBufferData(BufferType::ElementArrayBuffer,
+			//							 vertices.getSize() * sizeof(float32),
+			//							 vertices.head(),
+			//							 BufferUsage::Stream);
+
+			//graphicsDevice.unbindBuffer(BufferType::ElementArrayBuffer);
 		}
 
 		void Renderer::updateVertexBufferSize() {
@@ -161,6 +163,9 @@ namespace sani {
 			this->vertices.push(vertices, count);
 
 			// TODO: make indices.
+			if (vertexMode == VertexMode::Indexed) {
+				throw std::runtime_error("not implemented");
+			}
 		}
 		void Renderer::renderPolygon(const float32* vertices) {
 			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
@@ -168,6 +173,9 @@ namespace sani {
 			this->vertices.push(vertices, polygonRenderSetup->getVertices());
 
 			// TODO: make indices.
+			if (vertexMode == VertexMode::Indexed) {
+				throw std::runtime_error("not implemented");
+			}
 		}
 
 		void Renderer::endRendering() {
