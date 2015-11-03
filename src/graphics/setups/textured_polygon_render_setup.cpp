@@ -24,8 +24,8 @@ namespace sani {
 			textureDescription.count = 2;
 			textureDescription.type = PrimitiveType::Float;
 			textureDescription.normalized = false;
-			textureDescription.stride = sizeof(float32) * getVertices();
-			textureDescription.offset = sizeof(float32) * 6;
+			textureDescription.stride = sizeof(float32) * getElements();
+			textureDescription.offset = sizeof(float32) * 7;
 
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();
 			graphicsDevice->createVertexAttributePointer(textureDescription);

@@ -49,8 +49,8 @@ namespace sani {
 			void swapRenderSetup();
 
 			void prepareRendering(const RenderState renderState, const math::Mat4f& transform, const VertexMode vertexMode);
-			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 vertices);
-			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 vertices);
+			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 elements);
+			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 elements);
 
 			void endRendering(const RenderState renderState);
 
@@ -64,28 +64,28 @@ namespace sani {
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
 			/// @param[in] texture texture that will be used to texture the shapes
-			/// @param[in] vertices how many vertices each object has
+			/// @param[in] elements how many elements each vertex has
 			/// @param[in] renderMode render mode
-			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertices, const RenderMode renderMode);
+			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 elements, const RenderMode renderMode);
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
-			/// @param[in] vertices how many vertices each object has
+			/// @param[in] elements how many elements each vertex has
 			/// @param[in] renderMode render mode
-			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 vertices, const RenderMode renderMode);
+			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 elements, const RenderMode renderMode);
 
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
 			/// @param[in] texture texture that will be used to texture the shapes
-			/// @param[in] vertices how many vertices each object has
+			/// @param[in] elements how many elements each vertex has
 			/// @param[in] indices indices 
 			/// @param[in] renderMode render mode
-			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertices, const uint32* indices, const RenderMode renderMode);
+			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 elements, const uint32* indices, const RenderMode renderMode);
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
-			/// @param[in] vertices how many vertices each object has
+			/// @param[in] elements how many elements each vertex has
 			/// @param[in] indices indices
 			/// @param[in] renderMode render mode
-			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertices, const uint32* indices, const RenderMode renderMode);
+			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 elements, const uint32* indices, const RenderMode renderMode);
 
 			/// Renders given polygons.
 			/// @param[in] vertices vertices
