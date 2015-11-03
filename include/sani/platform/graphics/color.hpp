@@ -16,11 +16,12 @@ namespace sani {
 			float32 b;
 			float32 a;
 
-			/// Creates new instance of the color object with given values. 255 base.
+			/// Creates new instance of the color object with given values. The values are divided by 255.
 			Color(const uint8 r, const uint8 g, const uint8 b, const uint8 a);
+			/// Creates new instance of the color object with already created color and custom alpha value
 			Color(const Color& color, const uint8 a);
 
-			/// Creates new instance of the color object with given values. Values are multiplied by 255.
+			/// Creates new instance of the color object with given values from 0 to 1.0f.
 			Color(const float32 r, const float32 g, const float32 b, const float32 a);
 			Color(const Color& color, const float32 a);
 
