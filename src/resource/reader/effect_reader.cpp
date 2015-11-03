@@ -3,8 +3,10 @@
 namespace sani {
 	namespace resource {
 		namespace reader {
-			void EffectReader::read(ResourceReader* reader) {
+			EffectReader::~EffectReader() {}
 
+			void* EffectReader::read(ResourceReader* reader) {
+				return nullptr;
 			}
 		}
 	}

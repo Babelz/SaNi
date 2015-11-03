@@ -180,9 +180,6 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\reader\primitive_readers.cpp">
-      <Filter>src\resource\reader</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp">
       <Filter>src\resource\reader</Filter>
     </ClCompile>
@@ -409,9 +406,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp">
       <Filter>include\resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\reader\primitive_readers.hpp">
-      <Filter>include\resource\reader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp">
       <Filter>include\resource\reader</Filter>

@@ -194,7 +194,6 @@
     <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp" />
     <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
-    <ClCompile Include="..\..\src\resource\reader\primitive_readers.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
@@ -291,7 +290,6 @@
     <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\reader\primitive_readers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader_manager.hpp" />

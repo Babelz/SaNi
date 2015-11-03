@@ -94,8 +94,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
-	//initResource(&graphicsDevice);
-	//tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
+	initResource(&graphicsDevice);
+	tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 

@@ -13,7 +13,7 @@ namespace sani {
 				~Texture2DReader();
 				String getReaderName() const { return "sani::resource::reader::Texture2DReader"; }
 
-				void read(ResourceReader* reader);
+				void* read(ResourceReader* reader);
 			};
 		}
 	}

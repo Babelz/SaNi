@@ -7,9 +7,9 @@ namespace sani {
 			class ResourceTypeWriter {
 			public:
 				/// Default constructor
-				ResourceTypeWriter() = default;
+				ResourceTypeWriter() {}
 				/// Default destructor
-				virtual ~ResourceTypeWriter() = default;
+				virtual ~ResourceTypeWriter() {}
 
 				/// Writes the data type to stream
 				/// @param writer The content writer which has stream open
