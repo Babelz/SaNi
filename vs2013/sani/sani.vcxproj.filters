@@ -130,6 +130,9 @@
     <Filter Include="src\graphics\setups">
       <UniqueIdentifier>{32be1caa-d02f-48a6-aa0e-d508fc049c4f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\resource\processor">
+      <UniqueIdentifier>{fbfd0dbe-7e0e-4855-a40d-6a33436eca5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -272,6 +275,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp">
       <Filter>src\graphics\setups</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\texture2d_content.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp">
+      <Filter>src\resource\processor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -572,6 +581,9 @@
     <ClInclude Include="..\..\include\sani\graphics\vertex_mode.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resources.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -594,6 +606,9 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl">
       <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\resource\compiler\resource_writer.inl">
+      <Filter>include\resource\compiler</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
