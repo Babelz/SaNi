@@ -9,8 +9,7 @@ namespace sani {
 				std::type_index info = std::type_index(typeid(T));
 				// we dont have writer yet lets add it
 				if (writers.find(info) == writers.end()) {
-					//assert(0);
-					// TODO HOW TO GET TYPE USED FOR WRITING?
+					// Texture2D => Texture2DWriter 
 				}
 				return writers[std::type_index(typeid(T))];
 			}

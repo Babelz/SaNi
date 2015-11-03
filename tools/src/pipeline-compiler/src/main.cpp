@@ -10,6 +10,7 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/window.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
+#include "sani/resource/compiler/resource_compiler.hpp"
 
 static void usage() {
 	std::cout << "Insert some help here" << std::endl;
@@ -18,35 +19,23 @@ static void usage() {
 int main(int argc, char** argv) {
 	using namespace sani::resource;
 	using namespace sani::io;
-
+	using namespace sani::resource::compiler;
 	if (argc <= 1) {
 		usage();
 		return 1;
 	}
 
-	// TODO multiple files
-	String filePath(argv[1]);
-	String filename(argv[1]);
-	String outExtension(".out");
+	ResourceCompiler compiler;
 
-	size_t index = 0;
-	if ((index = filePath.rfind(".")) != String::npos) {
-		filename = (filename.substr(0, index));
-	}
-
-	const String outpath(filename + outExtension);
-
-	FileSystem fs;
 	processor::Texture2DProcessor proc;
 	pipeline::Texture2DImporter importer;
 	try {
-
-		std::cout << "Trying to open file " << filePath << std::endl;
-		if (!fs.fileExists(filePath)) {
-			std::cerr << filePath << " does not exist!" << std::endl;
-			return 1;
+		size_t i = 1;
+		while (argc-- > 1) {
+			compiler.compile(argv[i++]);
 		}
-
+		
+		/*
 		Texture2DContent* content = importer.import(filePath, &fs);
 		content = proc.process(content);
 
@@ -66,7 +55,7 @@ int main(int argc, char** argv) {
 		textureWriter->write(writer, content);
 		file->flush();
 		fs.closeFile(outpath);
-
+		*/
 /*		//// READING
 
 		if (!fs.openFile(outpath, Filemode::Read, &file)) {
