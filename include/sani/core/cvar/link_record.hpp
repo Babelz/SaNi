@@ -14,20 +14,20 @@ namespace sani {
 	/// linkages. Used to compile the files in correct order.
 	class LinkRecord {
 	private:
-		std::vector<CVarFile*> links;
+		std::vector<CVarFile* const> links;
 		CVarFile* root;
 	public:
 		LinkRecord();
 
-		void recordRoot(CVarFile* root);
-		void recordLink(CVarFile* link);
+		void recordRoot(CVarFile* const root);
+		void recordLink(CVarFile* const link);
 
-		CVarFile* getRoot() const;
+		CVarFile* const getRoot() const;
 		
 		bool hasLinks() const;
-		CVarFile* getNextLink();
+		CVarFile* const getNextLink();
 
-		bool isLinked(CVarFile* link) const;
+		bool isLinked(CVarFile* const link) const;
 
 		~LinkRecord();
 	};

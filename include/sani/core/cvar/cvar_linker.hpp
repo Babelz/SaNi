@@ -23,11 +23,11 @@ namespace sani {
 		LinkRecord* rootRecord;
 		uint32 scope;
 
-		CVarFile* findFile(const String& filename, std::list<CVarFile>& files);
-		void linkFiles(CVarFile* file, std::list<CVarFile>& files);
+		CVarFile* const findFile(const String& filename, std::list<CVarFile>& files);
+		void linkFiles(CVarFile* const file, std::list<CVarFile>& files);
 
-		void copyContents(CVarFile* file, const uint32 lineIndex, const String& line, std::list<CVarFile>& files);
-		void linkFile(CVarFile* file, String& line, std::list<CVarFile>& files);
+		void copyContents(CVarFile* const file, const uint32 lineIndex, const String& line, std::list<CVarFile>& files);
+		void linkFile(CVarFile* const file, String& line, std::list<CVarFile>& files);
 
 		void updateScope(const String& line);
 		
@@ -38,7 +38,7 @@ namespace sani {
 		bool hasErrors() const;
 		String getNextError();
 
-		void link(const String& filename, std::list<CVarFile>& files, LinkRecord* record);
+		void link(const String& filename, std::list<CVarFile>& files, LinkRecord* const record);
 
 		~CVarLinker();
 	};

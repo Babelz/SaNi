@@ -10,7 +10,7 @@ namespace sani {
 	CVarLinker::CVarLinker() {
 	}
 
-	CVarFile* CVarLinker::findFile(const String& filename, std::list<CVarFile>& files) {
+	CVarFile* const CVarLinker::findFile(const String& filename, std::list<CVarFile>& files) {
 		auto file = std::find_if(files.begin(), files.end(), [&filename](const CVarFile& other) {
 			return filename == other.getFilename();
 		});
@@ -23,7 +23,7 @@ namespace sani {
 
 		return &(*file);
 	}
-	void CVarLinker::linkFiles(CVarFile* file, std::list<CVarFile>& files) {
+	void CVarLinker::linkFiles(CVarFile* const file, std::list<CVarFile>& files) {
 		scope = 0;
 
 		for (uint32 i = 0; i < file->getLinesCount(); i++) {
@@ -41,7 +41,7 @@ namespace sani {
 		}
 	}
 
-	void CVarLinker::copyContents(CVarFile* file, const uint32 lineIndex, const String& line, std::list<CVarFile>& files) {
+	void CVarLinker::copyContents(CVarFile* const file, const uint32 lineIndex, const String& line, std::list<CVarFile>& files) {
 		if (hasErrors()) return;
 
 		CVarFile* other = findFile(line, files);
@@ -62,7 +62,7 @@ namespace sani {
 			rootRecord->recordLink(other);
 		}
 	}
-	void CVarLinker::linkFile(CVarFile* file, String& line, std::list<CVarFile>& files) {
+	void CVarLinker::linkFile(CVarFile* const file, String& line, std::list<CVarFile>& files) {
 		// Begin by looking if the file we are linking needs to be linked.
 
 		// Require that the scope is 0.
@@ -111,7 +111,7 @@ namespace sani {
 		return message;
 	}
 
-	void CVarLinker::link(const String& filename, std::list<CVarFile>& files, LinkRecord* linkRecord) {
+	void CVarLinker::link(const String& filename, std::list<CVarFile>& files, LinkRecord* const linkRecord) {
 		CVarFile* file = findFile(filename, files);
 
 		if (hasErrors()) return;

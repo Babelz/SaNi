@@ -84,19 +84,19 @@ namespace sani {
 		stringVal = value;
 		changed = true;
 	}
-	void CVar::write(int32 value) {
+	void CVar::write(const int32 value) {
 		if (type != cvarlang::ValueType::IntVal) return;
 
 		int32Val = value; 
 		changed = true;
 	}
-	void CVar::write(float32 value) {
+	void CVar::write(const float32 value) {
 		if (type != cvarlang::ValueType::FloatVal) return;
 
 		float32Val = value; 
 		changed = true;
 	}
-	void CVar::write(float64 value) {
+	void CVar::write(const float64 value) {
 		if (type != cvarlang::ValueType::DoubleVal) return;
 
 		float64Val = value; 
@@ -114,7 +114,7 @@ namespace sani {
 		TODO: fix these with some delegation... Too much duplication.
 	*/
 
-	const bool CVar::operator == (const CVar& other) const {
+	bool CVar::operator == (const CVar& other) const {
 		if (type == cvarlang::ValueType::StringVal) {
 			String val(""); other.read(val);
 
@@ -135,10 +135,10 @@ namespace sani {
 
 		return false;
 	}
-	const bool CVar::operator != (const CVar& other) const {
+	bool CVar::operator != (const CVar& other) const {
 		return !(*this == other);
 	}
-	const bool CVar::operator < (const CVar& other) const {
+	bool CVar::operator < (const CVar& other) const {
 		if (type == cvarlang::ValueType::StringVal) {
 			String val(""); other.read(val);
 
@@ -159,13 +159,13 @@ namespace sani {
 
 		return false;
 	}
-	const bool CVar::operator <= (const CVar& other) const {
+	bool CVar::operator <= (const CVar& other) const {
 		return *this < other || *this == other;
 	}
-	const bool CVar::operator > (const CVar& other) const {
+	bool CVar::operator > (const CVar& other) const {
 		return !(*this < other);
 	}
-	const bool CVar::operator >= (const CVar& other) const {
+	bool CVar::operator >= (const CVar& other) const {
 		return !(*this < other) || *this == other;
 	}
 }

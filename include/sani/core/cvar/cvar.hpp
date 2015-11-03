@@ -62,19 +62,19 @@ namespace sani {
 		void read(float64& value) const;
 
 		void write(const String& value);
-		void write(int32 value);
-		void write(float32 value);
-		void write(float64 value);
+		void write(const int32 value);
+		void write(const float32 value);
+		void write(const float64 value);
 
 		void getRequireStatementMessages(std::vector<String>& messages);
 
 		~CVar();
 
-		const bool operator == (const CVar& other) const;
-		const bool operator != (const CVar& other) const;
-		const bool operator < (const CVar& other) const;
-		const bool operator <= (const CVar& other) const;
-		const bool operator > (const CVar& other) const;
-		const bool operator >= (const CVar& other) const;
+		bool operator == (const CVar& other) const;
+		bool operator != (const CVar& other) const;
+		bool operator < (const CVar& other) const;
+		bool operator <= (const CVar& other) const;
+		bool operator > (const CVar& other) const;
+		bool operator >= (const CVar& other) const;
 	};
 }
