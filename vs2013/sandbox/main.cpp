@@ -112,15 +112,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		Vec3 v6(-0.5f + i, -0.5f + i, 0.0f);
 
 		Vec3 vert[] = {
-		v1, Vec3(1, 0, 0),
-		v2, Vec3(0, 1, 0),
-		v3, Vec3(1, 0, 0),
-		v4, Vec3(0, 0, 1),
-		v5, Vec3(1, 0, 0),
-		v6, Vec3(1, 1, 0)
-	};
+			v1, Vec3(1, 0, 0),
+			v2, Vec3(0, 1, 0),
+			v3, Vec3(1, 0, 0),
+			v4, Vec3(0, 0, 1),
+			v5, Vec3(1, 0, 0),
+			v6, Vec3(1, 1, 0)
+		};
 
-	vertices.push(reinterpret_cast<float32*>(vert), 36);
+		vertices.push(reinterpret_cast<float32*>(vert), 36);
 	}
 
 	char* vertexSource =
@@ -192,9 +192,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		graphicsDevice.clear(Color::black);
 		
-		renderer.beginRenderingUserPrimitives(transform, 6, RenderMode::Triangles);
+		renderer.beginRenderingPolygons(transform, 6, RenderMode::Triangles);
 
-		renderer.renderUserPrimitives(vertices);
+		renderer.renderPolygons(vertices.head(), vertices.getBufferPointerLocation());
 
 		renderer.endRendering();
 

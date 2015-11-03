@@ -16,6 +16,7 @@ namespace sani {
 		Renderer::Renderer(GraphicsDevice& graphicsDevice) : graphicsDevice(graphicsDevice),
 															 vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
 															 indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+															 verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
 															 renderState(RenderState::Waiting),
 															 vertexBuffer(0),
 															 indexBuffer(0) {
@@ -51,6 +52,8 @@ namespace sani {
 		void Renderer::updateVertexBufferSize() {
 			// Rebind buffer if it's size has changed.
 			if (verticesSize != vertices.getSize()) {
+				graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
+
 				graphicsDevice.setBufferData(BufferType::ArrayBuffer,
 											 vertices.getSize() * sizeof(float32),
 											 vertices.head(),
@@ -97,18 +100,23 @@ namespace sani {
 		}
 
 		void Renderer::presentPolygons() {
-			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
-			
-			updateVertexBufferSize();
+			if (vertexMode == VertexMode::NoIndexing) {
+				// Render with no indexing.
+				updateVertexBufferSize();
 
-			graphicsDevice.setBufferSubData(BufferType::ArrayBuffer,
-											0,
-											vertices.getBufferPointerLocation() * sizeof(float32),
-											vertices.head());
+				graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 
-			PolygonRenderSetup* renderSetup = static_cast<PolygonRenderSetup*>(this->renderSetup);
+				graphicsDevice.setBufferSubData(BufferType::ArrayBuffer,
+												0,
+												vertices.getBufferPointerLocation() * sizeof(float32),
+												vertices.head());
 
-			graphicsDevice.drawArrays(renderSetup->getRenderMode(), 0, vertices.getBufferPointerLocation() / renderSetup->getVertices());
+				PolygonRenderSetup* renderSetup = static_cast<PolygonRenderSetup*>(this->renderSetup);
+
+				graphicsDevice.drawArrays(renderSetup->getRenderMode(), 0, vertices.getBufferPointerLocation() / renderSetup->getVertices());
+			} else {
+				throw std::runtime_error("not implemented");
+			}
 		}
 		void Renderer::presentIndexedPolygons() {
 			throw std::runtime_error("not implemented");
@@ -148,7 +156,9 @@ namespace sani {
 		void Renderer::renderPolygons(const float32* vertices, const uint32 count) {
 			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
 			
-			this->vertices.push(vertices, count * polygonRenderSetup->getVertices());
+			SANI_ASSERT((count % polygonRenderSetup->getVertices()) == 0);
+
+			this->vertices.push(vertices, count);
 
 			// TODO: make indices.
 		}
@@ -163,8 +173,7 @@ namespace sani {
 		void Renderer::endRendering() {
 			switch (renderState) {
 			case sani::graphics::RenderState::Polygons:
-				if (vertexMode == VertexMode::NoIndexing) presentPolygons();
-				else                                      presentIndexedPolygons();
+				presentPolygons();
 				break;
 			case sani::graphics::RenderState::TexturedPolygons:
 			case sani::graphics::RenderState::Waiting:
