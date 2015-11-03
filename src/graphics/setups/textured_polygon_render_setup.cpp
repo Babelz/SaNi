@@ -7,6 +7,7 @@ namespace sani {
 
 		TexturedPolygonRenderSetup::TexturedPolygonRenderSetup(GraphicsDevice* const graphicsDevice) : PolygonRenderSetup(graphicsDevice),
 																									   texture(0) {
+			// No need to set default render mode, base sets it.
 		}
 
 		void TexturedPolygonRenderSetup::setTexture(const uint32 texture) {
@@ -38,6 +39,8 @@ namespace sani {
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();
 			graphicsDevice->disableVertexAttributePointer(2);
 			graphicsDevice->unbindTexture();
+
+			// No need to reset the render mode, base clears it.
 		}
 	}
 }

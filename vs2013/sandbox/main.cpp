@@ -99,9 +99,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 
-	VertexPositionColor v1(Vec3f(32.0f, 0.0f, 0.0f), Color::red);
-	VertexPositionColor v2(Vec3f(64.0f, 64.0f, 0.0f), Color::red);
-	VertexPositionColor v3(Vec3f(0.0f, 64.0f, 0.0f), Color::red);
+	VertexPositionColor v1(Vec3f(32.0f, 0.0f, 0.0f), sani::graphics::red);
+	VertexPositionColor v2(Vec3f(64.0f, 64.0f, 0.0f), sani::graphics::red);
+	VertexPositionColor v3(Vec3f(0.0f, 64.0f, 0.0f), sani::graphics::red);
 
 	VertexPositionColor vert[] = 
 	{
@@ -183,12 +183,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
-		graphicsDevice.clear(Color::black);
+		graphicsDevice.clear(sani::graphics::black);
 		
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 
 		renderer.renderPolygons(vertices.data(), vertices.getElementsCount());
-
+		
 		renderer.endRendering();
 	}
 

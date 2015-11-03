@@ -1,5 +1,6 @@
 #pragma once	
 
+#include "sani/graphics/vertex_position_color.hpp"
 #include "sani/platform/graphics/color.hpp"
 #include "sani/core/math/vector.hpp"
 
@@ -10,9 +11,13 @@ namespace sani {
 	namespace graphics {
 
 		struct VertexPositionColorTexture {
-			Vec3f position;
-			Color color;
-			Vec2f uv;
+			/*
+				Just use the VPC here, should keep the 
+				byte layout same.
+			*/
+
+			VertexPositionColor vertexPositionColor;
+			Vec2f textureCoordinates;
 
 			VertexPositionColorTexture() {
 			}

@@ -133,6 +133,12 @@
     <Filter Include="src\resource\processor">
       <UniqueIdentifier>{fbfd0dbe-7e0e-4855-a40d-6a33436eca5b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\graphics\renderables">
+      <UniqueIdentifier>{a2d0f343-7654-400b-ace1-918f595e83ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\graphics\renderables">
+      <UniqueIdentifier>{5ab31bd3-8d2b-4bf2-a798-91ed8d49eb7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -281,6 +287,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp">
       <Filter>src\resource\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\transformable.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\shape.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp">
+      <Filter>src\graphics\renderables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -533,9 +548,6 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -584,6 +596,21 @@
     <ClInclude Include="..\..\include\sani\resource\resources.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl">
+      <Filter>include\graphics\inl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderable.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -609,6 +636,9 @@
     </None>
     <None Include="..\..\include\sani\resource\compiler\resource_writer.inl">
       <Filter>include\resource\compiler</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\renderer.inl">
+      <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

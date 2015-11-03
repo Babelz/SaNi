@@ -59,7 +59,23 @@ namespace sani {
 		public:
 			Renderer(GraphicsDevice& graphicsDevice);
 
+			/// Returns the current render state.
+			inline RenderState getRenderState() const;
+			/// Returns the current vertex mode.
+			inline VertexMode getVertexMode() const;
+			/// Returns the current render mode.
+			inline RenderMode getRenderMode() const;
+
+			/// Returns the count of elements each vertex should have.
+			inline uint32 getVertexElementsCount() const;
+
 			bool initialize();
+
+			/*
+				TODO: add effect binding functions.
+				TODO: create shader wrapper (effect class)
+				TODO: create default shaders for this level of rendering (basic vtx and basic shader)
+			*/
 
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
@@ -76,7 +92,7 @@ namespace sani {
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
 			/// @param[in] texture texture that will be used to texture the shapes
-			/// @param[in] elements how many elements each vertex has
+			/// @param[in] elements how many vertices each element has
 			/// @param[in] indices indices 
 			/// @param[in] renderMode render mode
 			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 elements, const uint32* indices, const RenderMode renderMode);
@@ -94,7 +110,12 @@ namespace sani {
 			/// Renders given polygon.
 			/// @param[in] vertices vertices
 			void renderPolygon(const float32* vertices);
-			
+
+			/*
+				TODO: add text functions.
+				TODO: add index buffering.
+			*/
+
 			void endRendering();
 
 			~Renderer();

@@ -167,10 +167,13 @@
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\shape.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp" />
+    <ClCompile Include="..\..\src\graphics\transformable.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -256,6 +259,10 @@
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl" />
+    <ClInclude Include="..\..\include\sani\graphics\renderable.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer.hpp" />
@@ -311,6 +318,7 @@
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
+    <None Include="..\..\include\sani\graphics\inl\renderer.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
     <None Include="..\..\include\sani\resource\compiler\resource_writer.inl" />
   </ItemGroup>

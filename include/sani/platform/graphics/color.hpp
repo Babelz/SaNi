@@ -3,6 +3,7 @@
 #include "sani/types.hpp"
 
 namespace sani {
+
 	namespace graphics {
 
 		/// @class Color color.hpp "sani/platform/graphics/viewport.hpp"
@@ -30,13 +31,13 @@ namespace sani {
 			Color& operator =(const Color& rhs);
 			bool operator ==(const Color& rhs);
 			bool operator !=(const Color& rhs);
-		
-			#define black	Color(0.0f, 0.0f, 0.0f, 1.0f)
-			#define white	Color(1.0f, 1.0f, 1.0f, 1.0f)
-			#define red		Color(1.0f, 0.0f, 0.0f, 1.0f)
-			#define green	Color(0.0f, 1.0f, 0.0f, 1.0f)
-			#define blue	Color(0.0f, 0.0f, 1.0f, 1.0f)
 		};
+
+		const Color black	(0.0f, 0.0f, 0.0f, 1.0f);
+		const Color white	(1.0f, 1.0f, 1.0f, 1.0f);
+		const Color red		(1.0f, 0.0f, 0.0f, 1.0f);
+		const Color green	(0.0f, 1.0f, 0.0f, 1.0f);
+		const Color blue	(0.0f, 0.0f, 1.0f, 1.0f);
 	}
 }
 

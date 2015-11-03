@@ -13,11 +13,21 @@ namespace sani {
 		class RenderSetup {
 		private:
 			GraphicsDevice* const graphicsDevice;
+		
+			RenderMode renderMode;
+
+			uint32 elements;
 		protected:
 			GraphicsDevice* const getGraphicsDevice() const;
 		public:
 			RenderSetup(GraphicsDevice* const graphicsDevice);
 			RenderSetup();
+
+			void setRenderMode(const RenderMode renderMode);
+			RenderMode getRenderMode() const;
+
+			void setElements(const uint32 elements);
+			uint32 getElements() const;
 			
 			/// Causes this setups render setups to be used.
 			virtual void use() = 0;

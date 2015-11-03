@@ -9,6 +9,20 @@ namespace sani {
 		RenderSetup::RenderSetup() : graphicsDevice(nullptr) {
 		}
 
+		void RenderSetup::setRenderMode(const RenderMode renderMode) {
+			this->renderMode = renderMode;
+		}
+		RenderMode RenderSetup::getRenderMode() const {
+			return renderMode;
+		}
+
+		void RenderSetup::setElements(const uint32 elements) {
+			this->elements = elements;
+		}
+		uint32 RenderSetup::getElements() const {
+			return elements;
+		}
+
 		GraphicsDevice* const RenderSetup::getGraphicsDevice() const {
 			return graphicsDevice;
 		}
