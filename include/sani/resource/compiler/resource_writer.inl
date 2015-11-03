@@ -6,11 +6,13 @@ namespace sani {
 
 			template <class T>
 			ResourceTypeWriter* ResourceWriter::getWriter() {
-				std::type_info info = typeid(T);
+				std::type_index info = std::type_index(typeid(T));
 				// we dont have writer yet lets add it
 				if (writers.find(info) == writers.end()) {
-					//DeserializableWith<T>::k
+					//assert(0);
+					// TODO HOW TO GET TYPE USED FOR WRITING?
 				}
+				return writers[std::type_index(typeid(T))];
 			}
 
 			template <class T>

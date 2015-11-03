@@ -59,9 +59,11 @@ int main(int argc, char** argv) {
 		}
 
 		sc::ResourceWriter* writer = new sc::ResourceWriter(file);
+		
 		writer->writeHeader();
-		compiler::Texture2DWriter textureWriter;
-		textureWriter.write(writer, content);
+		compiler::Texture2DWriter* textureWriter = new compiler::Texture2DWriter();
+		//compiler::Texture2DWriter* textureWriter = static_cast<compiler::Texture2DWriter*>(writer->getWriter<Texture2D>());
+		textureWriter->write(writer, content);
 		file->flush();
 		fs.closeFile(outpath);
 

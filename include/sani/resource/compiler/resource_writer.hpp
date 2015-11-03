@@ -2,6 +2,7 @@
 #include "sani/platform/file/binary_writer.hpp"
 #include "sani/core/math/math.hpp"
 #include <vector>
+#include <typeindex>
 #include <map>
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceTypeWriter);
@@ -14,7 +15,7 @@ namespace sani {
 			private:
 				static const char Platforms[];
 				static const uint8 Version = 1;
-				std::map<std::type_info, ResourceTypeWriter*> writers;
+				std::map<std::type_index, ResourceTypeWriter*> writers;
 			public:
 
 				// This assumes the file is opened already!
