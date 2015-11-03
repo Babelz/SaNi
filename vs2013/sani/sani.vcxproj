@@ -192,12 +192,12 @@
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\primitive_writers.cpp" />
+    <ClCompile Include="..\..\src\resource\compiler\resource_compiler.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp" />
     <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp" />
     <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
-    <ClCompile Include="..\..\src\resource\reader\primitive_readers.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
@@ -288,8 +288,10 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\primitive_writers.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp" />
@@ -298,7 +300,6 @@
     <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\reader\primitive_readers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader_manager.hpp" />

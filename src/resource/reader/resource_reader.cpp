@@ -20,6 +20,7 @@ namespace sani {
 			}
 
 			void* ResourceReader::readAsset(const ResoureTypeReaderManager& typeReaders) const {
+				
 				// type readers are initialized, get the list of used type readers
 				return nullptr;
 			}

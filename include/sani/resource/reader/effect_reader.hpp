@@ -13,7 +13,7 @@ namespace sani {
 				~EffectReader();
 				String getReaderName() const { return "sani::resource::reader::EffectReader"; }
 
-				void read(ResourceReader* reader);
+				void* read(ResourceReader* reader);
 			};
 		}
 	}

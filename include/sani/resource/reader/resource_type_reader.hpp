@@ -26,7 +26,7 @@ namespace sani {
 				virtual void initialize(ResourceTypeReaderManager* manager)  {}
 				/// Reads the data type
 				/// @param reader The content reader which has the stream to read
-				virtual void read(ResourceReader* reader) = 0;
+				virtual void* read(ResourceReader* reader) = 0;
 			};
 		}
 	}

@@ -29,7 +29,7 @@ TEST_CASE("Resource .png loading", "[resource]") {
 }
 
 TEST_CASE("Resource deserialization compile time constants", "[resource]") {
-	CHECK(DeserializableWith<sani::resource::Texture2D>::value() == "sani::resource::reader::Texture2DReader");
+	CHECK(DeserializableWith<sani::resource::Texture2DContent>::value() == "sani::resource::reader::Texture2DReader");
 
 }
 

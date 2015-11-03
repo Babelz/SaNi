@@ -3,7 +3,9 @@
 namespace sani {
 	namespace resource {
 		namespace reader {
-			void Texture2DReader::read(ResourceReader* reader) {
+			Texture2DReader::~Texture2DReader() {}
+
+			void* Texture2DReader::read(ResourceReader* reader) {
 				typedef std::vector<unsigned char> PixelData;
 				typedef std::vector < PixelData> MipmapChain;
 
@@ -27,6 +29,7 @@ namespace sani {
 						data[j] = reader->readByte();
 					}
 				}
+				return nullptr;
 			}
 		}
 	}

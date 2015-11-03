@@ -2,7 +2,10 @@
 #include "sani/platform/file/binary_writer.hpp"
 #include "sani/core/math/math.hpp"
 #include <vector>
+#include <typeindex>
+#include <map>
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
+SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceTypeWriter);
 namespace sani {
 	using namespace math;
 	using namespace io;
@@ -12,9 +15,9 @@ namespace sani {
 			private:
 				static const char Platforms[];
 				static const uint8 Version = 1;
+				std::map<std::type_index, ResourceTypeWriter*> writers;
 			public:
-				// TODO add functions to write matrices vectors and stuff
-				// TODO this may need some wrapping
+
 				// This assumes the file is opened already!
 				ResourceWriter(const FileStream* stream);
 				~ResourceWriter();
@@ -23,6 +26,12 @@ namespace sani {
 				/// first 3 magic bytes S, N, B, then platform name
 				/// and Version number
 				void writeHeader();
+
+				template <class T>
+				ResourceTypeWriter* getWriter();
+
+				template <class T>
+				void writeObject(const T* obj);
 
 				template <class T>
 				void writeContainer(const std::vector<T>& v);

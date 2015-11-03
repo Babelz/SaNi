@@ -4,7 +4,9 @@
 namespace sani {
 	namespace resource {
 		namespace compiler {
+			
 			void Texture2DWriter::write(ResourceWriter* writer, void* value) {
+
 				typedef std::vector<unsigned char> PixelData;
 				typedef std::vector < PixelData> MipmapChain;
 				Texture2DContent* tex = static_cast<Texture2DContent*>(value);

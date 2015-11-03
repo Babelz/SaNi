@@ -2,7 +2,10 @@
 #include "sani/resource/resource.hpp"
 #include "sani/resource/serialization.hpp"
 #include "sani/forward_declare.hpp"
+
 SANI_FORWARD_DECLARE_3(sani, resource, reader, Texture2DReader);
+SANI_FORWARD_DECLARE_2(sani, resource, Texture2DContent);
+SANI_FORWARD_DECLARE_3(sani, resource, compiler, Texture2DWriter)
 
 namespace sani {
 	namespace resource {
@@ -21,4 +24,6 @@ namespace sani {
 	}
 }
 // TODO this can be moved to somewhere else?
-SANI_DESERIALIZABLE_WITH(sani::resource::Texture2D, sani::resource::reader::Texture2DReader);
+SANI_DESERIALIZABLE_WITH(sani::resource::Texture2DContent, sani::resource::reader::Texture2DReader);
+//SANI_SERIALIZABLE_WITH(sani::resource::Texture2DContent, sani::resource::compiler::Texture2DWriter);
+
