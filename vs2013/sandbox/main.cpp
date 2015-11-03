@@ -97,19 +97,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Buffer<float32> vertices(1024, BufferSizing::Dynamic);
 
-	Vec3 v1(-0.5f, -0.5f, 0.0f);
-	Vec3 v2(0.5f, -0.5f, 0.0f);
-	Vec3 v3(0.5f, 0.5f, 0.0f);
+	Vec3 v1(-32, -32, 0.0f);
+	Vec3 v2(32, -32, 0.0f);
+	Vec3 v3(32, 32, 0.0f);
 	
 	for (size_t i = 0; i < 32; i++)
 	{
-		Vec3 v1(-0.5f + i, -0.5f + i, 0.0f);
-		Vec3 v2(0.5f + i, -0.5f + i, 0.0f);
-		Vec3 v3(0.5f + i, 0.5f + i, 0.0f);
+		Vec3 v1(-32 + i, -32 + i, 0.0f);
+		Vec3 v2(32 + i, -32 + i, 0.0f);
+		Vec3 v3(32 + i, 32 + i, 0.0f);
 
-		Vec3 v4(0.5f + i, 0.5f + i, 0.0f);
-		Vec3 v5(-0.5f + i , 0.5f + i, 0.0f);
-		Vec3 v6(-0.5f + i, -0.5f + i, 0.0f);
+		Vec3 v4(32 + i, 32 + i, 0.0f);
+		Vec3 v5(-32 + i , 32 + i, 0.0f);
+		Vec3 v6(-32 + i, -32 + i, 0.0f);
 
 		Vec3 vert[] = {
 			v1, Vec3(1, 0, 0),
