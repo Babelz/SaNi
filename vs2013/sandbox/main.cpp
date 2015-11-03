@@ -92,24 +92,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
-	initResource(&graphicsDevice);
-	tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
+	//initResource(&graphicsDevice);
+	//tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
 
 	Buffer<float32> vertices(1024, BufferSizing::Dynamic);
 
-	Vec3 v1(-32, -32, 0.0f);
-	Vec3 v2(32, -32, 0.0f);
-	Vec3 v3(32, 32, 0.0f);
-	
-	for (size_t i = 0; i < 32; i++)
+	/*for (size_t i = 0; i < 32; i++)
 	{
-		Vec3 v1(-32 + i, -32 + i, 0.0f);
-		Vec3 v2(32 + i, -32 + i, 0.0f);
-		Vec3 v3(32 + i, 32 + i, 0.0f);
+		Vec3 v1(-32 * i, -32 * i, 0.0f);
+		Vec3 v2(32 * i, -32 * i, 0.0f);
+		Vec3 v3(32 * i, 32 * i, 0.0f);
 
-		Vec3 v4(32 + i, 32 + i, 0.0f);
-		Vec3 v5(-32 + i , 32 + i, 0.0f);
-		Vec3 v6(-32 + i, -32 + i, 0.0f);
+		Vec3 v4(32 * i, 32 * i, 0.0f);
+		Vec3 v5(-32 * i , 32 * i, 0.0f);
+		Vec3 v6(-32 * i, -32 * i, 0.0f);
 
 		Vec3 vert[] = {
 			v1, Vec3(1, 0, 0),
@@ -122,6 +118,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		vertices.push(reinterpret_cast<float32*>(vert), 36);
 	}
+	*/
+
+	Vec3 vert[] = {
+		Vec3(0.5f * 8.0f, 0, 0), Vec3(1, 0, 0),
+		Vec3(1.0f * 8.0f, -1.0f * 8.0f, 0), Vec3(0, 1, 0),
+		Vec3(1.0f * 8.0f, -1.0f* 8.0f, 0), Vec3(1, 0, 0)
+	};
+
+	vertices.push(reinterpret_cast<float32*>(vert), 18);
 
 	char* vertexSource =
 		"#version 330 core\n"
