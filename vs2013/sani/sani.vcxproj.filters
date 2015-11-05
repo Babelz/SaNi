@@ -133,11 +133,11 @@
     <Filter Include="src\resource\processor">
       <UniqueIdentifier>{fbfd0dbe-7e0e-4855-a40d-6a33436eca5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\graphics\renderables">
-      <UniqueIdentifier>{a2d0f343-7654-400b-ace1-918f595e83ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\graphics\renderables">
       <UniqueIdentifier>{5ab31bd3-8d2b-4bf2-a798-91ed8d49eb7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\graphics\renderables">
+      <UniqueIdentifier>{f9198654-3b0d-40b8-a163-cf64bc38a31a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -231,9 +231,6 @@
     <ClCompile Include="..\..\src\platform\graphics\window.cpp">
       <Filter>src\platform\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\platform\graphics\color.cpp">
-      <Filter>src\platform\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\platform\file\binary_writer.cpp">
       <Filter>src\platform\file</Filter>
     </ClCompile>
@@ -296,6 +293,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\resource\compiler\resource_compiler.cpp">
       <Filter>src\resource\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\color.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -542,9 +542,6 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -592,6 +589,19 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\resources.hpp">
       <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl" />
+    <ClInclude Include="..\..\include\sani\graphics\renderable.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\color.hpp">
+      <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

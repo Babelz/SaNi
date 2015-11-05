@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/graphics/transformable.hpp"
 #include "sani/graphics/render_state.hpp"
 #include "sani/core/math/rectangle.hpp"
 #include "sani/forward_declare.hpp"
@@ -17,7 +18,7 @@ namespace sani {
 		/// 
 		/// Interface for objects that can render
 		/// themselves to the screen.
-		class Renderable  { 
+		class Renderable : public Transformable {
 		public:
 			Renderable() = default;
 

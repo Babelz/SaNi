@@ -259,6 +259,7 @@
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl" />
     <ClInclude Include="..\..\include\sani\graphics\renderable.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp" />

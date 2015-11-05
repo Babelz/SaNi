@@ -1,7 +1,6 @@
 #include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
-#include "sani/platform/graphics/color.hpp"
 #include "sani/debug.hpp"
 #include <sstream>
 
@@ -232,7 +231,7 @@ namespace sani {
 			return hasErrors();
 		}
 
-		void GraphicsDevice::clear(const Color& color) {
+		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
 			/*
 				TODO: implement drawing from the backbuffer once some rendering can be done.
 			*/
@@ -240,7 +239,7 @@ namespace sani {
 			SwapBuffers(impl->deviceContext);
 
 			// Change clear color for the GL.
-			glClearColor(color.r, color.g, color.b, color.a);
+			glClearColor(r, g, b, a);
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

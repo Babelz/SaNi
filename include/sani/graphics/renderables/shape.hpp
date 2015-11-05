@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/graphics/renderables/renderable.hpp"
-#include "sani/platform/graphics/color.hpp"
+#include "sani/graphics/color.hpp"
 #include "sani/graphics/transformable.hpp"
 
 namespace sani {
@@ -12,7 +12,7 @@ namespace sani {
 		/// @author voidbab
 		///
 		/// Abstract base class for all geometric shapes.
-		class Shape : public Transformable, public Renderable {
+		class Shape : public Renderable {
 		private:
 			Color fill;
 		public:

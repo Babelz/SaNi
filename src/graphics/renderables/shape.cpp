@@ -4,7 +4,7 @@ namespace sani {
 
 	namespace graphics {
 		
-		Shape::Shape() {
+		Shape::Shape() : Renderable() {
 		}
 
 		void Shape::setFill(const Color& fill) {

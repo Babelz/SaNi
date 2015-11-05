@@ -35,7 +35,6 @@ namespace sani {
 		*/
 		
 		// Forward declarations.
-		struct Color;
 		struct Viewport;
 		
 		class RenderTarget2D;
@@ -99,7 +98,7 @@ namespace sani {
 
 			/// Clears the device. Swaps the back
 			/// and front buffer.
-			void clear(const Color& color);
+			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
 			
 			/*
 				Texture and render target operations.

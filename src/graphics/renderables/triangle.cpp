@@ -1,4 +1,5 @@
 #include "sani/graphics/renderables/triangle.hpp"
+#include "sani/graphics/renderer.hpp"
 #include "sani/core/math/vector.hpp"
 
 namespace sani {
@@ -37,25 +38,42 @@ namespace sani {
 
 			topPoint.x = tx;
 			topPoint.y = ty;
+			topVertex.vertexPositionColor.position = topPoint;
 			topVertex.textureCoordinates.x = 0.5f;
 			topVertex.textureCoordinates.y = 1.0f;
 
 			leftPoint.x = lx;
 			leftPoint.y = ly;
+			leftVertex.vertexPositionColor.position = leftPoint;
 			leftVertex.textureCoordinates.x = 0.0f;
 			leftVertex.textureCoordinates.y = 1.0f;
 
 			rightPoint.x = rx;
 			rightPoint.y = ry;
+			rightVertex.vertexPositionColor.position = rightPoint;
 			rightVertex.textureCoordinates.x = 1.0f;
 			rightVertex.textureCoordinates.y = 1.0f;
 
 			setPosition(rx, ty);
-			setOriginX((rx - lx) / 2.0f);
-			//setOriginY(()
+
+			// TODO: set origin
+
+			recomputeVertices();
 		}
 		void Triangle::recomputeVertices()  {
-			
+			if (hasChanged()) {
+				const sani::math::Vec3f position = getPosition();
+				
+				topVertex.vertexPositionColor.position = topPoint + position;
+				leftVertex.vertexPositionColor.position = leftPoint + position;
+				rightVertex.vertexPositionColor.position = rightPoint + position;
+
+				topVertex.vertexPositionColor.color = getFill();
+				leftVertex.vertexPositionColor.color = getFill();
+				rightVertex.vertexPositionColor.color = getFill();
+
+				clearChanges();
+			}
 		}
 
 		const math::Rectf Triangle::getLocalBounds() const {
@@ -90,6 +108,16 @@ namespace sani {
 		}
 
 		void Triangle::render(Renderer* const renderer) {
+			if (hasChanged()) recomputeVertices();
+
+			VertexPositionColor vertices[] = 
+			{
+				topVertex.vertexPositionColor,
+				leftVertex.vertexPositionColor,
+				rightVertex.vertexPositionColor
+			};
+
+			renderer->renderPolygon(reinterpret_cast<float32*>(vertices), sizeof(vertices));
 		}
 	}
 }

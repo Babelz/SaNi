@@ -167,10 +167,12 @@ namespace sani {
 				throw std::runtime_error("not implemented");
 			}
 		}
-		void Renderer::renderPolygon(const float32* vertices) {
+		void Renderer::renderPolygon(const float32* vertices, const uint32 count) {
 			PolygonRenderSetup* const polygonRenderSetup = static_cast<PolygonRenderSetup*>(renderSetup);
 
-			this->vertices.push(vertices, polygonRenderSetup->getElements());
+			SANI_ASSERT((count % polygonRenderSetup->getElements()) == 0);
+
+			this->vertices.push(vertices, count);
 
 			// TODO: make indices.
 			if (vertexMode == VertexMode::Indexed) {

@@ -109,7 +109,8 @@ namespace sani {
 			void renderPolygons(const float32* vertices, const uint32 count);
 			/// Renders given polygon.
 			/// @param[in] vertices vertices
-			void renderPolygon(const float32* vertices);
+			/// @param[in] count count of vertices to render
+			void renderPolygon(const float32* vertices, const uint32 count);
 
 			/*
 				TODO: add text functions.

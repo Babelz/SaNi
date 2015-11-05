@@ -8,7 +8,7 @@
 #include <Windows.h>
 
 #include "sani/graphics/renderer.hpp"
-#include "sani/platform/graphics/color.hpp"
+#include "sani/graphics/color.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/window.hpp"
 #include "sani/platform/graphics/viewport.hpp"
@@ -18,7 +18,8 @@
 #include "sani/graphics/renderer.hpp"
 #include "sani/graphics/vertex_position_color.hpp"
 #include "sani/core/math/vector.hpp"
-#include "sani/platform/graphics/color.hpp"
+#include "sani/graphics/renderables/triangle.hpp"
+#include <random>
 
 using namespace sani::graphics;
 using namespace sani::math;
@@ -99,9 +100,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 
-	VertexPositionColor v1(Vec3f(32.0f, 0.0f, 0.0f), sani::graphics::red);
-	VertexPositionColor v2(Vec3f(64.0f, 64.0f, 0.0f), sani::graphics::red);
-	VertexPositionColor v3(Vec3f(0.0f, 64.0f, 0.0f), sani::graphics::red);
+	VertexPositionColor v1(Vec3f(32.0f, 0.0f, 0.0f), sani::graphics::color::red);
+	VertexPositionColor v2(Vec3f(64.0f, 64.0f, 0.0f), sani::graphics::color::red);
+	VertexPositionColor v3(Vec3f(0.0f, 64.0f, 0.0f), sani::graphics::color::red);
 
 	VertexPositionColor vert[] = 
 	{
@@ -174,6 +175,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
+	Triangle t(64, 64);
+	t.setFill(sani::graphics::color::red);
+
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
@@ -183,12 +187,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
-		graphicsDevice.clear(sani::graphics::black);
+		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
-
-		renderer.renderPolygons(vertices.data(), vertices.getElementsCount());
 		
+		for (size_t i = 0; i < 128; i++) {
+			for (size_t j = 0; j < 128; j++) {
+
+				t.setPosition(j * 32.0f, i * 32.0f);
+				
+				Color fill(rand() * 0.00001f, 
+					       rand() * 0.00001f, 
+						   rand() * 0.00001f, 
+						   rand() * 0.001f);
+
+				t.setFill(fill);
+
+				t.render(&renderer);
+			}
+		}
+
 		renderer.endRendering();
 	}
 

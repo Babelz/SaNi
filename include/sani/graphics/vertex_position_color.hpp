@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/platform/graphics/color.hpp"
+#include "sani/graphics/color.hpp"
 #include "sani/core/math/vector3.hpp"
 
 using namespace sani::math;
