@@ -590,17 +590,31 @@
     <ClInclude Include="..\..\include\sani\resource\resources.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl" />
-    <ClInclude Include="..\..\include\sani\graphics\renderable.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\color.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp">
+      <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp">
+      <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderable.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
