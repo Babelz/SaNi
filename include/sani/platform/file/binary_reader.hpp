@@ -11,22 +11,22 @@ namespace sani {
 		public:
 			BinaryReader(const FileStream* stream);
 			virtual ~BinaryReader();
-			int16 readInt16();
-			int32 readInt32();
-			int64 readInt64();
+			int16 readInt16() const;
+			int32 readInt32() const;
+			int64 readInt64() const;
 
-			uint16 readUint16();
-			uint32 readUint32();
-			uint64 readUint64();
+			uint16 readUint16() const;
+			uint32 readUint32() const;
+			uint64 readUint64() const;
 
-			float32 readSingle();
+			float32 readSingle() const;
 
-			String readString();
-			float64 readDouble();
+			String readString() const;
+			float64 readDouble() const;
 
-			uint8 readByte();
-			char readChar();
-			uint64 read7BitEncodedInt();
+			uint8 readByte() const;
+			char readChar() const;
+			uint64 read7BitEncodedInt() const;
 
 		};
 	}
