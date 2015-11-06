@@ -20,13 +20,13 @@ namespace sani {
 			float32 rotation;
 
 			bool changed;
-		protected:
+		public:
+			Transformable();
+
 			/// Returns true if the transformation has changed.
 			inline bool hasChanged() const;
 			/// Clears the changes flag (sets it to false)
 			inline void clearChanges();
-		public:
-			Transformable();
 
 			inline void setPosition(const sani::math::Vec3f& position);
 			inline void setPosition(const float32 x, const float32 y);

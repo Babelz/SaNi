@@ -30,13 +30,13 @@ using namespace sani::math;
 #include "sani/resource/texture2d.hpp"
 using namespace sani::resource;
 
-Texture2D* tuksu = nullptr;
-ResourceManager* resourceManager = nullptr;
-FileSystem* fileSystem = new FileSystem();
-
-void initResource(GraphicsDevice* gdevice) {
-	resourceManager = new ResourceManager(fileSystem, gdevice);
-}
+//Texture2D* tuksu = nullptr;
+//ResourceManager* resourceManager = nullptr;
+//FileSystem* fileSystem = new FileSystem();
+//
+//void initResource(GraphicsDevice* gdevice) {
+//	resourceManager = new ResourceManager(fileSystem, gdevice);
+//}
 /*
 	To test if our window, context etc even work.
 */
@@ -95,8 +95,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
-	initResource(&graphicsDevice);
-	tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
+	//initResource(&graphicsDevice);
+	//tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 
@@ -177,9 +177,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Triangle t(256, 256);
 
-	t.setFill(sani::graphics::color::red);
-	t.setPosition(600, 300);
-	t.setOrigin(128, 0);
+	t.fill = sani::graphics::color::red;
+	t.transform.setPosition(600, 300);
+	t.transform.setOrigin(128, 0);
 	
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -193,13 +193,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Update..
-		t.rotate(0.01f);
+		t.transform.rotate(0.01f);
 
 		// Draw...
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 
-		t.recomputeVertices();
-		t.render(&renderer);
+		triangle::render(t, renderer);
 		
 		renderer.endRendering();
 	}

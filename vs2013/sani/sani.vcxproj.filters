@@ -204,9 +204,6 @@
     <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp">
       <Filter>src\resource\compiler</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\primitive_writers.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp">
       <Filter>src\resource\compiler</Filter>
     </ClCompile>
@@ -284,9 +281,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\transformable.cpp">
       <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\graphics\renderables\shape.cpp">
-      <Filter>src\graphics\renderables</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp">
       <Filter>src\graphics\renderables</Filter>
@@ -611,9 +605,6 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp">
-      <Filter>include\graphics\renderables</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl">
       <Filter>include\graphics\inl</Filter>
     </ClInclude>
@@ -623,6 +614,7 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -653,6 +645,12 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\renderable.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\triangle.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
