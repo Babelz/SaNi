@@ -192,7 +192,6 @@
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\primitive_writers.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\resource_compiler.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp" />
@@ -309,6 +308,7 @@
     <ClInclude Include="..\..\include\sani\resource\reader\texture2d_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resources.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
     <ClInclude Include="..\..\include\sani\resource\serialization.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />

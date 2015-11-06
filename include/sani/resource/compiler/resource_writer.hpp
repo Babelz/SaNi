@@ -7,6 +7,8 @@
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceTypeWriter);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceCompiler);
+SANI_FORWARD_DECLARE_2(sani, resource, ResourceItem);
+
 namespace sani {
 	using namespace math;
 	using namespace io;
@@ -19,13 +21,10 @@ namespace sani {
 				std::map<std::type_index, ResourceTypeWriter*> writers;
 				const ResourceCompiler* compiler;
 
-				// TODO this should be public
-				template <class T>
-				ResourceTypeWriter* getWriter();
+				ResourceTypeWriter* getWriter(const std::type_index&);
 
 				// TODO this needs to be public
-				template <class T>
-				void writeObject(const T* obj);
+				void writeObject(const std::type_index&, const ResourceItem*);
 
 				/// Writes the header which consists of
 				/// first 3 magic bytes S, N, B, then platform name
@@ -45,8 +44,7 @@ namespace sani {
 				/// @see ResourceWriter::writeHeader
 				/// @see ResourceWriter::writeTypeWriters
 				/// @see ResourceWriter::writeObject
-				template <class T>
-				void flush(const T* obj);
+				void flush(const std::type_index&, const ResourceItem*);
 
 				template <class T>
 				void writeContainer(const std::vector<T>& v);

@@ -1,18 +1,19 @@
 #pragma once
+#include "sani/forward_declare.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, resource, ResourceItem);
 
 namespace sani {
 	namespace resource {
 		namespace processor {
-			template <class Input, class Output, class Implementer>
+			
 			class ResourceProcessor {
 			public:
 				~ResourceProcessor() = default;
-				Output* process(Input* input) {
-					return static_cast<Output*>(impl.process(input));
-				}
+				virtual ResourceItem* process(ResourceItem* input) = 0;
 				ResourceProcessor() = default;
 			private:
-				Implementer impl;
+				
 			};
 		}
 	}

@@ -7,13 +7,12 @@ namespace sani {
 	namespace resource {
 
 		namespace processor {
-			class Texture2DProcessorImpl {
+			class Texture2DProcessor : public ResourceProcessor {
 			public:
-				Texture2DProcessorImpl() = default;
-				~Texture2DProcessorImpl() = default;
-				Texture2DContent* process(Texture2DContent* input); 
+				Texture2DProcessor() = default;
+				~Texture2DProcessor() = default;
+				ResourceItem* process(ResourceItem* input) override;
 			};
-			typedef ResourceProcessor < sani::resource::Texture2DContent, sani::resource::Texture2DContent, Texture2DProcessorImpl > Texture2DProcessor;
 		}
 	}
 }

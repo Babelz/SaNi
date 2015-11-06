@@ -4,7 +4,7 @@ namespace sani {
 	namespace resource {
 		Texture2DContent::Texture2DContent(
 			const uint32 width, const uint32 height, const PixelData& pixels)
-			: width(width), height(height) {
+			: ResourceItem(), width(width), height(height) {
 			faces.push_back(pixels);
 		}
 

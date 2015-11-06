@@ -20,19 +20,20 @@ int main(int argc, char** argv) {
 	using namespace sani::resource;
 	using namespace sani::io;
 	using namespace sani::resource::compiler;
-	if (argc <= 1) {
+	if (argc <= 2) {
+		std::cout << argv[1] << std::endl;
 		usage();
 		return 1;
 	}
 
 	ResourceCompiler compiler;
-
+	String root(argv[1]);
 	processor::Texture2DProcessor proc;
 	pipeline::Texture2DImporter importer;
 	try {
-		size_t i = 1;
-		while (argc-- > 1) {
-			compiler.compile(argv[i++]);
+		size_t i = 2;
+		while (argc-- > 2) {
+			compiler.compile(root, argv[i++]);
 		}
 		
 		/*
