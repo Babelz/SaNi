@@ -2,8 +2,10 @@
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 
+
 SANI_FORWARD_DECLARE_3(sani, resource, reader, ResourceReader);
 SANI_FORWARD_DECLARE_3(sani, resource, reader, ResourceTypeReaderManager);
+
 namespace sani {
 	namespace resource {
 		namespace reader {

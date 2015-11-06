@@ -4,6 +4,7 @@
 #include "sani/resource/compiler/resource_type_writer.hpp"
 #include "sani/platform/file/file_system.hpp"
 #include "sani/types.hpp"
+#include "sani/resource/pipeline/content_importer.hpp"
 
 namespace sani {
 	namespace resource {
@@ -12,6 +13,8 @@ namespace sani {
 			private:
 				io::FileSystem fileSystem;
 				std::map<std::type_index, ResourceTypeWriter*> lookup;
+				std::map<String, pipeline::ContentImporter*> importers;
+				String contentRoot;
 				String filePath;
 				String outputPath;
 				void initialize();
@@ -29,7 +32,9 @@ namespace sani {
 					return lookup[std::type_index(typeid(T))];
 				}
 
-				void compile(const String& path);
+				pipeline::ContentImporter* getImporterFor(const String& asset) const;
+
+				void compile(const String& root, const String& path);
 
 				const String& getFilePath() const;
 				const String& getOutputPath() const;

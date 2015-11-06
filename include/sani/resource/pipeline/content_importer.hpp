@@ -2,37 +2,20 @@
 
 #include "sani/types.hpp"
 #include "sani/platform/file/file_system.hpp"
+#include "sani/forward_declare.hpp"
+SANI_FORWARD_DECLARE_2(sani, resource, ResourceItem);
 
 namespace sani {
 
 	namespace resource {
 
 		namespace pipeline {
-
-			template <class ContentType, class Implementer>
 			class ContentImporter  {
 			public:
-				ContentImporter();
-				ContentType* import(const String& filename, io::FileSystem* fileSystem) const;
-			private:
-				const Implementer impl;
+				ContentImporter() = default;
+				virtual ~ContentImporter() = default;
+				virtual ResourceItem* import(const String& filename, io::FileSystem* fileSystem) const = 0;
 			};
-		}
-	}
-}
-
-namespace sani {
-	namespace resource {
-		namespace pipeline {
-
-			
-			template <class T, class U>
-			ContentImporter<T, U>::ContentImporter() {}
-
-			template <class T, class U>
-			T* ContentImporter<T, U>::import(const String& filename, io::FileSystem* fileSystem) const {
-				return impl.import(filename, fileSystem);
-			}
 		}
 	}
 }

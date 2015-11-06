@@ -4,14 +4,14 @@
 namespace sani {
 	namespace resource {
 		namespace processor {
-			Texture2DContent* Texture2DProcessorImpl::process(Texture2DContent* input) {
+			void* Texture2DProcessor::process(void* input) {
 				using namespace Magick;
 				std::cout << "Texture2dProcessorImpl::process() invoked" << std::endl;
 				// TODO color keys etc
+				Texture2DContent* content = static_cast<Texture2DContent*>(input);
+				content->generateMipmaps(false);
 
-				input->generateMipmaps(false);
-
-				return input;
+				return content;
 			}
 		}
 	}

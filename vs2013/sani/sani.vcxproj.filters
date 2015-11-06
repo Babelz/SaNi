@@ -617,6 +617,9 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
