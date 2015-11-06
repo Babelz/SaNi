@@ -70,12 +70,12 @@ namespace sani {
 		typedef Rectangle<int16> Rect16;
 		typedef Rectangle<int8> Rect8;
 
-		typedef Rectangle<double> Rectd;
-		typedef Rectangle<float> Rectf;
-		typedef Rectangle<int> Recti;
+		typedef Rectangle<float64> Rectd;
+		typedef Rectangle<float32> Rectf;
+		typedef Rectangle<int32> Recti;
 
 		// Creates new rectangle using "int" as template type.
-		typedef Rectangle<int> Rect;
+		typedef Rectangle<int32> Rect;
 	}
 }
 

@@ -90,34 +90,37 @@ namespace sani {
 			return globalBounds;
 		}
 
-		const sani::math::Vec3f& Triangle::getTop() const {
-			return topVertex.vertexPositionColor.position;
+		sani::math::Vec2f Triangle::getTop() const {
+			return math::Vec2f(topPoint.x, topPoint.y);
 		}
-		const sani::math::Vec3f& Triangle::getLeft() const {
-			return topVertex.vertexPositionColor.position;
+		sani::math::Vec2f Triangle::getLeft() const {
+			return math::Vec2f(leftPoint.x, leftPoint.y);
 		}
-		const sani::math::Vec3f& Triangle::getRight() const {
-			return topVertex.vertexPositionColor.position;
+		sani::math::Vec2f Triangle::getRight() const {
+			return math::Vec2f(rightPoint.x, rightPoint.y);
 		}
 
-		void Triangle::setTop(const Vec3f& top) {
-			topPoint = top;
+		void Triangle::setTop(const Vec2f& top) {
+			topPoint.x = top.x;
+			topPoint.y = top.y;
 			
 			recomputeBounds();
 			recomputeVertices();
 
 			clearChanges();
 		}
-		void Triangle::setRight(const Vec3f& right) {
-			rightPoint = right;
+		void Triangle::setRight(const Vec2f& right) {
+			rightPoint.x = right.x;
+			rightPoint.y = right.y;
 
 			recomputeBounds();
 			recomputeVertices();
 
 			clearChanges();
 		}
-		void Triangle::setLeft(const Vec3f& left) {
-			leftPoint = left;
+		void Triangle::setLeft(const Vec2f& left) {
+			leftPoint.x = left.x;
+			leftPoint.y = left.y;
 
 			recomputeBounds();
 			recomputeVertices();
@@ -125,18 +128,18 @@ namespace sani {
 			clearChanges();
 		}
 
-		void Triangle::setTop(const float32 x, const float32 y, const float32 z) {
-			const sani::math::Vec3f top(x, y, z);
+		void Triangle::setTop(const float32 x, const float32 y) {
+			const sani::math::Vec2f top(x, y);
 
 			setTop(top);
 		}
-		void Triangle::setRight(const float32 x, const float32 y, const float32 z) {
-			const sani::math::Vec3f right(x, y, z);
+		void Triangle::setRight(const float32 x, const float32 y) {
+			const sani::math::Vec2f right(x, y);
 
 			setRight(right);
 		}
-		void Triangle::setLeft(const float32 x, const float32 y, const float32 z) {
-			const sani::math::Vec3f left(x, y, z);
+		void Triangle::setLeft(const float32 x, const float32 y) {
+			const sani::math::Vec2f left(x, y);
 
 			setLeft(left);
 		}

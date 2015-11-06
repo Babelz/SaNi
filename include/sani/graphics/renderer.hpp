@@ -123,3 +123,5 @@ namespace sani {
 		};
 	}
 }
+
+#include "sani/graphics/inl/renderer.inl"

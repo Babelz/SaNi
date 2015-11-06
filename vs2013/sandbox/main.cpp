@@ -175,15 +175,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	Triangle t(256, 512);
+	Triangle t(256, 256);
 
 	t.setFill(sani::graphics::color::red);
 	t.setPosition(600, 300);
 	t.setOrigin(128, 0);
 	
-	float32 scale = 1.0f;
-	bool scaleDown = true;
-
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
@@ -198,26 +195,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		// Update..
 		t.rotate(0.01f);
 
-		if (scale <= 0.0f) {
-			scaleDown = false;
-		} 
-		else if (scale >= 1.0f) {
-			scaleDown = true;
-		}
-
-		if (scaleDown) {
-			scale -= 0.01f;
-		} else {
-			scale += 0.01f;
-		}
-
-		t.setFill(Color(rand() * 0.0001f, rand() * 0.0001f, rand() * 0.0001f, rand() * 0.0005f));
-		
-		t.setScale(scale, scale);
-
 		// Draw...
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 
+		t.recomputeVertices();
 		t.render(&renderer);
 		
 		renderer.endRendering();

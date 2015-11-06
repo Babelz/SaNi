@@ -297,6 +297,9 @@
     <ClCompile Include="..\..\src\platform\graphics\color.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -616,6 +619,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\vertex_helper.hpp">
       <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp">
+      <Filter>include\graphics\renderables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
