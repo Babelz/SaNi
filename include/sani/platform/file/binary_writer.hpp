@@ -13,7 +13,7 @@ namespace sani {
 		public:
 			BinaryWriter(const FileStream* stream);
 			~BinaryWriter();
-
+			void flush() const;
 			void write(uint8 value);
 			void write(uint16 value);
 			void write(uint32 value);

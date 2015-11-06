@@ -3,6 +3,7 @@
 #include "sani/resource/texture2d.hpp"
 #include "sani/resource/serialization.hpp"
 #include "sani/resource/texture2d_content.hpp"
+#include "sani/resource/serialization.hpp"
 namespace sani {
 	namespace resource {
 		namespace compiler {
@@ -13,6 +14,10 @@ namespace sani {
 				}
 				~Texture2DWriter() {}
 				void write(ResourceWriter* writer, void* value) override;
+
+				virtual String getRuntimeReader() const {
+					return DeserializableWith<Texture2DContent>::value();
+				}
 			};
 		}
 	}

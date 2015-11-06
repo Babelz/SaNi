@@ -76,5 +76,9 @@ namespace sani {
 				stream->write('\0', sizeof(char));
 			}
 		}
+
+		void BinaryWriter::flush() const {
+			stream->flush();
+		}
 	}
 }
