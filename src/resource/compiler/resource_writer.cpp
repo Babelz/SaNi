@@ -34,7 +34,7 @@ namespace sani {
 				write((uint8)'B');
 
 				// platform
-				write(Platforms[SANI_TARGET_PLATFORM]);
+				write((uint8)Platforms[SANI_TARGET_PLATFORM]);
 				// version, is this needed?
 				write(Version);
 			}
