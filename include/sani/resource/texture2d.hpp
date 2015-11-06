@@ -1,4 +1,5 @@
 #pragma once
+#include "sani/types.hpp"
 #include "sani/resource/resource.hpp"
 #include "sani/resource/serialization.hpp"
 #include "sani/forward_declare.hpp"
@@ -11,14 +12,14 @@ namespace sani {
 	namespace resource {
 		class Texture2D : public Resource {
 		private:
-			size_t width;
-			size_t height;
+			uint32 width;
+			uint32 height;
 
 		public:
-			Texture2D(const size_t width, const size_t height);
+			Texture2D(const uint32 width, const uint32 height);
 			~Texture2D();
-			size_t getWidth() const;
-			size_t getHeight() const;
+			uint32 getWidth() const;
+			uint32 getHeight() const;
 		};
 		
 	}

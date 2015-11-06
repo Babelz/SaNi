@@ -41,7 +41,9 @@ namespace sani {
 					throw "cant open file!";
 				}
 
-				ResourceWriter writer(file);
+				ResourceWriter writer(file, this);
+				
+				
 			}
 
 			const String& ResourceCompiler::getFilePath() const {

@@ -9,14 +9,38 @@ namespace sani {
 				std::type_index info = std::type_index(typeid(T));
 				// we dont have writer yet lets add it
 				if (writers.find(info) == writers.end()) {
-					// Texture2D => Texture2DWriter 
+					ResourceTypeWriter* w = compiler->getWriter<T>();
+					writers[std::type_index(typeid(T))] = w;
+					return w;
 				}
+				// we have the typewriter already
 				return writers[std::type_index(typeid(T))];
 			}
 
 			template <class T>
 			void ResourceWriter::writeObject(const T* obj) {
+				if (obj == nullptr) {
+					throw std::runtime_error("obj is nullptr");
+				}
 				ResourceTypeWriter* writer = getWriter<T>();
+				if (writer == nullptr) {
+					throw std::runtime_error("Cant get writer for T");
+				}
+				writer->write(this, obj);
+			}
+
+			template <class T>
+			void ResourceWriter::flush(const T* obj) {
+				// this is hax, just so we have the writer in list...
+				getWriter<T>();
+				// write the header..
+				writeHeader();
+				// write the readers to deserialize
+				writeTypeWriters();
+				// write the final object..
+				writeObject(obj);
+
+				BinaryWriter::flush();
 			}
 
 			template <class T>

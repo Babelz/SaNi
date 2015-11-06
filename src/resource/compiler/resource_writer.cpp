@@ -1,6 +1,8 @@
 #include "sani/resource/compiler/resource_writer.hpp"
 #include "sani/platform/platform_config.hpp"
 #include "sani/platform/file/file_stream.hpp"
+#include "sani/resource/compiler/resource_compiler.hpp"
+
 namespace sani {
 	using namespace io;
 	namespace resource {
@@ -16,8 +18,8 @@ namespace sani {
 				// TODO emscripte, ps4, xbox
 			};
 
-			ResourceWriter::ResourceWriter(const FileStream* stream) 
-				: BinaryWriter(stream) {
+			ResourceWriter::ResourceWriter(const FileStream* stream, const ResourceCompiler* compiler) 
+				: BinaryWriter(stream), compiler(compiler) {
 
 			}
 			ResourceWriter::~ResourceWriter() {}
@@ -35,6 +37,13 @@ namespace sani {
 				write(Platforms[SANI_TARGET_PLATFORM]);
 				// version, is this needed?
 				write(Version);
+			}
+
+			void ResourceWriter::writeTypeWriters() {
+				write7BitEncodedInt(writers.size());
+				for (auto& kv : writers) {
+					write(kv.second->getRuntimeReader());
+				}
 			}
 		}
 	}

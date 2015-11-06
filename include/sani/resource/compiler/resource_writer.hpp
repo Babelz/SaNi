@@ -6,6 +6,7 @@
 #include <map>
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceTypeWriter);
+SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceCompiler);
 namespace sani {
 	using namespace math;
 	using namespace io;
@@ -16,22 +17,36 @@ namespace sani {
 				static const char Platforms[];
 				static const uint8 Version = 1;
 				std::map<std::type_index, ResourceTypeWriter*> writers;
-			public:
+				const ResourceCompiler* compiler;
 
-				// This assumes the file is opened already!
-				ResourceWriter(const FileStream* stream);
-				~ResourceWriter();
+				// TODO this should be public
+				template <class T>
+				ResourceTypeWriter* getWriter();
+
+				// TODO this needs to be public
+				template <class T>
+				void writeObject(const T* obj);
 
 				/// Writes the header which consists of
 				/// first 3 magic bytes S, N, B, then platform name
 				/// and Version number
 				void writeHeader();
 
-				template <class T>
-				ResourceTypeWriter* getWriter();
+				/// Writers the typewriters used to write this object
+				void writeTypeWriters();
+			public:
 
+				// This assumes the file is opened already!
+				ResourceWriter(const FileStream* stream, const ResourceCompiler* compiler);
+				~ResourceWriter();
+
+				/// TODO this is hax, we need streambuf or smthing
+				/// Writes and flushes the object to stream
+				/// @see ResourceWriter::writeHeader
+				/// @see ResourceWriter::writeTypeWriters
+				/// @see ResourceWriter::writeObject
 				template <class T>
-				void writeObject(const T* obj);
+				void flush(const T* obj);
 
 				template <class T>
 				void writeContainer(const std::vector<T>& v);
