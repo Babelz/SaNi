@@ -100,7 +100,7 @@ namespace sani {
 			changed = true;
 		}
 
-		const sani::math::Vec3f Transformable::getPosition() const {
+		const sani::math::Vec3f& Transformable::getPosition() const {
 			return position;
 		}
 		float32 Transformable::getX() const {
@@ -110,7 +110,7 @@ namespace sani {
 			return position.y;
 		}
 
-		const sani::math::Vec3f Transformable::getScale() const {
+		const sani::math::Vec3f& Transformable::getScale() const {
 			return scale;
 		}
 		float32 Transformable::getHorizontalScale() const {
@@ -120,7 +120,7 @@ namespace sani {
 			return scale.y;
 		}
 
-		const sani::math::Vec3f Transformable::getOrigin() const {
+		const sani::math::Vec3f& Transformable::getOrigin() const {
 			return origin;
 		}
 		float32 Transformable::getOriginX() const {

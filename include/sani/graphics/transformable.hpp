@@ -49,15 +49,15 @@ namespace sani {
 			inline void move(const sani::math::Vec3f& offset);
 			inline void move(const float32 offsetX, const float32 offsetY);
 
-			inline const sani::math::Vec3f getPosition() const;
+			inline const sani::math::Vec3f& getPosition() const;
 			inline float32 getX() const;
 			inline float32 getY() const;
 
-			inline const sani::math::Vec3f getScale() const;
+			inline const sani::math::Vec3f& getScale() const;
 			inline float32 getHorizontalScale() const;
 			inline float32 getVerticalScale() const;
 
-			inline const sani::math::Vec3f getOrigin() const;
+			inline const sani::math::Vec3f& getOrigin() const;
 			inline float32 getOriginX() const;
 			inline float32 getOriginY() const;
 

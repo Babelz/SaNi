@@ -260,7 +260,7 @@
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl" />
-    <ClInclude Include="..\..\include\sani\graphics\renderable.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
@@ -271,6 +271,7 @@
     <ClInclude Include="..\..\include\sani\graphics\setups\polygon_render_setup.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\textured_polygon_render_setup.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\transformable.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\vertex_helper.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_mode.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp" />
@@ -279,7 +280,6 @@
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_system.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp" />
@@ -321,6 +321,7 @@
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\graphics\inl\renderer.inl" />
+    <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
     <None Include="..\..\include\sani\resource\compiler\resource_writer.inl" />
   </ItemGroup>

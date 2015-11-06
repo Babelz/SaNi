@@ -175,8 +175,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	Triangle t(64, 64);
+	Triangle t(256, 512);
+
 	t.setFill(sani::graphics::color::red);
+	t.setPosition(600, 300);
+	t.setOrigin(128, 0);
+	
+	float32 scale = 1.0f;
+	bool scaleDown = true;
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -188,25 +194,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
-		
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
-		
-		for (size_t i = 0; i < 128; i++) {
-			for (size_t j = 0; j < 128; j++) {
 
-				t.setPosition(j * 32.0f, i * 32.0f);
-				
-				Color fill(rand() * 0.00001f, 
-					       rand() * 0.00001f, 
-						   rand() * 0.00001f, 
-						   rand() * 0.001f);
+		// Update..
+		t.rotate(0.01f);
 
-				t.setFill(fill);
-
-				t.render(&renderer);
-			}
+		if (scale <= 0.0f) {
+			scaleDown = false;
+		} 
+		else if (scale >= 1.0f) {
+			scaleDown = true;
 		}
 
+		if (scaleDown) {
+			scale -= 0.01f;
+		} else {
+			scale += 0.01f;
+		}
+
+		t.setFill(Color(rand() * 0.0001f, rand() * 0.0001f, rand() * 0.0001f, rand() * 0.0005f));
+		
+		t.setScale(scale, scale);
+
+		// Draw...
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
+
+		t.render(&renderer);
+		
 		renderer.endRendering();
 	}
 
