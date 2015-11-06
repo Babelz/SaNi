@@ -20,6 +20,11 @@ namespace sani {
 		/// Interface for objects that can render
 		/// themselves to the screen.
 		class Renderable : public Transformable {
+		private:
+			math::Rectf globalBounds;
+			math::Rectf localBounds;
+
+			uint32 verticesCount;
 		public:
 			Renderable() = default;
 
