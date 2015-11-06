@@ -11,7 +11,7 @@ namespace sani {
 			public:
 				Texture2DProcessor() = default;
 				~Texture2DProcessor() = default;
-				void* process(void* input); 
+				ResourceItem* process(ResourceItem* input) override;
 			};
 		}
 	}

@@ -4,6 +4,7 @@
 #include "sani/resource/pipeline/content_importer.hpp"
 #include "sani/resource/pipeline/texture2d_importer.hpp"
 #include "sani/resource/processor/resource_processor.hpp"
+#include "sani/resource/processor/texture2d_processor.hpp"
 #include <iostream>
 namespace sani {
 	namespace resource {
@@ -20,10 +21,11 @@ namespace sani {
 
 			void ResourceCompiler::initialize() {
 				using namespace sani::resource::compiler;
-				map<Texture2DContent, Texture2DWriter>();
+				mapWriter<Texture2DContent, Texture2DWriter>();
 				//map<Effect, EffectWriter>();
 				// THIS IS FOR DEBUG
 				importers["tuksu.png"] = new pipeline::Texture2DImporter;
+				mapProcessor<Texture2DContent, processor::Texture2DProcessor>();
 			}
 
 			void ResourceCompiler::compile(const String& root, const String& path) {
@@ -51,14 +53,21 @@ namespace sani {
 				ContentImporter* importer = getImporterFor(path);
 				ResourceItem* data = importer->import(filePath, &fileSystem);
 
-				ResourceProcessor* processor ;
-				//void* binary = processor->process(data);
-				std::cout << typeid(*data).name() << std::endl;
-				//std::cout << typeid(*binary).name() << std::endl;
-
-				//ResourceWriter writer(file, this);
-			//	writer.flush(binary);
+				ResourceProcessor* processor = getProcessorFor(std::type_index(typeid(*data)));
+				ResourceItem* binary = processor->process(data);
 				
+				std::cout << typeid(*binary).name() << std::endl;
+
+				ResourceWriter writer(file, this);
+				writer.flush(std::type_index(typeid(*binary)), binary);
+				
+			}
+
+			processor::ResourceProcessor* ResourceCompiler::getProcessorFor(const std::type_index& type) const {
+				if (!processors.count(type)) {
+					throw std::runtime_error(String("No processor for ") + type.name());
+				}
+				return processors.at(type);
 			}
 
 			pipeline::ContentImporter* ResourceCompiler::getImporterFor(const String& asset) const {
@@ -67,6 +76,12 @@ namespace sani {
 				}
 				return importers.at(asset);
 			}
+
+
+			ResourceTypeWriter* ResourceCompiler::getWriter(const std::type_index& t) const {
+				return lookup.at(t);
+			}
+
 
 			const String& ResourceCompiler::getFilePath() const {
 				return filePath;

@@ -13,7 +13,7 @@ namespace sani {
 
 				}
 				~Texture2DWriter() {}
-				void write(ResourceWriter* writer, void* value) override;
+				void write(ResourceWriter* writer, const void* value) override;
 
 				virtual String getRuntimeReader() const {
 					return DeserializableWith<Texture2DContent>::value();

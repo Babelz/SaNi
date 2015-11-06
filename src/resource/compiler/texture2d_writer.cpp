@@ -5,11 +5,11 @@ namespace sani {
 	namespace resource {
 		namespace compiler {
 			
-			void Texture2DWriter::write(ResourceWriter* writer, void* value) {
+			void Texture2DWriter::write(ResourceWriter* writer, const void* value) {
 
 				typedef std::vector<unsigned char> PixelData;
 				typedef std::vector < PixelData> MipmapChain;
-				Texture2DContent* tex = static_cast<Texture2DContent*>(value);
+				const Texture2DContent* tex = static_cast<const Texture2DContent*>(value);
 				const MipmapChain& mipmaps = tex->getMipmaps();
 				writer->write(tex->getWidth());
 				writer->write(tex->getHeight());

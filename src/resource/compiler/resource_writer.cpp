@@ -45,6 +45,41 @@ namespace sani {
 					write(kv.second->getRuntimeReader());
 				}
 			}
+
+			ResourceTypeWriter* ResourceWriter::getWriter(const std::type_index& info) {
+				// we dont have writer yet lets add it
+				if (writers.find(info) == writers.end()) {
+					ResourceTypeWriter* w = compiler->getWriter(info);
+					writers[info] = w;
+					return w;
+				}
+				// we have the typewriter already
+				return writers[info];
+			}
+
+			void ResourceWriter::writeObject(const std::type_index& type, const ResourceItem* obj) {
+				if (obj == nullptr) {
+					throw std::runtime_error("obj is nullptr");
+				}
+				ResourceTypeWriter* writer = getWriter(type);
+				if (writer == nullptr) {
+					throw std::runtime_error("Cant get writer for T");
+				}
+				writer->write(this, obj);
+			}
+
+			void ResourceWriter::flush(const std::type_index& type, const ResourceItem* obj) {
+				// this is hax, just so we have the writer in list...
+				getWriter(type);
+				// write the header..
+				writeHeader();
+				// write the readers to deserialize
+				writeTypeWriters();
+				// write the final object..
+				writeObject(type, obj);
+
+				BinaryWriter::flush();
+			}
 		}
 	}
 }

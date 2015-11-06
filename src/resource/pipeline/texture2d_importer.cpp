@@ -34,7 +34,7 @@ namespace sani {
 			}
 			Texture2DImporter::~Texture2DImporter() { }
 			ResourceItem* Texture2DImporter::import(const String& filename, FileSystem* fileSystem) const {
-				std::cout << "Texture2DImporterImpl::import(String&) invoked" << std::endl;
+				std::cout << "Texture2DImporter::import(String&) invoked" << std::endl;
 				size_t index = filename.rfind(".");
 				if (index == String::npos) {
 					throw std::runtime_error("Couldn't determine the file type!");

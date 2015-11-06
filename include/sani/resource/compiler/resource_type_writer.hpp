@@ -14,7 +14,7 @@ namespace sani {
 
 				/// Writes the data type to stream
 				/// @param writer The content writer which has stream open
-				virtual void write(ResourceWriter* writer, void* value) = 0;
+				virtual void write(ResourceWriter* writer, const void* value) = 0;
 
 				virtual String getRuntimeReader() const = 0;
 			};
