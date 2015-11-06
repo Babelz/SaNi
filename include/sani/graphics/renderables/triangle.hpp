@@ -36,15 +36,11 @@ namespace sani {
 			Triangle(const float32 width, const float32 height);
 		};
 
-		namespace triangle {
-			inline void render(const Triangle& triangle, Renderer& renderer);
+		inline bool canRender(const Triangle& triangle, const Renderer& renderer);
+		inline void render(const Triangle& triangle, Renderer& renderer);
 
-			inline void recomputeBounds(Triangle& triangle);
-
-			inline void recomputeVertices(Triangle& triangle);
-
-			inline bool canRender(const Triangle& triangle, const Renderer& renderer);
-		}
+		inline void recomputeVertices(Triangle& triangle);
+		inline void recomputeBounds(Triangle& triangle);
 	}
 }
 

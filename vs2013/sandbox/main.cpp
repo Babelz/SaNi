@@ -175,11 +175,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	Triangle t(256, 256);
+	std::vector<Triangle> triangles;
 
-	t.fill = sani::graphics::color::red;
-	t.transform.setPosition(600, 300);
-	t.transform.setOrigin(128, 0);
+	for (size_t i = 0; i < 64; i++) {
+		for (size_t j = 0; j < 64; j++) {
+			Triangle t(32, 32);
+
+			t.fill = Color(j * i * 0.01f, j * 0.1f, i * 0.01f, i * 0.1f);
+			t.transform.setPosition(i * 32, j * 32);
+			t.transform.setOrigin(16, 16);
+
+			triangles.push_back(t);
+		}
+	}
 	
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -193,12 +201,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Update..
-		t.transform.rotate(0.01f);
+		for (Triangle& t : triangles) {
+			t.transform.rotate(0.01f);
+			recomputeVertices(t);
+		}
 
 		// Draw...
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 
-		triangle::render(t, renderer);
+		for(Triangle& t : triangles) render(t, renderer);
 		
 		renderer.endRendering();
 	}

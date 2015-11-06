@@ -28,6 +28,10 @@ namespace sani {
 			math::Rectf localBounds;
 
 			Texture2D* texture;
+
+			Renderable();
+
+			~Renderable();
 		};
 
 		inline bool canRender(const Renderable* const renderable, const Renderer* const renderer);

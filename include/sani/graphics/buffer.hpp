@@ -33,6 +33,10 @@ namespace sani {
 						const uint32 oldSize = size;
 						const uint32 newSize = size * 2;
 
+						/*
+							WARNING: throws bad_alloc when trying to allocate 128mb of memory.
+						*/
+
 						T* newMemory = new T[newSize];
 						std::move(memory, memory + oldSize, newMemory);
 

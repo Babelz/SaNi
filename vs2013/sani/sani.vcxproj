@@ -168,6 +168,7 @@
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />

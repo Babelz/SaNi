@@ -52,8 +52,8 @@ namespace sani {
 
 			transform.setPosition(rx, ty);
 			
-			triangle::recomputeBounds(*this);
-			triangle::recomputeVertices(*this);
+			recomputeBounds(*this);
+			recomputeVertices(*this);
 			
 			transform.clearChanges();
 		}

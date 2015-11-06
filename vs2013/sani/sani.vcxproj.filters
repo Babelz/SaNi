@@ -294,6 +294,9 @@
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
