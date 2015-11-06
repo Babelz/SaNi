@@ -52,7 +52,7 @@ namespace sani {
 			/// element to be renderer.
 			///
 			/// TODO: too much overhead? 
-			virtual bool canRender(const Renderer* const renderer) const = 0;
+			//virtual bool canRender(const Renderer* const renderer) const = 0;
 
 			virtual ~Renderable() = default;
 		};
