@@ -590,9 +590,6 @@
     <ClInclude Include="..\..\include\sani\resource\resources.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\color.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\color.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -602,19 +599,22 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp">
       <Filter>include\resource\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderable.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp">
-      <Filter>include\graphics</Filter>
+      <Filter>include\graphics\renderables</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl">
-      <Filter>include\graphics</Filter>
+      <Filter>include\graphics\inl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\vertex_helper.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -644,6 +644,9 @@
       <Filter>include\resource\compiler</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\renderer.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
