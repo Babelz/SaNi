@@ -29,9 +29,9 @@ namespace sani {
 #error "Couldnt determine the platform"
 #endif
 				// magic 3 bytes
-				write('S');
-				write('N');
-				write('B');
+				write((uint8)'S');
+				write((uint8)'N');
+				write((uint8)'B');
 
 				// platform
 				write(Platforms[SANI_TARGET_PLATFORM]);
