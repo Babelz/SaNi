@@ -35,7 +35,7 @@ namespace sani {
 				access[0] = 'w'; access[1] = '+'; access[2] = 'b';
 			}
 			else if (mode & Filemode::Truncate) {
-				access[0] = 'w';
+				access[0] = 'w'; access[1] = 'b';
 			}
 			else if (mode & Filemode::Read) {
 				access[0] = 'r'; access[1] = 'b';

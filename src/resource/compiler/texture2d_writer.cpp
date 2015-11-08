@@ -21,7 +21,9 @@ namespace sani {
 					const PixelData& face = mipmaps[i];
 					// write the byte count
 					writer->write7BitEncodedInt(face.size());
-					writer->writeContainer(face);
+					for (size_t i = 0; i < face.size(); ++i) {
+						writer->write((uint8)face[i]);
+					}
 				}
 				
 			}
