@@ -28,8 +28,6 @@ int main(int argc, char** argv) {
 
 	ResourceCompiler compiler;
 	String root(argv[1]);
-	processor::Texture2DProcessor proc;
-	pipeline::Texture2DImporter importer;
 	try {
 		size_t i = 2;
 		while (argc-- > 2) {
