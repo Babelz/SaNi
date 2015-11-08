@@ -9,7 +9,7 @@ namespace sani {
 	namespace graphics {
 
 		/*
-			Move impl to .cpp
+			TODO: Move impl to .cpp
 		*/
 
 		/// @class Buffer buffer.hpp "sani/graphics/buffer.hpp"
@@ -21,33 +21,26 @@ namespace sani {
 		private:
 			const BufferSizing bufferSizing;
 
+			std::vector<T> memory;
 			uint32 bufferPointer;
 			uint32 size;
-			T* memory;
 			
 			inline void checkSize(const uint32 offset) {
 				if (bufferSizing == BufferSizing::Static) {
 					if (bufferPointer + offset > size) throw std::runtime_error("Buffer overflow");
 				} else if (bufferSizing == BufferSizing::Dynamic) {
 					if (bufferPointer + offset > size) {
-						const uint32 oldSize = size;
-						const uint32 newSize = size * 2;
+						size *= 2;
 
-						T* newMemory = new T[newSize];
-						std::move(memory, memory + oldSize, newMemory);
-
-						delete memory;
-
-						memory = newMemory;
-						size = newSize;
+						memory.resize(size);
 					}
 				}
 			}
 		public:
 			Buffer(const uint32 initialSize, const BufferSizing bufferSizing) : bufferSizing(bufferSizing),
 																			    bufferPointer(0),
-																				memory(new T[initialSize]),
 																				size(initialSize) {
+				memory.resize(size);
 			}
 		
 			/// Returns the type of the buffer. 
@@ -92,7 +85,7 @@ namespace sani {
 
 			/// Returns pointer to the beginning of the buffer.
 			inline T* data() {
-				return &memory[0];
+				return memory.data();
 			}
 
 			/// Sets the buffer pointers value to zero.
@@ -101,7 +94,6 @@ namespace sani {
 			}
 		
 			~Buffer() {
-				delete[] memory;
 			}
 		};
 	}

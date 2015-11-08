@@ -1,14 +1,13 @@
-#include "sani/graphics/transformable.hpp"
+#include "sani/graphics/Transform.hpp"
 
 namespace sani {
 
 	namespace graphics {
-		Transformable::Transformable() : scale(1.0f, 1.0f, 1.0f),
-										 changed(false),
+		Transform::Transform() : scale(1.0f, 1.0f, 1.0f),
 										 rotation(0.0f) {
 		}
 
-		Transformable::~Transformable() {
+		Transform::~Transform() {
 		}
 	}
 }

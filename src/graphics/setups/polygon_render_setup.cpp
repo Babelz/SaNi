@@ -17,7 +17,7 @@ namespace sani {
 			vertexDescription.count = 3;
 			vertexDescription.type = PrimitiveType::Float;
 			vertexDescription.normalized = false;
-			vertexDescription.stride = sizeof(float32) * getElements();
+			vertexDescription.stride = sizeof(float32) * getVertexElementsCount();
 			vertexDescription.offset = 0;
 			
 			VertexAttributePointerDescription colorDescription;
@@ -25,7 +25,7 @@ namespace sani {
 			colorDescription.count = 4;
 			colorDescription.type = PrimitiveType::Float;
 			colorDescription.normalized = false;
-			colorDescription.stride = sizeof(float32) * getElements();
+			colorDescription.stride = sizeof(float32) * getVertexElementsCount();
 			colorDescription.offset = sizeof(float32) * 3;
 
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();

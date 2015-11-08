@@ -25,7 +25,7 @@ namespace sani {
 			textureDescription.count = 2;
 			textureDescription.type = PrimitiveType::Float;
 			textureDescription.normalized = false;
-			textureDescription.stride = sizeof(float32) * getElements();
+			textureDescription.stride = sizeof(float32) * getVertexElementsCount();
 			textureDescription.offset = sizeof(float32) * 7;
 
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();

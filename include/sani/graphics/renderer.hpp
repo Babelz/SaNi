@@ -46,11 +46,13 @@ namespace sani {
 			void generateBuffers();
 
 			void updateVertexBufferSize();
+			void updateIndexBufferSize();
+
 			void swapRenderSetup();
 
 			void prepareRendering(const RenderState renderState, const math::Mat4f& transform, const VertexMode vertexMode);
-			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 elements);
-			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 elements);
+			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 vertexElementsCount);
+			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 vertexElementsCount);
 
 			void endRendering(const RenderState renderState);
 
@@ -80,38 +82,36 @@ namespace sani {
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
 			/// @param[in] texture texture that will be used to texture the shapes
-			/// @param[in] elements how many elements each vertex has
+			/// @param[in] vertexElementsCount how many elements each vertex has
 			/// @param[in] renderMode render mode
-			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 elements, const RenderMode renderMode);
+			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertexElementsCount, const RenderMode renderMode);
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
-			/// @param[in] elements how many elements each vertex has
+			/// @param[in] vertexElementsCount how many elements each vertex has
 			/// @param[in] renderMode render mode
-			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 elements, const RenderMode renderMode);
+			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode);
 
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
 			/// @param[in] texture texture that will be used to texture the shapes
-			/// @param[in] elements how many vertices each element has
+			/// @param[in] vertexElementsCount many many elements each vertex has
 			/// @param[in] indices indices 
 			/// @param[in] renderMode render mode
-			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 elements, const uint32* indices, const RenderMode renderMode);
+			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertexElementsCount, const RenderMode renderMode);
 			/// Begins rendering polygons with given arguments.
 			/// @param[in] transformation transformation
-			/// @param[in] elements how many elements each vertex has
+			/// @param[in] vertexElementsCount how many elements each vertex has
 			/// @param[in] indices indices
 			/// @param[in] renderMode render mode
-			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 elements, const uint32* indices, const RenderMode renderMode);
+			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode);
 
 			/// Renders given polygons.
-			/// @param[in] vertices vertices
-			/// @param[in] count count of objects to render
-			void renderPolygons(const float32* vertices, const uint32 count);
-			/// Renders given polygon.
-			/// @param[in] vertices vertices
-			/// @param[in] count count of vertices to render
-			void renderPolygon(const float32* vertices, const uint32 count);
-
+			/// @param[in] vertices vertex elements
+			/// @param[in] vertexElementsCount how many vertex elements to copy from vertices
+			void renderPolygons(const float32* vertices, const uint32 vertexElementsCount);
+			
+			void renderIndexedPolygons(const float32* vertices, const uint32* indices, const uint32 verticesCount, const uint32 indicesCount, const uint32 indexObjects);
+			
 			/*
 				TODO: add text functions.
 				TODO: add index buffering.

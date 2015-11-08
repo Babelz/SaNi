@@ -204,9 +204,6 @@
     <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp">
       <Filter>src\resource\compiler</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\primitive_writers.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp">
       <Filter>src\resource\compiler</Filter>
     </ClCompile>
@@ -264,9 +261,6 @@
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\renderer.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp">
       <Filter>src\graphics\setups</Filter>
     </ClCompile>
@@ -285,9 +279,6 @@
     <ClCompile Include="..\..\src\graphics\transformable.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\renderables\shape.cpp">
-      <Filter>src\graphics\renderables</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
@@ -298,6 +289,15 @@
       <Filter>src\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderer.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\circle.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
   </ItemGroup>
@@ -578,9 +578,6 @@
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\transformable.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\setups\polygon_render_setup.hpp">
       <Filter>include\graphics\setups</Filter>
     </ClInclude>
@@ -611,16 +608,22 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp">
-      <Filter>include\graphics\renderables</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl">
-      <Filter>include\graphics\inl</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\vertex_helper.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
+      <Filter>src\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\inl\transform.inl">
+      <Filter>include\graphics\inl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\transform.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
   </ItemGroup>
@@ -653,6 +656,15 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\triangle.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\rectangle.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\circle.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>

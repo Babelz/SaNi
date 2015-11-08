@@ -167,8 +167,9 @@
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
-    <ClCompile Include="..\..\src\graphics\renderables\shape.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
@@ -260,10 +261,10 @@
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\inl\transformable.inl" />
+    <ClInclude Include="..\..\include\sani\graphics\inl\transform.inl" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\renderables\shape.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
@@ -272,7 +273,7 @@
     <ClInclude Include="..\..\include\sani\graphics\setups\render_setups.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\polygon_render_setup.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\textured_polygon_render_setup.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\transformable.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\transform.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_helper.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_mode.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
@@ -322,7 +323,10 @@
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
+    <None Include="..\..\include\sani\graphics\inl\circle.inl" />
+    <None Include="..\..\include\sani\graphics\inl\rectangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\renderer.inl" />
+    <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
     <None Include="..\..\include\sani\resource\compiler\resource_writer.inl" />

@@ -16,7 +16,7 @@ namespace sani {
 		
 			RenderMode renderMode;
 
-			uint32 elements;
+			uint32 vertexElementsCount;
 		protected:
 			GraphicsDevice* const getGraphicsDevice() const;
 		public:
@@ -26,8 +26,8 @@ namespace sani {
 			void setRenderMode(const RenderMode renderMode);
 			RenderMode getRenderMode() const;
 
-			void setElements(const uint32 elements);
-			uint32 getElements() const;
+			void setVertexElementsCount(const uint32 vertexElementsCount);
+			uint32 getVertexElementsCount() const;
 			
 			/// Causes this setups render setups to be used.
 			virtual void use() = 0;

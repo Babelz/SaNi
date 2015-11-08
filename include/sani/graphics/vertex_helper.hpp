@@ -46,6 +46,11 @@ namespace sani {
 		/// @param[in] sin sin
 		/// @param[in] cos cos
 		inline void applyRotationToBottomRightVertex(sani::math::Vec3f& globalPosition, const sani::math::Vec3f& vertexPosition, const float32 dx, const float32 dy, const float32 sin, const float32 cos);
+	
+		inline void applyRotationToTriangle(sani::math::Vec3f* globalPositions, const sani::math::Vec3f* const vertexPositions, const float32 dx, const float32 dy, const float32 sin, const float32 cos);
+		
+		inline void applyRotationToRectangle(sani::math::Vec3f* globalPositions, const sani::math::Vec3f* const vertexPositions, const float32 dx, const float32 dy, const float32 sin, const float32 cos);
+	
 	}
 }
 

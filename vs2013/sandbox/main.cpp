@@ -19,6 +19,7 @@
 #include "sani/graphics/vertex_position_color.hpp"
 #include "sani/core/math/vector.hpp"
 #include "sani/graphics/renderables/triangle.hpp"
+#include "sani/graphics/renderables/triangle.hpp"
 #include <random>
 
 using namespace sani::graphics;
@@ -29,14 +30,19 @@ using namespace sani::math;
 #include "sani/resource/resources.hpp"
 #include "sani/resource/texture2d.hpp"
 using namespace sani::resource;
+#include "sani/core/math/trigonometric.hpp"
 
-Texture2D* tuksu = nullptr;
-ResourceManager* resourceManager = nullptr;
-FileSystem* fileSystem = new FileSystem();
+#include "sani/graphics/renderables/rectangle.hpp"
+#include "sani/graphics/renderables/circle.hpp"
 
-void initResource(GraphicsDevice* gdevice) {
-	resourceManager = new ResourceManager(fileSystem, gdevice);
-}
+//Texture2D* tuksu = nullptr;
+//ResourceManager* resourceManager = nullptr;
+//FileSystem* fileSystem = new FileSystem();
+//
+//void initResource(GraphicsDevice* gdevice) {
+//	resourceManager = new ResourceManager(fileSystem, gdevice);
+//}
+
 /*
 	To test if our window, context etc even work.
 */
@@ -95,8 +101,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
-	initResource(&graphicsDevice);
-	tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
+	//initResource(&graphicsDevice);
+	//tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 
@@ -175,12 +181,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	Triangle t(256, 256);
-
-	t.setFill(sani::graphics::color::red);
-	t.setPosition(600, 300);
-	t.setOrigin(128, 0);
+	Triangle triangle(256, 256);
+	triangle.fill = color::red;
+	triangle.borderFill = Color(0.0f, 1.0f, 0.0f, 0.5f);
+	triangle.transform.setPosition(600, 300);
+	triangle.transform.setOrigin(128, 0);
+	triangle.borderThickness = 32.0f;
 	
+	sani::graphics::Rectangle rectangle(600, 300, 64, 64);
+	rectangle.fill = Color(1.0f, 0.0f, 1.0f, 0.25f);
+	rectangle.borderFill = Color(0.0f, 1.0f, 0.0f, 0.5f);
+	rectangle.borderThickness = 16.0f;
+
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
@@ -193,14 +205,44 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Update..
-		t.rotate(0.01f);
+		triangle.transform.rotate(0.00001f);
+		recomputeGeometryData(triangle);
 
-		// Draw...
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
+		//renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 
-		t.recomputeVertices();
-		t.render(&renderer);
+		//// Draw...
+		//render(triangle, renderer);
+
+		//renderer.endRendering();
 		
+
+		rectangle.transform.rotate(0.00001f);
+		recomputeGeometryData(rectangle);
+		
+		renderer.beginRenderingIndexedPolygons(transform, 7, RenderMode::Triangles);
+		render(rectangle, renderer);
+		renderer.endRendering();
+
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::LineLoop);
+		render(triangle, renderer);
+		renderer.endRendering();
+
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::LineLoop);
+
+		sani::graphics::Circle circle(0, 0, 100, VERTICES_ROUGH_CIRCLE);
+		circle.transform.setPosition(300, 100);
+
+		render(circle, renderer);
+
+		renderer.endRendering();
+
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);
+
+		circle = sani::graphics::Circle(300, 0, 100, VERTICES_SMOOTH_CIRCLE);
+		circle.transform.setPosition(300, 100);
+
+		render(circle, renderer);
+
 		renderer.endRendering();
 	}
 

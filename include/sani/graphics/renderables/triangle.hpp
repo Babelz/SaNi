@@ -1,72 +1,61 @@
 #pragma once
 
 #include "sani/graphics/vertex_position_color_texture.hpp"
-#include "sani/graphics/renderables/shape.hpp"
+#include "sani/graphics/renderables/renderable.hpp"
 
 namespace sani {
 
 	namespace graphics {
+
+		/*
+			TODO: impl texturing.
+		*/
 
 		/// @class Triangle triangle.hpp "sani/graphics/triangle.hpp"
 		/// @author voidbab
 		/// 
 		/// Represents a triangle that can have a fill color, 
 		/// texture and border of given color and thickness.
-		/// TODO: border not implemented.
-		class Triangle : public Shape {
+		class Triangle : public Renderable {
 		private:
+			void initialize(const float32 tx, const float32 ty, const float32 lx, const float32 ly, const float32 rx, const float32 ry);
+		public:
+			// Local position data.
 			sani::math::Vec3f topPoint;
 			sani::math::Vec3f leftPoint;
 			sani::math::Vec3f rightPoint;
 
+			// Global position data and vertex data.
 			VertexPositionColorTexture topVertex;
 			VertexPositionColorTexture leftVertex;
 			VertexPositionColorTexture rightVertex;
+			
+			VertexPositionColor topBorderVertex;
+			VertexPositionColor leftBorderVertex;
+			VertexPositionColor rightBorderVertex;
 
-			math::Rectf localBounds;
-			math::Rectf globalBounds;
+			// TODO: should this affect the geometry data?
+			float32 borderThickness;
+			Color borderFill;
 
-			void initialize(const float32 tx, const float32 ty, const float32 lx, const float32 ly, const float32 rx, const float32 ry);
-			void recomputeBounds();
-		public:
-			/*
-				TODO: vec2 or vec3? wtf...
-			*/
+			Color fill;
 
 			Triangle(const float32 tx, const float32 ty, const float32 lx, const float32 ly, const float32 rx, const float32 ry);
 			Triangle(const sani::math::Vec2f& top, const sani::math::Vec2f& left, const sani::math::Vec2f& right);
 			Triangle(const float32 x, const float32 y, const float32 width, const float32 height);
+			Triangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size);
 			Triangle(const float32 width, const float32 height);
-			
-			const math::Rectf& getLocalBounds() const override;
-			const math::Rectf& getGlobalBounds() const override;
-			
-			void render(Renderer* const renderer) override;
-
-			void recomputeVertices() override;
-
-			bool canRender(const Renderer* const renderer) const override;
-
-			/// Returns the top points local coordinates.
-			sani::math::Vec2f getTop() const;
-			/// Returns the left points local coordinates.
-			sani::math::Vec2f getLeft() const;
-			/// Returns the right points local coordinates.
-			sani::math::Vec2f getRight() const;
-
-			/// Sets the top points local coordinates.
-			void setTop(const Vec2f& top);
-			/// Sets the right points local coordinates.
-			void setRight(const Vec2f& right);
-			/// Sets the left points local coordinates.
-			void setLeft(const Vec2f& left);
-
-			/// Sets the top points coordinates.
-			void setTop(const float32 x, const float32 y);
-			/// Sets the right points coordinates.
-			void setRight(const float32 x, const float32 y);
-			/// Sets the left points coordinates.
-			void setLeft(const float32 x, const float32 y);
 		};
+
+		inline void recomputeGeometryData(Triangle& triangle);
+		inline void recomputeVertices(Triangle& triangle);
+		inline void recomputeBounds(Triangle& triangle);
+
+		inline bool canRender(const Triangle& triangle, const Renderer& renderer);
+		inline void render(Triangle& triangle, Renderer& renderer);
+
+		inline const uint32 getVertexElementsCount(const Triangle& triangle);
 	}
 }
+
+#include "sani/graphics/inl/triangle.inl"

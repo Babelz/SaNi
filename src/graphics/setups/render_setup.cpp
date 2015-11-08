@@ -16,11 +16,11 @@ namespace sani {
 			return renderMode;
 		}
 
-		void RenderSetup::setElements(const uint32 elements) {
-			this->elements = elements;
+		void RenderSetup::setVertexElementsCount(const uint32 vertexElementsCount) {
+			this->vertexElementsCount = vertexElementsCount;
 		}
-		uint32 RenderSetup::getElements() const {
-			return elements;
+		uint32 RenderSetup::getVertexElementsCount() const {
+			return vertexElementsCount;
 		}
 
 		GraphicsDevice* const RenderSetup::getGraphicsDevice() const {

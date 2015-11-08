@@ -175,7 +175,7 @@ namespace sani {
 			/// Draws array elements.
 
 			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
-			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices);
 
 			void createVertexAttributePointer(const VertexAttributePointerDescription& description);
 			void disableVertexAttributePointer(const uint32 location);

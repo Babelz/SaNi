@@ -181,15 +181,12 @@ namespace sani {
 			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
 
 			// Enable GL settings.
-			glEnable(GL_MULTISAMPLE);
-			glEnable(GL_DEPTH_TEST);
-			glEnable(GL_ALPHA_TEST);
 			glEnable(GL_BLEND);
 
 			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
+			
 			// Set the window full screen. Default is windowed.
 			if (impl->fullscreen) setFullscreen();
 

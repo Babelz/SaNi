@@ -20,7 +20,7 @@ namespace sani {
 
 		/// Returns the count of elements each vertex should have.
 		uint32 Renderer::getVertexElementsCount() const {
-			return renderSetup->getElements();
+			return renderSetup->getVertexElementsCount();
 		}
 	}
 }

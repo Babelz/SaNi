@@ -7,26 +7,19 @@ namespace sani {
 	
 	namespace graphics {
 			
-		/// @class Transformable transformable.hpp "sani/graphics/transformable.hpp"
+		/// @class Transform Transform.hpp "sani/graphics/transform.hpp"
 		/// @author voidbab
 		///
 		/// Transform defined by position, scale, origin and rotation.
-		class Transformable {
+		class Transform {
 		private:
 			sani::math::Vec3f position;
 			sani::math::Vec3f scale;
 			sani::math::Vec3f origin;
 
 			float32 rotation;
-
-			bool changed;
-		protected:
-			/// Returns true if the transformation has changed.
-			inline bool hasChanged() const;
-			/// Clears the changes flag (sets it to false)
-			inline void clearChanges();
 		public:
-			Transformable();
+			Transform();
 
 			inline void setPosition(const sani::math::Vec3f& position);
 			inline void setPosition(const float32 x, const float32 y);
@@ -42,6 +35,8 @@ namespace sani {
 			inline void setOrigin(const float32 x, const float32 y);
 			inline void setOriginX(const float32 x);
 			inline void setOriginY(const float32 y);
+
+			// TODO: rads?
 
 			inline void setRotation(const float32 angle);
 			inline void rotate(const float32 angle);
@@ -63,9 +58,9 @@ namespace sani {
 
 			inline float32 getRotation() const;
 
-			~Transformable();
+			~Transform();
 		};
 	}
 }
 
-#include "sani/graphics/inl/transformable.inl"
+#include "sani/graphics/inl/transform.inl"
