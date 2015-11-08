@@ -19,12 +19,14 @@ namespace sani {
 				TODO: borders, rotation.
 			*/
 
+			const sani::math::Vec3f& scale = circle.transform.getScale();
+
 			for (uint32 i = 0; i < circle.shapeVertices.size(); i++) {
 				const float32 percent = (i / float(circle.shapeVertices.size() - 1));
 				const float32 radius = percent * 2.0f * PI;
 
-				const float32 ox = circle.globalBounds.x + circle.radius + circle.radius * sani::math::cos(radius);
-				const float32 oy = circle.globalBounds.y + circle.radius + circle.radius * sani::math::sin(radius);
+				const float32 ox = circle.globalBounds.x + circle.radius * scale.x * sani::math::cos(radius);
+				const float32 oy = circle.globalBounds.y + circle.radius * scale.y * sani::math::sin(radius);
 
 				VertexPositionColorTexture& vertex = circle.shapeVertices[i];
 				vertex.vertexPositionColor.position.x = ox;
@@ -65,15 +67,8 @@ namespace sani {
 		void render(Circle& circle, Renderer& renderer) {
 			// TODO: add texturing.
 
-			int i = 0;
-
 			for (VertexPositionColorTexture vertex: circle.shapeVertices) {
 				const VertexPositionColor& vpc = vertex.vertexPositionColor;
-
-				if (i == 0) {
-					i = 1;
-					continue;
-				}
 
 				float32 vertexData[] = 
 				{

@@ -223,23 +223,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		render(rectangle, renderer);
 		renderer.endRendering();
 
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::LineLoop);
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 		render(triangle, renderer);
 		renderer.endRendering();
 
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::LineLoop);
 
-		sani::graphics::Circle circle(0, 0, 100, VERTICES_ROUGH_CIRCLE);
+		sani::graphics::Circle circle(0, 0, 100, VERTICES_SMOOTH_CIRCLE);
 		circle.transform.setPosition(300, 100);
+		recomputeGeometryData(circle);
 
 		render(circle, renderer);
 
 		renderer.endRendering();
 
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::LineLoop);
 
 		circle = sani::graphics::Circle(300, 0, 100, VERTICES_SMOOTH_CIRCLE);
 		circle.transform.setPosition(300, 100);
+		circle.transform.setVerticalScale(0.25f);
+		recomputeGeometryData(circle);
 
 		render(circle, renderer);
 
