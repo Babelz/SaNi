@@ -208,7 +208,7 @@ namespace sani {
 			if (vertexMode == VertexMode::NoIndexing) throw std::runtime_error("invalid call, was expecting indexed elements");
 		}
 
-		void Renderer::flush() {
+		void Renderer::endRendering() {
 			switch (renderState) {
 			case sani::graphics::RenderState::Polygons:
 				presentPolygons();
@@ -220,20 +220,13 @@ namespace sani {
 				throw std::runtime_error("invalid or unsupported state");
 			}
 
-			vertices.resetBufferPointer();
-			indices.resetBufferPointer();
-		}
-
-		void Renderer::endRendering() {
-			flush();
-
 			endRendering(renderState);
 		}
 
 		Renderer::~Renderer() {
 			for (uint32 i = 0; i < RENDER_STATES_COUNT; i++) delete renderSetups[i];
 			
-			delete[]renderSetups;
+			delete[] renderSetups;
 		}
 	}
 }

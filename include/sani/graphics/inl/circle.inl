@@ -116,8 +116,6 @@ namespace sani {
 
 					renderer.renderPolygons(vertexData, 7);
 				}
-
-				renderer.flush();
 			}
 
 			for (const VertexPositionColorTexture vertex : circle.shapeVertices) {
