@@ -112,6 +112,8 @@ namespace sani {
 			
 			void renderIndexedPolygons(const float32* vertices, const uint32* indices, const uint32 verticesCount, const uint32 indicesCount, const uint32 indexObjects);
 			
+			void flush();
+
 			/*
 				TODO: add text functions.
 				TODO: add index buffering.

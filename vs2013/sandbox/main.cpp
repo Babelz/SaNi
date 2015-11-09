@@ -181,7 +181,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	Triangle triangle(256, 256);
+	sani::graphics::Triangle triangle(256, 256);
 	triangle.fill = color::red;
 	triangle.borderFill = Color(0.0f, 1.0f, 0.0f, 0.5f);
 	triangle.transform.setPosition(600, 300);
@@ -192,6 +192,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	rectangle.fill = Color(1.0f, 0.0f, 1.0f, 0.25f);
 	rectangle.borderFill = Color(0.0f, 1.0f, 0.0f, 0.5f);
 	rectangle.borderThickness = 16.0f;
+
+	sani::graphics::Circle circle(0, 0, 100, 6);
+	circle.borderThickness = 32.0f;
+	recomputeGeometryData(circle);
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -205,20 +209,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Update..
-		triangle.transform.rotate(0.00001f);
+		triangle.transform.rotate(0.01f);
 		recomputeGeometryData(triangle);
 
-		//renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
-
-		//// Draw...
-		//render(triangle, renderer);
-
-		//renderer.endRendering();
-		
-
-		rectangle.transform.rotate(0.00001f);
+		rectangle.transform.rotate(0.01f);
 		recomputeGeometryData(rectangle);
 		
+		circle.transform.rotate(0.01f);
+		circle.transform.move(1, 1);
+		recomputeGeometryData(circle);
+
+		// Render..
 		renderer.beginRenderingIndexedPolygons(transform, 7, RenderMode::Triangles);
 		render(rectangle, renderer);
 		renderer.endRendering();
@@ -227,25 +228,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		render(triangle, renderer);
 		renderer.endRendering();
 
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::LineLoop);
-
-		sani::graphics::Circle circle(0, 0, 100, VERTICES_SMOOTH_CIRCLE);
-		circle.transform.setPosition(300, 100);
-		recomputeGeometryData(circle);
-
+		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);
 		render(circle, renderer);
-
-		renderer.endRendering();
-
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::LineLoop);
-
-		circle = sani::graphics::Circle(300, 0, 100, VERTICES_SMOOTH_CIRCLE);
-		circle.transform.setPosition(300, 100);
-		circle.transform.setVerticalScale(0.25f);
-		recomputeGeometryData(circle);
-
-		render(circle, renderer);
-
 		renderer.endRendering();
 	}
 
