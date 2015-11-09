@@ -3,23 +3,19 @@
 #include "sani/resource/resource.hpp"
 #include "sani/resource/serialization.hpp"
 #include "sani/forward_declare.hpp"
+#include "sani/platform/graphics/texture.hpp"
 
 SANI_FORWARD_DECLARE_3(sani, resource, reader, Texture2DReader);
 SANI_FORWARD_DECLARE_2(sani, resource, Texture2DContent);
-SANI_FORWARD_DECLARE_3(sani, resource, compiler, Texture2DWriter)
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 
 namespace sani {
 	namespace resource {
-		class Texture2D : public Resource {
-		private:
-			uint32 width;
-			uint32 height;
-
+		class Texture2D : public Resource, public graphics::Texture {
 		public:
-			Texture2D(const uint32 width, const uint32 height);
+			// TODO debug, hax dont use
+			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height);
 			~Texture2D();
-			uint32 getWidth() const;
-			uint32 getHeight() const;
 		};
 		
 	}

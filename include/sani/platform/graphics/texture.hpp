@@ -1,6 +1,7 @@
-#include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/types.hpp"
+#include "sani/forward_declare.hpp"
 
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 namespace sani {
 	namespace graphics {
 
@@ -21,8 +22,8 @@ namespace sani {
 			// Identifier of the texture, required atleast by the OpenGL.
 			uint32 renderTexture;
 		public:
-			Texture(GraphicsDevice& device, const uint32 width, const uint32 height);
-
+			Texture(GraphicsDevice* device, const uint32 width, const uint32 height);
+			virtual ~Texture();
 			uint32 getWidth() const;
 			uint32 getHeight() const;
 

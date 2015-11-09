@@ -35,13 +35,13 @@ using namespace sani::resource;
 #include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/graphics/renderables/circle.hpp"
 
-//Texture2D* tuksu = nullptr;
-//ResourceManager* resourceManager = nullptr;
-//FileSystem* fileSystem = new FileSystem();
-//
-//void initResource(GraphicsDevice* gdevice) {
-//	resourceManager = new ResourceManager(fileSystem, gdevice);
-//}
+sani::resource::Texture2D* tuksu = nullptr;
+ResourceManager* resourceManager = nullptr;
+FileSystem* fileSystem = new FileSystem();
+
+void initResource(GraphicsDevice* gdevice) {
+	resourceManager = new ResourceManager(fileSystem, gdevice);
+}
 
 /*
 	To test if our window, context etc even work.
@@ -101,8 +101,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
-	//initResource(&graphicsDevice);
-	//tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
+	namespace sr = sani::resource;
+	initResource(&graphicsDevice);
+	tuksu = static_cast<sr::Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 
