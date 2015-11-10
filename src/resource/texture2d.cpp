@@ -3,12 +3,36 @@
 
 namespace sani {
 	namespace resource {
-		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const GLuint id)
-			: Texture(device, width, height) {
-			// TODO hax
-			renderTexture = id;
+		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height)
+			: Texture(device, width, height), levelCount(1) {
+			generateTexture(device, width, height, false, SurfaceFormat::ColorRGBA, SurfaceType::Texture);
+		}
+
+		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format)
+			: Texture(device, width, height), levelCount(((mipmap) ? calculateLevelCount(width, height) : 1)) {
+			generateTexture(device, width, height, mipmap, format, SurfaceType::Texture);
+		}
+
+		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, 
+							 const bool mipmap, const SurfaceFormat format, const SurfaceType type)
+							 : Texture(device, width, height), levelCount(((mipmap) ? calculateLevelCount(width, height) : 1)) {
+			generateTexture(device, width, height, mipmap, format, type);
 		}
 
 		Texture2D::~Texture2D() {}
+
+		void Texture2D::generateTexture(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format, SurfaceType type) {
+
+		}
+
+		uint32 Texture2D::calculateLevelCount(uint32 width, uint32 height) {
+			uint32 levels = 0;
+			while (width > 1 && height > 1) {
+				++levels;
+				width /= 2;
+				height /= 2;
+			}
+			return levels;
+		}
 	}
 }

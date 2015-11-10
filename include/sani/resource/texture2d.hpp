@@ -10,11 +10,27 @@ SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 
 namespace sani {
 	namespace resource {
+
+		enum SurfaceFormat {
+			ColorRGBA
+		};
+
+		enum SurfaceType {
+			Texture,
+			RenderTarget
+		};
+
 		class Texture2D : public Resource, public graphics::Texture {
+		private:
+			const uint32 levelCount;
+			void generateTexture(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format, SurfaceType type);
 		public:
 			// TODO debug, hax dont use
-			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const GLuint id);
+			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height);
+			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format);
+			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, const SurfaceFormat format, const SurfaceType type);
 			~Texture2D();
+			static uint32 calculateLevelCount(uint32 width, uint32 height);
 		};
 		
 	}
