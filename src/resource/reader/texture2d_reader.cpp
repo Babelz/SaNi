@@ -66,7 +66,7 @@ namespace sani {
 				}
 				glBindTexture(GL_TEXTURE_2D, 0);
 
-				Texture2D* out = new Texture2D(*device, width, height, texture);
+				Texture2D* out = new Texture2D(device, width, height);
 
 				return out;
 			}

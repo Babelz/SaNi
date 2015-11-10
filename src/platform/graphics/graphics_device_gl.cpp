@@ -207,7 +207,7 @@ namespace sani {
 			}
 
 			// Initialize backbuffer.
-			impl->cImpl.backbuffer = new RenderTarget2D(*this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
+			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
 			setRenderTarget(nullptr);
 
 			setViewport(viewport);
@@ -327,7 +327,7 @@ namespace sani {
 
 			delete impl->cImpl.backbuffer;
 
-			impl->cImpl.backbuffer = new RenderTarget2D(*this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
+			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
 			setRenderTarget(nullptr);
 
 			CHECK_FOR_ERRORS();

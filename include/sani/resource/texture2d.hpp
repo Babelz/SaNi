@@ -1,9 +1,8 @@
 #pragma once
+#include "sani/platform/graphics/texture.hpp"
 #include "sani/types.hpp"
 #include "sani/resource/resource.hpp"
 #include "sani/resource/serialization.hpp"
-#include "sani/forward_declare.hpp"
-#include "sani/platform/graphics/texture.hpp"
 
 SANI_FORWARD_DECLARE_3(sani, resource, reader, Texture2DReader);
 SANI_FORWARD_DECLARE_2(sani, resource, Texture2DContent);

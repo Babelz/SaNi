@@ -1,3 +1,4 @@
+#pragma once
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 

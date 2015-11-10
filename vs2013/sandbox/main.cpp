@@ -29,6 +29,7 @@ using namespace sani::math;
 #include "sani/platform/file/file_stream.hpp"
 #include "sani/resource/resources.hpp"
 #include "sani/resource/texture2d.hpp"
+#include "sani/platform/graphics/texture.hpp"
 using namespace sani::resource;
 #include "sani/core/math/trigonometric.hpp"
 

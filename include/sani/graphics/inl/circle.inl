@@ -23,7 +23,7 @@ namespace sani {
 
 			for (uint32 i = 0; i < circle.shapeVertices.size(); i++) {
 				const float32 percent = (i / float(circle.shapeVertices.size() - 1));
-				const float32 radius = percent * 2.0f * PI;
+				const float32 radius = static_cast<float32>(percent * 2.0f * PI);
 
 				const float32 ox = circle.globalBounds.x + circle.radius * scale.x * sani::math::cos(radius);
 				const float32 oy = circle.globalBounds.y + circle.radius * scale.y * sani::math::sin(radius);
