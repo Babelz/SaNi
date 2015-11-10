@@ -13,10 +13,10 @@ namespace sani {
 				bl------br
 		*/
 
-		Rectangle::Rectangle(const float32 x, const float32 y, const float32 w, const float32 h) {
+		Rectangle::Rectangle(const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(1, 1, 1) {
 			initialize(x, y, w, h);
 		}
-		Rectangle::Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size) {
+		Rectangle::Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size) : Renderable(1, 1, 1){
 			initialize(position.x, position.y, size.x, size.y);
 		}
 
@@ -41,8 +41,10 @@ namespace sani {
 			bottomRightVertex.textureCoordinates.x = 1.0f;
 			bottomRightVertex.textureCoordinates.y = 1.0f;
 
-			transform.setPosition(x, y);
-			transform.setOrigin(localBounds.w / 2.0f, localBounds.h / 2.0f);
+			transform.position.x = x; 
+			transform.position.y = y;
+			transform.origin.x = localBounds.w / 2.0f;
+			transform.origin.y = localBounds.h / 2.0f;
 
 			recomputeGeometryData(*this);
 		}

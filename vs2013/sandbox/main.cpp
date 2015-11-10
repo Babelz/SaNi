@@ -181,11 +181,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	sani::graphics::Triangle triangle(256, 256);
-	triangle.fill = color::red;
-	triangle.borderFill = Color(0.0f, 1.0f, 0.0f, 0.5f);
-	triangle.transform.setPosition(600, 300);
-	triangle.transform.setOrigin(128, 0);
+	sani::graphics::Triangle triangle(300, 300);
+	triangle.transform.position = Vec3f(300, 300, 1);
+	triangle.transform.origin = Vec3f(150, 0, 1);
 	triangle.borderThickness = 32.0f;
 	
 	sani::graphics::Rectangle rectangle(600, 300, 64, 64);
@@ -209,14 +207,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Update..
-		triangle.transform.rotate(0.01f);
+		triangle.transform.rotation += 0.01f;
 		recomputeGeometryData(triangle);
+		updateRenderData(triangle);
 
-		rectangle.transform.rotate(0.01f);
+		//rectangle.transform.rotation += 0.01f;
 		recomputeGeometryData(rectangle);
 		
-		circle.transform.rotate(0.01f);
-		circle.transform.move(1, 1);
+		circle.transform.rotation += 0.01f;
+		circle.transform.position.x += 1;
+		circle.transform.position.y += 1;
 		recomputeGeometryData(circle);
 
 		// Render..
@@ -225,7 +225,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		renderer.endRendering();
 
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
-		render(triangle, renderer);
+		
+		for (uint32 i = 0; i < triangle.renderData.renderElementsCount; i++) {
+			const uint32 index = triangle.renderData.renderElementIndices[i];
+			const RenderElementData& renderElement = triangle.renderData.renderElements[index];
+			
+			const uint32 first			= renderElement.first;
+			const uint32 last			= renderElement.last;
+			const uint32 vertexElements = renderElement.vertexElements;
+			const uint32 offset			= renderElement.offset;
+			const float32* vertexData	= reinterpret_cast<float32*>(triangle.renderData.vertices.data());
+
+			for (uint32 j = first; j < last + 1; j++) {
+				renderer.renderPolygons(vertexData, vertexElements, j * (vertexElements + offset));
+			}
+		}
+
 		renderer.endRendering();
 
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);

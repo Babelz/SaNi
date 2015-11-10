@@ -195,6 +195,15 @@ namespace sani {
 			if (vertexMode == VertexMode::Indexed) throw std::runtime_error("invalid call, was not expecting indexed elements");
 		}
 
+		void Renderer::renderPolygons(const float32* vertices, const uint32 vertexElementsCount, const uint32 offset) {
+			SANI_ASSERT((vertexElementsCount % renderSetup->getVertexElementsCount()) == 0);
+
+			for (uint32 i = offset; i < offset + vertexElementsCount; i++) this->vertices.push(vertices[i]);
+
+			// TODO: change to debug asserts?
+			if (vertexMode == VertexMode::Indexed) throw std::runtime_error("invalid call, was not expecting indexed elements");
+		}
+
 		void Renderer::renderIndexedPolygons(const float32* vertices, const uint32* indices, const uint32 verticesCount, const uint32 indicesCount, const uint32 indexObjects) {
 			SANI_ASSERT((verticesCount % renderSetup->getVertexElementsCount()) == 0);
 

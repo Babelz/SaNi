@@ -1,10 +1,8 @@
 #pragma once
 
-#include "sani/platform/graphics/graphics_precompiled.hpp"
-#include "sani/graphics/Transform.hpp"
-#include "sani/graphics/render_state.hpp"
+#include "sani/graphics/render_data.hpp"
 #include "sani/core/math/rectangle.hpp"
-#include "sani/forward_declare.hpp"
+#include "sani/graphics/Transform.hpp"
 #include "sani/types.hpp"
 
 namespace sani {
@@ -14,15 +12,6 @@ namespace sani {
 		class Texture2D;
 		class Renderer;
 		
-		/*
-			Document DOD, hierarchy, architecture etc.
-
-			If the object has getters/setters for specific operation,
-			do use them or you are a moron.
-
-			(RESPECT THE INTERFACE!)
-		*/
-
 		/// @class Renderable renderable.hpp "sani/graphics/renderable.hpp"
 		/// @author voidbab
 		/// 
@@ -30,6 +19,7 @@ namespace sani {
 		/// transform and bound data. 
 		class Renderable {
 		public:
+			RenderData renderData;
 			Transform transform;
 
 			math::Rectf sourceRectangle;
@@ -38,7 +28,8 @@ namespace sani {
 
 			Texture2D* texture;
 
-			Renderable();
+			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);
+			Renderable(const uint32 vertices, const uint32 renderElements);
 
 			~Renderable();
 

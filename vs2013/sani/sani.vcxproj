@@ -178,10 +178,12 @@
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_element_data.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\transformable.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_data.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -267,12 +269,12 @@
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\inl\transform.inl" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\render_setup.hpp" />
@@ -280,6 +282,7 @@
     <ClInclude Include="..\..\include\sani\graphics\setups\polygon_render_setup.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\textured_polygon_render_setup.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\transform.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_data.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_helper.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_mode.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
