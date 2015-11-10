@@ -7,11 +7,10 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
+SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
 namespace sani {
 
 	namespace graphics {
-
-		class Texture2D;
 		class Renderer;
 		
 		/*
@@ -36,7 +35,7 @@ namespace sani {
 			math::Rectf globalBounds;
 			math::Rectf localBounds;
 
-			Texture2D* texture;
+			resource::Texture2D* texture;
 
 			Renderable();
 
