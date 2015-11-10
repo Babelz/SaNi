@@ -3,10 +3,10 @@
 
 namespace sani {
 	namespace resource {
-		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height)
+		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const GLuint id)
 			: Texture(device, width, height) {
 			// TODO hax
-		//	renderTexture = tex;
+			renderTexture = id;
 		}
 
 		Texture2D::~Texture2D() {}

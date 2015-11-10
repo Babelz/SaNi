@@ -20,7 +20,7 @@ namespace sani {
 			
 			try {
 				ResourceReader reader(stream, *this, graphicsDevice);
-				void* a = reader.readAsset(typeReaders);
+				return reader.readAsset(typeReaders);
 			}
 			catch (const std::exception& ex) {
 				(void)ex;

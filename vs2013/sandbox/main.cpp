@@ -104,7 +104,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	namespace sr = sani::resource;
 	initResource(&graphicsDevice);
-	tuksu = static_cast<sr::Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
+	tuksu = resourceManager->load<sr::Texture2D>("../../assets/tuksu.out");
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 

@@ -2,7 +2,7 @@
 src/platform/android/java/assets
 #tools .dll
 tools/binary/*.dll
-tools/*.exe
+tools/binary/*.exe
 assets/*.out
 assets/*.snb
 
