@@ -17,11 +17,11 @@ namespace sani {
 			recomputeVertices(rectangle);
 		}
 		void recomputeVertices(Rectangle& rectangle) {
-			const sani::math::Vec3f& position = rectangle.transform.getPosition();
-			const sani::math::Vec3f& origin = rectangle.transform.getOrigin();
-			const sani::math::Vec3f& scale = rectangle.transform.getScale();
+			const sani::math::Vec3f& position = rectangle.transform.position;
+			const sani::math::Vec3f& origin = rectangle.transform.origin;
+			const sani::math::Vec3f& scale = rectangle.transform.scale;
 			const sani::math::Rectf& localBounds = rectangle.localBounds;
-			const float32 rotation = rectangle.transform.getRotation();
+			const float32 rotation = rectangle.transform.rotation;
 
 			const float32 sin = sani::math::sin(rotation);
 			const float32 cos = sani::math::cos(rotation);
@@ -110,7 +110,7 @@ namespace sani {
 			}
 		}
 		void recomputeBounds(Rectangle& rectangle) {
-			const sani::math::Vec3f& position = rectangle.transform.getPosition();
+			const sani::math::Vec3f& position = rectangle.transform.position;
 			const sani::math::Rectf localBounds = rectangle.localBounds;
 			sani::math::Rectf globalBounds;
 

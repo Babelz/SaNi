@@ -105,6 +105,8 @@ namespace sani {
 			/// @param[in] renderMode render mode
 			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode);
 
+			void renderPolygons(const float32* vertices, const uint32 vertexElementsCount, const uint32 offset);
+
 			/// Renders given polygons.
 			/// @param[in] vertices vertex elements
 			/// @param[in] vertexElementsCount how many vertex elements to copy from vertices
