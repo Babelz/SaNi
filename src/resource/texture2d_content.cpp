@@ -1,5 +1,6 @@
 #include "sani/resource/texture2d_content.hpp"
 #include <Magick++.h>
+#include <sstream>
 namespace sani {
 	namespace resource {
 		Texture2DContent::Texture2DContent(
@@ -20,11 +21,14 @@ namespace sani {
 
 			
 			while (w > 1 && h > 1) {
+				std::stringstream ss;
 				w /= 2;
 				h /= 2;
-				img.resize(Magick::Geometry(width, height));
+				ss << w << "x" << h << "tuksu.png";
+				img.resize(Magick::Geometry(w, h));
 				faces.push_back(PixelData(w * h * 4));
-				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, faces[faces.size() - 1].data());
+				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, faces.back().data());
+				img.write(ss.str());
 			}
 		}
 		

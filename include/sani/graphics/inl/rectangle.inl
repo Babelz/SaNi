@@ -29,6 +29,14 @@ namespace sani {
 			const float32 dx = -origin.x * scale.x;
 			const float32 dy = -origin.y * scale.y;
 
+			VertexPositionColorTexture* shapeVertices[] = 
+			{
+				&rectangle.topLeftVertex,
+				&rectangle.bottomLeftVertex,
+				&rectangle.bottomRightVertex,
+				&rectangle.topRightVertex
+			};
+
 			sani::math::Vec3f shapeGlobalPositions[] = 
 			{
 				position,
@@ -47,17 +55,20 @@ namespace sani {
 
 			applyRotationToRectangle(shapeGlobalPositions, shapeVertexPositions, dx, dy, sin, cos);
 
-			rectangle.topLeftVertex.vertexPositionColor.position = shapeGlobalPositions[0];
-			rectangle.bottomLeftVertex.vertexPositionColor.position = shapeGlobalPositions[1];
-			rectangle.bottomRightVertex.vertexPositionColor.position = shapeGlobalPositions[2];
-			rectangle.topRightVertex.vertexPositionColor.position = shapeGlobalPositions[3];
+			for (uint32 i = 0; i < 4; i++) {
+				shapeVertices[i]->vertexPositionColor.position = shapeGlobalPositions[i];
+				shapeVertices[i]->vertexPositionColor.color = rectangle.fill;
+			}
 
-			rectangle.topLeftVertex.vertexPositionColor.color = rectangle.fill;
-			rectangle.bottomLeftVertex.vertexPositionColor.color = rectangle.fill;
-			rectangle.bottomRightVertex.vertexPositionColor.color = rectangle.fill;
-			rectangle.topRightVertex.vertexPositionColor.color = rectangle.fill;
+			if (rectangle.borderThickness > 0.0f) {	
+				VertexPositionColor* borderVertices[] =
+				{
+					&rectangle.topLeftBorderVertex,
+					&rectangle.bottomLeftBorderVertex,
+					&rectangle.bottomRightBorderVertex,
+					&rectangle.topRightBorderVertex
+				};
 
-			if (rectangle.borderThickness > 0.0f) {				
 				sani::math::Vec3f borderTopLeftPoint;
 				borderTopLeftPoint.x = 0.0f;
 				borderTopLeftPoint.y = -rectangle.borderThickness * 2.0f;
@@ -92,15 +103,10 @@ namespace sani {
 
 				applyRotationToRectangle(borderGlobalPositions, borderVertexPositions, dx - rectangle.borderThickness, dy - rectangle.borderThickness, sin, cos);
 
-				rectangle.topLeftBorderVertex.position = borderGlobalPositions[0];
-				rectangle.bottomLeftBorderVertex.position = borderGlobalPositions[1];
-				rectangle.bottomRightBorderVertex.position = borderGlobalPositions[2];
-				rectangle.topRightBorderVertex.position = borderGlobalPositions[3];
-
-				rectangle.topLeftBorderVertex.color = rectangle.borderFill;
-				rectangle.bottomLeftBorderVertex.color = rectangle.borderFill;
-				rectangle.bottomRightBorderVertex.color = rectangle.borderFill;
-				rectangle.topRightBorderVertex.color = rectangle.borderFill;
+				for (uint32 i = 0; i < 4; i++) {
+					borderVertices[i]->position = borderGlobalPositions[i];
+					borderVertices[i]->color = rectangle.borderFill;
+				}
 			}
 		}
 		void recomputeBounds(Rectangle& rectangle) {
