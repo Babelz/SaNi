@@ -275,6 +275,7 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\render_setup.hpp" />
@@ -335,6 +336,7 @@
     <None Include="..\..\include\sani\graphics\inl\circle.inl" />
     <None Include="..\..\include\sani\graphics\inl\rectangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\renderer.inl" />
+    <None Include="..\..\include\sani\graphics\inl\render_helper.inl" />
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />

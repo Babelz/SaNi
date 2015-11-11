@@ -16,8 +16,8 @@ namespace sani {
 		*/
 
 		/*
-			0-2 = border vertices.
-			3-5 = shape vertices.
+			0-2 = shape vertices.
+			3-5 = border vertices.
 		*/
 
 		Triangle::Triangle(const float32 tx, const float32 ty, const float32 lx, const float32 ly, const float32 rx, const float32 ry) : Renderable(6, 2),
@@ -52,14 +52,14 @@ namespace sani {
 			updateRenderData(*this);
 
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
-			shapeRenderData.first = 3;
-			shapeRenderData.last = 5;
+			shapeRenderData.first = 0;
+			shapeRenderData.last = 2;
 			shapeRenderData.vertexElements = 7;		// TODO: no texturing.
 			shapeRenderData.offset = 2;
 
 			RenderElementData& borderRenderData = renderData.renderElements[1];
-			borderRenderData.first = 0;
-			borderRenderData.last = 2;
+			borderRenderData.first = 3;
+			borderRenderData.last = 5;
 			borderRenderData.vertexElements = 7;
 			borderRenderData.offset = 2;
 		}

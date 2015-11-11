@@ -39,7 +39,7 @@ namespace sani {
 				sani::math::Vec3f globalPosition = position;
 				sani::math::Vec3f vertexPosition(ox, oy, position.z);
 
-				applyRotationToBottomRightVertex(globalPosition, vertexPosition, dx, dy, sin, cos);
+				applyRotationToBottomRightVertex(&globalPosition, &vertexPosition, dx, dy, sin, cos);
 
 				VertexPositionColorTexture& vertex = circle.shapeVertices[i];
 				vertex.vertexPositionColor.position = globalPosition;
@@ -59,7 +59,7 @@ namespace sani {
 					sani::math::Vec3f globalPosition = position;
 					sani::math::Vec3f vertexPosition(ox, oy, position.z);
 
-					applyRotationToBottomRightVertex(globalPosition, vertexPosition, dx, dy, sin, cos);
+					applyRotationToBottomRightVertex(&globalPosition, &vertexPosition, dx, dy, sin, cos);
 
 					VertexPositionColorTexture& vertex = circle.borderVertices[i];
 					vertex.vertexPositionColor.position = globalPosition;

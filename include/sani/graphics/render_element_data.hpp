@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/types.hpp"
 
 namespace sani {
@@ -18,6 +19,9 @@ namespace sani {
 			uint32 last;
 			// Offset from the end of an vertex to the beginning of the next.
 			uint32 offset;
+
+			// Render mode that this element will use.
+			RenderMode renderMode;
 
 			RenderElementData();
 

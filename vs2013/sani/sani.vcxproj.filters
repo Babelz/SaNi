@@ -638,6 +638,9 @@
     <ClInclude Include="..\..\include\sani\graphics\render_data.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -677,6 +680,9 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\circle.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\render_helper.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>

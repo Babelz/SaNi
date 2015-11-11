@@ -1,5 +1,6 @@
 #include "sani/graphics/renderables/triangle.hpp"
 #include "sani/core/math/trigonometric.hpp"
+#include "sani/graphics/render_helper.hpp"
 #include "sani/graphics/vertex_helper.hpp"
 #include "sani/graphics/renderer.hpp"
 
@@ -42,9 +43,9 @@ namespace sani {
 			};
 
 			VertexPositionColorTexture* shapeVertices[] {
-				&triangle.renderData.vertices[3],	// Top.
-				&triangle.renderData.vertices[4],	// Left.
-				&triangle.renderData.vertices[5]	// Right.
+				&triangle.renderData.vertices[0],	// Top.
+				&triangle.renderData.vertices[1],	// Left.
+				&triangle.renderData.vertices[2]	// Right.
 			};
 
 			applyRotationToTriangle(shapeGlobalPositions, shapeVertexPositions, dx, dy, sin, cos);
@@ -76,9 +77,9 @@ namespace sani {
 				};
 
 				VertexPositionColorTexture* borderVertices[] {
-					&triangle.renderData.vertices[0],	// Top.
-					&triangle.renderData.vertices[1],	// Left.
-					&triangle.renderData.vertices[2]	// Right.
+					&triangle.renderData.vertices[3],	// Top.
+					&triangle.renderData.vertices[4],	// Left.
+					&triangle.renderData.vertices[5]	// Right.
 				};
 
 				sani::math::Vec3f borderVertexPositions[]
@@ -117,17 +118,8 @@ namespace sani {
 		}
 	
 		void updateRenderData(Triangle& triangle) {
-			triangle.renderData.renderElementsCount = 1;
-
-			if (triangle.borderThickness > 0.0f) {
-				triangle.renderData.renderElementsCount++;
-				
-				triangle.renderData.renderElementIndices[0] = 1;
-				triangle.renderData.renderElementIndices[1] = 0;
-			} else {
-				triangle.renderData.renderElementIndices[0] = 0;
-				triangle.renderData.renderElementIndices[1] = 1;
-			}
+			// TODO: apply texturing support.
+			setupShapeForRendering(&triangle, triangle.borderThickness);
 		}
 	}
 }

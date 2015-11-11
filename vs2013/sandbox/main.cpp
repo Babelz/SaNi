@@ -246,6 +246,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);
 		render(circle, renderer);
 		renderer.endRendering();
+
+		Sleep(16);
 	}
 
 	graphicsDevice.cleanUp();
