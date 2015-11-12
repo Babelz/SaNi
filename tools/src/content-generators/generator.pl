@@ -1,6 +1,9 @@
 #!/usr/bin/perl
 use strict;
 use warnings;
+use File::Spec;
+use File::Basename;
+
 #.hpp / .cpp
 my @templates = (
 	'templates/inc/', #hpp
@@ -50,6 +53,9 @@ sub intro {
 }
 
 sub main {
+	my $path = dirname(File::Spec->rel2abs( __FILE__));
+	# get the base dir
+	$path =~ s!(.+?)tools.+!$1!i;
 	my $name = $ARGV[0];
 	return 0 if (!intro($name));
 
@@ -69,6 +75,17 @@ sub main {
 			$content =~ s/\$LCNAME/$lcName/g;
 			$content =~ s/\$UCNAME/$ucName/g;
 			
+
+			my $out = $header_save_loc[$i];
+			$out = $src_save_loc[$i] if ($j % 2 == 1);
+
+			$out .= "$lcName$files[$i]$extensions[$j]";
+			$out = "$path$out";
+			open $handle, ">$out" or die $!;
+			print $handle $content;
+			close $handle;
+			print "Wrote $out\n";
+
 			$j++;
 		}
 		$i++;
