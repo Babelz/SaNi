@@ -56,6 +56,8 @@ namespace sani {
 			ErrorBuffer errorBuffer;
 
 			void checkForErrors(const char* func, const int32 line);
+
+			static int32 surfaceFormatToOpenGl(const SurfaceFormat fmt);
 		public:
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			GraphicsDevice();
@@ -129,6 +131,14 @@ namespace sani {
 			/// Sets texture parameter to texture
 			/// This function assumes the texture is binded already 
 			void setTextureParameter(const TextureTarget target, const TextureParameterName field, int value);
+
+			void setTextureData(const TextureTarget target,
+				const int level,
+				const SurfaceFormat internalFormat,
+				const int width,
+				const int height,
+				const SurfaceFormat format,
+				const unsigned char* data);
 
 			/*
 				Shader operations.

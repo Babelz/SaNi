@@ -59,6 +59,32 @@ namespace sani {
 				TextureParameterName::TextureWrapT,
 				static_cast<int>(wrap)
 				);
+
+
+			device->unbindTexture();
+		}
+
+		void Texture2D::setData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount) {
+			uint32 startBytes = sizeof(unsigned char) * startIndex;
+			const unsigned char* ptr = data.data() + startIndex;
+			if (rect != nullptr) {
+				throw std::logic_error("not implemented");
+			}
+			int x, y, w, h;
+			x = y = 0;
+			w = max(getWidth() >> level, 1);
+			h = max(getHeight() >> level, 1);
+
+			device->bindTexture(renderTexture);
+			device->setTextureData(
+				TextureTarget::Texture2D,
+				level,
+				SurfaceFormat::ColorRGBA,
+				w,
+				h,
+				SurfaceFormat::ColorRGBA,
+				ptr
+				);
 			device->unbindTexture();
 		}
 

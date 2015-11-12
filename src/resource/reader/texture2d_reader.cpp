@@ -38,36 +38,12 @@ namespace sani {
 				}
 
 				GraphicsDevice* device = reader->getGraphicsDevice();
-				
-				// TODO move impl to graphicsdevice
-				GLuint texture;
-				glGenTextures(1, &texture);
-				glBindTexture(GL_TEXTURE_2D, texture);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-
-				uint32 w = width, h = height;
+				Texture2D* out = new Texture2D(device, width, height, true, SurfaceFormat::ColorRGBA);
 
 				for (size_t level = 0; level < faceCount; ++level) {
-					glTexImage2D(
-						GL_TEXTURE_2D,
-						static_cast<GLint>(level), // mipmap lvl
-						GL_RGBA,
-						w,
-						h,
-						0,
-						GL_RGBA,
-						GL_UNSIGNED_BYTE,
-						faces[level].data()
-						);
-					w /= 2;
-					h /= 2;
+					out->setData(device, level, nullptr, faces[level], 0, faces.size());
 				}
-				glBindTexture(GL_TEXTURE_2D, 0);
-
-				Texture2D* out = new Texture2D(device, width, height);
-
 				return out;
 			}
 		}

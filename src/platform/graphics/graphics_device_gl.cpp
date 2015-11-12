@@ -393,14 +393,10 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::generateTexture(uint32& texture, const TextureDescription& desc) {
-			// generate the texture because DX wants it too..
-			glGenTextures(1, &texture);
-			glBindTexture(GL_TEXTURE_2D, texture);
-
+		int32 GraphicsDevice::surfaceFormatToOpenGl(const SurfaceFormat fmt) {
 			// TODO when theres more move this elsewhere maybe?
 			GLint glFormat = 0;
-			switch (desc.format)
+			switch (fmt)
 			{
 			case SurfaceFormat::ColorRGBA:
 				glFormat = GL_RGBA;
@@ -408,6 +404,16 @@ namespace sani {
 			default:
 				throw std::runtime_error("not supported format");
 			}
+			return glFormat;
+		}
+
+		void GraphicsDevice::generateTexture(uint32& texture, const TextureDescription& desc) {
+			// generate the texture because DX wants it too..
+			glGenTextures(1, &texture);
+			glBindTexture(GL_TEXTURE_2D, texture);
+
+
+			GLint glFormat = GraphicsDevice::surfaceFormatToOpenGl(desc.format);
 
 			glTexImage2D(GL_TEXTURE_2D,
 				0,		// mipmap levels howto
@@ -426,6 +432,26 @@ namespace sani {
 
 		void GraphicsDevice::setTextureParameter(const TextureTarget target, const TextureParameterName field, int value) {
 			glTexParameteri(static_cast<GLuint>(target), static_cast<GLuint>(field), value);
+		}
+
+		void GraphicsDevice::setTextureData(const TextureTarget target,
+			const int level,
+			const SurfaceFormat internalFormat,
+			const int width,
+			const int height,
+			const SurfaceFormat format,
+			const unsigned char* data) {
+			glTexImage2D(
+				static_cast<GLuint>(target),
+				level,
+				static_cast<GLint>(internalFormat),
+				width,
+				height,
+				0,
+				static_cast<GLenum>(format),
+				GL_UNSIGNED_BYTE,
+				data
+				);
 		}
 
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
