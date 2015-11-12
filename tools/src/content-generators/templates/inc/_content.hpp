@@ -1,5 +1,4 @@
 #pragma once
-
 #include "sani/types.hpp"
 #include "sani/resource/resource_item.hpp"
 

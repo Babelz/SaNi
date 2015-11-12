@@ -1,5 +1,4 @@
 #pragma once
-
 #include "sani/resource/reader/resource_type_reader.hpp"
 
 namespace sani {

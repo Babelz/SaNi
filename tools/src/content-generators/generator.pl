@@ -6,6 +6,7 @@ my @templates = (
 	'templates/inc/', #hpp
 	'templates/src/' #cpp
 	);
+my @extensions = qw/.hpp .cpp/;
 
 my $hpp_base = 'include/sani/resource';
 my @header_save_loc = (
@@ -31,3 +32,48 @@ my @files = (
 	'_processor',
 	'_content'
 	);
+
+my @classes = qw/Reader Writer Importer Processor Content/;
+
+sub intro {
+	my $name = shift @_;
+	die "Need name\n" if (not defined $name);
+
+	print "Generating ";
+	for (@classes) {
+		print ucfirst "$name$_ " ;
+	}
+	print "y/n?";
+	return 0 if (getc(STDIN) !~ /y/i);
+
+	return 1;
+}
+
+sub main {
+	my $name = $ARGV[0];
+	return 0 if (!intro($name));
+
+	my $i = 0;
+	for my $c(@classes) {
+		my $className = ucfirst "$name$c";
+		my $lcName = lc $name;
+		my $ucName = ucfirst $name;
+		my $j = 0;
+		for my $template (@templates) {
+			my $file = "$template$files[$i]$extensions[$j]";
+			die $! if (!open my $handle, $file);
+			my $content = do { local $/; <$handle>};
+			close $handle;
+			# replace our 'vars'
+			$content =~ s/\$CLASSNAME/$className/g;
+			$content =~ s/\$LCNAME/$lcName/g;
+			$content =~ s/\$UCNAME/$ucName/g;
+			
+			$j++;
+		}
+		$i++;
+	}
+}
+
+
+main();
