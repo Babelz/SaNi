@@ -620,9 +620,6 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
-      <Filter>src\resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\transform.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -640,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp">
       <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
+      <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

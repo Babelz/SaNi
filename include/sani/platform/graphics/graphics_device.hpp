@@ -140,6 +140,9 @@ namespace sani {
 				const SurfaceFormat format,
 				const unsigned char* data);
 
+			void getTextureData(const TextureTarget target, const int level,
+				const SurfaceFormat format, unsigned char* data);
+
 			/*
 				Shader operations.
 			*/

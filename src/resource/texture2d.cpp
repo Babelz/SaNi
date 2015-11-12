@@ -88,6 +88,20 @@ namespace sani {
 			device->unbindTexture();
 		}
 
+		void Texture2D::getData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount) {
+			if (rect != nullptr) {
+				throw std::logic_error("Not implemented");
+			}
+			device->bindTexture(renderTexture);
+			data.reserve(getWidth() * getHeight() * 4);
+			device->getTextureData(
+				TextureTarget::Texture2D,
+				level,
+				SurfaceFormat::ColorRGBA,
+				data.data()
+				);
+		}
+
 		uint32 Texture2D::calculateLevelCount(uint32 width, uint32 height) {
 			uint32 levels = 0;
 			while (width > 1 && height > 1) {

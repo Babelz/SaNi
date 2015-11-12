@@ -447,6 +447,17 @@ namespace sani {
 				);
 		}
 
+		void GraphicsDevice::getTextureData(const TextureTarget target, const int level,
+			const SurfaceFormat format, unsigned char* data) {
+			glGetTexImage(
+				static_cast<GLenum>(target),
+				level,
+				surfaceFormatToOpenGl(format),
+				GL_UNSIGNED_BYTE,
+				data
+				);
+		}
+
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
 			// Assume that the render texture has been initialized and generated.
 

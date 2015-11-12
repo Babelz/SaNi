@@ -25,6 +25,7 @@ namespace sani {
 			static uint32 calculateLevelCount(uint32 width, uint32 height);
 
 			void setData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount);
+			void getData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount);
 		};
 		
 	}
