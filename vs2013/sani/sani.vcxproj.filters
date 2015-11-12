@@ -300,6 +300,12 @@
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_data.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_element_data.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -617,9 +623,6 @@
     <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
       <Filter>src\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\inl\transform.inl">
-      <Filter>include\graphics\inl</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\transform.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -629,7 +632,15 @@
     <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\texture_description.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_data.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -670,6 +681,9 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\circle.inl">
       <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\render_helper.inl">
+      <Filter>include\graphics</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

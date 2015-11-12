@@ -29,19 +29,64 @@ using namespace sani::math;
 #include "sani/platform/file/file_stream.hpp"
 #include "sani/resource/resources.hpp"
 #include "sani/resource/texture2d.hpp"
-#include "sani/platform/graphics/texture.hpp"
 using namespace sani::resource;
 #include "sani/core/math/trigonometric.hpp"
 
 #include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/graphics/renderables/circle.hpp"
 
-sani::resource::Texture2D* tuksu = nullptr;
+Texture2D* tuksu = nullptr;
 ResourceManager* resourceManager = nullptr;
 FileSystem* fileSystem = new FileSystem();
 
 void initResource(GraphicsDevice* gdevice) {
 	resourceManager = new ResourceManager(fileSystem, gdevice);
+}
+
+/*
+To test if our window, context etc even work.
+*/
+void glDraw() {
+	GLuint VertexArrayID;
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
+
+	// An array of 3 vectors which represents 3 vertices
+	static const GLfloat g_vertex_buffer_data[] = {
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		0.0f, 1.0f, 0.0f,
+	};
+
+	// This will identify our vertex buffer
+	GLuint vertexbuffer;
+
+	// Generate 1 buffer, put the resulting identifier in vertexbuffer
+	glGenBuffers(1, &vertexbuffer);
+
+	// The following commands will talk about our 'vertexbuffer' buffer
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+
+	// Give our vertices to OpenGL.
+	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+	// 1rst attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glVertexAttribPointer(
+		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
+
+	// Draw the triangle !
+	//glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
+	glDisableVertexAttribArray(0);
+
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -56,9 +101,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GraphicsDevice graphicsDevice(window.getHandle(), hInstance, 1280, 720);
 	graphicsDevice.initialize();
 
-	namespace sr = sani::resource;
 	initResource(&graphicsDevice);
-	tuksu = resourceManager->load<sr::Texture2D>("../../assets/tuksu.out");
+	tuksu = static_cast<Texture2D*>(resourceManager->load("../../assets/tuksu.out"));
 
 	Buffer<float32> vertices(21, BufferSizing::Static);
 
@@ -66,7 +110,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	VertexPositionColor v2(Vec3f(64.0f, 64.0f, 0.0f), sani::graphics::color::red);
 	VertexPositionColor v3(Vec3f(0.0f, 64.0f, 0.0f), sani::graphics::color::red);
 
-	VertexPositionColor vert[] = 
+	VertexPositionColor vert[] =
 	{
 		v1,
 		v2,
@@ -104,9 +148,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	uint32 vertex = 0;
 	uint32 fragment = 0;
 	uint32 program = 0;
-	glGetError();
+
 	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
+
 	graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
 	assert(!graphicsDevice.hasErrors());
 
@@ -127,7 +172,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		viewport.width = window.getClientWidth();
 		viewport.height = window.getClientHeight();
-		
+
 		graphicsDevice.setViewport(viewport);
 
 		graphicsDevice.setBackBufferWidth(viewport.width);
@@ -136,15 +181,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	sani::graphics::Triangle triangle(256, 256);
-	triangle.fill = color::red;
-	triangle.borderFill = Color(0.0f, 1.0f, 0.0f, 0.5f);
-	triangle.transform.setPosition(600, 300);
-	triangle.transform.setOrigin(128, 0);
+	sani::graphics::Triangle triangle(300, 300);
+	triangle.transform.position = Vec3f(300, 300, 1);
+	triangle.transform.origin = Vec3f(150, 0, 1);
 	triangle.borderThickness = 32.0f;
-	
-	sani::graphics::Rectangle rectangle(600, 300, 400, 300);
-	//rectangle.fill = Color(1.0f, 0.0f, 1.0f, 0.25f);
+
+	sani::graphics::Rectangle rectangle(600, 300, 64, 64);
+	rectangle.fill = Color(1.0f, 0.0f, 1.0f, 0.25f);
 	rectangle.borderFill = Color(0.0f, 1.0f, 0.0f, 0.5f);
 	rectangle.borderThickness = 16.0f;
 
@@ -154,41 +197,70 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
-	
+
 		window.listen();
 
 		camera.computeTransformation();
 		sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
-		graphicsDevice.bindTexture(tuksu->getID());
-
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Update..
-		triangle.transform.rotate(0.01f);
+		triangle.transform.rotation += 0.01f;
 		recomputeGeometryData(triangle);
+		updateRenderData(triangle);
 
-		rectangle.transform.rotate(0.01f);
+		rectangle.transform.rotation += 0.01f;
 		recomputeGeometryData(rectangle);
-		
-		circle.transform.rotate(0.01f);
-		circle.transform.move(1, 1);
+		updateRenderData(rectangle);
+
+		circle.transform.rotation += 0.01f;
+		circle.transform.position.x += 1;
+		circle.transform.position.y += 1;
 		recomputeGeometryData(circle);
 
 		// Render..
 		renderer.beginRenderingIndexedPolygons(transform, 7, RenderMode::Triangles);
-		render(rectangle, renderer);
-		renderer.endRendering();
-		
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
-		render(triangle, renderer);
 		renderer.endRendering();
 
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);
-		render(circle, renderer);
+		renderer.beginRenderingIndexedPolygons(transform, 7, RenderMode::Triangles);
+
+		for (uint32 i = 0; i < rectangle.renderData.renderElementsCount; i++) {
+			const uint32 index = rectangle.renderData.renderElementIndices[i];
+			const RenderElementData& renderElement = rectangle.renderData.renderElements[index];
+
+			const uint32 first = renderElement.first;
+			const uint32 last = renderElement.last;
+			const uint32 vertexElements = renderElement.vertexElements;
+			const uint32 offset = renderElement.offset;
+			const float32* vertexData = reinterpret_cast<float32*>(rectangle.renderData.vertices.data());
+			const uint32* indexData = reinterpret_cast<uint32*>(rectangle.renderData.vertexIndices.data());
+			const uint32 indicesCount = rectangle.renderData.vertexIndices.size();
+
+			std::vector<uint32> indices;
+			indices.push_back(i * (vertexElements + offset) + indexData[0]);
+			indices.push_back(i * (vertexElements + offset) + indexData[1]);
+			indices.push_back(i * (vertexElements + offset) + indexData[2]);
+
+			indices.push_back(i * (vertexElements + offset) + indexData[3]);
+			indices.push_back(i * (vertexElements + offset) + indexData[4]);
+			indices.push_back(i * (vertexElements + offset) + indexData[5]);
+
+			std::vector<float32> vertices;
+
+			for (uint32 j = first; j < last + 1; j++) {
+				for (size_t i = j * 9; i < j * 9 + 9; i++) {
+					vertices.push_back(vertexData[i]);
+				}
+			}
+
+			renderer.renderIndexedPolygons(vertices.data(), 4 * vertexElements, offset, indices.data(), 6, 0);
+		}
+
 		renderer.endRendering();
-		graphicsDevice.unbindTexture();
+
+		Sleep(16);
 	}
 
 	graphicsDevice.cleanUp();

@@ -11,13 +11,13 @@ namespace sani {
 
 		int64 FileStream::read(unsigned char* buffer, const int32 size) const {
 			// TODO check if the mode contains read
-			SANI_ASSERT((mode & Filemode::Read) == Filemode::Read);
+			SANI_ASSERT((static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Read)) == static_cast<uint32>(Filemode::Read));
 			int64 readBytes = fread(buffer, sizeof(unsigned char), size, handle);
 			return readBytes;
 		}
 
 		uint32 FileStream::write(const unsigned char* data, const int32 size) const {
-			SANI_ASSERT((mode & Filemode::Write) == Filemode::Write || (mode & Filemode::Truncate) == Filemode::Truncate);
+			SANI_ASSERT((static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Write)) == static_cast<uint32>(Filemode::Write) || (static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Truncate)) == static_cast<uint32>(Filemode::Truncate));
 			SANI_ASSERT(data != nullptr);
 			uint32 wroteBytes = fwrite(data, sizeof(unsigned char), size, handle);
 			return wroteBytes;
@@ -31,7 +31,7 @@ namespace sani {
 		}
 
 		void FileStream::flush() const {
-			assert(mode & Filemode::Write || mode & Filemode::Truncate);
+			assert(static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Write) || static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Truncate));
 			fflush(handle);
 		}
 

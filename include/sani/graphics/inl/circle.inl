@@ -14,10 +14,10 @@ namespace sani {
 			recomputeVertices(circle);
 		}
 		void recomputeVertices(Circle& circle) {
-			const sani::math::Vec3f& position = circle.transform.getPosition();
-			const sani::math::Vec3f& origin = circle.transform.getOrigin();
-			const sani::math::Vec3f& scale = circle.transform.getScale();
-			const float32 rotation = circle.transform.getRotation();
+			const sani::math::Vec3f& position = circle.transform.position;
+			const sani::math::Vec3f& origin = circle.transform.origin;
+			const sani::math::Vec3f& scale = circle.transform.scale;
+			const float32 rotation = circle.transform.rotation;
 
 			/*
 				TODO: borders, rotation.
@@ -39,7 +39,7 @@ namespace sani {
 				sani::math::Vec3f globalPosition = position;
 				sani::math::Vec3f vertexPosition(ox, oy, position.z);
 
-				applyRotationToBottomRightVertex(globalPosition, vertexPosition, dx, dy, sin, cos);
+				applyRotationToBottomRightVertex(&globalPosition, &vertexPosition, dx, dy, sin, cos);
 
 				VertexPositionColorTexture& vertex = circle.shapeVertices[i];
 				vertex.vertexPositionColor.position = globalPosition;
@@ -59,7 +59,7 @@ namespace sani {
 					sani::math::Vec3f globalPosition = position;
 					sani::math::Vec3f vertexPosition(ox, oy, position.z);
 
-					applyRotationToBottomRightVertex(globalPosition, vertexPosition, dx, dy, sin, cos);
+					applyRotationToBottomRightVertex(&globalPosition, &vertexPosition, dx, dy, sin, cos);
 
 					VertexPositionColorTexture& vertex = circle.borderVertices[i];
 					vertex.vertexPositionColor.position = globalPosition;
@@ -75,8 +75,8 @@ namespace sani {
 			localBounds.w = circle.radius * 2.0f;
 			localBounds.h = circle.radius * 2.0f;
 
-			const sani::math::Vec3f& position = circle.transform.getPosition();
-			const sani::math::Vec3f& scale = circle.transform.getScale();
+			const sani::math::Vec3f& position = circle.transform.position;
+			const sani::math::Vec3f& scale = circle.transform.scale;
 			sani::math::Rectf globalBounds;
 
 			globalBounds.x = position.x;
@@ -115,8 +115,6 @@ namespace sani {
 
 					renderer.renderPolygons(vertexData, 7);
 				}
-
-				renderer.flush();
 			}
 
 			for (const VertexPositionColorTexture vertex : circle.shapeVertices) {

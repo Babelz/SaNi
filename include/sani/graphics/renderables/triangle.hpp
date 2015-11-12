@@ -17,24 +17,12 @@ namespace sani {
 		/// Represents a triangle that can have a fill color, 
 		/// texture and border of given color and thickness.
 		class Triangle : public Renderable {
-		private:
-			void initialize(const float32 tx, const float32 ty, const float32 lx, const float32 ly, const float32 rx, const float32 ry);
 		public:
 			// Local position data.
 			sani::math::Vec3f topPoint;
 			sani::math::Vec3f leftPoint;
 			sani::math::Vec3f rightPoint;
-
-			// Global position data and vertex data.
-			VertexPositionColorTexture topVertex;
-			VertexPositionColorTexture leftVertex;
-			VertexPositionColorTexture rightVertex;
 			
-			VertexPositionColor topBorderVertex;
-			VertexPositionColor leftBorderVertex;
-			VertexPositionColor rightBorderVertex;
-
-			// TODO: should this affect the geometry data?
 			float32 borderThickness;
 			Color borderFill;
 
@@ -50,11 +38,8 @@ namespace sani {
 		inline void recomputeGeometryData(Triangle& triangle);
 		inline void recomputeVertices(Triangle& triangle);
 		inline void recomputeBounds(Triangle& triangle);
-
-		inline bool canRender(const Triangle& triangle, const Renderer& renderer);
-		inline void render(Triangle& triangle, Renderer& renderer);
-
-		inline const uint32 getVertexElementsCount(const Triangle& triangle);
+		
+		inline void updateRenderData(Triangle& triangle);
 	}
 }
 

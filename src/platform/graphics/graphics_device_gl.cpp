@@ -1,7 +1,6 @@
 #include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
-#include "sani/platform/graphics/texture_description.hpp"
 #include "sani/debug.hpp"
 #include <sstream>
 

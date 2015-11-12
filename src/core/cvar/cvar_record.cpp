@@ -28,22 +28,22 @@ namespace sani {
 		// Replace the old value with the new.
 		std::stringstream ss;
 
-		if (cvar.getType() == sani::cvarlang::StringVal) {
+		if (cvar.getType() == sani::cvarlang::ValueType::StringVal) {
 			String value;
 			cvar.read(value);
 
 			ss << value;
-		} else if (cvar.getType() == sani::cvarlang::IntVal) {
+		} else if (cvar.getType() == sani::cvarlang::ValueType::IntVal) {
 			int32 value = 0;
 			cvar.read(value);
 
 			ss << value;
-		} else if (cvar.getType() == sani::cvarlang::FloatVal) {
+		} else if (cvar.getType() == sani::cvarlang::ValueType::FloatVal) {
 			float32 value = 0.0f;
 			cvar.read(value);
 
 			ss << value;
-		} else if (cvar.getType() == sani::cvarlang::DoubleVal) {
+		} else if (cvar.getType() == sani::cvarlang::ValueType::DoubleVal) {
 			float64 value = 0.0;
 			cvar.read(value);
 

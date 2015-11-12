@@ -7,7 +7,7 @@ namespace sani {
 	namespace io {
 
 		/// Specifies how the operating system should open a file
-		enum Filemode {
+		enum class Filemode : uint32 {
 			/// Read only
 			Read = 1 << 0,
 			/// Write only
@@ -16,13 +16,13 @@ namespace sani {
 			Truncate = 1 << 2
 		};
 
-		enum SeekPosition {
+		enum class SeekPosition : uint32 {
 			/// From begin
-			Begin,
+			Begin = 0,
 			/// From current position
-			Current,
+			Current = 1,
 			/// From end
-			End
+			End = 2
 		};
 
 		/// Operator for bitwise or

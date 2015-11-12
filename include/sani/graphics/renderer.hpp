@@ -105,14 +105,14 @@ namespace sani {
 			/// @param[in] renderMode render mode
 			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode);
 
+			void renderPolygons(const float32* vertices, const uint32 vertexElementsCount, const uint32 offset);
+
 			/// Renders given polygons.
 			/// @param[in] vertices vertex elements
 			/// @param[in] vertexElementsCount how many vertex elements to copy from vertices
 			void renderPolygons(const float32* vertices, const uint32 vertexElementsCount);
 			
-			void renderIndexedPolygons(const float32* vertices, const uint32* indices, const uint32 verticesCount, const uint32 indicesCount, const uint32 indexObjects);
-			
-			void flush();
+			void renderIndexedPolygons(const float32* vertices , const uint32 verticesCount, const uint32 vertexOffset, const uint32* indices, const uint32 indicesCount, const uint32 indicesOffset);
 
 			/*
 				TODO: add text functions.

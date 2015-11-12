@@ -1,6 +1,6 @@
 #include "sani/resource/texture2d.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
-#include "sani/platform/graphics/texture_description.hpp"
+
 namespace sani {
 	namespace resource {
 		using namespace graphics;

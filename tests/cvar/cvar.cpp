@@ -44,11 +44,11 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 			TODO: not supported by the system yet, implement.
 		*/
 
-		auto aEqualsBOrCEqualsD = CVarCondition(cvarlang::Or, [a, b](){
+		auto aEqualsBOrCEqualsD = CVarCondition(cvarlang::LogicalOperators::Or, [a, b](){
 			return a == b; 
 		});
 
-		auto cEqualsD = CVarCondition(cvarlang::Or, [c, d](){
+		auto cEqualsD = CVarCondition(cvarlang::LogicalOperators::Or, [c, d](){
 			return c == d;
 		});
 
