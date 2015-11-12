@@ -30,6 +30,17 @@ namespace sani {
 			desc.type = type;
 			desc.levels = levelCount;
 			device->generateTexture(renderTexture, desc);
+			
+			TextureWrapMode wrap = TextureWrapMode::Repeat;
+			// For best compatibility only set ClampToEdge if either
+			// dimension is not a power of two.
+			if (((width & (width - 1)) != 0) || ((height & (height - 1)) != 0)) {
+				wrap = TextureWrapMode::ClampToEdge;
+			}
+
+			device->bindTexture(renderTexture);
+			
+			device->unbindTexture();
 		}
 
 		uint32 Texture2D::calculateLevelCount(uint32 width, uint32 height) {

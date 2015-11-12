@@ -38,7 +38,6 @@ namespace sani {
 			uint32 getHeight() const;
 
 			uint32 getID() const;
-
 			// TODO: add support for deleting the textures.
 		};
 	}

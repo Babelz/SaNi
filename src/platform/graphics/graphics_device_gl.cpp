@@ -404,6 +404,7 @@ namespace sani {
 			{
 			case ColorRGBA:
 				glFormat = GL_RGBA;
+				break;
 			default:
 				throw std::runtime_error("not supported format");
 			}
