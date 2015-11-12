@@ -37,8 +37,6 @@ namespace sani {
 		// Forward declarations.
 		struct Viewport;
 		struct TextureDescription;
-		enum SurfaceFormat;
-		enum SurfaceType;
 		class RenderTarget2D;
 		
 		typedef std::stack<GraphicsError> ErrorBuffer;
@@ -127,6 +125,10 @@ namespace sani {
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
 			void generateRenderTarget2D(uint32& texture, uint32& colorBuffer, uint32& frameBuffer, uint32& depthBuffer, const uint32 width, const uint32 height);
+
+			/// Sets texture parameter to texture
+			/// This function assumes the texture is binded already 
+			void setTextureParameter(const TextureTarget target, const TextureParameterName field, int value);
 
 			/*
 				Shader operations.

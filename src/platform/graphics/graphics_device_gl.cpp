@@ -402,7 +402,7 @@ namespace sani {
 			GLint glFormat = 0;
 			switch (desc.format)
 			{
-			case ColorRGBA:
+			case SurfaceFormat::ColorRGBA:
 				glFormat = GL_RGBA;
 				break;
 			default:
@@ -423,6 +423,11 @@ namespace sani {
 
 			CHECK_FOR_ERRORS();
 		}
+
+		void GraphicsDevice::setTextureParameter(const TextureTarget target, const TextureParameterName field, int value) {
+			glTextureParameteri(static_cast<GLuint>(target), static_cast<GLuint>(field), value);
+		}
+
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
 			// Assume that the render texture has been initialized and generated.
 
@@ -554,10 +559,10 @@ namespace sani {
 
 			// Set the uniform value.
 			switch (type) {
-			case Mat4F:
+			case UniformType::Mat4F:
 				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
 				break;
-			case Mat3F:
+			case UniformType::Mat3F:
 				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
 				break;
 			default:
@@ -573,31 +578,31 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::bindBuffer(uint32& buffer, const BufferType type) {
-			glBindBuffer(type, buffer);
+			glBindBuffer(static_cast<GLenum>(type), buffer);
 		}
 		void GraphicsDevice::unbindBuffer(const BufferType type) {
-			glBindBuffer(type, 0);
+			glBindBuffer(static_cast<GLenum>(type), 0);
 
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
-			glBufferData(type, bytes, data, usage);
+			glBufferData(static_cast<GLenum>(type), bytes, data, static_cast<GLenum>(usage));
 
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data) {
-			glBufferSubData(type, offset, bytes, data);
+			glBufferSubData(static_cast<GLenum>(type), offset, bytes, data);
 
 			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {
-			glDrawArrays(mode, first, last);
+			glDrawArrays(static_cast<GLenum>(mode), first, last);
 
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
-			glDrawElements(mode, count, type, (void*)indices);
+			glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>( type), (void*)indices);
 
 			CHECK_FOR_ERRORS();
 		}
@@ -607,7 +612,7 @@ namespace sani {
 
 			glVertexAttribPointer(description.location,
 								  description.count,
-								  description.type,
+								  static_cast<GLenum>(description.type),
 								  description.normalized,
 								  description.stride,
 								  (void*)description.offset);

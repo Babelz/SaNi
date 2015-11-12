@@ -39,7 +39,26 @@ namespace sani {
 			}
 
 			device->bindTexture(renderTexture);
-			
+			device->setTextureParameter(
+				TextureTarget::Texture2D,
+				TextureParameterName::TextureMinFilter,
+				static_cast<int>((mipmap) ? TextureMinFilter::LinearMipmapLinear : TextureMinFilter::Linear)
+				);
+			device->setTextureParameter(
+				TextureTarget::Texture2D,
+				TextureParameterName::TextureMagFilter,
+				static_cast<int>(TextureMagFilter::Linear)
+				);
+			device->setTextureParameter(
+				TextureTarget::Texture2D,
+				TextureParameterName::TextureWrapS,
+				static_cast<int>(wrap)
+				);
+			device->setTextureParameter(
+				TextureTarget::Texture2D,
+				TextureParameterName::TextureWrapT,
+				static_cast<int>(wrap)
+				);
 			device->unbindTexture();
 		}
 
