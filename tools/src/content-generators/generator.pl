@@ -56,10 +56,18 @@ sub main {
 	my $path = dirname(File::Spec->rel2abs( __FILE__));
 	# get the base dir
 	$path =~ s!(.+?)tools.+!$1!i;
+	my $vsfolder = "vs2013\\sani";
+	my $vcxproj = "$path\\$vsfolder\\sani.vcxproj";
+	my $filters = "$path\\$vsfolder\\sani.vcxproj.filters";
+
 	my $name = $ARGV[0];
 	return 0 if (!intro($name));
 
 	my $i = 0;
+
+	my @headers;
+	my @sources;
+
 	for my $c(@classes) {
 		my $className = ucfirst "$name$c";
 		my $lcName = lc $name;
@@ -76,21 +84,43 @@ sub main {
 			$content =~ s/\$UCNAME/$ucName/g;
 			
 
+			my $isCPP = $j % 2 == 1;
 			my $out = $header_save_loc[$i];
-			$out = $src_save_loc[$i] if ($j % 2 == 1);
+			$out = $src_save_loc[$i] if ($isCPP);
 
-			$out .= "$lcName$files[$i]$extensions[$j]";
+			my $target = $out .= "$lcName$files[$i]$extensions[$j]";
 			$out = "$path$out";
 			open $handle, ">$out" or die $!;
 			print $handle $content;
 			close $handle;
 			print "Wrote $out\n";
 
+
+			$target =~ s!/!\\!g;
+			#the thing is that .vcxproj has first .cpp and then .hpp, then .inl
+			# we need to inlcude ..\..\ before our file
+			$target = "..\\..\\$target";
+			if ($isCPP) {
+				push @sources, $target;
+			} else {
+				push @headers, $target;
+			}
+
 			$j++;
 		}
 		$i++;
 	}
+	updateProject($vcxproj, @sources, @headers);
+	updateFilters($filters, @sources, @headers);
 }
 
+sub updateProject {
+	my ($vcxproj, @sources, @headers) = @_;
+	#<ClCompile Include="$source" />
+}
+
+sub updateFilters {
+	my ($filters, @sources, @headers) = @_;
+}
 
 main();
