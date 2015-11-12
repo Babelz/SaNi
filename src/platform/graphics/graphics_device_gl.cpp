@@ -425,7 +425,7 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setTextureParameter(const TextureTarget target, const TextureParameterName field, int value) {
-			glTextureParameteri(static_cast<GLuint>(target), static_cast<GLuint>(field), value);
+			glTexParameteri(static_cast<GLuint>(target), static_cast<GLuint>(field), value);
 		}
 
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {

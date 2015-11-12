@@ -161,12 +161,12 @@ namespace sani {
 			RenderTarget
 		};
 
-		enum class TextureTarget {
+		enum class TextureTarget : uint32 {
 			Texture2D = GL_TEXTURE_2D,
 			Texture3D = GL_TEXTURE_3D
 		};
 
-		enum class TextureParameterName {
+		enum class TextureParameterName : uint32 {
 			TextureMagFilter = GL_TEXTURE_MAG_FILTER,
 			TextureMinFilter = GL_TEXTURE_MIN_FILTER,
 			TextureWrapS = GL_TEXTURE_WRAP_S,
@@ -181,13 +181,13 @@ namespace sani {
 		};
 
 		enum class TextureMagFilter {
-			Linear = GL_LINEAR,
-			Nearest = GL_NEAREST
+			Nearest = GL_NEAREST,
+			Linear = GL_LINEAR
 		};
 
 		enum class TextureMinFilter {
-			Linear = GL_LINEAR,
 			Nearest = GL_NEAREST,
+			Linear = GL_LINEAR,
 			NearestMipmapNearest = GL_NEAREST_MIPMAP_NEAREST,
 			LinearMipmapNearest = GL_LINEAR_MIPMAP_NEAREST,
 			NearestMipmapLinear = GL_NEAREST_MIPMAP_LINEAR,
