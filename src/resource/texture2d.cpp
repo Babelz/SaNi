@@ -83,7 +83,7 @@ namespace sani {
 				w,
 				h,
 				SurfaceFormat::ColorRGBA,
-				ptr
+				data.data()
 				);
 			device->unbindTexture();
 		}

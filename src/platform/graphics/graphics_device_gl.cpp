@@ -414,7 +414,7 @@ namespace sani {
 
 
 			GLint glFormat = GraphicsDevice::surfaceFormatToOpenGl(desc.format);
-
+			/*
 			glTexImage2D(GL_TEXTURE_2D,
 				0,		// mipmap levels howto
 				glFormat,
@@ -423,8 +423,15 @@ namespace sani {
 				0,		// border
 				glFormat,
 				GL_UNSIGNED_BYTE,
-				0);
-
+				0);*/
+			setTextureData(
+				TextureTarget::Texture2D,
+				0,
+				desc.format,
+				desc.width,
+				desc.height,
+				desc.format,
+				nullptr);
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			CHECK_FOR_ERRORS();
@@ -441,14 +448,16 @@ namespace sani {
 			const int height,
 			const SurfaceFormat format,
 			const unsigned char* data) {
+			GLint glformat = surfaceFormatToOpenGl(format);
+			GLint internalGlformat = surfaceFormatToOpenGl(format);
 			glTexImage2D(
-				static_cast<GLuint>(target),
+				static_cast<GLenum>(target),
 				level,
-				static_cast<GLint>(internalFormat),
+				internalGlformat,
 				width,
 				height,
 				0,
-				static_cast<GLenum>(format),
+				glformat,
 				GL_UNSIGNED_BYTE,
 				data
 				);

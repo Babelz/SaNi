@@ -104,10 +104,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	uint32 vertex = 0;
 	uint32 fragment = 0;
 	uint32 program = 0;
-
+	glGetError();
 	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
-
 	graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
 	assert(!graphicsDevice.hasErrors());
 
