@@ -1,5 +1,6 @@
 #include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/core/math/trigonometric.hpp"
+#include "sani/graphics/render_helper.hpp"
 #include "sani/graphics/vertex_helper.hpp"
 #include "sani/graphics/renderer.hpp"
 
@@ -29,24 +30,21 @@ namespace sani {
 			const float32 dx = -origin.x * scale.x;
 			const float32 dy = -origin.y * scale.y;
 
-			VertexPositionColorTexture* shapeVertices[] = 
-			{
-				&rectangle.topLeftVertex,
-				&rectangle.bottomLeftVertex,
-				&rectangle.bottomRightVertex,
-				&rectangle.topRightVertex
+			VertexPositionColorTexture* shapeVertices[] {
+				&rectangle.renderData.vertices[0],
+				&rectangle.renderData.vertices[1],
+				&rectangle.renderData.vertices[2],
+				&rectangle.renderData.vertices[3]
 			};
 
-			sani::math::Vec3f shapeGlobalPositions[] = 
-			{
+			sani::math::Vec3f shapeGlobalPositions[] {
 				position,
 				position,
 				position,
 				position
 			};
 
-			sani::math::Vec3f shapeVertexPositions[] =
-			{
+			sani::math::Vec3f shapeVertexPositions[] {
 				sani::math::Vec3f(0.0f, 0.0f, 0.0f),
 				sani::math::Vec3f(0.0f, localBounds.h, 0.0f) * scale,
 				sani::math::Vec3f(localBounds.w, localBounds.h, 0.0f) * scale,
@@ -61,105 +59,50 @@ namespace sani {
 			}
 
 			if (rectangle.borderThickness > 0.0f) {	
-				VertexPositionColor* borderVertices[] =
-				{
-					&rectangle.topLeftBorderVertex,
-					&rectangle.bottomLeftBorderVertex,
-					&rectangle.bottomRightBorderVertex,
-					&rectangle.topRightBorderVertex
+				VertexPositionColorTexture* borderVertices[] {
+					&rectangle.renderData.vertices[4],
+					&rectangle.renderData.vertices[5],
+					&rectangle.renderData.vertices[6],
+					&rectangle.renderData.vertices[7]
 				};
 
-				sani::math::Vec3f borderTopLeftPoint;
-				borderTopLeftPoint.x = 0.0f;
-				borderTopLeftPoint.y = -rectangle.borderThickness * 2.0f;
+				const float32 borderThickness = rectangle.borderThickness;
+				const float32 doubleBorderThickness = borderThickness * 2.0f;
 				
-				sani::math::Vec3f borderBottomLeftPoint;
-				borderBottomLeftPoint.x = -rectangle.borderThickness * 2.0f;
-				borderBottomLeftPoint.y = localBounds.h + rectangle.borderThickness * 2.0f;
-				
-				sani::math::Vec3f borderBottomRightPoint;
-				borderBottomRightPoint.x = localBounds.w + rectangle.borderThickness * 2.0f;
-				borderBottomRightPoint.y = localBounds.h + rectangle.borderThickness * 2.0f;
-				
-				sani::math::Vec3f borderTopRightPoint;
-				borderTopRightPoint.x = localBounds.w + rectangle.borderThickness * 2.0f;
-				borderTopRightPoint.y = -rectangle.borderThickness * 2.0f;
-				
-				sani::math::Vec3f borderGlobalPositions[] =
-				{
+				sani::math::Vec3f borderGlobalPositions[] {
 					position,
 					position,
 					position,
 					position
 				};
 
-				sani::math::Vec3f borderVertexPositions[] = 
-				{
-					borderTopLeftPoint,
-					borderBottomLeftPoint,
-					borderBottomRightPoint,
-					borderTopRightPoint
+				sani::math::Vec3f borderVertexPositions[] {
+					sani::math::Vec3f(0.0f, -doubleBorderThickness, position.z),
+					sani::math::Vec3f(-borderThickness * 2.0f, localBounds.h + doubleBorderThickness, position.z),
+					sani::math::Vec3f(localBounds.w + doubleBorderThickness, localBounds.h + doubleBorderThickness, position.z),
+					sani::math::Vec3f(localBounds.w + doubleBorderThickness, -doubleBorderThickness, position.z)
 				};
 
 				applyRotationToRectangle(borderGlobalPositions, borderVertexPositions, dx - rectangle.borderThickness, dy - rectangle.borderThickness, sin, cos);
 
 				for (uint32 i = 0; i < 4; i++) {
-					borderVertices[i]->position = borderGlobalPositions[i];
-					borderVertices[i]->color = rectangle.borderFill;
+					borderVertices[i]->vertexPositionColor.position = borderGlobalPositions[i];
+					borderVertices[i]->vertexPositionColor.color = rectangle.borderFill;
 				}
 			}
 		}
 		void recomputeBounds(Rectangle& rectangle) {
 			const sani::math::Vec3f& position = rectangle.transform.position;
-			const sani::math::Rectf localBounds = rectangle.localBounds;
-			sani::math::Rectf globalBounds;
+			const sani::math::Vec3f& scale = rectangle.transform.scale;
 
-			globalBounds.x = position.x;
-			globalBounds.y = position.y;
-			globalBounds.w = localBounds.w;
-			globalBounds.w = localBounds.h;
+			rectangle.globalBounds.x = position.x;
+			rectangle.globalBounds.y = position.y;
+			rectangle.globalBounds.w = rectangle.localBounds.w * scale.x;
+			rectangle.globalBounds.w = rectangle.localBounds.h * scale.y;
 		}
 
-		bool canRender(const Rectangle& rectangle, const Renderer& renderer) {
-			const RenderState renderState	 = rectangle.texture == nullptr ? RenderState::Polygons : RenderState::TexturedPolygons;
-			const uint32 vertexElementsCount = getVertexElementsCount(rectangle);
-			
-			return renderer.getVertexMode() == VertexMode::Indexed && renderer.getVertexElementsCount() == vertexElementsCount &&
-				   renderer.getRenderState() == renderState;
-		}
-		void render(Rectangle& rectangle, Renderer& renderer) {
-			const uint32 indices[] =
-			{
-				0, 1, 2,
-				0, 3, 2
-			};
-
-			if (rectangle.borderThickness > 0.0f) {
-				VertexPositionColor borderVertexData[] =
-				{
-					rectangle.topLeftBorderVertex,
-					rectangle.bottomLeftBorderVertex,
-					rectangle.bottomRightBorderVertex,
-					rectangle.topRightBorderVertex
-				};
-			
-				renderer.renderIndexedPolygons(reinterpret_cast<float32*>(borderVertexData), indices, 28, 6, 1);
-			}
-			
-			// TODO: add texture checking.
-			VertexPositionColor shapeVertexData[]= 
-			{
-				rectangle.topLeftVertex.vertexPositionColor,
-				rectangle.bottomLeftVertex.vertexPositionColor,
-				rectangle.bottomRightVertex.vertexPositionColor,
-				rectangle.topRightVertex.vertexPositionColor
-			};
-
-			renderer.renderIndexedPolygons(reinterpret_cast<float32*>(shapeVertexData), indices, 28, 6, 1);
-		}
-
-		const uint32 getVertexElementsCount(const Rectangle& rectangle) {
-			return rectangle.texture == nullptr ? 7 : 9;
+		void updateRenderData(Rectangle& rectangle) {
+			setupShapeForRendering(&rectangle, rectangle.borderThickness);
 		}
 	}
 }

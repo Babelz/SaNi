@@ -4,7 +4,7 @@ namespace sani {
 
 	namespace graphics {
 
-		enum BufferSizing {
+		enum class BufferSizing {
 			// Static size.
 			Static,
 			// Dynamic size.

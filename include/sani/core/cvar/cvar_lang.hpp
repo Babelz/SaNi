@@ -14,7 +14,7 @@ namespace sani {
 
 	namespace cvarlang {
 
-		enum ConditionalOperators {
+		enum class ConditionalOperators {
 			NoOperation,
 
 			// ==
@@ -36,7 +36,7 @@ namespace sani {
 			GreaterOrEqual
 		};
 
-		enum ValueType {
+		enum class ValueType {
 			NoValue,
 
 			StringVal,
@@ -51,7 +51,7 @@ namespace sani {
 			DoubleVal
 		};
 
-		enum LogicalOperators {
+		enum class LogicalOperators {
 			// No operation.
 			None,
 
@@ -62,7 +62,7 @@ namespace sani {
 			Or
 		};
 
-		enum TokenType {
+		enum class TokenType {
 			Invalid,
 			EmptyOrComment,
 			Declaration,

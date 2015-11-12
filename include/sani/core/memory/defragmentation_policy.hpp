@@ -4,7 +4,7 @@ namespace sani {
 
 	/// Defines how the heap allocator should 
 	/// be defragmented.
-	enum DefragmentationPolicy {
+	enum class DefragmentationPolicy {
 		/// Automatic defragmentations. Pages are
 		/// defragmented if their fragmentation
 		/// is larger or equal to 10%.

@@ -28,19 +28,19 @@ namespace sani {
 
 			char access[5] = { 0 };
 
-			if (mode & Filemode::Read && mode & Filemode::Write) {
+			if (static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Read) && static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Write)) {
 				access[0] = 'a'; access[1] = '+';  access[2] = 'b';
 			}
-			else if (mode & Filemode::Truncate && mode & Filemode::Read) {
+			else if (static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Truncate) && static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Read)) {
 				access[0] = 'w'; access[1] = '+'; access[2] = 'b';
 			}
-			else if (mode & Filemode::Truncate) {
+			else if (static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Truncate)) {
 				access[0] = 'w'; access[1] = 'b';
 			}
-			else if (mode & Filemode::Read) {
+			else if (static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Read)) {
 				access[0] = 'r'; access[1] = 'b';
 			}
-			else if (mode & Filemode::Write) {
+			else if (static_cast<uint32>(mode) & static_cast<uint32>(Filemode::Write)) {
 				access[0] = 'a'; access[1] = 'b';
 			}
 			FILE* handle = nullptr;

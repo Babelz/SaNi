@@ -112,7 +112,7 @@ namespace sani {
 			/// @param[in] vertexElementsCount how many vertex elements to copy from vertices
 			void renderPolygons(const float32* vertices, const uint32 vertexElementsCount);
 			
-			void renderIndexedPolygons(const float32* vertices, const uint32* indices, const uint32 verticesCount, const uint32 indicesCount, const uint32 indexObjects);
+			void renderIndexedPolygons(const float32* vertices , const uint32 verticesCount, const uint32 vertexOffset, const uint32* indices, const uint32 indicesCount, const uint32 indicesOffset);
 
 			/*
 				TODO: add text functions.

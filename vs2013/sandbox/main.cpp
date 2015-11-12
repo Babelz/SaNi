@@ -211,8 +211,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		recomputeGeometryData(triangle);
 		updateRenderData(triangle);
 
-		//rectangle.transform.rotation += 0.01f;
+		rectangle.transform.rotation += 0.01f;
 		recomputeGeometryData(rectangle);
+		updateRenderData(rectangle);
 		
 		circle.transform.rotation += 0.01f;
 		circle.transform.position.x += 1;
@@ -221,30 +222,42 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		// Render..
 		renderer.beginRenderingIndexedPolygons(transform, 7, RenderMode::Triangles);
-		render(rectangle, renderer);
 		renderer.endRendering();
 
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
+		renderer.beginRenderingIndexedPolygons(transform, 7, RenderMode::Triangles);
 		
-		for (uint32 i = 0; i < triangle.renderData.renderElementsCount; i++) {
-			const uint32 index = triangle.renderData.renderElementIndices[i];
-			const RenderElementData& renderElement = triangle.renderData.renderElements[index];
+		for (uint32 i = 0; i < rectangle.renderData.renderElementsCount; i++) {
+			const uint32 index = rectangle.renderData.renderElementIndices[i];
+			const RenderElementData& renderElement = rectangle.renderData.renderElements[index];
 			
 			const uint32 first			= renderElement.first;
 			const uint32 last			= renderElement.last;
 			const uint32 vertexElements = renderElement.vertexElements;
 			const uint32 offset			= renderElement.offset;
-			const float32* vertexData	= reinterpret_cast<float32*>(triangle.renderData.vertices.data());
+			const float32* vertexData	= reinterpret_cast<float32*>(rectangle.renderData.vertices.data());
+			const uint32* indexData		= reinterpret_cast<uint32*>(rectangle.renderData.vertexIndices.data());
+			const uint32 indicesCount	= rectangle.renderData.vertexIndices.size();
 
-			for (uint32 j = first; j < last + 1; j++) {
-				renderer.renderPolygons(vertexData, vertexElements, j * (vertexElements + offset));
+			std::vector<uint32> indices;
+			indices.push_back(i * (vertexElements + offset) + indexData[0]);
+			indices.push_back(i * (vertexElements + offset) + indexData[1]);
+			indices.push_back(i * (vertexElements + offset) + indexData[2]);
+
+			indices.push_back(i * (vertexElements + offset) + indexData[3]);
+			indices.push_back(i * (vertexElements + offset) + indexData[4]);
+			indices.push_back(i * (vertexElements + offset) + indexData[5]);
+			
+			std::vector<float32> vertices;
+
+			for (uint32 j = first; j < last + 1; j++) {				
+				for (size_t i = j * 9; i < j * 9 + 9; i++) {
+					vertices.push_back(vertexData[i]);
+				}
 			}
+
+			renderer.renderIndexedPolygons(vertices.data(), 4 * vertexElements, offset, indices.data(), 6, 0);
 		}
 
-		renderer.endRendering();
-
-		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);
-		render(circle, renderer);
 		renderer.endRendering();
 
 		Sleep(16);

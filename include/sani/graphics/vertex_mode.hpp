@@ -4,7 +4,7 @@ namespace sani {
 
 	namespace graphics {
 
-		enum VertexMode {
+		enum class VertexMode {
 			// Vertices are drawn without indexing.
 			NoIndexing,
 			// Vertices are drawn using indexing. 

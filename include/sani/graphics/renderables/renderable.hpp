@@ -22,10 +22,10 @@ namespace sani {
 			RenderData renderData;
 			Transform transform;
 
-			math::Rectf sourceRectangle;
 			math::Rectf globalBounds;
 			math::Rectf localBounds;
 
+			math::Rectf sourceRectangle;
 			Texture2D* texture;
 
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);

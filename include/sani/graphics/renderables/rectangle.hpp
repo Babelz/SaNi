@@ -18,23 +18,7 @@ namespace sani {
 		/// texture and border of given color and thickness.
 		/// Uses indexing for rendering.
 		class Rectangle : public Renderable {
-		private:
-		private:
-			void initialize(const float32 x, const float32 y, const float32 w, const float32 h);
 		public:
-			sani::math::Rectf localBounds;
-			sani::math::Rectf globalBounds;
-
-			VertexPositionColorTexture topLeftVertex;
-			VertexPositionColorTexture topRightVertex;
-			VertexPositionColorTexture bottomLeftVertex;
-			VertexPositionColorTexture bottomRightVertex;
-
-			VertexPositionColor topLeftBorderVertex;
-			VertexPositionColor topRightBorderVertex;
-			VertexPositionColor bottomLeftBorderVertex;
-			VertexPositionColor bottomRightBorderVertex;
-
 			float32 borderThickness;
 			Color borderFill;
 
@@ -44,14 +28,11 @@ namespace sani {
 			Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size);
 		};
 
-		inline void recomputeGeometryData(Rectangle& triangle);
+		inline void recomputeGeometryData(Rectangle& rectangle);
 		inline void recomputeVertices(Rectangle& rectangle);
 		inline void recomputeBounds(Rectangle& rectangle);
 
-		inline bool canRender(const Rectangle& rectangle, const Renderer& renderer);
-		inline void render(Rectangle& rectangle, Renderer& renderer);
-
-		inline const uint32 getVertexElementsCount(const Rectangle& rectangle);
+		inline void updateRenderData(Rectangle& rectangle);
 	}
 }
 

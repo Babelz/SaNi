@@ -26,10 +26,10 @@ namespace sani {
 		void Renderer::generateRenderSetups() {
 			renderSetups = new RenderSetup*[RENDER_STATES_COUNT];
 			
-			renderSetups[RenderState::Waiting]			= nullptr;												
-			renderSetups[RenderState::Polygons]			= new PolygonRenderSetup(&graphicsDevice); 		
-			renderSetups[RenderState::TexturedPolygons]	= new TexturedPolygonRenderSetup(&graphicsDevice);												
-			renderSetups[RenderState::Text]				= new TexturedPolygonRenderSetup(&graphicsDevice);												
+			renderSetups[static_cast<uint32>(RenderState::Waiting)]				= nullptr;
+			renderSetups[static_cast<uint32>(RenderState::Polygons)]			= new PolygonRenderSetup(&graphicsDevice);
+			renderSetups[static_cast<uint32>(RenderState::TexturedPolygons)]	= new TexturedPolygonRenderSetup(&graphicsDevice);
+			renderSetups[static_cast<uint32>(RenderState::Text)]				= new TexturedPolygonRenderSetup(&graphicsDevice);
 		}
 		void Renderer::generateBuffers() {
 			graphicsDevice.generateBuffer(vertexBuffer);
@@ -204,14 +204,14 @@ namespace sani {
 			if (vertexMode == VertexMode::Indexed) throw std::runtime_error("invalid call, was not expecting indexed elements");
 		}
 
-		void Renderer::renderIndexedPolygons(const float32* vertices, const uint32* indices, const uint32 verticesCount, const uint32 indicesCount, const uint32 indexObjects) {
+		void Renderer::renderIndexedPolygons(const float32* vertices, const uint32 verticesCount, const uint32 vertexOffset, const uint32* indices, const uint32 indicesCount, const uint32 indicesOffset) {
 			SANI_ASSERT((verticesCount % renderSetup->getVertexElementsCount()) == 0);
 
 			const uint32 vertexCount = this->vertices.getElementsCount() / renderSetup->getVertexElementsCount();
 
-			for (uint32 i = 0; i < indicesCount; i++) this->indices.push(indices[i] + vertexCount);
+			for (uint32 i = indicesOffset; i < indicesOffset + indicesCount; i++) this->indices.push(indices[i] + vertexCount);
 
-			this->vertices.push(vertices, verticesCount);
+			for (uint32 i = vertexOffset; i < vertexOffset + verticesCount; i++) this->vertices.push(vertices[i]);
 
 			// TODO: change to debug asserts?
 			if (vertexMode == VertexMode::NoIndexing) throw std::runtime_error("invalid call, was expecting indexed elements");
