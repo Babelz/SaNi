@@ -205,7 +205,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
-
 		// Update..
 		triangle.transform.rotation += 0.01f;
 		recomputeGeometryData(triangle);
@@ -257,7 +256,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			renderer.renderIndexedPolygons(vertices.data(), 4 * vertexElements, offset, indices.data(), 6, 0);
 		}
-
+		graphicsDevice.bindTexture(tuksu->getID());
+		
 		renderer.endRendering();
 
 		Sleep(16);
