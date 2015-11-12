@@ -10,10 +10,14 @@
 namespace sani {
 
 	namespace graphics {
-
+		
 		class GraphicsDevice;
 		class RenderSetup;
-		
+		class Renderable;
+		class RenderBatch;
+		class RenderElementData;
+		class RenderData;
+
 		/// @class Renderer renderer.hpp "sani/graphics/renderer.hpp"
 		/// @author voidbab
 		///
@@ -37,10 +41,11 @@ namespace sani {
 			Buffer<uint32> indices;
 			uint32 indicesSize;
 
+			Buffer<RenderBatch> renderBatches;
+			RenderBatch* renderBatch;
+
 			// Transform state and state.
 			math::Mat4f transform;
-			RenderState renderState;
-			VertexMode vertexMode;
 
 			void generateRenderSetups();
 			void generateBuffers();
@@ -48,28 +53,20 @@ namespace sani {
 			void updateVertexBufferSize();
 			void updateIndexBufferSize();
 
-			void swapRenderSetup();
+			//void presentPolygons();
+			//void presentIndexedPolygons();
 
-			void prepareRendering(const RenderState renderState, const math::Mat4f& transform, const VertexMode vertexMode);
-			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 vertexElementsCount);
-			void prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 vertexElementsCount);
+			void swapRenderSetup(const RenderState renderState);
+			void swapBatch();
+			
+			void batchElement(const RenderElementData* const renderElementData);
+			void copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData);
+			void copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData);
 
-			void endRendering(const RenderState renderState);
-
-			void presentPolygons();
-			void presentIndexedPolygons();
+			void flushRenderBatch(const RenderBatch* const renderBatch);
+			void updateBufferDatas();
 		public:
 			Renderer(GraphicsDevice& graphicsDevice);
-
-			/// Returns the current render state.
-			inline RenderState getRenderState() const;
-			/// Returns the current vertex mode.
-			inline VertexMode getVertexMode() const;
-			/// Returns the current render mode.
-			inline RenderMode getRenderMode() const;
-
-			/// Returns the count of elements each vertex should have.
-			inline uint32 getVertexElementsCount() const;
 
 			bool initialize();
 
@@ -79,45 +76,11 @@ namespace sani {
 				TODO: create default shaders for this level of rendering (basic vtx and basic shader)
 			*/
 
-			/// Begins rendering polygons with given arguments.
+			/// Begins rendering elements with given arguments.
 			/// @param[in] transformation transformation
-			/// @param[in] texture texture that will be used to texture the shapes
-			/// @param[in] vertexElementsCount how many elements each vertex has
-			/// @param[in] renderMode render mode
-			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertexElementsCount, const RenderMode renderMode);
-			/// Begins rendering polygons with given arguments.
-			/// @param[in] transformation transformation
-			/// @param[in] vertexElementsCount how many elements each vertex has
-			/// @param[in] renderMode render mode
-			void beginRenderingPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode);
+			void beginRendering(const math::Mat4f& transform);
 
-			/// Begins rendering polygons with given arguments.
-			/// @param[in] transformation transformation
-			/// @param[in] texture texture that will be used to texture the shapes
-			/// @param[in] vertexElementsCount many many elements each vertex has
-			/// @param[in] indices indices 
-			/// @param[in] renderMode render mode
-			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertexElementsCount, const RenderMode renderMode);
-			/// Begins rendering polygons with given arguments.
-			/// @param[in] transformation transformation
-			/// @param[in] vertexElementsCount how many elements each vertex has
-			/// @param[in] indices indices
-			/// @param[in] renderMode render mode
-			void beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode);
-
-			void renderPolygons(const float32* vertices, const uint32 vertexElementsCount, const uint32 offset);
-
-			/// Renders given polygons.
-			/// @param[in] vertices vertex elements
-			/// @param[in] vertexElementsCount how many vertex elements to copy from vertices
-			void renderPolygons(const float32* vertices, const uint32 vertexElementsCount);
-			
-			void renderIndexedPolygons(const float32* vertices , const uint32 verticesCount, const uint32 vertexOffset, const uint32* indices, const uint32 indicesCount, const uint32 indicesOffset);
-
-			/*
-				TODO: add text functions.
-				TODO: add index buffering.
-			*/
+			void render(const Renderable* const renderable);
 
 			void endRendering();
 
@@ -125,5 +88,3 @@ namespace sani {
 		};
 	}
 }
-
-#include "sani/graphics/inl/renderer.inl"

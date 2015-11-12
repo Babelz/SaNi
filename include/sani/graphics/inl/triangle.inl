@@ -76,17 +76,17 @@ namespace sani {
 					position		// Right.
 				};
 
-				VertexPositionColorTexture* borderVertices[] {
-					&triangle.renderData.vertices[3],	// Top.
-					&triangle.renderData.vertices[4],	// Left.
-					&triangle.renderData.vertices[5]	// Right.
-				};
-
 				sani::math::Vec3f borderVertexPositions[]
 				{
 					borderTopPoint * scale,
 					borderLeftPoint * scale,
 					borderRightPoint * scale
+				};
+
+				VertexPositionColorTexture* borderVertices[] {
+					&triangle.renderData.vertices[3],	// Top.
+					&triangle.renderData.vertices[4],	// Left.
+					&triangle.renderData.vertices[5]	// Right.
 				};
 
 				applyRotationToTriangle(borderGlobalPositions, borderVertexPositions, dx - triangle.borderThickness, dy - triangle.borderThickness, sin, cos);

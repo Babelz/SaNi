@@ -8,7 +8,8 @@ namespace sani {
 												 indices(0),
 												 first(0),
 												 last(0),
-												 offset(0) {
+												 offset(0),
+												 hash(0) {
 		}
 
 		RenderElementData::~RenderElementData() {

@@ -3,13 +3,15 @@
 #include "sani/graphics/render_data.hpp"
 #include "sani/core/math/rectangle.hpp"
 #include "sani/graphics/Transform.hpp"
+#include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
 
 namespace sani {
 
 	namespace graphics {
 
-		class Texture2D;
 		class Renderer;
 		
 		/// @class Renderable renderable.hpp "sani/graphics/renderable.hpp"
@@ -26,7 +28,7 @@ namespace sani {
 			math::Rectf localBounds;
 
 			math::Rectf sourceRectangle;
-			Texture2D* texture;
+			resource::Texture2D* texture;
 
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);
 			Renderable(const uint32 vertices, const uint32 renderElements);
@@ -40,5 +42,9 @@ namespace sani {
 					- canRender
 			*/
 		};
+
+		inline void updateHash(Renderable& renderable);
 	}
 }
+
+#include "sani/graphics/inl/renderable.inl"

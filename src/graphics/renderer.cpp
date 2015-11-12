@@ -1,5 +1,6 @@
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
+#include "sani/graphics/renderables/renderable.hpp"
 #include "sani/graphics/setups/render_setups.hpp"
 #include "sani/graphics/renderer.hpp"
 
@@ -8,17 +9,63 @@ namespace sani {
 	namespace graphics {
 
 		#define INITIAL_BUFFER_ELEMENTS_COUNT 32768
-		#define REQUIRE_STATE(requiredState) if (state != requiredState) throw std::runtime_error("can't call function " + String(__FUNCTION__) + " in current state");
+		
+		/*
+			Render batch class
+		*/
 
+		class RenderBatch {
+		public:
+			uint32 verticesBegin;
+			uint32 verticesEnd;
+
+			uint32 indicesBegin;
+			uint32 indicesEnd;
+			uint32 indicesCount;
+
+			const RenderElementData* elementsData;
+			RenderState renderState;
+			VertexMode vertexMode;
+			RenderMode renderMode;
+
+			// TODO: add these
+			/*
+				Effect* effect;
+				Texture2D* texture;
+			*/
+
+			RenderBatch() : verticesBegin(0),
+							verticesEnd(0),
+							indicesBegin(0),
+							indicesEnd(0),
+							elementsData(nullptr) {
+			}
+
+			void resetBatch() {
+				verticesBegin = 0;
+				verticesEnd = 0;
+				
+				indicesBegin = 0;
+				indicesEnd = 0;
+
+				elementsData = nullptr;
+			}
+
+			~RenderBatch() {
+			}
+		};
+		
 		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
 		// Keep the buffer usage as dynamic (memory as the limit).
 
 		Renderer::Renderer(GraphicsDevice& graphicsDevice) : graphicsDevice(graphicsDevice),
 															 vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
 															 indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+															 renderBatches(32, BufferSizing::Dynamic),
 															 verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
 															 indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
-															 renderState(RenderState::Waiting),
+															 renderBatch(nullptr),
+															 renderSetup(nullptr),
 															 vertexBuffer(0),
 															 indexBuffer(0) {
 		}
@@ -76,69 +123,114 @@ namespace sani {
 			}
 		}
 
-		void Renderer::swapRenderSetup() {
+		void Renderer::swapRenderSetup(const RenderState renderState) {
 			const uint32 index = static_cast<uint32>(renderState);
 
 			renderSetup = renderSetups[index];
 		}
-		
-		void Renderer::prepareRendering(const RenderState renderState, const math::Mat4f& transform, const VertexMode vertexMode) {
-			if (this->renderState != RenderState::Waiting) throw std::runtime_error("end rendering must be called before begin");
+		void Renderer::swapBatch() {
+			renderBatches.push(RenderBatch());
 
-			this->renderState = renderState;
-			this->transform = transform;
-			this->vertexMode = vertexMode;
-			
-			vertices.resetBufferPointer();
-			indices.resetBufferPointer();
-		}
-		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 vertexElementsCount) {
-			swapRenderSetup();
-
-			renderSetup->setRenderMode(renderMode);
-			renderSetup->setVertexElementsCount(vertexElementsCount);
-		}
-		void Renderer::prepareRenderingPolygons(const RenderMode renderMode, const uint32 texture, const uint32 vertexElementsCount) {
-			prepareRenderingPolygons(renderMode, vertexElementsCount);
-			
-			TexturedPolygonRenderSetup* const polygonRenderSetup = static_cast<TexturedPolygonRenderSetup*>(renderSetup);
-			polygonRenderSetup->setTexture(texture);
+			renderBatch = &renderBatches.data()[renderBatches.getElementsCount() - 1];
 		}
 
-		void Renderer::endRendering(const RenderState renderState) {
-			if (renderState == RenderState::Waiting) throw std::runtime_error("begin rendering must be called before end");
+		void Renderer::batchElement(const RenderElementData* const renderElementData) {
+			if (renderBatch->elementsData == nullptr) {
+				renderBatch->elementsData = renderElementData;
 
-			this->renderState = RenderState::Waiting;
-			
-			renderSetup->clear();
+				renderBatch->verticesBegin = vertices.getElementsCount();
+				renderBatch->indicesBegin = indices.getElementsCount();
+
+				renderBatch->indicesCount = renderElementData->indices;
+				
+				renderBatch->renderState = RenderState::Polygons;
+				renderBatch->vertexMode = VertexMode::NoIndexing;
+				renderBatch->renderMode = RenderMode::Triangles;
+			}
+
+			if (renderElementData->hash != renderBatch->elementsData->hash) {
+				swapBatch();
+
+				batchElement(renderElementData);
+
+				return;
+			}
+
+			const uint32 verticesCount = renderElementData->last- renderElementData->first;
+
+			renderBatch->verticesEnd += verticesCount + 1;
+			renderBatch->indicesEnd += renderElementData->indices;
+		}
+		void Renderer::copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
+			const uint32 vertexElements = renderElementData->vertexElements;
+			const uint32 vertexElementOffset = renderElementData->offset;
+
+			const uint32 first = renderElementData->first;
+			const uint32 last = renderElementData->last + 1;
+
+			const uint32 firstVertexElement = first * (vertexElements + vertexElementOffset);
+			const uint32 lastVertexElement = last * (vertexElements + vertexElementOffset);
+			const uint32 vertexElementsCount = lastVertexElement - firstVertexElement;
+			const uint32 verticesCount = last - first;
+
+			const float32* const vertexData = reinterpret_cast<const float32* const>(renderData->vertices.data());
+
+			if (vertexElementOffset != 0) {
+				uint32 vertexPointer = firstVertexElement;
+
+				for (uint32 i = 0; i < verticesCount; i++) {
+					vertices.push(&vertexData[vertexPointer], vertexElements);
+					
+					vertexPointer += vertexElements + vertexElementOffset;
+				}
+			} else {
+				vertices.push(&vertexData[firstVertexElement], vertexElementsCount);
+			}
+		}
+		void Renderer::copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
+			//const uint32 indicesCount = renderElementData->indices;
+			//const uint32* indicesData = reinterpret_cast<const uint32* const>(renderData->vertexIndices.data());
+
+			//indices.push(indicesData, indicesCount);
 		}
 
-		void Renderer::presentPolygons() {
+		void Renderer::flushRenderBatch(const RenderBatch* const renderBatch) {
+			if (renderSetup != nullptr) renderSetup->clear();
+
+			const RenderState renderState = renderBatch->renderState;
+
+			swapRenderSetup(renderState);
+			renderSetup->setVertexElementsCount(renderBatch->elementsData->vertexElements);
+			renderSetup->use();
+
+			const VertexMode vertexMode = renderBatch->vertexMode;
+			const RenderMode renderMode = renderBatch->renderMode;
+
+			if (vertexMode == VertexMode::NoIndexing) {
+				graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesEnd);
+			} else {
+				const uint32 indicesCount = renderBatch->indicesEnd - renderBatch->indicesBegin;
+
+				graphicsDevice.drawElements(renderMode, PrimitiveType::UInt, indicesCount, renderBatch->indicesBegin);
+			}
+		}
+		void Renderer::updateBufferDatas() {
 			updateVertexBufferSize();
 			updateIndexBufferSize();
 
 			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
-			
+
 			graphicsDevice.setBufferSubData(BufferType::ArrayBuffer,
 											0,
 											vertices.getElementsCount() * sizeof(float32),
 											vertices.data());
 
-			if (vertexMode == VertexMode::NoIndexing) {
-				graphicsDevice.drawArrays(renderSetup->getRenderMode(), 0, vertices.getElementsCount() / renderSetup->getVertexElementsCount());
-			} else {
-				graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
+			graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
-				graphicsDevice.setBufferSubData(BufferType::ElementArrayBuffer,
-												0,
-												indices.getElementsCount() * sizeof(uint32),
-												indices.data());
-
-				graphicsDevice.drawElements(renderSetup->getRenderMode(), PrimitiveType::UInt, indices.getElementsCount(), 0);
-			}
-		}
-		void Renderer::presentIndexedPolygons() {
-			throw std::runtime_error("not implemented");
+			graphicsDevice.setBufferSubData(BufferType::ElementArrayBuffer,
+											0,
+											indices.getElementsCount() * sizeof(uint32),
+											indices.data());
 		}
 
 		bool Renderer::initialize() {
@@ -148,88 +240,42 @@ namespace sani {
 			return graphicsDevice.hasErrors();
 		}
 
-		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertexElementsCount, const RenderMode renderMode) {
-			SANI_ASSERT(vertexElementsCount != 0);
+		void Renderer::beginRendering(const math::Mat4f& transform) {
+			vertices.resetBufferPointer();
+			indices.resetBufferPointer();
+			renderBatches.resetBufferPointer();
 
-			prepareRendering(RenderState::TexturedPolygons, transform, VertexMode::NoIndexing);
-			prepareRenderingPolygons(renderMode, texture, vertexElementsCount);
-			
-			renderSetup->use();
-		}
-		void Renderer::beginRenderingPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode) {
-			SANI_ASSERT(vertexElementsCount != 0);
-			
-			prepareRendering(RenderState::Polygons, transform, VertexMode::NoIndexing);
-			prepareRenderingPolygons(renderMode, vertexElementsCount);
+			renderBatches.push(RenderBatch());
 
-			renderSetup->use();
-		}
-		
-		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 texture, const uint32 vertexElementsCount, const RenderMode renderMode) {
-			SANI_ASSERT(vertexElementsCount != 0);
-
-			prepareRendering(RenderState::TexturedPolygons, transform, VertexMode::Indexed);
-			prepareRenderingPolygons(renderMode, texture, vertexElementsCount);
-
-			renderSetup->use();
-		}
-		void Renderer::beginRenderingIndexedPolygons(const math::Mat4f& transform, const uint32 vertexElementsCount, const RenderMode renderMode) {
-			SANI_ASSERT(vertexElementsCount != 0);
-
-			prepareRendering(RenderState::Polygons, transform, VertexMode::Indexed);
-			prepareRenderingPolygons(renderMode, vertexElementsCount);
-
-			renderSetup->use();
-		}
-		
-		/*
-			TODO: RENAME STUFF FUCK SAKES!
-		*/
-
-		void Renderer::renderPolygons(const float32* vertices, const uint32 vertexElementsCount) {
-			SANI_ASSERT((vertexElementsCount % renderSetup->getVertexElementsCount()) == 0);
-
-			this->vertices.push(vertices, vertexElementsCount);
-
-			// TODO: change to debug asserts?
-			if (vertexMode == VertexMode::Indexed) throw std::runtime_error("invalid call, was not expecting indexed elements");
+			renderBatch = &renderBatches.data()[renderBatches.getElementsCount() - 1];
+			renderBatch->resetBatch();
 		}
 
-		void Renderer::renderPolygons(const float32* vertices, const uint32 vertexElementsCount, const uint32 offset) {
-			SANI_ASSERT((vertexElementsCount % renderSetup->getVertexElementsCount()) == 0);
+		void Renderer::render(const Renderable* const renderable) {
+			// First render call.
+			for (uint32 i = 0; i < renderable->renderData.renderElementsCount; i++) {
+				const uint32 elementIndex = renderable->renderData.renderElementIndices[i];
+				const RenderElementData* const renderElementData = &renderable->renderData.renderElements[elementIndex];
 
-			for (uint32 i = offset; i < offset + vertexElementsCount; i++) this->vertices.push(vertices[i]);
+				batchElement(renderElementData);
 
-			// TODO: change to debug asserts?
-			if (vertexMode == VertexMode::Indexed) throw std::runtime_error("invalid call, was not expecting indexed elements");
-		}
-
-		void Renderer::renderIndexedPolygons(const float32* vertices, const uint32 verticesCount, const uint32 vertexOffset, const uint32* indices, const uint32 indicesCount, const uint32 indicesOffset) {
-			SANI_ASSERT((verticesCount % renderSetup->getVertexElementsCount()) == 0);
-
-			const uint32 vertexCount = this->vertices.getElementsCount() / renderSetup->getVertexElementsCount();
-
-			for (uint32 i = indicesOffset; i < indicesOffset + indicesCount; i++) this->indices.push(indices[i] + vertexCount);
-
-			for (uint32 i = vertexOffset; i < vertexOffset + verticesCount; i++) this->vertices.push(vertices[i]);
-
-			// TODO: change to debug asserts?
-			if (vertexMode == VertexMode::NoIndexing) throw std::runtime_error("invalid call, was expecting indexed elements");
+				copyVertexData(renderElementData, &renderable->renderData);
+				copyIndexData(renderElementData, &renderable->renderData);
+			}
 		}
 
 		void Renderer::endRendering() {
-			switch (renderState) {
-			case sani::graphics::RenderState::Polygons:
-				presentPolygons();
-				break;
-			case sani::graphics::RenderState::TexturedPolygons:
-			case sani::graphics::RenderState::Waiting:
-			case sani::graphics::RenderState::Text:
-			default:
-				throw std::runtime_error("invalid or unsupported state");
+			updateBufferDatas();
+
+			const RenderBatch* const renderBatchesData = renderBatches.data();
+
+			for (uint32 i = 0; i < renderBatches.getElementsCount(); i++) {
+				const RenderBatch* const renderBatch = &renderBatchesData[i];
+				
+				flushRenderBatch(renderBatch);
 			}
 
-			endRendering(renderState);
+			renderBatch = nullptr;
 		}
 
 		Renderer::~Renderer() {

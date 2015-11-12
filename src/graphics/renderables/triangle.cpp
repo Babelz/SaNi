@@ -42,10 +42,12 @@ namespace sani {
 			rightVertex.textureCoordinates.x = 1.0f;
 			rightVertex.textureCoordinates.y = 1.0f;
 
-			transform.origin.x = localBounds.w / 2.0f;
-			transform.origin.x = localBounds.h / 2.0f;
+			const float32 my = std::fmaxf(ly, ry);
 
-			transform.position.x = rx;
+			transform.origin.x = (rx - lx) / 2.0f;
+			transform.origin.y = my / 2.0f;
+
+			transform.position.x = lx;
 			transform.position.y = ty;
 
 			recomputeGeometryData(*this);
@@ -62,6 +64,8 @@ namespace sani {
 			borderRenderData.last = 5;
 			borderRenderData.vertexElements = 7;
 			borderRenderData.offset = 2;
+
+			updateHash(*this);
 		}
 		Triangle::Triangle(const sani::math::Vec2f& top, const sani::math::Vec2f& left, const sani::math::Vec2f& right) 
 			: Triangle(top.x, top.y, left.x, left.y, right.x, right.y) {

@@ -335,7 +335,8 @@
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\graphics\inl\circle.inl" />
     <None Include="..\..\include\sani\graphics\inl\rectangle.inl" />
-    <None Include="..\..\include\sani\graphics\inl\renderer.inl" />
+    <None Include="..\..\include\sani\graphics\inl\renderable.inl" />
+    <None Include="..\..\include\sani\graphics\inl\render_element_data.inl" />
     <None Include="..\..\include\sani\graphics\inl\render_helper.inl" />
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />

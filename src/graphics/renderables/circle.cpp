@@ -4,28 +4,13 @@ namespace sani {
 
 	namespace graphics {
 
-		Circle::Circle(const float32 x, const float32 y, const float32 radius, const uint32 vertices) : Renderable(1, 1, 1){
-			initialize(x, y, radius, vertices);
-		}
-		Circle::Circle(const sani::math::Vec2f& position, const float32 radius, const uint32 vertices) : Renderable(1, 1, 1){
-			initialize(position.x, position.y, radius, vertices);
-		}
-		Circle::Circle(const float32 radius, const uint32 vertices) : Renderable(1, 1, 1){
-			initialize(0.0f, 0.0f, radius, vertices);
-		}
-		Circle::Circle(const float32 radius) : Renderable(1, 1, 1){
-			initialize(0.0f, 0.0f, radius, VERTICES_SMOOTH_CIRCLE);
-		}
-
-		void Circle::initialize(const float32 x, const float32 y, const float32 radius, const uint32 vertices) {
+		Circle::Circle(const float32 x, const float32 y, const float32 radius, const uint32 vertices) : Renderable(vertices * 2, 2),
+																									    vertices(vertices) {
 			this->radius = radius;
-			
-			shapeVertices.resize(vertices);
-			borderVertices.resize(vertices);
 
 			borderThickness = 0.0f;
 			borderFill = color::green;
-			
+
 			fill = color::red;
 
 			// TODO: texture coordinates.
@@ -39,6 +24,27 @@ namespace sani {
 			localBounds.h = radius * 2.0f;
 
 			recomputeGeometryData(*this);
+			updateRenderData(*this);
+			
+			RenderElementData& shapeRenderData = renderData.renderElements[0];
+			shapeRenderData.first = 0;
+			shapeRenderData.last = vertices;
+			shapeRenderData.vertexElements = 7;		// TODO: no texturing.
+			shapeRenderData.offset = 2;
+
+			RenderElementData& borderRenderData = renderData.renderElements[1];
+			borderRenderData.first = vertices;
+			borderRenderData.last = (vertices * 2) - 1;
+			borderRenderData.vertexElements = 7;
+			borderRenderData.offset = 2;
+
+			updateHash(*this);
+		}
+		Circle::Circle(const sani::math::Vec2f& position, const float32 radius, const uint32 vertices) : Circle(position.x, position.y, radius, vertices) {
+		}
+		Circle::Circle(const float32 radius, const uint32 vertices) : Circle(0.0f, 0.0f, radius, vertices) {
+		}
+		Circle::Circle(const float32 radius) : Circle(0.0f, 0.0f, radius, VERTICES_SMOOTH_CIRCLE) {
 		}
 	}
 }

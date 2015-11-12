@@ -667,9 +667,6 @@
     <None Include="..\..\include\sani\resource\compiler\resource_writer.inl">
       <Filter>include\resource\compiler</Filter>
     </None>
-    <None Include="..\..\include\sani\graphics\inl\renderer.inl">
-      <Filter>include\graphics\inl</Filter>
-    </None>
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
@@ -683,6 +680,12 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\render_helper.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\render_element_data.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\renderable.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>

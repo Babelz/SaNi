@@ -23,9 +23,16 @@ namespace sani {
 			// Render mode that this element will use.
 			RenderMode renderMode;
 
+			// The so called "hash" used to check equality.
+			uint32 hash;
+
 			RenderElementData();
 
 			~RenderElementData();
 		};
+
+		inline void updateHash(RenderElementData& renderElementData);
 	}
 }
+
+#include "sani/graphics/inl/render_element_data.inl"
