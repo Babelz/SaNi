@@ -166,28 +166,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
 		// Update..
-/*		triangle.transform.rotate(0.01f);
+		triangle.transform.rotate(0.01f);
 		recomputeGeometryData(triangle);
 
 		rectangle.transform.rotate(0.01f);
-		recomputeGeometryData(rectangle);*
+		recomputeGeometryData(rectangle);
 		
 		circle.transform.rotate(0.01f);
 		circle.transform.move(1, 1);
-		recomputeGeometryData(circle);*/
+		recomputeGeometryData(circle);
 
 		// Render..
 		renderer.beginRenderingIndexedPolygons(transform, 7, RenderMode::Triangles);
 		render(rectangle, renderer);
 		renderer.endRendering();
-		/*
+		
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::Triangles);
 		render(triangle, renderer);
 		renderer.endRendering();
 
 		renderer.beginRenderingPolygons(transform, 7, RenderMode::TriangleFan);
 		render(circle, renderer);
-		renderer.endRendering();*/
+		renderer.endRendering();
 		graphicsDevice.unbindTexture();
 	}
 

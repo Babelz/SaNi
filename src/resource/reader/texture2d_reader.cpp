@@ -2,8 +2,6 @@
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/resource/texture2d.hpp"
-// TODO move this
-#include "GL\glew.h"
 
 namespace sani {
 	namespace resource {
@@ -39,7 +37,7 @@ namespace sani {
 
 				GraphicsDevice* device = reader->getGraphicsDevice();
 
-				Texture2D* out = new Texture2D(device, width, height, true, SurfaceFormat::ColorRGBA);
+				Texture2D* out = new Texture2D(device, width, height, faceCount > 1, SurfaceFormat::ColorRGBA);
 
 				for (size_t level = 0; level < faceCount; ++level) {
 					out->setData(device, level, nullptr, faces[level], 0, faces.size());
