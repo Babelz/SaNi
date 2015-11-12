@@ -20,7 +20,9 @@ namespace sani {
 			generateTexture(device, width, height, mipmap, format, type);
 		}
 
-		Texture2D::~Texture2D() {}
+		Texture2D::~Texture2D() {
+			
+		}
 
 		void Texture2D::generateTexture(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format, SurfaceType type) {
 			graphics::TextureDescription desc;
