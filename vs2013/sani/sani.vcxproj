@@ -204,7 +204,11 @@
     <ClCompile Include="..\..\src\resource\compiler\resource_compiler.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp" />
+    <ClCompile Include="..\..\src\resource\effect.cpp" />
+    <ClCompile Include="..\..\src\resource\effect_content.cpp" />
+    <ClCompile Include="..\..\src\resource\pipeline\effect_importer.cpp" />
     <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp" />
+    <ClCompile Include="..\..\src\resource\processor\effect_processor.cpp" />
     <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
@@ -308,7 +312,10 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\effect.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\effect_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />

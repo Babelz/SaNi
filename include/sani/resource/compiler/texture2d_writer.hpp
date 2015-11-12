@@ -3,7 +3,7 @@
 #include "sani/resource/texture2d.hpp"
 #include "sani/resource/serialization.hpp"
 #include "sani/resource/texture2d_content.hpp"
-#include "sani/resource/serialization.hpp"
+
 namespace sani {
 	namespace resource {
 		namespace compiler {

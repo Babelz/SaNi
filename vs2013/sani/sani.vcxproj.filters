@@ -306,6 +306,18 @@
     <ClCompile Include="..\..\src\graphics\render_element_data.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\effect.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\effect_content.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\processor\effect_processor.cpp">
+      <Filter>src\resource\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\pipeline\effect_importer.cpp">
+      <Filter>src\resource\pipeline</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -639,6 +651,15 @@
       <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\effect.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp">
+      <Filter>include\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\effect_content.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>
