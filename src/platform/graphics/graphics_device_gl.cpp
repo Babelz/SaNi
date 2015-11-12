@@ -1,6 +1,7 @@
 #include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
+#include "sani/platform/graphics/texture_description.hpp"
 #include "sani/debug.hpp"
 #include <sstream>
 
@@ -392,23 +393,30 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::generateTexture(uint32& texture, const uint32 width, const uint32 height) {
-			// Generate the texture.
+		void GraphicsDevice::generateTexture(uint32& texture, const TextureDescription& desc) {
+			// generate the texture because DX wants it too..
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
+			// TODO when theres more move this elsewhere maybe?
+			GLint glFormat = 0;
+			switch (desc.format)
+			{
+			case ColorRGBA:
+				glFormat = GL_RGBA;
+			default:
+				throw std::runtime_error("not supported format");
+			}
+
 			glTexImage2D(GL_TEXTURE_2D,
-				0,
-				GL_RGBA,
-				width,
-				height,
-				0,
-				GL_RGBA,
+				0,		// mipmap levels howto
+				glFormat,
+				desc.width,
+				desc.height,
+				0,		// border
+				glFormat,
 				GL_UNSIGNED_BYTE,
 				0);
-
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 			glBindTexture(GL_TEXTURE_2D, 0);
 

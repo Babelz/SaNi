@@ -6,6 +6,15 @@ SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 namespace sani {
 	namespace graphics {
 
+		enum SurfaceFormat {
+			ColorRGBA
+		};
+
+		enum SurfaceType {
+			Texture,
+			RenderTarget
+		};
+
 		/*
 			TODO: create base Texture class that holds no dimensional data?
 		*/

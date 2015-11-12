@@ -12,8 +12,9 @@ namespace sani {
 																										  framebuffer(0),
 																										  colorBuffer(0),
 																										  depthBuffer(0) {
-			device->generateTexture(renderTexture, width, height);
-			device->generateRenderTarget2D(renderTexture, colorBuffer, framebuffer, depthBuffer, width, height);
+
+			//device->generateTexture(renderTexture, width, height, SurfaceFormat::ColorRGBA, SurfaceType::RenderTarget);
+			//device->generateRenderTarget2D(renderTexture, colorBuffer, framebuffer, depthBuffer, width, height);
 		}
 
 		// TODO: add directx support.

@@ -36,7 +36,9 @@ namespace sani {
 		
 		// Forward declarations.
 		struct Viewport;
-		
+		struct TextureDescription;
+		enum SurfaceFormat;
+		enum SurfaceType;
 		class RenderTarget2D;
 		
 		typedef std::stack<GraphicsError> ErrorBuffer;
@@ -115,8 +117,8 @@ namespace sani {
 			/// will be used.
 			void setRenderTarget(RenderTarget2D* renderTarget);
 
-			/// Creates an empty RGBA color-format texture.
-			void generateTexture(uint32& texture, const uint32 width, const uint32 height);
+			/// Creates an empty texture or rendertarget
+			void generateTexture(uint32& texture, const TextureDescription& desc);
 			/// Generates new render target.
 			/// @param[in] renderTexture texture to be used with the target, call generateTexture before passing it
 			/// @param[in] colorBuffer color buffer to be generated for the target

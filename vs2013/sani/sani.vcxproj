@@ -294,6 +294,7 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\texture.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\texture_description.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
