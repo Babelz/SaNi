@@ -68,7 +68,7 @@ namespace sani {
 			renderData.vertexIndices[4] = 3;
 			renderData.vertexIndices[5] = 2;
 
-			updateHash(*this);
+			updateGroupIdentifier(*this);
 		}
 		Rectangle::Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size) : Rectangle(position.x, position.y, size.x, size.y) {
 		}

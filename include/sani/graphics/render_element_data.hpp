@@ -24,14 +24,14 @@ namespace sani {
 			RenderMode renderMode;
 
 			// The so called "hash" used to check equality.
-			uint32 hash;
+			uint32 groupIdentifier;
 
 			RenderElementData();
 
 			~RenderElementData();
 		};
 
-		inline void updateHash(RenderElementData& renderElementData);
+		inline void updateGroupIdentifier(RenderElementData& renderElementData);
 	}
 }
 

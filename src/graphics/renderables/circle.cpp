@@ -38,7 +38,7 @@ namespace sani {
 			borderRenderData.vertexElements = 7;
 			borderRenderData.offset = 2;
 
-			updateHash(*this);
+			updateGroupIdentifier(*this);
 		}
 		Circle::Circle(const sani::math::Vec2f& position, const float32 radius, const uint32 vertices) : Circle(position.x, position.y, radius, vertices) {
 		}

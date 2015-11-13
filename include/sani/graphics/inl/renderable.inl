@@ -5,8 +5,8 @@ namespace sani {
 
 	namespace graphics {
 
-		void updateHash(Renderable& renderable) {
-			for (RenderElementData& renderElementData : renderable.renderData.renderElements) updateHash(renderElementData);
+		void updateGroupIdentifier(Renderable& renderable) {
+			for (RenderElementData& renderElementData : renderable.renderData.renderElements) updateGroupIdentifier(renderElementData);
 		}
 	}
 }

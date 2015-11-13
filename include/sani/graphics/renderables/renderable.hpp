@@ -43,7 +43,7 @@ namespace sani {
 			*/
 		};
 
-		inline void updateHash(Renderable& renderable);
+		inline void updateGroupIdentifier(Renderable& renderable);
 	}
 }
 

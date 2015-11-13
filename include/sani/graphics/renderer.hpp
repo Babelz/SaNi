@@ -44,6 +44,10 @@ namespace sani {
 			Buffer<RenderBatch> renderBatches;
 			RenderBatch* renderBatch;
 
+			// Depth counter used while rendering the elements.
+			uint32 elementCounter;
+			uint32 elementsCount;
+
 			// Transform state and state.
 			math::Mat4f transform;
 

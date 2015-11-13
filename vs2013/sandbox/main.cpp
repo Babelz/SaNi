@@ -109,7 +109,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Triangle triangle(32, 32);
 
-	
+	Circle c(100, 32);
+
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 	
@@ -126,16 +127,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		float32 offx = 0.0f;
 		float32 offy = 0.0f;
-
-		for (uint32 i = 0; i < 32; i++) {
+		
+		for (uint32 i = 0; i < 64; i++) {
 			offx = 0.0f;
 
 			for (size_t j = 0; j < 64; j++) {
 				triangle.transform.position.x = j * 32.0f + offx;
 				triangle.transform.position.y = i * 32.0f + offy;
 				
+				triangle.borderThickness += 0.00001f;
 				triangle.transform.rotation += 0.00001f;
-				triangle.borderThickness = 16.0f;
+				triangle.borderFill.r = rand() * 0.0001f;
+				triangle.borderFill.g = rand() * 0.00001f;
+				triangle.borderFill.b = rand() * 0.000001f;
 
 				recomputeGeometryData(triangle);
 				updateRenderData(triangle);
@@ -147,10 +151,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			offy += 32.0f;
 		}
-				
-		renderer.endRendering();
 
-		Sleep(16);
+		renderer.endRendering();
 	}
 
 	graphicsDevice.cleanUp();

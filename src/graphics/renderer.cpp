@@ -145,10 +145,26 @@ namespace sani {
 				
 				renderBatch->renderState = RenderState::Polygons;
 				renderBatch->vertexMode = VertexMode::NoIndexing;
-				renderBatch->renderMode = RenderMode::Triangles;
+				renderBatch->renderMode = renderElementData->renderMode;
 			}
 
-			if (renderElementData->hash != renderBatch->elementsData->hash) {
+			if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
+				//if (renderBatches.getElementsCount() > 1) {
+				//	RenderBatch* const batchers = renderBatches.data();
+				//	RenderBatch* const last = &batchers[renderBatches.getElementsCount() - 2];
+
+				//	if (last->elementsData->groupIdentifier == renderElementData->groupIdentifier) {
+				//		RenderBatch* const current = renderBatch;
+				//		renderBatch = last;
+
+				//		batchElement(renderElementData);
+
+				//		renderBatch = current;
+
+				//		return;
+				//	}
+				//}
+
 				swapBatch();
 
 				batchElement(renderElementData);
@@ -158,6 +174,7 @@ namespace sani {
 
 			const uint32 verticesCount = renderElementData->last- renderElementData->first;
 
+			// Add one to keep the vertices index zero-based.
 			renderBatch->verticesEnd += verticesCount + 1;
 			renderBatch->indicesEnd += renderElementData->indices;
 		}
@@ -166,7 +183,7 @@ namespace sani {
 			const uint32 vertexElementOffset = renderElementData->offset;
 
 			const uint32 first = renderElementData->first;
-			const uint32 last = renderElementData->last + 1;
+			const uint32 last = renderElementData->last + 1;	// Add one to keep the index as zero-based.
 
 			const uint32 firstVertexElement = first * (vertexElements + vertexElementOffset);
 			const uint32 lastVertexElement = last * (vertexElements + vertexElementOffset);
@@ -253,8 +270,10 @@ namespace sani {
 
 		void Renderer::render(const Renderable* const renderable) {
 			// First render call.
-			for (uint32 i = 0; i < renderable->renderData.renderElementsCount; i++) {
-				const uint32 elementIndex = renderable->renderData.renderElementIndices[i];
+			elementsCount = renderable->renderData.renderElementsCount;
+
+			for (elementCounter = 0; elementCounter < elementsCount; elementCounter++) {
+				const uint32 elementIndex = renderable->renderData.renderElementIndices[elementCounter];
 				const RenderElementData* const renderElementData = &renderable->renderData.renderElements[elementIndex];
 
 				batchElement(renderElementData);

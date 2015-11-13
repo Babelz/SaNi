@@ -9,7 +9,8 @@ namespace sani {
 												 first(0),
 												 last(0),
 												 offset(0),
-												 hash(0) {
+												 groupIdentifier(0),
+												 renderMode(RenderMode::Triangles) {
 		}
 
 		RenderElementData::~RenderElementData() {
