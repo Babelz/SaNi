@@ -32,7 +32,7 @@ namespace sani {
 			ResourceManager(FileSystem* fileSystem, GraphicsDevice* graphicsDevice);
 			template <class T>
 			T* load(const String& asset) {
-				return nullptr;
+				return static_cast<T*>(load(asset));
 			}
 
 			void* load(const String& asset);

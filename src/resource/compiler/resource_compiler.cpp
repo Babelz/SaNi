@@ -32,7 +32,7 @@ namespace sani {
 				using namespace sani::resource::pipeline;
 				using namespace sani::resource::processor;
 
-				const static String outExtension(".out");
+				const static String outExtension(".snb");
 
 				if (!fileSystem.fileExists(root + path)) {
 					throw "file not found";

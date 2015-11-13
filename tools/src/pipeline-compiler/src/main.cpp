@@ -33,41 +33,6 @@ int main(int argc, char** argv) {
 		while (argc-- > 2) {
 			compiler.compile(root, argv[i++]);
 		}
-		
-		/*
-		Texture2DContent* content = importer.import(filePath, &fs);
-		content = proc.process(content);
-
-		namespace sc = sani::resource::compiler;
-		FileStream* file = nullptr;
-
-		if (!fs.openFile(outpath, Filemode::Truncate, &file)) {
-			std::cerr << "Cant open file " << filePath << std::endl;
-			return 1;
-		}
-
-		sc::ResourceWriter* writer = new sc::ResourceWriter(file);
-		
-		writer->writeHeader();
-		compiler::Texture2DWriter* textureWriter = new compiler::Texture2DWriter();
-		//compiler::Texture2DWriter* textureWriter = static_cast<compiler::Texture2DWriter*>(writer->getWriter<Texture2D>());
-		textureWriter->write(writer, content);
-		file->flush();
-		fs.closeFile(outpath);
-		*/
-/*		//// READING
-
-		if (!fs.openFile(outpath, Filemode::Read, &file)) {
-			throw std::runtime_error("File opening failed!");
-		}
-
-		Window*	window = new Window(GetModuleHandle(NULL), 800, 600);
-		window->initialize();
-		GraphicsDevice* gdevice = new GraphicsDevice(window->getHandle(), GetModuleHandle(NULL), 800, 600);
-		gdevice->initialize();
-		ResourceManager manager(&fs, gdevice);
-		//reader::ResourceReader* reader = new reader::ResourceReader(file, manager, gdevice);
-		Texture2D* texture = static_cast<Texture2D*>(manager.load(outpath));*/
 	}
 	catch (std::exception& ex) {
 		std::cerr << ex.what() << std::endl;

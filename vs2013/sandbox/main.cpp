@@ -49,6 +49,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
+	FileSystem fileSystem;
+	ResourceManager resources(&fileSystem, &graphicsDevice);
+	Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
 
 	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice, &camera]() {
 		Viewport viewport;
@@ -65,28 +68,28 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}));
 
 	char* vertexSource = "#version 330 core\n"
-						 "layout(location = 0) in vec3 vertex_position;"
-						 "layout(location = 1) in vec4 color;"
-						 ""
-						 "out vec4 out_color;"
-						 "uniform mat4 transform;"
-						 ""
-						 "void main() {"
-						 ""
-						 "	gl_Position = transform * vec4(vertex_position, 1.0);"
-						 "	out_color = color;"
-						 ""
-						 "}";
+		"layout(location = 0) in vec3 vertex_position;"
+		"layout(location = 1) in vec4 color;"
+		""
+		"out vec4 out_color;"
+		"uniform mat4 transform;"
+		""
+		"void main() {"
+		""
+		"	gl_Position = transform * vec4(vertex_position, 1.0);"
+		"	out_color = color;"
+		""
+		"}";
 
 	char* fragmentSource = "#version 330 core\n"
-							"in vec4 out_color;"
-							"out vec4 vertex_color;"
-							""
-							"void main(){"
-							""
-							"	vertex_color = out_color;"
-							""
-							"}";
+		"in vec4 out_color;"
+		"out vec4 vertex_color;"
+		""
+		"void main(){"
+		""
+		"	vertex_color = out_color;"
+		""
+		"}";
 
 	uint32 vertex = 0;
 	uint32 fragment = 0;
@@ -111,10 +114,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
-	
+
 		// Update.
 		window.listen();
-
+		graphicsDevice.bindTexture(tuksu->getID());
 		camera.computeTransformation();
 		const sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
@@ -125,14 +128,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		float32 offx = 0.0f;
 		float32 offy = 0.0f;
-		
+
 		for (uint32 i = 0; i < 3; i++) {
 			offx = 0.0f;
 
 			for (size_t j = 0; j < 3; j++) {
 				triangle.transform.position.x = 300 + j * 32.0f + offx;
 				triangle.transform.position.y = 300 + i * 32.0f + offy;
-				
+
 				triangle.borderThickness += 0.001f;
 				triangle.transform.rotation += 0.0001f;
 				triangle.transform.origin.x += 0.0001f;

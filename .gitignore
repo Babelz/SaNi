@@ -2,6 +2,9 @@
 src/platform/android/java/assets
 #tools .dll
 tools/binary/*.dll
+tools/binary/*.exe
+assets/*.out
+assets/*.snb
 
 # word temp files
 *.tmp

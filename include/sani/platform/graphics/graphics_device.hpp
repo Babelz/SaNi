@@ -36,7 +36,7 @@ namespace sani {
 		
 		// Forward declarations.
 		struct Viewport;
-		
+		struct TextureDescription;
 		class RenderTarget2D;
 		
 		typedef std::stack<GraphicsError> ErrorBuffer;
@@ -56,6 +56,8 @@ namespace sani {
 			ErrorBuffer errorBuffer;
 
 			void checkForErrors(const char* func, const int32 line);
+
+			static int32 surfaceFormatToOpenGl(const SurfaceFormat fmt);
 		public:
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			GraphicsDevice();
@@ -115,8 +117,8 @@ namespace sani {
 			/// will be used.
 			void setRenderTarget(RenderTarget2D* renderTarget);
 
-			/// Creates an empty RGBA color-format texture.
-			void generateTexture(uint32& texture, const uint32 width, const uint32 height);
+			/// Creates an empty texture or rendertarget
+			void generateTexture(uint32& texture, const TextureDescription& desc);
 			/// Generates new render target.
 			/// @param[in] renderTexture texture to be used with the target, call generateTexture before passing it
 			/// @param[in] colorBuffer color buffer to be generated for the target
@@ -125,6 +127,21 @@ namespace sani {
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
 			void generateRenderTarget2D(uint32& texture, uint32& colorBuffer, uint32& frameBuffer, uint32& depthBuffer, const uint32 width, const uint32 height);
+
+			/// Sets texture parameter to texture
+			/// This function assumes the texture is binded already 
+			void setTextureParameter(const TextureTarget target, const TextureParameterName field, int value);
+
+			void setTextureData(const TextureTarget target,
+				const int level,
+				const SurfaceFormat internalFormat,
+				const int width,
+				const int height,
+				const SurfaceFormat format,
+				const unsigned char* data);
+
+			void getTextureData(const TextureTarget target, const int level,
+				const SurfaceFormat format, unsigned char* data);
 
 			/*
 				Shader operations.

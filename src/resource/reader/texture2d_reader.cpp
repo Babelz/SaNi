@@ -1,11 +1,16 @@
 #include "sani/resource/reader/texture2d_reader.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
+#include "sani/platform/graphics/graphics_device.hpp"
+#include "sani/resource/texture2d.hpp"
+
 namespace sani {
 	namespace resource {
 		namespace reader {
 			Texture2DReader::~Texture2DReader() {}
 
 			void* Texture2DReader::read(ResourceReader* reader) {
+				using namespace sani::graphics;
+
 				typedef std::vector<unsigned char> PixelData;
 				typedef std::vector < PixelData> MipmapChain;
 
@@ -29,7 +34,15 @@ namespace sani {
 						data[j] = reader->readByte();
 					}
 				}
-				return nullptr;
+
+				GraphicsDevice* device = reader->getGraphicsDevice();
+
+				Texture2D* out = new Texture2D(device, width, height, faceCount > 1, SurfaceFormat::ColorRGBA);
+
+				for (size_t level = 0; level < faceCount; ++level) {
+					out->setData(device, level, nullptr, faces[level], 0, faces.size());
+				}
+				return out;
 			}
 		}
 	}

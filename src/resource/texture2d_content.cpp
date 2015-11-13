@@ -1,5 +1,6 @@
 #include "sani/resource/texture2d_content.hpp"
 #include <Magick++.h>
+
 namespace sani {
 	namespace resource {
 		Texture2DContent::Texture2DContent(
@@ -15,16 +16,18 @@ namespace sani {
 			uint32 h = height;
 
 			Magick::Image img;
-			img.magick("PNG");
-			img.read(width, height, "RGBA", Magick::CharPixel, faces[0].data());
-
-			
+			img.read(width, height, "RGBA", Magick::CharPixel, faces.back().data());
+			// flip the buffers 
+			// TODO this can be done more efficiently?
+			img.flip();
+			// write the flipped pixels back
+			img.write(0, 0, width, height, "RGBA", Magick::CharPixel, faces.back().data());
 			while (w > 1 && h > 1) {
 				w /= 2;
 				h /= 2;
-				img.resize(Magick::Geometry(width, height));
+				img.resize(Magick::Geometry(w, h));
 				faces.push_back(PixelData(w * h * 4));
-				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, faces[faces.size() - 1].data());
+				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, faces.back().data());
 			}
 		}
 		

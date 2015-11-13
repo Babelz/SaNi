@@ -1,12 +1,14 @@
 #include "sani/platform/graphics/texture.hpp"
-
+#include "sani/platform/graphics/graphics_device.hpp"
 namespace sani {
 	namespace graphics {
 
-		Texture::Texture(GraphicsDevice& device, const uint32 width, const uint32 height) : width(width),
+		Texture::Texture(GraphicsDevice* device, const uint32 width, const uint32 height) : width(width),
 																							height(height),
 																							renderTexture(0) {
 		}
+
+		Texture::~Texture() {}
 
 		uint32 Texture::getID() const {
 			return renderTexture;

@@ -23,8 +23,9 @@ static_assert(sizeof(GLuint) == sizeof(uint32), "sizeof(GLuint) != sizeof(uint32
 		  All GL functionalities are not supported
 		  yet and many of the will never be implemented.
 */
-
-enum BufferUsage {
+namespace sani {
+	namespace graphics {
+		enum class BufferUsage {
 	/*
 	
 		#define GL_STREAM_DRAW		0x88E0
@@ -41,7 +42,7 @@ enum BufferUsage {
 	*/
 	
 	// Buffers data will be modified once and used many times.
-	Static	= GL_STATIC_DRAW,
+			Static = GL_STATIC_DRAW,
 
 	// Buffers data will be modified repeatedly and used many times.
 	Dynamic = GL_DYNAMIC_DRAW,
@@ -50,17 +51,17 @@ enum BufferUsage {
 	Stream = GL_STREAM_DRAW
 };
 
-enum BufferType {
+		enum class BufferType {
 	/*
 		#define GL_ARRAY_BUFFER			0x8892
 		#define GL_ELEMENT_ARRAY_BUFFER 0x8893
 	*/
 
-	ElementArrayBuffer	= GL_ELEMENT_ARRAY_BUFFER,
-	ArrayBuffer			= GL_ARRAY_BUFFER
+			ElementArrayBuffer = GL_ELEMENT_ARRAY_BUFFER,
+			ArrayBuffer = GL_ARRAY_BUFFER
 };
 
-enum PrimitiveType {
+		enum class PrimitiveType {
 	/*
 		#define GL_BYTE				0x1400
 		#define GL_UNSIGNED_BYTE	0x1401
@@ -72,27 +73,27 @@ enum PrimitiveType {
 		#define GL_DOUBLE			0x140A
 	*/
 
-	Byte	= GL_BYTE,
-	UByte	= GL_UNSIGNED_BYTE,
-	Short	= GL_SHORT,
-	UShort	= GL_UNSIGNED_SHORT,
-	Int		= GL_INT,
-	UInt	= GL_UNSIGNED_INT,
-	Float	= GL_FLOAT,
-	Double	= GL_DOUBLE
+			Byte = GL_BYTE,
+			UByte = GL_UNSIGNED_BYTE,
+			Short = GL_SHORT,
+			UShort = GL_UNSIGNED_SHORT,
+			Int = GL_INT,
+			UInt = GL_UNSIGNED_INT,
+			Float = GL_FLOAT,
+			Double = GL_DOUBLE
 };
 
-enum ShaderType {
+		enum class ShaderType {
 	/*
 		#define GL_FRAGMENT_SHADER	0x8B30
 		#define GL_VERTEX_SHADER	0x8B31
 	*/
 
-	Vertex	 = GL_VERTEX_SHADER,
+			Vertex = GL_VERTEX_SHADER,
 	Fragment = GL_FRAGMENT_SHADER
 };
 
-enum UniformType {
+		enum class UniformType {
 	// Data type expected: float 4 * 4.
 	Mat4F,
 
@@ -100,7 +101,7 @@ enum UniformType {
 	Mat3F
 };
 
-enum RenderMode {
+		enum class RenderMode {
 	/*
 		#define GL_POINTS						0x0000
 		#define GL_LINES						0x0001
@@ -115,7 +116,7 @@ enum RenderMode {
 		#define GL_TRIANGLE_STRIP_ADJACENCY		0x000D
 	*/
 
-	Points =				 GL_POINTS,
+	Points =				 GL_LINES,
 	LineStrip =				 GL_LINE_STRIP,
 	LineLoop =				 GL_LINE_LOOP,
 	Lines =					 GL_LINES,
@@ -125,8 +126,8 @@ enum RenderMode {
 	TriangleFan =			 GL_TRIANGLE_FAN,
 	Triangles =				 GL_TRIANGLES,
 	TriangleStripAdjacency = GL_TRIANGLE_STRIP_ADJACENCY,
-	TrianglesAdjancency =	 GL_TRIANGLES_ADJACENCY,
-	Patches =				 GL_PATCHES
+			TrianglesAdjancency = GL_TRIANGLES_ADJACENCY,
+			Patches = GL_PATCHES
 };
 
 struct VertexAttributePointerDescription  {
@@ -150,3 +151,58 @@ struct VertexAttributePointerDescription  {
 	~VertexAttributePointerDescription() {
 	}
 };
+
+		enum class SurfaceFormat {
+			ColorRGBA
+		};
+
+		enum class SurfaceType {
+			Texture,
+			RenderTarget
+		};
+
+		enum class TextureTarget : uint32 {
+			Texture2D = GL_TEXTURE_2D,
+			Texture3D = GL_TEXTURE_3D
+		};
+
+		enum class TextureParameterName : uint32 {
+			TextureMagFilter = GL_TEXTURE_MAG_FILTER,
+			TextureMinFilter = GL_TEXTURE_MIN_FILTER,
+			TextureWrapS = GL_TEXTURE_WRAP_S,
+			TextureWrapT = GL_TEXTURE_WRAP_T
+		};
+
+		enum class TextureWrapMode {
+			Repeat = GL_REPEAT,
+			MirroredRepeat = GL_MIRRORED_REPEAT,
+			ClampToEdge = GL_CLAMP_TO_EDGE,
+			ClampToBorder = GL_CLAMP_TO_BORDER
+		};
+
+		enum class TextureMagFilter {
+			Nearest = GL_NEAREST,
+			Linear = GL_LINEAR
+		};
+
+		enum class TextureMinFilter {
+			Nearest = GL_NEAREST,
+			Linear = GL_LINEAR,
+			NearestMipmapNearest = GL_NEAREST_MIPMAP_NEAREST,
+			LinearMipmapNearest = GL_LINEAR_MIPMAP_NEAREST,
+			NearestMipmapLinear = GL_NEAREST_MIPMAP_LINEAR,
+			LinearMipmapLinear = GL_LINEAR_MIPMAP_LINEAR
+		};
+
+		struct TextureDescription {
+			uint32 width;
+			uint32 height;
+			uint32 levels;
+			SurfaceFormat format;
+			SurfaceType type;
+
+			TextureDescription()
+				: width(0), height(0), levels(1), format(SurfaceFormat::ColorRGBA), type(SurfaceType::Texture) {}
+		};
+	}
+}

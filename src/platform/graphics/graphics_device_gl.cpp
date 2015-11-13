@@ -207,7 +207,7 @@ namespace sani {
 			}
 
 			// Initialize backbuffer.
-			impl->cImpl.backbuffer = new RenderTarget2D(*this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
+			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
 			setRenderTarget(nullptr);
 
 			setViewport(viewport);
@@ -327,7 +327,7 @@ namespace sani {
 
 			delete impl->cImpl.backbuffer;
 
-			impl->cImpl.backbuffer = new RenderTarget2D(*this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
+			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
 			setRenderTarget(nullptr);
 
 			CHECK_FOR_ERRORS();
@@ -392,28 +392,72 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		void GraphicsDevice::generateTexture(uint32& texture, const uint32 width, const uint32 height) {
-			// Generate the texture.
+		int32 GraphicsDevice::surfaceFormatToOpenGl(const SurfaceFormat fmt) {
+			// TODO when theres more move this elsewhere maybe?
+			GLint glFormat = 0;
+			switch (fmt)
+			{
+			case SurfaceFormat::ColorRGBA:
+				glFormat = GL_RGBA;
+				break;
+			default:
+				throw std::runtime_error("not supported format");
+			}
+			return glFormat;
+		}
+
+		void GraphicsDevice::generateTexture(uint32& texture, const TextureDescription& desc) {
+			// generate the texture because DX wants it too..
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			glTexImage2D(GL_TEXTURE_2D,
+			GLint glFormat = GraphicsDevice::surfaceFormatToOpenGl(desc.format);
+			setTextureData(
+				TextureTarget::Texture2D,
 				0,
-				GL_RGBA,
-				width,
-				height,
-				0,
-				GL_RGBA,
-				GL_UNSIGNED_BYTE,
-				0);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
+				desc.format,
+				desc.width,
+				desc.height,
+				desc.format,
+				nullptr);
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			CHECK_FOR_ERRORS();
 		}
+
+		void GraphicsDevice::setTextureParameter(const TextureTarget target, const TextureParameterName field, int value) {
+			glTexParameteri(static_cast<GLuint>(target), static_cast<GLuint>(field), value);
+		}
+
+		void GraphicsDevice::setTextureData(const TextureTarget target, const int level, const SurfaceFormat internalFormat,
+			const int width, const int height, const SurfaceFormat format, const unsigned char* data) {
+
+			GLint glformat = surfaceFormatToOpenGl(format);
+			GLint internalGlformat = surfaceFormatToOpenGl(format);
+			glTexImage2D(
+				static_cast<GLenum>(target),
+				level,
+				internalGlformat,
+				width,
+				height,
+				0,
+				glformat,
+				GL_UNSIGNED_BYTE,
+				data
+				);
+		}
+
+		void GraphicsDevice::getTextureData(const TextureTarget target, const int level,
+			const SurfaceFormat format, unsigned char* data) {
+			glGetTexImage(
+				static_cast<GLenum>(target),
+				level,
+				surfaceFormatToOpenGl(format),
+				GL_UNSIGNED_BYTE,
+				data
+				);
+		}
+
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
 			// Assume that the render texture has been initialized and generated.
 
@@ -545,10 +589,10 @@ namespace sani {
 
 			// Set the uniform value.
 			switch (type) {
-			case Mat4F:
+			case UniformType::Mat4F:
 				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
 				break;
-			case Mat3F:
+			case UniformType::Mat3F:
 				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
 				break;
 			default:
@@ -564,31 +608,31 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::bindBuffer(uint32& buffer, const BufferType type) {
-			glBindBuffer(type, buffer);
+			glBindBuffer(static_cast<GLenum>(type), buffer);
 		}
 		void GraphicsDevice::unbindBuffer(const BufferType type) {
-			glBindBuffer(type, 0);
+			glBindBuffer(static_cast<GLenum>(type), 0);
 
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
-			glBufferData(type, bytes, data, usage);
+			glBufferData(static_cast<GLenum>(type), bytes, data, static_cast<GLenum>(usage));
 
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data) {
-			glBufferSubData(type, offset, bytes, data);
+			glBufferSubData(static_cast<GLenum>(type), offset, bytes, data);
 
 			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {
-			glDrawArrays(mode, first, last);
+			glDrawArrays(static_cast<GLenum>(mode), first, last);
 
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
-			glDrawElements(mode, count, type, (void*)indices);
+			glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>( type), (void*)indices);
 
 			CHECK_FOR_ERRORS();
 		}
@@ -598,7 +642,7 @@ namespace sani {
 
 			glVertexAttribPointer(description.location,
 								  description.count,
-								  description.type,
+								  static_cast<GLenum>(description.type),
 								  description.normalized,
 								  description.stride,
 								  (void*)description.offset);

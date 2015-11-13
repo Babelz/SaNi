@@ -25,7 +25,7 @@ namespace sani {
 		public:
 			/// Creates new instance of the rendertarget class, generates 
 			/// all required buffers for it and initializes it.
-			RenderTarget2D(GraphicsDevice& device, const uint32 width, const uint32 height);
+			RenderTarget2D(GraphicsDevice* device, const uint32 width, const uint32 height);
 			
 			/// Returns the color buffer.
 			uint32 getColorBuffer() const;

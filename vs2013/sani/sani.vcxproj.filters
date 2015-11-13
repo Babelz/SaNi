@@ -300,11 +300,23 @@
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_data.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\graphics\render_element_data.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\render_data.cpp">
-      <Filter>src\graphics</Filter>
+    <ClCompile Include="..\..\src\resource\effect.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\effect_content.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\processor\effect_processor.cpp">
+      <Filter>src\resource\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\pipeline\effect_importer.cpp">
+      <Filter>src\resource\pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -620,9 +632,6 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
-      <Filter>src\resource</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\transform.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -632,14 +641,26 @@
     <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\render_data.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\render_data.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp">
       <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\resource_item.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\effect.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp">
+      <Filter>include\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\effect_content.hpp">
+      <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -680,7 +701,7 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\render_helper.inl">
-      <Filter>include\graphics\inl</Filter>
+      <Filter>include\graphics</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\render_element_data.inl">
       <Filter>include\graphics\inl</Filter>
