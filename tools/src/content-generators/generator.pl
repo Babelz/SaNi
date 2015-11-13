@@ -3,7 +3,8 @@ use strict;
 use warnings;
 use File::Spec;
 use File::Basename;
-
+use XML::LibXML;
+use Data::Dumper;
 #.hpp / .cpp
 my @templates = (
 	'templates/inc/', #hpp
@@ -57,8 +58,8 @@ sub main {
 	# get the base dir
 	$path =~ s!(.+?)tools.+!$1!i;
 	my $vsfolder = "vs2013\\sani";
-	my $vcxproj = "$path\\$vsfolder\\sani.vcxproj";
-	my $filters = "$path\\$vsfolder\\sani.vcxproj.filters";
+	my $vcxproj = "sani.vcxproj";
+	my $filters = "sani.vcxproj.filters";
 
 	my $name = $ARGV[0];
 	return 0 if (!intro($name));
@@ -110,13 +111,34 @@ sub main {
 		}
 		$i++;
 	}
-	updateProject($vcxproj, @sources, @headers);
-	updateFilters($filters, @sources, @headers);
+	updateProject($vcxproj, \@sources, \@headers);
+	updateFilters($filters, \@sources, \@headers);
 }
 
 sub updateProject {
-	my ($vcxproj, @sources, @headers) = @_;
-	#<ClCompile Include="$source" />
+	my ($vcxproj, $sources, $headers) = @_;
+	
+	die $! if (!open my $handle, "+<$vcxproj");
+	my $content = do { local $/; <$handle>};
+	close $handle;
+	die $! if (!open my $handle, ">$vcxproj");
+
+	my $data = "";
+	foreach (@{$sources}) {
+		$data .= "    <ClCompile Include=\"$_\" />\n";
+	}
+	$data =~ s/^\s{2}//;
+	$content =~ s/(<ClCompile.+?)(<\/ItemGroup>)/$1${data}  $2/is;
+
+	$data = "";
+	foreach (@{$headers}) {
+		$data .= "    <ClInclude Include=\"$_\" />\n";
+	}
+	$data =~ s/^\s{2}//;
+	$content =~ s/(<ClInclude.+?)(<\/ItemGroup>)/$1${data}  $2/is;
+
+	print $handle $content;
+	close $handle;
 }
 
 sub updateFilters {
