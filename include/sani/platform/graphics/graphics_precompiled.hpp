@@ -115,7 +115,7 @@ enum RenderMode {
 		#define GL_TRIANGLE_STRIP_ADJACENCY		0x000D
 	*/
 
-	Points =				 GL_LINES,
+	Points =				 GL_POINTS,
 	LineStrip =				 GL_LINE_STRIP,
 	LineLoop =				 GL_LINE_LOOP,
 	Lines =					 GL_LINES,

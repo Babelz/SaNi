@@ -138,8 +138,14 @@ namespace sani {
 			if (renderBatch->elementsData == nullptr) {
 				renderBatch->elementsData = renderElementData;
 
+				// TODO: fix drawing
+				// TODO: fix vtx counts
+
 				renderBatch->verticesBegin = vertices.getElementsCount();
+				renderBatch->verticesEnd = renderBatch->verticesBegin;
+
 				renderBatch->indicesBegin = indices.getElementsCount();
+				renderBatch->indicesEnd = renderBatch->indicesBegin;
 
 				renderBatch->indicesCount = renderElementData->indices;
 				
@@ -172,10 +178,9 @@ namespace sani {
 				return;
 			}
 
-			const uint32 verticesCount = renderElementData->last- renderElementData->first;
+			const uint32 verticesCount = (renderElementData->last + 1) - renderElementData->first;
 
-			// Add one to keep the vertices index zero-based.
-			renderBatch->verticesEnd += verticesCount + 1;
+			renderBatch->verticesEnd += verticesCount * renderElementData->vertexElements;
 			renderBatch->indicesEnd += renderElementData->indices;
 		}
 		void Renderer::copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
@@ -225,6 +230,7 @@ namespace sani {
 
 			if (vertexMode == VertexMode::NoIndexing) {
 				graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesEnd);
+				//graphicsDevice.drawArrays(renderMode, 0, 54);
 			} else {
 				const uint32 indicesCount = renderBatch->indicesEnd - renderBatch->indicesBegin;
 

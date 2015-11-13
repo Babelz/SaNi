@@ -50,8 +50,8 @@ namespace sani {
 			if (circle.borderThickness > 0.0f) {
 				const float32 borderRadius = circle.radius + circle.borderThickness;
 
-				for (uint32 i = circle.vertices; i < circle.vertices * 2 - 1; i++) {
-					const float32 percent = (i / float(circle.vertices));
+				for (uint32 i = circle.vertices; i < circle.vertices * 2; i++) {
+					const float32 percent = (i / float(circle.vertices - 1));
 					const float32 radius = percent * 2.0f * PI;
 
 					const float32 ox = origin.x + borderRadius * scale.x * sani::math::cos(radius);

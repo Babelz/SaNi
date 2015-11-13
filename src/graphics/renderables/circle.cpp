@@ -28,15 +28,17 @@ namespace sani {
 			
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
-			shapeRenderData.last = vertices;
+			shapeRenderData.last = vertices - 1;
 			shapeRenderData.vertexElements = 7;		// TODO: no texturing.
 			shapeRenderData.offset = 2;
+			shapeRenderData.renderMode = RenderMode::LineLoop;
 
 			RenderElementData& borderRenderData = renderData.renderElements[1];
 			borderRenderData.first = vertices;
-			borderRenderData.last = (vertices * 2) - 1;
+			borderRenderData.last = vertices * 2;
 			borderRenderData.vertexElements = 7;
 			borderRenderData.offset = 2;
+			borderRenderData.renderMode = RenderMode::TriangleFan;
 
 			updateGroupIdentifier(*this);
 		}
