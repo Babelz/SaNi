@@ -58,8 +58,8 @@ sub main {
 	# get the base dir
 	$path =~ s!(.+?)tools.+!$1!i;
 	my $vsfolder = "vs2013\\sani";
-	my $vcxproj = "sani.vcxproj";
-	my $filters = "sani.vcxproj.filters";
+	my $vcxproj = "$path\\$vsfolder\\sani.vcxproj";
+	my $filters = "$path\\$vsfolder\\sani.vcxproj.filters";
 
 	my $name = $ARGV[0];
 	return 0 if (!intro($name));
@@ -121,7 +121,7 @@ sub updateProject {
 	die $! if (!open my $handle, "+<$vcxproj");
 	my $content = do { local $/; <$handle>};
 	close $handle;
-	die $! if (!open my $handle, ">$vcxproj");
+	die $! if (!open $handle, ">$vcxproj");
 
 	my $data = "";
 	foreach (@{$sources}) {
@@ -147,7 +147,7 @@ sub updateFilters {
 	die $! if (!open my $handle, "+<$filters");
 	my $content = do { local $/; <$handle>};
 	close $handle;
-	die $! if (!open my $handle, ">$filters");
+	die $! if (!open $handle, ">$filters");
 	my $data = "";
 	for (@{$sources}) {
 		my $dir = dirname($_);
@@ -162,6 +162,7 @@ sub updateFilters {
 	for (@{$headers}) {
 		my $dir = dirname($_);
 		$dir =~ s/(?:..\\)+//;
+		$dir =~ s!\\sani!!i;
 		$data .= "    <ClInclude Include=\"$_\">\n";
 		$data .= "      <Filter>$dir</Filter>\n";
 		$data .= "    </ClInclude>\n";

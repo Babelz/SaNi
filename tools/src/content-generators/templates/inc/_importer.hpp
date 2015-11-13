@@ -13,7 +13,7 @@ namespace sani {
 			public:
 				$CLASSNAME();
 				~$CLASSNAME();
-				ResourceItem* import(const String& filename, FileSystem* fileSystem) const override;
+				ResourceItem* import(const String& filename, io::FileSystem* fileSystem) const override;
 			};
 		}
 	}

@@ -4,7 +4,7 @@
 
 namespace sani {
 	namespace resource {
-		$CLASSNAME : public ResourceItem {
+		class $CLASSNAME : public ResourceItem {
 		public:
 			$CLASSNAME();
 			~$CLASSNAME();
