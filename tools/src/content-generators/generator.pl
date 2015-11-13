@@ -142,7 +142,34 @@ sub updateProject {
 }
 
 sub updateFilters {
-	my ($filters, @sources, @headers) = @_;
+	my ($filters, $sources, $headers) = @_;
+	#first source files
+	die $! if (!open my $handle, "+<$filters");
+	my $content = do { local $/; <$handle>};
+	close $handle;
+	die $! if (!open my $handle, ">$filters");
+	my $data = "";
+	for (@{$sources}) {
+		my $dir = dirname($_);
+		$dir =~ s/(?:..\\)+//;
+		$data .= "    <ClCompile Include=\"$_\">\n";
+		$data .= "      <Filter>$dir</Filter>\n";
+		$data .= "    </ClCompile>\n";
+	}
+
+	$content =~ s/(<ClCompile.+?)(<\/ItemGroup>)/$1${data}$2/is;
+	$data = "";
+	for (@{$headers}) {
+		my $dir = dirname($_);
+		$dir =~ s/(?:..\\)+//;
+		$data .= "    <ClInclude Include=\"$_\">\n";
+		$data .= "      <Filter>$dir</Filter>\n";
+		$data .= "    </ClInclude>\n";
+	}
+	$content =~ s/(<ClInclude.+?)(<\/ItemGroup>)/$1${data}$2/is;
+
+	print $handle $content;
+	close $handle;
 }
 
 main();
