@@ -1,5 +1,5 @@
 #include "sani/resource/reader/resource_reader.hpp"
-#include "sani/resource/$LCNAME.hpp"
+#include "sani/resource/reader/$LCNAME_reader.hpp"
 
 namespace sani {
 	namespace resource {

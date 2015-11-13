@@ -1,6 +1,6 @@
 #include "sani/platform/file/file_system.hpp"
-#include "sani/platform/$LCNAME_content.hpp"
-#include "sani/platform/$LCNAME_importer.hpp"
+#include "sani/resource/$LCNAME_content.hpp"
+#include "sani/resource/pipeline/$LCNAME_importer.hpp"
 
 namespace sani {
 	namespace resource {
@@ -13,7 +13,7 @@ namespace sani {
 
 			$CLASSNAME::~$CLASSNAME() { }
 
-			ResourceItem* $CLASSNAME::import(const String& filename, FileSystem* fileSystem) const {
+			ResourceItem* $CLASSNAME::import(const String& filename, io::FileSystem* fileSystem) const {
 				return nullptr;
 			}
 		}

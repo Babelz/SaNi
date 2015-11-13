@@ -1,7 +1,8 @@
 #include "sani/resource/compiler/resource_writer.hpp"
 #include "sani/resource/$LCNAME_content.hpp"
-#include "sani/resource/compiler/$LCNAME.hpp"
-#include "sani/serialization.hpp"
+#include "sani/resource/compiler/$LCNAME_writer.hpp"
+#include "sani/resource/serialization.hpp"
+
 namespace sani {
 	namespace resource {
 		namespace compiler {
@@ -14,7 +15,7 @@ namespace sani {
 			$CLASSNAME::~$CLASSNAME() { }
 
 			String $CLASSNAME::getRuntimeReader() const {
-				return DeserializableWith<$LCNAMEContent>::value();
+				return DeserializableWith<$UCNAMEContent>::value();
 			}
 
 			void $CLASSNAME::write(ResourceWriter* writer, const void* value) {
