@@ -10,6 +10,8 @@ namespace sani {
 												 last(0),
 												 offset(0),
 												 groupIdentifier(0),
+												 texture(0),
+												 effect(0),
 												 renderMode(RenderMode::Triangles) {
 		}
 

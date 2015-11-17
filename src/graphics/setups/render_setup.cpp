@@ -6,8 +6,6 @@ namespace sani {
 
 		RenderSetup::RenderSetup(GraphicsDevice* const graphicsDevice) : graphicsDevice(graphicsDevice) {
 		}
-		RenderSetup::RenderSetup() : graphicsDevice(nullptr) {
-		}
 
 		void RenderSetup::setVertexElementsCount(const uint32 vertexElementsCount) {
 			this->vertexElementsCount = vertexElementsCount;

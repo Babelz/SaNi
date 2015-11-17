@@ -5,16 +5,8 @@ namespace sani {
 
 	namespace graphics {
 
-		TexturedPolygonRenderSetup::TexturedPolygonRenderSetup(GraphicsDevice* const graphicsDevice) : PolygonRenderSetup(graphicsDevice),
-																									   texture(0) {
+		TexturedPolygonRenderSetup::TexturedPolygonRenderSetup(GraphicsDevice* const graphicsDevice) : PolygonRenderSetup(graphicsDevice) {
 			// No need to set default render mode, base sets it.
-		}
-
-		void TexturedPolygonRenderSetup::setTexture(const uint32 texture) {
-			this->texture = texture;
-		}
-		uint32 TexturedPolygonRenderSetup::getTexture() const {
-			return texture;
 		}
 
 		void TexturedPolygonRenderSetup::use()  {
@@ -30,7 +22,6 @@ namespace sani {
 
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();
 			graphicsDevice->createVertexAttributePointer(textureDescription);
-			graphicsDevice->bindTexture(texture);
 		}
 
 		void TexturedPolygonRenderSetup::clear() {

@@ -20,10 +20,10 @@ namespace sani {
 		public:
 			RenderSetup(GraphicsDevice* const graphicsDevice);
 			RenderSetup();
-
+			
 			void setVertexElementsCount(const uint32 vertexElementsCount);
 			uint32 getVertexElementsCount() const;
-			
+
 			/// Causes this setups render setups to be used.
 			virtual void use() = 0;
 			/// Clear all setups the render setup has initialized.

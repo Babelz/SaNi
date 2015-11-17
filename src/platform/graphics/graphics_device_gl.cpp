@@ -359,12 +359,14 @@ namespace sani {
 		}
 
 		void GraphicsDevice::bindTexture(const uint32 texture) {
-			const GLuint glTexture = static_cast<GLuint>(texture);
+			glBindTexture(GL_TEXTURE_2D, texture);
 
-			glBindTexture(GL_TEXTURE_2D, glTexture);
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::unbindTexture() {
 			glBindTexture(GL_TEXTURE_2D, 0);
+			
+			CHECK_FOR_ERRORS();
 		}
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
@@ -566,6 +568,8 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type) {
+			glUseProgram(shader);
+
 			GLint uniformLocation = glGetUniformLocation(shader, name);
 
 			// Uniform not found.
@@ -599,6 +603,8 @@ namespace sani {
 				throw std::logic_error("Invalid or unsupported uniform type");
 			}
 
+			glUseProgram(0);
+
 			CHECK_FOR_ERRORS();
 		}
 
@@ -609,6 +615,8 @@ namespace sani {
 		}
 		void GraphicsDevice::bindBuffer(uint32& buffer, const BufferType type) {
 			glBindBuffer(static_cast<GLenum>(type), buffer);
+
+			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::unbindBuffer(const BufferType type) {
 			glBindBuffer(static_cast<GLenum>(type), 0);

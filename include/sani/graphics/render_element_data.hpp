@@ -19,6 +19,10 @@ namespace sani {
 			uint32 last;
 			// Offset from the end of an vertex to the beginning of the next.
 			uint32 offset;
+			// ID of the texture.
+			uint32 texture;
+			// ID of the effect this element is using.
+			uint32 effect;
 
 			// Render mode that this element will use.
 			RenderMode renderMode;

@@ -61,9 +61,8 @@ namespace sani {
 				message = "An attempt was made to perform an operation that would cause an internal stack to overflow";
 				break;
 #endif
-
 			default:
-				throw std::logic_error("Invalid OpenGL error code");
+				break;
 			}
 		}
 #endif

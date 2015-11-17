@@ -27,8 +27,15 @@ namespace sani {
 		private:
 			// Device and setup states.
 			GraphicsDevice& graphicsDevice;
-			RenderSetup** renderSetups;
-			RenderSetup* renderSetup;
+
+			/*
+				Effect and setup transition tables.
+			*/
+
+			// 0 null, 1 and 2 are valid.
+			RenderSetup* renderSetups[RENDER_STATES_COUNT];
+			// 0 null, 1 and 2 are valid.
+			uint32 defaultEffects[RENDER_STATES_COUNT];
 
 			// API buffers.
 			uint32 vertexBuffer;
@@ -49,19 +56,23 @@ namespace sani {
 			uint32 elementsCount;
 
 			math::Mat4f transform;
+			uint32 texture;
+			uint32 effect;
 
+			void generateDefaultShaders();
 			void generateRenderSetups();
 			void generateBuffers();
 
 			void updateVertexBufferSize();
 			void updateIndexBufferSize();
 
-			void swapRenderSetup(const RenderState renderState);
 			void applyVertexOffset();
 
 			void initializeBatch(const RenderElementData* const renderElementData);
 			void swapBatch();
-			
+
+			const bool shouldBeBatchedAlone(const RenderElementData* renderElementData) const;
+
 			void applyToBatch(const RenderElementData* const renderElementData);
 			void batchElement(const RenderElementData* const renderElementData);
 			void copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData);

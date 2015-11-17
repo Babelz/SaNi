@@ -67,46 +67,46 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	char* vertexSource = "#version 330 core\n"
-		"layout(location = 0) in vec3 vertex_position;"
-		"layout(location = 1) in vec4 color;"
-		""
-		"out vec4 out_color;"
-		"uniform mat4 transform;"
-		""
-		"void main() {"
-		""
-		""
-		"	gl_Position = transform * vec4(vertex_position, 1.0);"
-		"	out_color = color;"
-		""
-		"}";
+	//char* vertexSource = "#version 330 core\n"
+	//	"layout(location = 0) in vec3 vertex_position;"
+	//	"layout(location = 1) in vec4 color;"
+	//	""
+	//	"out vec4 out_color;"
+	//	"uniform mat4 transform;"
+	//	""
+	//	"void main() {"
+	//	""
+	//	""
+	//	"	gl_Position = transform * vec4(vertex_position, 1.0);"
+	//	"	out_color = color;"
+	//	""
+	//	"}";
 
-	char* fragmentSource = "#version 330 core\n"
-		"in vec4 out_color;"
-		"out vec4 vertex_color;"
-		""
-		"void main(){"
-		""
-		"	vertex_color = out_color;"
-		""
-		"}";
+	//char* fragmentSource = "#version 330 core\n"
+	//	"in vec4 out_color;"
+	//	"out vec4 vertex_color;"
+	//	""
+	//	"void main(){"
+	//	""
+	//	"	vertex_color = out_color;"
+	//	""
+	//	"}";
 
-	uint32 vertex = 0;
-	uint32 fragment = 0;
-	uint32 program = 0;
+	//uint32 vertex = 0;
+	//uint32 fragment = 0;
+	//uint32 program = 0;
 
-	graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
-	assert(!graphicsDevice.hasErrors());
+	//graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
+	//assert(!graphicsDevice.hasErrors());
 
-	graphicsDevice.compileShader(fragment, fragmentSource, ShaderType::Fragment);
-	assert(!graphicsDevice.hasErrors());
+	//graphicsDevice.compileShader(fragment, fragmentSource, ShaderType::Fragment);
+	//assert(!graphicsDevice.hasErrors());
 
-	graphicsDevice.createProgram(program);
-	graphicsDevice.linkToProgram(program, vertex, true);
-	graphicsDevice.linkToProgram(program, fragment, true);
-	graphicsDevice.linkProgram(program);
-	graphicsDevice.useProgram(program);
+	//graphicsDevice.createProgram(program);
+	//graphicsDevice.linkToProgram(program, vertex, true);
+	//graphicsDevice.linkToProgram(program, fragment, true);
+	//graphicsDevice.linkProgram(program);
+	//graphicsDevice.useProgram(program);
 
 	Renderer renderer(graphicsDevice);
 	renderer.initialize();
@@ -134,7 +134,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		//graphicsDevice.bindTexture(tuksu->getID());
 		camera.computeTransformation();
 		const sani::math::Mat4f transform = camera.transformation();
-		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
 
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 
