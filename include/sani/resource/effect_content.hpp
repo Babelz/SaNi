@@ -17,8 +17,8 @@ namespace sani {
 			void setVertexCode(const String& code);
 			void setFragmentCode(const String& code);
 			void setEffectCode(const String& code);
-			const String& getFragmentCode(const String& code) const;
-			const String& getVertexCode(const String& code) const;
+			const String& getFragmentCode() const;
+			const String& getVertexCode() const;
 			const String& getEffectCode() const;
 			bool isCompiled() const;
 		};

@@ -1,5 +1,6 @@
 #include "sani/resource/compiler/effect_writer.hpp"
-
+#include "sani/resource/compiler/resource_writer.hpp"
+#include "sani/resource/effect_content.hpp"
 namespace sani {
 	namespace resource {
 		namespace compiler {
@@ -12,7 +13,18 @@ namespace sani {
 			}
 
 			void EffectWriter::write(ResourceWriter* writer, const void* value) {
+				const EffectContent* content = static_cast<const EffectContent*>(value);
 
+				// hmm hmm hmm hmm
+				bool isCompiled = content->isCompiled();
+				writer->write((uint8)isCompiled);
+
+				if (isCompiled) {
+					writer->write(content->getEffectCode());
+				}
+				// fallback
+				writer->write(content->getVertexCode());
+				writer->write(content->getFragmentCode());
 			}
 		}
 	}

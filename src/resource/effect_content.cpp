@@ -10,10 +10,10 @@ namespace sani {
 			vertexCode = code;
 		}
 		
-		const String& EffectContent::getFragmentCode(const String& code) const {
+		const String& EffectContent::getFragmentCode() const {
 			return fragmentCode;
 		}
-		const String& EffectContent::getVertexCode(const String& code) const {
+		const String& EffectContent::getVertexCode() const {
 			return vertexCode;
 		}
 
