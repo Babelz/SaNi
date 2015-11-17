@@ -8,12 +8,19 @@ namespace sani {
 	namespace resource {
 		class EffectContent : public ResourceItem {
 		private:
-			String code;
+			String vertexCode;
+			String fragmentCode;
+			String effectCode;
 		public:
 			EffectContent() = default;
 			~EffectContent() = default;
+			void setVertexCode(const String& code);
+			void setFragmentCode(const String& code);
 			void setEffectCode(const String& code);
-			const String& getEffectCode(const String& code) const;
+			const String& getFragmentCode() const;
+			const String& getVertexCode() const;
+			const String& getEffectCode() const;
+			bool isCompiled() const;
 		};
 	}
 }
