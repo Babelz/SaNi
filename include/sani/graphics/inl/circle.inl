@@ -32,8 +32,14 @@ namespace sani {
 
 			RenderElementData& shapeRenderData = circle.renderData.renderElements[0];
 
+			VertexPositionColorTexture& shapeCenter = circle.renderData.vertices[0];
+			shapeCenter.vertexPositionColor.position.x = circle.globalBounds.x;
+			shapeCenter.vertexPositionColor.position.y = circle.globalBounds.y;
+			shapeCenter.vertexPositionColor.position.z = position.z;
+			shapeCenter.vertexPositionColor.color = circle.fill;
+
 			for (uint32 i = 1; i < shapeRenderData.last + 1; i++) {
-				const float32 percent = (i / float(circle.vertices));
+				const float32 percent = (i / float32(circle.vertices));
 				const float32 radius = percent * 2.0f * PI;
 
 				const float32 ox = origin.x + circle.radius * scale.x * sani::math::cos(radius);
@@ -49,19 +55,16 @@ namespace sani {
 				vertex.vertexPositionColor.color = circle.fill;
 			}
 
-			VertexPositionColorTexture& center = circle.renderData.vertices[0];
-			center.vertexPositionColor.position.x = circle.globalBounds.x;
-			center.vertexPositionColor.position.y = circle.globalBounds.y;
-			center.vertexPositionColor.position.z = position.z;
-			center.vertexPositionColor.color = circle.fill;
-
 			if (circle.borderThickness > 0.0f) {
 				RenderElementData& borderRenderData = circle.renderData.renderElements[1];
 
 				const float32 borderRadius = circle.radius + circle.borderThickness;
 
-				for (uint32 i = borderRenderData.first; i < borderRenderData.last; i++) {
-					const float32 percent = (i / float(circle.vertices - 2));
+				VertexPositionColorTexture& borderCenter = circle.renderData.vertices[borderRenderData.first];
+				borderCenter = shapeCenter;
+
+				for (uint32 i = borderRenderData.first; i < borderRenderData.last + 1; i++) {
+					const float32 percent = (i / float32(circle.vertices));
 					const float32 radius = percent * 2.0f * PI;
 
 					const float32 ox = origin.x + borderRadius * scale.x * sani::math::cos(radius);

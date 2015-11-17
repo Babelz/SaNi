@@ -9,13 +9,6 @@ namespace sani {
 		RenderSetup::RenderSetup() : graphicsDevice(nullptr) {
 		}
 
-		void RenderSetup::setRenderMode(const RenderMode renderMode) {
-			this->renderMode = renderMode;
-		}
-		RenderMode RenderSetup::getRenderMode() const {
-			return renderMode;
-		}
-
 		void RenderSetup::setVertexElementsCount(const uint32 vertexElementsCount) {
 			this->vertexElementsCount = vertexElementsCount;
 		}

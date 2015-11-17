@@ -8,7 +8,6 @@ namespace sani {
 	namespace graphics {
 
 		PolygonRenderSetup::PolygonRenderSetup(GraphicsDevice* const graphicsDevice) : RenderSetup(graphicsDevice) {
-			setRenderMode(RenderMode::Triangles);
 		}
 
 		void PolygonRenderSetup::use() {
@@ -37,8 +36,6 @@ namespace sani {
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();
 			graphicsDevice->disableVertexAttributePointer(0);
 			graphicsDevice->disableVertexAttributePointer(1);
-			
-			setRenderMode(RenderMode::Triangles);
 		}
 	}
 }

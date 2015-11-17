@@ -14,17 +14,12 @@ namespace sani {
 		private:
 			GraphicsDevice* const graphicsDevice;
 		
-			RenderMode renderMode;
-
 			uint32 vertexElementsCount;
 		protected:
 			GraphicsDevice* const getGraphicsDevice() const;
 		public:
 			RenderSetup(GraphicsDevice* const graphicsDevice);
 			RenderSetup();
-
-			void setRenderMode(const RenderMode renderMode);
-			RenderMode getRenderMode() const;
 
 			void setVertexElementsCount(const uint32 vertexElementsCount);
 			uint32 getVertexElementsCount() const;

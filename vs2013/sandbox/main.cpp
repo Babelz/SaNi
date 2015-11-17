@@ -49,9 +49,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
-	FileSystem fileSystem;
-	ResourceManager resources(&fileSystem, &graphicsDevice);
-	Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
+	//FileSystem fileSystem;
+	//ResourceManager resources(&fileSystem, &graphicsDevice);
+	//Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
 
 	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice, &camera]() {
 		Viewport viewport;
@@ -115,14 +115,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	triangle.transform.position.x = 200;
 	triangle.transform.position.y = 200;
 
-	sani::graphics::Rectangle rect(400, 400, 32, 32);
+	Circle circle(100, 3);
+	circle.transform.position.y = 400;
+	circle.transform.position.x = 400;
+	circle.renderData.renderElements[0].renderMode = RenderMode::LineLoop;
+	circle.renderData.renderElements[1].renderMode = RenderMode::LineLoop;
+	circle.fill.a = 0.55f;
+	circle.borderFill = color::green;
+	circle.borderThickness = 16.0f;
 
+	sani::graphics::Rectangle rect(400, 400, 32, 32);
+	
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 
 		// Update.
 		window.listen();
-		graphicsDevice.bindTexture(tuksu->getID());
+		//graphicsDevice.bindTexture(tuksu->getID());
 		camera.computeTransformation();
 		const sani::math::Mat4f transform = camera.transformation();
 		graphicsDevice.setShaderUniform(program, "transform", (void*)&transform, UniformType::Mat4F);
@@ -155,18 +164,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		recomputeGeometryData(triangle);
 		updateRenderData(triangle);
 
-		Circle circle(100, 6);
-		circle.transform.position.x = 400;
-		circle.transform.position.y = 400;
+		circle.borderThickness += 0.0001f;
+
+		circle.transform.rotation += 0.00025f;
+
 		recomputeGeometryData(circle);
 		updateRenderData(circle);
 
 		renderer.render(&triangle);
 		renderer.render(&circle);
-
-		circle.transform.position.x = 700;
-		recomputeGeometryData(circle);
-		updateRenderData(circle);
 
 		renderer.endRendering();
 	}
