@@ -4,7 +4,7 @@ namespace sani {
 
 	namespace graphics {
 
-		Circle::Circle(const float32 x, const float32 y, const float32 radius, const uint32 vertices) : Renderable(vertices * 2, 2),
+		Circle::Circle(const float32 x, const float32 y, const float32 radius, const uint32 vertices) : Renderable((vertices * 2) + 1, 2),
 																									    vertices(vertices) {
 			this->radius = radius;
 
@@ -28,14 +28,14 @@ namespace sani {
 			
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
-			shapeRenderData.last = vertices - 1;
+			shapeRenderData.last = vertices + 1;
 			shapeRenderData.vertexElements = 7;		// TODO: no texturing.
 			shapeRenderData.offset = 2;
-			shapeRenderData.renderMode = RenderMode::LineLoop;
+			shapeRenderData.renderMode = RenderMode::TriangleFan;
 
 			RenderElementData& borderRenderData = renderData.renderElements[1];
-			borderRenderData.first = vertices;
-			borderRenderData.last = vertices * 2;
+			borderRenderData.first = vertices + 2;
+			borderRenderData.last = vertices * 2 + 2;  
 			borderRenderData.vertexElements = 7;
 			borderRenderData.offset = 2;
 			borderRenderData.renderMode = RenderMode::TriangleFan;

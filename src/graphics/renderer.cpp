@@ -2,6 +2,7 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/graphics/renderables/renderable.hpp"
 #include "sani/graphics/setups/render_setups.hpp"
+#include "sani/resource/texture2d.hpp"
 #include "sani/graphics/renderer.hpp"
 
 namespace sani {
@@ -11,19 +12,28 @@ namespace sani {
 		#define INITIAL_BUFFER_ELEMENTS_COUNT 32768
 		
 		/*
-			Render batch class
+			RenderBatch class
+		
+			Represents a part of the rendering process.
+			Can contain one or more elements that will be
+			rendered.
 		*/
-
 		class RenderBatch {
 		public:
+			// First vertex position.
 			uint32 verticesBegin;
+			// Last vertex position.
 			uint32 verticesEnd;
 
+			// First vertex index position.
 			uint32 indicesBegin;
+			// Last vertex index position.
 			uint32 indicesEnd;
-			uint32 indicesCount;
-
+			
+			// Element this batch can be used to render.
 			const RenderElementData* elementsData;
+
+			// Statee elements.
 			RenderState renderState;
 			VertexMode vertexMode;
 			RenderMode renderMode;
@@ -61,13 +71,14 @@ namespace sani {
 		Renderer::Renderer(GraphicsDevice& graphicsDevice) : graphicsDevice(graphicsDevice),
 															 vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
 															 indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
-															 renderBatches(32, BufferSizing::Dynamic),
 															 verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
 															 indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
 															 renderBatch(nullptr),
+															 renderBatchesCount(0),
 															 renderSetup(nullptr),
 															 vertexBuffer(0),
 															 indexBuffer(0) {
+			renderBatches.resize(32);
 		}
 
 		void Renderer::generateRenderSetups() {
@@ -76,7 +87,6 @@ namespace sani {
 			renderSetups[static_cast<uint32>(RenderState::Waiting)]				= nullptr;
 			renderSetups[static_cast<uint32>(RenderState::Polygons)]			= new PolygonRenderSetup(&graphicsDevice);
 			renderSetups[static_cast<uint32>(RenderState::TexturedPolygons)]	= new TexturedPolygonRenderSetup(&graphicsDevice);
-			renderSetups[static_cast<uint32>(RenderState::Text)]				= new TexturedPolygonRenderSetup(&graphicsDevice);
 		}
 		void Renderer::generateBuffers() {
 			graphicsDevice.generateBuffer(vertexBuffer);
@@ -123,97 +133,143 @@ namespace sani {
 			}
 		}
 
+		void Renderer::applyVertexOffset() {
+			// No need to add offset.
+			if (renderBatchesCount <= 1) return;
+
+			const RenderBatch* last = &renderBatches[renderBatchesCount - 1];
+
+			// No need to add offset, same vertex elements count.
+			if (last->elementsData->vertexElements == renderBatch->elementsData->vertexElements) return;
+
+			// From less elements to more.
+			// Offset = vtxElemes - vetxElemsMod.
+			const uint32 vertexElementsCount = renderBatch->elementsData->vertexElements;
+			const uint32 vertexElementsModulo = vertices.getElementsCount() % vertexElementsCount;
+			const uint32 vertexElementsOffset = vertexElementsCount - vertexElementsModulo;
+
+			vertices.offset(vertexElementsOffset);
+		}
 		void Renderer::swapRenderSetup(const RenderState renderState) {
 			const uint32 index = static_cast<uint32>(renderState);
 
 			renderSetup = renderSetups[index];
 		}
-		void Renderer::swapBatch() {
-			renderBatches.push(RenderBatch());
 
-			renderBatch = &renderBatches.data()[renderBatches.getElementsCount() - 1];
+		void Renderer::initializeBatch(const RenderElementData* const renderElementData) {
+			renderBatch->elementsData = renderElementData;
+
+			/*
+				TODO: add texturing.
+			*/
+
+			renderBatch->indicesBegin = indices.getElementsCount();
+			renderBatch->indicesEnd = renderBatch->indicesBegin + renderElementData->indices;
+			
+			renderBatch->renderState = RenderState::Polygons;
+			renderBatch->vertexMode = renderElementData->indices == 0 ? VertexMode::NoIndexing : VertexMode::Indexed;
+			renderBatch->renderMode = renderElementData->renderMode;
+
+			// Add possible vertex elements offset for this batch element.
+			applyVertexOffset();	
+
+			const uint32 vertexElementsCount = vertices.getElementsCount();
+			const uint32 vertexOffset = vertexElementsCount > 0 ? 1 : 0;
+
+			renderBatch->verticesBegin = vertexElementsCount / renderElementData->vertexElements;
+			renderBatch->verticesEnd = renderBatch->verticesBegin;
+		}
+		void Renderer::swapBatch() {
+			renderBatch = &renderBatches[renderBatchesCount];
+			renderBatch->resetBatch();
+			
+			renderBatchesCount++;
+
+			if (renderBatchesCount == renderBatches.size()) renderBatches.reserve(renderBatches.size() * 2);
 		}
 
-		void Renderer::batchElement(const RenderElementData* const renderElementData) {
-			if (renderBatch->elementsData == nullptr) {
-				renderBatch->elementsData = renderElementData;
-
-				// TODO: fix drawing
-				// TODO: fix vtx counts
-
-				renderBatch->verticesBegin = vertices.getElementsCount();
-				renderBatch->verticesEnd = renderBatch->verticesBegin;
-
-				renderBatch->indicesBegin = indices.getElementsCount();
-				renderBatch->indicesEnd = renderBatch->indicesBegin;
-
-				renderBatch->indicesCount = renderElementData->indices;
-				
-				renderBatch->renderState = RenderState::Polygons;
-				renderBatch->vertexMode = VertexMode::NoIndexing;
-				renderBatch->renderMode = renderElementData->renderMode;
-			}
-
-			if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
-				//if (renderBatches.getElementsCount() > 1) {
-				//	RenderBatch* const batchers = renderBatches.data();
-				//	RenderBatch* const last = &batchers[renderBatches.getElementsCount() - 2];
-
-				//	if (last->elementsData->groupIdentifier == renderElementData->groupIdentifier) {
-				//		RenderBatch* const current = renderBatch;
-				//		renderBatch = last;
-
-				//		batchElement(renderElementData);
-
-				//		renderBatch = current;
-
-				//		return;
-				//	}
-				//}
-
-				swapBatch();
-
-				batchElement(renderElementData);
-
-				return;
-			}
-
+		void Renderer::applyToBatch(const RenderElementData* const renderElementData) {
+			// Add one to keep the indexes as zero based.
 			const uint32 verticesCount = (renderElementData->last + 1) - renderElementData->first;
 
-			renderBatch->verticesEnd += verticesCount * renderElementData->vertexElements;
+			renderBatch->verticesEnd += verticesCount;
 			renderBatch->indicesEnd += renderElementData->indices;
 		}
+		void Renderer::batchElement(const RenderElementData* const renderElementData) {
+			if (renderBatch->elementsData == nullptr) {
+				initializeBatch(renderElementData);
+			}
+
+			if (renderElementData->renderMode == RenderMode::TriangleFan || renderElementData->renderMode == RenderMode::LineLoop) {
+				swapBatch();
+
+				initializeBatch(renderElementData);
+			} else if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
+				// Check if we can batch this element to some recent batch.
+				// If we can't just create new batch.
+				//if (renderBatchesCount >= 1 && (renderBatchesCount < elementCounter)) {
+				//	const uint32 batchesBegin = renderBatchesCount - elementCounter;
+				//	
+				//	uint32 i = batchesBegin;
+
+				//	while (i < renderBatchesCount) {
+				//		RenderBatch* const recentRenderBatch = &renderBatches[i];
+
+				//		if (recentRenderBatch->elementsData->groupIdentifier == renderElementData->groupIdentifier) {
+				//			RenderBatch* const temp = renderBatch;
+				//			renderBatch = recentRenderBatch;
+
+				//			applyToBatch(renderElementData);
+
+				//			renderBatch = temp;
+
+				//			return;
+				//		}
+				//	}
+				//} else {
+					// Can't batch to other batches, a new batch is required.
+					swapBatch();
+
+					initializeBatch(renderElementData);
+				/*}*/
+			}
+
+			applyToBatch(renderElementData);
+		}
 		void Renderer::copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
-			const uint32 vertexElements = renderElementData->vertexElements;
+			const uint32 elementVertexElementsCount = renderElementData->vertexElements;
 			const uint32 vertexElementOffset = renderElementData->offset;
 
 			const uint32 first = renderElementData->first;
 			const uint32 last = renderElementData->last + 1;	// Add one to keep the index as zero-based.
 
-			const uint32 firstVertexElement = first * (vertexElements + vertexElementOffset);
-			const uint32 lastVertexElement = last * (vertexElements + vertexElementOffset);
+			const uint32 firstVertexElement = first * (elementVertexElementsCount + vertexElementOffset);
+			const uint32 lastVertexElement = last * (elementVertexElementsCount + vertexElementOffset);
+
 			const uint32 vertexElementsCount = lastVertexElement - firstVertexElement;
 			const uint32 verticesCount = last - first;
-
-			const float32* const vertexData = reinterpret_cast<const float32* const>(renderData->vertices.data());
-
+			
+			const float32* const vertexElementsData = reinterpret_cast<const float32* const>(renderData->vertices.data());
+			
+			uint32 vertexElementPointer = firstVertexElement;
+			
 			if (vertexElementOffset != 0) {
-				uint32 vertexPointer = firstVertexElement;
+				uint32 vertexElementPointer = firstVertexElement;
 
 				for (uint32 i = 0; i < verticesCount; i++) {
-					vertices.push(&vertexData[vertexPointer], vertexElements);
-					
-					vertexPointer += vertexElements + vertexElementOffset;
+					vertices.push(&vertexElementsData[vertexElementPointer], elementVertexElementsCount);
+
+					vertexElementPointer += elementVertexElementsCount + vertexElementOffset;
 				}
 			} else {
-				vertices.push(&vertexData[firstVertexElement], vertexElementsCount);
+				vertices.push(&vertexElementsData[firstVertexElement], vertexElementsCount);
 			}
 		}
 		void Renderer::copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
-			//const uint32 indicesCount = renderElementData->indices;
-			//const uint32* indicesData = reinterpret_cast<const uint32* const>(renderData->vertexIndices.data());
+			const uint32 indicesCount = renderElementData->indices;
+			const uint32* indicesData = reinterpret_cast<const uint32* const>(renderData->vertexIndices.data());
 
-			//indices.push(indicesData, indicesCount);
+			indices.push(indicesData, indicesCount);
 		}
 
 		void Renderer::flushRenderBatch(const RenderBatch* const renderBatch) {
@@ -230,7 +286,6 @@ namespace sani {
 
 			if (vertexMode == VertexMode::NoIndexing) {
 				graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesEnd);
-				//graphicsDevice.drawArrays(renderMode, 0, 54);
 			} else {
 				const uint32 indicesCount = renderBatch->indicesEnd - renderBatch->indicesBegin;
 
@@ -264,23 +319,21 @@ namespace sani {
 		}
 
 		void Renderer::beginRendering(const math::Mat4f& transform) {
+			renderBatchesCount = 0;
+			renderBatch = nullptr;
+			
 			vertices.resetBufferPointer();
 			indices.resetBufferPointer();
-			renderBatches.resetBufferPointer();
-
-			renderBatches.push(RenderBatch());
-
-			renderBatch = &renderBatches.data()[renderBatches.getElementsCount() - 1];
-			renderBatch->resetBatch();
+			
+			swapBatch();
 		}
 
 		void Renderer::render(const Renderable* const renderable) {
-			// First render call.
 			elementsCount = renderable->renderData.renderElementsCount;
 
 			for (elementCounter = 0; elementCounter < elementsCount; elementCounter++) {
-				const uint32 elementIndex = renderable->renderData.renderElementIndices[elementCounter];
-				const RenderElementData* const renderElementData = &renderable->renderData.renderElements[elementIndex];
+				const uint32 renderElementIndex = renderable->renderData.renderElementIndices[elementCounter];
+				const RenderElementData* const renderElementData = &renderable->renderData.renderElements[renderElementIndex];
 
 				batchElement(renderElementData);
 
@@ -292,15 +345,7 @@ namespace sani {
 		void Renderer::endRendering() {
 			updateBufferDatas();
 
-			const RenderBatch* const renderBatchesData = renderBatches.data();
-
-			for (uint32 i = 0; i < renderBatches.getElementsCount(); i++) {
-				const RenderBatch* const renderBatch = &renderBatchesData[i];
-				
-				flushRenderBatch(renderBatch);
-			}
-
-			renderBatch = nullptr;
+			for (uint32 i = 0; i < renderBatchesCount; i++) flushRenderBatch(&renderBatches[i]);
 		}
 
 		Renderer::~Renderer() {

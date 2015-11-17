@@ -67,7 +67,8 @@
       </AdditionalManifestFiles>
     </Manifest>
     <PostBuildEvent>
-      <Command>"$(SolutionDir)../tools/binary/pipeline-compiler.exe" "$(SolutionDir)../assets/" "tuksu.png"</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

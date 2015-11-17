@@ -67,6 +67,13 @@ namespace sani {
 				bufferPointer += count;
 			}
 
+			/// Applies given offset to this buffer.
+			inline void offset(const uint32 offset) {
+				checkSize(offset);
+
+				bufferPointer += offset;
+			}
+
 			/// Returns the size of this buffer.
 			inline uint32 getSize() const {
 				return size;

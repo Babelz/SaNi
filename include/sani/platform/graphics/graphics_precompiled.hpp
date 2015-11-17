@@ -126,8 +126,8 @@ namespace sani {
 	TriangleFan =			 GL_TRIANGLE_FAN,
 	Triangles =				 GL_TRIANGLES,
 	TriangleStripAdjacency = GL_TRIANGLE_STRIP_ADJACENCY,
-			TrianglesAdjancency = GL_TRIANGLES_ADJACENCY,
-			Patches = GL_PATCHES
+	TrianglesAdjancency =	 GL_TRIANGLES_ADJACENCY,
+	Patches =				 GL_PATCHES
 };
 
 struct VertexAttributePointerDescription  {

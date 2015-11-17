@@ -76,6 +76,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		""
 		"void main() {"
 		""
+		""
 		"	gl_Position = transform * vec4(vertex_position, 1.0);"
 		"	out_color = color;"
 		""
@@ -111,6 +112,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	renderer.initialize();
 
 	Triangle triangle(32, 32);
+	triangle.transform.position.x = 200;
+	triangle.transform.position.y = 200;
+
+	sani::graphics::Rectangle rect(400, 400, 32, 32);
 
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
@@ -126,50 +131,44 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		renderer.beginRendering(transform);
 
-		float32 offx = 0.0f;
-		float32 offy = 0.0f;
+		//float32 offx = 0.0f;
+		//float32 offy = 0.0f;
 
-		for (uint32 i = 0; i < 3; i++) {
-			offx = 0.0f;
+		//for (uint32 i = 0; i < 3; i++) {
+		//	offx = 0.0f;
 
-			for (size_t j = 0; j < 3; j++) {
-				triangle.transform.position.x = 300 + j * 32.0f + offx;
-				triangle.transform.position.y = 300 + i * 32.0f + offy;
+		//	for (size_t j = 0; j < 3; j++) {
+		//		triangle.transform.position.x = 300 + j * 32.0f + offx;
+		//		triangle.transform.position.y = 300 + i * 32.0f + offy;
 
-				triangle.borderThickness += 0.001f;
-				triangle.transform.rotation += 0.0001f;
-				triangle.transform.origin.x += 0.0001f;
-				triangle.transform.origin.y += 0.0001f;
-				triangle.borderFill.r = rand() * 0.0001f;
-				triangle.borderFill.g = rand() * 0.00001f;
-				triangle.borderFill.b = rand() * 0.000001f;
+				//triangle.borderThickness += 0.01f;
+				//triangle.borderFill.r = rand() * 0.0001f;
+				//triangle.borderFill.g = rand() * 0.00001f;
+				//triangle.borderFill.b = rand() * 0.000001f;
 
-				recomputeGeometryData(triangle);
-				updateRenderData(triangle);
+		//		offx += 32.0f;
+		//	}
 
-				renderer.render(&triangle);
+		//	offy += 32.0f;
+		//}
 
-				offx += 32.0f;
-			}
+		recomputeGeometryData(triangle);
+		updateRenderData(triangle);
 
-			offy += 32.0f;
-		}
+		Circle circle(100, 6);
+		circle.transform.position.x = 400;
+		circle.transform.position.y = 400;
+		recomputeGeometryData(circle);
+		updateRenderData(circle);
 
-		static int a = 1;
+		renderer.render(&triangle);
+		renderer.render(&circle);
 
-		Circle c(100, a++);
-
-		c.fill = color::green;
-		c.transform.position.x += 300;
-		c.transform.position.y += 300;
-
-		recomputeGeometryData(c);
-		updateRenderData(c);
-
-		renderer.render(&c);
+		circle.transform.position.x = 700;
+		recomputeGeometryData(circle);
+		updateRenderData(circle);
 
 		renderer.endRendering();
-
 	}
 
 	graphicsDevice.cleanUp();

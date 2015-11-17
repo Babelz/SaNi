@@ -41,14 +41,13 @@ namespace sani {
 			Buffer<uint32> indices;
 			uint32 indicesSize;
 
-			Buffer<RenderBatch> renderBatches;
+			std::vector<RenderBatch> renderBatches;
+			uint32 renderBatchesCount;
 			RenderBatch* renderBatch;
-
-			// Depth counter used while rendering the elements.
+			
 			uint32 elementCounter;
 			uint32 elementsCount;
 
-			// Transform state and state.
 			math::Mat4f transform;
 
 			void generateRenderSetups();
@@ -57,16 +56,18 @@ namespace sani {
 			void updateVertexBufferSize();
 			void updateIndexBufferSize();
 
-			//void presentPolygons();
-			//void presentIndexedPolygons();
-
 			void swapRenderSetup(const RenderState renderState);
+			void applyVertexOffset();
+
+			void initializeBatch(const RenderElementData* const renderElementData);
 			void swapBatch();
 			
+			void applyToBatch(const RenderElementData* const renderElementData);
 			void batchElement(const RenderElementData* const renderElementData);
 			void copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData);
 			void copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData);
 
+			void prepareFlushRenderBatch(const RenderBatch* renderBatch);
 			void flushRenderBatch(const RenderBatch* const renderBatch);
 			void updateBufferDatas();
 		public:
