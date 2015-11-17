@@ -67,111 +67,50 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	//char* vertexSource = "#version 330 core\n"
-	//	"layout(location = 0) in vec3 vertex_position;"
-	//	"layout(location = 1) in vec4 color;"
-	//	""
-	//	"out vec4 out_color;"
-	//	"uniform mat4 transform;"
-	//	""
-	//	"void main() {"
-	//	""
-	//	""
-	//	"	gl_Position = transform * vec4(vertex_position, 1.0);"
-	//	"	out_color = color;"
-	//	""
-	//	"}";
-
-	//char* fragmentSource = "#version 330 core\n"
-	//	"in vec4 out_color;"
-	//	"out vec4 vertex_color;"
-	//	""
-	//	"void main(){"
-	//	""
-	//	"	vertex_color = out_color;"
-	//	""
-	//	"}";
-
-	//uint32 vertex = 0;
-	//uint32 fragment = 0;
-	//uint32 program = 0;
-
-	//graphicsDevice.compileShader(vertex, vertexSource, ShaderType::Vertex);
-	//assert(!graphicsDevice.hasErrors());
-
-	//graphicsDevice.compileShader(fragment, fragmentSource, ShaderType::Fragment);
-	//assert(!graphicsDevice.hasErrors());
-
-	//graphicsDevice.createProgram(program);
-	//graphicsDevice.linkToProgram(program, vertex, true);
-	//graphicsDevice.linkToProgram(program, fragment, true);
-	//graphicsDevice.linkProgram(program);
-	//graphicsDevice.useProgram(program);
-
 	Renderer renderer(graphicsDevice);
 	renderer.initialize();
 
-	Triangle triangle(32, 32);
-	triangle.transform.position.x = 200;
-	triangle.transform.position.y = 200;
+	std::vector<Triangle*> triangles;
 
-	Circle circle(100, 3);
-	circle.transform.position.y = 400;
-	circle.transform.position.x = 400;
-	circle.renderData.renderElements[0].renderMode = RenderMode::LineLoop;
-	circle.renderData.renderElements[1].renderMode = RenderMode::LineLoop;
-	circle.fill.a = 0.55f;
-	circle.borderFill = color::green;
-	circle.borderThickness = 16.0f;
+	for (size_t i = 0; i < 128; i++) {
+		for (size_t j = 0; j < 128; j++) {
+			Triangle* t = new Triangle(32.0f, 32.0f);
+			t->transform.position.x = j * 32.0f;
+			t->transform.position.y = i * 32.0f;
+			t->fill = Color(rand() * 0.001f,
+							rand() * 0.0001f,
+							rand() * 0.00001f,
+							0.75f);
+			t->borderFill = Color(rand() * 0.001f,
+								  rand() * 0.0001f,
+								  rand() * 0.00001f,
+								  1.0f);
 
-	sani::graphics::Rectangle rect(400, 400, 32, 32);
-	
+			recomputeGeometryData(*t);
+
+			triangles.push_back(t);
+		}
+	}
+
 	while (window.isOpen()) {
 		if (graphicsDevice.hasErrors()) break;
 
 		// Update.
 		window.listen();
-		//graphicsDevice.bindTexture(tuksu->getID());
+
 		camera.computeTransformation();
 		const sani::math::Mat4f transform = camera.transformation();
 
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
+		
+		for (Triangle* t : triangles) {
+			t->transform.rotation += 0.1f;
+			recomputeGeometryData(*t);
+		} 
 
 		renderer.beginRendering(transform);
 
-		//float32 offx = 0.0f;
-		//float32 offy = 0.0f;
-
-		//for (uint32 i = 0; i < 3; i++) {
-		//	offx = 0.0f;
-
-		//	for (size_t j = 0; j < 3; j++) {
-		//		triangle.transform.position.x = 300 + j * 32.0f + offx;
-		//		triangle.transform.position.y = 300 + i * 32.0f + offy;
-
-				//triangle.borderThickness += 0.01f;
-				//triangle.borderFill.r = rand() * 0.0001f;
-				//triangle.borderFill.g = rand() * 0.00001f;
-				//triangle.borderFill.b = rand() * 0.000001f;
-
-		//		offx += 32.0f;
-		//	}
-
-		//	offy += 32.0f;
-		//}
-
-		recomputeGeometryData(triangle);
-		updateRenderData(triangle);
-
-		circle.borderThickness += 0.0001f;
-
-		circle.transform.rotation += 0.00025f;
-
-		recomputeGeometryData(circle);
-		updateRenderData(circle);
-
-		renderer.render(&triangle);
-		renderer.render(&circle);
+		for (Triangle* t : triangles) renderer.renderElement(t);
 
 		renderer.endRendering();
 	}

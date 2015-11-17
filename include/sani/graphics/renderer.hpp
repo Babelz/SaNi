@@ -81,6 +81,8 @@ namespace sani {
 			void prepareFlushRenderBatch(const RenderBatch* renderBatch);
 			void flushRenderBatch(const RenderBatch* const renderBatch);
 			void updateBufferDatas();
+
+			void prepareRendering();
 		public:
 			Renderer(GraphicsDevice& graphicsDevice);
 
@@ -95,10 +97,17 @@ namespace sani {
 			/// Begins rendering elements with given arguments.
 			/// @param[in] transformation transformation
 			void beginRendering(const math::Mat4f& transform);
-
-			void render(const Renderable* const renderable);
-
+			void renderElement(const Renderable* const renderable);
 			void endRendering();
+			
+			// TODO: should the renderer have a batcher? 
+			//	     static layers need this, but i think
+			//       that static layers could just be a collection
+			//       of render targets (texture batches)
+			//
+			//void beginBatching();
+			//void batchElement(const Renderable* const renderable);
+			//void endBatching(std::vector<RenderBatch>& batches, Buffer<float32>& vertices);
 
 			~Renderer();
 		};
