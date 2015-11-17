@@ -6,8 +6,6 @@ namespace sani {
 	namespace resource {
 		namespace pipeline {
 			class EffectImporter : public ContentImporter {
-			private:
-				std::vector<String> supportedFileTypes;
 			public:
 				EffectImporter();
 				~EffectImporter();
