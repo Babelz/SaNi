@@ -285,7 +285,7 @@ namespace sani {
 			const RenderMode renderMode = renderBatch->renderMode;
 
 			if (vertexMode == VertexMode::NoIndexing) {
-				graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesEnd);
+				graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesEnd - renderBatch->verticesBegin);
 			} else {
 				const uint32 indicesCount = renderBatch->indicesEnd - renderBatch->indicesBegin;
 
