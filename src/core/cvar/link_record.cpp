@@ -1,5 +1,6 @@
 #include "sani/core/cvar/link_record.hpp"
-
+#include "sani/core/cvar/cvar_file.hpp"
+#include <algorithm>
 namespace sani {
 
 	LinkRecord::LinkRecord() : root(nullptr) {

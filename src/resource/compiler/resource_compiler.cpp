@@ -1,8 +1,12 @@
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 #include "sani/resource/compiler/resource_compiler.hpp"
 #include "sani/resource/compiler/compilers.hpp"
 #include <algorithm>
 #include "sani/resource/pipeline/importers.hpp"
 #include "sani/resource/processor/processors.hpp"
+#include "sani/resource/effect_content.hpp"
 #include <iostream>
 namespace sani {
 	namespace resource {
@@ -94,3 +98,5 @@ namespace sani {
 		}
 	}
 }
+
+#endif

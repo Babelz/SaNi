@@ -464,9 +464,6 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp">
       <Filter>include\resource\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\primitive_writers.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp">
       <Filter>include\resource\compiler</Filter>
     </ClInclude>

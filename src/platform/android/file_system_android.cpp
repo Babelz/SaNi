@@ -1,5 +1,7 @@
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+#include <cassert>
+#include <stdexcept>
 #include "sani/platform/file/file_system.hpp"
 #include <sys/stat.h>
 #include <dirent.h>
@@ -26,30 +28,37 @@ namespace sani {
 			return assetHandles.find(path) != assetHandles.end() || handles.find(path) != handles.end();
 		}
 
-		bool FileSystem::openFile(const String& path, const Filemode mode) {
+		bool FileSystem::openFile(const String& path, const Filemode mode, FileStream** stream) {
 			if (isFileOpen(path)) return true;
 
 
 			// apk
 			if (path.at(0) != '/') {
-				String withoutAssets(path.substr(7));
+				throw std::logic_error("not implemented");
+				/*String withoutAssets(path.substr(7));
 				AAsset* asset = AAssetManager_open(androidAssetManager, withoutAssets.c_str(), AASSET_MODE_UNKNOWN);
 				if (!asset) return false;
 
 				assetHandles[path] = asset;
-				return true;
+				return true;*/
 			}
 			// absolute
 
 			char access[5] = { 0 };
 
-			if (mode & Filemode::Read && mode & Filemode::Write) {
+			if (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Read) && static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Write)) {
 				access[0] = 'a'; access[1] = '+';  access[2] = 'b';
 			}
-			else if (mode & Filemode::Read) {
+			else if (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Truncate) && static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Read)) {
+				access[0] = 'w'; access[1] = '+'; access[2] = 'b';
+			}
+			else if (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Truncate)) {
+				access[0] = 'w'; access[1] = 'b';
+			}
+			else if (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Read)) {
 				access[0] = 'r'; access[1] = 'b';
 			}
-			else if (mode & Filemode::Write) {
+			else if (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Write)) {
 				access[0] = 'a'; access[1] = 'b';
 			}
 			FILE* handle = nullptr;
@@ -57,7 +66,8 @@ namespace sani {
 
 			if (!handle) return false;
 
-			handles[path] = handle;
+			handles[path] = new FileStream(path, mode, handle);
+			*stream = handles[path];
 
 			// File open succeeded
 			return true;
@@ -66,18 +76,20 @@ namespace sani {
 		void FileSystem::closeFile(const String& path) {
 			if (!isFileOpen(path)) return;
 			if (path.at(0) != '/') {
-				AAsset* asset = assetHandles[path];
+				throw std::logic_error("not implemented");
+				/*AAsset* asset = assetHandles[path];
 				AAsset_close(asset);
-				assetHandles.erase(path);
+				assetHandles.erase(path);*/
 			}
 			else {
-				FILE* handle = handles[path];
-				fclose(handle);
+				FileStream* handle = handles[path];
+				delete handle;
+				handle = nullptr;
 				handles.erase(path);
 			}
 		}
 
-		unsigned char* FileSystem::getFileData(const String& path, size_t& fileSize, bool nullTerminate /*= false*/) const {	
+		unsigned char* FileSystem::getFileData(const String& path, int64& fileSize, bool nullTerminate /*= false*/) const {	
 			assert(isFileOpen(path));
 
 			// inside APK
@@ -112,8 +124,7 @@ namespace sani {
 			}
 			// absolute path
 			else {
-
-				FILE* handle = handles.at(path);
+				FileStream* handle = handles.at(path);
 				size_t fsize = getFileSize(path);
 				unsigned char* buffer = nullptr;
 				if (nullTerminate) {
@@ -123,8 +134,15 @@ namespace sani {
 				else {
 					buffer = (unsigned char*)malloc(fsize);
 				}
+				int64 readBytes = 0;
+				try {
+					readBytes = handle->read(buffer, fsize);
+				}
+				catch (std::exception& ex) {
+					(void)ex;
+					throw;
+				}
 
-				size_t readBytes = fread(buffer, sizeof(unsigned char), fsize, handle);
 				// Failed
 				if (readBytes != fsize) {
 					if (buffer) {

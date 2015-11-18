@@ -80,7 +80,7 @@ namespace sani {
 			/// Sets the height of the back buffer.
 			void setBackBufferHeight(const uint32 newHeight);
 
-			void GraphicsDevice::applyBackbufferChanges();
+			void applyBackbufferChanges();
 
 			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;

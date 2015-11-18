@@ -26,7 +26,7 @@ namespace sani {
 		};
 
 		/// Operator for bitwise or
-		inline Filemode operator|(Filemode a, Filemode b) {
+		inline Filemode operator|(const Filemode a, const Filemode b) {
 			return static_cast<Filemode>(static_cast<int>(a) | static_cast<int>(b));
 		}
 

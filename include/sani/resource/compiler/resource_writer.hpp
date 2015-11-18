@@ -1,4 +1,7 @@
 #pragma once
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 #include "sani/platform/file/binary_writer.hpp"
 #include "sani/core/math/math.hpp"
 #include <vector>
@@ -71,3 +74,5 @@ namespace sani {
 	}
 }
 #include "resource_writer.inl"
+
+#endif

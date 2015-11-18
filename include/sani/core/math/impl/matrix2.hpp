@@ -142,7 +142,7 @@ namespace sani {
 
 		template<typename T>
 		inline const Vector2<T>& operator*=(Vector2<T>& lhs, const Matrix2<T>& rhs) {
-			lhs = rhs * left;
+			lhs = rhs * lhs;
 			return lhs;
 		}
 

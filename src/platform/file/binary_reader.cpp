@@ -1,5 +1,6 @@
 #include "sani/platform/file/binary_reader.hpp"
 #include "sani/platform/file/file_stream.hpp"
+#include <stdexcept>
 namespace sani {
 	namespace io {
 

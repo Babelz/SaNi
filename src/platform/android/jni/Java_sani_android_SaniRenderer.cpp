@@ -1,9 +1,9 @@
 #include <jni.h>
 #include <GLES2/gl2.h>
-#include <sani/platform/graphics_device.hpp>
+#include <sani/platform/graphics/graphics_device.hpp>
 #include <android/log.h>
-#include <sani/platform/viewport.hpp>
-#include <sani/platform/color.hpp>
+#include <sani/platform/graphics/viewport.hpp>
+
 // TODO test
 #define  LOG_TAG    "SaniRenderer"
 
@@ -40,6 +40,6 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_sani_android_SaniRenderer_nativeRender(JNIEnv* env, jclass clazz, jlong graphicsDevicePtr) {
 		using namespace sani::graphics;
 		GraphicsDevice* device = reinterpret_cast<GraphicsDevice*>(graphicsDevicePtr);
-		device->clear(Color::green);
+		device->clear(1.f, 0.f, 0.f, 1.f);
 	}
 }

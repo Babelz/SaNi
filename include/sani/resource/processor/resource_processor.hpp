@@ -1,4 +1,6 @@
 #pragma once
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 #include "sani/forward_declare.hpp"
 
 SANI_FORWARD_DECLARE_2(sani, resource, ResourceItem);
@@ -18,3 +20,4 @@ namespace sani {
 		}
 	}
 }
+#endif

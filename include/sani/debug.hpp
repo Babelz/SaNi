@@ -3,6 +3,7 @@
 #include "sani/platform/platform_config.hpp"
 #include <cassert>
 
+#include "sani/platform.hpp"
 #define __SANI_INFO__(message) String(message +											\
 							          " - @File: " + __FILE__ +							\
 							          " @Function: " + __FUNCTION__	+					\

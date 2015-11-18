@@ -1,5 +1,6 @@
 #include "sani/platform/file/file_stream.hpp"
 #include "sani/debug.hpp"
+#include <stdexcept>
 
 namespace sani {
 	namespace io {

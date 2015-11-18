@@ -1,5 +1,9 @@
+#include "sani/platform/platform_config.hpp"
 #include "sani/resource/texture2d_content.hpp"
+#include <stdexcept>
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 #include <Magick++.h>
+#endif
 
 namespace sani {
 	namespace resource {
@@ -10,6 +14,7 @@ namespace sani {
 		}
 
 		void Texture2DContent::generateMipmaps(bool overwrite) {
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			if (!overwrite && faces.size() > 1) return;
 			if (overwrite) throw std::logic_error("not implemented");
 			uint32 w = width;
@@ -29,6 +34,9 @@ namespace sani {
 				faces.push_back(PixelData(w * h * 4));
 				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, faces.back().data());
 			}
+#else
+			throw std::logic_error("Not implemented");
+#endif
 		}
 		
 		const std::vector<std::vector<unsigned char>>& Texture2DContent::getMipmaps() const {
