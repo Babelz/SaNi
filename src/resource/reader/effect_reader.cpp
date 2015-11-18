@@ -1,7 +1,7 @@
 #include "sani/resource/reader/effect_reader.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
-
+#include "sani/resource/effect.hpp"
 namespace sani {
 	namespace resource {
 		namespace reader {
@@ -32,18 +32,9 @@ namespace sani {
 
 				// compile shaders
 				GraphicsDevice* device = reader->getGraphicsDevice();
-				uint32 vertex, fragment, program;
+				Effect* effect = new Effect(device, vertexCode, fragmentCode);
 
-				// TODO error check or soemthing?
-				device->compileShader(vertex, vertexCode.c_str(), ShaderType::Vertex);
-				device->compileShader(fragment, fragmentCode.c_str(), ShaderType::Vertex);
-
-				device->createProgram(program);
-				device->linkToProgram(program, vertex, true);
-				device->linkToProgram(program, fragment, true);
-				device->linkProgram(program);
-
-				return nullptr;
+				return effect;
 			}
 		}
 	}

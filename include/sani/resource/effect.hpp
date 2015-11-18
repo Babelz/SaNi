@@ -15,7 +15,9 @@ namespace sani {
 		private:
 			uint32 id;
 		public:
-			Effect(graphics::GraphicsDevice* device, const String& code);
+			// TODO this is just for school and is going to fixed when time
+			Effect(graphics::GraphicsDevice* device, const String& vcdode, const String& fcode);
+			uint32 getProgram() const;
 		};
 	}
 }
