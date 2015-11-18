@@ -51,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
 	FileSystem fileSystem;
-	ResourceManager resources(&fileSystem, &graphicsDevice);
+	//ResourceManager resources(&fileSystem, &graphicsDevice);
 	//Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
 	//volatile Effect* effect = resources.load<Effect>("../../assets/polygon.snb");
 

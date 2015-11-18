@@ -1,6 +1,5 @@
 #pragma once
 
-#include "sani/graphics/vertex_position_color_texture.hpp"
 #include "sani/graphics/renderables/renderable.hpp"
 
 namespace sani {
@@ -8,7 +7,7 @@ namespace sani {
 	namespace graphics {
 
 		/*
-			TODO: impl texturing.
+			TODO: impl texturing support.
 		*/
 
 		/// @class Rectangle rectangle.hpp "sani/graphics/rectangle.hpp"

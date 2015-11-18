@@ -276,6 +276,7 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp" />

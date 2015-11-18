@@ -671,6 +671,9 @@
     <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp">
       <Filter>include\resource\pipeline</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

@@ -98,28 +98,52 @@ namespace sani {
 			const char* const defaultPolygonVertexSource = 
 											"#version 330 core\n"
 											"layout(location = 0) in vec3 vertex_position;"
-											"layout(location = 1) in vec4 color;"
+											"layout(location = 1) in vec4 vertex_color;"
 											""
-											"out vec4 out_color;"
+											"out vec4 out_vertex_color;"
 											"uniform mat4 transform;"
 											""
 											"void main() {"
-											""
-											""
 											"	gl_Position = transform * vec4(vertex_position, 1.0);"
-											"	out_color = color;"
-											""
+											"	out_vertex_color = vertex_color;"
 											"}";
 
 			const char* const defaultPolygonFragmentSource = 
 											"#version 330 core\n"
-											"in vec4 out_color;"
+											"in vec4 out_vertex_color;"
 											"out vec4 vertex_color;"
 											""
-											"void main(){"
+											"void main() {"
+											"	vertex_color = out_vertex_color;"
+											"}";
+
+			const char* const defaultTexturedPolygonVertexSource = 
+											"#version 330\n"
+											"layout (location = 0) in vec3 vertex_position;"
+											"layout (location = 1) in vec4 vertex_color;"
+											"layout (location = 2) in vec2 texture_coordinates;"
 											""
-											"	vertex_color = out_color;"
+											"out vec2 out_texture_coordinates;"
+											"out vec4 out_vertex_color;"
 											""
+											"uniform mat4 transform;"
+											""
+											"void main() {"
+											"	gl_Position = transform * vec4(vertex_position, 1.0);"
+											"	out_texture_coordinates = texture_coordinates;"
+											"	out_vertex_color = vertex_color;"
+											"}";
+
+			const char* const defaultTexturedPolygonFragmentSource = 
+											"#version 330\n"
+											"out vec4 vertex_color;"
+											"in vec2 out_texture_coordinates;"
+											"in vec4 out_vertex_color;"
+											""
+											"uniform sampler2D sampler;"
+											""
+											"void main() {"
+											"	vertex_color = texture(sampler, out_texture_coordinates) * out_vertex_color;"
 											"}";
 
 			uint32 vertex = 0;
@@ -127,6 +151,7 @@ namespace sani {
 			uint32 defaultPolygonEffect = 0;
 			uint32 defaultTexturedPolygonEffect = 0;
 
+			// Create default polygon shader.
 			graphicsDevice.compileShader(vertex, defaultPolygonVertexSource, ShaderType::Vertex);
 			assert(!graphicsDevice.hasErrors());
 
@@ -140,12 +165,23 @@ namespace sani {
 			assert(!graphicsDevice.hasErrors());
 
 			vertex = fragment = 0;
-
 			
+			// Create default textured polygon shader.
+			graphicsDevice.compileShader(vertex, defaultTexturedPolygonVertexSource, ShaderType::Vertex);
+			assert(!graphicsDevice.hasErrors());
+
+			graphicsDevice.compileShader(fragment, defaultTexturedPolygonFragmentSource, ShaderType::Fragment);
+			assert(!graphicsDevice.hasErrors());
+
+			graphicsDevice.createProgram(defaultTexturedPolygonEffect);
+			graphicsDevice.linkToProgram(defaultTexturedPolygonEffect, vertex, true);
+			graphicsDevice.linkToProgram(defaultTexturedPolygonEffect, fragment, true);
+			graphicsDevice.linkProgram(defaultTexturedPolygonEffect);
+			assert(!graphicsDevice.hasErrors());
 
 			defaultEffects[static_cast<uint32>(RenderState::Waiting)]			= 0;
 			defaultEffects[static_cast<uint32>(RenderState::Polygons)]			= defaultPolygonEffect;
-			defaultEffects[static_cast<uint32>(RenderState::TexturedPolygons)]	= 0;
+			defaultEffects[static_cast<uint32>(RenderState::TexturedPolygons)]	= defaultTexturedPolygonEffect;
 		}
 		void Renderer::generateRenderSetups() {
 			renderSetups[static_cast<uint32>(RenderState::Waiting)]				= nullptr;

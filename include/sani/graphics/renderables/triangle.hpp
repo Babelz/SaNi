@@ -1,6 +1,5 @@
 #pragma once
 
-#include "sani/graphics/vertex_position_color_texture.hpp"
 #include "sani/graphics/renderables/renderable.hpp"
 
 namespace sani {
