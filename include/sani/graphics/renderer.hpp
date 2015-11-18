@@ -55,6 +55,10 @@ namespace sani {
 			uint32 elementCounter;
 			uint32 elementsCount;
 
+			// Used while transforming indices of 
+			// render elements.
+			std::vector<uint32> indexTransformBuffer;
+
 			math::Mat4f transform;
 			uint32 texture;
 			uint32 effect;
@@ -97,7 +101,10 @@ namespace sani {
 			/// Begins rendering elements with given arguments.
 			/// @param[in] transformation transformation
 			void beginRendering(const math::Mat4f& transform);
+
 			void renderElement(const Renderable* const renderable);
+			void renderElements(const Renderable* const renderables, const uint32 count);
+
 			void endRendering();
 			
 			// TODO: should the renderer have a batcher? 
@@ -108,6 +115,11 @@ namespace sani {
 			//void beginBatching();
 			//void batchElement(const Renderable* const renderable);
 			//void endBatching(std::vector<RenderBatch>& batches, Buffer<float32>& vertices);
+
+			// TODO: impl post processing when render targets 
+			//		 are working.
+			//
+			//void endRendering(Effect* const postProcessor);
 
 			~Renderer();
 		};

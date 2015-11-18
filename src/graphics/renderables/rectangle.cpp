@@ -72,5 +72,7 @@ namespace sani {
 		}
 		Rectangle::Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size) : Rectangle(position.x, position.y, size.x, size.y) {
 		}
+		Rectangle::Rectangle() : Rectangle(0.0f, 0.0f, 1.0f, 1.0f) {
+		}
 	}
 }

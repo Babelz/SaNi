@@ -52,8 +52,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	camera.computeTransformation();
 	FileSystem fileSystem;
 	ResourceManager resources(&fileSystem, &graphicsDevice);
-	Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
-	volatile Effect* effect = resources.load<Effect>("../../assets/polygon.snb");
+	//Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
+	//volatile Effect* effect = resources.load<Effect>("../../assets/polygon.snb");
 
 	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice, &camera]() {
 		Viewport viewport;
@@ -72,26 +72,70 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Renderer renderer(graphicsDevice);
 	renderer.initialize();
 
-	std::vector<Triangle*> triangles;
+	std::vector<Triangle> triangles;
 
-	for (size_t i = 0; i < 128; i++) {
-		for (size_t j = 0; j < 128; j++) {
-			Triangle* t = new Triangle(32.0f, 32.0f);
-			t->transform.position.x = j * 32.0f;
-			t->transform.position.y = i * 32.0f;
-			t->fill = Color(rand() * 0.001f,
+	for (uint32 i = 0; i < 3; i++) {
+		for (uint32 j = 0; j < 3; j++) {
+			Triangle t(32.0f, 32.0f);
+			t.transform.position.x = j * 64.0f + 300.0f;
+			t.transform.position.y = i * 64.0f + 300.0f;
+
+			t.fill = Color(rand() * 0.001f,
 							rand() * 0.0001f,
 							rand() * 0.00001f,
 							0.75f);
-			t->borderFill = Color(rand() * 0.001f,
+			t.borderFill = Color(rand() * 0.001f,
 								  rand() * 0.0001f,
 								  rand() * 0.00001f,
-								  1.0f);
+								  0.25f);
 
-			recomputeGeometryData(*t);
+			t.borderThickness = 8.0f;
+			t.transform.origin.x = 16.0f;
+			t.transform.origin.y = 0.0f;
+
+			recomputeGeometryData(t);
+			updateRenderData(t);
 
 			triangles.push_back(t);
 		}
+	}
+
+	std::vector<sani::graphics::Rectangle> rectangles;
+
+	for (uint32 i = 0; i < 3; i++) {
+		for (uint32 j = 0; j < 3; j++) {
+			sani::graphics::Rectangle r(j * 64.0f + 100.0f, i * 64.0f + 100.0f, 16.0f, 16.0f);
+			r.borderThickness = 8.0f;
+			
+			recomputeGeometryData(r);
+			updateRenderData(r);
+
+			rectangles.push_back(r);
+		}
+	}
+
+	std::vector<Circle> circles;
+
+	uint32 verticesCount = 4;
+
+	for (uint32 i = 0; i < 3; i++) {
+		Circle c(700.0f, 100.0f + i * 150.0f, 100.0f, verticesCount);
+
+		c.borderThickness = 12.0f;
+
+		if (i == 1) {
+			c.fill.r = 0.0f;
+			c.fill.g = 0.0f;
+			c.fill.b = 0.0f;
+			c.fill.a = 1.0f;
+		}
+
+		recomputeGeometryData(c);
+		updateRenderData(c);
+
+		verticesCount += 2;
+
+		circles.push_back(c);
 	}
 
 	while (window.isOpen()) {
@@ -105,14 +149,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 		
-		for (Triangle* t : triangles) {
-			t->transform.rotation += 0.1f;
-			recomputeGeometryData(*t);
+		for (Triangle& t : triangles) {
+			t.transform.rotation += 0.001f;
+			recomputeGeometryData(t);
 		} 
+
+		for (sani::graphics::Rectangle& r : rectangles) {
+			r.transform.rotation += 0.001f;
+			recomputeGeometryData(r);
+		}
 
 		renderer.beginRendering(transform);
 
-		for (Triangle* t : triangles) renderer.renderElement(t);
+		for (Triangle& t : triangles) renderer.renderElement(&t);
+
+		for (sani::graphics::Rectangle& r : rectangles) renderer.renderElement(&r);
+
+		for (Circle& c : circles) renderer.renderElement(&c);
 
 		renderer.endRendering();
 	}

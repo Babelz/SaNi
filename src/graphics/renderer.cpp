@@ -84,6 +84,7 @@ namespace sani {
 															 texture(0),
 															 effect(0) {
 			renderBatches.resize(32);
+			indexTransformBuffer.resize(32);
 		}
 
 		void Renderer::generateDefaultShaders() {
@@ -121,21 +122,26 @@ namespace sani {
 											""
 											"}";
 
-			uint32 polygonVertex = 0;
-			uint32 polygonFragment = 0;
+			uint32 vertex = 0;
+			uint32 fragment = 0;
 			uint32 defaultPolygonEffect = 0;
+			uint32 defaultTexturedPolygonEffect = 0;
 
-			graphicsDevice.compileShader(polygonVertex, defaultPolygonVertexSource, ShaderType::Vertex);
+			graphicsDevice.compileShader(vertex, defaultPolygonVertexSource, ShaderType::Vertex);
 			assert(!graphicsDevice.hasErrors());
 
-			graphicsDevice.compileShader(polygonFragment, defaultPolygonFragmentSource, ShaderType::Fragment);
+			graphicsDevice.compileShader(fragment, defaultPolygonFragmentSource, ShaderType::Fragment);
 			assert(!graphicsDevice.hasErrors());
 
 			graphicsDevice.createProgram(defaultPolygonEffect);
-			graphicsDevice.linkToProgram(defaultPolygonEffect, polygonVertex, true);
-			graphicsDevice.linkToProgram(defaultPolygonEffect, polygonFragment, true);
+			graphicsDevice.linkToProgram(defaultPolygonEffect, vertex, true);
+			graphicsDevice.linkToProgram(defaultPolygonEffect, fragment, true);
 			graphicsDevice.linkProgram(defaultPolygonEffect);
 			assert(!graphicsDevice.hasErrors());
+
+			vertex = fragment = 0;
+
+			
 
 			defaultEffects[static_cast<uint32>(RenderState::Waiting)]			= 0;
 			defaultEffects[static_cast<uint32>(RenderState::Polygons)]			= defaultPolygonEffect;
@@ -262,12 +268,13 @@ namespace sani {
 				swapBatch();
 
 				initializeBatch(renderElementData);
-			} else if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
+			}
+			else if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
 				// Check if we can batch this element to some recent batch.
 				// If we can't just create new batch.
-				if (renderBatchesCount >= 1 && (renderBatchesCount < elementCounter)) {
-					const uint32 batchesBegin = renderBatchesCount - elementCounter;
-					
+				if (renderBatchesCount >= 1 && (elementCounter < renderBatchesCount)) {
+					const uint32 batchesBegin = renderBatchesCount - (elementCounter + 1);
+
 					uint32 i = batchesBegin;
 
 					while (i < renderBatchesCount) {
@@ -283,13 +290,15 @@ namespace sani {
 
 							return;
 						}
-					}
-				} else {
-					// Can't batch to other batches, a new batch is required.
-					swapBatch();
 
-					initializeBatch(renderElementData);
+						i++;
+					}
 				}
+
+				// Can't batch to other batches, a new batch is required.
+				swapBatch();
+
+				initializeBatch(renderElementData);
 			}
 
 			applyToBatch(renderElementData);
@@ -324,10 +333,18 @@ namespace sani {
 			}
 		}
 		void Renderer::copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
-			const uint32 indicesCount = renderElementData->indices;
-			const uint32* indicesData = reinterpret_cast<const uint32* const>(renderData->vertexIndices.data());
+			const uint32 indicesCount					= renderElementData->indices;
+			const uint32* indicesData					= reinterpret_cast<const uint32* const>(renderData->vertexIndices.data());
 
-			indices.push(indicesData, indicesCount);
+			const uint32 elementVertexElementsCount		= renderElementData->vertexElements;
+			const uint32 bufferVertexElementsCount		= vertices.getElementsCount() / elementVertexElementsCount;
+			const uint32 vertexOffset					= bufferVertexElementsCount - (renderElementData->last + 1 - renderElementData->first);
+
+			if (indexTransformBuffer.size() < indicesCount) indexTransformBuffer.reserve(indexTransformBuffer.size() * 2);
+
+			for (uint32 i = 0; i < indicesCount; i++) indexTransformBuffer[i] = indicesData[i] + vertexOffset;
+
+			indices.push(indexTransformBuffer.data(), indicesCount);
 		}
 
 		void Renderer::flushRenderBatch(const RenderBatch* const renderBatch) {
@@ -413,6 +430,9 @@ namespace sani {
 				copyVertexData(renderElementData, &renderable->renderData);
 				copyIndexData(renderElementData, &renderable->renderData);
 			}
+		}
+		void Renderer::renderElements(const Renderable* const renderables, const uint32 count) {
+			for (uint32 i = 0; i < count; i++) renderElement(&renderables[i]);
 		}
 
 		void Renderer::endRendering() {

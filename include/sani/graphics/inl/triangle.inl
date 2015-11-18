@@ -57,15 +57,15 @@ namespace sani {
 
 			// Compute border vertices if needed.
 			if (triangle.borderThickness > 0.0f) {
-				sani::math::Vec3f borderTopPoint = triangle.topPoint;
+				sani::math::Vec3f borderTopPoint = triangle.topPoint * scale;
 				borderTopPoint.x += triangle.borderThickness;
 				borderTopPoint.y += triangle.borderThickness;
 
-				sani::math::Vec3f borderLeftPoint = triangle.leftPoint;
+				sani::math::Vec3f borderLeftPoint = triangle.leftPoint * scale;
 				borderLeftPoint.x -= triangle.borderThickness * 4.0f;
 				borderLeftPoint.y += triangle.borderThickness * 1.5f;
 
-				sani::math::Vec3f borderRightPoint = triangle.rightPoint;
+				sani::math::Vec3f borderRightPoint = triangle.rightPoint * scale;
 				borderRightPoint.x += triangle.borderThickness * 2.0f;
 				borderRightPoint.y += triangle.borderThickness * 1.5f;
 				
@@ -78,9 +78,9 @@ namespace sani {
 
 				sani::math::Vec3f borderVertexPositions[]
 				{
-					borderTopPoint * scale,
-					borderLeftPoint * scale,
-					borderRightPoint * scale
+					borderTopPoint,
+					borderLeftPoint,
+					borderRightPoint
 				};
 
 				VertexPositionColorTexture* borderVertices[] {
