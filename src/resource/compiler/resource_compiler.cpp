@@ -1,10 +1,8 @@
 #include "sani/resource/compiler/resource_compiler.hpp"
 #include "sani/resource/compiler/compilers.hpp"
 #include <algorithm>
-#include "sani/resource/pipeline/content_importer.hpp"
-#include "sani/resource/pipeline/texture2d_importer.hpp"
-#include "sani/resource/processor/resource_processor.hpp"
-#include "sani/resource/processor/texture2d_processor.hpp"
+#include "sani/resource/pipeline/importers.hpp"
+#include "sani/resource/processor/processors.hpp"
 #include <iostream>
 namespace sani {
 	namespace resource {
@@ -22,10 +20,14 @@ namespace sani {
 			void ResourceCompiler::initialize() {
 				using namespace sani::resource::compiler;
 				mapWriter<Texture2DContent, Texture2DWriter>();
+				mapWriter<EffectContent, EffectWriter>();
 				//map<Effect, EffectWriter>();
 				// THIS IS FOR DEBUG
 				importers["tuksu.png"] = new pipeline::Texture2DImporter;
+				importers["polygon.vert"] = new pipeline::EffectImporter;
+				importers["texture.vert"] = new pipeline::EffectImporter;
 				mapProcessor<Texture2DContent, processor::Texture2DProcessor>();
+				mapProcessor<EffectContent, processor::EffectProcessor>();
 			}
 
 			void ResourceCompiler::compile(const String& root, const String& path) {

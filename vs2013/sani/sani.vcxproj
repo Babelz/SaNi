@@ -316,8 +316,10 @@
     <ClInclude Include="..\..\include\sani\resource\effect_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\effect_processor.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\processor\processors.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp" />

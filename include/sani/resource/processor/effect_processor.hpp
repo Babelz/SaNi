@@ -6,7 +6,7 @@ namespace sani {
 		namespace processor {
 			class EffectProcessor : public ResourceProcessor {
 			public:
-				virtual ResourceItem* process(ResourceItem* input) = 0;
+				ResourceItem* process(ResourceItem* input);
 			};
 		}
 	}

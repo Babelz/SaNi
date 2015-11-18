@@ -10,8 +10,15 @@ namespace sani {
 				io::FileStream* vertex = nullptr;
 				io::FileStream* fragment = nullptr;
 
-				String vertexPath(filename + ".vertex");
-				String fragmentPath(filename + ".fragment");
+				String file(filename);
+				// get rid of extension
+				size_t index = 0;
+				if ((index = filename.rfind('.')) != String::npos) {
+					file = file.substr(0, index);
+				}
+
+				String vertexPath(file + ".vert");
+				String fragmentPath(file + ".frag");
 
 				if (!fileSystem->openFile(vertexPath, io::Filemode::Read, &vertex)) {
 					throw std::runtime_error("cant open vertex shader file");
@@ -25,10 +32,10 @@ namespace sani {
 
 				EffectContent* content = new EffectContent;
 				content->setVertexCode(vertexSource);
-				content->setVertexCode(fragmentSource);
+				content->setFragmentCode(fragmentSource);
 
-				fileSystem->closeFile(filename+".vertex");
-				fileSystem->closeFile(filename+".fragment");
+				fileSystem->closeFile(vertexPath);
+				fileSystem->closeFile(fragmentPath);
 
 				return content;
 			}

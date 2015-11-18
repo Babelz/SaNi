@@ -29,6 +29,7 @@ using namespace sani::math;
 #include "sani/platform/file/file_stream.hpp"
 #include "sani/resource/resources.hpp"
 #include "sani/resource/texture2d.hpp"
+#include "sani/resource/effect.hpp"
 using namespace sani::resource;
 #include "sani/core/math/trigonometric.hpp"
 
@@ -49,9 +50,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	Camera2D camera(graphicsDevice.getViewport());
 	camera.computeTransformation();
-	//FileSystem fileSystem;
-	//ResourceManager resources(&fileSystem, &graphicsDevice);
-	//Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
+	FileSystem fileSystem;
+	ResourceManager resources(&fileSystem, &graphicsDevice);
+	Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
+	volatile Effect* effect = resources.load<Effect>("../../assets/polygon.snb");
 
 	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice, &camera]() {
 		Viewport viewport;

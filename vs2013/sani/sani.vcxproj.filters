@@ -665,6 +665,12 @@
     <ClInclude Include="..\..\include\sani\resource\processor\effect_processor.hpp">
       <Filter>include\resource\processor</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\processor\processors.hpp">
+      <Filter>include\resource\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp">
+      <Filter>include\resource\pipeline</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
