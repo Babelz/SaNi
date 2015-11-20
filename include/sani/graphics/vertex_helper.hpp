@@ -56,7 +56,7 @@ namespace sani {
 		/// Recomputes texture coordinates for given rectangle element.
 		/// textureCoordinates should be ordered as follows:
 		/// top left, top right, bottom left and bottom right positions.
-		inline void computeRectangleTextureCoordinates(sani::math::Vec2f** const textureCoordinates, const sani::math::Rectf* const textureSource, const uint32 textureWidth, const uint32 textureHeight);
+		inline void computeRectangleTextureCoordinates(sani::math::Vec2f** const textureCoordinates, const sani::math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight);
 
 		//inline void recomputeRectangleBounds(const sani::math::Vec3f* const position, const sani::math::Vec3f* const scale, sani::math::Rectf& localBounds, sani::math::Rectf& globalBounds);
 	}

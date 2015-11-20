@@ -38,28 +38,34 @@ namespace sani {
 			applyRotationToBottomRightVertex(&globalPositions[3], &vertexPositions[3], dx, dy, sin, cos);
 		}
 
-		void computeRectangleTextureCoordinates(sani::math::Vec2f** const textureCoordinates, const sani::math::Rectf* const textureSource, const uint32 textureWidth, const uint32 textureHeight) {
-			const float32 sourceLeft = textureSource->left();
-			const float32 sourceRight = textureSource->right();
+		void computeRectangleTextureCoordinates(sani::math::Vec2f** const textureCoordinates, const sani::math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+			const float32 sourceLeft = textureSource->x;
+			const float32 sourceRight = textureSource->x + textureSource->w;
 
-			const float32 sourceX = textureSource->x;
-			const float32 sourceY = textureSource->y;
+			const float32 sourceTop = textureSource->y;
+			const float32 sourceBottom = textureSource->y + textureSource->h;
 
-			sani::math::Vec2f& topLeftUV = *textureCoordinates[0];
-			topLeftUV.x = sourceLeft / textureWidth;
-			topLeftUV.y = -sourceY / textureWidth;
+			/*
+			
+				TODO: fix uv.
+				
+			*/
 
-			sani::math::Vec2f& topRightUV = *textureCoordinates[1];
-			topRightUV.x = sourceRight / textureWidth;
-			topRightUV.y = topLeftUV.y;
+			sani::math::Vec2f* topLeft = textureCoordinates[0];
+			topLeft->x = sourceLeft / textureWidth;
+			topLeft->y = sourceTop / textureHeight;
 
-			sani::math::Vec2f& bottomLeftUV = *textureCoordinates[2];
-			bottomLeftUV.x = topLeftUV.x;
-			bottomLeftUV.y = -(textureSource->h + sourceY) / textureHeight;
+			sani::math::Vec2f* topRight = textureCoordinates[1];
+			topRight->x = sourceRight / textureWidth;
+			topRight->y = sourceTop / textureHeight;
 
-			sani::math::Vec2f& bottomRightUV = *textureCoordinates[3];
-			bottomRightUV.x = sourceRight / textureWidth;
-			bottomRightUV.y = bottomLeftUV.y;
+			sani::math::Vec2f* bottomLeft = textureCoordinates[2];
+			bottomLeft->x = sourceLeft / textureWidth;
+			bottomLeft->y = sourceBottom / textureHeight;
+
+			sani::math::Vec2f* bottomRight = textureCoordinates[3];
+			bottomRight->x = sourceRight / textureWidth;
+			bottomRight->y = sourceBottom / textureHeight;
 		}
 	}
 }

@@ -119,8 +119,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			r.texture = tuksu;
 			r.fill = color::white;
-			r.textureSource = Rectf(0.0f, 0.0f, 32.0f, 32.0f);
-			
+			r.textureSource = Rectf(0.0f, 0.0f, tuksu->getHeight(), tuksu->getWidth());
+
 			recomputeGeometryData(r);
 			updateRenderData(r);
 
@@ -164,11 +164,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		for (Triangle& t : triangles) {
+			t.transform.scale.x += 0.001f;
+			t.transform.scale.y += 0.001f;
 			recomputeGeometryData(t);
 			updateRenderData(t);
 		}
 
 		for (auto& r : rectangles) {
+			r.textureSource.h -= 0.005f;
+			r.textureSource.w -= 0.005f;
 			recomputeGeometryData(r);
 			updateRenderData(r);
 		}

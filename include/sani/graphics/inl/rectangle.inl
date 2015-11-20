@@ -115,7 +115,10 @@ namespace sani {
 						&rectangle.renderData.vertices[3].textureCoordinates
 					};
 
-					computeRectangleTextureCoordinates(textureCoordinates, &rectangle.textureSource, rectangle.texture->getWidth(), rectangle.texture->getHeight());
+					computeRectangleTextureCoordinates(textureCoordinates, 
+													   &rectangle.textureSource, 
+													   static_cast<float32>(rectangle.texture->getWidth()), 
+													   static_cast<float32>(rectangle.texture->getHeight()));
 				}
 
 				useTexturing(&rectangle);
