@@ -45,10 +45,10 @@ namespace sani {
 			};
 
 			sani::math::Vec3f shapeVertexPositions[] {
-				sani::math::Vec3f(0.0f, 0.0f, 0.0f),
-				sani::math::Vec3f(0.0f, localBounds.h, 0.0f) * scale,
-				sani::math::Vec3f(localBounds.w, localBounds.h, 0.0f) * scale,
-				sani::math::Vec3f(localBounds.w, 0.0f, 0.0f) * scale
+				sani::math::Vec3f(0.0f, 0.0f, 0.0f),								// Top left
+				sani::math::Vec3f(localBounds.w, 0.0f, 0.0f) * scale,				// Top right
+				sani::math::Vec3f(0.0f, localBounds.h, 0.0f) * scale,				// Bottom left
+				sani::math::Vec3f(localBounds.w, localBounds.h, 0.0f) * scale		// Bottom right
 			};
 
 			applyRotationToRectangle(shapeGlobalPositions, shapeVertexPositions, dx, dy, sin, cos);
@@ -77,10 +77,10 @@ namespace sani {
 				};
 
 				sani::math::Vec3f borderVertexPositions[] {
-					sani::math::Vec3f(0.0f, -doubleBorderThickness, position.z),
-					sani::math::Vec3f(-borderThickness * 2.0f, localBounds.h + doubleBorderThickness, position.z),
-					sani::math::Vec3f(localBounds.w + doubleBorderThickness, localBounds.h + doubleBorderThickness, position.z),
-					sani::math::Vec3f(localBounds.w + doubleBorderThickness, -doubleBorderThickness, position.z)
+					sani::math::Vec3f(0.0f, 0.0f, 0.0f),																				// Top left
+					sani::math::Vec3f(localBounds.w + doubleBorderThickness, 0.0f, 0.0f) * scale,										// Top right
+					sani::math::Vec3f(-doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale,						// Bottom left
+					sani::math::Vec3f(localBounds.w + doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale		// Bottom right
 				};
 
 				applyRotationToRectangle(borderGlobalPositions, borderVertexPositions, dx - rectangle.borderThickness, dy - rectangle.borderThickness, sin, cos);
@@ -104,8 +104,24 @@ namespace sani {
 		void updateRenderData(Rectangle& rectangle) {
 			setupShapeForRendering(&rectangle, rectangle.borderThickness);
 
-			if (rectangle.texture != nullptr) {
+			if (rectangle.texture == nullptr) {
+				useSolidFill(&rectangle);
+			} else {
+				if (!rectangle.textureSource.isEmpty()) {
+					sani::math::Vec2f* textureCoordinates[] {
+						&rectangle.renderData.vertices[0].textureCoordinates,
+						&rectangle.renderData.vertices[1].textureCoordinates,
+						&rectangle.renderData.vertices[2].textureCoordinates,
+						&rectangle.renderData.vertices[3].textureCoordinates
+					};
+
+					computeRectangleTextureCoordinates(textureCoordinates, &rectangle.textureSource, rectangle.texture->getWidth(), rectangle.texture->getHeight());
+				}
+
+				useTexturing(&rectangle);
 			}
+
+			updateGroupIdentifier(rectangle);
 		}
 	}
 }

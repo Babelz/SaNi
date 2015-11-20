@@ -29,9 +29,6 @@ namespace sani {
 
 			GraphicsDevice* const graphicsDevice = getGraphicsDevice();
 			graphicsDevice->disableVertexAttributePointer(2);
-			graphicsDevice->unbindTexture();
-
-			// No need to reset the render mode, base clears it.
 		}
 	}
 }

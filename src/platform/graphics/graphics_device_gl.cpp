@@ -640,7 +640,7 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
-			glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>( type), (void*)indices);
+			glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), (void*)indices);
 
 			CHECK_FOR_ERRORS();
 		}

@@ -237,7 +237,7 @@ namespace sani {
 			// No need to add offset.
 			if (renderBatchesCount <= 1) return;
 
-			const RenderBatch* last = &renderBatches[renderBatchesCount - 1];
+			const RenderBatch* last = &renderBatches[renderBatchesCount - 2];
 
 			// No need to add offset, same vertex elements count.
 			if (last->elementsData->vertexElements == renderBatch->elementsData->vertexElements) return;
@@ -246,7 +246,7 @@ namespace sani {
 			// Offset = vtxElemes - vetxElemsMod.
 			const uint32 vertexElementsCount	= renderBatch->elementsData->vertexElements;
 			const uint32 vertexElementsModulo	= vertices.getElementsCount() % vertexElementsCount;
-			const uint32 vertexElementsOffset	= vertexElementsCount - vertexElementsModulo;
+			const uint32 vertexElementsOffset	= (vertexElementsCount - vertexElementsModulo);
 
 			vertices.offset(vertexElementsOffset);
 		}
@@ -394,11 +394,8 @@ namespace sani {
 			graphicsDevice.bindTexture(renderBatch->texture);
 			graphicsDevice.useProgram(renderBatch->effect);
 
-			if (vertexMode == VertexMode::NoIndexing) {
-				graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesCount);
-			} else {
-				graphicsDevice.drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin);
-			}
+			if (vertexMode == VertexMode::NoIndexing)	graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesCount);
+			else										graphicsDevice.drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin * sizeof(uint32));
 
 			renderSetup->clear();
 
@@ -446,10 +443,7 @@ namespace sani {
 
 		void Renderer::beginRendering(const math::Mat4f& transform) {
 			graphicsDevice.setShaderUniform(defaultEffects[1], "transform", (void*)&transform, UniformType::Mat4F);
-			
-			/*
-				TODO: set texture effect transform.
-			*/
+			graphicsDevice.setShaderUniform(defaultEffects[2], "transform", (void*)&transform, UniformType::Mat4F);
 
 			prepareRendering();
 		}

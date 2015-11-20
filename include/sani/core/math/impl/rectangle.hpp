@@ -66,8 +66,8 @@ namespace sani {
 			Vector2<T> Rectangle<T>::center() const {
 				Vector2<T> v;
 				
-				v.x = x + (w / 2);
-				v.y = y + (h / 2);
+				v.x = x + (w / static_cast<T>(2));
+				v.y = y + (h / static_cast<T>(2));
 
 				return v;
 			}
@@ -94,7 +94,7 @@ namespace sani {
 
 			template <typename T>
 			bool Rectangle<T>::isEmpty() const {
-				return x == 0 && y == 0 && h == 0 && w == 0;
+				return x == static_cast<T>(0) && y == static_cast<T>(0) && h == static_cast<T>(0) && w == static_cast<T>(0);
 			}
 
 			template <typename T>

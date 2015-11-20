@@ -18,6 +18,16 @@ namespace sani {
 		/// Uses indexing for rendering.
 		class Rectangle : public Renderable {
 		public:
+			/*
+				Element data layout
+					- shape element @index 0
+					- border element @index 1
+					- 6 indices per element
+					- 4 vertices ver element
+						- 6-9 vertex elements for the shape
+						- 6 elements for the border (no texturing)
+			*/
+
 			float32 borderThickness;
 			Color borderFill;
 

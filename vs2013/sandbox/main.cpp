@@ -102,17 +102,21 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	std::vector<sani::graphics::Rectangle> rectangles;
 
-	for (uint32 i = 0; i < 3; i++) {
-		for (uint32 j = 0; j < 3; j++) {
-			sani::graphics::Rectangle r(j * 64.0f + 100.0f, i * 64.0f + 100.0f, 16.0f, 16.0f);
-			r.borderThickness = 8.0f;
+	//for (uint32 i = 0; i < 3; i++) {
+	//	for (uint32 j = 0; j < 3; j++) {
+			sani::graphics::Rectangle r(0.0f, 0.0f, tuksu->getWidth(), tuksu->getHeight());
+			//r.borderThickness = 8.0f;
+			r.borderThickness = 16.0f;
+
+			r.texture = tuksu;
+			r.fill = color::white;
 			
 			recomputeGeometryData(r);
 			updateRenderData(r);
 
 			rectangles.push_back(r);
-		}
-	}
+	//	}
+	//}
 
 	std::vector<Circle> circles;
 
@@ -154,18 +158,20 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			recomputeGeometryData(t);
 		} 
 
-		for (sani::graphics::Rectangle& r : rectangles) {
+		for (auto& r : rectangles) {
 			r.transform.rotation += 0.001f;
+			r.transform.position.x += 1.0f;
+			r.transform.position.y += 1.0f;
 			recomputeGeometryData(r);
 		}
 
 		renderer.beginRendering(transform);
 
-		for (Triangle& t : triangles) renderer.renderElement(&t);
+		//for (Triangle& t : triangles) renderer.renderElement(&t);
 
 		for (sani::graphics::Rectangle& r : rectangles) renderer.renderElement(&r);
 
-		for (Circle& c : circles) renderer.renderElement(&c);
+		//for (Circle& c : circles) renderer.renderElement(&c);
 
 		renderer.endRendering();
 	}
