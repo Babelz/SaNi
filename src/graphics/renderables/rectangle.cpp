@@ -24,19 +24,19 @@ namespace sani {
 
 			VertexPositionColorTexture& topLeftVertex = renderData.vertices[0];
 			topLeftVertex.textureCoordinates.x = 0.0f;
-			topLeftVertex.textureCoordinates.y = 0.0f;
+			topLeftVertex.textureCoordinates.y = 1.0f;
 
 			VertexPositionColorTexture& topRightVertex = renderData.vertices[1];
 			topRightVertex.textureCoordinates.x = 1.0f;
-			topRightVertex.textureCoordinates.y = 0.0f;
+			topRightVertex.textureCoordinates.y = 1.0f;
 
 			VertexPositionColorTexture& bottomLeftVertex = renderData.vertices[2];
 			bottomLeftVertex.textureCoordinates.x = 0.0f;
-			bottomLeftVertex.textureCoordinates.y = 1.0f;
+			bottomLeftVertex.textureCoordinates.y = 0.0f;
 
 			VertexPositionColorTexture& bottomRightVertex = renderData.vertices[3];
 			bottomRightVertex.textureCoordinates.x = 1.0f;
-			bottomRightVertex.textureCoordinates.y = 1.0f;
+			bottomRightVertex.textureCoordinates.y = 0.0f;
 
 			transform.position.x = x;
 			transform.position.y = y;

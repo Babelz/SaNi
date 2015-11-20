@@ -258,7 +258,7 @@ namespace sani {
 				TODO: add texturing.
 			*/
 
-			renderBatch->indicesBegin		 = indices.getElementsCount();
+			renderBatch->indicesBegin		 = indices.getElementsCount() * sizeof(uint32);
 			
 			const RenderState renderState	 = renderElementData->texture == 0 ? RenderState::Polygons : RenderState::TexturedPolygons;
 			renderBatch->vertexMode			 = renderElementData->indices == 0 ? VertexMode::NoIndexing : VertexMode::Indexed;
@@ -395,7 +395,7 @@ namespace sani {
 			graphicsDevice.useProgram(renderBatch->effect);
 
 			if (vertexMode == VertexMode::NoIndexing)	graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesCount);
-			else										graphicsDevice.drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin * sizeof(uint32));
+			else										graphicsDevice.drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin);
 
 			renderSetup->clear();
 
