@@ -76,6 +76,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	for (uint32 i = 0; i < 3; i++) {
 		for (uint32 j = 0; j < 3; j++) {
+			
 			Triangle t(32.0f, 32.0f);
 			t.transform.position.x = j * 64.0f + 300.0f;
 			t.transform.position.y = i * 64.0f + 300.0f;
@@ -84,12 +85,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 							rand() * 0.0001f,
 							rand() * 0.00001f,
 							0.75f);
-			t.borderFill = Color(rand() * 0.001f,
-								  rand() * 0.0001f,
-								  rand() * 0.00001f,
-								  0.25f);
 
-			t.borderThickness = 8.0f;
+			t.borderFill = color::white;
+
+			t.borderThickness = j == 0 ? 16.0f : 0.0f;
+			t.texture = j == 1 ? tuksu : nullptr;
+
+			if (t.texture != nullptr) t.fill = color::white;
+
 			t.transform.origin.x = 16.0f;
 			t.transform.origin.y = 0.0f;
 
@@ -108,8 +111,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			//r.borderThickness = 8.0f;
 			r.borderThickness = 16.0f;
 
+			r.transform.origin.x = 0.0f;
+			r.transform.origin.y = 0.0f;
+
+			r.transform.position.x = 300.0f;
+			r.transform.position.y = 100.0f;
+
 			r.texture = tuksu;
 			r.fill = color::white;
+			r.textureSource = Rectf(0.0f, 0.0f, 32.0f, 32.0f);
 			
 			recomputeGeometryData(r);
 			updateRenderData(r);
@@ -154,24 +164,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		for (Triangle& t : triangles) {
-			t.transform.rotation += 0.001f;
 			recomputeGeometryData(t);
-		} 
+			updateRenderData(t);
+		}
 
 		for (auto& r : rectangles) {
-			r.transform.rotation += 0.001f;
-			r.transform.position.x += 1.0f;
-			r.transform.position.y += 1.0f;
 			recomputeGeometryData(r);
+			updateRenderData(r);
 		}
 
 		renderer.beginRendering(transform);
 
-		//for (Triangle& t : triangles) renderer.renderElement(&t);
-
 		for (sani::graphics::Rectangle& r : rectangles) renderer.renderElement(&r);
 
-		//for (Circle& c : circles) renderer.renderElement(&c);
+		for (Circle& c : circles) renderer.renderElement(&c);
+
+		for (Triangle& t : triangles) renderer.renderElement(&t);
 
 		renderer.endRendering();
 	}

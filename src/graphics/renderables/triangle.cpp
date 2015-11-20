@@ -26,21 +26,21 @@ namespace sani {
 																																		 borderThickness(0.0f) {
 			topPoint.x = tx;
 			topPoint.y = ty;
-			VertexPositionColorTexture& topVertex = renderData.vertices[3];
+			VertexPositionColorTexture& topVertex = renderData.vertices[0];
 			topVertex.textureCoordinates.x = 0.5f;
 			topVertex.textureCoordinates.y = 1.0f;
 
 			leftPoint.x = lx;
 			leftPoint.y = ly;
-			VertexPositionColorTexture& leftVertex = renderData.vertices[4];
+			VertexPositionColorTexture& leftVertex = renderData.vertices[1];
 			leftVertex.textureCoordinates.x = 0.0f;
-			leftVertex.textureCoordinates.y = 1.0f;
+			leftVertex.textureCoordinates.y = 0.0f;
 
 			rightPoint.x = rx;
 			rightPoint.y = ry;
-			VertexPositionColorTexture& rightVertex = renderData.vertices[5];
+			VertexPositionColorTexture& rightVertex = renderData.vertices[2];
 			rightVertex.textureCoordinates.x = 1.0f;
-			rightVertex.textureCoordinates.y = 1.0f;
+			rightVertex.textureCoordinates.y = 0.0f;
 
 			const float32 my = std::fmaxf(ly, ry);
 

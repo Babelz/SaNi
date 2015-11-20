@@ -118,8 +118,23 @@ namespace sani {
 		}
 	
 		void updateRenderData(Triangle& triangle) {
-			// TODO: apply texturing support.
 			setupShapeForRendering(&triangle, triangle.borderThickness);
+			
+			if (triangle.texture == nullptr) {
+				useSolidFill(&triangle);
+			} else {
+				if (!triangle.textureSource.isEmpty()) {
+					sani::math::Vec2f* textureCoordinates[] {
+						&triangle.renderData.vertices[0].textureCoordinates,
+						&triangle.renderData.vertices[1].textureCoordinates,
+						&triangle.renderData.vertices[2].textureCoordinates
+					};
+				}
+
+				useTexturing(&triangle);
+			}
+
+			updateGroupIdentifier(triangle);
 		}
 	}
 }

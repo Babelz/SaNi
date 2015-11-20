@@ -39,27 +39,27 @@ namespace sani {
 		}
 
 		void computeRectangleTextureCoordinates(sani::math::Vec2f** const textureCoordinates, const sani::math::Rectf* const textureSource, const uint32 textureWidth, const uint32 textureHeight) {
-			const float32 tw = static_cast<float32>(textureWidth);
-			const float32 th = static_cast<float32>(textureHeight);
-			
-			const float32 sl = textureSource->left();
-			const float32 sr = textureSource->right();
+			const float32 sourceLeft = textureSource->left();
+			const float32 sourceRight = textureSource->right();
 
-			sani::math::Vec2f& tl = *textureCoordinates[0];
-			tl.x = sl / tw;
-			tl.y = textureSource->y / th;
+			const float32 sourceX = textureSource->x;
+			const float32 sourceY = textureSource->y;
 
-			sani::math::Vec2f& tr = *textureCoordinates[1];
-			tr.x = sr / tw;
-			tr.y = tl.y;
+			sani::math::Vec2f& topLeftUV = *textureCoordinates[0];
+			topLeftUV.x = sourceLeft / textureWidth;
+			topLeftUV.y = -sourceY / textureWidth;
 
-			sani::math::Vec2f& bl = *textureCoordinates[2];
-			bl.x = sl / tw;
-			bl.y = (textureSource->h + textureSource->y) / th;
+			sani::math::Vec2f& topRightUV = *textureCoordinates[1];
+			topRightUV.x = sourceRight / textureWidth;
+			topRightUV.y = topLeftUV.y;
 
-			sani::math::Vec2f& br = *textureCoordinates[3];
-			br.x = sr / tw;
-			br.y = bl.y;
+			sani::math::Vec2f& bottomLeftUV = *textureCoordinates[2];
+			bottomLeftUV.x = topLeftUV.x;
+			bottomLeftUV.y = -(textureSource->h + sourceY) / textureHeight;
+
+			sani::math::Vec2f& bottomRightUV = *textureCoordinates[3];
+			bottomRightUV.x = sourceRight / textureWidth;
+			bottomRightUV.y = bottomLeftUV.y;
 		}
 	}
 }
