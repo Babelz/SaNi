@@ -139,6 +139,12 @@
     <Filter Include="include\graphics\renderables">
       <UniqueIdentifier>{f9198654-3b0d-40b8-a163-cf64bc38a31a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\platform\file\android">
+      <UniqueIdentifier>{e0a2c23a-f8d3-46c0-a3c1-854b1352ff0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform\file\win32">
+      <UniqueIdentifier>{45e18590-07ab-463b-8b48-251164c503ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -317,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\resource\pipeline\effect_importer.cpp">
       <Filter>src\resource\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\android\file_stream_android.cpp">
+      <Filter>src\platform\android</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -667,6 +676,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp">
       <Filter>include\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file\android\file_stream_android.hpp">
+      <Filter>include\platform\file\android</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\platform_exception.hpp">
+      <Filter>include\platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

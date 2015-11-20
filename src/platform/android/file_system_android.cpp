@@ -5,7 +5,8 @@
 #include "sani/platform/file/file_system.hpp"
 #include <sys/stat.h>
 #include <dirent.h>
-
+#include "sani/platform/platform_exception.hpp"
+#include "sani/platform/file/android/file_stream_android.hpp"
 namespace sani {
 	namespace io {
 		void FileSystem::setAssetManager(AAssetManager* assetmanager) {
@@ -34,13 +35,18 @@ namespace sani {
 
 			// apk
 			if (path.at(0) != '/') {
-				throw std::logic_error("not implemented");
-				/*String withoutAssets(path.substr(7));
+				// android doesnt support it..
+				if (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Write) || static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Truncate)) {
+					throw sani::UnsupportedOperation("Android does not support writing inside APK");
+				}
+				String withoutAssets(path.substr(7));
 				AAsset* asset = AAssetManager_open(androidAssetManager, withoutAssets.c_str(), AASSET_MODE_UNKNOWN);
 				if (!asset) return false;
-
+				
 				assetHandles[path] = asset;
-				return true;*/
+				handles[path] = new priv::AndroidFileStream(path, mode, asset);
+				*stream = handles[path];
+				return true;
 			}
 			// absolute
 
@@ -66,7 +72,7 @@ namespace sani {
 
 			if (!handle) return false;
 
-			handles[path] = new FileStream(path, mode, handle);
+			handles[path] = new priv::_FileStream(path, mode, handle);
 			*stream = handles[path];
 
 			// File open succeeded
@@ -76,24 +82,23 @@ namespace sani {
 		void FileSystem::closeFile(const String& path) {
 			if (!isFileOpen(path)) return;
 			if (path.at(0) != '/') {
-				throw std::logic_error("not implemented");
-				/*AAsset* asset = assetHandles[path];
+				AAsset* asset = assetHandles[path];
 				AAsset_close(asset);
-				assetHandles.erase(path);*/
+				assetHandles.erase(path);
 			}
-			else {
-				FileStream* handle = handles[path];
-				delete handle;
-				handle = nullptr;
-				handles.erase(path);
-			}
+			
+			FileStream* handle = handles[path];
+			delete handle;
+			handle = nullptr;
+			handles.erase(path);
+			
 		}
 
 		unsigned char* FileSystem::getFileData(const String& path, int64& fileSize, bool nullTerminate /*= false*/) const {	
 			assert(isFileOpen(path));
 
 			// inside APK
-			if (path.at(0) != '/') {
+			/*if (path.at(0) != '/') {
 				AAsset* asset = assetHandles.at(path);
 				if (asset) {
 					off_t size = AAsset_getLength(asset);
@@ -121,42 +126,42 @@ namespace sani {
 
 				}
 				return nullptr;
-			}
+			} */
 			// absolute path
-			else {
-				FileStream* handle = handles.at(path);
-				size_t fsize = getFileSize(path);
-				unsigned char* buffer = nullptr;
-				if (nullTerminate) {
-					buffer = (unsigned char*)malloc(fsize + 1);
-					buffer[fsize] = '\0';
-				}
-				else {
-					buffer = (unsigned char*)malloc(fsize);
-				}
-				int64 readBytes = 0;
-				try {
-					readBytes = handle->read(buffer, fsize);
-				}
-				catch (std::exception& ex) {
-					(void)ex;
-					throw;
-				}
-
-				// Failed
-				if (readBytes != fsize) {
-					if (buffer) {
-						free(buffer);
-						buffer = nullptr;
-					}
-					fileSize = 0;
-					return nullptr;
-				}
-
-				// Success
-				fileSize = readBytes;
-				return buffer;
+			
+			FileStream* handle = handles.at(path);
+			size_t fsize = getFileSize(path);
+			unsigned char* buffer = nullptr;
+			if (nullTerminate) {
+				buffer = (unsigned char*)malloc(fsize + 1);
+				buffer[fsize] = '\0';
 			}
+			else {
+				buffer = (unsigned char*)malloc(fsize);
+			}
+			int64 readBytes = 0;
+			try {
+				readBytes = handle->read(buffer, fsize);
+			}
+			catch (std::exception& ex) {
+				(void)ex;
+				throw;
+			}
+
+			// Failed
+			if (readBytes != fsize) {
+				if (buffer) {
+					free(buffer);
+					buffer = nullptr;
+				}
+				fileSize = 0;
+				return nullptr;
+			}
+
+			// Success
+			fileSize = readBytes;
+			return buffer;
+			
 		}
 
 		size_t FileSystem::getFileSize(const String& path) const {
@@ -164,14 +169,19 @@ namespace sani {
 			if (path.empty()) return 0;
 			// inside apk
 			if (path.at(0) != '/') {
-				AAsset* asset = AAssetManager_open(androidAssetManager, path.c_str(), AASSET_MODE_UNKNOWN);
-				if (asset) {
-					size_t size = AAsset_getLength(asset);
-					AAsset_close(asset);
-					return size;
+				// file is not open
+				if (assetHandles.find(path) == assetHandles.end()) {
+					AAsset* asset = AAssetManager_open(androidAssetManager, path.c_str(), AASSET_MODE_UNKNOWN);
+					if (asset) {
+						size_t size = AAsset_getLength(asset);
+						AAsset_close(asset);
+						return size;
+					}
+					// file not found
+					return 0;
 				}
-				// file not found
-				return 0;
+				// its open
+				return AAsset_getLength(assetHandles.at(path));
 			}
 			// absolute path
 			struct stat statbuf;

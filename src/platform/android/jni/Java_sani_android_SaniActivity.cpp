@@ -13,7 +13,8 @@ extern "C" {
 		AAssetManager* manager = AAssetManager_fromJava(env, assetManager);
 		fileSystem->setAssetManager(manager);
 		const std::string path("assets/random.txt");
-		bool suc = fileSystem->openFile(path, sani::io::Read);
+		FileStream* stream = nullptr;
+		bool suc = fileSystem->openFile(path, Filemode::Read, &stream);
 		std::string contents = fileSystem->getFileDataString(path);
 		fileSystem->closeFile(path);
 		__android_log_print(ANDROID_LOG_ERROR, "ASD", "%s", contents.c_str());

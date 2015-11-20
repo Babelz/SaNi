@@ -120,6 +120,10 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
+    <Lib>
+      <ThinArchive>true</ThinArchive>
+      <AdditionalDependencies />
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -185,6 +189,7 @@
     <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\transformable.cpp" />
     <ClCompile Include="..\..\src\graphics\render_data.cpp" />
+    <ClCompile Include="..\..\src\platform\android\file_stream_android.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -294,6 +299,7 @@
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file\android\file_stream_android.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
@@ -306,6 +312,7 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\platform_exception.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
