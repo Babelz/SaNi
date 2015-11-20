@@ -16,13 +16,18 @@ namespace sani {
 				- defines what will be used to draw
 		*/
 
+		/// @class RenderData render_data "sani/graphics/render_data.hpp"
+		/// @author Voidbab
+		///
+		/// Defines the render data of and object.
+		/// Render data contains vertex, index, element and element index data.
 		class RenderData {
 		public:
-			std::vector<VertexPositionColorTexture> vertices;
-			std::vector<uint32> vertexIndices;
+			std::vector<VertexPositionColorTexture> vertices;		// Vertex data of the object.
+			std::vector<uint32> vertexIndices;						// Vertex indices of the object.
 
-			std::vector<RenderElementData> renderElements;
-			std::vector<uint32> renderElementIndices;
+			std::vector<RenderElementData> renderElements;			// Render elements of the object.
+			std::vector<uint32> renderElementIndices;				// Render element indices of the object.
 			
 			// How many render elements to use while rendering.
 			uint32 renderElementsCount;

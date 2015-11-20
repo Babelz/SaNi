@@ -7,6 +7,11 @@ namespace sani {
 	
 	namespace graphics {
 
+		/// @class RenderElementData render_element_data "sani/graphics/render_element_data.hpp"
+		/// @author voidbab
+		///
+		/// Defines how vertices of an element should be processed 
+		/// and what texture and effect it will be using.
 		class RenderElementData {
 		public:
 			// How many elements each vertex contains.

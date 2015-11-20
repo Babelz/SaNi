@@ -8,6 +8,7 @@ namespace sani {
 
 		#define RENDER_STATES_COUNT 3
 
+		/// Defines the state of the render batch.
 		enum class RenderState : uint32 {
 			// Renderer is waiting for user commands.
 			Waiting				= 0,

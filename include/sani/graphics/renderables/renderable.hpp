@@ -27,7 +27,7 @@ namespace sani {
 			math::Rectf globalBounds;
 			math::Rectf localBounds;
 
-			math::Rectf sourceRectangle;
+			math::Rectf textureSource;
 			resource::Texture2D* texture;
 
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);

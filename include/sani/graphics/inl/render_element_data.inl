@@ -5,7 +5,6 @@ namespace sani {
 	namespace graphics {
 
 		void updateGroupIdentifier(RenderElementData& renderElementData) {
-			// TODO: is this unique for every different type of element?
 			renderElementData.groupIdentifier = renderElementData.vertexElements					* offsetof(RenderElementData, vertexElements) +
 								                renderElementData.indices							* offsetof(RenderElementData, indices) +
 												renderElementData.offset							* offsetof(RenderElementData, offset) +

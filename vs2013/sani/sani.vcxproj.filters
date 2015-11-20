@@ -712,13 +712,13 @@
     <None Include="..\..\include\sani\graphics\inl\circle.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
-    <None Include="..\..\include\sani\graphics\inl\render_helper.inl">
-      <Filter>include\graphics</Filter>
-    </None>
     <None Include="..\..\include\sani\graphics\inl\render_element_data.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\renderable.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\render_helper.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>

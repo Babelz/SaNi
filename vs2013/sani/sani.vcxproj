@@ -102,6 +102,9 @@
     <Lib>
       <AdditionalLibraryDirectories />
     </Lib>
+    <PostBuildEvent>
+      <Command>$(SolutionDir)..\tools\binary\pipeline-compiler.exe $(SolutionDir)..\assets\ tuksu.png</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
     <ClCompile>

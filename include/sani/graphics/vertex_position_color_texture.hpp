@@ -10,20 +10,22 @@ namespace sani {
 
 	namespace graphics {
 
+		/// @class VertexPositionColorTexture vertex_position_texture_color "sani/graphics/vertex_position_texture_color.hpp"
+		/// @author voidbab
+		///
+		/// Defines a vertex with position, color and texture data.
 		struct VertexPositionColorTexture {
 			/*
 				Just use the VPC here, should keep the 
 				byte layout same.
 			*/
 
+			// Position and color components.
 			VertexPositionColor vertexPositionColor;
 			Vec2f textureCoordinates;
 
-			VertexPositionColorTexture() {
-			}
-			
-			~VertexPositionColorTexture() {
-			}
+			VertexPositionColorTexture() = default;
+			~VertexPositionColorTexture() = default;
 		};
 
 		typedef VertexPositionColorTexture VPCT;

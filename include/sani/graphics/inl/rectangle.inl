@@ -103,6 +103,9 @@ namespace sani {
 
 		void updateRenderData(Rectangle& rectangle) {
 			setupShapeForRendering(&rectangle, rectangle.borderThickness);
+
+			if (rectangle.texture != nullptr) {
+			}
 		}
 	}
 }

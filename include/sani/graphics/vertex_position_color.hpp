@@ -9,18 +9,16 @@ namespace sani {
 
 	namespace graphics {
 
+		/// @class VertexPositionColor vertex_position_color "sani/graphics/vertex_position_color.hpp"
+		/// @author voidbab
+		///
+		/// Defines a vertex with position and color data.
 		struct VertexPositionColor {
 			Vec3f position;
 			Color color;
 
-			VertexPositionColor(const Vec3f& position, const Color& color) : position(position),
-																			 color(color) {
-			}
-			VertexPositionColor() {
-			}
-
-			~VertexPositionColor() {
-			}
+			VertexPositionColor() = default;
+			~VertexPositionColor() = default;
 		};
 
 		typedef VertexPositionColor VPC;

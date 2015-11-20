@@ -21,8 +21,9 @@ namespace sani {
 		/// @class Renderer renderer.hpp "sani/graphics/renderer.hpp"
 		/// @author voidbab
 		///
-		/// Low-level renderer of the rendering module. Uses different states
-		/// to determine what will be rendered.
+		/// Low-level renderer of the rendering module. Uses
+		/// render batches to join different elements into logical
+		/// renderable batches that will be presented to the user.
 		class Renderer {
 		private:
 			// Device and setup states.
