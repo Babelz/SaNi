@@ -129,6 +129,11 @@ namespace sani {
 						&triangle.renderData.vertices[1].textureCoordinates,
 						&triangle.renderData.vertices[2].textureCoordinates
 					};
+
+					computeTriangleTextureCoordinates(textureCoordinates, 
+													  &triangle.textureSource, 
+													  static_cast<float32>(triangle.texture->getWidth()),
+													  static_cast<float32>(triangle.texture->getHeight()));
 				}
 
 				useTexturing(&triangle);

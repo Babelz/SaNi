@@ -77,9 +77,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	for (uint32 i = 0; i < 3; i++) {
 		for (uint32 j = 0; j < 3; j++) {
 			
-			Triangle t(32.0f, 32.0f);
-			t.transform.position.x = j * 64.0f + 300.0f;
-			t.transform.position.y = i * 64.0f + 300.0f;
+			Triangle t(128.0f, 128.0f);
+			t.transform.position.x = j * 256.0f + 128.0f;
+			t.transform.position.y = i * 256.0f + 128.0f;
+
 
 			t.fill = Color(rand() * 0.001f,
 							rand() * 0.0001f,
@@ -164,16 +165,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		for (Triangle& t : triangles) {
-			t.transform.scale.x += 0.001f;
-			t.transform.scale.y += 0.001f;
+			t.transform.scale.x += 0.0001f;
+			t.transform.scale.y += 0.0001f;
+			t.transform.origin.x = t.localBounds.center().x;
+			t.transform.origin.y = 0.0f;
 			recomputeGeometryData(t);
 			updateRenderData(t);
 		}
 
 		for (auto& r : rectangles) {
-			r.textureSource.y += 0.1f;
-			r.textureSource.x += 0.1f;
-
 			recomputeGeometryData(r);
 			updateRenderData(r);
 		}
