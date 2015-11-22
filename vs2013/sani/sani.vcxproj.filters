@@ -674,9 +674,6 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\sprite_texturing_mode.hpp">
-      <Filter>include\graphics</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

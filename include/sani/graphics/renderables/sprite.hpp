@@ -1,7 +1,6 @@
 #pragma once
 
 #include "sani/graphics/renderables/renderable.hpp"
-#include "sani/graphics/sprite_texturing_mode.hpp"
 #include "sani/forward_declare.hpp"
 
 namespace sani {
@@ -13,10 +12,9 @@ namespace sani {
 		/// @class Sprite sprite.hpp "sani/graphics/renderables/sprite.hpp"
 		/// @author voidbab
 		///
-		/// A sprite defined by transform, source and texturing mode.
+		/// Basic sprite class defined by transform, texture, effect and source.
 		class Sprite : public Renderable {
 		public:
-			SpriteTexturingMode texturingMode;
 			Color color;
 
 			sani::resource::Texture2D* texture;
