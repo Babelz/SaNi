@@ -171,8 +171,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		}
 
 		for (auto& r : rectangles) {
-			r.textureSource.h -= 0.005f;
-			r.textureSource.w -= 0.005f;
+			r.textureSource.y += 0.1f;
+			r.textureSource.x += 0.1f;
+
 			recomputeGeometryData(r);
 			updateRenderData(r);
 		}

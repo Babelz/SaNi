@@ -39,33 +39,27 @@ namespace sani {
 		}
 
 		void computeRectangleTextureCoordinates(sani::math::Vec2f** const textureCoordinates, const sani::math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
-			const float32 sourceLeft = textureSource->x;
-			const float32 sourceRight = textureSource->x + textureSource->w;
+			const float32 sourceLeft = textureSource->left();
+			const float32 sourceRight = textureSource->right();
 
-			const float32 sourceTop = textureSource->y;
-			const float32 sourceBottom = textureSource->y + textureSource->h;
-
-			/*
-			
-				TODO: fix uv.
-				
-			*/
+			const float32 sourceTop = -textureHeight + textureSource->top();
+			const float32 sourceBottom = -textureHeight + textureSource->bottom();
 
 			sani::math::Vec2f* topLeft = textureCoordinates[0];
 			topLeft->x = sourceLeft / textureWidth;
-			topLeft->y = sourceTop / textureHeight;
+			topLeft->y = -sourceTop / textureHeight;
 
 			sani::math::Vec2f* topRight = textureCoordinates[1];
 			topRight->x = sourceRight / textureWidth;
-			topRight->y = sourceTop / textureHeight;
+			topRight->y = -sourceTop / textureHeight;
 
 			sani::math::Vec2f* bottomLeft = textureCoordinates[2];
 			bottomLeft->x = sourceLeft / textureWidth;
-			bottomLeft->y = sourceBottom / textureHeight;
+			bottomLeft->y = -sourceBottom / textureHeight;
 
 			sani::math::Vec2f* bottomRight = textureCoordinates[3];
 			bottomRight->x = sourceRight / textureWidth;
-			bottomRight->y = sourceBottom / textureHeight;
+			bottomRight->y = -sourceBottom / textureHeight;
 		}
 	}
 }
