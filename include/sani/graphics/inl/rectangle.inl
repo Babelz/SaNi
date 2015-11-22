@@ -105,8 +105,10 @@ namespace sani {
 			setupShapeForRendering(&rectangle, rectangle.borderThickness);
 
 			if (rectangle.texture == nullptr) {
+				// No texture, just use solid fill.
 				useSolidFill(&rectangle);
 			} else {
+				// Use texturing, recompute texture coordinates if needed.
 				if (!rectangle.textureSource.isEmpty()) {
 					sani::math::Vec2f* textureCoordinates[] {
 						&rectangle.renderData.vertices[0].textureCoordinates,

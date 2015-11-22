@@ -291,6 +291,7 @@
     <ClInclude Include="..\..\include\sani\graphics\setups\render_setups.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\polygon_render_setup.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\setups\textured_polygon_render_setup.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\sprite_texturing_mode.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\transform.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_data.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_helper.hpp" />
