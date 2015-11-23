@@ -73,9 +73,14 @@ namespace sani {
 		}
 
 		void computeTriangleTextureCoordinates(sani::math::Vec2f** const uvs, const sani::math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+			sani::math::Rectf const topSource(textureSource->x + textureSource->w * 0.5f;
+											  textureSource->y;
+											  textureSource->h;
+											  textureSource->w);
+			
 			sani::math::Vec2f* const top = uvs[0];
-			computeTopLeftTextureCoordinate(top, textureSource, textureWidth, textureHeight);
-			top->x += 0.25f;
+			computeTopLeftTextureCoordinate(top, &topSource, textureWidth, textureHeight);
+			//top->x = top->x + right->x - left->x;
 
 			sani::math::Vec2f* const left = uvs[1];
 			computeBottomLeftTextureCoordinate(left, textureSource, textureWidth, textureHeight);

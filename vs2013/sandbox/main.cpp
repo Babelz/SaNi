@@ -94,6 +94,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 			if (t.texture != nullptr) t.fill = color::white;
 
+			t.textureSource.h = 128.0f;
+			t.textureSource.w = 128.0f;
+
 			t.transform.origin.x = 16.0f;
 			t.transform.origin.y = 0.0f;
 
@@ -165,8 +168,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		for (Triangle& t : triangles) {
-			t.transform.scale.x += 0.0001f;
-			t.transform.scale.y += 0.0001f;
+			t.textureSource.x += 0.1f;
 			t.transform.origin.x = t.localBounds.center().x;
 			t.transform.origin.y = 0.0f;
 			recomputeGeometryData(t);
