@@ -51,8 +51,7 @@ namespace sani {
 			transform.position.y = ty;
 
 			recomputeGeometryData(*this);
-			updateRenderData(*this);
-
+			
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
 			shapeRenderData.last = 2;
@@ -66,6 +65,7 @@ namespace sani {
 			borderRenderData.offset = 2;
 
 			updateGroupIdentifier(*this);
+			updateRenderData(*this);
 		}
 		Triangle::Triangle(const sani::math::Vec2f& top, const sani::math::Vec2f& left, const sani::math::Vec2f& right) 
 			: Triangle(top.x, top.y, left.x, left.y, right.x, right.y) {

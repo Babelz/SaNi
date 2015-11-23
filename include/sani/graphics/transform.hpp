@@ -13,9 +13,9 @@ namespace sani {
 		/// Transform defined by position, scale, origin and rotation.
 		class Transform {
 		public:
-			sani::math::Vec3f position;
-			sani::math::Vec3f scale;
-			sani::math::Vec3f origin;
+			math::Vec3f position;
+			math::Vec3f scale;
+			math::Vec3f origin;
 
 			float32 rotation;
 

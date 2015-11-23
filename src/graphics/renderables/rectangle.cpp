@@ -1,4 +1,5 @@
 #include "sani/graphics/renderables/rectangle.hpp"
+#include "sani/graphics/vertex_helper.hpp"
 #include "sani/graphics/renderer.hpp"
 
 namespace sani {
@@ -22,29 +23,21 @@ namespace sani {
 			localBounds.w = w;
 			localBounds.h = h;
 
-			VertexPositionColorTexture& topLeftVertex = renderData.vertices[0];
-			topLeftVertex.textureCoordinates.x = 0.0f;
-			topLeftVertex.textureCoordinates.y = 1.0f;
+			VertexPositionColorTexture* vertices[] {
+				&renderData.vertices[0],
+				&renderData.vertices[1],
+				&renderData.vertices[2],
+				&renderData.vertices[3]
+			};
 
-			VertexPositionColorTexture& topRightVertex = renderData.vertices[1];
-			topRightVertex.textureCoordinates.x = 1.0f;
-			topRightVertex.textureCoordinates.y = 1.0f;
-
-			VertexPositionColorTexture& bottomLeftVertex = renderData.vertices[2];
-			bottomLeftVertex.textureCoordinates.x = 0.0f;
-			bottomLeftVertex.textureCoordinates.y = 0.0f;
-
-			VertexPositionColorTexture& bottomRightVertex = renderData.vertices[3];
-			bottomRightVertex.textureCoordinates.x = 1.0f;
-			bottomRightVertex.textureCoordinates.y = 0.0f;
-
+			applyDefaultRectangleTextureCoordinates(vertices);
+			
 			transform.position.x = x;
 			transform.position.y = y;
 			transform.origin.x = localBounds.w / 2.0f;
 			transform.origin.y = localBounds.h / 2.0f;
 
 			recomputeGeometryData(*this);
-			updateRenderData(*this);
 
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
@@ -69,6 +62,7 @@ namespace sani {
 			renderData.vertexIndices[5] = 2;
 
 			updateGroupIdentifier(*this);
+			updateRenderData(*this);
 		}
 		Rectangle::Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size) : Rectangle(position.x, position.y, size.x, size.y) {
 		}
