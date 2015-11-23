@@ -25,7 +25,7 @@ namespace sani {
 			uint32 vertices;
 
 			Circle(const float32 x, const float32 y, const float32 radius, const uint32 vertices);
-			Circle(const sani::math::Vec2f& position, const float32 radius, const uint32 vertices);
+			Circle(const math::Vec2f& position, const float32 radius, const uint32 vertices);
 			Circle(const float32 radius, const uint32 vertices);
 			Circle(const float32 radius);
 			Circle();

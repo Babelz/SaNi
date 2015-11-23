@@ -16,9 +16,9 @@ namespace sani {
 
 			VertexPositionColorTexture* vertices[] {
 				&renderData.vertices[0],
-					&renderData.vertices[1],
-					&renderData.vertices[2],
-					&renderData.vertices[3]
+				&renderData.vertices[1],
+				&renderData.vertices[2],
+				&renderData.vertices[3]
 			};
 
 			applyDefaultRectangleTextureCoordinates(vertices);

@@ -34,7 +34,7 @@ namespace sani {
 			Color fill;
 
 			Rectangle(const float32 x, const float32 y, const float32 w, const float32 h);
-			Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size);
+			Rectangle(const math::Vec2f& position, const math::Vec2f& size);
 			Rectangle();
 		};
 

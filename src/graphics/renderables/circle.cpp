@@ -22,9 +22,6 @@ namespace sani {
 
 			localBounds.w = radius * 2.0f;
 			localBounds.h = radius * 2.0f;
-
-			recomputeGeometryData(*this);
-			updateRenderData(*this);
 			
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
@@ -40,9 +37,10 @@ namespace sani {
 			borderRenderData.offset = 2;
 			borderRenderData.renderMode = RenderMode::TriangleFan;
 
-			updateGroupIdentifier(*this);
+			recomputeGeometryData(*this);
+			updateRenderData(*this);
 		}
-		Circle::Circle(const sani::math::Vec2f& position, const float32 radius, const uint32 vertices) : Circle(position.x, position.y, radius, vertices) {
+		Circle::Circle(const math::Vec2f& position, const float32 radius, const uint32 vertices) : Circle(position.x, position.y, radius, vertices) {
 		}
 		Circle::Circle(const float32 radius, const uint32 vertices) : Circle(0.0f, 0.0f, radius, vertices) {
 		}

@@ -18,25 +18,25 @@ namespace sani {
 			recomputeVertices(triangle);
 		}
 		void recomputeVertices(Triangle& triangle)  {
-			const sani::math::Vec3f& position = triangle.transform.position;
-			const sani::math::Vec3f& origin = triangle.transform.origin;
-			const sani::math::Vec3f& scale = triangle.transform.scale;
+			const math::Vec3f& position = triangle.transform.position;
+			const math::Vec3f& origin = triangle.transform.origin;
+			const math::Vec3f& scale = triangle.transform.scale;
 			const float32 rotation = triangle.transform.rotation;
 
-			const float32 sin = sani::math::sin(rotation);
-			const float32 cos = sani::math::cos(rotation);
+			const float32 sin = math::sin(rotation);
+			const float32 cos = math::cos(rotation);
 
 			const float32 dx = -origin.x * scale.x;
 			const float32 dy = -origin.y * scale.y;
 
-			sani::math::Vec3f shapeGlobalPositions[]  {
+			math::Vec3f shapeGlobalPositions[]  {
 				// Transformed results will be placed in this array.
 				position,		// Top.
 				position,		// Left.
 				position		// Right.
 			};
 
-			sani::math::Vec3f shapeVertexPositions[] {
+			math::Vec3f shapeVertexPositions[] {
 				triangle.topPoint * scale,
 				triangle.leftPoint * scale,
 				triangle.rightPoint * scale
@@ -57,26 +57,26 @@ namespace sani {
 
 			// Compute border vertices if needed.
 			if (triangle.borderThickness > 0.0f) {
-				sani::math::Vec3f borderTopPoint = triangle.topPoint * scale;
+				math::Vec3f borderTopPoint = triangle.topPoint * scale;
 				borderTopPoint.x += triangle.borderThickness;
 				borderTopPoint.y += triangle.borderThickness;
 
-				sani::math::Vec3f borderLeftPoint = triangle.leftPoint * scale;
+				math::Vec3f borderLeftPoint = triangle.leftPoint * scale;
 				borderLeftPoint.x -= triangle.borderThickness * 4.0f;
 				borderLeftPoint.y += triangle.borderThickness * 1.5f;
 
-				sani::math::Vec3f borderRightPoint = triangle.rightPoint * scale;
+				math::Vec3f borderRightPoint = triangle.rightPoint * scale;
 				borderRightPoint.x += triangle.borderThickness * 2.0f;
 				borderRightPoint.y += triangle.borderThickness * 1.5f;
 				
-				sani::math::Vec3f borderGlobalPositions[] {
+				math::Vec3f borderGlobalPositions[] {
 					// Transformed results will be placed in this array.
 					position,		// Top.
 					position,		// Left.
 					position		// Right.
 				};
 
-				sani::math::Vec3f borderVertexPositions[]
+				math::Vec3f borderVertexPositions[]
 				{
 					borderTopPoint,
 					borderLeftPoint,
@@ -108,8 +108,8 @@ namespace sani {
 			triangle.localBounds.h = maxHeight - triangle.topPoint.y;
 
 			// Recompute global bounds.
-			const sani::math::Vec3f& position = triangle.transform.position;
-			const sani::math::Vec3f& scale = triangle.transform.scale;
+			const math::Vec3f& position = triangle.transform.position;
+			const math::Vec3f& scale = triangle.transform.scale;
 			
 			triangle.globalBounds.x = position.x;
 			triangle.globalBounds.y = position.y;
@@ -124,7 +124,7 @@ namespace sani {
 				useSolidFill(&triangle);
 			} else {
 				if (!triangle.textureSource.isEmpty()) {
-					sani::math::Vec2f* textureCoordinates[] {
+					math::Vec2f* textureCoordinates[] {
 						&triangle.renderData.vertices[0].textureCoordinates,
 						&triangle.renderData.vertices[1].textureCoordinates,
 						&triangle.renderData.vertices[2].textureCoordinates

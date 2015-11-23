@@ -64,7 +64,7 @@ namespace sani {
 			updateGroupIdentifier(*this);
 			updateRenderData(*this);
 		}
-		Rectangle::Rectangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size) : Rectangle(position.x, position.y, size.x, size.y) {
+		Rectangle::Rectangle(const math::Vec2f& position, const math::Vec2f& size) : Rectangle(position.x, position.y, size.x, size.y) {
 		}
 		Rectangle::Rectangle() : Rectangle(0.0f, 0.0f, 1.0f, 1.0f) {
 		}

@@ -2,7 +2,6 @@
 #include "sani/core/math/trigonometric.hpp"
 #include "sani/graphics/render_helper.hpp"
 #include "sani/graphics/vertex_helper.hpp"
-#include "sani/graphics/renderer.hpp"
 
 namespace sani {
 
@@ -18,14 +17,14 @@ namespace sani {
 			recomputeVertices(rectangle);
 		}
 		void recomputeVertices(Rectangle& rectangle) {
-			const sani::math::Vec3f& position = rectangle.transform.position;
-			const sani::math::Vec3f& origin = rectangle.transform.origin;
-			const sani::math::Vec3f& scale = rectangle.transform.scale;
-			const sani::math::Rectf& localBounds = rectangle.localBounds;
+			const math::Vec3f& position = rectangle.transform.position;
+			const math::Vec3f& origin = rectangle.transform.origin;
+			const math::Vec3f& scale = rectangle.transform.scale;
+			const math::Rectf& localBounds = rectangle.localBounds;
 			const float32 rotation = rectangle.transform.rotation;
 
-			const float32 sin = sani::math::sin(rotation);
-			const float32 cos = sani::math::cos(rotation);
+			const float32 sin = math::sin(rotation);
+			const float32 cos = math::cos(rotation);
 
 			const float32 dx = -origin.x * scale.x;
 			const float32 dy = -origin.y * scale.y;
@@ -37,18 +36,18 @@ namespace sani {
 				&rectangle.renderData.vertices[3]
 			};
 
-			sani::math::Vec3f shapeGlobalPositions[] {
+			math::Vec3f shapeGlobalPositions[] {
 				position,
 				position,
 				position,
 				position
 			};
 
-			sani::math::Vec3f shapeVertexPositions[] {
-				sani::math::Vec3f(0.0f, 0.0f, 0.0f),								// Top left
-				sani::math::Vec3f(localBounds.w, 0.0f, 0.0f) * scale,				// Top right
-				sani::math::Vec3f(0.0f, localBounds.h, 0.0f) * scale,				// Bottom left
-				sani::math::Vec3f(localBounds.w, localBounds.h, 0.0f) * scale		// Bottom right
+			math::Vec3f shapeVertexPositions[] {
+				math::Vec3f(0.0f, 0.0f, 0.0f),								// Top left
+				math::Vec3f(localBounds.w, 0.0f, 0.0f) * scale,				// Top right
+				math::Vec3f(0.0f, localBounds.h, 0.0f) * scale,				// Bottom left
+				math::Vec3f(localBounds.w, localBounds.h, 0.0f) * scale		// Bottom right
 			};
 
 			applyRotationToRectangle(shapeGlobalPositions, shapeVertexPositions, dx, dy, sin, cos);
@@ -69,18 +68,18 @@ namespace sani {
 				const float32 borderThickness = rectangle.borderThickness;
 				const float32 doubleBorderThickness = borderThickness * 2.0f;
 				
-				sani::math::Vec3f borderGlobalPositions[] {
+				math::Vec3f borderGlobalPositions[] {
 					position,
 					position,
 					position,
 					position
 				};
 
-				sani::math::Vec3f borderVertexPositions[] {
-					sani::math::Vec3f(0.0f, 0.0f, 0.0f),																				// Top left
-					sani::math::Vec3f(localBounds.w + doubleBorderThickness, 0.0f, 0.0f) * scale,										// Top right
-					sani::math::Vec3f(-doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale,						// Bottom left
-					sani::math::Vec3f(localBounds.w + doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale		// Bottom right
+				math::Vec3f borderVertexPositions[] {
+					math::Vec3f(0.0f, 0.0f, 0.0f),																				// Top left
+					math::Vec3f(localBounds.w + doubleBorderThickness, 0.0f, 0.0f) * scale,										// Top right
+					math::Vec3f(-doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale,						// Bottom left
+					math::Vec3f(localBounds.w + doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale		// Bottom right
 				};
 
 				applyRotationToRectangle(borderGlobalPositions, borderVertexPositions, dx - rectangle.borderThickness, dy - rectangle.borderThickness, sin, cos);
@@ -92,8 +91,8 @@ namespace sani {
 			}
 		}
 		void recomputeBounds(Rectangle& rectangle) {
-			const sani::math::Vec3f& position = rectangle.transform.position;
-			const sani::math::Vec3f& scale = rectangle.transform.scale;
+			const math::Vec3f& position = rectangle.transform.position;
+			const math::Vec3f& scale = rectangle.transform.scale;
 
 			rectangle.globalBounds.x = position.x;
 			rectangle.globalBounds.y = position.y;
@@ -110,7 +109,7 @@ namespace sani {
 			} else {
 				// Use texturing, recompute texture coordinates if needed.
 				if (!rectangle.textureSource.isEmpty()) {
-					sani::math::Vec2f* textureCoordinates[] {
+					math::Vec2f* textureCoordinates[] {
 						&rectangle.renderData.vertices[0].textureCoordinates,
 						&rectangle.renderData.vertices[1].textureCoordinates,
 						&rectangle.renderData.vertices[2].textureCoordinates,

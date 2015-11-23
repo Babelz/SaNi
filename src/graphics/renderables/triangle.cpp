@@ -49,8 +49,6 @@ namespace sani {
 
 			transform.position.x = lx;
 			transform.position.y = ty;
-
-			recomputeGeometryData(*this);
 			
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
@@ -64,16 +62,16 @@ namespace sani {
 			borderRenderData.vertexElements = 7;
 			borderRenderData.offset = 2;
 
-			updateGroupIdentifier(*this);
+			recomputeGeometryData(*this);
 			updateRenderData(*this);
 		}
-		Triangle::Triangle(const sani::math::Vec2f& top, const sani::math::Vec2f& left, const sani::math::Vec2f& right) 
+		Triangle::Triangle(const math::Vec2f& top, const math::Vec2f& left, const math::Vec2f& right) 
 			: Triangle(top.x, top.y, left.x, left.y, right.x, right.y) {
 		}
 		Triangle::Triangle(const float32 x, const float32 y, const float32 width, const float32 height) 
 			: Triangle(x + width / 2.0f, y, x, y + height, x + width, y + height) {
 		}
-		Triangle::Triangle(const sani::math::Vec2f& position, const sani::math::Vec2f& size) 
+		Triangle::Triangle(const math::Vec2f& position, const math::Vec2f& size) 
 			: Triangle(position.x - size.x / 2.0f, position.y, position.x, position.y + size.y, position.x + size.x, position.y + size.y) {
 		}
 		Triangle::Triangle(const float32 width, const float32 height) 
