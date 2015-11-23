@@ -32,3 +32,5 @@ namespace sani {
 		inline void updateRenderData(Sprite& sprite);
 	}
 }
+
+#include "sani/graphics/inl/sprite.inl"

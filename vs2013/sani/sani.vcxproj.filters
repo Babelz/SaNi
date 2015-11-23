@@ -318,6 +318,9 @@
     <ClCompile Include="..\..\src\resource\pipeline\effect_importer.cpp">
       <Filter>src\resource\pipeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -674,6 +677,12 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\random.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\random.hpp">
+      <Filter>include\core\math\impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -719,6 +728,9 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\render_helper.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\sprite.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>

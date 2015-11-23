@@ -180,6 +180,7 @@
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\graphics\render_element_data.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix4.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\impl\random.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp" />
@@ -257,6 +259,7 @@
     <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix4.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\random.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\trigonometric.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\value_ptr.hpp" />
@@ -353,6 +356,7 @@
     <None Include="..\..\include\sani\graphics\inl\renderable.inl" />
     <None Include="..\..\include\sani\graphics\inl\render_element_data.inl" />
     <None Include="..\..\include\sani\graphics\inl\render_helper.inl" />
+    <None Include="..\..\include\sani\graphics\inl\sprite.inl" />
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />

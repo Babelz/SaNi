@@ -1,6 +1,12 @@
 #include "sani/debug.hpp"
 #include "../matrix2.hpp"
 
+/*
+
+	TODO: should these be moved to .inl files?
+
+*/
+
 namespace sani {
 	namespace math {
 		template <typename T>
