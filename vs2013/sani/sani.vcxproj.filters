@@ -139,6 +139,9 @@
     <Filter Include="include\graphics\renderables">
       <UniqueIdentifier>{f9198654-3b0d-40b8-a163-cf64bc38a31a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine">
+      <UniqueIdentifier>{d8f6ca29-1df9-4fae-aef9-0fa79be5e56f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -682,6 +685,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\impl\random.hpp">
       <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\engine_service.hpp">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\engine_service_container.hpp">
+      <Filter>include\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -276,6 +276,9 @@
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\engine_service_container.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
