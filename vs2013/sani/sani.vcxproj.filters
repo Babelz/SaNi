@@ -142,14 +142,14 @@
     <Filter Include="include\engine">
       <UniqueIdentifier>{d8f6ca29-1df9-4fae-aef9-0fa79be5e56f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\platform\timers">
-      <UniqueIdentifier>{2a07c85f-550f-484f-8eb5-526842b72766}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\platform\timers\impl">
-      <UniqueIdentifier>{2b0e9086-489d-4a87-85ef-158d80301625}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\graphics\impl">
       <UniqueIdentifier>{32fa39d4-0466-4317-874b-c5ad176a377d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform\time">
+      <UniqueIdentifier>{2a07c85f-550f-484f-8eb5-526842b72766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\platform\time\impl">
+      <UniqueIdentifier>{2b0e9086-489d-4a87-85ef-158d80301625}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -707,14 +707,20 @@
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\timers\stopwatch.hpp">
-      <Filter>include\platform\timers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\impl\stopwatch.hpp">
-      <Filter>include\platform\timers\impl</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp">
       <Filter>include\graphics\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\time\impl\stopwatch.hpp">
+      <Filter>include\platform\time\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\time\time.hpp">
+      <Filter>include\platform\time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp">
+      <Filter>include\platform\time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\time\impl\time.hpp">
+      <Filter>include\platform\time\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

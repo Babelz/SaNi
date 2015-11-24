@@ -1,13 +1,8 @@
 #pragma once
 
-#include <chrono>
+#include "sani/platform/time/time.hpp"
 
 namespace sani {
-
-	typedef std::chrono::high_resolution_clock		Timer;
-	
-	template<typename T>
-	typedef std::chrono::time_point<T>				Time;
 
 	/// @class Stopwatch stopwatch.hpp "sani/platform/timers/stopwatch.hpp"
 	/// @author voidbab
@@ -42,3 +37,5 @@ namespace sani {
 		~Stopwatch();
 	};
 }
+
+#include "sani/platform/time/impl/stopwatch.hpp"
