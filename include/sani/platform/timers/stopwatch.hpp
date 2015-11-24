@@ -35,10 +35,8 @@ namespace sani {
 		void stop();
 
 		/// Returns the time when start was last called.
-		template<typename T>
 		const Time<T>& getStartTime() const;
 		/// Returns the time stop was last called.
-		template<typename T>
 		const Time<T>& getEndTime() const;
 		
 		~Stopwatch();

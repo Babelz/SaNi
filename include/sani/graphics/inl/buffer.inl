@@ -5,13 +5,6 @@ namespace sani {
 	namespace graphics {
 
 		template<typename T>
-		Buffer<T>::Buffer(const uint32 initialSize, const BufferSizing bufferSizing) : bufferSizing(bufferSizing),
-																					   bufferPointer(0),
-																					   size(initialSize) {
-			memory.resize(size);
-		}
-
-		template<typename T>
 		void Buffer<T>::checkSize(const uint32 offset) {
 			if (bufferSizing == BufferSizing::Static) {
 				if (bufferPointer + offset > size) throw std::runtime_error("Buffer overflow");
@@ -88,10 +81,6 @@ namespace sani {
 		template<typename T>
 		void Buffer<T>::resetBufferPointer() {
 			bufferPointer = 0;
-		}
-
-		template<typename T>
-		Buffer<T>::~Buffer() {
 		}
 	}
 }

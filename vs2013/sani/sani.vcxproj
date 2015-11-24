@@ -284,6 +284,7 @@
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\impl\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
     <ClInclude Include="..\..\include\sani\platform\timers\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />

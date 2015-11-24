@@ -27,7 +27,7 @@ namespace sani {
 			
 			inline void checkSize(const uint32 offset);
 		public:
-			inline Buffer(const uint32 initialSize, const BufferSizing bufferSizing);
+			Buffer(const uint32 initialSize, const BufferSizing bufferSizing);
 		
 			/// Returns the type of the buffer. 
 			inline BufferSizing getBufferSizing() const;
@@ -56,9 +56,9 @@ namespace sani {
 			/// Sets the buffer pointers value to zero.
 			inline void resetBufferPointer();
 		
-			inline ~Buffer();
+			~Buffer();
 		};
 	}
 }
 
-#include "sani/graphics/inl/buffer.inl"
+#include "sani/graphics/impl/buffer.hpp"
