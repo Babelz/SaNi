@@ -25,83 +25,40 @@ namespace sani {
 			uint32 bufferPointer;
 			uint32 size;
 			
-			inline void checkSize(const uint32 offset) {
-				if (bufferSizing == BufferSizing::Static) {
-					if (bufferPointer + offset > size) throw std::runtime_error("Buffer overflow");
-				} else if (bufferSizing == BufferSizing::Dynamic) {
-					if (bufferPointer + offset > size) {
-						size *= 2;
-
-						memory.resize(size);
-					}
-				}
-			}
+			inline void checkSize(const uint32 offset);
 		public:
-			Buffer(const uint32 initialSize, const BufferSizing bufferSizing) : bufferSizing(bufferSizing),
-																			    bufferPointer(0),
-																				size(initialSize) {
-				memory.resize(size);
-			}
+			inline Buffer(const uint32 initialSize, const BufferSizing bufferSizing);
 		
 			/// Returns the type of the buffer. 
-			inline BufferSizing getBufferSizing() const {
-				return bufferSizing;
-			}
+			inline BufferSizing getBufferSizing() const;
 
 			/// Push a given element to the buffer.
-			inline void push(T element) {
-				checkSize(1);
-
-				memory[bufferPointer] = element;
-				
-				bufferPointer++;
-			}
+			inline void push(T element);
 			/// Push given elements to the buffer.
 			/// @param [in] elements elements to push
 			/// @param [in] count count of elements to push
-			inline void push(const T* elements, const uint32 count) {
-				checkSize(count);
-
-				for (uint32 i = 0; i < count; i++) memory[i + bufferPointer] = elements[i];
-
-				bufferPointer += count;
-			}
+			inline void push(const T* elements, const uint32 count);
 
 			/// Applies given offset to this buffer.
-			inline void offset(const uint32 offset) {
-				checkSize(offset);
-
-				bufferPointer += offset;
-			}
+			inline void offset(const uint32 offset);
 
 			/// Returns the size of this buffer.
-			inline uint32 getSize() const {
-				return size;
-			}
+			inline uint32 getSize() const;
 			/// Returns the location of the buffer pointer.
-			inline uint32 getElementsCount() const {
-				return bufferPointer;
-			}
+			inline uint32 getElementsCount() const;
 
 			/// Copies the contents of another buffer to this buffer.
-			inline void copy(Buffer<T>& other) {
-				checkSize(other.getBufferPointerLocation());
-
-				push(other.data(), other.getBufferPointerLocation());
-			}
+			inline void copy(Buffer<T>& other);
 
 			/// Returns pointer to the beginning of the buffer.
-			inline T* data() {
-				return memory.data();
-			}
+			inline T* data();
 
 			/// Sets the buffer pointers value to zero.
-			inline void resetBufferPointer() {
-				bufferPointer = 0;
-			}
+			inline void resetBufferPointer();
 		
-			~Buffer() {
-			}
+			inline ~Buffer();
 		};
 	}
 }
+
+#include "sani/graphics/inl/buffer.inl"

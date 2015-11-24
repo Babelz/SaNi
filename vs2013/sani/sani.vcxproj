@@ -278,7 +278,8 @@
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\engine_service_container.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\engine_service_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\timers\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\primitive_writers.hpp" />
@@ -353,6 +355,7 @@
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
+    <None Include="..\..\include\sani\graphics\inl\buffer.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\graphics\inl\circle.inl" />
     <None Include="..\..\include\sani\graphics\inl\rectangle.inl" />

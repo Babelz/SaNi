@@ -3,6 +3,8 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
+#include <stack>
+
 SANI_FORWARD_DECLARE_2(sani, engine, SaNiEngine);
 
 namespace sani {
@@ -20,9 +22,28 @@ namespace sani {
 		/// depend on any other services.
 		class EngineService {
 		private:
-			String name;
+			static uint32 idGenerator;
+
+			std::stack<String> errors;
+
+			const String name;
+			const uint32 id;
 		protected:
-			EngineService(SaNiEngine* engine, );
+			SaNiEngine* const getEngine();
+			void pushError(const String& error);
+		public:
+			EngineService(const String& name, SaNiEngine* const engine);
+
+			const String& getName() const;
+			const uint32 getID() const;
+
+			bool isUsing(const EngineService* const other) const;
+			bool hasHerrors() const;
+			
+			bool unuse(EngineService* const other);
+			bool use(EngineService* const other);
+
+			virtual void update(const float64 delta) = 0;
 
 			virtual ~EngineService();
 		};

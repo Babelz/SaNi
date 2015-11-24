@@ -142,6 +142,9 @@
     <Filter Include="include\engine">
       <UniqueIdentifier>{d8f6ca29-1df9-4fae-aef9-0fa79be5e56f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\platform\timers">
+      <UniqueIdentifier>{2a07c85f-550f-484f-8eb5-526842b72766}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -692,8 +695,14 @@
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\engine_service_container.hpp">
+    <ClInclude Include="..\..\include\sani\engine\engine_service_provider.hpp">
       <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\service_state.hpp">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\timers\stopwatch.hpp">
+      <Filter>include\platform\timers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -743,6 +752,9 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\sprite.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\buffer.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
