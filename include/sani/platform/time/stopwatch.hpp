@@ -11,8 +11,8 @@ namespace sani {
 	template<typename T>
 	class Stopwatch {
 	private:
-		Time<T> startTime;
-		Time<T> endTime;
+		//Time<T> startTime;
+		//Time<T> endTime;
 
 		bool running;
 	public:
@@ -29,10 +29,8 @@ namespace sani {
 		/// Stops measuring time.
 		void stop();
 
-		/// Returns the time when start was last called.
-		const Time<T>& getStartTime() const;
-		/// Returns the time stop was last called.
-		const Time<T>& getEndTime() const;
+		T getElapsedMilliseconds() const;
+		T getElapsedSeconds() const;
 		
 		~Stopwatch();
 	};

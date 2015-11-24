@@ -1,12 +1,11 @@
 #include "sani/platform/time/stopwatch.hpp"
 #include <stdexcept>
+#include <chrono>
 
 namespace sani {
 	
 	template<typename T>
-	Stopwatch<T>::Stopwatch() : startTime(Timer::now()),
-								endTime(Timer::now()),
-								running(false) {
+	Stopwatch<T>::Stopwatch() : running(false) {
 	}
 
 	template<typename T>
@@ -16,16 +15,14 @@ namespace sani {
 
 	template<typename T>
 	void Stopwatch<T>::reset() {
-		startTime = Clock::now();
-		endTime = Clock::now();
+		//startTime = sani::Clock::now();
+		//endTime = sani::Clock::now();
 	}
 	template<typename T>
 	void Stopwatch<T>::start() {
 		if (running) throw std::runtime_error("watch is already measuring");
 
 		running = true;
-
-		reset();
 	}
 	template<typename T>
 	void Stopwatch<T>::stop() {
@@ -33,16 +30,16 @@ namespace sani {
 		
 		running = false;
 
-		endTime = Clock::now();
+		//endTime = sani::Clock::now();
 	}
 
 	template<typename T>
-	const Time<T>& Stopwatch<T>::getStartTime() const {
-		return startTime;
+	T Stopwatch<T>::getElapsedMilliseconds() const {
+		return T();//std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).;
 	}
 	template<typename T>
-	const Time<T>& Stopwatch<T>::getEndTime() const {
-		return endTime;
+	T Stopwatch<T>::getElapsedSeconds() const {
+		return T();//(T)std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime).count();
 	}
 
 	template<typename T>

@@ -37,6 +37,9 @@
     <Filter Include="Source Files\graphics">
       <UniqueIdentifier>{25bb1743-e86d-4a2c-a791-e0d1afccea47}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\time">
+      <UniqueIdentifier>{8d777135-0b23-4681-a024-8973356b567c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\main.cpp">
@@ -74,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="..\..\tests\graphics\graphics.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\tests\time\time.cpp">
+      <Filter>Source Files\time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

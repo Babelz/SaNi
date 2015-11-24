@@ -719,9 +719,6 @@
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp">
       <Filter>include\platform\time</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\time\impl\time.hpp">
-      <Filter>include\platform\time\impl</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

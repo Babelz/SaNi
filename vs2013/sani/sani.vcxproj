@@ -319,7 +319,6 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\impl\stopwatch.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\time\impl\time.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\time.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
