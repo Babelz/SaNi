@@ -48,6 +48,8 @@ namespace sani {
 			services.remove(service);
 
 			SANI_TRIGGER_EVENT(unregistered, void(EngineService* const), service);
+
+			delete service;
 		}
 
 		void EngineServiceProvider::update(const EngineTime& time) {
@@ -55,6 +57,7 @@ namespace sani {
 		}
 
 		EngineServiceProvider::~EngineServiceProvider() {
+			for (EngineService* const service : services) delete service;
 		}
 	}
 }
