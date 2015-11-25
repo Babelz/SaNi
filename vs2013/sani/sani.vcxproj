@@ -203,6 +203,7 @@
     <ClCompile Include="..\..\src\platform\graphics\viewport.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\window.cpp" />
     <ClCompile Include="..\..\src\platform\linux\file_system_linux.cpp" />
+    <ClCompile Include="..\..\src\platform\time\engine_time.cpp" />
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\time\engine_time.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\impl\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\time.hpp" />

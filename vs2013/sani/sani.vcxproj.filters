@@ -151,6 +151,9 @@
     <Filter Include="include\platform\time\impl">
       <UniqueIdentifier>{2b0e9086-489d-4a87-85ef-158d80301625}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\platform\time">
+      <UniqueIdentifier>{2e5cd3b0-3110-4106-b5b5-999909cb81a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -332,6 +335,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp">
       <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\time\engine_time.cpp">
+      <Filter>src\platform\time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -717,6 +723,9 @@
       <Filter>include\platform\time</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp">
+      <Filter>include\platform\time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\time\engine_time.hpp">
       <Filter>include\platform\time</Filter>
     </ClInclude>
   </ItemGroup>
