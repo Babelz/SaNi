@@ -35,10 +35,21 @@ namespace sani {
 
 			if (!initialize()) return;
 
-			EngineTime total(0.0, 0.0);
-
+			sani::Time last = sani::Clock::now();
+			sani::Time start = sani::Clock::now();
+			
 			while (running) {
-				services.update(total);
+				sani::Time current = sani::Clock::now();
+
+				auto delta = current - last;
+				auto total = start - current;
+				
+				last = current;
+
+				EngineTime time(static_cast<float64>(total.count()),
+								static_cast<float64>(delta.count()));
+
+				services.update(time);
 			}
 		}
 		void SaNiEngine::quit() {

@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
+    <ClCompile Include="..\..\src\engine\services\RenderService.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
@@ -284,6 +285,7 @@
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\engine_service_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
@@ -293,6 +295,7 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\renderables.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
