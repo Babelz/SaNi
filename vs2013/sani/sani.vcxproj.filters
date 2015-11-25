@@ -154,6 +154,12 @@
     <Filter Include="src\platform\time">
       <UniqueIdentifier>{2e5cd3b0-3110-4106-b5b5-999909cb81a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\engine">
+      <UniqueIdentifier>{451221a9-a46e-4a1f-bfd4-00ced2983d1f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\inl">
+      <UniqueIdentifier>{0110d407-92eb-4b9d-a52d-ad572df5b703}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -338,6 +344,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\time\engine_time.cpp">
       <Filter>src\platform\time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\sani_engine.cpp">
+      <Filter>src\engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -727,6 +736,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\time\engine_time.hpp">
       <Filter>include\platform\time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\inl\events.inl">
+      <Filter>include\core\inl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -39,40 +39,20 @@ namespace sani {
 	private:
 		std::list<std::function<T>> callbacks;
 	public:
-		Event() {
-		}
+		Event();
 
 		/// Adds new callback to the callback list.
-		inline void subscribe(std::function<T> callback) {
-			callbacks.push_back(callback);
-		}
+		inline void subscribe(std::function<T> callback);
 		/// Removes given callback from the callback list.
-		inline void unsubscribe(std::function<T> callback) {
-			if (callbacks.size() == 0) return;
-
-			for (auto i = callbacks.begin(); i != callbacks.end(); i++) {
-				if ((*i).template target<T>() == callback.template target<T>()) {
-					callbacks.erase(i);
-					
-					return;
-				}
-			}
-		}
+		inline void unsubscribe(std::function<T> callback);
 		/// Returns true if the manager contains callbacks.
-		inline bool hasSubscribers() const {
-			return !callbacks.empty();
-		}
+		inline bool hasSubscribers() const;
 	
-		~Event() {
-		}
+		~Event();
 
-		void operator += (std::function<T> callback) {
-			callbacks.push_back(callback);
-		}
+		void operator += (std::function<T> callback);
 
-		void operator -= (std::function<T> callback) {
-			unsubscribe(callback);
-		}
+		void operator -= (std::function<T> callback);
 	};
 
 	/// @class EventHandler "sani\events.hpp"
@@ -83,19 +63,12 @@ namespace sani {
 	private:
 		const Event<T>* event;
 	public:
-		EventCaller(const Event<T>* event) : event(event) {
-		}
-		EventCaller() : event(nullptr) {
-		}
+		EventCaller(const Event<T>* event);
+		EventCaller();
 
-		~EventCaller() {
-		}
+		~EventCaller();
 
-		void operator()(std::function<void(std::function<T>)> action) {
-			if (!event->hasSubscribers()) return;
-
-			for (std::function<T> callback : event->callbacks) action(callback);
-		}
+		void operator () (std::function<void(std::function<T>)> action);
 	};
 
 	// Macros for creating and initializing events.
@@ -115,3 +88,5 @@ namespace sani {
 	// Triggers the given event with given signature and passes no arguments to it.
 	#define SANI_TRIGGER_VOID_EVENT(name, signature)		name##Caller(std::function<void(std::function<signature>)>([](std::function<signature> action) { action(); }))
 }
+
+#include "sani/core/inl/events.inl"

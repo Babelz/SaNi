@@ -176,6 +176,7 @@
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
+    <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
@@ -243,6 +244,7 @@
     <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp" />
     <ClInclude Include="..\..\include\sani\core\events.hpp" />
     <ClInclude Include="..\..\include\sani\core\func.hpp" />
+    <ClInclude Include="..\..\include\sani\core\inl\events.inl" />
     <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />
