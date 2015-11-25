@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani/engine/engine_service_provider.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -10,13 +12,27 @@ namespace sani {
 		/// The core of the engine. 
 		class SaNiEngine {
 		private:
+			EngineServiceProvider services;
+
 			bool running;
-		public:
-			SaNiEngine();
 
 			/// Initializes the engine.
 			bool initialize();
-			
+		public:
+			SaNiEngine();
+
+			/// Returns the first service with given name and ID.
+			EngineService* const locateService(const String& name, const uint32 id);
+			/// Returns the first service with given name.
+			EngineService* const locateService(const String& name);
+			/// Returns the first service with given ID.
+			EngineService* const locateService(const uint32 id);
+
+			/// Registers new service.
+			void registerService(EngineService* const service);
+			/// Unregisters the given service and releases memory allocated by it.
+			void unregisterService(EngineService* const service);
+
 			/// Starts the engine.
 			void start();
 			/// Causes the engine to quit.

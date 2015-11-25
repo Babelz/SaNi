@@ -11,6 +11,12 @@ namespace sani {
 																					 engine(engine),
 																					 state(ServiceState::Uninitialized) {
 		}
+		
+		bool EngineService::onInitialize() {
+			return true;
+		}
+		void EngineService::onUpdate(const EngineTime& time) {
+		}
 
 		void EngineService::onSuspend() {
 		}

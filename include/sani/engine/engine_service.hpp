@@ -36,8 +36,8 @@ namespace sani {
 			const String name;
 			const uint32 id;
 		protected:
-			virtual bool onInitialize() = 0;
-			virtual void onUpdate(const EngineTime& time) = 0;
+			virtual bool onInitialize();
+			virtual void onUpdate(const EngineTime& time);
 
 			virtual void onSuspend();
 			virtual bool onResume();
@@ -49,6 +49,11 @@ namespace sani {
 
 			EngineService(const String& name, SaNiEngine* const engine);
 		public:
+			/*
+				TODO: notify services that depend on me
+					  that im being disposed.
+			*/
+
 			ServiceState getState() const;
 			const String& getName() const;
 			const uint32 getID() const;
