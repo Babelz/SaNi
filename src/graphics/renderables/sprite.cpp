@@ -36,7 +36,8 @@ namespace sani {
 			spriteRenderData.offset = 0;
 			spriteRenderData.indices = 6;
 
-			recomputeGeometryData(*this);
+			recomputeBounds(*this);
+			recomputeVertices(*this);
 			updateRenderData(*this);
 		}
 		Sprite::Sprite(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size)

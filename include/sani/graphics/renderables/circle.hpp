@@ -31,7 +31,6 @@ namespace sani {
 			Circle();
 		};
 
-		inline void recomputeGeometryData(Circle& circle);
 		inline void recomputeVertices(Circle& circle);
 		inline void recomputeBounds(Circle& circle);
 

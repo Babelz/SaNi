@@ -37,7 +37,8 @@ namespace sani {
 			borderRenderData.offset = 2;
 			borderRenderData.renderMode = RenderMode::TriangleFan;
 
-			recomputeGeometryData(*this);
+			recomputeBounds(*this);
+			recomputeVertices(*this);
 			updateRenderData(*this);
 		}
 		Circle::Circle(const math::Vec2f& position, const float32 radius, const uint32 vertices) : Circle(position.x, position.y, radius, vertices) {

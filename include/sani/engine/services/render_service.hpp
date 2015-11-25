@@ -17,18 +17,6 @@ namespace sani {
 
 			graphics::GraphicsDevice* graphicsDevice;
 			graphics::Renderer* renderer;
-
-			// TODO: move it impl.
-			// TODO: updates regarding render and 
-			//		 geometry data should be done
-			//	     somewhere else, move this to some manager class.
-			template<class T>
-			void updateElement(graphics::Renderable* const element) {
-				T* const renderable = static_cast<T*>(element);
-
-				recomputeGeometryData(*renderable);
-				updateRenderData(*renderable);
-			}
 		protected:
 			bool onInitialize() override;
 
@@ -37,11 +25,11 @@ namespace sani {
 			RenderService(SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice);
 
 			/*
-			TODO: impl
-			- layers
-			- culling
-			- element updates
-			- make fast af...
+				TODO: impl
+				- layers
+				- culling
+				- element updates
+				- make fast af...
 			*/
 
 			void addElement(graphics::Renderable* const renderable);

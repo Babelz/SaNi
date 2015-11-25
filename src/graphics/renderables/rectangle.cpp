@@ -37,8 +37,6 @@ namespace sani {
 			transform.origin.x = localBounds.w / 2.0f;
 			transform.origin.y = localBounds.h / 2.0f;
 
-			recomputeGeometryData(*this);
-
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
 			shapeRenderData.last = 3;
@@ -61,7 +59,8 @@ namespace sani {
 			renderData.vertexIndices[4] = 3;
 			renderData.vertexIndices[5] = 2;
 
-			updateGroupIdentifier(*this);
+			recomputeBounds(*this);
+			recomputeVertices(*this);
 			updateRenderData(*this);
 		}
 		Rectangle::Rectangle(const math::Vec2f& position, const math::Vec2f& size) : Rectangle(position.x, position.y, size.x, size.y) {

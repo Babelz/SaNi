@@ -6,11 +6,6 @@ namespace sani {
 
 	namespace graphics {
 
-		void recomputeGeometryData(Sprite& sprite) {
-
-			recomputeBounds(sprite);
-			recomputeVertices(sprite);
-		}
 		void recomputeVertices(Sprite& sprite) {
 			const math::Vec3f& position = sprite.transform.position;
 			const math::Vec3f& origin = sprite.transform.origin;

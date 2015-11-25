@@ -62,7 +62,8 @@ namespace sani {
 			borderRenderData.vertexElements = 7;
 			borderRenderData.offset = 2;
 
-			recomputeGeometryData(*this);
+			recomputeBounds(*this);
+			recomputeVertices(*this);
 			updateRenderData(*this);
 		}
 		Triangle::Triangle(const math::Vec2f& top, const math::Vec2f& left, const math::Vec2f& right) 

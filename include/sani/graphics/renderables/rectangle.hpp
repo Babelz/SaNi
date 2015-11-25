@@ -38,7 +38,6 @@ namespace sani {
 			Rectangle();
 		};
 
-		inline void recomputeGeometryData(Rectangle& rectangle);
 		inline void recomputeVertices(Rectangle& rectangle);
 		inline void recomputeBounds(Rectangle& rectangle);
 

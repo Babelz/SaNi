@@ -38,6 +38,15 @@ namespace sani {
 			sani::Time last = sani::Clock::now();
 			sani::Time start = sani::Clock::now();
 			
+			/*
+				Possible update order
+					1) entity
+					2) component
+					3) physics
+					4) render data
+					5) render?
+			*/
+
 			while (running) {
 				sani::Time current = sani::Clock::now();
 

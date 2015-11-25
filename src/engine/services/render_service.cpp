@@ -23,12 +23,12 @@ namespace sani {
 			// TODO: fix once layering, culling etc has been implemented.
 			// TODO: move geometry and renderdata updates to some manager class ASAP.
 			
-			for (graphics::Renderable* const element : elements) {
-				if		(typeid(element) == typeid(graphics::Sprite))		updateElement<graphics::Sprite>(element);
-				else if (typeid(element) == typeid(graphics::Rectangle))	updateElement<graphics::Rectangle>(element);
-				else if (typeid(element) == typeid(graphics::Triangle))		updateElement<graphics::Triangle>(element);
-				else if (typeid(element) == typeid(graphics::Circle))		updateElement<graphics::Circle>(element);
-			}
+			//for (graphics::Renderable* const element : elements) {
+			//	if		(typeid(element) == typeid(graphics::Sprite))		updateElement<graphics::Sprite>(element);
+			//	else if (typeid(element) == typeid(graphics::Rectangle))	updateElement<graphics::Rectangle>(element);
+			//	else if (typeid(element) == typeid(graphics::Triangle))		updateElement<graphics::Triangle>(element);
+			//	else if (typeid(element) == typeid(graphics::Circle))		updateElement<graphics::Circle>(element);
+			//}
 			
 			// TODO: layering and culling.
 			for (graphics::Renderable* const element : elements) renderer->renderElement(element);

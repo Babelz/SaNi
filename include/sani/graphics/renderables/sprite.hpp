@@ -26,7 +26,6 @@ namespace sani {
 			Sprite(resource::Texture2D* const texture);
 		};
 
-		inline void recomputeGeometryData(Sprite& sprite);
 		inline void recomputeVertices(Sprite& sprite);
 		inline void recomputeBounds(Sprite& sprite);
 

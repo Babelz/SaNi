@@ -7,15 +7,6 @@ namespace sani {
 
 	namespace graphics {
 
-		void recomputeGeometryData(Rectangle& rectangle) {
-			// TODO: could optimize, compute geometry data
-			//		 only if points or transform has changed?
-			//
-			// TODO: optimize.
-
-			recomputeBounds(rectangle);
-			recomputeVertices(rectangle);
-		}
 		void recomputeVertices(Rectangle& rectangle) {
 			const math::Vec3f& position = rectangle.transform.position;
 			const math::Vec3f& origin = rectangle.transform.origin;

@@ -100,7 +100,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			t.transform.origin.x = 16.0f;
 			t.transform.origin.y = 0.0f;
 
-			recomputeGeometryData(t);
+			recomputeVertices(t);
 			updateRenderData(t);
 
 			triangles.push_back(t);
@@ -125,7 +125,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			r.fill = color::white;
 			r.textureSource = Rectf(0.0f, 0.0f, tuksu->getHeight(), tuksu->getWidth());
 
-			recomputeGeometryData(r);
+			recomputeVertices(r);
 			updateRenderData(r);
 
 			rectangles.push_back(r);
@@ -148,7 +148,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			c.fill.a = 1.0f;
 		}
 
-		recomputeGeometryData(c);
+		recomputeVertices(c);
 		updateRenderData(c);
 
 		verticesCount += 2;
@@ -171,12 +171,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			t.textureSource.x += 0.1f;
 			t.transform.origin.x = t.localBounds.center().x;
 			t.transform.origin.y = 0.0f;
-			recomputeGeometryData(t);
+			recomputeVertices(t);
 			updateRenderData(t);
 		}
 
 		for (auto& r : rectangles) {
-			recomputeGeometryData(r);
+			recomputeVertices(r);
 			updateRenderData(r);
 		}
 

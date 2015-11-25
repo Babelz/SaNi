@@ -8,12 +8,6 @@ namespace sani {
 
 	namespace graphics {
 
-		void recomputeGeometryData(Circle& circle) {
-			// TODO: optimize.
-
-			recomputeBounds(circle);
-			recomputeVertices(circle);
-		}
 		void recomputeVertices(Circle& circle) {
 			const math::Vec3f& position = circle.transform.position;
 			const math::Vec3f& origin = circle.transform.origin;

@@ -35,7 +35,6 @@ namespace sani {
 			Triangle();
 		};
 
-		inline void recomputeGeometryData(Triangle& triangle);
 		inline void recomputeVertices(Triangle& triangle);
 		inline void recomputeBounds(Triangle& triangle);
 		
