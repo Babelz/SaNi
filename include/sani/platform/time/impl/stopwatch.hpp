@@ -5,7 +5,9 @@
 namespace sani {
 	
 	template<typename T>
-	Stopwatch<T>::Stopwatch() : running(false) {
+	Stopwatch<T>::Stopwatch() : startTime(sani::Clock::now()),
+								endTime(sani::Clock::now()),
+								running(false) {
 	}
 
 	template<typename T>
@@ -14,9 +16,18 @@ namespace sani {
 	}
 
 	template<typename T>
+	void Stopwatch<T>::restart() {
+		reset();
+
+		running = false;
+
+		start();
+	}
+
+	template<typename T>
 	void Stopwatch<T>::reset() {
-		//startTime = sani::Clock::now();
-		//endTime = sani::Clock::now();
+		startTime = sani::Clock::now();
+		endTime = sani::Clock::now();
 	}
 	template<typename T>
 	void Stopwatch<T>::start() {
@@ -30,16 +41,22 @@ namespace sani {
 		
 		running = false;
 
-		//endTime = sani::Clock::now();
+		endTime = sani::Clock::now();
 	}
 
 	template<typename T>
 	T Stopwatch<T>::getElapsedMilliseconds() const {
-		return T();//std::chrono::duration_cast<std::chrono::milliseconds>(endTime - startTime).;
+		auto delta = endTime - startTime;
+
+		auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(delta);
+
+		return static_cast<T>(elapsed.count());
 	}
 	template<typename T>
 	T Stopwatch<T>::getElapsedSeconds() const {
-		return T();//(T)std::chrono::duration_cast<std::chrono::seconds>(endTime - startTime).count();
+		const T millis = getElapsedMilliseconds();
+
+		return millis * 0.001f;
 	}
 
 	template<typename T>

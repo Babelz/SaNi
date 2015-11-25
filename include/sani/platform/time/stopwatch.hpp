@@ -11,8 +11,8 @@ namespace sani {
 	template<typename T>
 	class Stopwatch {
 	private:
-		//Time<T> startTime;
-		//Time<T> endTime;
+		Time startTime;
+		Time endTime;
 
 		bool running;
 	public:
@@ -22,6 +22,8 @@ namespace sani {
 		/// Returns true if the watch is measuring time.
 		bool isRunning() const;
 		
+		/// Resets the state of the watch and starts measuring time.
+		void restart();
 		/// Resets the state of the watch.
 		void reset();
 		/// Starts measuring time.

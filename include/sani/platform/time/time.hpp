@@ -6,8 +6,7 @@
 #include <ctime>
 
 namespace sani {
-	typedef std::chrono::high_resolution_clock Clock;
+	typedef std::chrono::high_resolution_clock				Clock;
 
-	template<typename T>
-	using Time = std::chrono::time_point<T, std::chrono::high_resolution_clock>;
+	typedef std::chrono::high_resolution_clock::time_point	Time;
 }

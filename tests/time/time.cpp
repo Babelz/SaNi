@@ -9,10 +9,14 @@ TEST_CASE("Tim", "[time]") {
 
 		sw.start();
 
-		Sleep(250);
+		Sleep(2500);
 
 		sw.stop();
 
-		REQUIRE(sw.getElapsedMilliseconds() >= 250.0f);
+		float ms = sw.getElapsedMilliseconds();
+		float s = sw.getElapsedSeconds();
+
+		REQUIRE(ms >= 250.0f);
+		REQUIRE(s >= 1.0f);
 	}
 }
