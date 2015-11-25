@@ -74,11 +74,11 @@ namespace sani {
 	// Macros for creating and initializing events.
 	// These macros should be called in the public declaration
 	// area of the class.
-	#define SANI_DECLARE_EVENT(name, signature) 			private: sani::EventCaller<signature> name##Caller; \
-															public:  sani::Event<signature> name		        \
+	#define SANI_DECLARE_EVENT(name, signature) 			private: EventCaller<signature> name##Caller; \
+															public:  Event<signature> name		        \
 
 	// Initializes given event with given signature.
-	#define SANI_INIT_EVENT(name, signature)				name##Caller = sani::EventCaller<signature>(&name)
+	#define SANI_INIT_EVENT(name, signature)				name##Caller = EventCaller<signature>(&name)
 
 	#define SANI_EVENT_HANDLER(signature, callback)			std::function<signature>(callback)
 	

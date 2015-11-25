@@ -348,6 +348,12 @@
     <ClCompile Include="..\..\src\engine\sani_engine.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\engine_service_provider.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\engine_service.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

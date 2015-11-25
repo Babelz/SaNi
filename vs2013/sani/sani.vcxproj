@@ -176,6 +176,8 @@
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
+    <ClCompile Include="..\..\src\engine\engine_service.cpp" />
+    <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />

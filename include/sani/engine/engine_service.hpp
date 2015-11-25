@@ -6,6 +6,7 @@
 #include <stack>
 
 SANI_FORWARD_DECLARE_2(sani, engine, SaNiEngine);
+SANI_FORWARD_DECLARE_1(sani, EngineTime);
 
 namespace sani {
 
@@ -30,6 +31,7 @@ namespace sani {
 			const uint32 id;
 		protected:
 			SaNiEngine* const getEngine();
+
 			void pushError(const String& error);
 		public:
 			EngineService(const String& name, SaNiEngine* const engine);
@@ -43,9 +45,22 @@ namespace sani {
 			bool unuse(EngineService* const other);
 			bool use(EngineService* const other);
 
-			virtual void update(const float64 delta) = 0;
+			virtual void update(const EngineTime& time) = 0;
 
 			virtual ~EngineService();
+
+			bool operator = (const EngineService& rhs) const;
+			bool operator != (const EngineService& rhs) const;
+
+			/*
+				Deleted operators/methods.
+			*/
+
+			EngineService(const EngineService&) = delete;
+			EngineService(const EngineService&&) = delete;
+
+			void operator =(const EngineService&) = delete;
+			void operator =(const EngineService&&) = delete;
 		};
 	}
 }

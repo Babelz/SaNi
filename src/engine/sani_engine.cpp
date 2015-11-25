@@ -9,7 +9,7 @@ namespace sani {
 
 		/// Initializes the engine.
 		bool SaNiEngine::initialize() {
-			return 0;
+			return false;
 		}
 
 		/// Starts the engine.

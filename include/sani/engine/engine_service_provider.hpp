@@ -20,8 +20,17 @@ namespace sani {
 		class EngineServiceProvider {
 		private:
 			std::list<EngineService*> services;
+
+			EngineService* locate(std::function<bool(EngineService* const)> pred);
+
+			bool contains(EngineService* const service);
 		public:
-			EngineServiceProvider(const uint32 initialServicesCount);
+			/// Triggered once a service has been registered.
+			SANI_DECLARE_EVENT(registered,	void(EngineService* const));
+			/// Triggered once a service has been unregistered.
+			SANI_DECLARE_EVENT(unregistered, void(EngineService* const));
+
+			EngineServiceProvider();
 
 			/// Returns the first service with given name and ID.
 			EngineService* const locate(const String& name, const uint32 id);
@@ -41,7 +50,7 @@ namespace sani {
 			~EngineServiceProvider();
 
 			/*
-				Deleted operators/functions.
+				Deleted operators/methods.
 			*/
 
 			EngineServiceProvider(const EngineServiceProvider&) = delete;
