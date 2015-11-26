@@ -26,6 +26,9 @@ namespace sani {
 	const String& CVarFile::lineAtIndex(const size_t index) const {
 		return lines[index];
 	}
+	String& CVarFile::lineAtIndex(const size_t index) {
+		return lines[index];
+	}
 	
 	void CVarFile::removeLineAtIndex(const size_t index) {
 		lines.erase(lines.begin() + index);

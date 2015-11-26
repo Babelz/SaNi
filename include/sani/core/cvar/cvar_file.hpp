@@ -25,7 +25,8 @@ namespace sani {
 
 		/// Returns given line at given index.
 		const String& lineAtIndex(const size_t index) const;
-		
+		String& lineAtIndex(const size_t index);
+
 		/// Removes line at given index from the "file".
 		void removeLineAtIndex(const size_t index);
 

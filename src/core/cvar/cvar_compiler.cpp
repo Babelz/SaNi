@@ -316,6 +316,10 @@ namespace sani {
 
 		// Try parse and emit.
 		compile(cvars, records, tokens);
+
+		records.sort([](const CVarRecord& lhs, const CVarRecord& rhs) {
+			return lhs.getFilename() == rhs.getFilename();
+		});
 	}
 
 	CVarCompiler::~CVarCompiler() {
