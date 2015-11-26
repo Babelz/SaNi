@@ -166,7 +166,6 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_linker.cpp" />
-    <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_compiler.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_parser.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_record.cpp" />
@@ -179,6 +178,7 @@
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
+    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\file_system_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
@@ -236,7 +236,6 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp" />
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record.hpp" />

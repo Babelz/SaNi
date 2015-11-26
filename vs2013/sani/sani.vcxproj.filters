@@ -189,9 +189,6 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\cvar\cvar_loader.cpp">
-      <Filter>src\core\cvar</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp">
       <Filter>src\core\cvar</Filter>
     </ClCompile>
@@ -369,6 +366,9 @@
     <ClCompile Include="..\..\src\engine\services\file_system_service.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -433,9 +433,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\events.hpp">
       <Filter>include\core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_loader.hpp">
-      <Filter>include\core\cvar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp">
       <Filter>include\core\cvar</Filter>
