@@ -12,8 +12,7 @@ namespace sani {
 																					 state(ServiceState::Uninitialized) {
 		}
 		
-		bool EngineService::onInitialize() {
-			return true;
+		void EngineService::onInitialize() {
 		}
 		void EngineService::onUpdate(const EngineTime& time) {
 		}
@@ -58,15 +57,13 @@ namespace sani {
 
 			state = ServiceState::Suspended;
 		}
-		bool EngineService::start() {
-			bool results = false;
-			
+		void EngineService::start() {
 			switch (state) {
 			case sani::engine::ServiceState::Uninitialized:
-				results = onInitialize();
+				onInitialize();
 				break;
 			case sani::engine::ServiceState::Suspended:
-				results = onResume();
+				onResume();
 				break;
 			case sani::engine::ServiceState::Stopped:
 			case sani::engine::ServiceState::Running:
@@ -75,8 +72,6 @@ namespace sani {
 			}
 
 			state = ServiceState::Running;
-
-			return results;
 		}
 		void EngineService::stop() {
 			switch (state) {

@@ -38,7 +38,7 @@ namespace sani {
 			const String name;
 			const uint32 id;
 		protected:
-			virtual bool onInitialize();
+			virtual void onInitialize();
 			virtual void onUpdate(const EngineTime& time);
 
 			/// Internal event that is triggered 
@@ -69,7 +69,7 @@ namespace sani {
 			/// Suspends the service.
 			void suspend();
 			/// Starts/resumes the service.
-			bool start();
+			void start();
 			/// Stops the service and prepares it to be disposed.
 			void stop();
 

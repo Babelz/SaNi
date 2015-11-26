@@ -65,7 +65,7 @@ namespace sani {
 		void CVarService::checkForRequiredCVars() {
 		}
 
-		bool CVarService::onInitialize() {
+		void CVarService::onInitialize() {
 			fileSystemService = static_cast<FileSystemService*>(getEngine()->locateService("file system"));
 			use(fileSystemService);
 
@@ -77,8 +77,6 @@ namespace sani {
 
 				checkForRequiredCVars();
 			}
-
-			return true;
 		}
 
 		void CVarService::onStop() {

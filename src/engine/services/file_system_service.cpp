@@ -8,10 +8,8 @@ namespace sani {
 		FileSystemService::FileSystemService(SaNiEngine* const engine) : EngineService("file system", engine) {
 		}
 
-		bool FileSystemService::onInitialize() {
+		void FileSystemService::onInitialize() {
 			fileSystem = new io::FileSystem();
-
-			return true;
 		}
 
 		bool FileSystemService::fileExists(const String& path) const {

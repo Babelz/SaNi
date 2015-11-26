@@ -14,9 +14,9 @@ namespace sani {
 																												 renderer(nullptr) {
 		}
 
-		bool RenderService::onInitialize() {
+		void RenderService::onInitialize() {
 			renderer = new graphics::Renderer(*graphicsDevice);
-			return renderer->initialize();
+			renderer->initialize();
 		}
 
 		void RenderService::onUpdate(const EngineTime& time) {

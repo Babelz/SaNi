@@ -16,7 +16,7 @@ namespace sani {
 			graphics::GraphicsDevice* graphicsDevice;
 			graphics::Renderer* renderer;
 		protected:
-			bool onInitialize() override;
+			void onInitialize() override;
 
 			void onUpdate(const EngineTime& time) override;
 		public:

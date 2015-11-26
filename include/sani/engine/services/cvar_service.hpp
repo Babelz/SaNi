@@ -29,7 +29,7 @@ namespace sani {
 			void useDefaultConfiguration();
 			void checkForRequiredCVars();
 		protected:
-			bool onInitialize() override;
+			void onInitialize() override;
 			
 			void onStop() override;
 		public:

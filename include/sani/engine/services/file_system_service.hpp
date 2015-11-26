@@ -21,7 +21,7 @@ namespace sani{
 		private:
 			io::FileSystem* fileSystem;
 		protected:
-			bool onInitialize() override;
+			void onInitialize() override;
 		public:
 			FileSystemService(SaNiEngine* const engine);
 
