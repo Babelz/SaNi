@@ -168,4 +168,17 @@ namespace sani {
 	bool CVar::operator >= (const CVar& other) const {
 		return !(*this < other) || *this == other;
 	}
+
+	CVar::operator String () const {
+		return stringVal;
+	}
+	CVar::operator int32 () const {
+		return int32Val;
+	}
+	CVar::operator float32 () const {
+		return float32Val;
+	}
+	CVar::operator float64 () const {
+		return float64Val;
+	}
 }

@@ -76,5 +76,16 @@ namespace sani {
 		bool operator <= (const CVar& other) const;
 		bool operator > (const CVar& other) const;
 		bool operator >= (const CVar& other) const;
+
+		operator String () const;
+		operator int32 () const;
+		operator float32 () const;
+		operator float64 () const;
+
+		CVar(const CVar&) = delete;
+		CVar(const CVar&&) = delete;
+
+		void operator =(const CVar&) = delete;
+		void operator =(const CVar&&) = delete;
 	};
 }
