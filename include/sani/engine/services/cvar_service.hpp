@@ -8,6 +8,7 @@ namespace sani {
 
 	namespace engine {
 
+		/// @class 
 		class CVarService : public EngineService {
 		private:
 			std::list<CVarRecord> records;
@@ -20,7 +21,13 @@ namespace sani {
 		public:
 			CVarService(SaNiEngine* const engine);
 
-			CVar& getCvar() const;
+			CVar* const findCVar(const String& name);
+
+			/*
+				TODO: add exec interface once it has been implemented.
+
+				void runCommand(const CVarCommand& command);
+			*/
 
 			~CVarService();
 		};
