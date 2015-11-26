@@ -26,6 +26,14 @@ namespace sani {
 		void EngineService::onStop() {
 		}
 
+		SaNiEngine* const EngineService::getEngine() {
+			return engine;
+		}
+
+		void EngineService::pushError(const String& error) {
+			errors.push(error);
+		}
+
 		ServiceState EngineService::getState() const {
 			return state;
 		}
@@ -51,12 +59,14 @@ namespace sani {
 			state = ServiceState::Suspended;
 		}
 		bool EngineService::start() {
+			bool results = false;
+			
 			switch (state) {
 			case sani::engine::ServiceState::Uninitialized:
-				onInitialize();
+				results = onInitialize();
 				break;
 			case sani::engine::ServiceState::Suspended:
-				onResume();
+				results = onResume();
 				break;
 			case sani::engine::ServiceState::Stopped:
 			case sani::engine::ServiceState::Running:
@@ -65,6 +75,8 @@ namespace sani {
 			}
 
 			state = ServiceState::Running;
+
+			return results;
 		}
 		void EngineService::stop() {
 			switch (state) {

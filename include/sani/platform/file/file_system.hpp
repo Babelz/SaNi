@@ -1,4 +1,4 @@
-##pragma once
+#pragma once
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 #include <windows.h>

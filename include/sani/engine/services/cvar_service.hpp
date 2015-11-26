@@ -1,4 +1,4 @@
-#include "sani/engine/services/engine_services.hpp"
+#include "sani/engine/engine_service.hpp"
 #include "sani/core/cvar/cvar_file.hpp"
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/core/cvar/cvar.hpp"
@@ -42,8 +42,6 @@ namespace sani {
 
 				void runCommand(const CVarCommand& command);
 			*/
-
-			~CVarService();
 		};
 	}
 }

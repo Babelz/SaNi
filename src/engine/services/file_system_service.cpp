@@ -36,7 +36,7 @@ namespace sani {
 			return fileSystem->getFileSize(path);
 		}
 
-		unsigned char* FileSystemService::getFileData(const String& path, int64& fileSize, bool nullTerminate = false) const  {
+		unsigned char* FileSystemService::getFileData(const String& path, int64& fileSize, bool nullTerminate) const  {
 			return fileSystem->getFileData(path, fileSize, nullTerminate);
 		}
 		String FileSystemService::getFileDataString(const String& path) const  {

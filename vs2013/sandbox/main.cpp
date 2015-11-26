@@ -22,21 +22,24 @@
 #include "sani/graphics/renderables/triangle.hpp"
 #include <random>
 
-using namespace sani::graphics;
-using namespace sani::math;
-
 #include "sani/platform/file/file_system.hpp"
 #include "sani/platform/file/file_stream.hpp"
 #include "sani/resource/resources.hpp"
 #include "sani/resource/texture2d.hpp"
 #include "sani/resource/effect.hpp"
-using namespace sani::resource;
 #include "sani/core/math/trigonometric.hpp"
 
 #include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/graphics/renderables/circle.hpp"
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+#include "sani/engine/sani_engine.hpp"
+
+using namespace sani::resource;
+using namespace sani::graphics;
+using namespace sani::math;
+using namespace sani::engine;
+
+void NO_ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	WIN32_ASSERT();
 
 	Window window(hInstance, 1280, 720);
@@ -76,16 +79,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	for (uint32 i = 0; i < 3; i++) {
 		for (uint32 j = 0; j < 3; j++) {
-			
+
 			Triangle t(128.0f, 128.0f);
 			t.transform.position.x = j * 256.0f + 128.0f;
 			t.transform.position.y = i * 256.0f + 128.0f;
 
 
 			t.fill = Color(rand() * 0.001f,
-							rand() * 0.0001f,
-							rand() * 0.00001f,
-							0.75f);
+				rand() * 0.0001f,
+				rand() * 0.00001f,
+				0.75f);
 
 			t.borderFill = color::white;
 
@@ -111,24 +114,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//for (uint32 i = 0; i < 3; i++) {
 	//	for (uint32 j = 0; j < 3; j++) {
-			sani::graphics::Rectangle r(0.0f, 0.0f, tuksu->getWidth(), tuksu->getHeight());
-			//r.borderThickness = 8.0f;
-			r.borderThickness = 16.0f;
+	sani::graphics::Rectangle r(0.0f, 0.0f, tuksu->getWidth(), tuksu->getHeight());
+	//r.borderThickness = 8.0f;
+	r.borderThickness = 16.0f;
 
-			r.transform.origin.x = 0.0f;
-			r.transform.origin.y = 0.0f;
+	r.transform.origin.x = 0.0f;
+	r.transform.origin.y = 0.0f;
 
-			r.transform.position.x = 300.0f;
-			r.transform.position.y = 100.0f;
+	r.transform.position.x = 300.0f;
+	r.transform.position.y = 100.0f;
 
-			r.texture = tuksu;
-			r.fill = color::white;
-			r.textureSource = Rectf(0.0f, 0.0f, tuksu->getHeight(), tuksu->getWidth());
+	r.texture = tuksu;
+	r.fill = color::white;
+	r.textureSource = Rectf(0.0f, 0.0f, tuksu->getHeight(), tuksu->getWidth());
 
-			recomputeVertices(r);
-			updateRenderData(r);
+	recomputeVertices(r);
+	updateRenderData(r);
 
-			rectangles.push_back(r);
+	rectangles.push_back(r);
 	//	}
 	//}
 
@@ -166,7 +169,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		const sani::math::Mat4f transform = camera.transformation();
 
 		graphicsDevice.clear(0.0f, 0.0f, 0.0f, 1.0f);
-		
+
 		for (Triangle& t : triangles) {
 			t.textureSource.x += 0.1f;
 			t.transform.origin.x = t.localBounds.center().x;
@@ -192,6 +195,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	graphicsDevice.cleanUp();
+}
+void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	SaNiEngine engine;
+	engine.start();
+}
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 	return 0;
 }

@@ -13,7 +13,7 @@ namespace sani {
 															 fileSystemService(nullptr) {
 		}
 
-		void CVarService::loadFiles() const {
+		void CVarService::loadFiles() {
 			std::vector<String, std::allocator<String>> cvarFiles;
 			fileSystemService->listFiles(cvarFiles, configurationRootFolder);
 
@@ -52,8 +52,8 @@ namespace sani {
 			compiler.compile(files.begin()->getFilename(), files, cvars, records);
 		}
 		void CVarService::useDefaultConfiguration() {
-			char* contents = "graphics_resolution_width		1280"
-							 "graphics_resolution_height	720";
+			char* contents = "graphics_resolution_width 1280\n"
+							 "graphics_resolution_height 720\n";
 
 			CVarFile file("configuration\\main.cfg", contents);
 			CVarCompiler compiler;
@@ -77,6 +77,8 @@ namespace sani {
 
 				checkForRequiredCVars();
 			}
+
+			return true;
 		}
 
 		void CVarService::onStop() {
@@ -112,10 +114,8 @@ namespace sani {
 				return cvar.getName() == name;
 			});
 
-			return result == cvars.end() ? nullptr : &*result;
-		}
-
-		CVarService::~CVarService() {
+			return nullptr;
+			//return result == cvars.end() ? nullptr : &*result;
 		}
 	}
 }

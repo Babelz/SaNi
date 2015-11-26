@@ -1,4 +1,4 @@
-#pragma one
+#pragma once
 
 #include "sani/graphics/renderables/circle.hpp"
 #include "sani/graphics/renderables/sprite.hpp"

@@ -46,6 +46,8 @@ namespace sani {
 
 			/// Updates all services.
 			void update(const EngineTime& time);
+			
+			bool hasErrors() const;
 
 			~EngineServiceProvider();
 

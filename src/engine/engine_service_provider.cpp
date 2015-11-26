@@ -56,6 +56,12 @@ namespace sani {
 			for (EngineService* const service : services) service->update(time);
 		}
 
+		bool EngineServiceProvider::hasErrors() const {
+			for (EngineService* const service : services) if (service->hasHerrors()) return true;
+
+			return false;
+		}
+
 		EngineServiceProvider::~EngineServiceProvider() {
 			for (EngineService* const service : services) delete service;
 		}

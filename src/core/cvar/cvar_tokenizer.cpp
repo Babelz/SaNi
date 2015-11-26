@@ -38,8 +38,13 @@ namespace sani {
 
 				cvarlang::TokenType type = cvarlang::TokenType::Invalid;
 
-				if (line.size() == 0 || cvarlang::lang::startsWithComment(line)) continue;
+				if (line.size() == 0 || cvarlang::lang::startsWithComment(line))	continue;
+				if (cvarlang::lang::containsTabs(line))								std::runtime_error("tabs not supported");
 				
+				/*
+					TODO: add support for tabs.
+				*/
+
 				// Check what type the line could be.
 				if (cvarlang::lang::isMessageStatement(line)) {
 					type = cvarlang::TokenType::Message;

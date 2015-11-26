@@ -12,12 +12,17 @@ namespace sani {
 		bool SaNiEngine::initialize() {
 			// Create all initial services.
 			FileSystemService* fileSystemService = new FileSystemService(this);
-
-			// Initialize/start all initial services.
-			fileSystemService->start();
+			CVarService* cvarService = new CVarService(this);
 
 			// Register all initial services.
 			services.registerService(fileSystemService);
+			services.registerService(cvarService);
+
+			// Initialize/start all initial services.
+			fileSystemService->start();
+			cvarService->start();
+
+			return !services.hasErrors();
 		}
 
 		EngineService* const SaNiEngine::locateService(const String& name, const uint32 id) {
@@ -39,22 +44,13 @@ namespace sani {
 
 		void SaNiEngine::start() {
 			// TODO: add services.
-			running = true;
-
 			if (!initialize()) return;
+			
+			running = true;
 
 			sani::Time last = sani::Clock::now();
 			sani::Time start = sani::Clock::now();
 			
-			/*
-				Possible update order
-					1) entity
-					2) component
-					3) physics
-					4) render data
-					5) render?
-			*/
-
 			while (running) {
 				sani::Time current = sani::Clock::now();
 
