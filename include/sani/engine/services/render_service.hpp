@@ -13,8 +13,6 @@ namespace sani {
 
 		class RenderService : public EngineService {
 		private:
-			std::list<graphics::Renderable*> elements;
-
 			graphics::GraphicsDevice* graphicsDevice;
 			graphics::Renderer* renderer;
 		protected:
@@ -31,9 +29,6 @@ namespace sani {
 				- element updates
 				- make fast af...
 			*/
-
-			void addElement(graphics::Renderable* const renderable);
-			void removeElement(graphics::Renderable* const renderable);
 
 			virtual ~RenderService() override;
 		};

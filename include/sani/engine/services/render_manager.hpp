@@ -10,6 +10,11 @@ namespace sani {
 
 	namespace engine {
 		
+		/// @class RenderManager render_manager.cpp "sani/engine/services/render_manager.hpp"
+		/// @author voidbab
+		/// 
+		/// Small service that is responsible of updating 
+		/// renderable elements when they require updating.
 		template<class T>
 		class RenderManager : public EngineService {
 		private:
@@ -24,10 +29,16 @@ namespace sani {
 		public:
 			RenderManager(engine::SaNiEngine* const engine, const String& name);
 
+			/// Adds given element to the update queue.
 			void applyChanges(T* element);
 			
+			/// Adds given element to the manager.
 			void add(T* element);
+			/// Removes given element from the manager.
 			void remove(T* element);
+
+			/// Clears the manager.
+			void clear();
 
 			~RenderManager();
 		};

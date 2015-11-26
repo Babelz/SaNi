@@ -1,3 +1,4 @@
+#include "sani/engine/services/engine_services.hpp"
 #include "sani/platform/time/engine_time.hpp"
 #include "sani/engine/sani_engine.hpp"
 
@@ -9,7 +10,14 @@ namespace sani {
 		}
 
 		bool SaNiEngine::initialize() {
-			return false;
+			// Create all initial services.
+			FileSystemService* fileSystemService = new FileSystemService(this);
+
+			// Initialize/start all initial services.
+			fileSystemService->start();
+
+			// Register all initial services.
+			services.registerService(fileSystemService);
 		}
 
 		EngineService* const SaNiEngine::locateService(const String& name, const uint32 id) {

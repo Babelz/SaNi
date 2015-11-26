@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
+    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
@@ -232,7 +233,6 @@
     <ClInclude Include="..\..\include\sani\contracts.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_condition.hpp" />
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_lang.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_linker.hpp" />
@@ -240,7 +240,6 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_record.hpp" />
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_record_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_statement.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_token.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_tokenizer.hpp" />
@@ -285,6 +284,9 @@
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\engine_service_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\engine_services.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\render_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />

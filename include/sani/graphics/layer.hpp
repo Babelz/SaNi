@@ -20,6 +20,8 @@ namespace sani {
 		/// Groups elements together for rendering.
 		class Layer {
 		private:
+			std::vector<graphics::Renderable* const> elements;
+
 			// Bottom part of the layer (all elements that have z value smaller than 0.0f)
 			std::vector<graphics::Renderable* const> bottom;
 			// Top part of the layer (all elements with z value of 0.0f or greater)
@@ -46,6 +48,9 @@ namespace sani {
 			void hide();
 			void show();
 
+			void add(graphics::Renderable* const element);
+			void remove(graphics::Renderable* const element);
+			
 			void render(graphics::Renderer* const renderer);
 
 			~Layer();

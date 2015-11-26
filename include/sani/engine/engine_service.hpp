@@ -23,6 +23,8 @@ namespace sani {
 		/// some given set of operations defined by another service.
 		/// Services can work as standalone as well, meaning they don't 
 		/// depend on any other services.
+		/// Services control the whole logical flow of the engine and 
+		/// can even close the engine.
 		class EngineService {
 		private:
 			static uint32 idGenerator;
@@ -39,8 +41,14 @@ namespace sani {
 			virtual bool onInitialize();
 			virtual void onUpdate(const EngineTime& time);
 
+			/// Internal event that is triggered 
+			/// when the service is being suspended.
 			virtual void onSuspend();
+			/// Internal event that is triggered 
+			/// when the service is being resumed.
 			virtual bool onResume();
+			/// Internal event that is triggered 
+			/// when the service is being stopped.
 			virtual void onStop();
 
 			SaNiEngine* const getEngine();
@@ -51,7 +59,7 @@ namespace sani {
 		public:
 			/*
 				TODO: notify services that depend on me
-					  that im being disposed.
+					  that i'm being disposed.
 			*/
 
 			ServiceState getState() const;

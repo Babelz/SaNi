@@ -366,6 +366,9 @@
     <ClCompile Include="..\..\src\engine\services\render_service.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -473,9 +476,6 @@
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_token.hpp">
       <Filter>include\core\cvar</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_container.hpp">
-      <Filter>include\core\cvar</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp">
       <Filter>include\core\utils</Filter>
     </ClInclude>
@@ -532,9 +532,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp">
       <Filter>include\platform\file</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\cvar\cvar_record_container.hpp">
-      <Filter>include\core\cvar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\debug.hpp">
       <Filter>include</Filter>
@@ -775,6 +772,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\impl\render_manager.hpp">
       <Filter>include\engine\services\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\engine_services.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

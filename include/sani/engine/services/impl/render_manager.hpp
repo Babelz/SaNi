@@ -58,9 +58,22 @@ namespace sani {
 		void RenderManager<T>::remove(T* const element) {
 			const uint32 elementIndex = element->nextElementIndex();
 
-			elements.erase(elements.begin() + elementIndex);
+			elements[elementIndex] = nullptr;
 
 			releasedElementIndices.push(elementIndex);
+		}
+
+		template<class T>
+		void RenderManager<T>::clear() {
+			for (uint32 i = 0; i < elements.size(); i++) {
+				T* element = elements[i];
+
+				const uint32 elementIndex = element->nextElementIndex();
+
+				elements[elementIndex] = nullptr;
+
+				releasedElementIndices.push(elementIndex);
+			}
 		}
 
 		template<class T>
