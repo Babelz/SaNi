@@ -96,11 +96,11 @@ namespace sani {
 			*/
 
 			const char* const defaultPolygonVertexSource = 
-											"#version 330 core\n"
-											"layout(location = 0) in vec3 vertex_position;"
-											"layout(location = 1) in vec4 vertex_color;"
+											"#version 120\n"
+											"attribute vec3 vertex_position;"
+											"attribute vec4 vertex_color;"
 											""
-											"out vec4 out_vertex_color;"
+											"varying vec4 out_vertex_color;"
 											"uniform mat4 transform;"
 											""
 											"void main() {"
@@ -109,22 +109,21 @@ namespace sani {
 											"}";
 
 			const char* const defaultPolygonFragmentSource = 
-											"#version 330 core\n"
-											"in vec4 out_vertex_color;"
-											"out vec4 vertex_color;"
+											"#version 120\n"
+											"varying vec4 out_vertex_color;"
 											""
 											"void main() {"
-											"	vertex_color = out_vertex_color;"
+											"	gl_FragColor = out_vertex_color;"
 											"}";
 
 			const char* const defaultTexturedPolygonVertexSource = 
-											"#version 330\n"
-											"layout (location = 0) in vec3 vertex_position;"
-											"layout (location = 1) in vec4 vertex_color;"
-											"layout (location = 2) in vec2 texture_coordinates;"
+											"#version 120\n"
+											"attribute vec3 vertex_position;"
+											"attribute vec4 vertex_color;"
+											"attribute in vec2 texture_coordinates;"
 											""
-											"out vec2 out_texture_coordinates;"
-											"out vec4 out_vertex_color;"
+											"varying vec2 out_texture_coordinates;"
+											"varying vec4 out_vertex_color;"
 											""
 											"uniform mat4 transform;"
 											""
@@ -135,15 +134,14 @@ namespace sani {
 											"}";
 
 			const char* const defaultTexturedPolygonFragmentSource = 
-											"#version 330\n"
-											"out vec4 vertex_color;"
-											"in vec2 out_texture_coordinates;"
-											"in vec4 out_vertex_color;"
+											"#version 120\n"
+											"varying vec2 out_texture_coordinates;"
+											"varying vec4 out_vertex_color;"
 											""
 											"uniform sampler2D sampler;"
 											""
 											"void main() {"
-											"	vertex_color = texture(sampler, out_texture_coordinates) * out_vertex_color;"
+											"	gl_FragColor = texture2D(sampler, out_texture_coordinates) * out_vertex_color;"
 											"}";
 
 			uint32 vertex = 0;

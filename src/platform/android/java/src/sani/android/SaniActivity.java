@@ -79,6 +79,8 @@ public class SaniActivity extends Activity
 		setContentView(glSurfaceView);
 
 		resourceManagerPtr = nativeInitResourceManager(fileSystemPtr, graphicsDevicePtr);
+		// TODO DIRTY HAX REMOVE 
+		renderer.setResourceManager(resourceManagerPtr);
 		Log.i("SaniActivity", "activity init");
 	}
 

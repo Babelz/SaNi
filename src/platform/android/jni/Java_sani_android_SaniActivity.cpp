@@ -3,9 +3,12 @@
 #include "sani/platform/file/file_system.hpp"
 #include <sani/platform/graphics/graphics_device.hpp>
 #include "sani/resource/resource_manager.hpp"
+#include "sani/resource/texture2d.hpp"
 #include <cassert>
 #include <android\log.h>
+
 extern "C" {
+
 	JNIEXPORT void JNICALL 
 		Java_sani_android_SaniActivity_nativeSetContext(JNIEnv* env, jobject thiz, jobject assetManager, jlong fileSystemPtr) {
 		using namespace sani::io;
@@ -43,4 +46,5 @@ extern "C" {
 		GraphicsDevice* device = new GraphicsDevice();
 		return (long)device;
 	}
+
 }
