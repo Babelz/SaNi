@@ -166,9 +166,6 @@
     <Filter Include="src\engine\services">
       <UniqueIdentifier>{af50be73-925a-49d7-9aa7-94eff41ee78d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\engine\services\impl">
-      <UniqueIdentifier>{70ebac3a-ac11-4aa6-a00b-daa5dfeb17c1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -359,15 +356,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\engine_service.cpp">
       <Filter>src\engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\services\render_service.cpp">
-      <Filter>src\engine\services</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp">
-      <Filter>src\engine\services</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
-      <Filter>src\engine\services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -752,9 +740,6 @@
     <ClInclude Include="..\..\include\sani\core\inl\events.inl">
       <Filter>include\core\inl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderables.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
@@ -763,21 +748,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\layer_type.hpp">
       <Filter>include\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\render_manager.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\impl\render_manager.hpp">
-      <Filter>include\engine\services\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\engine_services.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
-      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

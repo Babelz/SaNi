@@ -178,9 +178,6 @@
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
-    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp" />
-    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp" />
-    <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
@@ -283,12 +280,6 @@
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\engine_service_provider.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\engine_services.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\impl\render_manager.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\render_manager.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
