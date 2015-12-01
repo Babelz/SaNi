@@ -72,6 +72,8 @@ namespace sani {
 			/// @param offset How many bytes are traversed
 			virtual void seek(const SeekPosition seekpos, const long offset) const = 0;
 
+			virtual int64 size() const = 0;
+
 			inline Filemode getOpenMode() const;
 			inline const String& getPath() const;
 
@@ -91,6 +93,7 @@ namespace sani {
 				virtual uint32 write(const unsigned char* data, const int32 size) const;
 				virtual void seek(const SeekPosition seekpos, const long offset) const;
 				virtual void flush() const;
+				virtual int64 size() const;
 			};
 		}
 	}

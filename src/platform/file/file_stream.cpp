@@ -45,6 +45,14 @@ namespace sani {
 				fflush(handle);
 			}
 
+			int64 FileStreamImpl::size() const {
+				long current = ftell(handle);
+				fseek(handle, 0L, SEEK_END);
+				int64 size = ftell(handle);
+				fseek(handle, current, SEEK_SET);
+				return size;
+			}
+
 			// TODO reference counting
 			FileStreamImpl::~FileStreamImpl() {
 				// flcose flushes the buffer
