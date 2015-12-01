@@ -12,12 +12,13 @@ namespace sani {
 
 	namespace engine {
 
-		/// @class EngineServiceProvider engine_service_provider.hpp "sani/engine/engine_service_provider.hpp"
+		/// @class ServiceRegistry service_registry.hpp "sani/engine/service_registry.hpp"
 		/// @author voidbab
 		///
-		/// Service provider of the engine. Contains all services
-		/// and is responsible of managing the services.
-		class EngineServiceProvider {
+		/// Service registry of the engine. Contains all services
+		/// and is responsible of managing the services and 
+		/// locating the for the consumers.
+		class ServiceRegistry {
 		private:
 			std::list<EngineService*> services;
 
@@ -30,7 +31,7 @@ namespace sani {
 			/// Triggered once a service has been unregistered.
 			SANI_DECLARE_EVENT(unregistered, void(EngineService* const));
 
-			EngineServiceProvider();
+			ServiceRegistry();
 
 			/// Returns the first service with given name and ID.
 			EngineService* const locate(const String& name, const uint32 id);
@@ -49,17 +50,17 @@ namespace sani {
 			
 			bool hasErrors() const;
 
-			~EngineServiceProvider();
+			~ServiceRegistry();
 
 			/*
 				Deleted operators/methods.
 			*/
 
-			EngineServiceProvider(const EngineServiceProvider&) = delete;
-			EngineServiceProvider(const EngineServiceProvider&&) = delete;
+			ServiceRegistry(const ServiceRegistry&) = delete;
+			ServiceRegistry(const ServiceRegistry&&) = delete;
 
-			void operator =(const EngineServiceProvider&) = delete;
-			void operator =(const EngineServiceProvider&&) = delete;
+			void operator =(const ServiceRegistry&) = delete;
+			void operator =(const ServiceRegistry&&) = delete;
 		};
 	}
 }

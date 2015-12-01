@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/engine/engine_service_provider.hpp"
+#include "sani/engine/service_registry.hpp"
 
 namespace sani {
 
@@ -12,7 +12,7 @@ namespace sani {
 		/// The core of the engine. 
 		class SaNiEngine {
 		private:
-			EngineServiceProvider services;
+			ServiceRegistry services;
 
 			bool running;
 

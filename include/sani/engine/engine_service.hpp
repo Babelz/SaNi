@@ -7,6 +7,7 @@
 #include <stack>
 #include <list>
 
+SANI_FORWARD_DECLARE_2(sani, engine, StateMessage);
 SANI_FORWARD_DECLARE_2(sani, engine, SaNiEngine);
 SANI_FORWARD_DECLARE_1(sani, EngineTime);
 
@@ -30,58 +31,43 @@ namespace sani {
 			static uint32 idGenerator;
 
 			std::stack<String> errors;
-			std::list<EngineService*> dependencies;
 			
 			SaNiEngine* const engine;
 			ServiceState state;
 
+			// Name of the service.
 			const String name;
+			// Unique identifier of the service.
 			const uint32 id;
+
+			void sendStateMessage(StateMessage* const message, const String& errorMessage);
 		protected:
-			virtual void onInitialize();
-			virtual void onUpdate(const EngineTime& time);
-
-			/// Internal event that is triggered 
-			/// when the service is being suspended.
-			virtual void onSuspend();
-			/// Internal event that is triggered 
-			/// when the service is being resumed.
-			virtual bool onResume();
-			/// Internal event that is triggered 
-			/// when the service is being stopped.
-			virtual void onStop();
-
+			virtual void handleStateMessage(StateMessage* const stateMessage);
+			
 			SaNiEngine* const getEngine();
-
+			
 			void pushError(const String& error);
 
 			EngineService(const String& name, SaNiEngine* const engine);
 		public:
-			/*
-				TODO: notify services that depend on me
-					  that i'm being disposed.
-			*/
+			/// Starts the service. First call 
+			/// allows for service specific initialization.
+			void start();
+			/// Suspends the service. While suspended, the service can't
+			/// process or send any messages.
+			void suspend();
+			/// Terminates the service. Services that are
+			/// terminated should not be used anymore.
+			void terminate();
+
+			virtual void update(const EngineTime& time);
 
 			ServiceState getState() const;
-			const String& getName() const;
-			const uint32 getID() const;
 
-			/// Suspends the service.
-			void suspend();
-			/// Starts/resumes the service.
-			void start();
-			/// Stops the service and prepares it to be disposed.
-			void stop();
+			const String& const getName() const;
+			uint32 getID() const;
 
-			void update(const EngineTime& time);
-
-			/// Returns true if this service is using the given service.
-			bool isUsing(const EngineService* const other) const;
-			/// Returns true if this service has errors.
-			bool hasHerrors() const;
-			
-			bool unuse(EngineService* const other);
-			bool use(EngineService* const other);
+			bool hasErrors() const;
 
 			virtual ~EngineService();
 
