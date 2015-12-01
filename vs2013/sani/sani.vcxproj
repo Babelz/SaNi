@@ -63,22 +63,26 @@
     <Import Project="Glew.props" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
+    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
+    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Glew.props" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
+    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
+    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -180,6 +184,7 @@
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
+    <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
@@ -281,6 +286,7 @@
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
