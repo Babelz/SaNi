@@ -96,38 +96,6 @@ namespace sani {
 
 		unsigned char* FileSystem::getFileData(const String& path, int64& fileSize, bool nullTerminate /*= false*/) const {	
 			assert(isFileOpen(path));
-
-			// inside APK
-			/*if (path.at(0) != '/') {
-				AAsset* asset = assetHandles.at(path);
-				if (asset) {
-					off_t size = AAsset_getLength(asset);
-
-					unsigned char* buffer;
-					if (nullTerminate) {
-						buffer = (unsigned char*)malloc(size + 1);
-						buffer[size] = '\0';
-					}
-					else {
-						buffer = (unsigned char*)malloc(size);
-					}
-
-					int readBytes = AAsset_read(asset, buffer, size);
-					if (readBytes != size) {
-						if (buffer) {
-							free(buffer);
-							buffer = nullptr;
-						}
-						fileSize = 0;
-						return nullptr;
-					}
-					fileSize = readBytes;
-					return buffer;
-
-				}
-				return nullptr;
-			} */
-			// absolute path
 			
 			FileStream* handle = handles.at(path);
 			size_t fsize = getFileSize(path);
