@@ -20,13 +20,17 @@ public class SaniRenderer implements GLSurfaceView.Renderer {
 		screenHeight = surfaceHeight;
 	}
 
+	public void setGraphicsDevicePointer(final long ptr) {
+		graphicsDevicePtr = ptr;
+	}
+
 	@Override
 	public void onSurfaceCreated(final GL10 gl10, final EGLConfig config) {
-		graphicsDevicePtr = nativeInitGraphicsDevice();
 		if (graphicsDevicePtr == 0) {
 			Log.e("SaniRenderer", "Graphics device is null");
 			System.exit(0);
 		}
+		Log.e("SaniRenderer", "Created gdevice");
 		nativeInit(screenWidth, screenHeight, graphicsDevicePtr);
 	}
 
@@ -39,9 +43,6 @@ public class SaniRenderer implements GLSurfaceView.Renderer {
 	public void onDrawFrame(final GL10 gl) {
 		nativeRender(graphicsDevicePtr);
 	}
-
-	// Initialize graphics device
-	private static native long nativeInitGraphicsDevice();
 
 	// Initializes the graphics devices
 	private static native void nativeInit(final int width, final int height, long graphicsDevice);

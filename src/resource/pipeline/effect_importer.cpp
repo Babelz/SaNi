@@ -1,3 +1,6 @@
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 #include "sani/resource/pipeline/effect_importer.hpp"
 #include "sani/resource/effect_content.hpp"
 namespace sani {
@@ -42,3 +45,4 @@ namespace sani {
 		}
 	}
 }
+#endif

@@ -1,5 +1,6 @@
 #include "../vector2.hpp"
 #include "sani/debug.hpp"
+#include <cmath>
 
 namespace sani {
 	namespace math {

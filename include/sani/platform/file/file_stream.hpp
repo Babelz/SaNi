@@ -26,19 +26,18 @@ namespace sani {
 		};
 
 		/// Operator for bitwise or
-		inline Filemode operator|(Filemode a, Filemode b) {
-			return static_cast<Filemode>(static_cast<int>(a) | static_cast<int>(b));
+		inline Filemode operator|(const Filemode a, const Filemode b) {
+			return static_cast<Filemode>(static_cast<uint32>(a) | static_cast<uint32>(b));
 		}
 
 		class FileStream {
-		private:
+		protected:
 			const String filePath;
 			const Filemode mode;
-			FILE* handle;
 		public:
 			
-			FileStream(const String& filePath, const Filemode mode, FILE* handle);
-			~FileStream();
+			FileStream(const String& filePath, const Filemode mode);
+			virtual ~FileStream();
 			// disable copying
 			FileStream(const FileStream& fileStream) = delete;
 			FileStream(FileStream&& fileStream) = delete;
@@ -50,7 +49,7 @@ namespace sani {
 			/// @param buffer The buffer where to read 
 			/// @param size The amount of bytes to read
 			/// @return The bytes how much was read
-			int64 read(unsigned char* buffer, const int32 size) const;
+			virtual int64 read(unsigned char* buffer, const int32 size) const = 0;
 
 			/// Reads the data from offset position
 			///
@@ -58,26 +57,42 @@ namespace sani {
 			/// @param offset Where to seek
 			/// @param size The amount of bytes to read
 			/// @return The bytes how much was read
-			int64 read(unsigned char* buffer, const int32 offset, const int32 size) const;
+			virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) const = 0;
 
 			/// Writes the data to file
 			/// 
 			/// @param data The data that needs to be written
 			/// @param size The size of the data measured in bytes
 			/// @return The bytes written
-			uint32 write(const unsigned char* data, const int32 size) const;
+			virtual uint32 write(const unsigned char* data, const int32 size) const = 0;
 
 			/// Seeks in the file stream
 			///
 			/// @param seekpos What position is used as the origin
 			/// @param offset How many bytes are traversed
-			void seek(const SeekPosition seekpos, const long offset) const;
+			virtual void seek(const SeekPosition seekpos, const long offset) const = 0;
 
 			inline Filemode getOpenMode() const;
 			inline const String& getPath() const;
 
-			void flush() const;
+			/// Flushs the file stream
+			virtual void flush() const = 0;
 		};
+
+		namespace priv {
+			class FileStreamImpl : public sani::io::FileStream {
+			private:
+				FILE* handle;
+			public:
+				FileStreamImpl(const String& filePath, const Filemode mode, FILE* handle);
+				~FileStreamImpl();
+				virtual int64 read(unsigned char* buffer, const int32 size) const;
+				virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) const;
+				virtual uint32 write(const unsigned char* data, const int32 size) const;
+				virtual void seek(const SeekPosition seekpos, const long offset) const;
+				virtual void flush() const;
+			};
+		}
 	}
 }
 

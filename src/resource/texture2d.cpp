@@ -1,5 +1,9 @@
 #include "sani/resource/texture2d.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
+#include "sani/platform.hpp"
+#include <algorithm>
+#include <stdexcept>
+
 
 namespace sani {
 	namespace resource {
@@ -74,8 +78,8 @@ namespace sani {
 			}
 			int x, y, w, h;
 			x = y = 0;
-			w = max(getWidth() >> level, 1);
-			h = max(getHeight() >> level, 1);
+			w = std::max(getWidth() >> level, 1u);
+			h = std::max(getHeight() >> level, 1u);
 
 			device->bindTexture(renderTexture);
 			device->setTextureData(

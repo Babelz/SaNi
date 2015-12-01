@@ -3,6 +3,8 @@
 #include "sani/graphics/render_helper.hpp"
 #include "sani/graphics/vertex_helper.hpp"
 #include "sani/graphics/renderer.hpp"
+#include "sani/platform.hpp"
+#include <algorithm>
 
 namespace sani {
 
@@ -90,7 +92,7 @@ namespace sani {
 		}
 		void recomputeBounds(Triangle& triangle) {
 			// Recompute local bounds.
-			const float32 maxHeight = std::fmax(triangle.leftPoint.y, triangle.rightPoint.y);
+			const float32 maxHeight = std::max(triangle.leftPoint.y, triangle.rightPoint.y);
 			
 			// Compute local bounds.
 			triangle.localBounds.x = 0.0f;

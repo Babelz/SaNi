@@ -45,6 +45,8 @@ public class SaniActivity extends Activity
 	private SaniGLSurfaceView glSurfaceView;
 
 	private long fileSystemPtr;
+	private long resourceManagerPtr;
+	private long graphicsDevicePtr;
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -69,9 +71,15 @@ public class SaniActivity extends Activity
 			// Avoids crashes on startup with some emulator images.
 			glSurfaceView.setEGLConfigChooser(8, 8, 8, 8, 16, 0);
 		}
+		graphicsDevicePtr = nativeInitGraphicsDevice();
+		SaniRenderer renderer = new SaniRenderer();
+		renderer.setGraphicsDevicePointer(graphicsDevicePtr);
 
-		glSurfaceView.setSaniRenderer(new SaniRenderer());
+		glSurfaceView.setSaniRenderer(renderer);
 		setContentView(glSurfaceView);
+
+		resourceManagerPtr = nativeInitResourceManager(fileSystemPtr, graphicsDevicePtr);
+		Log.i("SaniActivity", "activity init");
 	}
 
 	private boolean isProbablyEmulator() {
@@ -82,6 +90,11 @@ public class SaniActivity extends Activity
 						|| Build.MODEL.contains("Emulator")
 						|| Build.MODEL.contains("Android SDK built for x86"));
 	}
+
+	// Initialize graphics device
+	private static native long nativeInitGraphicsDevice();
+
+	private static native long nativeInitResourceManager(long fileSystem, long graphicsDevice);
 
 	public native long nativeInitializeFileSystem();
 	/* Sets the context to be used in android apps

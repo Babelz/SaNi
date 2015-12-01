@@ -48,7 +48,7 @@ namespace sani {
 
 			if (!handle) return false;
 
-			handles[path] = new FileStream(path, mode, handle);
+			handles[path] = new priv::FileStreamImpl(path, mode, handle);
 			*stream = handles[path];
 
 			// File open succeeded

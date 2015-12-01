@@ -1,4 +1,6 @@
 #include "sani/engine/engine_service.hpp"
+#include <stdexcept>
+#include <algorithm>
 
 namespace sani {
 

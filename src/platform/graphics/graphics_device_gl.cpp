@@ -3,6 +3,7 @@
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/debug.hpp"
 #include <sstream>
+#include <stdexcept>
 
 // Contains WindowsGL and LinuxGL implementations of the graphics device.
 
@@ -272,8 +273,8 @@ namespace sani {
 
 		}
 
-		void GraphicsDevice::clear(const Color& color) {
-			glClearColor(color.r, color.g, color.b, color.a);
+		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
+			glClearColor(r, g, b, a);
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -451,6 +452,7 @@ namespace sani {
 
 		void GraphicsDevice::getTextureData(const TextureTarget target, const int level,
 			const SurfaceFormat format, unsigned char* data) {
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			glGetTexImage(
 				static_cast<GLenum>(target),
 				level,
@@ -458,6 +460,10 @@ namespace sani {
 				GL_UNSIGNED_BYTE,
 				data
 				);
+#else
+			throw std::logic_error("not implemented");
+#endif
+
 		}
 
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
@@ -466,7 +472,7 @@ namespace sani {
 			/*
 				TODO: impl multisampling.
 			*/
-
+#if 0
 			// Generate frame buffer.
 			glGenFramebuffers(1, &frameBuffer);
 			glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
@@ -487,19 +493,18 @@ namespace sani {
 
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-			glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture, 0);
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID 
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture, 0);
-#endif
+		// WIN32	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture, 0);
+		// ANDROID  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture, 0);
+
 			GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-			glDrawBuffers(1, drawBuffers);
+			//glDrawBuffers(1, drawBuffers);
 
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 			CHECK_FOR_ERRORS();
+#endif
 		}
 
 		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {

@@ -81,8 +81,7 @@ namespace sani {
 			UShort = GL_UNSIGNED_SHORT,
 			Int = GL_INT,
 			UInt = GL_UNSIGNED_INT,
-			Float = GL_FLOAT,
-			Double = GL_DOUBLE
+			Float = GL_FLOAT
 		};
 
 		enum class ShaderType {
@@ -122,14 +121,18 @@ namespace sani {
 			LineStrip = GL_LINE_STRIP,
 			LineLoop = GL_LINE_LOOP,
 			Lines = GL_LINES,
+#if 0
 			LineStripAdjacency = GL_LINE_STRIP_ADJACENCY,
 			LinesAdjacency = GL_LINES_ADJACENCY,
+#endif
 			TriangleStrip = GL_TRIANGLE_STRIP,
 			TriangleFan = GL_TRIANGLE_FAN,
 			Triangles = GL_TRIANGLES,
+#if 0
 			TriangleStripAdjacency = GL_TRIANGLE_STRIP_ADJACENCY,
 			TrianglesAdjancency = GL_TRIANGLES_ADJACENCY,
 			Patches = GL_PATCHES
+#endif
 		};
 
 		struct VertexAttributePointerDescription  {
@@ -165,7 +168,9 @@ namespace sani {
 
 		enum class TextureTarget : uint32 {
 			Texture2D = GL_TEXTURE_2D,
+#if 0
 			Texture3D = GL_TEXTURE_3D
+#endif
 		};
 
 		enum class TextureParameterName : uint32 {
@@ -179,7 +184,9 @@ namespace sani {
 			Repeat = GL_REPEAT,
 			MirroredRepeat = GL_MIRRORED_REPEAT,
 			ClampToEdge = GL_CLAMP_TO_EDGE,
+#if 0
 			ClampToBorder = GL_CLAMP_TO_BORDER
+#endif
 		};
 
 		enum class TextureMagFilter {

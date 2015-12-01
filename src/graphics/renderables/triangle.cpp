@@ -42,7 +42,7 @@ namespace sani {
 			rightVertex.textureCoordinates.x = 1.0f;
 			rightVertex.textureCoordinates.y = 0.0f;
 
-			const float32 my = std::fmaxf(ly, ry);
+			const float32 my = std::max(ly, ry);
 
 			transform.origin.x = (rx - lx) / 2.0f;
 			transform.origin.y = my / 2.0f;

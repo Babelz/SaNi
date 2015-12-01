@@ -1,3 +1,6 @@
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 #include "sani/resource/compiler/effect_writer.hpp"
 #include "sani/resource/compiler/resource_writer.hpp"
 #include "sani/resource/effect_content.hpp"
@@ -29,3 +32,4 @@ namespace sani {
 		}
 	}
 }
+#endif

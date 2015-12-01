@@ -1,3 +1,6 @@
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 #include "sani/resource/pipeline/texture2d_importer.hpp"
 #include "sani/platform/file/file_system.hpp"
 #include "sani/resource/texture2d_content.hpp"
@@ -112,3 +115,4 @@ namespace sani {
 		}
 	}
 }
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/types.hpp"
 #include "sani/platform/file/file_system.hpp"
@@ -19,3 +21,5 @@ namespace sani {
 		}
 	}
 }
+
+#endif
