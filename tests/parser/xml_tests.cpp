@@ -13,5 +13,10 @@ TEST_CASE("XML parsing", "[xml]") {
 	SECTION("Loading") {
 		REQUIRE(fileSystem.openFile(Path, Filemode::Read, &stream));
 		doc.load(stream);
+		XmlNode node;
+		CHECK(doc.firstNode(node));
+		CHECK(!doc.firstNode("field", node));
+
+
 	}
 }

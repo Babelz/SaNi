@@ -20,5 +20,29 @@ namespace sani {
 				throw sani::parser::XmlException(error.what());
 			}
 		}
+
+		bool XmlDocument::firstNode(const char* name, XmlNode& to) {
+			// not found
+			rapidxml::xml_node<>* node;
+			if ((node = document.first_node(name)) == nullptr) {
+				return false;
+			}
+			to = XmlNode(node);
+			return true;
+		}
+		
+		bool XmlDocument::firstNode(XmlNode& node) {
+			return firstNode(0, node);
+		}
+
+		XmlNode::XmlNode()
+			: node(nullptr) {
+		}
+
+		XmlNode::XmlNode(rapidxml::xml_node<>* node) 
+			: node(node) {
+
+		}
+
 	}
 }

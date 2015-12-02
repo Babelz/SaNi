@@ -17,6 +17,16 @@ namespace sani {
 				: std::runtime_error(what) {}
 		};
 
+		class XmlNode {
+		private:
+			rapidxml::xml_node<>* node;
+		public:
+			/// Default constructor
+			XmlNode();
+			/// 
+			XmlNode(rapidxml::xml_node<>* node);
+		};
+
 		class XmlDocument {
 		private:
 			rapidxml::xml_document<> document;
@@ -39,6 +49,19 @@ namespace sani {
 			///
 			/// @param xml The string containing the xml
 			void loadXml(const String& xml);
+
+			/// Gets first child node
+			///
+			/// @param node Where to store the node if found
+			/// @return true if the node is found, otherwise false
+			bool firstNode(XmlNode& node);
+
+			/// Gets first child node matching the name
+			///
+			/// @param name Null terminated string containing the name
+			/// @param node Where to store the node if found
+			/// @return true if the node is found, otherwise false
+			bool firstNode(const char* name, XmlNode& node);
 		};
 	}
 }
