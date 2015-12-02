@@ -44,5 +44,17 @@ namespace sani {
 
 		}
 
+		String XmlNode::value() const {
+			return String(node->value());
+		}
+
+		void XmlNode::setValue(const String& value) {
+			node->value(value.c_str());
+		}
+
+		bool XmlNode::hasChilds() const {
+			return node->first_node() != nullptr;
+		}
+
 	}
 }

@@ -17,6 +17,7 @@ namespace sani {
 				: std::runtime_error(what) {}
 		};
 
+		/// XML node in document
 		class XmlNode {
 		private:
 			rapidxml::xml_node<>* node;
@@ -25,8 +26,15 @@ namespace sani {
 			XmlNode();
 			/// 
 			XmlNode(rapidxml::xml_node<>* node);
+
+			String value() const;
+
+			void setValue(const String& value);
+
+			bool hasChilds() const;
 		};
 
+		/// XmlDocument which doesnt support XPath queries
 		class XmlDocument {
 		private:
 			rapidxml::xml_document<> document;

@@ -10,13 +10,14 @@ const std::string Path("../../assets/test_xml.xml");
 FileStream* stream;
 TEST_CASE("XML parsing", "[xml]") {
 	XmlDocument doc;
+	XmlNode node;
 	SECTION("Loading") {
 		REQUIRE(fileSystem.openFile(Path, Filemode::Read, &stream));
 		doc.load(stream);
-		XmlNode node;
 		CHECK(doc.firstNode(node));
 		CHECK(!doc.firstNode("field", node));
-
-
+		CHECK(node.hasChilds());
 	}
+
+	fileSystem.closeFile(Path);
 }
