@@ -761,6 +761,18 @@
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipents_count.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
