@@ -21,6 +21,7 @@
     <ClCompile Include="..\..\tests\math\vector.cpp" />
     <ClCompile Include="..\..\tests\memory\heap.cpp" />
     <ClCompile Include="..\..\tests\memory\pool.cpp" />
+    <ClCompile Include="..\..\tests\parser\xml_tests.cpp" />
     <ClCompile Include="..\..\tests\resource\resource.cpp" />
     <ClCompile Include="..\..\tests\time\time.cpp" />
     <ClCompile Include="..\..\tests\utils\string_utils.cpp" />
@@ -55,12 +56,14 @@
     <Import Project="..\propertysheets\catch.props" />
     <Import Project="..\propertysheets\sani.props" />
     <Import Project="..\propertysheets\libpng.props" />
+    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\propertysheets\catch.props" />
     <Import Project="..\propertysheets\sani.props" />
     <Import Project="..\propertysheets\libpng.props" />
+    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

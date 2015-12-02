@@ -4,11 +4,19 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 #include <vector>
+#include <stdexcept>
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 
 
 namespace sani {
 	namespace parser {
+
+		class XmlException : std::runtime_error {
+		public:
+			XmlException(const std::string& what) 
+				: std::runtime_error(what) {}
+		};
+
 		class XmlDocument {
 		private:
 			rapidxml::xml_document<> document;

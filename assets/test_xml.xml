@@ -1,0 +1,7 @@
+<root>
+	<field name="top" value="kek" />
+	<field name="massive" value="topkek" />
+	<child>
+		<inner_child name="child" />
+	</child>
+</root>
