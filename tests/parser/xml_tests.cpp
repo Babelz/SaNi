@@ -23,11 +23,18 @@ TEST_CASE("XML parsing", "[xml]") {
 		CHECK(node.getChildNodes(childs));
 
 		XmlNode& child = childs[0];
+		CHECK(childs.size() == 3); // field, field, child
 		CHECK(child.getName() == "field");
 		XmlAttribute nameAttr;
 		CHECK(child.attribute("name", nameAttr));
-
 		CHECK(nameAttr.value() == "top");
+
+		std::vector<XmlAttribute> attributes;
+		CHECK(child.getAttributes(attributes));
+		CHECK(attributes.size() == 2);
+		CHECK(attributes[1].value() == "kek");
+
+
 		
 	}
 

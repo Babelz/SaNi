@@ -95,6 +95,18 @@ namespace sani {
 			return true;
 		}
 
+		bool XmlNode::getAttributes(std::vector<XmlAttribute>& attributes) const {
+			rapidxml::xml_attribute<>* attribute;
+			if ((attribute = node->first_attribute()) == nullptr) {
+				return false;
+			}
+			attributes.push_back(XmlAttribute(attribute));
+			while ((attribute = attribute->next_attribute()) != nullptr) {
+				attributes.push_back(XmlAttribute(attribute));
+			}
+			return !attributes.empty();
+		}
+
 		String XmlNode::getName() const {
 			return node->name();
 		}

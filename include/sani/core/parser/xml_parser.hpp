@@ -63,6 +63,11 @@ namespace sani {
 
 			bool getChildNodes(std::vector<XmlNode>& childs) const;
 
+			/// Gets all attributes of the node
+			/// 
+			/// @return true if has attributes, false otherwise
+			bool getAttributes(std::vector<XmlAttribute>& attributes) const;
+
 			/// Gets the XML element name
 			///
 			/// @return The name of the XML element
