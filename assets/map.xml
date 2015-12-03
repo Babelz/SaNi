@@ -1,0 +1,14 @@
+<assets>
+	<asset filename="tuksu.png" 
+		importer="sani::resource::pipeline::Texture2DImporter" 
+		processor="sani::resource::processor::Texture2DProcessor"
+		writer="sani::resource::compiler::Texture2DWriter" />
+	<asset filename="polygon.vert" 
+		importer="sani::resource::pipeline::EffectImporter" 
+		processor="sani::resource::processor::EffectProcessor"
+		writer="sani::resource::compiler::EffectImporter" />
+	<asset filename="texture.vert" 
+		importer="sani::resource::pipeline::EffectImporter" 
+		processor="sani::resource::processor::EffectProcessor"
+		writer="sani::resource::compiler::EffectImporter" />
+</assets>
