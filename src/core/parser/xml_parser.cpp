@@ -21,7 +21,7 @@ namespace sani {
 			}
 		}
 
-		bool XmlDocument::firstNode(const char* name, XmlNode& to) {
+		bool XmlDocument::firstNode(const char* name, XmlNode& to) const {
 			// not found
 			rapidxml::xml_node<>* node;
 			if ((node = document.first_node(name)) == nullptr) {
@@ -31,7 +31,7 @@ namespace sani {
 			return true;
 		}
 		
-		bool XmlDocument::firstNode(XmlNode& node) {
+		bool XmlDocument::firstNode(XmlNode& node) const {
 			return firstNode(0, node);
 		}
 
@@ -60,7 +60,7 @@ namespace sani {
 			return node->first_attribute() != nullptr;
 		}
 
-		bool XmlNode::attribute(const char* attributeName, XmlAttribute& to) {
+		bool XmlNode::attribute(const char* attributeName, XmlAttribute& to) const {
 			rapidxml::xml_attribute<>* attr;
 			if ((attr = node->first_attribute(attributeName)) == nullptr) {
 				return false;
@@ -68,6 +68,19 @@ namespace sani {
 
 			to = XmlAttribute(attr);
 			return true;
+		}
+
+		bool XmlNode::firstNode(const char* name, XmlNode& to) const {
+			rapidxml::xml_node<>* child;
+			if ((child = node->first_node()) == nullptr) {
+				return false;
+			}
+			to = XmlNode(child);
+			return true;
+		}
+
+		bool XmlNode::firstNode(XmlNode& node) const {
+			return firstNode(0, node);
 		}
 
 		bool XmlNode::getChildNodes(std::vector<XmlNode>& childs) const {
@@ -80,6 +93,10 @@ namespace sani {
 				childs.push_back(XmlNode(child));
 			}
 			return true;
+		}
+
+		String XmlNode::getName() const {
+			return node->name();
 		}
 
 		XmlAttribute::XmlAttribute()

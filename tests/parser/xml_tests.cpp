@@ -21,6 +21,13 @@ TEST_CASE("XML parsing", "[xml]") {
 
 		CHECK(node.hasChilds());
 		CHECK(node.getChildNodes(childs));
+
+		XmlNode& child = childs[0];
+		CHECK(child.getName() == "field");
+		XmlAttribute nameAttr;
+		CHECK(child.attribute("name", nameAttr));
+
+		CHECK(nameAttr.value() == "top");
 		
 	}
 
