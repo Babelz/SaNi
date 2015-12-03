@@ -11,12 +11,17 @@ FileStream* stream;
 TEST_CASE("XML parsing", "[xml]") {
 	XmlDocument doc;
 	XmlNode node;
+	std::vector<XmlNode> childs;
 	SECTION("Loading") {
 		REQUIRE(fileSystem.openFile(Path, Filemode::Read, &stream));
 		doc.load(stream);
 		CHECK(doc.firstNode(node));
 		CHECK(!doc.firstNode("field", node));
+		CHECK(node.hasAttributes() == false);
+
 		CHECK(node.hasChilds());
+		CHECK(node.getChildNodes(childs));
+		
 	}
 
 	fileSystem.closeFile(Path);

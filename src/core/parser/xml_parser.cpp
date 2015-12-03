@@ -9,7 +9,7 @@ namespace sani {
 		XmlDocument::~XmlDocument() {}
 
 		void XmlDocument::load(io::FileStream* stream) {
-			int64 size = stream->size();
+			uint32 size = static_cast<uint32>(stream->size());
 			sourceText = (std::vector<unsigned char>((size + 1u), '\0'));
 			stream->read(sourceText.data(), size);
 			
@@ -41,7 +41,7 @@ namespace sani {
 
 		XmlNode::XmlNode(rapidxml::xml_node<>* node) 
 			: node(node) {
-
+			
 		}
 
 		String XmlNode::value() const {
@@ -54,6 +54,48 @@ namespace sani {
 
 		bool XmlNode::hasChilds() const {
 			return node->first_node() != nullptr;
+		}
+
+		bool XmlNode::hasAttributes() const {
+			return node->first_attribute() != nullptr;
+		}
+
+		bool XmlNode::attribute(const char* attributeName, XmlAttribute& to) {
+			rapidxml::xml_attribute<>* attr;
+			if ((attr = node->first_attribute(attributeName)) == nullptr) {
+				return false;
+			}
+
+			to = XmlAttribute(attr);
+			return true;
+		}
+
+		bool XmlNode::getChildNodes(std::vector<XmlNode>& childs) const {
+			rapidxml::xml_node<>* child;
+			if ((child = node->first_node()) == nullptr) {
+				return false;
+			}
+			childs.push_back(XmlNode(child));
+			while ((child = child->next_sibling()) != nullptr) {
+				childs.push_back(XmlNode(child));
+			}
+			return true;
+		}
+
+		XmlAttribute::XmlAttribute()
+			: attribute(nullptr) {
+		}
+
+		XmlAttribute::XmlAttribute(rapidxml::xml_attribute<>* attr)
+			: attribute(attr) {
+		}
+
+		String XmlAttribute::value() const {
+			return attribute->value();
+		}
+
+		void XmlAttribute::setValue(const String& value) {
+			attribute->value(value.c_str());
 		}
 
 	}
