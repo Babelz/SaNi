@@ -8,7 +8,6 @@
 #include "sani/core/cvar/cvar_parser.hpp"
 #include "sani/core/cvar/cvar_statement.hpp"
 #include "sani/core/cvar/cvar_condition.hpp"
-#include "sani/core/cvar/cvar_loader.hpp"
 #include "sani/core/cvar/cvar_file.hpp"
 #include "sani/platform/file/file_system.hpp"
 #include "sani/core/cvar/cvar_record.hpp"

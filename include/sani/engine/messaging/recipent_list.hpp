@@ -2,6 +2,8 @@
 
 #include "sani/types.hpp"
 
+#include <vector>
+
 namespace sani {
 
 	namespace engine {
@@ -12,13 +14,15 @@ namespace sani {
 		/// Represents a list of recipents.
 		class RecipentList {
 		private:
-			String recipents;
+			std::vector<String> recipents;
 
 			uint32 count;
 		public:
 			RecipentList();
 
-			void setRecipents(const String& recipents);
+			void clear();
+			void addRecipent(const String& recipent);
+			void removeRecipent(const String& recipent);
 
 			void getRecipentAtIndex(const uint32 index, String& recipent) const;
 			uint32 getRecipentsCount() const;

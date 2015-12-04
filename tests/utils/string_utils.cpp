@@ -30,8 +30,8 @@ TEST_CASE("String utils", "[string utils]") {
 		std::list<String> listRes;
 		std::vector<String> vectorRes;
 		
-		split(str, String("||"), listRes);
-		split(str, String("||"), vectorRes);
+		split(str, String("||"), listRes, true);
+		split(str, String("||"), vectorRes, true);
 
 		std::list<String>::iterator iter = listRes.begin();
 
