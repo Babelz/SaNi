@@ -5,6 +5,7 @@
 #include "sani/resource/compiler/compilers.hpp"
 #include <algorithm>
 #include "sani/resource/pipeline/importers.hpp"
+#include "sani/resource/spritefont_content.hpp"
 #include "sani/resource/processor/processors.hpp"
 #include "sani/resource/effect_content.hpp"
 #include "sani/core/parser/xml_parser.hpp"
@@ -26,14 +27,16 @@ namespace sani {
 				using namespace sani::resource::compiler;
 				mapWriter<Texture2DContent, Texture2DWriter>();
 				mapWriter<EffectContent, EffectWriter>();
+				mapWriter<SpriteFontContent, SpriteFontWriter>();
 				//map<Effect, EffectWriter>();
-				// THIS IS FOR DEBUG
 				importers.reserve(32u);
 				importers.push_back(new pipeline::Texture2DImporter);
 				importers.push_back(new pipeline::EffectImporter);
+				importers.push_back(new pipeline::SpriteFontImporter);
 
 				mapProcessor<Texture2DContent, processor::Texture2DProcessor>();
 				mapProcessor<EffectContent, processor::EffectProcessor>();
+				mapProcessor<SpriteFontContent, processor::SpriteFontProcessor>();
 			}
 
 			void ResourceCompiler::readBuildFile(const String& root, const String& buildFile) {

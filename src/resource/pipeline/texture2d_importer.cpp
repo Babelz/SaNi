@@ -14,23 +14,6 @@ namespace sani {
 	namespace resource {
 		namespace pipeline {
 
-/*			static void read(png_struct* pngStructure, unsigned char* buffer, uint32 size) {
-				using namespace sani::io;
-				FileStream* stream = static_cast<FileStream*>(png_get_io_ptr(pngStructure));
-				stream->read(buffer, size);
-			}
-
-			static void onError(png_struct*, const char* msg) {
-				// TODO LOG
-				std::cerr << "PNG ERROR " << msg << std::endl;
-				SANI_ASSERT(0 && "PNG reading failed");
-			}
-
-			static void onWarning(png_struct*, const char* msg) {
-				// TODO LOG
-				std::cout << "PNG WARNING " << msg << std::endl;
-			}
-			*/
 			Texture2DImporter::Texture2DImporter()
 				: ContentImporter() {
 				supportedFileTypes.push_back(".png");

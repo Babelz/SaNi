@@ -11,4 +11,6 @@
 		importer="sani::resource::pipeline::EffectImporter" 
 		processor="sani::resource::processor::EffectProcessor"
 		writer="sani::resource::compiler::EffectImporter" />
+	<asset filename="font.spritefont"
+		importer="sani::resource::pipeline::SpriteFontImporter" /> 
 </assets>

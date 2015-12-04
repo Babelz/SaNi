@@ -94,7 +94,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\freetype\include\;$(SolutionDir)..\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -143,6 +143,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\freetype\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -236,6 +237,11 @@
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
+    <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp" />
+    <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp" />
+    <ClCompile Include="..\..\src\resource\pipeline\spritefont_importer.cpp" />
+    <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp" />
+    <ClCompile Include="..\..\src\resource\spritefont_content.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\contracts.hpp" />
@@ -368,6 +374,11 @@
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_importer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
