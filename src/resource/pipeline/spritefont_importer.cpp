@@ -1,3 +1,5 @@
+#include "sani/platform/platform_config.hpp"
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 #include "sani/platform/file/file_system.hpp"
 #include "sani/resource/spritefont_content.hpp"
 #include "sani/resource/pipeline/spritefont_importer.hpp"
@@ -6,6 +8,19 @@
 #include FT_FREETYPE_H
 
 static FT_Library library;
+
+int CALLBACK EnumFontFamiliesExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType, LPARAM lParam);
+static void getInstalledPlatformFonts() {
+	HDC hdc = GetDC(NULL);
+	LOGFONT lf = { 0, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0,
+		0, L"Arial" };
+	EnumFontFamiliesEx(hdc, &lf, (FONTENUMPROC)EnumFontFamiliesExProc, 0, 0);
+}
+
+int CALLBACK EnumFontFamiliesExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType, LPARAM lParam) {
+	printf("%s\n", lpelfe->elfFullName);
+	return 1;
+}
 
 namespace sani {
 	namespace resource {
@@ -46,8 +61,15 @@ namespace sani {
 				if (!root.firstNode("name", nameNode)) {
 					throw std::runtime_error("SpriteFont missing name node!");
 				}
-				volatile String nameOfFont(nameNode.value());
+				String nameOfFont(nameNode.value());
 				
+
+				// TODO context maybe?
+				String basename(filename.substr(0, filename.rfind("\\")));
+				// it is a system font probably
+				if (!fileSystem->fileExists(basename + "\\" + nameOfFont)) {
+					getInstalledPlatformFonts();
+				}
 				
 				
 				return nullptr;
@@ -55,3 +77,4 @@ namespace sani {
 		}
 	}
 }
+#endif
