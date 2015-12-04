@@ -4,23 +4,36 @@
 #include "sani/resource/spritefont_content.hpp"
 #include "sani/resource/pipeline/spritefont_importer.hpp"
 #include "sani/core/parser/xml_parser.hpp"
+#include <tchar.h>
 #include <ft2build.h>
+#include <iostream>
 #include FT_FREETYPE_H
 
 static FT_Library library;
 
-int CALLBACK EnumFontFamiliesExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType, LPARAM lParam);
-static void getInstalledPlatformFonts() {
-	HDC hdc = GetDC(NULL);
-	LOGFONT lf = { 0, 0, 0, 0, 0, 0, 0, 0, DEFAULT_CHARSET, 0, 0, 0,
-		0, L"Arial" };
-	EnumFontFamiliesEx(hdc, &lf, (FONTENUMPROC)EnumFontFamiliesExProc, 0, 0);
+int CALLBACK EnumFontFamiliesExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType, LPARAM lParam) {
+	LPARAM* l = (LPARAM*)lParam;
+	*l = TRUE;
+	return 0;
 }
 
-int CALLBACK EnumFontFamiliesExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType, LPARAM lParam) {
-	printf("%s\n", lpelfe->elfFullName);
-	return 1;
+static bool platformIsFontInstalled(const char* faceName) {
+	const int MaxSize = 512;
+	if (strlen(faceName) > MaxSize) {
+		throw std::runtime_error("Not enough memory");
+	}
+	wchar_t lz[MaxSize] = { 0 };
+	mbstowcs(lz, faceName, strlen(faceName));
+	HDC hdc = GetDC(NULL);
+	LOGFONT lf = { 0 };
+	lf.lfCharSet = DEFAULT_CHARSET;
+	_tcscpy(lf.lfFaceName, lz);
+	LPARAM lparam = 0;
+	EnumFontFamiliesEx(hdc, &lf, (FONTENUMPROC)EnumFontFamiliesExProc, (LPARAM)&lparam, 0);
+	return lparam ? true : false;
 }
+
+
 
 namespace sani {
 	namespace resource {
@@ -51,6 +64,7 @@ namespace sani {
 					doc.load(stream);
 				}
 				catch (const XmlException& ex) {
+					(void)ex;
 					fileSystem->closeFile(filename);
 					throw;
 				}
@@ -68,7 +82,9 @@ namespace sani {
 				String basename(filename.substr(0, filename.rfind("\\")));
 				// it is a system font probably
 				if (!fileSystem->fileExists(basename + "\\" + nameOfFont)) {
-					getInstalledPlatformFonts();
+					if (platformIsFontInstalled(nameOfFont.c_str())) {
+						std::cout << "jeee" << std::endl;
+					}
 				}
 				
 				
