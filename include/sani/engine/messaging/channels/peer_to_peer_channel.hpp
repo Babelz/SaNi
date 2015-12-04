@@ -28,7 +28,7 @@ namespace sani {
 
 				/// Creates new empty p2p message.
 				messages::Message* const createEmptyMessage() final override;
-				/// Releases (aka recycles) a given p2p message element.
+				/// Releases (aka recycles) a given p2p message.
 				void releaseMessage(messages::Message* const message) final override;
 			};
 		}

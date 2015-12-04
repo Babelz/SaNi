@@ -28,9 +28,12 @@ namespace sani {
 					// Send unhandled messages to the dead letter channel.
 					if (message->wasHandled()) {
 						// TODO: dead letter channel.
+						/// Do not release any unhandled messages before
+						/// they are handled in some other way.
+					} else {
+						// Message was handled by the receiver, release it.
+						releaseMessage(message);
 					}
-
-					releaseMessage(message);
 				}
 			}
 

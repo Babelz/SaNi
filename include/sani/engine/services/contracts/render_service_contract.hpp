@@ -35,23 +35,25 @@ namespace sani {
 					Functionalities:		Modify layers.
 				*/
 
+				/// List of all known commands for the render service.
 				enum class RenderServiceCommands : uint32 {
-					CreateLayer,
-					DeleteLayer,
+					CreateLayer		= 0,
 
-					AddElement,
-					RemoveElement,
+					DeleteLayer		= 1,
 
-					GetLayer
+					GetLayers		= 2
 				};
 
+				/// Generates a message that will causes the service to create a new layer with given name.
 				void createLayer(messages::CommandMessage* const message, const String& layerName);
+
+				/// Generates a message that will causes the service to delete the layer with given name.
 				void deleteLayer(messages::CommandMessage* const message, const String& layerName);
 
-				void addElement(messages::CommandMessage* const message, const String& layerName);
-				void removeElement(messages::CommandMessage* const message, const String& layerName);
-
-				void getLayer(messages::CommandMessage* const message, const String& layerName);
+				/// Generates a message that will return all layers.
+				void getLayers(messages::CommandMessage* const message);
+				
+				bool isValidCommand(const uint32 command);
 			}
 		}
 	}
