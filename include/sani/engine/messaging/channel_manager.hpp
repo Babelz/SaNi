@@ -13,7 +13,7 @@ namespace sani {
 		private:
 		public:
 			ChannelManager();
-			
+
 
 
 			~ChannelManager();

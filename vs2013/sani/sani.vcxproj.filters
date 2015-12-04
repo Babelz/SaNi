@@ -172,6 +172,18 @@
     <Filter Include="src\engine\messaging">
       <UniqueIdentifier>{b032d680-30d9-4979-ad00-8698a63fdc13}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\messaging\messages">
+      <UniqueIdentifier>{d11baa1d-08a0-4797-b1fd-94fe35f9a8d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\messaging\channels">
+      <UniqueIdentifier>{d83a8a7e-a4b7-4d07-8cf2-bd825ad7bcc8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\messaging\messages">
+      <UniqueIdentifier>{eee1da62-0cbe-465e-82be-45fa9ba698af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\messaging\channels">
+      <UniqueIdentifier>{332c1f23-e722-4839-b361-9c5878d1f7c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -366,11 +378,14 @@
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp">
       <Filter>src\engine\messaging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sani\engine\messaging\channel.cpp">
-      <Filter>src\engine\messaging</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\sani\engine\messaging\recipent_list.cpp">
       <Filter>src\engine\messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sani\engine\messaging\channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sani\engine\messaging\message.cpp">
+      <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -767,9 +782,6 @@
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp">
-      <Filter>include\engine\messaging</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp">
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
@@ -782,11 +794,17 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp">
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\channel.hpp">
-      <Filter>include\engine\messaging</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\recipent_list.hpp">
       <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp">
+      <Filter>include\engine\messaging\messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channel.hpp">
+      <Filter>include\engine\messaging\channels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp">
+      <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -840,6 +858,9 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\buffer.inl">
       <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp">
+      <Filter>include\engine\messaging\messages</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

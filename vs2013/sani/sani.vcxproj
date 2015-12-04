@@ -227,6 +227,7 @@
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
     <ClCompile Include="..\..\src\sani\engine\messaging\channel.cpp" />
+    <ClCompile Include="..\..\src\sani\engine\messaging\message.cpp" />
     <ClCompile Include="..\..\src\sani\engine\messaging\recipent_list.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +283,7 @@
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp" />
@@ -374,6 +376,7 @@
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
+    <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp" />
     <None Include="..\..\include\sani\graphics\inl\buffer.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\graphics\inl\circle.inl" />

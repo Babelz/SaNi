@@ -21,7 +21,7 @@ namespace sani {
 				return lhs == recipent;
 			});
 
-			if (it == recipents.end) return;
+			if (it == recipents.end()) return;
 			
 			recipents.erase(it);
 		}
