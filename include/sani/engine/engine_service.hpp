@@ -68,7 +68,7 @@ namespace sani {
 
 			ServiceState getState() const;
 
-			const String& const getName() const;
+			const String& getName() const;
 			uint32 getID() const;
 
 			bool hasErrors() const;

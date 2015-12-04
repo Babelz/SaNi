@@ -79,7 +79,7 @@ namespace sani {
 			return state;
 		}
 
-		const String& const EngineService::getName() const {
+		const String& EngineService::getName() const {
 			return name;
 		}
 		uint32 EngineService::getID() const {
