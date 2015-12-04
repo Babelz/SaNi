@@ -6,7 +6,9 @@ namespace sani {
 
 	namespace engine {
 
-		SaNiEngine::SaNiEngine() : running(false) {
+		SaNiEngine::SaNiEngine() : running(false),
+								   services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
+								   channels(&services)	{
 		}
 
 		bool SaNiEngine::initialize() {
@@ -22,6 +24,22 @@ namespace sani {
 		}
 		EngineService* const SaNiEngine::locateService(const uint32 id) {
 			return services.locate(id);
+		}
+
+		messages::Message* const SaNiEngine::createEmptyMessage(MessageType const type) {
+			channels::Channel* channel = channels.getChannel(type);
+
+			return channel->createEmptyMessage();
+		}
+		void SaNiEngine::releaseMessage(messages::Message* const message) {
+			channels::Channel* channel = channels.getChannel(message->type);
+
+			channel->releaseMessage(message);
+		}
+		void SaNiEngine::routeMessage(messages::Message* const message) {
+			channels::Channel* channel = channels.getChannel(message->type);
+
+			channel->route(message);
 		}
 
 		void SaNiEngine::registerService(EngineService* const service) {
@@ -41,6 +59,8 @@ namespace sani {
 			sani::Time start = sani::Clock::now();
 			
 			while (running) {
+				channels.route();
+
 				sani::Time current = sani::Clock::now();
 
 				auto delta = current - last;

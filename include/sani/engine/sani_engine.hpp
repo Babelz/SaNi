@@ -1,6 +1,11 @@
 #pragma once
 
+#include "sani/engine/messaging/channel_manager.hpp"
 #include "sani/engine/service_registry.hpp"
+#include "sani/forward_declare.hpp"
+
+SANI_FORWARD_DECLARE_3(sani, engine, messages, Message);
+SANI_FORWARD_DECLARE_3(sani, engine, channels, Channel);
 
 namespace sani {
 
@@ -13,6 +18,7 @@ namespace sani {
 		class SaNiEngine {
 		private:
 			ServiceRegistry services;
+			ChannelManager channels;
 
 			bool running;
 
@@ -27,6 +33,10 @@ namespace sani {
 			EngineService* const locateService(const String& name);
 			/// Returns the first service with given ID.
 			EngineService* const locateService(const uint32 id);
+
+			messages::Message* const createEmptyMessage(MessageType const type);
+			void releaseMessage(messages::Message* const message);
+			void routeMessage(messages::Message* const message);
 
 			/// Registers new service.
 			void registerService(EngineService* const service);

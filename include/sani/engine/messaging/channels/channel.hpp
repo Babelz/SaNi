@@ -43,6 +43,9 @@ namespace sani {
 
 				Channel(const MessageType channelType, ServiceRegistry* const serviceRegistry);
 			public:
+				/// Returns the type of this channel.
+				MessageType getType() const;
+
 				/// Returns true if the channel contains 
 				/// messages that are yet to be routed.
 				bool empty() const;

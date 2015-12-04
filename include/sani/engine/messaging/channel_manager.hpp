@@ -1,5 +1,8 @@
 #pragma once
 
+#include "sani/engine/messaging/channels/peer_to_peer_channel.hpp"
+#include "sani/engine/messaging/channels/channel.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -11,10 +14,14 @@ namespace sani {
 		/// services and consumers use to send messages.
 		class ChannelManager {
 		private:
+			channels::Channel** channels;
 		public:
-			ChannelManager();
+			ChannelManager(ServiceRegistry* const serviceRegistry);
 
+			channels::Channel* getChannel(const MessageType type);
 
+			/// Routes all messages once per channel.
+			void route() const;
 
 			~ChannelManager();
 		};

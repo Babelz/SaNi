@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipent_list.cpp" />

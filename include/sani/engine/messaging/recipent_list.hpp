@@ -24,6 +24,8 @@ namespace sani {
 			void addRecipent(const String& recipent);
 			void removeRecipent(const String& recipent);
 
+			uint32 recipentsCount() const;
+
 			std::vector<const String>::const_iterator begin() const;
 			std::vector<const String>::const_iterator end() const;
 

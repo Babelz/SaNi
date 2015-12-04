@@ -393,6 +393,9 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp">
+      <Filter>src\engine\messaging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

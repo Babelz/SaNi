@@ -26,6 +26,10 @@ namespace sani {
 			recipents.erase(it);
 		}
 
+		uint32 RecipentList::recipentsCount() const {
+			return recipents.size();
+		}
+
 		std::vector<const String>::const_iterator RecipentList::begin() const {
 			return recipents.begin();
 		}

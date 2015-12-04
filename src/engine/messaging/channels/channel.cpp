@@ -30,6 +30,10 @@ namespace sani {
 				return next;
 			}
 
+			MessageType Channel::getType() const {
+				return channelType;
+			}
+
 			bool Channel::empty() const {
 				return messageQueue.empty();
 			}

@@ -15,6 +15,8 @@ namespace sani {
 			void PeerToPeerChannel::flush() {
 				while (!empty()) {
 					messages::PeerToPeerMessage* const message = static_cast<messages::PeerToPeerMessage*>(nextMessage());
+					
+					SANI_ASSERT(message->recipents.recipentsCount() == 1);
 
 					// P2P messages should always have only one recipent.
 					const String& recipentName = *message->recipents.begin();
