@@ -11,7 +11,7 @@ SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 namespace sani {
 	namespace parser {
 
-		class XmlException : std::runtime_error {
+		class XmlException : public std::runtime_error {
 		public:
 			XmlException(const std::string& what) 
 				: std::runtime_error(what) {}

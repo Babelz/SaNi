@@ -26,13 +26,14 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	ResourceCompiler compiler;
+	
 	String root(argv[1]);
+	String xmlPath(argv[2]);
+
+	ResourceCompiler compiler;
+	compiler.readBuildFile(root, xmlPath);
 	try {
-		size_t i = 2;
-		while (argc-- > 2) {
-			compiler.compile(root, argv[i++]);
-		}
+		compiler.compileAll(root);
 	}
 	catch (std::exception& ex) {
 		std::cerr << ex.what() << std::endl;

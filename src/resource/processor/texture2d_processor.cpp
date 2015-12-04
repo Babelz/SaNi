@@ -8,7 +8,6 @@ namespace sani {
 		namespace processor {
 			ResourceItem* Texture2DProcessor::process(ResourceItem* input) {
 				using namespace Magick;
-				std::cout << "Texture2dProcessor::process() invoked" << std::endl;
 				// TODO color keys etc
 				Texture2DContent* content = static_cast<Texture2DContent*>(input);
 				content->generateMipmaps(false);

@@ -5,6 +5,7 @@
 
 #include <typeindex>
 #include <map>
+#include <queue>
 #include "sani/resource/compiler/resource_type_writer.hpp"
 #include "sani/platform/file/file_system.hpp"
 #include "sani/types.hpp"
@@ -18,8 +19,10 @@ namespace sani {
 			private:
 				io::FileSystem fileSystem;
 				std::map<std::type_index, ResourceTypeWriter*> lookup;
-				std::map<String, pipeline::ContentImporter*> importers;
+				std::vector<pipeline::ContentImporter*> importers;
+				std::map<String, pipeline::ContentImporter*> importerMap;
 				std::map<std::type_index, processor::ResourceProcessor*> processors;
+				std::queue<String> filesToCompile;
 				String contentRoot;
 				String filePath;
 				String outputPath;
@@ -45,7 +48,11 @@ namespace sani {
 
 				processor::ResourceProcessor* getProcessorFor(const std::type_index& type) const;
 
+				void readBuildFile(const String& root, const String& buildFile);
+
 				void compile(const String& root, const String& path);
+
+				void compileAll(const String& root);
 
 				const String& getFilePath() const;
 				const String& getOutputPath() const;

@@ -7,6 +7,7 @@
 #include "sani/resource/pipeline/importers.hpp"
 #include "sani/resource/processor/processors.hpp"
 #include "sani/resource/effect_content.hpp"
+#include "sani/core/parser/xml_parser.hpp"
 #include <iostream>
 namespace sani {
 	namespace resource {
@@ -27,11 +28,71 @@ namespace sani {
 				mapWriter<EffectContent, EffectWriter>();
 				//map<Effect, EffectWriter>();
 				// THIS IS FOR DEBUG
-				importers["tuksu.png"] = new pipeline::Texture2DImporter;
-				importers["polygon.vert"] = new pipeline::EffectImporter;
-				importers["texture.vert"] = new pipeline::EffectImporter;
+				importers.reserve(32u);
+				importers.push_back(new pipeline::Texture2DImporter);
+				importers.push_back(new pipeline::EffectImporter);
+
 				mapProcessor<Texture2DContent, processor::Texture2DProcessor>();
 				mapProcessor<EffectContent, processor::EffectProcessor>();
+			}
+
+			void ResourceCompiler::readBuildFile(const String& root, const String& buildFile) {
+				using namespace parser;
+				const String fullPath(root + buildFile);
+
+				FileStream* stream;
+				if (!fileSystem.openFile(fullPath, Filemode::Read, &stream)) {
+					throw std::runtime_error("cant open build file");
+				}
+				parser::XmlDocument document;
+				try {
+					document.load(stream);
+					XmlNode assets;
+					
+					if (!document.firstNode("assets", assets)) {
+						return;
+					}
+
+					std::vector<XmlNode> childs;
+					assets.getChildNodes(childs);
+
+					for (auto& child : childs) {
+
+						XmlAttribute filenameAttr;
+						if (!child.attribute("filename", filenameAttr)) {
+							throw std::runtime_error("No filename attribute");
+						}
+
+						XmlAttribute importerAttr;
+						if (!child.attribute("importer", importerAttr)) {
+							throw std::runtime_error("No importer attribute");
+						}
+						String importerString = importerAttr.value();
+						auto it = std::find_if(importers.begin(), importers.end(), [&importerString](pipeline::ContentImporter* imp) {
+							return imp->getImporterName() == importerString;
+						});
+
+						if (it == importers.end()) {
+							throw std::runtime_error(String("No importer called ") + importerString);
+						}
+						// TODO do we need processor and shit?
+						pipeline::ContentImporter* importer = *it;
+						importerMap[filenameAttr.value()] = importer;
+
+						filesToCompile.push(filenameAttr.value());
+					}
+				}
+				catch (const parser::XmlException& ex) {
+					std::cout << ex.what() << std::endl;
+				}
+				fileSystem.closeFile(fullPath);
+			}
+
+			void ResourceCompiler::compileAll(const String& root) {
+				while (!filesToCompile.empty()) {
+					compile(root, filesToCompile.front());
+					filesToCompile.pop();
+				}
 			}
 
 			void ResourceCompiler::compile(const String& root, const String& path) {
@@ -39,7 +100,7 @@ namespace sani {
 				using namespace sani::resource::processor;
 
 				const static String outExtension(".snb");
-
+				std::cout << "Compiling " << path << " ";
 				if (!fileSystem.fileExists(root + path)) {
 					throw "file not found";
 				}
@@ -61,12 +122,11 @@ namespace sani {
 
 				ResourceProcessor* processor = getProcessorFor(std::type_index(typeid(*data)));
 				ResourceItem* binary = processor->process(data);
-				
-				std::cout << typeid(*binary).name() << std::endl;
 
 				ResourceWriter writer(file, this);
 				writer.flush(std::type_index(typeid(*binary)), binary);
 				
+				std::cout << "-> " << filename << outExtension << std::endl;
 			}
 
 			processor::ResourceProcessor* ResourceCompiler::getProcessorFor(const std::type_index& type) const {
@@ -77,10 +137,10 @@ namespace sani {
 			}
 
 			pipeline::ContentImporter* ResourceCompiler::getImporterFor(const String& asset) const {
-				if (!importers.count(asset)) {
+				if (!importerMap.count(asset)) {
 					throw std::runtime_error("No importer specified for " + asset);
 				}
-				return importers.at(asset);
+				return importerMap.at(asset);
 			}
 
 

@@ -17,6 +17,7 @@ namespace sani {
 				ContentImporter() = default;
 				virtual ~ContentImporter() = default;
 				virtual ResourceItem* import(const String& filename, io::FileSystem* fileSystem) const = 0;
+				virtual String getImporterName() const = 0;
 			};
 		}
 	}

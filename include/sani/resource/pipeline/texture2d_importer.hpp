@@ -22,6 +22,9 @@ namespace sani {
 				Texture2DImporter();
 				~Texture2DImporter();
 				ResourceItem* import(const String& filename, FileSystem* fileSystem) const override;
+				virtual String getImporterName() const {
+					return "sani::resource::pipeline::Texture2DImporter";
+				}
 			};
 		}
 	}

@@ -12,6 +12,9 @@ namespace sani {
 				EffectImporter();
 				~EffectImporter();
 				ResourceItem* import(const String& filename, io::FileSystem* fileSystem) const;
+				virtual String getImporterName() const {
+					return "sani::resource::pipeline::EffectImporter";
+				}
 			};
 		}
 	}
