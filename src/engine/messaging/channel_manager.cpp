@@ -9,12 +9,13 @@ namespace sani {
 		ChannelManager::ChannelManager(ServiceRegistry* const serviceRegistry) {
 			// TODO: add adding and removing channels?
 			// Create initial channels.
-			channels = new channels::Channel*[4];
+			channels = new channels::Channel*[5];
 
 			channels[static_cast<uint32>(MessageType::Document)]		= nullptr;
 			channels[static_cast<uint32>(MessageType::PeerToPeer)]		= new channels::PeerToPeerChannel(serviceRegistry);
 			channels[static_cast<uint32>(MessageType::RequestReply)]	= nullptr;
 			channels[static_cast<uint32>(MessageType::Event)]			= nullptr;
+			channels[static_cast<uint32>(MessageType::Command)]			= nullptr;
 		}
 
 		channels::Channel* ChannelManager::getChannel(const MessageType type) {

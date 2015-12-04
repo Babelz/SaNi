@@ -16,17 +16,29 @@ namespace sani {
 			/// Represents a message that the services and consumers and use
 			/// to message each other. 
 			class Message {
-			public:
+			private:
 				// Type of the message.
 				const MessageType type;
 
-				// Recipents of the message.
+				// Recipients of the message.
 				RecipentList recipents;
 
-				// Was this message handled by the recipent.
+				// Was this message handled by the recipients.
 				bool handled;
-
+			public:
 				Message(const MessageType type);
+
+				/// Returns true if this message was handled.
+				bool wasHandled() const;
+				/// Marks this message as handled.
+				void markUnhandled();
+				/// Marks this message as unhandled aka resets it's state.
+				void markHandled();
+
+				/// Returns the recipient list of this message.
+				RecipentList& const getRecipents();
+				/// Returns the type of this message.
+				MessageType getType() const;
 
 				virtual ~Message();
 			};

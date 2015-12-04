@@ -6,12 +6,12 @@ namespace sani {
 
 	namespace engine {
 
-		const uint32 MESSAGE_TYPES_COUNT = 4;
+		const uint32 MESSAGE_TYPES_COUNT = 5;
 
 		/// Defines the type of a given message.
 		enum class MessageType : uint32 {
 			/// Contains data and is sent back to the sender
-			/// after processing.
+			/// after processing. Sent trough the p2p channel.
 			Document		= 0,
 
 			/// Basic and simples message. P2P just sends
@@ -20,11 +20,22 @@ namespace sani {
 			PeerToPeer		= 1,
 
 			/// Request is send and a reply is requested after the
-			/// processing of the request.
+			/// processing of the request. Sent trough the request p2p channel.
 			RequestReply	= 2,
 
 			/// All services can access this message.
-			Event			= 3
+			/// Sent trough the global channel and 
+			/// removed once handled.
+			Event			= 3,
+
+			/// Message that contains a command that will be
+			/// interpreted by the recipient(s). Can also contain
+			/// additional command data in a form of a string and 
+			/// can have a return value that the sender can
+			/// and should inspect after the message has been 
+			/// flagged as handled. Commands are sent trough 
+			/// p2p channel.
+			Command			= 4
 		};
 	}
 }

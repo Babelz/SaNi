@@ -13,8 +13,17 @@ namespace sani {
 			///
 			/// Represents a simple one-way p2p message.
 			class PeerToPeerMessage final : public Message {
+			private:
+				// Contents of the message.
+				String contents;
 			public:
+				PeerToPeerMessage(const String& contents);
 				PeerToPeerMessage();
+
+				/// Returns the contents for this message.
+				const String& getContents() const;
+				/// Sets this messages contents.
+				void setContents(const String& contents);
 			};
 		}
 	}

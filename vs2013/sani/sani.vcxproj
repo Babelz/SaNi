@@ -162,6 +162,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\include\src\engine\messaging\messages\command_message.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_condition.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp" />
@@ -289,12 +290,13 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\command_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipents_count.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipent_list.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />

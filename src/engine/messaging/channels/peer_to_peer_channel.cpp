@@ -16,19 +16,21 @@ namespace sani {
 				while (!empty()) {
 					messages::PeerToPeerMessage* const message = static_cast<messages::PeerToPeerMessage*>(nextMessage());
 					
-					SANI_ASSERT(message->recipents.recipentsCount() == 1);
+					SANI_ASSERT(message->getRecipents().recipentsCount() == 1);
 
-					// P2P messages should always have only one recipent.
-					const String& recipentName = *message->recipents.begin();
+					// p2p messages should always have only one recipent.
+					const String& recipentName = *message->getRecipents().begin();
 
 					// Send the message to the recipent.
 					services::EngineService* const recipent = getServiceRegistry()->locate(recipentName);
 					recipent->receive(message);
 
 					// Send unhandled messages to the dead letter channel.
-					if (message->handled) {
+					if (message->wasHandled()) {
 						// TODO: dead letter channel.
 					}
+
+					releaseMessage(message);
 				}
 			}
 

@@ -94,12 +94,12 @@ namespace sani {
 			return channel->createEmptyMessage();
 		}
 		void SaNiEngine::releaseMessage(messages::Message* const message) {
-			channels::Channel* channel = channels.getChannel(message->type);
+			channels::Channel* channel = channels.getChannel(message->getType());
 
 			channel->releaseMessage(message);
 		}
 		void SaNiEngine::routeMessage(messages::Message* const message) {
-			channels::Channel* channel = channels.getChannel(message->type);
+			channels::Channel* channel = channels.getChannel(message->getType());
 
 			channel->route(message);
 		}
@@ -121,9 +121,6 @@ namespace sani {
 			while (window->isOpen()) {
 				// Clear last frame and listen for window events.
 				window->listen();
-
-				// Do pre-update message routing.
-				channels.route();
 
 				sani::Time current = sani::Clock::now();
 

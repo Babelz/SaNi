@@ -6,7 +6,17 @@ namespace sani {
 		
 		namespace messages {
 
-			PeerToPeerMessage::PeerToPeerMessage() : Message(MessageType::PeerToPeer) {
+			PeerToPeerMessage::PeerToPeerMessage(const String& contents) : Message(MessageType::PeerToPeer),
+																		   contents(contents) {
+			}
+			PeerToPeerMessage::PeerToPeerMessage() : PeerToPeerMessage(String()) {
+			}
+
+			const String& PeerToPeerMessage::getContents() const {
+				return contents;
+			}
+			void PeerToPeerMessage::setContents(const String& contents) {
+				this->contents = contents;
 			}
 		}
 	}
