@@ -10,6 +10,7 @@ namespace sani {
 	namespace resource {
 		namespace pipeline {
 			class SpriteFontImporter : public ContentImporter {
+			private:
 			public:
 				SpriteFontImporter();
 				~SpriteFontImporter();

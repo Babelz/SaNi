@@ -5,6 +5,7 @@
 #include "sani/resource/pipeline/spritefont_importer.hpp"
 #include "sani/core/parser/xml_parser.hpp"
 #include <sstream>
+#include "sani/core/parser/xml_util.hpp"
 #include <tchar.h>
 #include <ft2build.h>
 #include <iostream>
@@ -140,20 +141,43 @@ namespace sani {
 				}
 				fileSystem->closeFile(filename);
 
-				XmlNode root, nameNode;
+				XmlNode root, nameNode, sizeNode;
 				doc.firstNode(root);
 				if (!root.firstNode("name", nameNode)) {
 					throw std::runtime_error("SpriteFont missing name node!");
 				}
+
+				if (!root.firstNode("size", sizeNode)) {
+					throw std::runtime_error("SpriteFont missing size node!");
+				}
+
 				String nameOfFont(nameNode.value());
 				
 
 				// TODO context maybe?
 				String basename(filename.substr(0, filename.rfind("\\")));
+
+				FT_Face face;
+				
 				// it is a system font probably
 				if (!fileSystem->fileExists(basename + "\\" + nameOfFont)) {
 					if (platformIsFontInstalled(nameOfFont.c_str())) {
 						String fontFilePath(platformGetFontPath(nameOfFont));
+						FT_Error error = FT_New_Face(library, fontFilePath.c_str(), 0, &face);
+
+						if (error == FT_Err_Unknown_File_Format) {
+							throw std::runtime_error("Invalid font file format!");
+						}
+						else if (error) {
+							throw std::runtime_error("Font file could not be read");
+						}
+						uint32 size = XmlUtil::get<uint32>(sizeNode);
+						error = FT_Set_Char_Size(
+							face,
+							0, // same as height
+							size * 64u,
+							300,
+							300);
 
 					}
 				}

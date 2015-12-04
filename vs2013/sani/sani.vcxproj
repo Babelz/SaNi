@@ -293,6 +293,7 @@
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
+    <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />

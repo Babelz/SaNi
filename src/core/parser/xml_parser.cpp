@@ -72,7 +72,7 @@ namespace sani {
 
 		bool XmlNode::firstNode(const char* name, XmlNode& to) const {
 			rapidxml::xml_node<>* child;
-			if ((child = node->first_node()) == nullptr) {
+			if ((child = node->first_node(name)) == nullptr) {
 				return false;
 			}
 			to = XmlNode(child);

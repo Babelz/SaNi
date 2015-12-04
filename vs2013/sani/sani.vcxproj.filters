@@ -363,7 +363,7 @@
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp">
       <Filter>src\core\parser</Filter>
     </ClCompile>
-      <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp">
+    <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp">
       <Filter>src\resource\reader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp">
@@ -378,7 +378,7 @@
     <ClCompile Include="..\..\src\resource\spritefont_content.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
-</ItemGroup>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
       <Filter>include</Filter>
@@ -773,7 +773,7 @@
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp">
       <Filter>include\core\parser</Filter>
     </ClInclude>
-      <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp">
+    <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp">
       <Filter>include\resource\reader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp">
@@ -788,7 +788,8 @@
     <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-</ItemGroup>
+    <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
+  </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
       <Filter>include\core\math\func\inl</Filter>
