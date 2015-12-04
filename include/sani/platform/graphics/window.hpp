@@ -34,8 +34,6 @@ namespace sani {
 #endif
 
 		public:
-
-
 			SANI_DECLARE_EVENT(sizeChanged, void());
 			SANI_DECLARE_EVENT(closed, void());
 

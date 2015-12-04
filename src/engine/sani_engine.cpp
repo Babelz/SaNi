@@ -12,8 +12,7 @@ namespace sani {
 
 		// Win32 ctro impl.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-		SaNiEngine::SaNiEngine(const HINSTANCE hInstance) : running(false),
-															services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
+		SaNiEngine::SaNiEngine(const HINSTANCE hInstance) : services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
 															channels(&services),
 															hInstance(hInstance) {
 		}
@@ -28,9 +27,6 @@ namespace sani {
 			window = new graphics::Window(hInstance, 1280, 720);
 			if (!window->initialize()) return false;
 
-			window->sizeChanged += SANI_EVENT_HANDLER(void(), windowSizeChanged);
-			window->closed += SANI_EVENT_HANDLER(void(), windowClosed);
-
 			window->setTitle("SaNi Engine");
 			window->show();
 
@@ -41,16 +37,19 @@ namespace sani {
 
 			if (!graphicsDevice->initialize()) return false;
 
+			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
+			window->closed		+= SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowClosed, graphicsDevice));
+
 			return true;
 		}
 		bool SaNiEngine::initializeServices() {
 			return true;
 		}
 
-		void SaNiEngine::windowClosed() {
-			quit();
+		void SaNiEngine::windowClosed(graphics::GraphicsDevice* const graphicsDevice) {
+			graphicsDevice->cleanUp();
 		}
-		void SaNiEngine::windowSizeChanged() {
+		void SaNiEngine::windowSizeChanged(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window) {
 			graphics::Viewport viewport;
 
 			viewport.width = window->getClientWidth();
@@ -115,13 +114,11 @@ namespace sani {
 		void SaNiEngine::start() {
 			// TODO: add services.
 			if (!initialize()) return;
-			
-			running = true;
 
 			sani::Time last = sani::Clock::now();
 			sani::Time start = sani::Clock::now();
 			
-			while (running) {
+			while (window->isOpen()) {
 				// Clear last frame and listen for window events.
 				window->listen();
 
@@ -146,9 +143,6 @@ namespace sani {
 			}
 		}
 		void SaNiEngine::quit() {
-			running = false;
-
-			graphicsDevice->cleanUp();
 			window->close();
 		}
 

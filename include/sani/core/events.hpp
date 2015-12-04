@@ -47,7 +47,7 @@ namespace sani {
 		inline void unsubscribe(std::function<T> callback);
 		/// Returns true if the manager contains callbacks.
 		inline bool hasSubscribers() const;
-	
+
 		~Event();
 
 		void operator += (std::function<T> callback);
