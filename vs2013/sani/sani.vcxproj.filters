@@ -378,13 +378,19 @@
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp">
       <Filter>src\engine\messaging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sani\engine\messaging\recipent_list.cpp">
-      <Filter>src\engine\messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\sani\engine\messaging\channel.cpp">
+    <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp">
       <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sani\engine\messaging\message.cpp">
+    <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\messages\message.cpp">
+      <Filter>src\engine\messaging\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\recipent_list.cpp">
+      <Filter>src\engine\messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
   </ItemGroup>
@@ -800,10 +806,10 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\channel.hpp">
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp">
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
   </ItemGroup>

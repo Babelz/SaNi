@@ -1,6 +1,8 @@
 #pragma once
 
+#include "sani/engine/messaging/messages/peer_to_peer_message.hpp"
 #include "sani/engine/messaging/channels/channel.hpp"
+#include "sani/core/memory/page_pool_allocator.hpp"
 #include "sani/forward_declare.hpp"
 
 SANI_FORWARD_DECLARE_3(sani, engine, messages, Message);
@@ -16,6 +18,8 @@ namespace sani {
 			///
 			/// Simple peer to peer channel.
 			class PeerToPeerChannel : public Channel {
+			private:
+				PagePoolAllocator<messages::PeerToPeerMessage> messagePool;
 			public:
 				PeerToPeerChannel(ServiceRegistry* const serviceRegistry);
 

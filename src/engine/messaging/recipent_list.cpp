@@ -26,13 +26,11 @@ namespace sani {
 			recipents.erase(it);
 		}
 
-		void RecipentList::getRecipentAtIndex(const uint32 index, String& recipent) const {
-			SANI_ASSERT(recipents.size() != 0);
-
-			recipent = recipents[index];
+		std::vector<const String>::const_iterator RecipentList::begin() const {
+			return recipents.begin();
 		}
-		uint32 RecipentList::getRecipentsCount() const {
-			return recipents.size();
+		std::vector<const String>::const_iterator RecipentList::end() const {
+			return recipents.end();
 		}
 
 		RecipentList::~RecipentList() {

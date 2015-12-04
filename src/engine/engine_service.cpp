@@ -70,6 +70,8 @@ namespace sani {
 			sendStateMessage(&stateMessage, terminateErrorMessage);
 		}
 
+		void EngineService::receive(messages::Message* const message) {
+		}
 		void EngineService::update(const EngineTime& time) {
 		}
 

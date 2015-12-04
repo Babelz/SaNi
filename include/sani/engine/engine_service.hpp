@@ -7,6 +7,7 @@
 #include <stack>
 #include <list>
 
+SANI_FORWARD_DECLARE_3(sani, engine, messages, Message);
 SANI_FORWARD_DECLARE_2(sani, engine, StateMessage);
 SANI_FORWARD_DECLARE_2(sani, engine, SaNiEngine);
 SANI_FORWARD_DECLARE_1(sani, EngineTime);
@@ -60,6 +61,9 @@ namespace sani {
 			/// terminated should not be used anymore.
 			void terminate();
 
+			/// Process all incoming messages.
+			virtual void receive(messages::Message* const message);
+			/// Can be used to update the services state.
 			virtual void update(const EngineTime& time);
 
 			ServiceState getState() const;

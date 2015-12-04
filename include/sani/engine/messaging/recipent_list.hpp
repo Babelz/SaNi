@@ -14,7 +14,7 @@ namespace sani {
 		/// Represents a list of recipents.
 		class RecipentList {
 		private:
-			std::vector<String> recipents;
+			std::vector<const String> recipents;
 
 			uint32 count;
 		public:
@@ -24,8 +24,8 @@ namespace sani {
 			void addRecipent(const String& recipent);
 			void removeRecipent(const String& recipent);
 
-			void getRecipentAtIndex(const uint32 index, String& recipent) const;
-			uint32 getRecipentsCount() const;
+			std::vector<const String>::const_iterator begin() const;
+			std::vector<const String>::const_iterator end() const;
 
 			~RecipentList();
 		};

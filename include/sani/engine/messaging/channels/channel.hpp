@@ -15,6 +15,9 @@ namespace sani {
 
 		namespace channels {
 
+			const uint32 MESSAGE_POOL_PAGE_SIZE		= 16;
+			const uint32 MESSAGE_POOL_PAGES_COUNT	= 1;
+
 			/// @class Channel channel.hpp "sani/engine/messaging/channel.hpp"
 			/// @author voidbab
 			///
@@ -37,15 +40,20 @@ namespace sani {
 
 				/// Returns the next message from the internal message queue.
 				messages::Message* const nextMessage();
-			public:
-				Channel(const MessageType channelType, ServiceRegistry* const serviceRegistry);
 
+				Channel(const MessageType channelType, ServiceRegistry* const serviceRegistry);
+			public:
 				/// Returns true if the channel contains 
 				/// messages that are yet to be routed.
 				bool empty() const;
 
 				/// Routes the next message.
 				virtual void flush() = 0;
+
+				/// Creates new empty message suited for this channel.
+				virtual messages::Message* const createEmptyMessage() = 0;
+				/// Releases (aka recycles) a given message element.
+				virtual void releaseMessage(messages::Message* const message) = 0;
 
 				/// Routes the given message to all the
 				/// recipents who should know about it.
