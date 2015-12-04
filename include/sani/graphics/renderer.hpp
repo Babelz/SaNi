@@ -4,19 +4,20 @@
 #include "sani/graphics/render_state.hpp"
 #include "sani/graphics/vertex_mode.hpp"
 #include "sani/core/math/matrix4.hpp"
+#include "sani/forward_declare.hpp"
 #include "sani/graphics/buffer.hpp"
 #include "sani/types.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
+SANI_FORWARD_DECLARE_2(sani, graphics, RenderSetup);
+SANI_FORWARD_DECLARE_2(sani, graphics, Renderable);
+SANI_FORWARD_DECLARE_2(sani, graphics, RenderBatch);
+SANI_FORWARD_DECLARE_2(sani, graphics, RenderElementData);
+SANI_FORWARD_DECLARE_2(sani, graphics, RenderData);
 
 namespace sani {
 
 	namespace graphics {
-		
-		class GraphicsDevice;
-		class RenderSetup;
-		class Renderable;
-		class RenderBatch;
-		class RenderElementData;
-		class RenderData;
 
 		/// @class Renderer renderer.hpp "sani/graphics/renderer.hpp"
 		/// @author voidbab
@@ -27,7 +28,7 @@ namespace sani {
 		class Renderer {
 		private:
 			// Device and setup states.
-			GraphicsDevice& graphicsDevice;
+			GraphicsDevice* const graphicsDevice;
 
 			/*
 				Effect and setup transition tables.
@@ -89,7 +90,7 @@ namespace sani {
 
 			void prepareRendering();
 		public:
-			Renderer(GraphicsDevice& graphicsDevice);
+			Renderer(GraphicsDevice* const graphicsDevice);
 
 			bool initialize();
 

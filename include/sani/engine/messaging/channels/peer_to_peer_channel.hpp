@@ -17,19 +17,19 @@ namespace sani {
 			/// @author voidbab
 			///
 			/// Simple peer to peer channel.
-			class PeerToPeerChannel : public Channel {
+			class PeerToPeerChannel final : public Channel {
 			private:
 				PagePoolAllocator<messages::PeerToPeerMessage> messagePool;
 			public:
 				PeerToPeerChannel(ServiceRegistry* const serviceRegistry);
 
 				/// Routes the next message.
-				void flush() override;
+				void flush() final override;
 
 				/// Creates new empty p2p message.
-				messages::Message* const createEmptyMessage() override;
+				messages::Message* const createEmptyMessage() final override;
 				/// Releases (aka recycles) a given p2p message element.
-				void releaseMessage(messages::Message* const message) override;
+				void releaseMessage(messages::Message* const message) final override;
 			};
 		}
 	}

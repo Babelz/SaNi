@@ -72,7 +72,7 @@ void NO_ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		camera.setViewport(graphicsDevice.getViewport());
 	}));
 
-	Renderer renderer(graphicsDevice);
+	Renderer renderer(&graphicsDevice);
 	renderer.initialize();
 
 	std::vector<Triangle> triangles;
@@ -197,7 +197,8 @@ void NO_ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	graphicsDevice.cleanUp();
 }
 void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	SaNiEngine engine;
+	SaNiEngine engine(hInstance);
+	
 	engine.start();
 }
 

@@ -12,7 +12,7 @@ namespace sani {
 			/// @author voidbab
 			///
 			/// Represents a simple one-way p2p message.
-			class PeerToPeerMessage : public Message {
+			class PeerToPeerMessage final : public Message {
 			public:
 				PeerToPeerMessage();
 			};

@@ -5,8 +5,10 @@
 #include "sani/types.hpp"
 #include <list>
 
-SANI_FORWARD_DECLARE_2(sani, engine, EngineService);
+SANI_FORWARD_DECLARE_3(sani, engine, services, EngineService);
 SANI_FORWARD_DECLARE_1(sani, EngineTime);
+
+using namespace sani::engine::services;
 
 namespace sani {
 

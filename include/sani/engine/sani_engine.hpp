@@ -1,11 +1,20 @@
 #pragma once
 
 #include "sani/engine/messaging/channel_manager.hpp"
+#include "sani/platform/platform_config.hpp"
 #include "sani/engine/service_registry.hpp"
 #include "sani/forward_declare.hpp"
 
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
+#include <Windows.h>
+
+#endif
+
 SANI_FORWARD_DECLARE_3(sani, engine, messages, Message);
 SANI_FORWARD_DECLARE_3(sani, engine, channels, Channel);
+SANI_FORWARD_DECLARE_2(sani, graphics, Window);
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 
 namespace sani {
 
@@ -17,15 +26,31 @@ namespace sani {
 		/// The core of the engine. 
 		class SaNiEngine {
 		private:
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+			const HINSTANCE hInstance;
+#endif
+
+			graphics::GraphicsDevice* graphicsDevice;
+			graphics::Window* window;
+
 			ServiceRegistry services;
 			ChannelManager channels;
 
 			bool running;
 
+			bool platformInitialize();
+			bool initializeServices();
+
+			void windowClosed();
+			void windowSizeChanged();
+
 			/// Initializes the engine.
 			bool initialize();
 		public:
-			SaNiEngine();
+			// Win32 ctor.
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+			SaNiEngine(const HINSTANCE hInstance);
+#endif
 
 			/// Returns the first service with given name and ID.
 			EngineService* const locateService(const String& name, const uint32 id);

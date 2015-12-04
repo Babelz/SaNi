@@ -11,10 +11,10 @@ namespace sani {
 			// Create initial channels.
 			channels = new channels::Channel*[4];
 
-			channels[0] = nullptr;
-			channels[1] = new channels::PeerToPeerChannel(serviceRegistry);
-			channels[2] = nullptr;
-			channels[3] = nullptr;
+			channels[static_cast<uint32>(MessageType::Document)]		= nullptr;
+			channels[static_cast<uint32>(MessageType::PeerToPeer)]		= new channels::PeerToPeerChannel(serviceRegistry);
+			channels[static_cast<uint32>(MessageType::RequestReply)]	= nullptr;
+			channels[static_cast<uint32>(MessageType::Event)]			= nullptr;
 		}
 
 		channels::Channel* ChannelManager::getChannel(const MessageType type) {
@@ -25,7 +25,7 @@ namespace sani {
 
 		/// Routes all messages once per channel.
 		void ChannelManager::route() const {
-			for (uint32 i = 0; i < MESSAGE_TYPES_COUNT; i++) channels[i]->flush();
+			channels[static_cast<uint32>(MessageType::PeerToPeer)]->flush();
 		}
 
 		ChannelManager::~ChannelManager() {

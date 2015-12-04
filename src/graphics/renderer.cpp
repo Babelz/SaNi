@@ -72,17 +72,17 @@ namespace sani {
 		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
 		// Keep the buffer usage as dynamic (memory as the limit).
 
-		Renderer::Renderer(GraphicsDevice& graphicsDevice) : graphicsDevice(graphicsDevice),
-															 vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
-															 indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
-															 verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
-															 indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
-															 renderBatch(nullptr),
-															 renderBatchesCount(0),
-															 vertexBuffer(0),
-															 indexBuffer(0),
-															 texture(0),
-															 effect(0) {
+		Renderer::Renderer(GraphicsDevice* const graphicsDevice) : graphicsDevice(graphicsDevice),
+																  vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+																  indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+																  verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
+																  indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
+																  renderBatch(nullptr),
+																  renderBatchesCount(0),
+																  vertexBuffer(0),
+																  indexBuffer(0),
+																  texture(0),
+																  effect(0) {
 			renderBatches.resize(32);
 			indexTransformBuffer.resize(32);
 		}
@@ -152,32 +152,32 @@ namespace sani {
 			uint32 defaultTexturedPolygonEffect = 0;
 
 			// Create default polygon shader.
-			graphicsDevice.compileShader(vertex, defaultPolygonVertexSource, ShaderType::Vertex);
-			assert(!graphicsDevice.hasErrors());
+			graphicsDevice->compileShader(vertex, defaultPolygonVertexSource, ShaderType::Vertex);
+			assert(!graphicsDevice->hasErrors());
 
-			graphicsDevice.compileShader(fragment, defaultPolygonFragmentSource, ShaderType::Fragment);
-			assert(!graphicsDevice.hasErrors());
+			graphicsDevice->compileShader(fragment, defaultPolygonFragmentSource, ShaderType::Fragment);
+			assert(!graphicsDevice->hasErrors());
 
-			graphicsDevice.createProgram(defaultPolygonEffect);
-			graphicsDevice.linkToProgram(defaultPolygonEffect, vertex, true);
-			graphicsDevice.linkToProgram(defaultPolygonEffect, fragment, true);
-			graphicsDevice.linkProgram(defaultPolygonEffect);
-			assert(!graphicsDevice.hasErrors());
+			graphicsDevice->createProgram(defaultPolygonEffect);
+			graphicsDevice->linkToProgram(defaultPolygonEffect, vertex, true);
+			graphicsDevice->linkToProgram(defaultPolygonEffect, fragment, true);
+			graphicsDevice->linkProgram(defaultPolygonEffect);
+			assert(!graphicsDevice->hasErrors());
 
 			vertex = fragment = 0;
 			
 			// Create default textured polygon shader.
-			graphicsDevice.compileShader(vertex, defaultTexturedPolygonVertexSource, ShaderType::Vertex);
-			assert(!graphicsDevice.hasErrors());
+			graphicsDevice->compileShader(vertex, defaultTexturedPolygonVertexSource, ShaderType::Vertex);
+			assert(!graphicsDevice->hasErrors());
 
-			graphicsDevice.compileShader(fragment, defaultTexturedPolygonFragmentSource, ShaderType::Fragment);
-			assert(!graphicsDevice.hasErrors());
+			graphicsDevice->compileShader(fragment, defaultTexturedPolygonFragmentSource, ShaderType::Fragment);
+			assert(!graphicsDevice->hasErrors());
 
-			graphicsDevice.createProgram(defaultTexturedPolygonEffect);
-			graphicsDevice.linkToProgram(defaultTexturedPolygonEffect, vertex, true);
-			graphicsDevice.linkToProgram(defaultTexturedPolygonEffect, fragment, true);
-			graphicsDevice.linkProgram(defaultTexturedPolygonEffect);
-			assert(!graphicsDevice.hasErrors());
+			graphicsDevice->createProgram(defaultTexturedPolygonEffect);
+			graphicsDevice->linkToProgram(defaultTexturedPolygonEffect, vertex, true);
+			graphicsDevice->linkToProgram(defaultTexturedPolygonEffect, fragment, true);
+			graphicsDevice->linkProgram(defaultTexturedPolygonEffect);
+			assert(!graphicsDevice->hasErrors());
 
 			defaultEffects[static_cast<uint32>(RenderState::Waiting)]			= 0;
 			defaultEffects[static_cast<uint32>(RenderState::Polygons)]			= defaultPolygonEffect;
@@ -185,23 +185,23 @@ namespace sani {
 		}
 		void Renderer::generateRenderSetups() {
 			renderSetups[static_cast<uint32>(RenderState::Waiting)]				= nullptr;
-			renderSetups[static_cast<uint32>(RenderState::Polygons)]			= new PolygonRenderSetup(&graphicsDevice);
-			renderSetups[static_cast<uint32>(RenderState::TexturedPolygons)]	= new TexturedPolygonRenderSetup(&graphicsDevice);
+			renderSetups[static_cast<uint32>(RenderState::Polygons)]			= new PolygonRenderSetup(graphicsDevice);
+			renderSetups[static_cast<uint32>(RenderState::TexturedPolygons)]	= new TexturedPolygonRenderSetup(graphicsDevice);
 		}
 		void Renderer::generateBuffers() {
-			graphicsDevice.generateBuffer(vertexBuffer);
-			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
+			graphicsDevice->generateBuffer(vertexBuffer);
+			graphicsDevice->bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 
-			graphicsDevice.generateBuffer(indexBuffer);
-			graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
+			graphicsDevice->generateBuffer(indexBuffer);
+			graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
-			graphicsDevice.setBufferData(BufferType::ArrayBuffer,
+			graphicsDevice->setBufferData(BufferType::ArrayBuffer,
 										 vertices.getSize() * sizeof(float32),
 										 vertices.data(),
 										 BufferUsage::Dynamic);
 
 
-			graphicsDevice.setBufferData(BufferType::ElementArrayBuffer,
+			graphicsDevice->setBufferData(BufferType::ElementArrayBuffer,
 										 indices.getSize() * sizeof(uint32),
 										 indices.data(),
 										 BufferUsage::Dynamic);
@@ -210,9 +210,9 @@ namespace sani {
 		void Renderer::updateVertexBufferSize() {
 			// Rebind buffer if it's size has changed.
 			if (verticesSize != vertices.getSize()) {
-				graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
+				graphicsDevice->bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 
-				graphicsDevice.setBufferData(BufferType::ArrayBuffer,
+				graphicsDevice->setBufferData(BufferType::ArrayBuffer,
 											 vertices.getSize() * sizeof(float32),
 											 vertices.data(),
 											 BufferUsage::Dynamic);
@@ -222,9 +222,9 @@ namespace sani {
 		}
 		void Renderer::updateIndexBufferSize() {
 			if (indicesSize != indices.getSize()) {
-				graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
+				graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
-				graphicsDevice.setBufferData(BufferType::ElementArrayBuffer,
+				graphicsDevice->setBufferData(BufferType::ElementArrayBuffer,
 											 indices.getSize() * sizeof(uint32),
 											 indices.data(),
 											 BufferUsage::Dynamic);
@@ -391,32 +391,32 @@ namespace sani {
 			renderSetup->setVertexElementsCount(renderBatch->elementsData->vertexElements);
 			renderSetup->use();
 
-			graphicsDevice.bindTexture(renderBatch->texture);
-			graphicsDevice.useProgram(renderBatch->effect);
+			graphicsDevice->bindTexture(renderBatch->texture);
+			graphicsDevice->useProgram(renderBatch->effect);
 
-			if (vertexMode == VertexMode::NoIndexing)	graphicsDevice.drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesCount);
-			else										graphicsDevice.drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin);
+			if (vertexMode == VertexMode::NoIndexing)	graphicsDevice->drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesCount);
+			else										graphicsDevice->drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin);
 
 			renderSetup->clear();
 
-			graphicsDevice.bindTexture(0);
-			graphicsDevice.useProgram(0);
+			graphicsDevice->bindTexture(0);
+			graphicsDevice->useProgram(0);
 		}
 		void Renderer::updateBufferDatas() {
 			updateVertexBufferSize();
 			updateIndexBufferSize();
 
-			graphicsDevice.bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
+			graphicsDevice->bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 
-			graphicsDevice.setBufferSubData(BufferType::ArrayBuffer,
+			graphicsDevice->setBufferSubData(BufferType::ArrayBuffer,
 											0,
 											vertices.getElementsCount() * sizeof(float32),
 											vertices.data());
 
 			if (indices.getElementsCount() > 0) {
-				graphicsDevice.bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
+				graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
-				graphicsDevice.setBufferSubData(BufferType::ElementArrayBuffer,
+				graphicsDevice->setBufferSubData(BufferType::ElementArrayBuffer,
 												0,
 												indices.getElementsCount() * sizeof(uint32),
 												indices.data());
@@ -438,12 +438,12 @@ namespace sani {
 			generateRenderSetups();
 			generateBuffers();
 
-			return graphicsDevice.hasErrors();
+			return graphicsDevice->hasErrors();
 		}
 
 		void Renderer::beginRendering(const math::Mat4f& transform) {
-			graphicsDevice.setShaderUniform(defaultEffects[1], "transform", (void*)&transform, UniformType::Mat4F);
-			graphicsDevice.setShaderUniform(defaultEffects[2], "transform", (void*)&transform, UniformType::Mat4F);
+			graphicsDevice->setShaderUniform(defaultEffects[1], "transform", (void*)&transform, UniformType::Mat4F);
+			graphicsDevice->setShaderUniform(defaultEffects[2], "transform", (void*)&transform, UniformType::Mat4F);
 
 			prepareRendering();
 		}

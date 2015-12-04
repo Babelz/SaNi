@@ -1,103 +1,106 @@
 #include "sani/engine/messaging/state_message.hpp"
-#include "sani/engine/engine_service.hpp"
+#include "sani/engine/services/engine_service.hpp"
 
 namespace sani {
 
 	namespace engine {
 
-		uint32 EngineService::idGenerator = 0;
+		namespace services {
 
-		const String initializationErrorMessage		= "initialization failed!";
-		const String resumeErrorMessage				= "resume failed!";
-		const String suspendErrorMessage			= "failed to suspend the service!";
-		const String terminateErrorMessage			= "failed to terminate the service!";
+			uint32 EngineService::idGenerator = 0;
 
-		EngineService::EngineService(const String& name, SaNiEngine* const engine) : name(name),
-																					 id(idGenerator++),
-																					 engine(engine),
-																					 state(ServiceState::Uninitialized) {
-		}
+			static const String initializationErrorMessage		= "initialization failed!";
+			static const String resumeErrorMessage				= "resume failed!";
+			static const String suspendErrorMessage				= "failed to suspend the service!";
+			static const String terminateErrorMessage			= "failed to terminate the service!";
 
-		void EngineService::sendStateMessage(StateMessage* const message, const String& errorMessage) {
-			handleStateMessage(message);
-
-			if (state == ServiceState::Terminated) {
-				// Unsuccesfull terminate messages are handled
-				// as fatal errors.
-				if (!message->handled) throw std::runtime_error(errorMessage);
-				
-				return;
+			EngineService::EngineService(const String& name, SaNiEngine* const engine) : name(name),
+				id(idGenerator++),
+				engine(engine),
+				state(ServiceState::Uninitialized) {
 			}
 
-			// If message was not handled, terminate the service.
-			if (!message->handled) {
-				errors.push(errorMessage);
+			void EngineService::sendStateMessage(StateMessage* const message, const String& errorMessage) {
+				handleStateMessage(message);
 
-				StateMessage terminateMessage(ServiceState::Terminated, state);
+				if (state == ServiceState::Terminated) {
+					// Unsuccesfull terminate messages are handled
+					// as fatal errors.
+					if (!message->handled) throw std::runtime_error(errorMessage);
 
-				sendStateMessage(&terminateMessage, terminateErrorMessage);
+					return;
+				}
 
-				state = ServiceState::Terminated;
+				// If message was not handled, terminate the service.
+				if (!message->handled) {
+					errors.push(errorMessage);
+
+					StateMessage terminateMessage(ServiceState::Terminated, state);
+
+					sendStateMessage(&terminateMessage, terminateErrorMessage);
+
+					state = ServiceState::Terminated;
+				}
 			}
-		}
 
-		void EngineService::handleStateMessage(StateMessage* const stateMessage) {
-		}
+			void EngineService::handleStateMessage(StateMessage* const stateMessage) {
+			}
 
-		SaNiEngine* const EngineService::getEngine() {
-			return engine;
-		}
+			SaNiEngine* const EngineService::getEngine() {
+				return engine;
+			}
 
-		void EngineService::pushError(const String& error) {
-			errors.push(error);
-		}
-		
-		void EngineService::start() {
-			StateMessage stateMessage(ServiceState::Running, state);
+			void EngineService::pushError(const String& error) {
+				errors.push(error);
+			}
 
-			const String errorMessage = state == ServiceState::Uninitialized ? initializationErrorMessage : resumeErrorMessage;
+			void EngineService::start() {
+				StateMessage stateMessage(ServiceState::Running, state);
 
-			sendStateMessage(&stateMessage, errorMessage);
-		}
-		void EngineService::suspend() {
-			StateMessage stateMessage(ServiceState::Suspended, state);
+				const String errorMessage = state == ServiceState::Uninitialized ? initializationErrorMessage : resumeErrorMessage;
 
-			sendStateMessage(&stateMessage, suspendErrorMessage);
-		}
-		void EngineService::terminate() {
-			StateMessage stateMessage(ServiceState::Terminated, state);
-			
-			sendStateMessage(&stateMessage, terminateErrorMessage);
-		}
+				sendStateMessage(&stateMessage, errorMessage);
+			}
+			void EngineService::suspend() {
+				StateMessage stateMessage(ServiceState::Suspended, state);
 
-		void EngineService::receive(messages::Message* const message) {
-		}
-		void EngineService::update(const EngineTime& time) {
-		}
+				sendStateMessage(&stateMessage, suspendErrorMessage);
+			}
+			void EngineService::terminate() {
+				StateMessage stateMessage(ServiceState::Terminated, state);
 
-		ServiceState EngineService::getState() const {
-			return state;
-		}
+				sendStateMessage(&stateMessage, terminateErrorMessage);
+			}
 
-		const String& EngineService::getName() const {
-			return name;
-		}
-		uint32 EngineService::getID() const {
-			return id;
-		}
+			void EngineService::receive(messages::Message* const message) {
+			}
+			void EngineService::update(const EngineTime& time) {
+			}
 
-		bool EngineService::hasErrors() const {
-			return !errors.empty();
-		}
+			ServiceState EngineService::getState() const {
+				return state;
+			}
 
-		EngineService::~EngineService()  {
-		}
+			const String& EngineService::getName() const {
+				return name;
+			}
+			uint32 EngineService::getID() const {
+				return id;
+			}
 
-		bool EngineService::operator == (const EngineService& rhs) const {
-			return name == rhs.name && id == rhs.id;
-		}
-		bool EngineService::operator != (const EngineService& rhs) const {
-			return !(*this == rhs);
+			bool EngineService::hasErrors() const {
+				return !errors.empty();
+			}
+
+			EngineService::~EngineService()  {
+			}
+
+			bool EngineService::operator == (const EngineService& rhs) const {
+				return name == rhs.name && id == rhs.id;
+			}
+			bool EngineService::operator != (const EngineService& rhs) const {
+				return !(*this == rhs);
+			}
 		}
 	}
 }

@@ -232,6 +232,7 @@
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
+    <ClCompile Include="..\..\src\sani\engine\services\render_service.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\contracts.hpp" />
@@ -284,7 +285,6 @@
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp" />
@@ -295,6 +295,8 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />

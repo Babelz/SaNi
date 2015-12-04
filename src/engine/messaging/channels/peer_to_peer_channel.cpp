@@ -1,6 +1,6 @@
 #include "sani/engine/messaging/channels/peer_to_peer_channel.hpp"
 #include "sani/engine/service_registry.hpp"
-#include "sani/engine/engine_service.hpp"
+#include "sani/engine/services/engine_service.hpp"
 
 namespace sani {
 
@@ -22,7 +22,7 @@ namespace sani {
 					const String& recipentName = *message->recipents.begin();
 
 					// Send the message to the recipent.
-					EngineService* const recipent = getServiceRegistry()->locate(recipentName);
+					services::EngineService* const recipent = getServiceRegistry()->locate(recipentName);
 					recipent->receive(message);
 
 					// Send unhandled messages to the dead letter channel.
