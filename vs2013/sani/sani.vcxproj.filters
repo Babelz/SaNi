@@ -366,6 +366,12 @@
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp">
       <Filter>src\engine\messaging</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\sani\engine\messaging\channel.cpp">
+      <Filter>src\engine\messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\sani\engine\messaging\recipent_list.cpp">
+      <Filter>src\engine\messaging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -771,6 +777,15 @@
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channel.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipent_list.hpp">
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
   </ItemGroup>

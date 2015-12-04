@@ -13,7 +13,7 @@ namespace sani {
 		/// to message each other.
 		class Message {
 		private:
-
+		
 		public:
 		};
 	}
