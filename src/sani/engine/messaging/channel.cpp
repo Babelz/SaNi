@@ -33,7 +33,7 @@ namespace sani {
 		}
 		
 		void Channel::route(Message* const message) {
-			//if (message->)
+			if (message->)
 		}
 
 		Channel::~Channel() {
