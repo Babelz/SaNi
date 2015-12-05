@@ -10,6 +10,7 @@ namespace sani {
 		class FontDescription : public ResourceItem {
 		private:
 			String fontName;
+			String fontPath;
 			float size;
 			float spacing;
 			std::vector<unsigned short> characters;
@@ -47,6 +48,13 @@ namespace sani {
 				useKerning = newKerning;
 			}
 
+			inline void setFontPath(const String& path) {
+				fontPath = path;
+			}
+			inline const String& getFontPath() const {
+				return fontPath;
+			}
+
 			inline void setSetCharacterRegions(CharacterRegionCollection& regions) {
 				for (size_t i = 0; i < regions.size(); ++i) {
 					CharacterRegion& region = regions[i];
@@ -58,6 +66,10 @@ namespace sani {
 						characters.push_back(static_cast<unsigned short>(start));
 					}
 				}
+			}
+
+			inline const std::vector<unsigned short>& getCharacters() const {
+				return characters;
 			}
 			
 		};
