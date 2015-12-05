@@ -3,8 +3,9 @@
 #include "sani/platform.hpp"
 #include "sani/platform/file/file_system.hpp"
 #include "sani/resource/spritefont_content.hpp"
-#include "sani/resource/pipeline/spritefont_importer.hpp"
+#include "sani/resource/pipeline/spritefont_description_importer.hpp"
 #include "sani/core/parser/xml_parser.hpp"
+#include "sani/resource/font_description.hpp"
 #include <sstream>
 #include "sani/core/parser/xml_util.hpp"
 #include <tchar.h>
@@ -113,7 +114,7 @@ namespace sani {
 	namespace resource {
 		namespace pipeline {
 
-			SpriteFontImporter::SpriteFontImporter() 
+			SpriteFontDescriptionImporter::SpriteFontDescriptionImporter() 
 				: ContentImporter() {
 				// this is only called once
 				FT_Error error = FT_Init_FreeType(&library);
@@ -122,7 +123,7 @@ namespace sani {
 				}
 			}
 
-			SpriteFontImporter::~SpriteFontImporter() { }
+			SpriteFontDescriptionImporter::~SpriteFontDescriptionImporter() { }
 
 			class Glyph {
 			public:
@@ -146,7 +147,7 @@ namespace sani {
 			};
 
 			static Glyph* importGlyph(unsigned long character, FT_Face face) {
-				
+				Glyph* g = nullptr;
 				if (FT_Load_Char(face, character, FT_LOAD_RENDER)) {
 					throw std::runtime_error("aaa");
 				}
@@ -162,21 +163,26 @@ namespace sani {
 					}*/
 					unsigned char* alphas = new unsigned char[width * rows];
 					std::memcpy(alphas, face->glyph->bitmap.buffer, width * rows);
-					float a = static_cast<float>(face->glyph->metrics.horiBearingX >> 6);
-					float b = static_cast<float>(face->glyph->metrics.width >> 6);
-					float c = static_cast<float>((face->glyph->metrics.horiAdvance >> 6) - (a + b));
-					Glyph* g = new Glyph(character, alphas, width*rows, width, rows);
-					g->xOffset = static_cast<float>( -(face->glyph->advance.x >> 6)) ;
-					g->xAdvance = static_cast<float>( face->glyph->metrics.horiAdvance >> 6) ;
-					g->yOffset = static_cast<float>( -(face->glyph->metrics.horiBearingY >> 6)) ;
-					g->a = a; g->b = b; g->c = c;
-					return g;
+					g = new Glyph(character, alphas, width*rows, width, rows);
 				}
 				// if the font doesnt have the char
 				else {
-					std::cout << character << std::endl;
+					int gHA = face->glyph->metrics.horiAdvance >> 6;
+					int gVA = face->size->metrics.height >> 6;
+
+					gHA = gHA > 0 ? gHA : gVA;
+					gVA = gVA > 0 ? gVA : gHA;
+					g = new Glyph(character, new unsigned char[gHA * gVA], gHA*gVA, gHA, gVA);
 				}
-				return nullptr;
+				float a = static_cast<float>(face->glyph->metrics.horiBearingX >> 6);
+				float b = static_cast<float>(face->glyph->metrics.width >> 6);
+				float c = static_cast<float>((face->glyph->metrics.horiAdvance >> 6) - (a + b));
+				
+				g->xOffset = static_cast<float>(-(face->glyph->advance.x >> 6));
+				g->xAdvance = static_cast<float>(face->glyph->metrics.horiAdvance >> 6);
+				g->yOffset = static_cast<float>(-(face->glyph->metrics.horiBearingY >> 6));
+				g->a = a; g->b = b; g->c = c;
+				return g;
 			}
 
 			static FT_Face createFontFace(parser::XmlDocument& doc, const String& basename, io::FileSystem* fs) {
@@ -217,7 +223,7 @@ namespace sani {
 				return face;
 			}
 
-			ResourceItem* SpriteFontImporter::import(const String& filename, io::FileSystem* fileSystem) const {
+			ResourceItem* SpriteFontDescriptionImporter::import(const String& filename, io::FileSystem* fileSystem) const {
 				using namespace sani::io;
 				using namespace sani::parser;
 
@@ -236,43 +242,67 @@ namespace sani {
 					throw;
 				}
 				fileSystem->closeFile(filename);
+				
+				XmlNode root, nameNode, sizeNode, spacingNode, regionsNode;
+				std::vector<XmlNode> regionNodes;
+				CharacterRegionCollection characterRegions;
 
-				XmlNode root;
 				doc.firstNode(root);
+				root.firstNode("name", nameNode);
+				root.firstNode("size", sizeNode);
+				root.firstNode("spacing", spacingNode);
+				root.firstNode("character_regions", regionsNode);
+				
+
+				FontDescription* desc = new FontDescription(
+					nameNode.value(),
+					XmlUtil::get<float>(sizeNode),
+					XmlUtil::get<float>(spacingNode)
+					);
+				
+				
+				regionsNode.getChildNodes(regionNodes);
+				for (auto& regionNode : regionNodes) {
+					XmlNode startNode, endNode;
+					regionNode.firstNode("start", startNode);
+					regionNode.firstNode("end", endNode);
+
+					unsigned short start = XmlUtil::get<uint32>(startNode);
+					unsigned short end = XmlUtil::get<uint32>(endNode);
+					characterRegions.push_back(std::make_tuple(start, end));
+				}
+				
+				desc->setSetCharacterRegions(characterRegions);
+				return desc;
+				/*
 
 				// TODO context maybe?
 				String basename(filename.substr(0, filename.rfind("\\")));
 
 				FT_Face face = createFontFace(doc, basename, fileSystem);
-				FT_GlyphSlot slot = face->glyph;
 
-				XmlNode regionsNode;
-				root.firstNode("character_regions", regionsNode);
-				std::vector<XmlNode> regionNodes;
-				regionsNode.getChildNodes(regionNodes);
+				
+				
 				std::vector<Glyph*> glyphs;
 				for (auto& regionNode : regionNodes) {
-					XmlNode startNode, endNode;
-					regionNode.firstNode("start", startNode);
-					regionNode.firstNode("end", endNode);
-					uint32 start = XmlUtil::get<uint32>(startNode);
-					uint32 end = XmlUtil::get<uint32>(endNode);
-					if (start >= end) {
-						throw std::runtime_error("Invalid start/end position");
-					}
-
 					uint32 width, height;
 					width = height = 0u;
 					for (unsigned long character = start; character <= end; ++character) {
 						Glyph* glyph = importGlyph(character, face);
 						glyphs.push_back(glyph);
 					}
-					std::cout << width << std::endl;
 				}
+
+				// font height
+				uint32 lineSpacing = face->size->metrics.height >> 6;
+				// The height used to calculate the Y offset for each character.
+				uint32 yOffsetMin = -face->size->metrics.ascender >> 6;
+
+				std::sort(glyphs.begin(), glyphs.end(), [](Glyph*a, Glyph* b) {
+					return a->character < b->character;
+				});
 			
-				
-				
-				return nullptr;
+				*/
 			}
 		}
 	}

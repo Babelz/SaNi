@@ -369,14 +369,14 @@
     <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp">
       <Filter>src\resource\compiler</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\pipeline\spritefont_importer.cpp">
-      <Filter>src\resource\pipeline</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp">
       <Filter>src\resource\processor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\resource\spritefont_content.cpp">
       <Filter>src\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\pipeline\spritefont_description_importer.cpp">
+      <Filter>src\resource\pipeline</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -779,9 +779,6 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp">
       <Filter>include\resource\compiler</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_importer.hpp">
-      <Filter>include\resource\pipeline</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp">
       <Filter>include\resource\processor</Filter>
     </ClInclude>
@@ -789,6 +786,12 @@
       <Filter>include\resource</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_description_importer.hpp">
+      <Filter>include\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\font_description.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

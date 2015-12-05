@@ -10,6 +10,7 @@
 #include "sani/resource/effect_content.hpp"
 #include "sani/core/parser/xml_parser.hpp"
 #include <iostream>
+#include "sani/resource/font_description.hpp"
 namespace sani {
 	namespace resource {
 		namespace compiler {
@@ -32,11 +33,11 @@ namespace sani {
 				importers.reserve(32u);
 				importers.push_back(new pipeline::Texture2DImporter);
 				importers.push_back(new pipeline::EffectImporter);
-				importers.push_back(new pipeline::SpriteFontImporter);
+				importers.push_back(new pipeline::SpriteFontDescriptionImporter);
 
 				mapProcessor<Texture2DContent, processor::Texture2DProcessor>();
 				mapProcessor<EffectContent, processor::EffectProcessor>();
-				mapProcessor<SpriteFontContent, processor::SpriteFontProcessor>();
+				mapProcessor<FontDescription, processor::SpriteFontProcessor>();
 			}
 
 			void ResourceCompiler::readBuildFile(const String& root, const String& buildFile) {

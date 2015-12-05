@@ -239,7 +239,7 @@
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
     <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp" />
-    <ClCompile Include="..\..\src\resource\pipeline\spritefont_importer.cpp" />
+    <ClCompile Include="..\..\src\resource\pipeline\spritefont_description_importer.cpp" />
     <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp" />
     <ClCompile Include="..\..\src\resource\spritefont_content.cpp" />
   </ItemGroup>
@@ -354,6 +354,7 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect_content.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\font_description.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp" />
@@ -377,7 +378,7 @@
     <ClInclude Include="..\..\include\sani\types.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_importer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_description_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp" />
   </ItemGroup>

@@ -21,19 +21,16 @@ namespace sani {
 		public:
 			template <class T>
 			static T get(const XmlAttribute& attr) {
-				static_assert(std::numeric_limits<T>::is_integer, "T != integer type");
 				return lexical_cast<T>(attr.value());
 			}
 
 			template <class T>
 			static T get(const XmlNode& node) {
-				static_assert(std::numeric_limits<T>::is_integer, "T != integer type");
 				return lexical_cast<T>(node.value());
 			}
 
 			template <class T>
 			static T get(const XmlNode& node, const char* attrName, T defaultValue) {
-				static_assert(std::numeric_limits<T>::is_integer, "T != integer type");
 				XmlAttribute attr;
 				if (!node.attribute(attrName, attr)) return defaultValue;
 				return get(attr);
