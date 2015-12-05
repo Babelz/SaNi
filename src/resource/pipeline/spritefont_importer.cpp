@@ -1,5 +1,6 @@
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#include "sani/platform.hpp"
 #include "sani/platform/file/file_system.hpp"
 #include "sani/resource/spritefont_content.hpp"
 #include "sani/resource/pipeline/spritefont_importer.hpp"
@@ -9,7 +10,9 @@
 #include <tchar.h>
 #include <ft2build.h>
 #include <iostream>
+#include <algorithm>
 #include FT_FREETYPE_H
+#include FT_GLYPH_H
 
 static FT_Library library;
 
@@ -121,6 +124,99 @@ namespace sani {
 
 			SpriteFontImporter::~SpriteFontImporter() { }
 
+			class Glyph {
+			public:
+				unsigned long character;
+				unsigned char* pixels;
+				uint32 dataLength;
+				uint32 width;
+				uint32 height;
+				float a;
+				float b;
+				float c;
+				float xOffset;
+				float yOffset;
+				float xAdvance;
+			public:
+				Glyph(unsigned long character, unsigned char* pixels, uint32 dataLength, uint32 width, uint32 height)
+					: character(character), pixels(pixels), dataLength(dataLength), 
+					width(width), height(height), a(0), b(0), c(0), xOffset(0), yOffset(0), xAdvance(0) {
+
+				}
+			};
+
+			static Glyph* importGlyph(unsigned long character, FT_Face face) {
+				
+				if (FT_Load_Char(face, character, FT_LOAD_RENDER)) {
+					throw std::runtime_error("aaa");
+				}
+
+				// if the font has the char
+				if (face->glyph->bitmap.width > 0 && face->glyph->bitmap.rows > 0) {
+					uint32 width = face->glyph->bitmap.width;
+					uint32 rows = face->glyph->bitmap.rows;
+					// TODO DEBUG
+					/*unsigned char** pixels = new unsigned char*[rows];
+					for (size_t i = 0; i < rows; ++i) {
+						pixels[i] = new unsigned char[width];
+					}*/
+					unsigned char* alphas = new unsigned char[width * rows];
+					std::memcpy(alphas, face->glyph->bitmap.buffer, width * rows);
+					float a = static_cast<float>(face->glyph->metrics.horiBearingX >> 6);
+					float b = static_cast<float>(face->glyph->metrics.width >> 6);
+					float c = static_cast<float>((face->glyph->metrics.horiAdvance >> 6) - (a + b));
+					Glyph* g = new Glyph(character, alphas, width*rows, width, rows);
+					g->xOffset = static_cast<float>( -(face->glyph->advance.x >> 6)) ;
+					g->xAdvance = static_cast<float>( face->glyph->metrics.horiAdvance >> 6) ;
+					g->yOffset = static_cast<float>( -(face->glyph->metrics.horiBearingY >> 6)) ;
+					g->a = a; g->b = b; g->c = c;
+					return g;
+				}
+				// if the font doesnt have the char
+				else {
+					std::cout << character << std::endl;
+				}
+				return nullptr;
+			}
+
+			static FT_Face createFontFace(parser::XmlDocument& doc, const String& basename, io::FileSystem* fs) {
+				using namespace sani::parser;
+				FT_Face face = nullptr;
+				XmlNode root, nameNode, sizeNode;
+
+				doc.firstNode(root);
+				if (!root.firstNode("name", nameNode)) {
+					throw std::runtime_error("SpriteFont missing name node!");
+				}
+
+				if (!root.firstNode("size", sizeNode)) {
+					throw std::runtime_error("SpriteFont missing size node!");
+				}
+				String nameOfFont(nameNode.value());
+
+				// it is a system font probably
+				if (!fs->fileExists(basename + "\\" + nameOfFont)) {
+					if (platformIsFontInstalled(nameOfFont.c_str())) {
+						String fontFilePath(platformGetFontPath(nameOfFont));
+						FT_Error error = FT_New_Face(library, fontFilePath.c_str(), 0, &face);
+
+						if (error == FT_Err_Unknown_File_Format) {
+							throw std::runtime_error("Invalid font file format!");
+						}
+						else if (error) {
+							throw std::runtime_error("Font file could not be read");
+						}
+					}
+				}
+				else {
+					throw std::logic_error("not impl");
+				}
+				uint32 size = XmlUtil::get<uint32>(sizeNode);
+				const uint32 dpi = 96;
+				FT_Set_Char_Size(face, 0, size * 64, dpi, dpi);
+				return face;
+			}
+
 			ResourceItem* SpriteFontImporter::import(const String& filename, io::FileSystem* fileSystem) const {
 				using namespace sani::io;
 				using namespace sani::parser;
@@ -128,7 +224,7 @@ namespace sani {
 				FileStream* stream = nullptr;
 				// the file exists so we can just open it
 				fileSystem->openFile(filename, Filemode::Read, &stream);
-				
+
 				// the file points to XML
 				XmlDocument doc;
 				try {
@@ -141,46 +237,39 @@ namespace sani {
 				}
 				fileSystem->closeFile(filename);
 
-				XmlNode root, nameNode, sizeNode;
+				XmlNode root;
 				doc.firstNode(root);
-				if (!root.firstNode("name", nameNode)) {
-					throw std::runtime_error("SpriteFont missing name node!");
-				}
-
-				if (!root.firstNode("size", sizeNode)) {
-					throw std::runtime_error("SpriteFont missing size node!");
-				}
-
-				String nameOfFont(nameNode.value());
-				
 
 				// TODO context maybe?
 				String basename(filename.substr(0, filename.rfind("\\")));
 
-				FT_Face face;
-				
-				// it is a system font probably
-				if (!fileSystem->fileExists(basename + "\\" + nameOfFont)) {
-					if (platformIsFontInstalled(nameOfFont.c_str())) {
-						String fontFilePath(platformGetFontPath(nameOfFont));
-						FT_Error error = FT_New_Face(library, fontFilePath.c_str(), 0, &face);
+				FT_Face face = createFontFace(doc, basename, fileSystem);
+				FT_GlyphSlot slot = face->glyph;
 
-						if (error == FT_Err_Unknown_File_Format) {
-							throw std::runtime_error("Invalid font file format!");
-						}
-						else if (error) {
-							throw std::runtime_error("Font file could not be read");
-						}
-						uint32 size = XmlUtil::get<uint32>(sizeNode);
-						error = FT_Set_Char_Size(
-							face,
-							0, // same as height
-							size * 64u,
-							300,
-							300);
-
+				XmlNode regionsNode;
+				root.firstNode("character_regions", regionsNode);
+				std::vector<XmlNode> regionNodes;
+				regionsNode.getChildNodes(regionNodes);
+				std::vector<Glyph*> glyphs;
+				for (auto& regionNode : regionNodes) {
+					XmlNode startNode, endNode;
+					regionNode.firstNode("start", startNode);
+					regionNode.firstNode("end", endNode);
+					uint32 start = XmlUtil::get<uint32>(startNode);
+					uint32 end = XmlUtil::get<uint32>(endNode);
+					if (start >= end) {
+						throw std::runtime_error("Invalid start/end position");
 					}
+
+					uint32 width, height;
+					width = height = 0u;
+					for (unsigned long character = start; character <= end; ++character) {
+						Glyph* glyph = importGlyph(character, face);
+						glyphs.push_back(glyph);
+					}
+					std::cout << width << std::endl;
 				}
+			
 				
 				
 				return nullptr;
