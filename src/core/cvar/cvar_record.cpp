@@ -5,11 +5,9 @@
 
 namespace sani {
 
-	CVarRecord::CVarRecord(const CVarToken& token, const CVar& cvar) : lineNumber(token.getLineNumber()),
-																	   filename(token.getFilename()),
-																	   line(token.getLine()),
-																	   cvar(cvar) {
-		const String line = line;
+	CVarRecord::CVarRecord(const CVarToken& token, const CVar& cvar) :  token(token),
+																		cvar(cvar) {
+		const String line = token.getLine();
 		const size_t spos = line.find(' ');
 
 		if (spos != line.npos) {
@@ -24,10 +22,10 @@ namespace sani {
 	}
 
 	uint32 CVarRecord::getLineNumber() const {
-		return lineNumber;
+		return token.getLineNumber();
 	}
 	const String& CVarRecord::getFilename() const {
-		return filename;
+		return token.getFilename();
 	}
 
 	String CVarRecord::generateSyncedStringRepresentation() const {
@@ -58,7 +56,7 @@ namespace sani {
 
 		// Create the new representation.
 		const String newValue = ss.str();
-		String newRepresentation = line;
+		String newRepresentation = token.getLine();
 
 		if (newValue.size() < originalValue.size()) {
 			// Remove chars.

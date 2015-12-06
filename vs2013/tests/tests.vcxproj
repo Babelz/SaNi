@@ -23,6 +23,7 @@
     <ClCompile Include="..\..\tests\memory\pool.cpp" />
     <ClCompile Include="..\..\tests\resource\resource.cpp" />
     <ClCompile Include="..\..\tests\time\time.cpp" />
+    <ClCompile Include="..\..\tests\utils\convert.cpp" />
     <ClCompile Include="..\..\tests\utils\string_utils.cpp" />
   </ItemGroup>
   <ItemGroup>

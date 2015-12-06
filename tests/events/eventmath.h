@@ -1,5 +1,7 @@
 #include "sani\core\events.hpp"
 
+using namespace sani;
+
 // Test class for testing events.
 class EventMath {
 public:

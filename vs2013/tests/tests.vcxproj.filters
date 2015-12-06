@@ -81,6 +81,9 @@
     <ClCompile Include="..\..\tests\time\time.cpp">
       <Filter>Source Files\time</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\tests\utils\convert.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\tests\events\eventmath.h">
