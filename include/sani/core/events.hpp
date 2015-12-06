@@ -10,6 +10,10 @@
 		example
 		SANI_DECLARE_EVENT(onClosed, void(void));
 
+	NOTICE: declaring events don't work outside the sani namespace, 
+			if you are declaring events outside this namespace please
+			add "using namespace sani" to your file.
+
 	To initialize the event..
 		SANI_INIT_EVENT(name, signature);
 
