@@ -7,6 +7,7 @@
 
 #include <Windows.h>
 
+#include "sani/engine/services/contracts/render_service_contract.hpp"
 #include "sani/graphics/renderer.hpp"
 #include "sani/graphics/color.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
@@ -33,6 +34,7 @@
 #include "sani/graphics/renderables/circle.hpp"
 
 #include "sani/engine/sani_engine.hpp"
+#include "sani/engine/messaging/messages/command_message.hpp"
 
 using namespace sani::resource;
 using namespace sani::graphics;
@@ -198,7 +200,6 @@ void NO_ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 }
 void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	SaNiEngine engine(hInstance);
-	
 	engine.start();
 }
 

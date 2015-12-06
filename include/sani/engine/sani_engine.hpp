@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sani/engine/messaging/channel_manager.hpp"
+#include "sani/core/memory/heap_allocator.hpp"
 #include "sani/platform/platform_config.hpp"
 #include "sani/engine/service_registry.hpp"
 #include "sani/forward_declare.hpp"
@@ -29,6 +30,9 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			const HINSTANCE hInstance;
 #endif
+			// Shared memory region used by the services to allocate
+			// temporary stuff such as results for messages.
+			HeapAllocator sharedServiceMemory;
 
 			graphics::GraphicsDevice* graphicsDevice;
 			graphics::Window* window;
@@ -71,7 +75,15 @@ namespace sani {
 			/// Causes the engine to quit.
 			void quit();
 
+			template<typename T>
+			T* allocateFromSharedMemory();
+			
+			template<typename T>
+			void releaseFromSharedMemory(T* object);
+
 			~SaNiEngine();
 		};
 	}
 }
+
+#include "sani/engine/impl/sani_engine.hpp"

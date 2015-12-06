@@ -39,7 +39,7 @@ namespace sani {
 			}
 
 			void Channel::route(messages::Message* const message) {
-				if (message->type != channelType) throw std::runtime_error("invalid message type for the given channel");
+				if (message->getType() != channelType) throw std::runtime_error("invalid message type for the given channel");
 
 				queueMessage(message);
 			}

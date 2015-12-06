@@ -6,6 +6,8 @@
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/window.hpp"
 
+#include "sani/core/memory/memory.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -14,7 +16,8 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 		SaNiEngine::SaNiEngine(const HINSTANCE hInstance) : services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
 															channels(&services),
-															hInstance(hInstance) {
+															hInstance(hInstance),
+															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic) {
 		}
 #endif
 

@@ -36,7 +36,7 @@ namespace sani {
 				void markHandled();
 
 				/// Returns the recipient list of this message.
-				RecipentList& const getRecipents();
+				RecipentList& getRecipents();
 				/// Returns the type of this message.
 				MessageType getType() const;
 

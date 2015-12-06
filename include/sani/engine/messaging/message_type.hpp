@@ -8,7 +8,7 @@ namespace sani {
 
 		const uint32 MESSAGE_TYPES_COUNT = 5;
 
-		/// Defines the type of a given message.
+		/// Enum of supported message types.
 		enum class MessageType : uint32 {
 			/// Contains data and is sent back to the sender
 			/// after processing. Sent trough the p2p channel.

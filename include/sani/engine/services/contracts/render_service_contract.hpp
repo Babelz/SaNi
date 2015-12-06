@@ -3,6 +3,7 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
+SANI_FORWARD_DECLARE_3(sani, engine, messages, DocumentMessage);
 SANI_FORWARD_DECLARE_3(sani, engine, messages, CommandMessage);
 
 namespace sani {
@@ -51,7 +52,7 @@ namespace sani {
 				void deleteLayer(messages::CommandMessage* const message, const String& layerName);
 
 				/// Generates a message that will return all layers.
-				void getLayers(messages::CommandMessage* const message);
+				void getLayers(messages::DocumentMessage* const message);
 				
 				bool isValidCommand(const uint32 command);
 			}

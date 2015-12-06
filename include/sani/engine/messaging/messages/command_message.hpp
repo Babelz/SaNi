@@ -26,8 +26,6 @@ namespace sani {
 				// Can be empty.
 				String data;
 			public:
-				CommandMessage(const uint32 command, const String& data);
-				CommandMessage(const uint32 command);
 				CommandMessage();
 
 				/// Returns the messages data to the caller.

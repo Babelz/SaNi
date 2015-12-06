@@ -6,13 +6,8 @@ namespace sani {
 		
 		namespace messages {
 
-			CommandMessage::CommandMessage(const uint32 command, const String& data) : Message(MessageType::Command), 
-																					   command(command),
-																					   data(data) {
-			}
-			CommandMessage::CommandMessage(const uint32 command) : CommandMessage(command, String()) {
-			}
-			CommandMessage::CommandMessage() : CommandMessage(0, String()) {
+			CommandMessage::CommandMessage() : Message(MessageType::Command),
+											   command(0) {
 			}
 
 			const String& CommandMessage::getData() const {
