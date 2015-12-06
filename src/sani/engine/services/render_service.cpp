@@ -4,6 +4,7 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/engine/services/render_service.hpp"
 #include "sani/core/utils/string_utils.hpp"
+#include "sani/core/utils/convert.hpp"
 #include "sani/engine/sani_engine.hpp"
 #include "sani/graphics/layer.hpp"
 
@@ -14,6 +15,7 @@ namespace sani {
 		namespace services {
 
 			using namespace renderservice;
+			using namespace graphics;
 
 			RenderService::RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice) : EngineService("render service", engine),
 																															 graphicsDevice(graphicsDevice),
@@ -54,10 +56,22 @@ namespace sani {
 				utils::split(message->getData(), "||", tokens, true);
 
 				SANI_ASSERT(tokens.size() == 3);
+
+				const String name			= tokens[0];
+				const LayerType type		= static_cast<LayerType>(utils::toUInt8(tokens[1]));
+				const float32 order			= utils::toFloat32(tokens[2]);
+				
+				layers.push_back(Layer(name, type, order));
 			}
 			void RenderService::deleteLayer(messages::CommandMessage* const message) {
 			}
 			void RenderService::getLayers(messages::DocumentMessage* const message) {
+				std::vector<Layer* const>* results = getEngine()->allocateFromSharedMemory<std::vector<Layer* const>>();
+				NEW_DYNAMIC_DEFAULT(std::vector<Layer* const>, results);
+				
+				for (Layer& layer : layers) results->push_back(&layer);
+
+				message->setData(results);
 			}
 
 			void RenderService::receive(messages::Message* const message) {
