@@ -17,12 +17,12 @@ namespace sani {
 					message->setData(data);
 				}
 
-				void createLayer(messages::CommandMessage* const message, const String& layerName) {
-					decorateCommandMessage(message, RenderServiceCommands::CreateLayer, layerName);
+				void createLayer(messages::CommandMessage* const message, const String& layerInformation) {
+					decorateCommandMessage(message, RenderServiceCommands::CreateLayer, layerInformation);
 				}
 
-				void deleteLayer(messages::CommandMessage* const message, const String& layerName) {
-					decorateCommandMessage(message, RenderServiceCommands::DeleteLayer, layerName);
+				void deleteLayer(messages::CommandMessage* const message, const String& layerInformation) {
+					decorateCommandMessage(message, RenderServiceCommands::DeleteLayer, layerInformation);
 				}
 
 				void getLayers(messages::DocumentMessage* const message) {

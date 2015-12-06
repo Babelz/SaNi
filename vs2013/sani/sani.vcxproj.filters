@@ -190,6 +190,9 @@
     <Filter Include="include\engine\impl">
       <UniqueIdentifier>{c3306251-4a7b-4f9a-95be-13139fa391af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\utils\inl">
+      <UniqueIdentifier>{e3bc2bf2-8e43-49a2-bfd3-66ad044d84f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -843,6 +846,9 @@
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
       <Filter>include\engine\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\utils\convert.hpp">
+      <Filter>include\core\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -898,6 +904,9 @@
     </None>
     <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\utils\inl\convert.inl">
+      <Filter>include\core\utils\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

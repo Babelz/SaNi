@@ -46,10 +46,10 @@ namespace sani {
 				};
 
 				/// Generates a message that will causes the service to create a new layer with given name.
-				void createLayer(messages::CommandMessage* const message, const String& layerName);
+				void createLayer(messages::CommandMessage* const message, const String& layerInformation);
 
 				/// Generates a message that will causes the service to delete the layer with given name.
-				void deleteLayer(messages::CommandMessage* const message, const String& layerName);
+				void deleteLayer(messages::CommandMessage* const message, const String& layerInformation);
 
 				/// Generates a message that will return all layers.
 				void getLayers(messages::DocumentMessage* const message);

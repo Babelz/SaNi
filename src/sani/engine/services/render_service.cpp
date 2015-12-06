@@ -3,7 +3,9 @@
 #include "sani/engine/messaging/messages/command_message.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/engine/services/render_service.hpp"
+#include "sani/core/utils/string_utils.hpp"
 #include "sani/engine/sani_engine.hpp"
+#include "sani/graphics/layer.hpp"
 
 namespace sani {
 
@@ -23,8 +25,10 @@ namespace sani {
 
 				switch (command) {
 				case RenderServiceCommands::GetLayers:
+					getLayers(message);
 					break;
 				default:
+					// TODO: dead letter.
 					break;
 				}
 			}
@@ -33,12 +37,27 @@ namespace sani {
 
 				switch (command) {
 				case RenderServiceCommands::CreateLayer:
+					createLayer(message);
 					break;
 				case RenderServiceCommands::DeleteLayer:
+					deleteLayer(message);
 					break;
 				default:
+					// TODO: dead letter.
 					break;
 				}
+			}
+
+			void RenderService::createLayer(messages::CommandMessage* const message) {
+				std::vector<String> tokens;
+
+				utils::split(message->getData(), "||", tokens, true);
+
+				SANI_ASSERT(tokens.size() == 3);
+			}
+			void RenderService::deleteLayer(messages::CommandMessage* const message) {
+			}
+			void RenderService::getLayers(messages::DocumentMessage* const message) {
 			}
 
 			void RenderService::receive(messages::Message* const message) {

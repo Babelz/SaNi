@@ -286,6 +286,7 @@
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\utils\convert.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp" />
@@ -387,6 +388,7 @@
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
+    <None Include="..\..\include\sani\core\utils\inl\convert.inl" />
     <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp" />
     <None Include="..\..\include\sani\graphics\inl\buffer.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
