@@ -187,6 +187,7 @@
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\layer.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />

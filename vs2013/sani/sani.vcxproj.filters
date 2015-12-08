@@ -415,6 +415,9 @@
     <ClCompile Include="..\..\src\sani\engine\messaging\messages\document_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\layer.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

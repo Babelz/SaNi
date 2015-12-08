@@ -33,6 +33,8 @@ namespace sani {
 			float32 order;
 		
 			String name;
+
+			void typeInitialize();
 		public:
 			Layer(const String& name, const LayerType type, const float32 order = 0.0f);
 

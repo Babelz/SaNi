@@ -2,6 +2,7 @@
 #include "sani/engine/messaging/messages/document_message.hpp"
 #include "sani/engine/messaging/messages/command_message.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
+#include "sani/engine/messaging/state_message.hpp"
 #include "sani/engine/services/render_service.hpp"
 #include "sani/core/utils/string_utils.hpp"
 #include "sani/core/utils/convert.hpp"
@@ -20,6 +21,13 @@ namespace sani {
 			RenderService::RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice) : EngineService("render service", engine),
 																															 graphicsDevice(graphicsDevice),
 																															 renderer(graphicsDevice) {
+			}
+
+			void RenderService::handleStateMessage(StateMessage* const message) {
+				if (message->oldState == ServiceState::Uninitialized) {
+					// Initialize.
+					renderer.initialize();
+				}
 			}
 
 			void RenderService::handleDocumentMessage(messages::DocumentMessage* const message) {
@@ -73,6 +81,26 @@ namespace sani {
 
 				message->setData(results);
 			}
+			void RenderService::removeCamera(message::CommandMessage* const message) {
+			}
+			void RenderService::addCamera(message::CommandMessage* const message) {
+			}
+
+			void RenderService::renderToCamera(const graphics::Camera2D& camera) {
+				// Swap viewports.
+				const Viewport real = graphicsDevice->getViewport();
+				const math::Mat4f& transform = camera.transformation();
+
+				graphicsDevice->setViewport(camera.getViewport());
+
+				renderer.beginRendering(transform);
+
+				for (uint32 i = 0; i < layers.size(); i++) layers[i].render(&renderer);
+
+				renderer.endRendering();
+				
+				graphicsDevice->setViewport(real);
+			}
 
 			void RenderService::receive(messages::Message* const message) {
 				const MessageType messageType = message->getType();
@@ -89,6 +117,10 @@ namespace sani {
 				}
 			}
 			void RenderService::update(const EngineTime& time) {
+				// No need to render if there are no cameras.
+				if (cameras.size() == 0) return;
+
+				for (Camera2D& camera : cameras) renderToCamera(camera);
 			}
 		}
 	}
