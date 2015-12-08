@@ -2,11 +2,21 @@
 #include "sani/platform/time/engine_time.hpp"
 #include "sani/engine/sani_engine.hpp"
 
+#include "sani/engine/services/render_service.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/window.hpp"
 
 #include "sani/core/memory/memory.hpp"
+
+#include "sani/engine/messaging/messages/command_message.hpp"
+#include "sani/engine/messaging/messages/document_message.hpp"
+#include "sani/engine/messaging/messages/peer_to_peer_message.hpp"
+#include "sani/engine/services/contracts/render_service_contract.hpp"
+
+#include "sani/graphics/renderables/renderables.hpp"
+
+#include "sani/graphics/layer.hpp"
 
 namespace sani {
 
@@ -46,6 +56,34 @@ namespace sani {
 			return true;
 		}
 		bool SaNiEngine::initializeServices() {
+			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
+			services.registerService(renderService);
+			renderService->start();
+
+			/*
+				TODO: test services etc here.
+			*/
+
+			auto create_layer = createEmptyMessage<messages::CommandMessage>();
+			renderservice::createLayer(create_layer, "layer_1||1||1.0");
+			create_layer->getRecipents().addRecipent("render service");
+			
+			auto get_layers = createEmptyMessage<messages::DocumentMessage>();
+			renderservice::getLayers(get_layers);
+			get_layers->getRecipents().addRecipent("render service");
+
+
+
+			routeMessage(create_layer);
+			routeMessage(get_layers);
+
+			channels.route();
+
+			auto data = get_layers->getData();
+
+			std::vector<graphics::Layer* const>* vittu = static_cast<std::vector<graphics::Layer* const>*>(data);
+			vittu->at(0)->add(new sani::graphics::Circle(128.0f, 38));
+
 			return true;
 		}
 
@@ -96,6 +134,7 @@ namespace sani {
 
 			return channel->createEmptyMessage();
 		}
+
 		void SaNiEngine::releaseMessage(messages::Message* const message) {
 			channels::Channel* channel = channels.getChannel(message->getType());
 

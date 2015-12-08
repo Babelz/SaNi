@@ -15,9 +15,9 @@ namespace sani {
 			static const String terminateErrorMessage			= "failed to terminate the service!";
 
 			EngineService::EngineService(const String& name, SaNiEngine* const engine) : name(name),
-				id(idGenerator++),
-				engine(engine),
-				state(ServiceState::Uninitialized) {
+																						 id(idGenerator++),
+																						 engine(engine),
+																						 state(ServiceState::Uninitialized) {
 			}
 
 			void EngineService::sendStateMessage(StateMessage* const message, const String& errorMessage) {
@@ -40,7 +40,11 @@ namespace sani {
 					sendStateMessage(&terminateMessage, terminateErrorMessage);
 
 					state = ServiceState::Terminated;
+
+					return;
 				}
+
+				state = message->newState;
 			}
 
 			void EngineService::handleStateMessage(StateMessage* const stateMessage) {

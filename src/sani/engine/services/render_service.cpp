@@ -27,6 +27,8 @@ namespace sani {
 				if (message->oldState == ServiceState::Uninitialized) {
 					// Initialize.
 					renderer.initialize();
+
+					message->handled = true;
 				}
 			}
 

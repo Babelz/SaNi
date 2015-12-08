@@ -55,8 +55,8 @@ namespace sani {
 		}
 
 		void Layer::render(graphics::Renderer* const renderer) {
-			//if (bottom.size() > 0)	renderer->renderElements(bottom.data()[0], bottom.size());
-			//if (top.size() > 0)		renderer->renderElements(top.data()[0], top.size());
+			if (bottom.size() > 0)	renderer->renderElements(bottom.data()[0], bottom.size());
+			if (top.size() > 0)		renderer->renderElements(top.data()[0], top.size());
 		}
 
 		Layer::~Layer() {

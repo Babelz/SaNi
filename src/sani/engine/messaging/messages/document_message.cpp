@@ -8,7 +8,8 @@ namespace sani {
 		
 		namespace messages {
 
-			DocumentMessage::DocumentMessage() : Message(MessageType::Document) {
+			DocumentMessage::DocumentMessage() : Message(MessageType::Document),
+												data(nullptr) {
 			}
 
 			void DocumentMessage::setCommand(const uint32 command) {

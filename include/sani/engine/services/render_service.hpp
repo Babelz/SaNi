@@ -8,8 +8,8 @@
 #include <vector>
 #include <list>
 
-SANI_FORWARD_DECLARE_3(sani, engine, message, DocumentMessage);
-SANI_FORWARD_DECLARE_3(sani, engine, message, CommandMessage);
+SANI_FORWARD_DECLARE_3(sani, engine, messages, DocumentMessage);
+SANI_FORWARD_DECLARE_3(sani, engine, messages, CommandMessage);
 
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 SANI_FORWARD_DECLARE_2(sani, engine, SaNiEngine);

@@ -62,6 +62,10 @@ namespace sani {
 			EngineService* const locateService(const uint32 id);
 
 			messages::Message* const createEmptyMessage(MessageType const type);
+
+			template <typename T>
+			T* const createEmptyMessage();
+
 			void releaseMessage(messages::Message* const message);
 			void routeMessage(messages::Message* const message);
 

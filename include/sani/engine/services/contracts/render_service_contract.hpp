@@ -42,7 +42,13 @@ namespace sani {
 
 					DeleteLayer		= 1,
 
-					GetLayers		= 2
+					GetLayers		= 2,
+
+					CreateCamera	= 3,
+
+					DeleteCamera	= 4,
+
+					GetCameras		= 5
 				};
 
 				/// Generates a message that will causes the service to create a new layer with given name.
@@ -53,6 +59,15 @@ namespace sani {
 
 				/// Generates a message that will return all layers.
 				void getLayers(messages::DocumentMessage* const message);
+
+				/// Generates a message that will causes the service to create a new camera with given name.
+				void createCamera(messages::CommandMessage* const message, const String& cameraInformation);
+
+				/// Generates a message that will causes the service to delete the camera with given name.
+				void deleteCamera(messages::CommandMessage* const message, const String& cameraInformation);
+
+				/// Generates a message that will return all Camera2Ds.
+				void getCamera2Ds(messages::DocumentMessage* const message);
 				
 				bool isValidCommand(const uint32 command);
 			}
