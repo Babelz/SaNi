@@ -2,6 +2,7 @@
 #include "sani/resource/font_description.hpp"
 #include <ft2build.h>
 #include <algorithm>
+#include "sani/resource/spritefont_content.hpp"
 #include FT_FREETYPE_H
 #include FT_GLYPH_H
 
@@ -96,11 +97,130 @@ namespace sani {
 				return face;
 			}
 
+			struct GlyphWrapper {
+				Glyph* source;
+				uint32 x;
+				uint32 y;
+				uint32 width;
+				uint32 height;
+			};
+
+			static int makeValidTextureSize(uint32 value, bool powerOfTwo) {
+				const uint32 blockSize = 4u;
+				if (powerOfTwo) {
+					uint32 pwr = blockSize;
+					while (pwr < value) pwr <<= 1;
+					return pwr;
+				}
+				return (value + blockSize - 1) & ~(blockSize - 1);
+			}
+
+			static uint32 guessOutputWidth(const std::vector<Glyph*>& sourceGlyphs) {
+				uint32 maxWidth = 0;
+				uint32 totalSize = 0;
+				for (auto* g : sourceGlyphs) {
+					maxWidth = std::max(maxWidth, g->width);
+					totalSize += g->width * g->height;
+				}
+				uint32 width = std::max((uint32)std::sqrt(totalSize), maxWidth);
+				return makeValidTextureSize(width, true);
+			}
+
+			static int findIntersectingGlpyh(const std::vector<GlyphWrapper>& glyphs, uint32 index, uint32 x, uint32 y) {
+				uint32 w = glyphs[index].width;
+				uint32 h = glyphs[index].width;
+
+				for (uint32 i = 0; i < index; ++i) {
+					if (glyphs[i].x >= x + w) continue;
+					if (glyphs[i].x + glyphs[i].width <= x) continue;
+					if (glyphs[i].y >= y + h) continue;
+					if (glyphs[i].y + glyphs[i].height <= y) continue;
+					return i;
+				}
+				return -1;
+			}
+
+			static void positionGlyph(std::vector<GlyphWrapper>& glyphs, uint32 index, uint32 outputWidth) {
+				uint32 x = 0;
+				uint32 y = 0;
+
+				while (true) {
+					int intersects = findIntersectingGlpyh(glyphs, index, x, y);
+					if (intersects < 0) {
+						glyphs[index].x = x;
+						glyphs[index].y = y;
+						return;
+					}
+					// Skip past the existing glyph that we collided with.
+					x = glyphs[intersects].x + glyphs[intersects].width;
+					// If we ran out of room to move to the right, try the next line down instead.
+					if (x + glyphs[index].width > outputWidth) {
+						x = 0;
+						y++;
+					}
+				}
+			}
+			struct Color {
+				float r;
+				float g;
+				float b;
+				float a;
+			};
+			static void copyGlyphsToOutput(std::vector<GlyphWrapper>& glyphs, uint32 width, uint32 height) {
+				Color** pixels = new Color*[height];
+				for (size_t i = 0; i < height; ++i) {
+					pixels[i] = new Color[width];
+				}
+
+				for (auto& glyph : glyphs) {
+
+				}
+			}
+
+			static void arrangeGlyphs(const std::vector<Glyph*>& sourceGlyphs) {
+				std::vector<GlyphWrapper> glyphs;
+				glyphs.reserve(sourceGlyphs.size());
+				for (size_t i = 0; i < sourceGlyphs.size(); ++i) {
+					Glyph* glyph = sourceGlyphs[i];
+					glyphs.push_back(GlyphWrapper{
+						glyph,
+						0,
+						0,
+						glyph->width + 2u,
+						glyph->height + 2u
+					});
+				}
+
+				std::sort(glyphs.begin(), glyphs.end(), [](GlyphWrapper& a, GlyphWrapper& b) {
+					const uint32 heightWeight = 1024u;
+					uint32 aSize = a.height * heightWeight + a.width;
+					uint32 bSize = b.height * heightWeight + b.width;
+					if (aSize != bSize)
+						return bSize < aSize;
+
+					return a.source->character < b.source->character;
+				});
+
+				uint32 outputWidth = guessOutputWidth(sourceGlyphs);
+				uint32 outputHeight = 0;
+
+				for (size_t i = 0; i < glyphs.size(); ++i) {
+					positionGlyph(glyphs, i, outputWidth);
+					outputHeight = std::max(outputHeight, glyphs[i].y + glyphs[i].height);
+				}
+
+				outputHeight = makeValidTextureSize(outputHeight, true);
+
+
+			}
+
 			ResourceItem* SpriteFontProcessor::process(ResourceItem* input) {
 				if (FT_Init_FreeType(&library)) {
 					throw std::runtime_error("Failed to initialize freetype");
 				}
+
 				FontDescription* desc = static_cast<FontDescription*>(input);
+				SpriteFontContent* output = new SpriteFontContent(desc);
 				// import the actual font now
 				FT_Face face = createFontFace(desc);
 				
@@ -115,16 +235,19 @@ namespace sani {
 				}
 
 				// font height
-				uint32 lineSpacing = face->size->metrics.height >> 6;
+				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
 				// The height used to calculate the Y offset for each character.
-				uint32 yOffsetMin = -face->size->metrics.ascender >> 6;
+				float yOffsetMin = static_cast<float>(-face->size->metrics.ascender >> 6);
 
 				std::sort(glyphs.begin(), glyphs.end(), [](Glyph*a, Glyph* b) {
 					return a->character < b->character;
 				});
 
+				arrangeGlyphs(glyphs);
+
 				FT_Done_Face(face);
 				FT_Done_FreeType(library);
+
 				return nullptr;
 			}
 		}
