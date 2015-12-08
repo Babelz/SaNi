@@ -2,6 +2,7 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/graphics/renderables/renderable.hpp"
 #include "sani/graphics/setups/render_setups.hpp"
+#include "sani/graphics/render_batch.hpp"
 #include "sani/graphics/renderer.hpp"
 
 namespace sani {
@@ -9,65 +10,6 @@ namespace sani {
 	namespace graphics {
 
 		#define INITIAL_BUFFER_ELEMENTS_COUNT 32768
-
-		/*
-			RenderBatch class
-		
-			Represents a part of the rendering process.
-			Can contain one or more elements that will be
-			rendered.
-		*/
-		class RenderBatch {
-		public:
-			// First vertex position.
-			uint32 verticesBegin;
-			uint32 verticesCount;
-
-			// First vertex index position.
-			uint32 indicesBegin;
-			uint32 indicesCount;
-			
-			uint32 texture;
-			uint32 effect;
-
-			// Element this batch can be used to render.
-			const RenderElementData* elementsData;
-			RenderSetup* renderSetup;
-
-			// State elements.
-			VertexMode vertexMode;
-			RenderMode renderMode;
-
-			// TODO: add these
-			/*
-				Effect* effect;
-			*/
-
-			RenderBatch() : verticesBegin(0),
-							verticesCount(0),
-							indicesBegin(0),
-							indicesCount(0),
-							elementsData(nullptr),
-							renderSetup(nullptr),
-							texture(0) {
-			}
-
-			void resetBatch() {
-				verticesBegin = 0;
-				verticesCount = 0;
-				
-				indicesBegin = 0;
-				indicesCount = 0;
-
-				texture = 0;
-
-				elementsData = nullptr;
-				renderSetup = nullptr;
-			}
-
-			~RenderBatch() {
-			}
-		};
 		
 		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
 		// Keep the buffer usage as dynamic (memory as the limit).
@@ -77,12 +19,11 @@ namespace sani {
 																  indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
 																  verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
 																  indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
-																  renderBatch(nullptr),
-																  renderBatchesCount(0),
 																  vertexBuffer(0),
 																  indexBuffer(0),
 																  texture(0),
-																  effect(0) {
+																  effect(0),
+																  renderBatchesCount(0) {
 			renderBatches.resize(32);
 			indexTransformBuffer.resize(32);
 		}
@@ -234,111 +175,13 @@ namespace sani {
 		}
 
 		void Renderer::applyVertexOffset() {
-			// No need to add offset.
-			if (renderBatchesCount <= 1) return;
+			const uint32 nextOffset = renderBatcher.getNextOffset();
 
-			const RenderBatch* last = &renderBatches[renderBatchesCount - 2];
-
-			// No need to add offset, same vertex elements count.
-			if (last->elementsData->vertexElements == renderBatch->elementsData->vertexElements) return;
-
-			// From less elements to more.
-			// Offset = vtxElemes - vetxElemsMod.
-			const uint32 vertexElementsCount	= renderBatch->elementsData->vertexElements;
-			const uint32 vertexElementsModulo	= vertices.getElementsCount() % vertexElementsCount;
-			const uint32 vertexElementsOffset	= (vertexElementsCount - vertexElementsModulo);
-
-			vertices.offset(vertexElementsOffset);
-		}
-
-		void Renderer::initializeBatch(const RenderElementData* const renderElementData) {
-			renderBatch->elementsData = renderElementData;
-
-			/*
-				TODO: add texturing.
-			*/
-
-			renderBatch->indicesBegin		 = indices.getElementsCount() * sizeof(uint32);
-			
-			const RenderState renderState	 = renderElementData->texture == 0 ? RenderState::Polygons : RenderState::TexturedPolygons;
-			renderBatch->vertexMode			 = renderElementData->indices == 0 ? VertexMode::NoIndexing : VertexMode::Indexed;
-			renderBatch->renderMode			 = renderElementData->renderMode;
-
-			renderBatch->texture			 = renderElementData->texture;
-			renderBatch->effect				 = renderElementData->effect == 0 ? defaultEffects[static_cast<uint32>(renderState)] : renderElementData->effect;
-			renderBatch->renderSetup		 = renderSetups[static_cast<uint32>(renderState)];
-
-			// Add possible vertex elements offset for this batch element.
-			applyVertexOffset();	
-
-			renderBatch->verticesBegin		 = vertices.getElementsCount() / renderElementData->vertexElements;
-		}
-		void Renderer::swapBatch() {
-			renderBatch = &renderBatches[renderBatchesCount];
-			renderBatch->resetBatch();
-			
-			renderBatchesCount++;
-
-			if (renderBatchesCount == renderBatches.size()) renderBatches.reserve(renderBatches.size() * 2);
-		}
-
-		const bool Renderer::shouldBeBatchedAlone(const RenderElementData* renderElementData) const {
-			const RenderMode renderMode = renderElementData->renderMode;
-
-			return renderMode == RenderMode::TriangleFan || renderMode == RenderMode::LineLoop || renderMode == RenderMode::Lines;
-		}
-
-		void Renderer::applyToBatch(const RenderElementData* const renderElementData) {
-			// Add one to keep the indexes as zero based.
-			const uint32 verticesCount = (renderElementData->last + 1) - renderElementData->first;
-
-			renderBatch->verticesCount += verticesCount;
-			renderBatch->indicesCount += renderElementData->indices;
-		}
-		void Renderer::batchElement(const RenderElementData* const renderElementData) {
-			if (renderBatch->elementsData == nullptr) {
-				initializeBatch(renderElementData);
+			if (nextOffset > 0) {
+				vertices.offset(nextOffset);
 			}
-
-			if (shouldBeBatchedAlone(renderElementData)) {
-				swapBatch();
-
-				initializeBatch(renderElementData);
-			}
-			else if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
-				// Check if we can batch this element to some recent batch.
-				// If we can't just create new batch.
-				if (renderBatchesCount >= 1 && (elementCounter < renderBatchesCount)) {
-					const uint32 batchesBegin = renderBatchesCount - (elementCounter + 1);
-
-					uint32 i = batchesBegin;
-
-					while (i < renderBatchesCount) {
-						RenderBatch* const recentRenderBatch = &renderBatches[i];
-
-						if (recentRenderBatch->elementsData->groupIdentifier == renderElementData->groupIdentifier) {
-							RenderBatch* const temp = renderBatch;
-							renderBatch = recentRenderBatch;
-
-							applyToBatch(renderElementData);
-
-							renderBatch = temp;
-
-							return;
-						}
-
-						i++;
-					}
-				}
-
-				// Can't batch to other batches, a new batch is required.
-				swapBatch();
-
-				initializeBatch(renderElementData);
-			}
-
-			applyToBatch(renderElementData);
 		}
+
 		void Renderer::copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
 			const uint32 elementVertexElementsCount		 = renderElementData->vertexElements;
 			const uint32 vertexElementOffset			 = renderElementData->offset;
@@ -387,10 +230,10 @@ namespace sani {
 			const VertexMode vertexMode = renderBatch->vertexMode;
 			const RenderMode renderMode = renderBatch->renderMode;
 
-			RenderSetup* const renderSetup = renderBatch->renderSetup;
+			RenderSetup* const renderSetup = renderSetups[renderBatch->renderSetup];
 			renderSetup->setVertexElementsCount(renderBatch->elementsData->vertexElements);
 			renderSetup->use();
-
+			
 			graphicsDevice->bindTexture(renderBatch->texture);
 			graphicsDevice->useProgram(renderBatch->effect);
 
@@ -402,6 +245,15 @@ namespace sani {
 			graphicsDevice->bindTexture(0);
 			graphicsDevice->useProgram(0);
 		}
+
+		void Renderer::checkBatchEffects() {
+			for (uint32 i = 0; i < renderBatchesCount; i++) {
+				// TODO: not safe but works.
+				RenderBatch& renderBatch = renderBatches[i];
+				
+				renderBatch.effect = renderBatch.effect <= 2 ? defaultEffects[renderBatch.effect] : renderBatch.effect;
+			}
+		}
 		void Renderer::updateBufferDatas() {
 			updateVertexBufferSize();
 			updateIndexBufferSize();
@@ -409,28 +261,25 @@ namespace sani {
 			graphicsDevice->bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
 
 			graphicsDevice->setBufferSubData(BufferType::ArrayBuffer,
-											0,
-											vertices.getElementsCount() * sizeof(float32),
-											vertices.data());
+											 0,
+											 vertices.getElementsCount() * sizeof(float32),
+											 vertices.data());
 
 			if (indices.getElementsCount() > 0) {
 				graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
 				graphicsDevice->setBufferSubData(BufferType::ElementArrayBuffer,
-												0,
-												indices.getElementsCount() * sizeof(uint32),
-												indices.data());
+											 	 0,
+												 indices.getElementsCount() * sizeof(uint32),
+												 indices.data());
 			}
 		}
 
 		void Renderer::prepareRendering() {
-			renderBatchesCount = 0;
-			renderBatch = nullptr;
+			renderBatcher.prepareBatching(&renderBatches);
 
 			vertices.resetBufferPointer();
 			indices.resetBufferPointer();
-
-			swapBatch();
 		}
 
 		bool Renderer::initialize() {
@@ -455,7 +304,9 @@ namespace sani {
 				const uint32 renderElementIndex						= renderable->renderData.renderElementIndices[elementCounter];
 				const RenderElementData* const renderElementData	= &renderable->renderData.renderElements[renderElementIndex];
 
-				batchElement(renderElementData);
+				renderBatcher.batchElement(renderElementData, elementCounter, elementsCount);
+				
+				applyVertexOffset();
 
 				copyVertexData(renderElementData, &renderable->renderData);
 				copyIndexData(renderElementData, &renderable->renderData);
@@ -466,6 +317,9 @@ namespace sani {
 		}
 
 		void Renderer::endRendering() {
+			renderBatchesCount = renderBatcher.getRenderBatchesCount();
+
+			checkBatchEffects();
 			updateBufferDatas();
 
 			for (uint32 i = 0; i < renderBatchesCount; i++) flushRenderBatch(&renderBatches[i]);

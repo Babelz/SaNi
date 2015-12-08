@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani/graphics/render_batcher.hpp"
+#include "sani/graphics/render_batch.hpp"
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/graphics/render_state.hpp"
 #include "sani/graphics/vertex_mode.hpp"
@@ -11,13 +13,17 @@
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 SANI_FORWARD_DECLARE_2(sani, graphics, RenderSetup);
 SANI_FORWARD_DECLARE_2(sani, graphics, Renderable);
-SANI_FORWARD_DECLARE_2(sani, graphics, RenderBatch);
 SANI_FORWARD_DECLARE_2(sani, graphics, RenderElementData);
 SANI_FORWARD_DECLARE_2(sani, graphics, RenderData);
 
 namespace sani {
 
 	namespace graphics {
+
+		/*
+			FIX: remove batching process from the renderer and 
+			     move it to the render batcher.
+		*/
 
 		/// @class Renderer renderer.hpp "sani/graphics/renderer.hpp"
 		/// @author voidbab
@@ -50,9 +56,9 @@ namespace sani {
 			Buffer<uint32> indices;
 			uint32 indicesSize;
 
+			RenderBatcher renderBatcher;
 			std::vector<RenderBatch> renderBatches;
 			uint32 renderBatchesCount;
-			RenderBatch* renderBatch;
 			
 			uint32 elementCounter;
 			uint32 elementsCount;
@@ -74,18 +80,13 @@ namespace sani {
 
 			void applyVertexOffset();
 
-			void initializeBatch(const RenderElementData* const renderElementData);
-			void swapBatch();
-
-			const bool shouldBeBatchedAlone(const RenderElementData* renderElementData) const;
-
-			void applyToBatch(const RenderElementData* const renderElementData);
-			void batchElement(const RenderElementData* const renderElementData);
 			void copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData);
 			void copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData);
 
 			void prepareFlushRenderBatch(const RenderBatch* renderBatch);
 			void flushRenderBatch(const RenderBatch* const renderBatch);
+			
+			void checkBatchEffects();
 			void updateBufferDatas();
 
 			void prepareRendering();

@@ -30,9 +30,17 @@ namespace sani {
 
 				void handleStateMessage(StateMessage* const message) final override;
 
+				/*
+					Message handling.
+				*/
+
 				void handleDocumentMessage(messages::DocumentMessage* const message);
 				void handleCommandMessage(messages::CommandMessage* const message);
-			
+				
+				/*
+					Command functions.				
+				*/
+
 				void createLayer(messages::CommandMessage* const message);
 				void deleteLayer(messages::CommandMessage* const message);
 				void getLayers(messages::DocumentMessage* const message);

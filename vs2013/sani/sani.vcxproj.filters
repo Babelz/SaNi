@@ -418,6 +418,12 @@
     <ClCompile Include="..\..\src\graphics\layer.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_batch.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_batcher.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -851,6 +857,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\utils\convert.hpp">
       <Filter>include\core\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_batcher.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp">
+      <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

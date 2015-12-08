@@ -74,7 +74,7 @@ namespace sani {
 			void RenderService::deleteLayer(messages::CommandMessage* const message) {
 			}
 			void RenderService::getLayers(messages::DocumentMessage* const message) {
-				std::vector<Layer* const>* results = getEngine()->allocateFromSharedMemory<std::vector<Layer* const>>();
+				std::vector<Layer* const>* results = getEngine()->allocateShared<std::vector<Layer* const>>();
 				NEW_DYNAMIC_DEFAULT(std::vector<Layer* const>, results);
 				
 				for (Layer& layer : layers) results->push_back(&layer);

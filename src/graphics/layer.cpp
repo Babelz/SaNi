@@ -6,10 +6,10 @@ namespace sani {
 
 	namespace graphics {
 
-		Layer::Layer(const String& name, const LayerType type, const float32 order = 0.0f) : name(name), 
-																							 type(type),
-																							 order(order),
-																							 visible(true) {
+		Layer::Layer(const String& name, const LayerType type, const float32 order) : name(name), 
+																					  type(type),
+																					  order(order),
+																					  visible(true) {
 			typeInitialize();
 		}
 

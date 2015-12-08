@@ -75,11 +75,11 @@ namespace sani {
 			/// Causes the engine to quit.
 			void quit();
 
-			template<typename  T>
-			T* allocateFromSharedMemory();
+			template<typename T>
+			T* allocateShared();
 			
-			template<typename  T>
-			void releaseFromSharedMemory(T* object);
+			template<typename T>
+			void deallocateShared(T* object);
 
 			~SaNiEngine();
 		};

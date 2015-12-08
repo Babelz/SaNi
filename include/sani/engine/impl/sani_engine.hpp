@@ -5,12 +5,12 @@ namespace sani {
 	namespace engine {
 		
 		template<typename T>
-		T* SaNiEngine::allocateFromSharedMemory() {
+		T* SaNiEngine::allocateShared() {
 			return sharedServiceMemory.allocate<T>();
 		}
 
-		template<typename  T>
-		void SaNiEngine::releaseFromSharedMemory(T* object) {
+		template<typename T>
+		void SaNiEngine::deallocateShared(T* object) {
 			sharedServiceMemory.release<T>();
 		}
 	}

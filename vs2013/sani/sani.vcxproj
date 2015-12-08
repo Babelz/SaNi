@@ -194,6 +194,8 @@
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_batch.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_batcher.cpp" />
     <ClCompile Include="..\..\src\graphics\render_element_data.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\polygon_render_setup.cpp" />
@@ -321,6 +323,8 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_batcher.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
