@@ -64,6 +64,13 @@ namespace sani {
 			inline void setName(const String& name);
 
 			~Camera2D();
+
+			/*
+				TODO: what happens with cameras what have same name?
+			*/
+
+			bool operator ==(const Camera2D& lhs) const;
+			bool operator !=(const Camera2D& lhs) const;
 		};
 	}
 }

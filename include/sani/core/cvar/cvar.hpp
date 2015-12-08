@@ -37,7 +37,7 @@ namespace sani {
 		CVar(const cvarlang::ValueType type, const String& name, const bool synced, const String& value);
 
 		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,
-			const String& name, const bool synced, const String& value);
+			 const String& name, const bool synced, const String& value);
 
 		/// Creates a new cvar with default value of given value type.
 		CVar(const cvarlang::ValueType type, const String& name);

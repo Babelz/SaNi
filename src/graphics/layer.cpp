@@ -14,7 +14,7 @@ namespace sani {
 		}
 
 		void Layer::typeInitialize() {
-			if (type == LayerType::Static) throw std::runtime_error("unsupported");
+			if (type == LayerType::Static) throw std::runtime_error("unsupported layer type static");
 		}
 		
 		LayerType Layer::getType() const { 
@@ -55,11 +55,18 @@ namespace sani {
 		}
 
 		void Layer::render(graphics::Renderer* const renderer) {
-			if (bottom.size() > 0)	renderer->renderElements(bottom.data()[0], bottom.size());
-			if (top.size() > 0)		renderer->renderElements(top.data()[0], top.size());
+			//if (bottom.size() > 0)	renderer->renderElements(bottom.data()[0], bottom.size());
+			//if (top.size() > 0)		renderer->renderElements(top.data()[0], top.size());
 		}
 
 		Layer::~Layer() {
+		}
+
+		bool Layer::operator ==(const Layer& lhs) const {
+			return lhs.getName() == name;
+		}
+		bool Layer::operator !=(const Layer& lhs) const {
+			return !(lhs.getName() == name);
 		}
 	}
 }

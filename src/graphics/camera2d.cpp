@@ -12,5 +12,12 @@ namespace sani {
 
 		Camera2D::~Camera2D() {
 		}
+
+		bool Camera2D::operator ==(const Camera2D& lhs) const {
+			return lhs.getName() == name;
+		}
+		bool Camera2D::operator !=(const Camera2D& lhs) const {
+			return !(lhs.getName() == name);
+		}
 	}
 }

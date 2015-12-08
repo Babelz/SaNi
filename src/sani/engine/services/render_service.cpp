@@ -70,8 +70,21 @@ namespace sani {
 				const float32 order			= utils::toFloat32(tokens[2]);
 				
 				layers.push_back(Layer(name, type, order));
+
+				message->markHandled();
 			}
 			void RenderService::deleteLayer(messages::CommandMessage* const message) {
+				const String& name = message->getData();
+
+				auto it = std::find_if(layers.begin(), layers.end(), [&name](const Layer& layer) {
+					return layer.getName() == name;
+				});
+
+				if (it != layers.end()) {
+					layers.remove(*it);
+
+					message->markHandled();
+				}
 			}
 			void RenderService::getLayers(messages::DocumentMessage* const message) {
 				std::vector<Layer* const>* results = getEngine()->allocateShared<std::vector<Layer* const>>();
@@ -80,10 +93,28 @@ namespace sani {
 				for (Layer& layer : layers) results->push_back(&layer);
 
 				message->setData(results);
+
+				message->markHandled();
 			}
-			void RenderService::removeCamera(message::CommandMessage* const message) {
+			void RenderService::removeCamera(messages::CommandMessage* const message) {
+				const String& name = message->getData();
+
+				auto it = std::find_if(cameras.begin(), cameras.end(), ([&name](const Camera2D& camera) {
+					return camera.getName() == name;
+				}));
+
+				if (it != cameras.end()) {
+					cameras.remove(*it);
+					
+					message->markHandled();
+				}
 			}
-			void RenderService::addCamera(message::CommandMessage* const message) {
+			void RenderService::addCamera(messages::CommandMessage* const message) {
+				const String name = message->getData();
+
+				cameras.push_back(Camera2D(graphicsDevice->getViewport()));
+				
+				if (name.size() != 0) cameras.back().setName(name);
 			}
 
 			void RenderService::renderToCamera(const graphics::Camera2D& camera) {
@@ -95,7 +126,7 @@ namespace sani {
 
 				renderer.beginRendering(transform);
 
-				for (uint32 i = 0; i < layers.size(); i++) layers[i].render(&renderer);
+				for (Layer& layer : layers) layer.render(&renderer);
 
 				renderer.endRendering();
 				

@@ -25,8 +25,8 @@ namespace sani {
 				graphics::GraphicsDevice* const graphicsDevice;
 				graphics::Renderer renderer;
 
-				std::list<graphics::Camera2D> cameras;
-				std::vector<graphics::Layer> layers;
+				std::list<sani::graphics::Camera2D> cameras;
+				std::list<sani::graphics::Layer> layers;
 
 				void handleStateMessage(StateMessage* const message) final override;
 
@@ -45,8 +45,8 @@ namespace sani {
 				void deleteLayer(messages::CommandMessage* const message);
 				void getLayers(messages::DocumentMessage* const message);
 
-				void removeCamera(message::CommandMessage* const message);
-				void addCamera(message::CommandMessage* const message);
+				void removeCamera(messages::CommandMessage* const message);
+				void addCamera(messages::CommandMessage* const message);
 
 				void renderToCamera(const graphics::Camera2D& camera);
 			public:
