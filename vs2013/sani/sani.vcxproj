@@ -187,12 +187,15 @@
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\layer.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_batch.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_batcher.cpp" />
     <ClCompile Include="..\..\src\graphics\render_element_data.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\polygon_render_setup.cpp" />
@@ -291,6 +294,7 @@
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
@@ -320,6 +324,8 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_batcher.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />

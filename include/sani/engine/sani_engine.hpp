@@ -62,6 +62,10 @@ namespace sani {
 			EngineService* const locateService(const uint32 id);
 
 			messages::Message* const createEmptyMessage(MessageType const type);
+
+			template <typename T>
+			T* const createEmptyMessage();
+
 			void releaseMessage(messages::Message* const message);
 			void routeMessage(messages::Message* const message);
 
@@ -75,11 +79,11 @@ namespace sani {
 			/// Causes the engine to quit.
 			void quit();
 
-			template<typename  T>
-			T* allocateFromSharedMemory();
+			template<typename T>
+			T* allocateShared();
 			
-			template<typename  T>
-			void releaseFromSharedMemory(T* object);
+			template<typename T>
+			void deallocateShared(T* object);
 
 			~SaNiEngine();
 		};

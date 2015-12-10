@@ -188,6 +188,7 @@ void NO_ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 		renderer.beginRendering(transform);
 
 		for (sani::graphics::Rectangle& r : rectangles) renderer.renderElement(&r);
+//		renderer.renderElement(&rectangles[0]);
 
 		for (Circle& c : circles) renderer.renderElement(&c);
 
@@ -206,8 +207,8 @@ void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
-
 	//NO_ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	
 	return 0;
 }
 

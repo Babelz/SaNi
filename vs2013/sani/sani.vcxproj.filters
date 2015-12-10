@@ -193,6 +193,9 @@
     <Filter Include="include\core\utils\inl">
       <UniqueIdentifier>{e3bc2bf2-8e43-49a2-bfd3-66ad044d84f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\messaging\channels\impl">
+      <UniqueIdentifier>{8afc09c8-6f5b-4fd6-8d14-3346f3d22eeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -414,6 +417,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\sani\engine\messaging\messages\document_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\layer.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_batch.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_batcher.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -848,6 +860,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\utils\convert.hpp">
       <Filter>include\core\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_batcher.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp">
+      <Filter>include\engine\messaging\channels\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

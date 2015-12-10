@@ -29,12 +29,26 @@ namespace sani {
 					const uint32 command = static_cast<uint32>(RenderServiceCommands::GetLayers);
 
 					message->setCommand(command);
+					message->clearData();
+				}
 
+				void createCamera(messages::CommandMessage* const message, const String& cameraInformation) {
+					decorateCommandMessage(message, RenderServiceCommands::CreateCamera, cameraInformation);
+				}
+
+				void deleteCamera(messages::CommandMessage* const message, const String& cameraInformation) {
+					decorateCommandMessage(message, RenderServiceCommands::DeleteCamera, cameraInformation);
+				}
+
+				void getCamera2Ds(messages::DocumentMessage* const message) {
+					const uint32 command = static_cast<uint32>(RenderServiceCommands::GetCameras);
+
+					message->setCommand(command);
 					message->clearData();
 				}
 
 				bool isValidCommand(const uint32 command) {
-					return command <= static_cast<uint32>(RenderServiceCommands::GetLayers);
+					return command <= static_cast<uint32>(RenderServiceCommands::GetCameras);
 				}
 			}
 		}

@@ -17,11 +17,12 @@ namespace sani {
 			/// @author voidbab
 			///
 			/// Simple peer to peer channel.
+			template <typename T>
 			class PeerToPeerChannel final : public Channel {
 			private:
-				PagePoolAllocator<messages::PeerToPeerMessage> messagePool;
+				PagePoolAllocator<T> messagePool;
 			public:
-				PeerToPeerChannel(ServiceRegistry* const serviceRegistry);
+				PeerToPeerChannel(ServiceRegistry* const serviceRegistry, const MessageType type);
 
 				/// Routes the next message.
 				void flush() final override;
@@ -34,3 +35,5 @@ namespace sani {
 		}
 	}
 }
+
+#include "sani/engine/messaging/channels/impl/peer_to_peer_channel.hpp"
