@@ -18,7 +18,7 @@ namespace sani {
 			///
 			/// Simple peer to peer channel.
 			template <typename T>
-			class PeerToPeerChannel final : public Channel {
+			class PeerToPeerChannel : public Channel {
 			private:
 				PagePoolAllocator<T> messagePool;
 			protected:

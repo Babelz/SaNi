@@ -35,7 +35,7 @@ namespace sani {
 			}
 			template <typename T>
 			void PeerToPeerChannel<T>::releaseMessage(messages::Message* const message) {
-				messagePool.deallocate(static_cast<T*>(message));
+				messagePool.deallocate(static_cast<T* const>(message));
 			}
 		}
 	}

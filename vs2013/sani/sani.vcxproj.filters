@@ -411,7 +411,6 @@
     <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp">
       <Filter>src\engine\messaging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sani\engine\services\contracts\render_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
@@ -432,6 +431,13 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\channels\command_channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -878,6 +884,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp">
       <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\document_channel.hpp">
+      <Filter>include\engine\messaging\channels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\command_channel.hpp">
+      <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
