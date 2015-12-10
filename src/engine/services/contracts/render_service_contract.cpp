@@ -10,11 +10,28 @@ namespace sani {
 			
 			namespace renderservice {
 				
+				static void setMessageRecipents(messages::Message* const message) {
+					message->getRecipents().clear();
+
+					message->getRecipents().addRecipent("render service");
+				}
+
 				static void decorateCommandMessage(messages::CommandMessage* const message, const RenderServiceCommands renderServiceCommand, const String& data) {
 					const uint32 command = static_cast<uint32>(renderServiceCommand);
 
 					message->setCommand(command);
 					message->setData(data);
+
+					setMessageRecipents(message);
+				}
+
+				static void decorateDocumentMessage(messages::DocumentMessage* const message, const RenderServiceCommands renderServiceCommand) {
+					const uint32 command = static_cast<uint32>(renderServiceCommand);
+
+					message->setCommand(command);
+					message->clearData();
+
+					setMessageRecipents(message);
 				}
 
 				void createLayer(messages::CommandMessage* const message, const String& layerInformation) {
@@ -26,10 +43,7 @@ namespace sani {
 				}
 
 				void getLayers(messages::DocumentMessage* const message) {
-					const uint32 command = static_cast<uint32>(RenderServiceCommands::GetLayers);
-
-					message->setCommand(command);
-					message->clearData();
+					decorateDocumentMessage(message, RenderServiceCommands::GetLayers);
 				}
 
 				void createCamera(messages::CommandMessage* const message, const String& cameraInformation) {
@@ -40,15 +54,8 @@ namespace sani {
 					decorateCommandMessage(message, RenderServiceCommands::DeleteCamera, cameraInformation);
 				}
 
-				void getCamera2Ds(messages::DocumentMessage* const message) {
-					const uint32 command = static_cast<uint32>(RenderServiceCommands::GetCameras);
-
-					message->setCommand(command);
-					message->clearData();
-				}
-
-				bool isValidCommand(const uint32 command) {
-					return command <= static_cast<uint32>(RenderServiceCommands::GetCameras);
+				void getCameras(messages::DocumentMessage* const message) {
+					decorateDocumentMessage(message, RenderServiceCommands::GetCameras);
 				}
 			}
 		}

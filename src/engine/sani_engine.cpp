@@ -31,61 +31,6 @@ namespace sani {
 		}
 #endif
 
-		bool SaNiEngine::platformInitialize() {
-			// TODO: read config from cvars.
-			// TODO: add some error messages.
-			// TODO: win32 impl only, add android init.
-
-			// Init window.
-			window = new graphics::Window(hInstance, 1280, 720);
-			if (!window->initialize()) return false;
-
-			window->setTitle("SaNi Engine");
-			window->show();
-
-			graphicsDevice = new graphics::GraphicsDevice(window->getHandle(), 
-														  hInstance, 
-														  window->getWidth(), 
-														  window->getHeight());
-
-			if (!graphicsDevice->initialize()) return false;
-
-			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
-			window->closed		+= SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowClosed, graphicsDevice));
-
-			return true;
-		}
-		bool SaNiEngine::initializeServices() {
-			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
-			services.registerService(renderService);
-			renderService->start();
-
-			/*
-				TODO: test services etc here.
-			*/
-
-			auto create_layer = createEmptyMessage<messages::CommandMessage>();
-			renderservice::createLayer(create_layer, "layer_1||1||1.0");
-			create_layer->getRecipents().addRecipent("render service");
-			
-			auto get_layers = createEmptyMessage<messages::DocumentMessage>();
-			renderservice::getLayers(get_layers);
-			get_layers->getRecipents().addRecipent("render service");
-
-			routeMessage(create_layer);
-			routeMessage(get_layers);
-
-			auto data = get_layers->getData();
-
-			std::vector<graphics::Layer* const>* vittu = static_cast<std::vector<graphics::Layer* const>*>(data);
-			vittu->at(0)->add(new sani::graphics::Circle(128.0f, 38));
-
-			return true;
-		}
-
-		void SaNiEngine::windowClosed(graphics::GraphicsDevice* const graphicsDevice) {
-			graphicsDevice->cleanUp();
-		}
 		void SaNiEngine::windowSizeChanged(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window) {
 			graphics::Viewport viewport;
 
@@ -108,8 +53,60 @@ namespace sani {
 			// Load game data
 			// RUN!
 
-			if (!platformInitialize()) return false;
-			if (!initializeServices()) return false;
+			// Window init.
+			window = new graphics::Window(hInstance, 1280, 720);
+			if (!window->initialize()) return false;
+
+			window->setTitle("SaNi Engine");
+			window->show();
+
+			// Device init.
+			graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
+				hInstance,
+				window->getWidth(),
+				window->getHeight());
+
+			if (!graphicsDevice->initialize()) return false;
+
+			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
+			
+			// Render service init.
+			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
+			services.registerService(renderService);
+			renderService->start();
+
+			auto createLayer = createEmptyMessage<messages::CommandMessage>();
+			services::renderservice::createLayer(createLayer, "l1||1||0.0");
+
+			auto createCamera = createEmptyMessage<messages::CommandMessage>();
+			services::renderservice::createCamera(createCamera, "c1");
+
+			auto getLayers = createEmptyMessage<messages::DocumentMessage>();
+			services::renderservice::getLayers(getLayers);
+
+			auto getCameras = createEmptyMessage<messages::DocumentMessage>();
+			services::renderservice::getCameras(getCameras);
+
+			routeMessage(createLayer);
+			routeMessage(createCamera);
+			routeMessage(getLayers);
+			routeMessage(getCameras);
+
+			std::vector<graphics::Layer* const>* layers = static_cast<std::vector<graphics::Layer* const>*>(getLayers->getData());
+			graphics::Layer* layer = *layers->begin();
+			deallocateShared(layers);
+
+			layer->add(new graphics::Rectangle(100, 100, 128, 128));
+
+			std::vector<graphics::Camera2D* const>* cameras = static_cast<std::vector<graphics::Camera2D* const>*>(getCameras->getData());
+			graphics::Camera2D* camera = *cameras->begin();
+			deallocateShared(cameras);
+
+			camera->setViewport(graphicsDevice->getViewport());
+			camera->computeTransformation();
+
+			releaseMessage(getCameras);
+			releaseMessage(getLayers);
 
 			// Create all initial services.
 			return true;
@@ -173,6 +170,8 @@ namespace sani {
 				// Update all services.
 				services.update(time);
 			}
+
+			graphicsDevice->cleanUp();
 		}
 		void SaNiEngine::quit() {
 			window->close();

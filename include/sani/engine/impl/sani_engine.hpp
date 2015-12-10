@@ -20,8 +20,8 @@ namespace sani {
 		}
 
 		template<typename T>
-		void SaNiEngine::deallocateShared(T* object) {
-			sharedServiceMemory.release<T>();
+		void SaNiEngine::deallocateShared(T* memory) {
+			sharedServiceMemory.deallocate<T>(memory);
 		}
 	}
 }

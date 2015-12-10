@@ -225,6 +225,8 @@ namespace sani {
 		}
 
 		void Renderer::flushRenderBatch(const RenderBatch* const renderBatch) {
+			if (renderBatch->elementsData == nullptr) return;
+
 			const VertexMode vertexMode = renderBatch->vertexMode;
 			const RenderMode renderMode = renderBatch->renderMode;
 

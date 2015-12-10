@@ -40,11 +40,7 @@ namespace sani {
 			ServiceRegistry services;
 			ChannelManager channels;
 
-			bool platformInitialize();
-			bool initializeServices();
-
 			static void windowSizeChanged(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
-			static void windowClosed(graphics::GraphicsDevice* const graphicsDevice);
 			
 			/// Initializes the engine.
 			bool initialize();

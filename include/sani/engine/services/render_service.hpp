@@ -45,8 +45,9 @@ namespace sani {
 				void deleteLayer(messages::CommandMessage* const message);
 				void getLayers(messages::DocumentMessage* const message);
 
-				void removeCamera(messages::CommandMessage* const message);
-				void addCamera(messages::CommandMessage* const message);
+				void createCamera(messages::CommandMessage* const message);
+				void deleteCamera(messages::CommandMessage* const message);
+				void getCameras(messages::DocumentMessage* const message);
 
 				void renderToCamera(const graphics::Camera2D& camera);
 			public:

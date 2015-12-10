@@ -67,9 +67,7 @@ namespace sani {
 				void deleteCamera(messages::CommandMessage* const message, const String& cameraInformation);
 
 				/// Generates a message that will return all Camera2Ds.
-				void getCamera2Ds(messages::DocumentMessage* const message);
-				
-				bool isValidCommand(const uint32 command);
+				void getCameras(messages::DocumentMessage* const message);
 			}
 		}
 	}

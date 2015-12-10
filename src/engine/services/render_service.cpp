@@ -39,6 +39,9 @@ namespace sani {
 				case RenderServiceCommands::GetLayers:
 					getLayers(message);
 					break;
+				case RenderServiceCommands::GetCameras:
+					getCameras(message);
+					break;
 				default:
 					// TODO: dead letter.
 					break;
@@ -53,6 +56,12 @@ namespace sani {
 					break;
 				case RenderServiceCommands::DeleteLayer:
 					deleteLayer(message);
+					break;
+				case RenderServiceCommands::CreateCamera:
+					createCamera(message);
+					break;
+				case RenderServiceCommands::DeleteCamera:
+					deleteCamera(message);
 					break;
 				default:
 					// TODO: dead letter.
@@ -98,7 +107,8 @@ namespace sani {
 
 				message->markHandled();
 			}
-			void RenderService::removeCamera(messages::CommandMessage* const message) {
+			
+			void RenderService::deleteCamera(messages::CommandMessage* const message) {
 				const String& name = message->getData();
 
 				auto it = std::find_if(cameras.begin(), cameras.end(), ([&name](const Camera2D& camera) {
@@ -111,12 +121,22 @@ namespace sani {
 					message->markHandled();
 				}
 			}
-			void RenderService::addCamera(messages::CommandMessage* const message) {
+			void RenderService::createCamera(messages::CommandMessage* const message) {
 				const String name = message->getData();
 
 				cameras.push_back(Camera2D(graphicsDevice->getViewport()));
 				
 				if (name.size() != 0) cameras.back().setName(name);
+			}
+			void RenderService::getCameras(messages::DocumentMessage* const message) {
+				std::vector<Camera2D* const>* results = getEngine()->allocateShared<std::vector<Camera2D* const>>();
+				NEW_DYNAMIC_DEFAULT(std::vector<Camera2D* const>, results);
+
+				for (Camera2D& camera : cameras) results->push_back(&camera);
+
+				message->setData(results);
+
+				message->markHandled();
 			}
 
 			void RenderService::renderToCamera(const graphics::Camera2D& camera) {
