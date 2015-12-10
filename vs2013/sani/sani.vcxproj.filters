@@ -196,6 +196,9 @@
     <Filter Include="include\engine\messaging\channels\impl">
       <UniqueIdentifier>{8afc09c8-6f5b-4fd6-8d14-3346f3d22eeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\engine\services\contracts">
+      <UniqueIdentifier>{1f7a3988-9836-460f-8091-f7c735e77eaa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -408,14 +411,8 @@
     <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp">
       <Filter>src\engine\messaging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\sani\engine\services\render_service.cpp">
-      <Filter>src\engine\services</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\sani\engine\services\contracts\render_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp">
-      <Filter>src\engine\messaging\messages</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\sani\engine\messaging\messages\document_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\layer.cpp">
@@ -426,6 +423,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\render_batcher.cpp">
       <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp">
+      <Filter>src\engine\messaging\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\render_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -869,6 +875,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp">
       <Filter>include\engine\messaging\channels\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp">
+      <Filter>include\engine\messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

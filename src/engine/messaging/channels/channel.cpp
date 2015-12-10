@@ -9,39 +9,27 @@ namespace sani {
 
 		namespace channels {
 
-			Channel::Channel(const MessageType channelType, ServiceRegistry* const serviceRegistry) : channelType(channelType),
-				serviceRegistry(serviceRegistry) {
+			Channel::Channel(const MessageType channelType, ServiceRegistry* const serviceRegistry, const messages::MessageReleaseStrategy messageReleaseStrategy) 
+				: channelType(channelType),																																					 
+				  serviceRegistry(serviceRegistry),
+				  messageReleaseStrategy(messageReleaseStrategy) {
 			}
 
+			messages::MessageReleaseStrategy Channel::getMessageReleaseStrategy() const {
+				return messageReleaseStrategy;
+			}
 			ServiceRegistry* const Channel::getServiceRegistry() {
 				return serviceRegistry;
-			}
-
-			void Channel::queueMessage(messages::Message* const message) {
-				messageQueue.push(message);
-			}
-
-			messages::Message* const Channel::nextMessage() {
-				SANI_ASSERT(!empty());
-
-				messages::Message* const next = messageQueue.front();
-				messageQueue.pop();
-
-				return next;
 			}
 
 			MessageType Channel::getType() const {
 				return channelType;
 			}
 
-			bool Channel::empty() const {
-				return messageQueue.empty();
-			}
-
 			void Channel::route(messages::Message* const message) {
 				if (message->getType() != channelType) throw std::runtime_error("invalid message type for the given channel");
 
-				queueMessage(message);
+				routeMessage(message);
 			}
 
 			Channel::~Channel() {

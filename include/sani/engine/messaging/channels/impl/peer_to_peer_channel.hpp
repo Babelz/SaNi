@@ -9,26 +9,23 @@ namespace sani {
 		namespace channels {
 
 			template <typename T>
-			PeerToPeerChannel<T>::PeerToPeerChannel(ServiceRegistry* const serviceRegistry, const MessageType type) : Channel(type, serviceRegistry),
-																													  messagePool(MESSAGE_POOL_PAGE_SIZE, MESSAGE_POOL_PAGES_COUNT) {
+			PeerToPeerChannel<T>::PeerToPeerChannel(ServiceRegistry* const serviceRegistry, const MessageType type, const messages::MessageReleaseStrategy messageReleaseStrategy) 
+				: Channel(type, serviceRegistry, messageReleaseStrategy),	
+				  messagePool(MESSAGE_POOL_PAGE_SIZE, MESSAGE_POOL_PAGES_COUNT) {
 			}
 
 			template <typename T>
-			void PeerToPeerChannel<T>::flush() {
-				while (!empty()) {
-					T* const message = static_cast<T*>(nextMessage());
+			void PeerToPeerChannel<T>::routeMessage(messages::Message* const message) {
+				// p2p messages should always have only one recipent.
+				const String& recipentName = *message->getRecipents().begin();
 
-					// p2p messages should always have only one recipent.
-					const String& recipentName = *message->getRecipents().begin();
+				// Send the message to the recipent.
+				services::EngineService* const recipent = getServiceRegistry()->locate(recipentName);
+				recipent->receive(message);
 
-					// Send the message to the recipent.
-					services::EngineService* const recipent = getServiceRegistry()->locate(recipentName);
-					recipent->receive(message);
-
-					// Release handled messages.
-					if (message->wasHandled()) {
-						releaseMessage(message);
-					}
+				// Release handled messages.
+				if (message->wasHandled()) {
+					if (getMessageReleaseStrategy() == messages::MessageReleaseStrategy::ReleaseWhenHandled) releaseMessage(message);
 				}
 			}
 

@@ -72,12 +72,8 @@ namespace sani {
 			renderservice::getLayers(get_layers);
 			get_layers->getRecipents().addRecipent("render service");
 
-
-
 			routeMessage(create_layer);
 			routeMessage(get_layers);
-
-			channels.route();
 
 			auto data = get_layers->getData();
 
@@ -176,9 +172,6 @@ namespace sani {
 
 				// Update all services.
 				services.update(time);
-
-				// Do post-update message routing.
-				channels.route();
 			}
 		}
 		void SaNiEngine::quit() {

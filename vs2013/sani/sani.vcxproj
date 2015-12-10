@@ -181,11 +181,14 @@
     <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipent_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\layer.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
@@ -236,9 +239,7 @@
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
-    <ClCompile Include="..\..\src\sani\engine\messaging\messages\document_message.cpp" />
-    <ClCompile Include="..\..\src\sani\engine\services\contracts\render_service_contract.cpp" />
-    <ClCompile Include="..\..\src\sani\engine\services\render_service.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\contracts.hpp" />
@@ -300,6 +301,7 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\command_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\document_message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipents_count.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipent_list.hpp" />

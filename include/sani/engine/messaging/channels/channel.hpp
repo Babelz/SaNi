@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/engine/messaging/message_releasing_strategy.hpp"
 #include "sani/engine/messaging/message_type.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
@@ -25,33 +26,22 @@ namespace sani {
 			/// and services can use to send messages.
 			class Channel {
 			private:
-				std::queue<messages::Message* const> messageQueue;
-
 				ServiceRegistry* const serviceRegistry;
 
 				// Defines the types of messages that this channel will accept.
 				const MessageType channelType;
+				const messages::MessageReleaseStrategy messageReleaseStrategy;
 			protected:
+				messages::MessageReleaseStrategy getMessageReleaseStrategy() const;
 				ServiceRegistry* const getServiceRegistry();
 
-				/// Adds the given message to the channels internal
-				/// message queue for later processing.
-				void queueMessage(messages::Message* const message);
-
-				/// Returns the next message from the internal message queue.
-				messages::Message* const nextMessage();
-
-				Channel(const MessageType channelType, ServiceRegistry* const serviceRegistry);
+				Channel(const MessageType channelType, ServiceRegistry* const serviceRegistry, const messages::MessageReleaseStrategy messageReleaseStrategy);
+				
+				/// Routes the next message.
+				virtual void routeMessage(messages::Message* const message) = 0;
 			public:
 				/// Returns the type of this channel.
 				MessageType getType() const;
-
-				/// Returns true if the channel contains 
-				/// messages that are yet to be routed.
-				bool empty() const;
-
-				/// Routes the next message.
-				virtual void flush() = 0;
 
 				/// Creates new empty message suited for this channel.
 				virtual messages::Message* const createEmptyMessage() = 0;

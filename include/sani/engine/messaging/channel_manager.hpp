@@ -20,9 +20,6 @@ namespace sani {
 
 			channels::Channel* getChannel(const MessageType type);
 
-			/// Routes all messages once per channel.
-			void route() const;
-
 			~ChannelManager();
 		};
 	}

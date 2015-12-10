@@ -21,11 +21,11 @@ namespace sani {
 			class PeerToPeerChannel final : public Channel {
 			private:
 				PagePoolAllocator<T> messagePool;
-			public:
-				PeerToPeerChannel(ServiceRegistry* const serviceRegistry, const MessageType type);
-
+			protected:
 				/// Routes the next message.
-				void flush() final override;
+				void routeMessage(messages::Message* const message) final override;
+			public:
+				PeerToPeerChannel(ServiceRegistry* const serviceRegistry, const MessageType type, const messages::MessageReleaseStrategy messageReleaseStrategy);
 
 				/// Creates new empty p2p message.
 				messages::Message* const createEmptyMessage() final override;
