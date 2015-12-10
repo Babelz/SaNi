@@ -1,6 +1,6 @@
 #pragma once	
 
-#include "sani/engine/messaging/recipent_list.hpp"
+#include "sani/engine/messaging/recipient_list.hpp"
 #include "sani/engine/messaging/message_type.hpp"
 
 namespace sani {
@@ -21,7 +21,7 @@ namespace sani {
 				const MessageType type;
 
 				// Recipients of the message.
-				RecipentList recipents;
+				RecipientList recipents;
 
 				// Was this message handled by the recipients.
 				bool handled;
@@ -36,7 +36,7 @@ namespace sani {
 				void markHandled();
 
 				/// Returns the recipient list of this message.
-				RecipentList& getRecipents();
+				RecipientList& getRecipents();
 				/// Returns the type of this message.
 				MessageType getType() const;
 

@@ -20,7 +20,7 @@ namespace sani {
 				handled = true;
 			}
 
-			RecipentList& Message::getRecipents() {
+			RecipientList& Message::getRecipents() {
 				return recipents;
 			}
 			MessageType Message::getType() const {

@@ -8,17 +8,17 @@ namespace sani {
 
 	namespace engine {
 
-		/// @class RecipentList recipent_list.hpp "sani/engine/messaging/recipent_list.hpp"
+		/// @class RecipientList recipient_list.hpp "sani/engine/messaging/recipient_list.hpp"
 		/// @author voidbab
 		///
 		/// Represents a list of recipents.
-		class RecipentList {
+		class RecipientList {
 		private:
 			std::vector<const String> recipents;
 
 			uint32 count;
 		public:
-			RecipentList();
+			RecipientList();
 
 			void clear();
 			void addRecipent(const String& recipent);
@@ -29,7 +29,7 @@ namespace sani {
 			std::vector<const String>::const_iterator begin() const;
 			std::vector<const String>::const_iterator end() const;
 
-			~RecipentList();
+			~RecipientList();
 		};
 	}
 }

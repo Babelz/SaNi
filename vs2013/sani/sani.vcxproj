@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -186,10 +186,9 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp" />
-    <ClCompile Include="..\..\src\engine\messaging\recipent_list.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
-    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\layer.cpp" />
@@ -307,8 +306,8 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\document_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\messaging\recipents_count.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\messaging\recipent_list.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />

@@ -61,7 +61,7 @@ namespace sani {
 											"#version 120\n"
 											"attribute vec3 vertex_position;"
 											"attribute vec4 vertex_color;"
-											"attribute in vec2 texture_coordinates;"
+											"attribute vec2 texture_coordinates;"
 											""
 											"varying vec2 out_texture_coordinates;"
 											"varying vec4 out_vertex_color;"
