@@ -40,9 +40,6 @@
     <Filter Include="Source Files\time">
       <UniqueIdentifier>{8d777135-0b23-4681-a024-8973356b567c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\parser">
-      <UniqueIdentifier>{447f7836-d020-4de3-b489-e241972236de}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\tests\main.cpp">
@@ -84,8 +81,8 @@
     <ClCompile Include="..\..\tests\time\time.cpp">
       <Filter>Source Files\time</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\tests\parser\xml_tests.cpp">
-      <Filter>Source Files\parser</Filter>
+    <ClCompile Include="..\..\tests\utils\convert.cpp">
+      <Filter>Source Files\utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

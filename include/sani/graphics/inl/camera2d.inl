@@ -96,5 +96,12 @@ namespace sani {
 			transform = math::scale(transform, zoom);
 			transform = math::translate(transform, origin) * transform;
 		}
+
+		const String& Camera2D::getName() const {
+			return name;
+		}
+		void Camera2D::setName(const String& name) {
+			this->name = name;
+		}
 	}
 }

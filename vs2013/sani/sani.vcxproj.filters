@@ -163,8 +163,11 @@
     <Filter Include="include\core\parser">
       <UniqueIdentifier>{d6b29389-e209-4c50-a5e3-f0cbe4f331ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\core\parser">
-      <UniqueIdentifier>{0dc4fecd-f152-46f7-9af7-46ccb077b0da}</UniqueIdentifier>
+    <Filter Include="src\engine\services">
+      <UniqueIdentifier>{af50be73-925a-49d7-9aa7-94eff41ee78d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\services\impl">
+      <UniqueIdentifier>{70ebac3a-ac11-4aa6-a00b-daa5dfeb17c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -357,26 +360,14 @@
     <ClCompile Include="..\..\src\engine\engine_service.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\platform\android\file_stream_android.cpp">
-      <Filter>src\platform\android</Filter>
+    <ClCompile Include="..\..\src\engine\services\render_service.cpp">
+      <Filter>src\engine\services</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\parser\xml_parser.cpp">
-      <Filter>src\core\parser</Filter>
+    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp">
+      <Filter>src\engine\services</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp">
-      <Filter>src\resource\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp">
-      <Filter>src\resource\processor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\spritefont_content.cpp">
-      <Filter>src\resource</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\pipeline\spritefont_description_importer.cpp">
-      <Filter>src\resource\pipeline</Filter>
+    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
+      <Filter>src\engine\services</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -731,15 +722,6 @@
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp">
       <Filter>include\engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\engine_service.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\engine_service_provider.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\service_state.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp">
       <Filter>include\graphics\impl</Filter>
     </ClInclude>
@@ -767,30 +749,20 @@
     <ClInclude Include="..\..\include\sani\graphics\layer_type.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\file\android\file_stream_android.hpp">
-      <Filter>include\platform\file</Filter>
+    <ClInclude Include="..\..\include\sani\engine\services\render_manager.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp">
-      <Filter>include\core\parser</Filter>
+    <ClInclude Include="..\..\include\sani\engine\services\impl\render_manager.hpp">
+      <Filter>include\engine\services\impl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp">
-      <Filter>include\resource\reader</Filter>
+    <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
+    <ClInclude Include="..\..\include\sani\engine\services\engine_services.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp">
-      <Filter>include\resource\processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp">
-      <Filter>include\resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_description_importer.hpp">
-      <Filter>include\resource\pipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\font_description.hpp">
-      <Filter>include\resource</Filter>
+    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -844,6 +816,12 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\buffer.inl">
       <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp">
+      <Filter>include\engine\messaging\messages</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\utils\inl\convert.inl">
+      <Filter>include\core\utils\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

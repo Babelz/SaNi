@@ -1,6 +1,21 @@
 #pragma once
 
-#include "sani/engine/engine_service_provider.hpp"
+#include "sani/engine/messaging/channel_manager.hpp"
+#include "sani/core/memory/heap_allocator.hpp"
+#include "sani/platform/platform_config.hpp"
+#include "sani/engine/service_registry.hpp"
+#include "sani/forward_declare.hpp"
+
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
+#include <Windows.h>
+
+#endif
+
+SANI_FORWARD_DECLARE_3(sani, engine, messages, Message);
+SANI_FORWARD_DECLARE_3(sani, engine, channels, Channel);
+SANI_FORWARD_DECLARE_2(sani, graphics, Window);
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 
 namespace sani {
 
@@ -12,14 +27,32 @@ namespace sani {
 		/// The core of the engine. 
 		class SaNiEngine {
 		private:
-			EngineServiceProvider services;
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+			const HINSTANCE hInstance;
+#endif
+			// Shared memory region used by the services to allocate
+			// temporary stuff such as results for messages.
+			HeapAllocator sharedServiceMemory;
 
-			bool running;
+			graphics::GraphicsDevice* graphicsDevice;
+			graphics::Window* window;
 
+			ServiceRegistry services;
+			ChannelManager channels;
+
+			bool platformInitialize();
+			bool initializeServices();
+
+			static void windowSizeChanged(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
+			static void windowClosed(graphics::GraphicsDevice* const graphicsDevice);
+			
 			/// Initializes the engine.
 			bool initialize();
 		public:
-			SaNiEngine();
+			// Win32 ctor.
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+			SaNiEngine(const HINSTANCE hInstance);
+#endif
 
 			/// Returns the first service with given name and ID.
 			EngineService* const locateService(const String& name, const uint32 id);
@@ -27,6 +60,14 @@ namespace sani {
 			EngineService* const locateService(const String& name);
 			/// Returns the first service with given ID.
 			EngineService* const locateService(const uint32 id);
+
+			messages::Message* const createEmptyMessage(MessageType const type);
+
+			template <typename T>
+			T* const createEmptyMessage();
+
+			void releaseMessage(messages::Message* const message);
+			void routeMessage(messages::Message* const message);
 
 			/// Registers new service.
 			void registerService(EngineService* const service);
@@ -38,7 +79,15 @@ namespace sani {
 			/// Causes the engine to quit.
 			void quit();
 
+			template<typename T>
+			T* allocateShared();
+			
+			template<typename T>
+			void deallocateShared(T* object);
+
 			~SaNiEngine();
 		};
 	}
 }
+
+#include "sani/engine/impl/sani_engine.hpp"

@@ -43,6 +43,7 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 namespace sani {
+
 	namespace graphics {
 		
 		/*
@@ -79,6 +80,7 @@ namespace sani {
 			*/
 
 			SANI_INIT_EVENT(sizeChanged, void());
+			SANI_INIT_EVENT(closed, void());
 		}
 
 		// Private.
@@ -173,6 +175,9 @@ namespace sani {
 					window->impl->cImpl.x = wndRect.left;
 					window->impl->cImpl.y = wndRect.top;
 
+					return 0;
+				case WM_CLOSE:
+					window->close();
 					return 0;
 			}
 
@@ -296,10 +301,10 @@ namespace sani {
 			return clntRect.bottom - clntRect.top;
 		}
 
-		inline int32 Window::getWidth() {
+		int32 Window::getWidth() {
 			return impl->cImpl.width;
 		}
-		inline int32 Window::getHeight() {
+		int32 Window::getHeight() {
 			return impl->cImpl.height;
 		}
 
@@ -334,6 +339,8 @@ namespace sani {
 			if (!impl->cImpl.isWindowOpen) return;
 
 			impl->cImpl.isWindowOpen = false;
+
+			SANI_TRIGGER_VOID_EVENT(closed, void());
 		}
 
 		bool Window::initialize() {

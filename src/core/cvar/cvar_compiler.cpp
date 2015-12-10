@@ -318,9 +318,16 @@ namespace sani {
 		// Try parse and emit.
 		compile(cvars, records, tokens);
 
-		records.sort([](const CVarRecord& lhs, const CVarRecord& rhs) {
-			return lhs.getFilename() == rhs.getFilename();
-		});
+		if (records.size() != 0) {
+			records.sort([](const CVarRecord& lhs, const CVarRecord& rhs) {
+				std::hash<String> hash;
+
+				const uint32 lhsHash = hash(lhs.getFilename());
+				const uint32 rhsHash = hash(rhs.getFilename());
+
+				return lhsHash < rhsHash;
+			});
+		}
 	}
 
 	CVarCompiler::~CVarCompiler() {

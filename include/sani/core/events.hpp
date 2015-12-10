@@ -10,6 +10,10 @@
 		example
 		SANI_DECLARE_EVENT(onClosed, void(void));
 
+	NOTICE: declaring events don't work outside the sani namespace, 
+			if you are declaring events outside this namespace please
+			add "using namespace sani" to your file.
+
 	To initialize the event..
 		SANI_INIT_EVENT(name, signature);
 
@@ -47,7 +51,7 @@ namespace sani {
 		inline void unsubscribe(std::function<T> callback);
 		/// Returns true if the manager contains callbacks.
 		inline bool hasSubscribers() const;
-	
+
 		~Event();
 
 		void operator += (std::function<T> callback);
@@ -63,7 +67,7 @@ namespace sani {
 	private:
 		const Event<T>* event;
 	public:
-		EventCaller(const Event<T>* event);
+		EventCaller(const Event<T>* e);
 		EventCaller();
 
 		~EventCaller();

@@ -63,28 +63,21 @@ namespace sani {
 
 		template <template <typename, typename> class Collection, class Item, class Allocator = std::allocator<Item> >
 		inline void split(const String& str, const String& pattern, Collection<Item, Allocator>& results, const bool removeEmpty = false) {
-			// From: https://github.com/Babelz/EUS/blob/master/EUS/StringHelper.cpp
-			// Optimize if needed.
+			// From: http://www.cplusplus.com/forum/beginner/114790/
 
 			size_t start = 0;
-			size_t end = str.find(pattern);
+			size_t end = str.find_first_of(pattern);
 
-			while (end != String::npos) {
-				const String sub = str.substr(start, end - start);
+			while (end <= String::npos) {
+				String token = str.substr(start, end - start);
 
-				start = end + pattern.size();
-				end = str.find(pattern, start);
+				if (!(token.empty() && removeEmpty)) results.push_back(token);
 
-				if (sub.empty() && removeEmpty) continue;
+				if (end == String::npos) break;
 
-				results.push_back(sub);
+				start = end + 1;
+				end = str.find_first_of(pattern, start);
 			}
-
-			const String sub = str.substr(start, end - start);
-
-			if (sub.empty() && removeEmpty) return;
-
-			results.push_back(sub);
 		}
 	}
 }
