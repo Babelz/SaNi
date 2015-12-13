@@ -14,6 +14,8 @@ namespace sani {
 		template <class PixelType>
 		PixelBitmapContent<PixelType>::PixelBitmapContent(uint32 width, uint32 height) 
 			: BitmapContent(width, height), pixels(new PixelType[width * height]) {
+			// transparent
+			memset(pixels, 0, sizeof(PixelType) * width * height);
 			tryGetFormat(format);
 		}
 
