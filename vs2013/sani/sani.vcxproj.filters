@@ -160,47 +160,41 @@
     <Filter Include="include\core\parser">
       <UniqueIdentifier>{d6b29389-e209-4c50-a5e3-f0cbe4f331ce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\engine\services">
-      <UniqueIdentifier>{af50be73-925a-49d7-9aa7-94eff41ee78d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\engine\messaging">
-      <UniqueIdentifier>{542bb755-6b95-42f8-8f1f-a9e42620938f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\engine\messaging\channels">
-      <UniqueIdentifier>{153458e1-1067-4e05-88ef-700d2cae0186}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\engine\messaging\messages">
-      <UniqueIdentifier>{16210882-1511-4a60-91d7-b0b93f6e5908}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\engine\impl">
-      <UniqueIdentifier>{d81a0862-8f1e-40b3-aaa0-282bc2096cfa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\engine\messaging\channels\impl">
-      <UniqueIdentifier>{40a517b5-37fc-49a2-abfe-67b923b1fd27}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\engine\services">
-      <UniqueIdentifier>{a7c76475-2837-40e5-af8d-f904c3b01751}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\engine\services\contracts">
-      <UniqueIdentifier>{e15493d4-2c4d-476f-9860-10ffd2ea8ca7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\core\utils\inl">
-      <UniqueIdentifier>{2a87fe6d-e120-4b16-98fd-e9a3019e090e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\engine\messaging">
-      <UniqueIdentifier>{4a17af3e-6542-4c78-8d9c-1a1cebc5040d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\engine\messaging\channels">
-      <UniqueIdentifier>{4ec3c591-0b30-4725-a0d0-a680e7750921}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\engine\messaging\messages">
-      <UniqueIdentifier>{8eaea954-dec1-4017-aa23-c506a4361033}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\engine\services\contracts">
-      <UniqueIdentifier>{68df5ef4-33fb-4c37-be4d-2fae20f2ecd9}</UniqueIdentifier>
+    <Filter Include="src\core\parser">
+      <UniqueIdentifier>{0dc4fecd-f152-46f7-9af7-46ccb077b0da}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\resource\pipeline\compiler">
       <UniqueIdentifier>{8b8e7f0d-0f59-4c41-b5a8-cc0f6fa2ee62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\messaging">
+      <UniqueIdentifier>{e3d722bb-8585-444a-8101-783572e2cbe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\messaging\channels">
+      <UniqueIdentifier>{46be5400-fb9d-4104-8def-1b184ba3dd32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\messaging\messages">
+      <UniqueIdentifier>{85302ba1-d8c8-4876-a71b-97233ec806a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\services">
+      <UniqueIdentifier>{a264dd8f-bd15-402c-bdad-1e2f63e584db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\services\contracts">
+      <UniqueIdentifier>{efc4b5b8-21c4-4c3a-a851-33350c9a83de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\messaging">
+      <UniqueIdentifier>{4bd1d5c4-2894-407b-9153-a4753c224eb4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\messaging\channels">
+      <UniqueIdentifier>{dc0af3c1-a909-4e67-a51e-883dcd39fa45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\messaging\messages">
+      <UniqueIdentifier>{902efd51-44f6-467d-b8f6-ea60b27216e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\services">
+      <UniqueIdentifier>{3a3c45a6-1e50-4d61-99de-513fd7f1f90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\services\contracts">
+      <UniqueIdentifier>{f41234ac-b2a4-444c-8b20-1ef4dd597ea1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -393,38 +387,29 @@
     <ClCompile Include="..\..\src\engine\engine_service.cpp">
       <Filter>src\engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\services\render_service.cpp">
-      <Filter>src\engine\services</Filter>
+    <ClCompile Include="..\..\src\resource\bitmap_content.cpp">
+      <Filter>src\resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\state_message.cpp">
-      <Filter>src\engine\messaging\messages</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp">
-      <Filter>src\engine\services\contracts</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\graphics\render_batcher.cpp">
-      <Filter>src\graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\graphics\render_batch.cpp">
-      <Filter>src\graphics</Filter>
+    <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp">
+      <Filter>src\engine\messaging</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp">
       <Filter>src\engine\messaging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp">
-      <Filter>src\engine\messaging\channels</Filter>
+    <ClCompile Include="..\..\src\engine\messaging\state_message.cpp">
+      <Filter>src\engine\messaging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp">
+    <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp">
       <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\messaging\channels\command_channel.cpp">
       <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp">
-      <Filter>src\engine\messaging\messages</Filter>
+    <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp">
-      <Filter>src\engine\messaging\messages</Filter>
+    <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
@@ -432,17 +417,26 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp">
-      <Filter>src\engine\messaging\channels</Filter>
+    <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp">
+      <Filter>src\engine\messaging\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp">
+      <Filter>src\engine\messaging\messages</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\render_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\graphics\render_batcher.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\layer.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp">
-      <Filter>src\engine\messaging</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\bitmap_content.cpp">
-      <Filter>src\resource</Filter>
+    <ClCompile Include="..\..\src\graphics\render_batch.cpp">
+      <Filter>src\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -797,6 +791,9 @@
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp">
       <Filter>include\engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\service_state.hpp">
+      <Filter>include\engine</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp">
       <Filter>include\graphics\impl</Filter>
     </ClInclude>
@@ -824,8 +821,29 @@
     <ClInclude Include="..\..\include\sani\graphics\layer_type.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\service_registry.hpp">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
-      <Filter>include\engine\impl</Filter>
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp">
+      <Filter>include\engine\messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp">
+      <Filter>include\engine\messaging</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
@@ -836,11 +854,11 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\document_channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp">
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp">
-      <Filter>include\engine\messaging\channels\impl</Filter>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp">
+      <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\command_message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
@@ -851,17 +869,8 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp">
-      <Filter>include\engine\messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp">
-      <Filter>include\engine\messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp">
-      <Filter>include\engine\messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp">
-      <Filter>include\engine\messaging</Filter>
+    <ClInclude Include="..\..\include\sani\core\utils\convert.hpp">
+      <Filter>include\core\utils</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp">
       <Filter>include\engine\services</Filter>
@@ -872,32 +881,14 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\service_registry.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\service_state.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp">
-      <Filter>include\engine\messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp">
-      <Filter>include\engine\messaging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\primitive_writers.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\render_batcher.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\utils\convert.hpp">
-      <Filter>include\core\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp">
-      <Filter>include\resource</Filter>
+    <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp">
+      <Filter>include\engine\messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -952,14 +943,14 @@
     <None Include="..\..\include\sani\graphics\inl\buffer.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
+    <None Include="..\..\include\sani\resource\inl\bitmap_content.inl">
+      <Filter>include\resource</Filter>
+    </None>
     <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </None>
     <None Include="..\..\include\sani\core\utils\inl\convert.inl">
-      <Filter>include\core\utils\inl</Filter>
-    </None>
-    <None Include="..\..\include\sani\resource\inl\bitmap_content.inl">
-      <Filter>include\resource</Filter>
+      <Filter>include\core\utils</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

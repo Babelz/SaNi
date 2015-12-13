@@ -366,7 +366,6 @@
     <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\primitive_writers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
