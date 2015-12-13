@@ -1,5 +1,5 @@
 #include "sani/platform/platform_config.hpp"
-#if 0
+
 // TODO: does it matter if we just with the win32 builds?
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
@@ -245,5 +245,4 @@ TEST_CASE("CVar parsing", "[cvar]") {
 	}
 }
 
-#endif
 #endif

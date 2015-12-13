@@ -63,26 +63,22 @@
     <Import Project="Glew.props" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
-    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
-    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="Glew.props" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
-    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\propertysheets\libpng.props" />
     <Import Project="..\propertysheets\magick++.props" />
-    <Import Project="..\propertysheets\rapidxml.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />
@@ -94,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\freetype\include\;$(SolutionDir)..\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -117,21 +113,16 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;ANDROID;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>$(SolutionDir)..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-std=c++11  -fexceptions %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
     </Link>
-    <Lib>
-      <ThinArchive>true</ThinArchive>
-      <AdditionalDependencies />
-    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -143,7 +134,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\freetype\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -185,24 +175,37 @@
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
-    <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channels\command_channel.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\messages\message.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
+    <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\layer.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_batch.cpp" />
+    <ClCompile Include="..\..\src\graphics\render_batcher.cpp" />
     <ClCompile Include="..\..\src\graphics\render_element_data.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\transformable.cpp" />
     <ClCompile Include="..\..\src\graphics\render_data.cpp" />
-    <ClCompile Include="..\..\src\platform\android\file_stream_android.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -238,11 +241,7 @@
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
-    <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp" />
-    <ClCompile Include="..\..\src\resource\pipeline\spritefont_description_importer.cpp" />
-    <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp" />
-    <ClCompile Include="..\..\src\resource\spritefont_content.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\contracts.hpp" />
@@ -293,13 +292,29 @@
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
-    <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
-    <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
+    <ClInclude Include="..\..\include\sani\core\utils\convert.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\engine_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\command_channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\document_channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\command_message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\document_message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\engine_service_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
@@ -315,6 +330,8 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\render_batcher.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_element_data.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_helper.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp" />
@@ -330,7 +347,6 @@
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\file\android\file_stream_android.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
@@ -350,13 +366,13 @@
     <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\primitive_writers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect_content.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\font_description.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp" />
@@ -378,11 +394,6 @@
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_description_importer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
@@ -390,6 +401,8 @@
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
+    <None Include="..\..\include\sani\core\utils\inl\convert.inl" />
+    <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp" />
     <None Include="..\..\include\sani\graphics\inl\buffer.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\graphics\inl\circle.inl" />

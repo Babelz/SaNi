@@ -1,131 +1,110 @@
-#include "sani/engine/engine_service.hpp"
-#include <stdexcept>
-#include <algorithm>
+#include "sani/engine/messaging/state_message.hpp"
+#include "sani/engine/services/engine_service.hpp"
 
 namespace sani {
 
 	namespace engine {
 
-		uint32 EngineService::idGenerator = 0;
+		namespace services {
 
-		EngineService::EngineService(const String& name, SaNiEngine* const engine) : name(name),
-																					 id(idGenerator++),
-																					 engine(engine),
-																					 state(ServiceState::Uninitialized) {
-		}
-		
-		void EngineService::onInitialize() {
-		}
-		void EngineService::onUpdate(const EngineTime& time) {
-		}
+			uint32 EngineService::idGenerator = 0;
 
-		void EngineService::onSuspend() {
-		}
-		bool EngineService::onResume() {
-			return true;
-		}
-		void EngineService::onStop() {
-		}
+			static const String initializationErrorMessage		= "initialization failed!";
+			static const String resumeErrorMessage				= "resume failed!";
+			static const String suspendErrorMessage				= "failed to suspend the service!";
+			static const String terminateErrorMessage			= "failed to terminate the service!";
 
-		SaNiEngine* const EngineService::getEngine() {
-			return engine;
-		}
-
-		void EngineService::pushError(const String& error) {
-			errors.push(error);
-		}
-
-		ServiceState EngineService::getState() const {
-			return state;
-		}
-		const String& EngineService::getName() const {
-			return name;
-		}
-		const uint32 EngineService::getID() const {
-			return id;
-		}
-
-		void EngineService::suspend() {
-			switch (state) {
-			case sani::engine::ServiceState::Uninitialized:
-			case sani::engine::ServiceState::Suspended:
-			case sani::engine::ServiceState::Stopped:
-			default:
-				throw std::runtime_error("invalid operation at this time");
-			case sani::engine::ServiceState::Running:
-				onSuspend();
-				break;
+			EngineService::EngineService(const String& name, SaNiEngine* const engine) : name(name),
+																						 id(idGenerator++),
+																						 engine(engine),
+																						 state(ServiceState::Uninitialized) {
 			}
 
-			state = ServiceState::Suspended;
-		}
-		void EngineService::start() {
-			switch (state) {
-			case sani::engine::ServiceState::Uninitialized:
-				onInitialize();
-				break;
-			case sani::engine::ServiceState::Suspended:
-				onResume();
-				break;
-			case sani::engine::ServiceState::Stopped:
-			case sani::engine::ServiceState::Running:
-			default:
-				throw std::runtime_error("invalid operation at this time");
+			void EngineService::sendStateMessage(StateMessage* const message, const String& errorMessage) {
+				handleStateMessage(message);
+
+				if (state == ServiceState::Terminated) {
+					// Unsuccesfull terminate messages are handled
+					// as fatal errors.
+					if (!message->handled) throw std::runtime_error(errorMessage);
+
+					return;
+				}
+
+				// If message was not handled, terminate the service.
+				if (!message->handled) {
+					errors.push(errorMessage);
+
+					StateMessage terminateMessage(ServiceState::Terminated, state);
+
+					sendStateMessage(&terminateMessage, terminateErrorMessage);
+
+					state = ServiceState::Terminated;
+
+					return;
+				}
+
+				state = message->newState;
 			}
 
-			state = ServiceState::Running;
-		}
-		void EngineService::stop() {
-			switch (state) {
-			case sani::engine::ServiceState::Suspended:
-			case sani::engine::ServiceState::Running:
-				onStop();
-				break;
-			case sani::engine::ServiceState::Stopped:
-			case sani::engine::ServiceState::Uninitialized:
-			default:
-				throw std::runtime_error("invalid operation at this time");
+			void EngineService::handleStateMessage(StateMessage* const stateMessage) {
 			}
 
-			state = ServiceState::Stopped;
-		}
+			SaNiEngine* const EngineService::getEngine() {
+				return engine;
+			}
 
-		void EngineService::update(const EngineTime& time) {
-			if (state != ServiceState::Running) return;
+			void EngineService::pushError(const String& error) {
+				errors.push(error);
+			}
 
-			onUpdate(time);
-		}
+			void EngineService::start() {
+				StateMessage stateMessage(ServiceState::Running, state);
 
-		bool EngineService::isUsing(const EngineService* const other) const {
-			return std::find(dependencies.begin(), dependencies.end(), other) != dependencies.end();
-		}
-		bool EngineService::hasHerrors() const {
-			return !errors.empty();
-		}
+				const String errorMessage = state == ServiceState::Uninitialized ? initializationErrorMessage : resumeErrorMessage;
 
-		bool EngineService::unuse(EngineService* const other) {
-			if (!isUsing(other)) return false;
+				sendStateMessage(&stateMessage, errorMessage);
+			}
+			void EngineService::suspend() {
+				StateMessage stateMessage(ServiceState::Suspended, state);
 
-			dependencies.remove(other);
-			
-			return true;
-		}
-		bool EngineService::use(EngineService* const other) {
-			if (isUsing(other)) return false;
+				sendStateMessage(&stateMessage, suspendErrorMessage);
+			}
+			void EngineService::terminate() {
+				StateMessage stateMessage(ServiceState::Terminated, state);
 
-			dependencies.push_back(other);
+				sendStateMessage(&stateMessage, terminateErrorMessage);
+			}
 
-			return true;
-		}
+			void EngineService::receive(messages::Message* const message) {
+			}
+			void EngineService::update(const EngineTime& time) {
+			}
 
-		EngineService::~EngineService()  {
-		}
+			ServiceState EngineService::getState() const {
+				return state;
+			}
 
-		bool EngineService::operator == (const EngineService& rhs) const {
-			return name == rhs.name && id == rhs.id;
-		}
-		bool EngineService::operator != (const EngineService& rhs) const {
-			return !(*this == rhs);
+			const String& EngineService::getName() const {
+				return name;
+			}
+			uint32 EngineService::getID() const {
+				return id;
+			}
+
+			bool EngineService::hasErrors() const {
+				return !errors.empty();
+			}
+
+			EngineService::~EngineService()  {
+			}
+
+			bool EngineService::operator == (const EngineService& rhs) const {
+				return name == rhs.name && id == rhs.id;
+			}
+			bool EngineService::operator != (const EngineService& rhs) const {
+				return !(*this == rhs);
+			}
 		}
 	}
 }

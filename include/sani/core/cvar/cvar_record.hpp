@@ -12,11 +12,8 @@ namespace sani {
 	/// Used to store cvars to files when the engine gets closed.
 	class CVarRecord {
 	private:
+		const CVarToken token;
 		const CVar& cvar;			// Runtime cvar.
-		
-		const uint32 lineNumber;
-		const String filename;
-		const String line;
 		
 		size_t indexOfValue;
 		String originalValue;

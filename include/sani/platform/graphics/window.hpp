@@ -34,10 +34,11 @@ namespace sani {
 #endif
 
 		public:
+			SANI_DECLARE_EVENT(sizeChanged, void());
+			SANI_DECLARE_EVENT(closed, void());
 
 			// Public Win32 members.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-			SANI_DECLARE_EVENT(sizeChanged, void());
 
 			Window(const HINSTANCE hInstance, const uint32 width, const uint32 height);
 

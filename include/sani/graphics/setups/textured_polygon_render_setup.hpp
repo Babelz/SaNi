@@ -6,13 +6,13 @@ namespace sani {
 
 	namespace graphics {
 
-		class TexturedPolygonRenderSetup : public PolygonRenderSetup {
+		class TexturedPolygonRenderSetup final : public PolygonRenderSetup {
 		public:
 			TexturedPolygonRenderSetup(GraphicsDevice* const graphicsDevice);
 
-			virtual void use() override;
+			virtual void use() final override;
 			
-			virtual void clear() override;
+			virtual void clear() final override;
 		};
 	}
 }

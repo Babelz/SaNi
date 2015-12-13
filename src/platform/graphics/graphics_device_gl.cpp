@@ -527,7 +527,7 @@ namespace sani {
 
 			CHECK_FOR_ERRORS();
 
-			// Push custom error code.
+			// Push custom error.
 			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to compile shader", __FUNCTION__, __LINE__));
 		}
 		void GraphicsDevice::deleteShader(const uint32 shader) {

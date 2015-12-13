@@ -22,6 +22,8 @@ namespace sani {
 			math::Vec3f zoom;
 
 			float32 rotation;
+
+			String name;
 		public:
 			Camera2D(Viewport& viewport);
 
@@ -58,7 +60,17 @@ namespace sani {
 			inline const math::Mat4f& transformation() const;
 			inline void computeTransformation();
 
+			inline const String& getName() const;
+			inline void setName(const String& name);
+
 			~Camera2D();
+
+			/*
+				TODO: what happens with cameras what have same name?
+			*/
+
+			bool operator ==(const Camera2D& lhs) const;
+			bool operator !=(const Camera2D& lhs) const;
 		};
 	}
 }
