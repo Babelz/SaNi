@@ -5,6 +5,13 @@
 #include <tuple>
 namespace sani {
 	namespace resource {
+
+		enum class OutlineType {
+			None,
+			Inner,
+			Outer
+		};
+
 		typedef std::tuple<unsigned short, unsigned short> CharacterRegion;
 		typedef std::vector<CharacterRegion> CharacterRegionCollection;
 		class FontDescription : public ResourceItem {
@@ -14,12 +21,16 @@ namespace sani {
 			float size;
 			float spacing;
 			std::vector<unsigned short> characters;
+			OutlineType outline;
+			float32 outlineWidth;
 			bool useKerning;
 		public:
 			// only internal
-			FontDescription() : size(0), spacing(0), useKerning(false) { }
+			FontDescription() : 
+				size(0), spacing(0), useKerning(false), outline(OutlineType::None), outlineWidth(0.f) { }
+
 			FontDescription(const String& name, float size, float spacing)
-				: spacing(spacing), useKerning(false) {
+				: spacing(spacing), useKerning(false), outline(OutlineType::None), outlineWidth(0.f) {
 				// validate
 				setFontName(name);
 				setSize(size);
@@ -55,11 +66,25 @@ namespace sani {
 				return fontPath;
 			}
 
+			inline void setOutlineWidth(const float32 newWidth) {
+				outlineWidth = newWidth;
+			}
+			inline float32 getOutlineWidth() const {
+				return outlineWidth;
+			}
+
+			inline void setOutlineType(const OutlineType newType) {
+				outline = newType;
+			}
+			inline OutlineType getOutlineType() const {
+				return outline;
+			}
+
 			inline void setSetCharacterRegions(CharacterRegionCollection& regions) {
 				for (size_t i = 0; i < regions.size(); ++i) {
 					CharacterRegion& region = regions[i];
-					uint32 start = std::get<0>(region);
-					uint32 end = std::get<1>(region);
+					unsigned short start = std::get<0>(region);
+					unsigned short end = std::get<1>(region);
 					if (start >= end) throw std::logic_error("Start needs to be less than end!");
 					characters.reserve(end - start);
 					for (; start <= end; ++start) {

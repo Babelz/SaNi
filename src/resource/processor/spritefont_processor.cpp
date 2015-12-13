@@ -3,7 +3,9 @@
 #include <ft2build.h>
 #include <algorithm>
 #include "sani/resource/spritefont_content.hpp"
+#include "sani/core/math/rectangle.hpp"
 #include FT_FREETYPE_H
+#include FT_STROKER_H
 #include FT_GLYPH_H
 
 namespace sani {
@@ -41,42 +43,112 @@ namespace sani {
 				}
 			};
 
-			static Glyph* importGlyph(unsigned long character, FT_Face face) {
+			struct Span {
+				Span() { }
+				Span(int _x, int _y, int _width, int _coverage)
+					: x(_x), y(_y), width(_width), coverage(_coverage) { }
+
+				int x, y, width, coverage;
+			};
+
+			static void rasterSpan(const int y, const int count, const FT_Span * const spans, void * const user) {
+				std::vector<Span>* sptr = (std::vector<Span> *)user;
+				for (int i = 0; i < count; ++i) {
+					sptr->push_back(Span(spans[i].x, y, spans[i].len, spans[i].coverage));
+				}
+			}
+
+			static void renderSpans(FT_Outline* outline, std::vector<Span>* spans) {
+				FT_Raster_Params params;
+				memset(&params, 0, sizeof(params));
+				params.flags = FT_RASTER_FLAG_AA | FT_RASTER_FLAG_DIRECT;
+				params.gray_spans = rasterSpan;
+				params.user = spans;
+
+				FT_Outline_Render(library, outline, &params);
+			}
+
+			static Glyph* importGlyph(FontDescription* desc, unsigned long character, FT_Face face) {
 				Glyph* g = nullptr;
-				if (FT_Load_Char(face, character, FT_LOAD_RENDER)) {
-					throw std::runtime_error("aaa");
+				
+				FT_UInt gindex = FT_Get_Char_Index(face, character);
+				
+				if (FT_Load_Glyph(face, gindex, FT_LOAD_NO_BITMAP)) {
+					throw std::runtime_error("FT_Load_Glyph failed");
+				}
+				
+				if (desc->getOutlineType() == OutlineType::Outer) {
+					if (face->glyph->format != FT_GLYPH_FORMAT_OUTLINE) {
+						throw std::runtime_error("No outline");
+					}
+
+					int32 outlineWidth = static_cast<int32>(desc->getOutlineWidth()* 64.f);
+					FT_Stroker stroker;
+					FT_Glyph glyph;
+					FT_Outline* outline = nullptr;
+					std::vector<Span> spans, outlineSpans;
+
+					renderSpans(&face->glyph->outline, &spans);
+
+					// setup stroker
+					FT_Stroker_New(library, &stroker);
+
+					FT_Stroker_Set(stroker,
+						outlineWidth,
+						FT_STROKER_LINECAP_ROUND,
+						FT_STROKER_LINEJOIN_ROUND,
+						0);
+
+					if (FT_Get_Glyph(face->glyph, &glyph)){
+						throw std::runtime_error("Cant get glyph");
+					}
+
+					FT_Glyph_StrokeBorder(&glyph, stroker, 0, 1);
+					if (glyph->format != FT_GLYPH_FORMAT_OUTLINE) {
+						throw std::runtime_error("Not outline");
+					}
+
+					// render the outline spans to the span list
+					outline = &reinterpret_cast<FT_OutlineGlyph>(glyph)->outline;
+
+					
+
+					// Clean up afterwards.
+					FT_Stroker_Done(stroker);
+					FT_Done_Glyph(glyph);
+
+					// TODO what now
+					if (spans.empty()) {
+						throw std::logic_error("wat");
+					}
+
+					// build
+					sani::math::Recti rect(
+						spans.front().x,
+						spans.front().y,
+						1, 1
+						);
+
+					for (auto& s : spans) {
+						rect.include(sani::math::Vec2i(s.x, s.y));
+						rect.include(sani::math::Vec2i(s.x + s.width - 1, s.y));
+					}
+
+					for (auto& s : outlineSpans) {
+						rect.include(sani::math::Vec2i(s.x, s.y));
+						rect.include(sani::math::Vec2i(s.x + s.width - 1, s.y));
+					}
+
+					float32 bearingX = static_cast<float32>(face->glyph->metrics.horiBearingX >> 6); // left
+					float32 bearingY = static_cast<float32>(face->glyph->metrics.horiBearingY >> 6); // top
+					float32 advance = static_cast<float32>(face->glyph->advance.x >> 6); // offset
+
+					// Get some metrics of our image.
+					uint32 imgWidth = rect.w,
+						imgHeight = rect.h,
+						imgSize = imgWidth * imgHeight;
 				}
 
-				// if the font has the char
-				if (face->glyph->bitmap.width > 0 && face->glyph->bitmap.rows > 0) {
-					uint32 width = face->glyph->bitmap.width;
-					uint32 rows = face->glyph->bitmap.rows;
-					// TODO DEBUG
-					/*unsigned char** pixels = new unsigned char*[rows];
-					for (size_t i = 0; i < rows; ++i) {
-					pixels[i] = new unsigned char[width];
-					}*/
-					unsigned char* alphas = new unsigned char[width * rows];
-					std::memcpy(alphas, face->glyph->bitmap.buffer, width * rows);
-					g = new Glyph(character, alphas, width*rows, width, rows);
-				}
-				// if the font doesnt have the char
-				else {
-					int gHA = face->glyph->metrics.horiAdvance >> 6;
-					int gVA = face->size->metrics.height >> 6;
-
-					gHA = gHA > 0 ? gHA : gVA;
-					gVA = gVA > 0 ? gVA : gHA;
-					g = new Glyph(character, new unsigned char[gHA * gVA], gHA*gVA, gHA, gVA);
-				}
-				float a = static_cast<float>(face->glyph->metrics.horiBearingX >> 6);
-				float b = static_cast<float>(face->glyph->metrics.width >> 6);
-				float c = static_cast<float>((face->glyph->metrics.horiAdvance >> 6) - (a + b));
-
-				g->xOffset = static_cast<float>(-(face->glyph->advance.x >> 6));
-				g->xAdvance = static_cast<float>(face->glyph->metrics.horiAdvance >> 6);
-				g->yOffset = static_cast<float>(-(face->glyph->metrics.horiBearingY >> 6));
-				g->a = a; g->b = b; g->c = c;
 				return g;
 			}
 
@@ -105,115 +177,6 @@ namespace sani {
 				uint32 height;
 			};
 
-			static int makeValidTextureSize(uint32 value, bool powerOfTwo) {
-				const uint32 blockSize = 4u;
-				if (powerOfTwo) {
-					uint32 pwr = blockSize;
-					while (pwr < value) pwr <<= 1;
-					return pwr;
-				}
-				return (value + blockSize - 1) & ~(blockSize - 1);
-			}
-
-			static uint32 guessOutputWidth(const std::vector<Glyph*>& sourceGlyphs) {
-				uint32 maxWidth = 0;
-				uint32 totalSize = 0;
-				for (auto* g : sourceGlyphs) {
-					maxWidth = std::max(maxWidth, g->width);
-					totalSize += g->width * g->height;
-				}
-				uint32 width = std::max((uint32)std::sqrt(totalSize), maxWidth);
-				return makeValidTextureSize(width, true);
-			}
-
-			static int findIntersectingGlpyh(const std::vector<GlyphWrapper>& glyphs, uint32 index, uint32 x, uint32 y) {
-				uint32 w = glyphs[index].width;
-				uint32 h = glyphs[index].width;
-
-				for (uint32 i = 0; i < index; ++i) {
-					if (glyphs[i].x >= x + w) continue;
-					if (glyphs[i].x + glyphs[i].width <= x) continue;
-					if (glyphs[i].y >= y + h) continue;
-					if (glyphs[i].y + glyphs[i].height <= y) continue;
-					return i;
-				}
-				return -1;
-			}
-
-			static void positionGlyph(std::vector<GlyphWrapper>& glyphs, uint32 index, uint32 outputWidth) {
-				uint32 x = 0;
-				uint32 y = 0;
-
-				while (true) {
-					int intersects = findIntersectingGlpyh(glyphs, index, x, y);
-					if (intersects < 0) {
-						glyphs[index].x = x;
-						glyphs[index].y = y;
-						return;
-					}
-					// Skip past the existing glyph that we collided with.
-					x = glyphs[intersects].x + glyphs[intersects].width;
-					// If we ran out of room to move to the right, try the next line down instead.
-					if (x + glyphs[index].width > outputWidth) {
-						x = 0;
-						y++;
-					}
-				}
-			}
-			struct Color {
-				float r;
-				float g;
-				float b;
-				float a;
-			};
-			static void copyGlyphsToOutput(std::vector<GlyphWrapper>& glyphs, uint32 width, uint32 height) {
-				Color** pixels = new Color*[height];
-				for (size_t i = 0; i < height; ++i) {
-					pixels[i] = new Color[width];
-				}
-
-				for (auto& glyph : glyphs) {
-
-				}
-			}
-
-			static void arrangeGlyphs(const std::vector<Glyph*>& sourceGlyphs) {
-				std::vector<GlyphWrapper> glyphs;
-				glyphs.reserve(sourceGlyphs.size());
-				for (size_t i = 0; i < sourceGlyphs.size(); ++i) {
-					Glyph* glyph = sourceGlyphs[i];
-					glyphs.push_back(GlyphWrapper{
-						glyph,
-						0,
-						0,
-						glyph->width + 2u,
-						glyph->height + 2u
-					});
-				}
-
-				std::sort(glyphs.begin(), glyphs.end(), [](GlyphWrapper& a, GlyphWrapper& b) {
-					const uint32 heightWeight = 1024u;
-					uint32 aSize = a.height * heightWeight + a.width;
-					uint32 bSize = b.height * heightWeight + b.width;
-					if (aSize != bSize)
-						return bSize < aSize;
-
-					return a.source->character < b.source->character;
-				});
-
-				uint32 outputWidth = guessOutputWidth(sourceGlyphs);
-				uint32 outputHeight = 0;
-
-				for (size_t i = 0; i < glyphs.size(); ++i) {
-					positionGlyph(glyphs, i, outputWidth);
-					outputHeight = std::max(outputHeight, glyphs[i].y + glyphs[i].height);
-				}
-
-				outputHeight = makeValidTextureSize(outputHeight, true);
-
-
-			}
-
 			ResourceItem* SpriteFontProcessor::process(ResourceItem* input) {
 				if (FT_Init_FreeType(&library)) {
 					throw std::runtime_error("Failed to initialize freetype");
@@ -230,7 +193,7 @@ namespace sani {
 				glyphs.reserve(characters.size());
 
 				for (auto character : characters) {
-					Glyph* glyph = importGlyph(character, face);
+					Glyph* glyph = importGlyph(desc, character, face);
 					glyphs.push_back(glyph);
 				}
 
@@ -242,8 +205,6 @@ namespace sani {
 				std::sort(glyphs.begin(), glyphs.end(), [](Glyph*a, Glyph* b) {
 					return a->character < b->character;
 				});
-
-				arrangeGlyphs(glyphs);
 
 				FT_Done_Face(face);
 				FT_Done_FreeType(library);

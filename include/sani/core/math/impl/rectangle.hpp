@@ -93,6 +93,14 @@ namespace sani {
 			}
 
 			template <typename T>
+			void Rectangle<T>::include(const Vector2<T>& r) {
+				x = std::min(x, r.x);
+				y = std::min(y, r.y);
+				w = std::max(x, r.x) - x + T(1);
+				h = std::max(y, r.y) - y + T(1);
+			}
+
+			template <typename T>
 			bool Rectangle<T>::isEmpty() const {
 				return x == static_cast<T>(0) && y == static_cast<T>(0) && h == static_cast<T>(0) && w == static_cast<T>(0);
 			}

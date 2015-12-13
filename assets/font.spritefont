@@ -13,4 +13,5 @@
 			<end>153</end>
 		</character_region>
 	</character_regions>
+	<outline>Outer</outline> <!-- default None -->
 </spritefont>

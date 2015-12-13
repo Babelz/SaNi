@@ -53,13 +53,13 @@ namespace sani {
 			
 			inline bool intersects(const Rectangle& r) const;
 
+			inline void include(const Vector2<T>& r);
 			// Operators.
 
 			inline bool operator ==(const Rectangle& r) const;
 			inline bool operator !=(const Rectangle& r) const;
 			inline Rectangle& operator =(const Rectangle& r);
 		};
-
 		/* Type definitions */
 
 		typedef Rectangle<uint32> Rectu32;
