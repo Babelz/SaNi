@@ -139,7 +139,7 @@ namespace sani {
 				}
 				fileSystem->closeFile(filename);
 				
-				XmlNode root, nameNode, sizeNode, spacingNode, regionsNode;
+				XmlNode root, nameNode, sizeNode, spacingNode, regionsNode, outlineNode, outlineTypeNode, outlineWidthNode;
 				std::vector<XmlNode> regionNodes;
 				CharacterRegionCollection characterRegions;
 
@@ -162,6 +162,19 @@ namespace sani {
 					XmlUtil::get<float>(spacingNode)
 					);
 				
+				if (root.firstNode("outline", outlineNode)) {
+					if (outlineNode.firstNode("type", outlineTypeNode)) {
+						desc->setOutlineType(
+							static_cast<OutlineType>(XmlUtil::get<int32>(outlineTypeNode)
+						));
+					}
+					if (outlineNode.firstNode("type", outlineWidthNode)) {
+						desc->setOutlineWidth(
+							(XmlUtil::get<float32>(outlineWidthNode)
+							));
+					}
+
+				}
 				
 				regionsNode.getChildNodes(regionNodes);
 				for (auto& regionNode : regionNodes) {

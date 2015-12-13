@@ -4,6 +4,8 @@
 #include <algorithm>
 #include "sani/resource/spritefont_content.hpp"
 #include "sani/core/math/rectangle.hpp"
+#include "sani/resource/bitmap_content.hpp"
+#include "sani/core/math/vector4.hpp"
 #include FT_FREETYPE_H
 #include FT_STROKER_H
 #include FT_GLYPH_H
@@ -68,6 +70,24 @@ namespace sani {
 				FT_Outline_Render(library, outline, &params);
 			}
 
+			struct Rect {
+				Rect() { }
+				Rect(float left, float top, float right, float bottom)
+					: xmin(left), xmax(right), ymin(top), ymax(bottom) { }
+
+				void include(const sani::math::Vec2f &r) {
+					xmin = std::min(xmin, r.x);
+					ymin = std::min(ymin, r.y);
+					xmax = std::max(xmax, r.x);
+					ymax = std::max(ymax, r.y);
+				}
+
+				float width() const { return xmax - xmin + 1; }
+				float height() const { return ymax - ymin + 1; }
+
+				float xmin, xmax, ymin, ymax;
+			};
+
 			static Glyph* importGlyph(FontDescription* desc, unsigned long character, FT_Face face) {
 				Glyph* g = nullptr;
 				
@@ -110,8 +130,7 @@ namespace sani {
 
 					// render the outline spans to the span list
 					outline = &reinterpret_cast<FT_OutlineGlyph>(glyph)->outline;
-
-					
+					renderSpans(outline, &outlineSpans);
 
 					// Clean up afterwards.
 					FT_Stroker_Done(stroker);
@@ -119,14 +138,15 @@ namespace sani {
 
 					// TODO what now
 					if (spans.empty()) {
-						throw std::logic_error("wat");
+						return nullptr;
 					}
 
 					// build
-					sani::math::Recti rect(
+					Rect rect(
 						spans.front().x,
 						spans.front().y,
-						1, 1
+						spans.front().x,
+						spans.front().y
 						);
 
 					for (auto& s : spans) {
@@ -144,9 +164,18 @@ namespace sani {
 					float32 advance = static_cast<float32>(face->glyph->advance.x >> 6); // offset
 
 					// Get some metrics of our image.
-					uint32 imgWidth = rect.w,
-						imgHeight = rect.h,
+					uint32 imgWidth = rect.width(),
+						imgHeight = rect.height(),
 						imgSize = imgWidth * imgHeight;
+
+					PixelBitmapContent<sani::math::Vec4>* pixels = new PixelBitmapContent<sani::math::Vec4f>(imgWidth, imgHeight);
+					
+					for (Span& s : outlineSpans) {
+						for (int w = 0; w < s.width; ++w) {
+							int32 index = (int)((imgHeight - 1 - (s.y - rect.ymin)) * imgWidth + s.x - rect.xmin + w);
+							pixels->setPixel(index, sani::math::Vec4(1.f, 1.f, 1.f, s.coverage / 255.f)); // white
+						}
+					}
 				}
 
 				return g;
@@ -194,17 +223,15 @@ namespace sani {
 
 				for (auto character : characters) {
 					Glyph* glyph = importGlyph(desc, character, face);
-					glyphs.push_back(glyph);
+					if (glyph != nullptr) {
+						glyphs.push_back(glyph);
+					}
 				}
 
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
 				// The height used to calculate the Y offset for each character.
 				float yOffsetMin = static_cast<float>(-face->size->metrics.ascender >> 6);
-
-				std::sort(glyphs.begin(), glyphs.end(), [](Glyph*a, Glyph* b) {
-					return a->character < b->character;
-				});
 
 				FT_Done_Face(face);
 				FT_Done_FreeType(library);

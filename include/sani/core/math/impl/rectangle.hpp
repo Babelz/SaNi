@@ -96,8 +96,8 @@ namespace sani {
 			void Rectangle<T>::include(const Vector2<T>& r) {
 				x = std::min(x, r.x);
 				y = std::min(y, r.y);
-				w = std::max(x, r.x) - x + T(1);
-				h = std::max(y, r.y) - y + T(1);
+				w = std::max(x + w, r.x) - x + T(1);
+				h = std::max(y + h, r.y) - y + T(1);
 			}
 
 			template <typename T>

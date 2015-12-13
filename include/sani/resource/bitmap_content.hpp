@@ -10,7 +10,7 @@ namespace sani {
 		/// Class which represents image content
 		/// used to transform from type to another type eg. PNG => TGA, RGB => BGR etc
 		class BitmapContent : public ResourceItem {
-		private:
+		protected:
 			uint32 width;
 			uint32 height;
 		public:
@@ -20,6 +20,7 @@ namespace sani {
 			/// Gets the surface format for this bitmap
 			/// @param[out] out nullptr if the type is not recognized or the surface format if found
 			virtual void tryGetFormat(graphics::SurfaceFormat* out) const = 0;
+			
 
 			inline const uint32 getWidth() const;
 
@@ -37,6 +38,8 @@ namespace sani {
 			PixelBitmapContent(uint32 width, uint32 height);
 			~PixelBitmapContent();
 			virtual void tryGetFormat(graphics::SurfaceFormat* out) const;
+			// TODO figure out something better
+			void setPixel(uint32 index, const PixelType& value);
 		};
 
 	}

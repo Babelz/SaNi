@@ -7,7 +7,7 @@ namespace sani {
 	namespace resource {
 
 		enum class OutlineType {
-			None,
+			None = 0,
 			Inner,
 			Outer
 		};
