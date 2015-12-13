@@ -79,9 +79,6 @@
     <Filter Include="include\resource\reader">
       <UniqueIdentifier>{7b3aa4f9-8594-42f6-a02e-e7ee3c60de57}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\resource\compiler">
-      <UniqueIdentifier>{8b8e7f0d-0f59-4c41-b5a8-cc0f6fa2ee62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\resource\compiler">
       <UniqueIdentifier>{6437e6d5-d2df-4ceb-aa2b-41f6ea2fab58}</UniqueIdentifier>
     </Filter>
@@ -165,6 +162,9 @@
     </Filter>
     <Filter Include="src\core\parser">
       <UniqueIdentifier>{0dc4fecd-f152-46f7-9af7-46ccb077b0da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\resource\pipeline\compiler">
+      <UniqueIdentifier>{8b8e7f0d-0f59-4c41-b5a8-cc0f6fa2ee62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +378,9 @@
     <ClCompile Include="..\..\src\resource\pipeline\spritefont_description_importer.cpp">
       <Filter>src\resource\pipeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\bitmap_content.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -516,16 +519,16 @@
       <Filter>include\resource\reader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp">
       <Filter>include\platform\file</Filter>
@@ -660,10 +663,10 @@
       <Filter>include\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
       <Filter>include\graphics</Filter>
@@ -777,7 +780,7 @@
       <Filter>include\resource\reader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp">
       <Filter>include\resource\processor</Filter>
@@ -790,6 +793,9 @@
       <Filter>include\resource\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\font_description.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>
@@ -816,7 +822,7 @@
       <Filter>include\graphics\inl</Filter>
     </None>
     <None Include="..\..\include\sani\resource\compiler\resource_writer.inl">
-      <Filter>include\resource\compiler</Filter>
+      <Filter>include\resource\pipeline\compiler</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl">
       <Filter>include\graphics\inl</Filter>
@@ -844,6 +850,9 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\buffer.inl">
       <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\resource\inl\bitmap_content.inl">
+      <Filter>include\resource</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
