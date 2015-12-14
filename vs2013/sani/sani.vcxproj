@@ -296,6 +296,7 @@
     <ClInclude Include="..\..\include\sani\core\memory\heap_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_block.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />

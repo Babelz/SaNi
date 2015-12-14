@@ -20,7 +20,11 @@ namespace sani {
 				const ElementType type;
 
 				PagePoolAllocator<T> allocator;
+				
+				std::vector<T*> elementsToUpdate;
 				std::vector<T*> elements;
+
+				void updateContainers();
 
 				void handleDocumentMessage(messages::DocumentMessage* const message);
 				void handleCommandMessage(messages::CommandMessage* const message);

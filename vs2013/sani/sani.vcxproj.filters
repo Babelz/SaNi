@@ -199,6 +199,9 @@
     <Filter Include="include\engine\services\impl">
       <UniqueIdentifier>{cd847568-ad12-40b5-b5bf-fde2c602cc56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\memory\impl">
+      <UniqueIdentifier>{a1f3433d-51fa-4800-906d-e4e07861a207}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -949,6 +952,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp">
       <Filter>include\engine\services\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp">
+      <Filter>include\core\memory\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

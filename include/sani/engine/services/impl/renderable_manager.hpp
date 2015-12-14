@@ -8,7 +8,8 @@ namespace sani {
 
 			template <class T>
 			RenderableManager<T>::RenderableManager(const String& name, const ElementType type, engine::SaNiEngine* const engine) : EngineService(name, engine),
-																																	type(type) {
+																																	type(type),
+																																	allocator(PagePoolAllocator<T>(32)) {
 			}
 
 			template <class T>
