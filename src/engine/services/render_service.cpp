@@ -196,8 +196,7 @@ namespace sani {
 			}
 			void RenderService::update(const EngineTime& time) {
 				// No need to render if there are no cameras.
-				graphicsDevice->clear(clearColor.r, clearColor.a, clearColor.b, clearColor.a);
-
+				graphicsDevice->clear(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 
 				if (cameras.size() == 0) return;
 
