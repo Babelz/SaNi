@@ -323,6 +323,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />

@@ -35,11 +35,17 @@ namespace sani {
 
 				/// List of all known commands for the renderable services.
 				enum class RenderableManagerCommands : uint32 {
+					/// Creates new element of a given type.
 					CreateElement		= 0,
 					
+					/// Deletes given element of a given type.
 					DeleteElement		= 1,
 
-					QueueForUpdates		= 3
+					/// Queues the given element for updates.
+					QueueForUpdates		= 3,
+
+					/// Returns all elements of a given type to the user.
+					GetElements			= 4
 				};
 
 				enum class ElementType : uint32 {
@@ -54,9 +60,11 @@ namespace sani {
 
 				void createElement(messages::DocumentMessage* const message, const ElementType type);
 
-				void deleteElement(messages::CommandMessage* const message, const ElementType type);
+				void deleteElement(messages::DocumentMessage* const message, const ElementType type);
 				
 				void queueForUpdates(messages::CommandMessage* const message, const ElementType type);
+				
+				void getElements(messages::DocumentMessage* const message, const ElementType type);
 			}
 		}
 	}

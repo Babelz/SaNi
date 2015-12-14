@@ -196,6 +196,9 @@
     <Filter Include="include\resource\compiler">
       <UniqueIdentifier>{8b8e7f0d-0f59-4c41-b5a8-cc0f6fa2ee62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\services\impl">
+      <UniqueIdentifier>{cd847568-ad12-40b5-b5bf-fde2c602cc56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -943,6 +946,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp">
+      <Filter>include\engine\services\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

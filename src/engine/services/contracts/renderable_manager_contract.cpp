@@ -42,6 +42,10 @@ namespace sani {
 				void queueForUpdates(messages::CommandMessage* const message, const ElementType type) {
 					decorateMessage<messages::CommandMessage>(message, RenderableManagerCommands::QueueForUpdates, type);
 				}
+
+				void getElements(messages::DocumentMessage* const message, const ElementType type) {
+					decorateMessage<messages::DocumentMessage>(message, RenderableManagerCommands::GetElements, type);
+				}
 			}
 		}
 	}
