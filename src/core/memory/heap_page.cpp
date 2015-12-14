@@ -5,6 +5,13 @@ namespace sani {
 
 	#define FRAGMENTATION_THRESHOLD 0.10f
 
+	HeapPage::HeapPage(const uint32 size) : size(size),
+											pagepointer(0),
+											missedBytes(0),
+											fragmentation(0.0f) {
+		memory = new char[size];
+	}
+
 	void HeapPage::joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks) {
 		// Copy new blocks.
 		blocks = newBlocks;
@@ -103,5 +110,9 @@ namespace sani {
 
 		fragmentation = 0.0f;
 		missedBytes = 0;
+	}
+
+	HeapPage::~HeapPage() {
+		delete[] memory;
 	}
 }

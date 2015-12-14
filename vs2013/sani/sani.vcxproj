@@ -296,6 +296,7 @@
     <ClInclude Include="..\..\include\sani\core\memory\heap_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_block.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\impl\heap_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
@@ -422,6 +423,7 @@
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
     <None Include="..\..\include\sani\core\memory\impl\heap_allocator.hpp" />
     <None Include="..\..\include\sani\core\memory\inl\heap_block.inl" />
+    <None Include="..\..\include\sani\core\memory\inl\heap_page.inl" />
     <None Include="..\..\include\sani\core\utils\inl\convert.inl" />
     <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp" />
     <None Include="..\..\include\sani\graphics\inl\buffer.inl" />
