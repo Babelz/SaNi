@@ -3,7 +3,7 @@
 
 namespace sani {
 
-	#define FRAGMENTATION_THRESHOLD 0.10f
+	static const float32 FRAGMENTATION_THRESHOLD = 0.10f;
 
 	HeapPage::HeapPage(const uint32 size) : size(size),
 											pagepointer(0),
