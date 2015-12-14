@@ -3,7 +3,7 @@
 namespace sani {
 	
 	template<class T>
-	T* HeapAllocator<T>::allocate() {
+	T* HeapAllocator::allocate() {
 		const size_t size = sizeof(T);
 		T* element = nullptr;
 
@@ -38,7 +38,7 @@ namespace sani {
 	}
 
 	template<class T>
-	bool HeapAllocator<T>::deallocate(T* element) {
+	bool HeapAllocator::deallocate(T* element) {
 		for (HeapPage* page : pages) if (page->deallocate<T>(element)) return true;
 
 		return false;
