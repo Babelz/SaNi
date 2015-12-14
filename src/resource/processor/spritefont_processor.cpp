@@ -248,12 +248,10 @@ namespace sani {
 				}
 
 				FontDescription* desc = static_cast<FontDescription*>(input);
-				SpriteFontContent* output = new SpriteFontContent(desc);
 
 				// import the actual font now
 				FT_Face face = createFontFace(desc);
 				
-
 				const std::vector<unsigned short>& characters = desc->getCharacters();
 				std::vector<Glyph> glyphs;
 				glyphs.reserve(characters.size());
@@ -268,6 +266,8 @@ namespace sani {
 
 				BitmapContent* bitmap = packGlyphs(glyphs);
 
+				SpriteFontContent* output = new SpriteFontContent(desc, bitmap);
+
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
 				// The height used to calculate the Y offset for each character.
@@ -276,7 +276,7 @@ namespace sani {
 				FT_Done_Face(face);
 				FT_Done_FreeType(library);
 
-				return nullptr;
+				return output;
 			}
 		}
 	}
