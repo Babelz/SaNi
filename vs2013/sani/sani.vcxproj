@@ -222,6 +222,7 @@
     <ClCompile Include="..\..\src\platform\graphics\window.cpp" />
     <ClCompile Include="..\..\src\platform\linux\file_system_linux.cpp" />
     <ClCompile Include="..\..\src\platform\time\engine_time.cpp" />
+    <ClCompile Include="..\..\src\platform\time\time.cpp" />
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\bitmap_content.cpp" />

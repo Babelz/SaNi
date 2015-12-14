@@ -160,8 +160,6 @@ namespace sani {
 				// Clear last frame and listen for window events.
 				window->listen();
 
-				graphicsDevice->clear(0.0f, 0.0f, 0.0f, 0.0f);
-
 				sani::Time current = sani::Clock::now();
 
 				auto delta = current - last;
@@ -169,8 +167,8 @@ namespace sani {
 				
 				last = current;
 
-				EngineTime time(static_cast<float64>(total.count()),
-								static_cast<float64>(delta.count()));
+				EngineTime time(sani::toMilliseconds(sani::Time(total)),
+								sani::toMilliseconds(sani::Time(delta)));
 
 				// Update all services.
 				services.update(time);
