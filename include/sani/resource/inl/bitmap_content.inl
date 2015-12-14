@@ -73,6 +73,7 @@ namespace sani {
 					++destX;
 				}
 				++destY;
+				destX = destinationArea.x;
 			}
 
 		}

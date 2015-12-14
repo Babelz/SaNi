@@ -217,7 +217,7 @@ namespace sani {
 				})->pixels->getHeight();
 			}
 
-			static void packGlyphs(const std::vector<Glyph>& glyphs) {
+			static BitmapContent* packGlyphs(const std::vector<Glyph>& glyphs) {
 				uint32 outputWidth = calculateOutputWidth(glyphs);
 				uint32 outputHeight = calculateOutputHeight(glyphs);
 
@@ -235,8 +235,10 @@ namespace sani {
 					sani::math::Recti source(0, 0, height, width);
 					sani::math::Recti destination(1 + xOffset, yOffset, height, width);
 					bitmap->copyFrom(pixels, source, destination);
+					xOffset += width;
 				}
 
+				return bitmap;
 
 			}
 
@@ -264,7 +266,7 @@ namespace sani {
 					}
 				}
 
-				packGlyphs(glyphs);
+				BitmapContent* bitmap = packGlyphs(glyphs);
 
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
