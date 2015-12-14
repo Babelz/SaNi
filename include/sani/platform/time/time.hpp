@@ -6,7 +6,13 @@
 #include <ctime>
 
 namespace sani {
+
 	typedef std::chrono::high_resolution_clock				Clock;
 
 	typedef std::chrono::high_resolution_clock::time_point	Time;
+
+	float32 toHours(const Time& time);
+	float32 toMinutes(const Time& time);
+	float32 toSeconds(const Time& time);
+	float32 toMilliseconds(const Time& time);
 }

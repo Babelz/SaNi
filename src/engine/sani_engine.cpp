@@ -63,8 +63,8 @@ namespace sani {
 			// Device init.
 			graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
 				hInstance,
-				window->getWidth(),
-				window->getHeight());
+				1280,
+				720);
 
 			if (!graphicsDevice->initialize()) return false;
 
@@ -96,7 +96,10 @@ namespace sani {
 			graphics::Layer* layer = *layers->begin();
 			deallocateShared(layers);
 
-			layer->add(new graphics::Rectangle(100, 100, 128, 128));
+			graphics::Rectangle* rect = new graphics::Rectangle(100, 100, 128, 128);
+			graphics::updateRenderData(*rect);
+			graphics::recomputeBounds(*rect);
+			layer->add(rect);
 
 			std::vector<graphics::Camera2D* const>* cameras = static_cast<std::vector<graphics::Camera2D* const>*>(getCameras->getData());
 			graphics::Camera2D* camera = *cameras->begin();
@@ -157,10 +160,12 @@ namespace sani {
 				// Clear last frame and listen for window events.
 				window->listen();
 
+				graphicsDevice->clear(0.0f, 0.0f, 0.0f, 0.0f);
+
 				sani::Time current = sani::Clock::now();
 
 				auto delta = current - last;
-				auto total = start - current;
+				auto total = current - start;
 				
 				last = current;
 
