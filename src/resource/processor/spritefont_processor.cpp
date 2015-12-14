@@ -212,9 +212,9 @@ namespace sani {
 
 			static uint32 calculateOutputHeight(const std::vector<Glyph>& glyphs) {
 				// TODO max width shaiba
-				std::max_element(glyphs.begin(), glyphs.end(), [](const Glyph& a, const Glyph& b) {
+				return std::max_element(glyphs.begin(), glyphs.end(), [](const Glyph& a, const Glyph& b) {
 					return a.pixels->getHeight() < b.pixels->getHeight();
-				});
+				})->pixels->getHeight();
 			}
 
 			static void packGlyphs(const std::vector<Glyph>& glyphs) {
@@ -224,9 +224,18 @@ namespace sani {
 
 				BitmapContent* bitmap = new PixelBitmapContent<sani::math::Vec4f>(outputWidth, outputHeight);
 
-				float xOffset = 0.f;
+				uint32 xOffset = 0u;
 				// TODO add max width
-				float yOffset = 0.f;
+				uint32 yOffset = 0u;
+
+				for (const auto& glyph : glyphs) {
+					BitmapContent* pixels = glyph.pixels;
+					uint32 width = pixels->getWidth();
+					uint32 height = pixels->getHeight();
+					sani::math::Recti source(0, 0, height, width);
+					sani::math::Recti destination(1 + xOffset, yOffset, height, width);
+					bitmap->copyFrom(pixels, source, destination);
+				}
 
 
 			}
@@ -254,6 +263,8 @@ namespace sani {
 						glyphs.push_back(glyph);
 					}
 				}
+
+				packGlyphs(glyphs);
 
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
