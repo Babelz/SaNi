@@ -1018,6 +1018,9 @@
     <None Include="..\..\include\sani\core\utils\inl\convert.inl">
       <Filter>include\core\utils</Filter>
     </None>
+    <None Include="..\..\include\sani\core\memory\impl\heap_allocator.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt">

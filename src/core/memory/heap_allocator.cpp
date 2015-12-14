@@ -24,6 +24,10 @@ namespace sani {
 		for (uint32 i = 0; i < initialPages; i++) pages.push_back(new HeapPage(pageSize));
 	}
 
+	uint32 HeapAllocator::pagesCount() const {
+		return pages.size();
+	}
+
 	float32 HeapAllocator::getFragmentation() const {
 		float32 fragmentation = 0.0f;
 
