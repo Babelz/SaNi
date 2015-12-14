@@ -202,6 +202,9 @@
     <Filter Include="include\core\memory\impl">
       <UniqueIdentifier>{a1f3433d-51fa-4800-906d-e4e07861a207}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\memory\inl">
+      <UniqueIdentifier>{1d27b374-0f28-4fe1-baf8-d83952893e8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1020,6 +1023,9 @@
     </None>
     <None Include="..\..\include\sani\core\memory\impl\heap_allocator.hpp">
       <Filter>include\core\memory\impl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\memory\inl\heap_block.inl">
+      <Filter>include\core\memory\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

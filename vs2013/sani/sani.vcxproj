@@ -421,6 +421,7 @@
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
     <None Include="..\..\include\sani\core\memory\impl\heap_allocator.hpp" />
+    <None Include="..\..\include\sani\core\memory\inl\heap_block.inl" />
     <None Include="..\..\include\sani\core\utils\inl\convert.inl" />
     <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp" />
     <None Include="..\..\include\sani\graphics\inl\buffer.inl" />
