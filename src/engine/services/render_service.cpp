@@ -20,7 +20,8 @@ namespace sani {
 
 			RenderService::RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice) : EngineService("render service", engine),
 																															 graphicsDevice(graphicsDevice),
-																															 renderer(graphicsDevice) {
+																															 renderer(graphicsDevice),
+																															 clearColor(color::black) {
 			}
 
 			void RenderService::handleStateMessage(StateMessage* const message) {
@@ -38,13 +39,15 @@ namespace sani {
 				switch (command) {
 				case RenderServiceCommands::GetLayers:
 					getLayers(message);
-					break;
+					return;
 				case RenderServiceCommands::GetCameras:
 					getCameras(message);
-					break;
+					return;
+				case RenderServiceCommands::GetClearColor:
+					return;
 				default:
 					// TODO: dead letter.
-					break;
+					return;
 				}
 			}
 			void RenderService::handleCommandMessage(messages::CommandMessage* const message) {
@@ -53,19 +56,21 @@ namespace sani {
 				switch (command) {
 				case RenderServiceCommands::CreateLayer:
 					createLayer(message);
-					break;
+					return;
 				case RenderServiceCommands::DeleteLayer:
 					deleteLayer(message);
-					break;
+					return;
 				case RenderServiceCommands::CreateCamera:
 					createCamera(message);
-					break;
+					return;
 				case RenderServiceCommands::DeleteCamera:
 					deleteCamera(message);
-					break;
+					return;
+				case RenderServiceCommands::SetClearColor:
+					setClearColor(message);
+					return;
 				default:
-					// TODO: dead letter.
-					break;
+					return;
 				}
 			}
 
@@ -104,7 +109,6 @@ namespace sani {
 				for (Layer& layer : layers) results->push_back(&layer);
 
 				message->setData(results);
-
 				message->markHandled();
 			}
 			
@@ -135,6 +139,27 @@ namespace sani {
 				for (Camera2D& camera : cameras) results->push_back(&camera);
 
 				message->setData(results);
+				message->markHandled();
+			}
+
+			void RenderService::getClearColor(messages::DocumentMessage* const message) {
+				graphics::Color* results = getEngine()->allocateShared<graphics::Color>();
+				NEW_DYNAMIC(graphics::Color, results, clearColor);
+
+				message->setData(static_cast<void*>(&results));
+				message->markHandled();
+			}
+			void RenderService::setClearColor(messages::CommandMessage* const message) {
+				std::vector<String> tokens;
+
+				utils::split(message->getData(), "||", tokens, true);
+
+				SANI_ASSERT(tokens.size() == 4);
+
+				clearColor.r = utils::toFloat32(tokens[0]);
+				clearColor.g = utils::toFloat32(tokens[1]);
+				clearColor.b = utils::toFloat32(tokens[2]);
+				clearColor.a = utils::toFloat32(tokens[3]);
 
 				message->markHandled();
 			}
@@ -171,6 +196,8 @@ namespace sani {
 			}
 			void RenderService::update(const EngineTime& time) {
 				// No need to render if there are no cameras.
+				graphicsDevice->clear(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
+
 				if (cameras.size() == 0) return;
 
 				for (Camera2D& camera : cameras) renderToCamera(camera);

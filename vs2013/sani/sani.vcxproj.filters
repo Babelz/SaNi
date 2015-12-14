@@ -456,6 +456,9 @@
     <ClCompile Include="..\..\src\resource\spritefont_content.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\time\time.cpp">
+      <Filter>src\platform\time</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -931,6 +934,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp">
       <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\renderable_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp">
+      <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

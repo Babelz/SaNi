@@ -10,52 +10,46 @@ namespace sani {
 			
 			namespace renderservice {
 				
-				static void setMessageRecipents(messages::Message* const message) {
+				template<class T>
+				static void decorateMessage(T* const message, const RenderServiceCommands renderServiceCommand) {
+					const uint32 command = static_cast<uint32>(renderServiceCommand);
+
+					message->setCommand(command);
+					
 					message->getRecipents().clear();
 
 					message->getRecipents().addRecipent("render service");
 				}
+				
+				template<class T>
+				static void decorateMessage(T* const message, const RenderServiceCommands renderServiceCommand, const String& data) {
+					decorateMessage(message, renderServiceCommand);
 
-				static void decorateCommandMessage(messages::CommandMessage* const message, const RenderServiceCommands renderServiceCommand, const String& data) {
-					const uint32 command = static_cast<uint32>(renderServiceCommand);
-
-					message->setCommand(command);
 					message->setData(data);
-
-					setMessageRecipents(message);
-				}
-
-				static void decorateDocumentMessage(messages::DocumentMessage* const message, const RenderServiceCommands renderServiceCommand) {
-					const uint32 command = static_cast<uint32>(renderServiceCommand);
-
-					message->setCommand(command);
-					message->clearData();
-
-					setMessageRecipents(message);
 				}
 
 				void createLayer(messages::CommandMessage* const message, const String& layerInformation) {
-					decorateCommandMessage(message, RenderServiceCommands::CreateLayer, layerInformation);
+					decorateMessage<messages::CommandMessage>(message, RenderServiceCommands::CreateLayer, layerInformation);
 				}
 
 				void deleteLayer(messages::CommandMessage* const message, const String& layerInformation) {
-					decorateCommandMessage(message, RenderServiceCommands::DeleteLayer, layerInformation);
+					decorateMessage<messages::CommandMessage>(message, RenderServiceCommands::DeleteLayer, layerInformation);
 				}
 
 				void getLayers(messages::DocumentMessage* const message) {
-					decorateDocumentMessage(message, RenderServiceCommands::GetLayers);
+					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetLayers);
 				}
 
 				void createCamera(messages::CommandMessage* const message, const String& cameraInformation) {
-					decorateCommandMessage(message, RenderServiceCommands::CreateCamera, cameraInformation);
+					decorateMessage<messages::CommandMessage>(message, RenderServiceCommands::CreateCamera, cameraInformation);
 				}
 
 				void deleteCamera(messages::CommandMessage* const message, const String& cameraInformation) {
-					decorateCommandMessage(message, RenderServiceCommands::DeleteCamera, cameraInformation);
+					decorateMessage<messages::CommandMessage>(message, RenderServiceCommands::DeleteCamera, cameraInformation);
 				}
 
 				void getCameras(messages::DocumentMessage* const message) {
-					decorateDocumentMessage(message, RenderServiceCommands::GetCameras);
+					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetCameras);
 				}
 			}
 		}

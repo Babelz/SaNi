@@ -31,9 +31,7 @@ namespace sani {
 											for the rendering. Layers can be dynamic
 											or static. Static layers are rendered once
 											and dynamic layers are rendered again 
-											each frame.
-
-					Functionalities:		Modify layers.
+											each frame. 
 				*/
 
 				/// List of all known commands for the render service.
@@ -48,7 +46,11 @@ namespace sani {
 
 					DeleteCamera	= 4,
 
-					GetCameras		= 5
+					GetCameras		= 5,
+
+					GetClearColor	= 6,
+
+					SetClearColor	= 7
 				};
 
 				/// Generates a message that will causes the service to create a new layer with given name.

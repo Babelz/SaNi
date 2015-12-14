@@ -4,6 +4,7 @@
 #include "sani/graphics/renderer.hpp"
 #include "sani/graphics/camera2d.hpp"
 #include "sani/graphics/layer.hpp"
+#include "sani/graphics/color.hpp"
 
 #include <vector>
 #include <list>
@@ -28,6 +29,8 @@ namespace sani {
 				std::list<sani::graphics::Camera2D> cameras;
 				std::list<sani::graphics::Layer> layers;
 
+				graphics::Color clearColor;
+
 				void handleStateMessage(StateMessage* const message) final override;
 
 				/*
@@ -48,6 +51,9 @@ namespace sani {
 				void createCamera(messages::CommandMessage* const message);
 				void deleteCamera(messages::CommandMessage* const message);
 				void getCameras(messages::DocumentMessage* const message);
+
+				void getClearColor(messages::DocumentMessage* const message);
+				void setClearColor(messages::CommandMessage* const message);
 
 				void renderToCamera(const graphics::Camera2D& camera);
 			public:
