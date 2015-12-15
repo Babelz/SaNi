@@ -459,6 +459,9 @@
     <ClCompile Include="..\..\src\platform\time\time.cpp">
       <Filter>src\platform\time</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\compiler\bitmap_content_writer.cpp">
+      <Filter>src\resource\compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -943,6 +946,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp">
+      <Filter>include\resource\compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

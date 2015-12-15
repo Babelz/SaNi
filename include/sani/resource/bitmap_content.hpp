@@ -4,7 +4,7 @@
 #include "sani/types.hpp"
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/core/math/rectangle.hpp"
-
+#include <vector>
 namespace sani {
 	namespace resource {
 
@@ -28,6 +28,8 @@ namespace sani {
 			inline const uint32 getWidth() const;
 
 			inline const uint32 getHeight() const;
+
+			virtual void getPixelData(std::vector<unsigned char>& pixels) const = 0;
 		};
 
 		template <class PixelType>
@@ -49,6 +51,8 @@ namespace sani {
 
 			void setPixel(uint32 y, uint32 x, const PixelType& pxl);
 			PixelType& getPixel(uint32 y, uint32 x) const;
+
+			virtual void getPixelData(std::vector<unsigned char>& pixels) const;
 		};
 
 	}

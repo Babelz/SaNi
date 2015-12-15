@@ -8,6 +8,7 @@
 #include "sani/resource/spritefont_content.hpp"
 #include "sani/resource/processor/processors.hpp"
 #include "sani/resource/effect_content.hpp"
+#include "sani/resource/compiler/bitmap_content_writer.hpp"
 #include "sani/core/parser/xml_parser.hpp"
 #include <iostream>
 #include "sani/resource/font_description.hpp"
@@ -29,6 +30,7 @@ namespace sani {
 				mapWriter<Texture2DContent, Texture2DWriter>();
 				mapWriter<EffectContent, EffectWriter>();
 				mapWriter<SpriteFontContent, SpriteFontWriter>();
+				mapWriter<BitmapContent, BitmapContentWriter>();
 				//map<Effect, EffectWriter>();
 				importers.reserve(32u);
 				importers.push_back(new pipeline::Texture2DImporter);
