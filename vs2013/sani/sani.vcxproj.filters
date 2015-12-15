@@ -480,6 +480,9 @@
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\compiler\bitmap_content_writer.cpp">
+      <Filter>src\resource\compiler</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

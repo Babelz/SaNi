@@ -230,6 +230,7 @@
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\bitmap_content.cpp" />
+    <ClCompile Include="..\..\src\resource\compiler\bitmap_content_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\resource_compiler.cpp" />
     <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp" />
@@ -387,6 +388,7 @@
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\time.hpp" />
     <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
