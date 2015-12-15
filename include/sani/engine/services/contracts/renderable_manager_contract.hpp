@@ -4,12 +4,11 @@
 #include "sani/types.hpp"
 
 SANI_FORWARD_DECLARE_3(sani, engine, messages, DocumentMessage);
-SANI_FORWARD_DECLARE_3(sani, engine, messages, CommandMessage);
 
 namespace sani {
 
 	namespace engine {
-		
+
 		namespace services {
 			
 			/// ! Contains the contract definition and helper functions to interact with 
@@ -41,8 +40,8 @@ namespace sani {
 					/// Deletes given element of a given type.
 					DeleteElement		= 1,
 
-					/// Queues the given element for updates.
-					QueueForUpdates		= 3,
+					/// Updates given elements vertex and render data.
+					EnqueueForUpdates	= 3,
 
 					/// Returns all elements of a given type to the user.
 					GetElements			= 4
