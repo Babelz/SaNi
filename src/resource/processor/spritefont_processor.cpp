@@ -2,6 +2,7 @@
 #include "sani/resource/font_description.hpp"
 #include <ft2build.h>
 #include <algorithm>
+#include <numeric>
 #include "sani/resource/spritefont_content.hpp"
 #include "sani/core/math/rectangle.hpp"
 #include "sani/resource/bitmap_content.hpp"
@@ -26,23 +27,13 @@ namespace sani {
 
 			class Glyph {
 			public:
+				BitmapContent* pixels;
 				unsigned long character;
-				unsigned char* pixels;
-				uint32 dataLength;
-				uint32 width;
-				uint32 height;
-				float a;
-				float b;
-				float c;
-				float xOffset;
-				float yOffset;
-				float xAdvance;
+				float32 bearingX;
+				float32 bearingY;
+				float32 advance;
 			public:
-				Glyph(unsigned long character, unsigned char* pixels, uint32 dataLength, uint32 width, uint32 height)
-					: character(character), pixels(pixels), dataLength(dataLength),
-					width(width), height(height), a(0), b(0), c(0), xOffset(0), yOffset(0), xAdvance(0) {
-
-				}
+				Glyph() : pixels(nullptr), character('\0') {}
 			};
 
 			struct Span {
@@ -88,9 +79,9 @@ namespace sani {
 				float xmin, xmax, ymin, ymax;
 			};
 
-			static Glyph* importGlyph(FontDescription* desc, unsigned long character, FT_Face face) {
-				Glyph* g = nullptr;
+			static void importGlyph(FontDescription* desc, unsigned long character, FT_Face face, Glyph& out) {
 				
+				out.character = character;
 				FT_UInt gindex = FT_Get_Char_Index(face, character);
 				
 				if (FT_Load_Glyph(face, gindex, FT_LOAD_NO_BITMAP)) {
@@ -138,15 +129,15 @@ namespace sani {
 
 					// TODO what now
 					if (spans.empty()) {
-						return nullptr;
+						return;
 					}
 
 					// build
 					Rect rect(
-						spans.front().x,
-						spans.front().y,
-						spans.front().x,
-						spans.front().y
+						static_cast<float>(spans.front().x),
+						static_cast<float>(spans.front().y),
+						static_cast<float>(spans.front().x),
+						static_cast<float>(spans.front().y)
 						);
 
 					for (auto& s : spans) {
@@ -163,9 +154,13 @@ namespace sani {
 					float32 bearingY = static_cast<float32>(face->glyph->metrics.horiBearingY >> 6); // top
 					float32 advance = static_cast<float32>(face->glyph->advance.x >> 6); // offset
 
+					out.bearingX = bearingX;
+					out.bearingY = bearingY;
+					out.advance = advance;
+
 					// Get some metrics of our image.
-					uint32 imgWidth = rect.width(),
-						imgHeight = rect.height(),
+					uint32 imgWidth = static_cast<uint32>(rect.width()),
+						imgHeight = static_cast<uint32>(rect.height()),
 						imgSize = imgWidth * imgHeight;
 
 					PixelBitmapContent<sani::math::Vec4>* pixels = new PixelBitmapContent<sani::math::Vec4f>(imgWidth, imgHeight);
@@ -176,9 +171,12 @@ namespace sani {
 							pixels->setPixel(index, sani::math::Vec4(1.f, 1.f, 1.f, s.coverage / 255.f)); // white
 						}
 					}
-				}
 
-				return g;
+					out.pixels = pixels;
+				}
+				else {
+					throw std::logic_error("not impl");
+				}
 			}
 
 			static FT_Face createFontFace(FontDescription* desc) {
@@ -206,27 +204,69 @@ namespace sani {
 				uint32 height;
 			};
 
+			static uint32 calculateOutputWidth(const std::vector<Glyph>& glyphs) {
+				return std::accumulate(glyphs.begin(), glyphs.end(), 0, [](uint32 r, const Glyph& g) {
+					return 1 + r + g.pixels->getWidth() + 1;
+				});
+			}
+
+			static uint32 calculateOutputHeight(const std::vector<Glyph>& glyphs) {
+				// TODO max width shaiba
+				return std::max_element(glyphs.begin(), glyphs.end(), [](const Glyph& a, const Glyph& b) {
+					return a.pixels->getHeight() < b.pixels->getHeight();
+				})->pixels->getHeight();
+			}
+
+			static BitmapContent* packGlyphs(const std::vector<Glyph>& glyphs) {
+				uint32 outputWidth = calculateOutputWidth(glyphs);
+				uint32 outputHeight = calculateOutputHeight(glyphs);
+
+
+				BitmapContent* bitmap = new PixelBitmapContent<sani::math::Vec4f>(outputWidth, outputHeight);
+
+				uint32 xOffset = 0u;
+				// TODO add max width
+				uint32 yOffset = 0u;
+
+				for (const auto& glyph : glyphs) {
+					BitmapContent* pixels = glyph.pixels;
+					uint32 width = pixels->getWidth();
+					uint32 height = pixels->getHeight();
+					sani::math::Recti source(0, 0, height, width);
+					sani::math::Recti destination(1 + xOffset, yOffset, height, width);
+					bitmap->copyFrom(pixels, source, destination);
+					xOffset += width;
+				}
+
+				return bitmap;
+
+			}
+
 			ResourceItem* SpriteFontProcessor::process(ResourceItem* input) {
 				if (FT_Init_FreeType(&library)) {
 					throw std::runtime_error("Failed to initialize freetype");
 				}
 
 				FontDescription* desc = static_cast<FontDescription*>(input);
-				SpriteFontContent* output = new SpriteFontContent(desc);
+
 				// import the actual font now
 				FT_Face face = createFontFace(desc);
 				
-
 				const std::vector<unsigned short>& characters = desc->getCharacters();
-				std::vector<Glyph*> glyphs;
+				std::vector<Glyph> glyphs;
 				glyphs.reserve(characters.size());
 
 				for (auto character : characters) {
-					Glyph* glyph = importGlyph(desc, character, face);
-					if (glyph != nullptr) {
+					Glyph glyph;
+					importGlyph(desc, character, face, glyph);
+					if (glyph.pixels != nullptr) {
 						glyphs.push_back(glyph);
 					}
 				}
+
+				BitmapContent* bitmap = packGlyphs(glyphs);
+
+				SpriteFontContent* output = new SpriteFontContent(desc, bitmap);
 
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
@@ -236,7 +276,7 @@ namespace sani {
 				FT_Done_Face(face);
 				FT_Done_FreeType(library);
 
-				return nullptr;
+				return output;
 			}
 		}
 	}

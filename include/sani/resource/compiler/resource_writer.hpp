@@ -26,9 +26,6 @@ namespace sani {
 
 				ResourceTypeWriter* getWriter(const std::type_index&);
 
-				// TODO this needs to be public
-				void writeObject(const std::type_index&, const ResourceItem*);
-
 				/// Writes the header which consists of
 				/// first 3 magic bytes S, N, B, then platform name
 				/// and Version number
@@ -48,6 +45,9 @@ namespace sani {
 				/// @see ResourceWriter::writeTypeWriters
 				/// @see ResourceWriter::writeObject
 				void flush(const std::type_index&, const ResourceItem*);
+
+				// TODO this needs to be public
+				void writeObject(const std::type_index&, const ResourceItem*);
 
 				template <class T>
 				void writeContainer(const std::vector<T>& v);
