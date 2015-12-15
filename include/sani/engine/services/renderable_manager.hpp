@@ -21,17 +21,16 @@ namespace sani {
 
 				PagePoolAllocator<T> allocator;
 				
-				std::vector<T*> elementsToUpdate;
-				std::vector<T*> elements;
+				std::list<T*> elementsToUpdate;
+				std::list<T*> elements;
 
 				void updateContainers();
 
 				void handleDocumentMessage(messages::DocumentMessage* const message);
-				void handleCommandMessage(messages::CommandMessage* const message);
-
+				
 				void createElement(messages::DocumentMessage* const message);
 				void deleteElement(messages::DocumentMessage* const message);
-				void createElement(messages::CommandMessage* const message);
+				void queueForUpdates(messages::DocumentMessage* const message);
 
 				void getElements(messages::DocumentMessage* const message);
 			protected:

@@ -19,8 +19,7 @@ namespace sani {
 		if (!releasedElements.empty()) {
 			element = releasedElements.top();
 			releasedElements.pop();
-		}
-		else {
+		} else {
 			if (poolpointer < size) {
 				element = &memory[poolpointer];
 				poolpointer++;

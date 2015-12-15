@@ -965,6 +965,9 @@
     <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp">
       <Filter>include\core\memory\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

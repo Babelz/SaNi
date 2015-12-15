@@ -62,7 +62,7 @@ namespace sani {
 
 				void deleteElement(messages::DocumentMessage* const message, const ElementType type);
 				
-				void queueForUpdates(messages::CommandMessage* const message, const ElementType type);
+				void queueForUpdates(messages::DocumentMessage* const message, const ElementType type);
 				
 				void getElements(messages::DocumentMessage* const message, const ElementType type);
 			}

@@ -18,6 +18,8 @@
 
 #include "sani/graphics/layer.hpp"
 
+#include "sani/engine/services/renderable_manager.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -45,6 +47,35 @@ namespace sani {
 			// TODO: notify cameras that the views bounds have changed.
 		}
 
+		bool SaNiEngine::initializeGraphics() {
+			// Window init.
+			window = new graphics::Window(hInstance, 1280, 720);
+
+			if (!window->initialize()) return false;
+
+			window->setTitle("SaNi Engine");
+			window->show();
+
+			// Device init.
+			graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
+														  hInstance,
+														  1280,
+														  720);
+
+			if (!graphicsDevice->initialize()) return false;
+
+			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
+
+			return true;
+		}
+		bool SaNiEngine::initializeRenderService() {
+			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
+			services.registerService(renderService);
+			renderService->start();
+		}
+		bool SaNiEngine::initializeRenderableManagers() {
+		}
+
 		bool SaNiEngine::initialize() {
 			// Create file system service
 			// Create cvar service
@@ -53,27 +84,9 @@ namespace sani {
 			// Load game data
 			// RUN!
 
-			// Window init.
-			window = new graphics::Window(hInstance, 1280, 720);
-			if (!window->initialize()) return false;
-
-			window->setTitle("SaNi Engine");
-			window->show();
-
-			// Device init.
-			graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
-				hInstance,
-				1280,
-				720);
-
-			if (!graphicsDevice->initialize()) return false;
-
-			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
-			
-			// Render service init.
-			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
-			services.registerService(renderService);
-			renderService->start();
+			if (!initializeGraphics()) return false;
+			if (!initializeRenderService()) return false;
+			if (!initializeRenderableManagers()) return false;
 
 			auto createLayer = createEmptyMessage<messages::CommandMessage>();
 			services::renderservice::createLayer(createLayer, "l1||1||0.0");
