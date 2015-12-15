@@ -974,6 +974,9 @@
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

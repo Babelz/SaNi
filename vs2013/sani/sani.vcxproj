@@ -332,6 +332,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
