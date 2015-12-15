@@ -11,30 +11,30 @@ namespace sani {
 		}
 
 		void RecipientList::clear() {
-			recipents.clear();
+			recipients.clear();
 		}
-		void RecipientList::addRecipent(const String& recipent) {
-			recipents.push_back(recipent);
+		void RecipientList::addRecipient(const String& recipent) {
+			recipients.push_back(recipent);
 		}
-		void RecipientList::removeRecipent(const String& recipent) {
-			auto it = std::find_if(recipents.begin(), recipents.end(), [&recipent](const String& lhs) {
+		void RecipientList::removeRecipient(const String& recipent) {
+			auto it = std::find_if(recipients.begin(), recipients.end(), [&recipent](const String& lhs) {
 				return lhs == recipent;
 			});
 
-			if (it == recipents.end()) return;
+			if (it == recipients.end()) return;
 			
-			recipents.erase(it);
+			recipients.erase(it);
 		}
 
 		uint32 RecipientList::recipentsCount() const {
-			return recipents.size();
+			return recipients.size();
 		}
 
 		std::vector<const String>::const_iterator RecipientList::begin() const {
-			return recipents.begin();
+			return recipients.begin();
 		}
 		std::vector<const String>::const_iterator RecipientList::end() const {
-			return recipents.end();
+			return recipients.end();
 		}
 
 		RecipientList::~RecipientList() {

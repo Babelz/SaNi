@@ -21,7 +21,7 @@ namespace sani {
 				const MessageType type;
 
 				// Recipients of the message.
-				RecipientList recipents;
+				RecipientList recipients;
 
 				// Was this message handled by the recipients.
 				bool handled;
@@ -36,7 +36,7 @@ namespace sani {
 				void markHandled();
 
 				/// Returns the recipient list of this message.
-				RecipientList& getRecipents();
+				RecipientList& getRecipients();
 				/// Returns the type of this message.
 				MessageType getType() const;
 

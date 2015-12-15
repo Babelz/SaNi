@@ -11,18 +11,18 @@ namespace sani {
 		/// @class RecipientList recipient_list.hpp "sani/engine/messaging/recipient_list.hpp"
 		/// @author voidbab
 		///
-		/// Represents a list of recipents.
+		/// Represents a list of recipients.
 		class RecipientList {
 		private:
-			std::vector<const String> recipents;
+			std::vector<const String> recipients;
 
 			uint32 count;
 		public:
 			RecipientList();
 
 			void clear();
-			void addRecipent(const String& recipent);
-			void removeRecipent(const String& recipent);
+			void addRecipient(const String& recipent);
+			void removeRecipient(const String& recipent);
 
 			uint32 recipentsCount() const;
 

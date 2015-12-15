@@ -15,7 +15,6 @@
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
-
 #include "sani/engine/services/rectangle_manager.hpp"
 #include "sani/engine/services/sprite_manager.hpp"
 #include "sani/engine/services/circle_manager.hpp"
@@ -24,8 +23,6 @@
 #include "sani/graphics/renderables/renderables.hpp"
 
 #include "sani/graphics/layer.hpp"
-
-#include "sani/engine/services/renderable_manager.hpp"
 
 namespace sani {
 
@@ -114,9 +111,9 @@ namespace sani {
 			// Load game data
 			// RUN!
 
-			if (!initializeGraphics()) return false;
-			if (!initializeRenderService()) return false;
-			if (!initializeRenderableManagers()) return false;
+			if (!initializeGraphics())				return false;
+			if (!initializeRenderService())			return false;
+			if (!initializeRenderableManagers())	return false;
 
 			/*
 				TODO: dbg stuff.

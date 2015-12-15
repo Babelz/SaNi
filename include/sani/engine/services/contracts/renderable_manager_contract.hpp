@@ -10,59 +10,59 @@ namespace sani {
 	namespace engine {
 
 		namespace services {
-			
+
 			/// ! Contains the contract definition and helper functions to interact with 
 			///   the renderable services.
 			namespace renderablemanager {
 
 				/*
-					Renderable manager contract definition
+				Renderable manager contract definition
 
-					Purpose of the service: Handle memory of the given types of 
-											renderables and handle their 
-											render and geometry updates.
+				Purpose of the service: Handle memory of the given types of
+				renderables and handle their
+				render and geometry updates.
 
-											User can create, delete and 
-											queue elements for updates.
+				User can create, delete and
+				queue elements for updates.
 
-											Updating an element causes it's 
-											geo/render data to be updated
-											and it might get relocated in 
-											the layer it is contained in.
+				Updating an element causes it's
+				geo/render data to be updated
+				and it might get relocated in
+				the layer it is contained in.
 
 				*/
 
 				/// List of all known commands for the renderable services.
 				enum class RenderableManagerCommands : uint32 {
 					/// Creates new element of a given type.
-					CreateElement		= 0,
-					
+					CreateElement = 0,
+
 					/// Deletes given element of a given type.
-					DeleteElement		= 1,
+					DeleteElement = 1,
 
 					/// Updates given elements vertex and render data.
-					EnqueueForUpdates	= 3,
+					EnqueueForUpdates = 3,
 
 					/// Returns all elements of a given type to the user.
-					GetElements			= 4
+					GetElements = 4
 				};
 
 				enum class ElementType : uint32 {
-					Rectangle	= 0,
+					Rectangle = 0,
 
-					Triangle	= 1,
-					
-					Sprite		= 2,
-					
-					Circle		= 3
+					Triangle = 1,
+
+					Sprite = 2,
+
+					Circle = 3
 				};
 
 				void createElement(messages::DocumentMessage* const message, const ElementType type);
 
 				void deleteElement(messages::DocumentMessage* const message, const ElementType type);
-				
+
 				void queueForUpdates(messages::DocumentMessage* const message, const ElementType type);
-				
+
 				void getElements(messages::DocumentMessage* const message, const ElementType type);
 			}
 		}

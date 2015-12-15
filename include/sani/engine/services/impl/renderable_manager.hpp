@@ -10,6 +10,8 @@ namespace sani {
 		
 		namespace services {
 
+			using namespace renderablemanager;
+
 			template <class T>
 			RenderableManager<T>::RenderableManager(const String& name, const ElementType type, engine::SaNiEngine* const engine) : EngineService(name, engine),
 																																	type(type),

@@ -16,9 +16,9 @@ namespace sani {
 
 					message->setCommand(command);
 					
-					message->getRecipents().clear();
+					message->getRecipients().clear();
 
-					message->getRecipents().addRecipent("render service");
+					message->getRecipients().addRecipient("render service");
 				}
 				
 				template<class T>

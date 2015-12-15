@@ -200,14 +200,14 @@ void NO_ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	graphicsDevice.cleanUp();
 }
 void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	//SaNiEngine engine(hInstance);
-	//engine.start();
+	SaNiEngine engine(hInstance);
+	engine.start();
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	NO_ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	//NO_ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 	
-	//ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 	return 0;
 }

@@ -191,6 +191,7 @@
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\engine\services\circle_manager.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
@@ -424,7 +425,6 @@
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
-    <ClInclude Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />

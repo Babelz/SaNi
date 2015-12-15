@@ -12,12 +12,10 @@ namespace sani {
 		
 		namespace services {
 
-			using namespace renderablemanager;
-
 			template<class T>
 			class RenderableManager : public EngineService {
 			private:
-				const ElementType type;
+				const renderablemanager::ElementType type;
 
 				PagePoolAllocator<T> allocator;
 				
@@ -34,7 +32,7 @@ namespace sani {
 
 				void getElements(messages::DocumentMessage* const message);
 			protected:
-				RenderableManager(const String& name, const ElementType type, engine::SaNiEngine* const engine);
+				RenderableManager(const String& name, const renderablemanager::ElementType type, engine::SaNiEngine* const engine);
 			public:
 				void receive(messages::Message* const message) final override;
 				void update(const EngineTime& time) final override;
