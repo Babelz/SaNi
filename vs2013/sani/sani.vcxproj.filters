@@ -962,6 +962,9 @@
     <ClInclude Include="..\..\include\sani\core\memory\impl\heap_page.hpp">
       <Filter>include\core\memory\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1031,6 +1034,9 @@
       <Filter>include\core\memory\inl</Filter>
     </None>
     <None Include="..\..\include\sani\core\memory\inl\heap_page.inl">
+      <Filter>include\core\memory\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\memory\inl\pool_page.inl">
       <Filter>include\core\memory\inl</Filter>
     </None>
   </ItemGroup>
