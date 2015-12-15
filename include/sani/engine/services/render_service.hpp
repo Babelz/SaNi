@@ -31,8 +31,6 @@ namespace sani {
 
 				graphics::Color clearColor;
 
-				void handleStateMessage(StateMessage* const message) final override;
-
 				/*
 					Message handling.
 				*/
@@ -56,6 +54,8 @@ namespace sani {
 				void setClearColor(messages::CommandMessage* const message);
 
 				void renderToCamera(const graphics::Camera2D& camera);
+			protected:
+				void handleStateMessage(StateMessage* const message) final override;
 			public:
 				RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice);
 

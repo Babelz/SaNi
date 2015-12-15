@@ -297,6 +297,9 @@
     <ClInclude Include="..\..\include\sani\core\memory\heap_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_block.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\heap_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\impl\heap_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
@@ -321,11 +324,16 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
@@ -420,6 +428,10 @@
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />
     <None Include="..\..\include\sani\core\math\func\trigonometric_func.inl" />
     <None Include="..\..\include\sani\core\math\value_ptr.inl" />
+    <None Include="..\..\include\sani\core\memory\impl\heap_allocator.hpp" />
+    <None Include="..\..\include\sani\core\memory\inl\heap_block.inl" />
+    <None Include="..\..\include\sani\core\memory\inl\heap_page.inl" />
+    <None Include="..\..\include\sani\core\memory\inl\pool_page.inl" />
     <None Include="..\..\include\sani\core\utils\inl\convert.inl" />
     <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp" />
     <None Include="..\..\include\sani\graphics\inl\buffer.inl" />

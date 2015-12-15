@@ -30,10 +30,6 @@ namespace sani {
 			math::Rectf textureSource;
 			resource::Texture2D* texture;
 
-			// Location of this element in the
-			// manager it is associated.
-			uint32 location;
-
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);
 			Renderable(const uint32 vertices, const uint32 renderElements);
 

@@ -48,6 +48,8 @@ namespace sani {
 			}
 
 			void EngineService::handleStateMessage(StateMessage* const stateMessage) {
+				// Default handling, messages are always "handled".
+				stateMessage->handled = true;
 			}
 
 			SaNiEngine* const EngineService::getEngine() {

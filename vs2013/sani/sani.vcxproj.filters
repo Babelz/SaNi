@@ -196,6 +196,15 @@
     <Filter Include="include\resource\compiler">
       <UniqueIdentifier>{8b8e7f0d-0f59-4c41-b5a8-cc0f6fa2ee62}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\services\impl">
+      <UniqueIdentifier>{cd847568-ad12-40b5-b5bf-fde2c602cc56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\memory\impl">
+      <UniqueIdentifier>{a1f3433d-51fa-4800-906d-e4e07861a207}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\core\memory\inl">
+      <UniqueIdentifier>{1d27b374-0f28-4fe1-baf8-d83952893e8b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -947,8 +956,29 @@
     <ClInclude Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
+    <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp">
+      <Filter>include\engine\services\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\impl\heap_page.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1011,6 +1041,18 @@
     </None>
     <None Include="..\..\include\sani\core\utils\inl\convert.inl">
       <Filter>include\core\utils</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\memory\impl\heap_allocator.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\memory\inl\heap_block.inl">
+      <Filter>include\core\memory\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\memory\inl\heap_page.inl">
+      <Filter>include\core\memory\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\memory\inl\pool_page.inl">
+      <Filter>include\core\memory\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

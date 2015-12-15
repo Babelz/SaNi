@@ -1,27 +1,31 @@
 #include "sani/core/memory/heap_allocator.hpp"
 #include "sani/debug.hpp"
 
-#define TWO_MEGABYTES 2097152 
-
 namespace sani {
 	
+	static const uint32 BLOCK_TWO_MEGABYTES = 2097152;
+
 	HeapAllocator::HeapAllocator(const uint32 pageSize, const uint32 initialPages, const DefragmentationPolicy defragmentationPolicy) : pageSize(pageSize),
 																																	    defragmentationPolicy(defragmentationPolicy)  {
 		initialize(initialPages);
 	}
 
-	HeapAllocator::HeapAllocator(const uint32 initialPages, const DefragmentationPolicy defragmentationPolicy) : pageSize(TWO_MEGABYTES),
+	HeapAllocator::HeapAllocator(const uint32 initialPages, const DefragmentationPolicy defragmentationPolicy) : pageSize(BLOCK_TWO_MEGABYTES),
 																												 defragmentationPolicy(defragmentationPolicy)  {
 		initialize(initialPages);
 	}
 
-	HeapAllocator::HeapAllocator(const DefragmentationPolicy defragmentationPolicy) : pageSize(TWO_MEGABYTES),
+	HeapAllocator::HeapAllocator(const DefragmentationPolicy defragmentationPolicy) : pageSize(BLOCK_TWO_MEGABYTES),
 																					  defragmentationPolicy(defragmentationPolicy) {
 		initialize(1);
 	}
 
 	void HeapAllocator::initialize(const uint32 initialPages) {
 		for (uint32 i = 0; i < initialPages; i++) pages.push_back(new HeapPage(pageSize));
+	}
+
+	uint32 HeapAllocator::pagesCount() const {
+		return pages.size();
 	}
 
 	float32 HeapAllocator::getFragmentation() const {

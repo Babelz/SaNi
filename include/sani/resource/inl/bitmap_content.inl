@@ -80,13 +80,21 @@ namespace sani {
 
 		template <class PixelType>
 		void PixelBitmapContent<PixelType>::getPixelData(std::vector<unsigned char>& outPixels) const {
-			outPixels.resize(getWidth() * getHeight() * 4);
-			auto ptr = &pixels[0].x;
+
 			uint32 size = getWidth() * getHeight();
-			/*outPixels.insert(outPixels.begin(),
-				reinterpret_cast<unsigned char>(ptr), 
-				reinterpret_cast<unsigned char>(ptr + size));*/
-			std::memcpy(outPixels.data(), pixels, sizeof(PixelType) * size);
+			
+			// resize the vector to fit all pixels in bytes
+			outPixels.resize(size * sizeof(PixelType));
+			// find the correct starting address and correct type
+			unsigned char* ptr = (unsigned char*)pixels;
+			outPixels.insert(
+				// where to insert
+				outPixels.begin(),
+				// from pixels 
+				ptr,
+				// calculate the ending address in bytes of pixels
+				ptr + size * sizeof(PixelType)
+				);
 		}
 	}
 }

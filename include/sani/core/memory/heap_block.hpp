@@ -14,44 +14,24 @@ namespace sani {
 		char* handle;
 		uint32 size;
 	public:
-		HeapBlock(char* handle, const uint32 size) : handle(handle),
-												     size(size),
-													 released(false) {
-		}
+		inline HeapBlock(char* handle, const uint32 size);
 
-		inline void shrink(const uint32 bytes) {
-			size -= bytes;
-		}
-		inline void grow(const uint32 bytes) {
-			size += bytes;
-		}
+		inline void shrink(const uint32 bytes);
+		inline void grow(const uint32 bytes);
 
-		inline uint32 getSize() const {
-			return size;
-		}
-		inline char* getHandle() const {
-			return handle;
-		}
+		inline uint32 getSize() const;
+		inline char* getHandle() const;
 
-		inline bool isReleased() const {
-			return released;
-		}
-		inline void release() {
-			released = true;
-		}
-		inline void reserve() {
-			released = false;
-		}
+		inline bool isReleased() const;
+		inline void release();
+		inline void reserve();
 
-		~HeapBlock() {
-		}
+		inline ~HeapBlock();
 
-		inline bool operator == (const HeapBlock& other) const {
-			return handle == other.handle;
-		}
+		inline bool operator == (const HeapBlock& other) const;
 
-		inline bool operator < (const HeapBlock& other) const {
-			return size < other.size;
-		}
+		inline bool operator < (const HeapBlock& other) const;
 	};
 }
+
+#include "sani/core/memory/inl/heap_block.inl"

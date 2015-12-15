@@ -19,6 +19,7 @@
 #include "sani/graphics/renderer.hpp"
 #include "sani/graphics/vertex_position_color.hpp"
 #include "sani/core/math/vector.hpp"
+#include "sani/core/func.hpp"
 #include "sani/graphics/renderables/triangle.hpp"
 #include "sani/graphics/renderables/triangle.hpp"
 #include <random>
@@ -206,7 +207,7 @@ void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	//NO_ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
-
+	
 	ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 	return 0;
