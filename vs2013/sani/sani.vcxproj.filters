@@ -468,6 +468,18 @@
     <ClCompile Include="..\..\src\platform\time\time.cpp">
       <Filter>src\platform\time</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\triangle_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\circle_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\resource\compiler\bitmap_content_writer.cpp">
       <Filter>src\resource\compiler</Filter>
     </ClCompile>

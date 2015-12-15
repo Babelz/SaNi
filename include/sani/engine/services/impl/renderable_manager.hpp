@@ -22,7 +22,7 @@ namespace sani {
 
 				switch (command) {
 				case RenderableManagerCommands::CreateElement:
-					createElement(message)
+					createElement(message);
 					return;
 				case RenderableManagerCommands::DeleteElement:
 					deleteElement(message);
@@ -38,8 +38,7 @@ namespace sani {
 			template <class T>
 			void RenderableManager<T>::createElement(messages::DocumentMessage* const message) {
 				T* element = allocator.allocate();
-				NEW_DYNAMIC_DEFAULT(element);
-
+				
 				elements.push_back(element);
 
 				message->setData(element);
@@ -51,7 +50,7 @@ namespace sani {
 
 				allocator.deallocate(element);
 
-				elementsToUpdate.erase(element);
+				elementsToUpdate.remove(element);
 
 				message->markHandled();
 			}
@@ -66,28 +65,30 @@ namespace sani {
 
 			template <class T>
 			void RenderableManager<T>::getElements(messages::DocumentMessage* const message) {
-				std::list<T* const>* results = getEngine()->allocateShared<std::list<T* const>*>();
-				NEW_DYNAMIC_DEFAULT(results, std::list<T* const>);
+				std::list<T* const>* results = getEngine()->allocateShared<std::list<T* const>>();
+				NEW_DYNAMIC_DEFAULT(std::list<T* const>, results);
 
 				for (T* const element : elements) results->push_back(element);
 
-				message->setData(elements);
+				message->setData(results);
 				message->markHandled();
 			}
 
 			template <class T>
 			void RenderableManager<T>::receive(messages::Message* const message) {
 				if (message->getType() == MessageType::Document) {
-					handleDocumentMessage(static_cast<messages::DocumentMessage>(message));
+					handleDocumentMessage(static_cast<messages::DocumentMessage* const>(message));
 				}
 			}
 			template <class T>
-			void RenderableManager<T>::update(const SaNiEngine& time) {
+			void RenderableManager<T>::update(const EngineTime& time) {
 				if (elementsToUpdate.empty()) return;
 
 				for (T* const element : elementsToUpdate) {
-					recomputeGeometryData(element);
-					updateRenderData(element);
+					recomputeVertices(*element);
+					recomputeBounds(*element);
+
+					updateRenderData(*element);
 				}
 			}
 		}

@@ -14,6 +14,13 @@
 #include "sani/engine/messaging/messages/peer_to_peer_message.hpp"
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 
+#include "sani/engine/services/contracts/renderable_manager_contract.hpp"
+
+#include "sani/engine/services/rectangle_manager.hpp"
+#include "sani/engine/services/sprite_manager.hpp"
+#include "sani/engine/services/circle_manager.hpp"
+#include "sani/engine/services/triangle_manager.hpp"
+
 #include "sani/graphics/renderables/renderables.hpp"
 
 #include "sani/graphics/layer.hpp"
@@ -72,10 +79,31 @@ namespace sani {
 			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
 			services.registerService(renderService);
 			renderService->start();
+
 			return true;
 		}
 		bool SaNiEngine::initializeRenderableManagers() {
-			return false;
+			SpriteManager* spriteManager		= new services::SpriteManager(this);
+			CircleManager* circleManager		= new services::CircleManager(this);
+			TriangleManager* triangleManager	= new services::TriangleManager(this);
+			RectangleManager* rectangleManager	= new services::RectangleManager(this);
+
+			services.registerService(spriteManager);
+			services.registerService(circleManager);
+			services.registerService(triangleManager);
+			services.registerService(rectangleManager);
+
+			spriteManager->start();
+			circleManager->start();
+			triangleManager->start();
+			rectangleManager->start();
+
+			if (spriteManager->hasErrors())		return false;
+			if (circleManager->hasErrors())		return false;
+			if (triangleManager->hasErrors())	return false;
+			if (rectangleManager->hasErrors())	return false;
+
+			return true;
 		}
 
 		bool SaNiEngine::initialize() {
@@ -90,6 +118,10 @@ namespace sani {
 			if (!initializeRenderService()) return false;
 			if (!initializeRenderableManagers()) return false;
 
+			/*
+				TODO: dbg stuff.
+			*/
+
 			auto createLayer = createEmptyMessage<messages::CommandMessage>();
 			services::renderservice::createLayer(createLayer, "l1||1||0.0");
 
@@ -99,19 +131,25 @@ namespace sani {
 			auto getLayers = createEmptyMessage<messages::DocumentMessage>();
 			services::renderservice::getLayers(getLayers);
 
+			auto createRect = createEmptyMessage<messages::DocumentMessage>();
+			services::renderablemanager::createElement(createRect, services::renderablemanager::ElementType::Rectangle);
+
 			auto getCameras = createEmptyMessage<messages::DocumentMessage>();
 			services::renderservice::getCameras(getCameras);
 
 			routeMessage(createLayer);
 			routeMessage(createCamera);
 			routeMessage(getLayers);
+			routeMessage(createRect);
 			routeMessage(getCameras);
 
 			std::vector<graphics::Layer* const>* layers = static_cast<std::vector<graphics::Layer* const>*>(getLayers->getData());
 			graphics::Layer* layer = *layers->begin();
 			deallocateShared(layers);
 
-			graphics::Rectangle* rect = new graphics::Rectangle(100, 100, 128, 128);
+			graphics::Rectangle* rect = static_cast<graphics::Rectangle*>(createRect->getData());
+			NEW_DYNAMIC(graphics::Rectangle, rect, 
+						32, 32, 128, 128);
 			graphics::updateRenderData(*rect);
 			graphics::recomputeBounds(*rect);
 			layer->add(rect);

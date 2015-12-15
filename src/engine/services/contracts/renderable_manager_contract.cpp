@@ -1,13 +1,12 @@
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
-#include "sani/engine/messaging/messages/command_message.hpp"
 
 namespace sani {
 
 	namespace engine {
-		
+
 		namespace services {
-			
+
 			namespace renderablemanager {
 
 				// Used to translate element type to recipent.
@@ -18,12 +17,11 @@ namespace sani {
 					"circle manager"			// Circle.
 				};
 
-				template <class T>
-				static void decorateMessage(T* const message, const RenderableManagerCommands renderableManagerCommands, const ElementType type) {
-					static uint32 command = static_cast<uint32>(renderableManagerCommands);
+				static void decorateMessage(messages::DocumentMessage* const message, const RenderableManagerCommands renderableManagerCommand, const ElementType type) {
 					static uint32 recipentIndex = static_cast<uint32>(type);
-
-					String recipent = recipents[recipentIndex];
+					static uint32 command		= static_cast<uint32>(renderableManagerCommand);
+					
+					const String& recipent = recipents[recipentIndex];
 
 					message->getRecipents().clear();
 
@@ -32,19 +30,19 @@ namespace sani {
 				}
 
 				void createElement(messages::DocumentMessage* const message, const ElementType type) {
-					decorateMessage<messages::DocumentMessage>(message, RenderableManagerCommands::CreateElement, type);
+					decorateMessage(message, RenderableManagerCommands::CreateElement, type);
 				}
 
 				void deleteElement(messages::DocumentMessage* const message, const ElementType type) {
-					decorateMessage<messages::DocumentMessage>(message, RenderableManagerCommands::DeleteElement, type);
+					decorateMessage(message, RenderableManagerCommands::DeleteElement, type);
 				}
 
 				void queueForUpdates(messages::DocumentMessage* const message, const ElementType type) {
-					decorateMessage<messages::DocumentMessage>(message, RenderableManagerCommands::QueueForUpdates, type);
+					decorateMessage(message, RenderableManagerCommands::EnqueueForUpdates, type);
 				}
 
 				void getElements(messages::DocumentMessage* const message, const ElementType type) {
-					decorateMessage<messages::DocumentMessage>(message, RenderableManagerCommands::GetElements, type);
+					decorateMessage(message, RenderableManagerCommands::GetElements, type);
 				}
 			}
 		}

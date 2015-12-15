@@ -9,9 +9,7 @@ namespace sani {
 
 		namespace services {
 
-			using namespace graphics;
-
-			class TriangleManager : public RenderableManager<Triangle> {
+			class TriangleManager : public RenderableManager<graphics::Triangle> {
 			public:
 				TriangleManager(SaNiEngine* const engine);
 			};

@@ -26,8 +26,8 @@ namespace sani {
 				graphics::GraphicsDevice* const graphicsDevice;
 				graphics::Renderer renderer;
 
-				std::list<sani::graphics::Camera2D> cameras;
-				std::list<sani::graphics::Layer> layers;
+				std::list<graphics::Camera2D> cameras;
+				std::list<graphics::Layer> layers;
 
 				graphics::Color clearColor;
 

@@ -6,13 +6,13 @@
 
 #include <vector>
 
-using namespace sani::engine::services::renderablemanager;
-
 namespace sani {
 
 	namespace engine {
 		
 		namespace services {
+
+			using namespace renderablemanager;
 
 			template<class T>
 			class RenderableManager : public EngineService {
@@ -37,7 +37,7 @@ namespace sani {
 				RenderableManager(const String& name, const ElementType type, engine::SaNiEngine* const engine);
 			public:
 				void receive(messages::Message* const message) final override;
-				void update(const SaNiEngine& time) final override;
+				void update(const EngineTime& time) final override;
 			};
 		}
 	}
