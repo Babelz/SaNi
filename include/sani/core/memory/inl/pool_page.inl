@@ -1,4 +1,5 @@
 #include "sani/core/memory/pool_page.hpp"
+#include "sani/debug.hpp"
 
 namespace sani {
 
@@ -26,6 +27,8 @@ namespace sani {
 			}
 		}
 
+		SANI_ASSERT(element != nullptr);
+
 		return element;
 	}
 
@@ -34,6 +37,8 @@ namespace sani {
 		// No address space checks, do it in the allocator.
 		// Just assume this element is located in this pages
 		// address space.
+		SANI_ASSERT(element != nullptr);
+
 		releasedElements.push(element);
 		element->~T();
 

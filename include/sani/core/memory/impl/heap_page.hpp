@@ -1,4 +1,5 @@
 #include "sani/core/memory/heap_page.hpp"
+#include "sani/debug.hpp"
 
 namespace sani {
 
@@ -15,8 +16,7 @@ namespace sani {
 			// Check if we can allocate from released blocks.
 			if (size <= releasedBlock.getSize()) {
 				releasedBlocks.pop();
-			}
-			else {
+			} else {
 				missedBytes += size;
 
 				fragmentation = missedBytes / static_cast<float32>(this->size);
@@ -56,6 +56,8 @@ namespace sani {
 
 	template<class T>
 	bool HeapPage::deallocate(T* element) {
+		SANI_ASSERT(element != nullptr);
+
 		char* handle = reinterpret_cast<char*>(element);
 
 		for (HeapBlock& block : blocks) {
