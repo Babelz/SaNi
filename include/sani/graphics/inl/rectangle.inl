@@ -88,7 +88,7 @@ namespace sani {
 			rectangle.globalBounds.x = position.x;
 			rectangle.globalBounds.y = position.y;
 			rectangle.globalBounds.w = rectangle.localBounds.w * scale.x;
-			rectangle.globalBounds.w = rectangle.localBounds.h * scale.y;
+			rectangle.globalBounds.h = rectangle.localBounds.h * scale.y;
 		}
 
 		void updateRenderData(Rectangle& rectangle) {

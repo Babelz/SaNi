@@ -92,6 +92,8 @@ namespace sani {
 
 					updateRenderData(*element);
 				}
+
+				elementsToUpdate.clear();
 			}
 		}
 	}

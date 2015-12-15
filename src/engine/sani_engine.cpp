@@ -146,9 +146,7 @@ namespace sani {
 
 			graphics::Rectangle* rect = static_cast<graphics::Rectangle*>(createRect->getData());
 			NEW_DYNAMIC(graphics::Rectangle, rect, 
-						32, 32, 128, 128);
-			graphics::updateRenderData(*rect);
-			graphics::recomputeBounds(*rect);
+						256, 256, 128, 128);
 			layer->add(rect);
 
 			std::vector<graphics::Camera2D* const>* cameras = static_cast<std::vector<graphics::Camera2D* const>*>(getCameras->getData());
@@ -160,6 +158,7 @@ namespace sani {
 
 			releaseMessage(getCameras);
 			releaseMessage(getLayers);
+			releaseMessage(createRect);
 
 			// Create all initial services.
 			return true;
