@@ -14,7 +14,7 @@ namespace sani {
 			namespace filesystemservice {
 
 				/*
-					
+					TODO: add definition.
 				*/
 
 				enum class FilesystemCommands : uint32 {
@@ -32,6 +32,10 @@ namespace sani {
 
 					ListFiles			= 6
 				};
+
+				/*
+					TODO: comment.
+				*/
 
 				void fileExists(messages::DocumentMessage* const message);
 				
