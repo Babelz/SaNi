@@ -492,6 +492,7 @@
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

@@ -18,8 +18,16 @@ namespace sani {
 				sani::io::FileSystem fileSystem;
 
 				void handleDocumentMessage(messages::DocumentMessage* const message);
-			
+
+				void fileExists(messages::DocumentMessage* const message);
+				void openFile(messages::DocumentMessage* const message);
+
+				void isAbsolutePath(messages::DocumentMessage* const message);
 				
+				void getFileData(messages::DocumentMessage* const message);
+				void getFileDataString(messages::DocumentMessage* const message);
+				
+				void listFiles(messages::DocumentMessage* const message);
 			protected:
 				void handleStateMessage(StateMessage* const message) final override;
 			public:

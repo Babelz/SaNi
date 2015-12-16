@@ -193,6 +193,7 @@
     <ClCompile Include="..\..\src\engine\services\circle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
