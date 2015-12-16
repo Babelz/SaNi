@@ -7,8 +7,8 @@ namespace sani {
 		class MemoryStream : public Stream {
 		private:
 			std::vector<unsigned char> buffer;
-			uint32 position = 0u;
-			int64 dataSize = 0;
+			uint64 position = 0u;
+			uint32 dataSize = 0;
 		public:
 			MemoryStream() = default;
 			virtual ~MemoryStream() = default;
@@ -17,6 +17,7 @@ namespace sani {
 			virtual uint32 write(const unsigned char* data, const int32 size) override;
 			virtual void seek(const SeekPosition seekpos, const long offset) override;
 			virtual int64 size() override;
+			virtual void flush() override;
 		};
 	}
 }

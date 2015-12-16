@@ -56,10 +56,10 @@ namespace sani {
 					}
 					readers.push_back(reader);
 				}
-
+				uint32 index = read7BitEncodedInt();
 				// TODO because there is only 1 reader atm we just assume it exist, FIX ME
 				// TODO should this be fixed?
-				return (*readers[0]).read((this));
+				return (*readers[index]).read((this));
 			}
 
 		}

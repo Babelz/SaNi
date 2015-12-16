@@ -45,6 +45,7 @@ namespace sani {
 			virtual uint32 write(const unsigned char* data, const int32 size) = 0;
 			virtual void seek(const SeekPosition seekpos, const long offset) = 0;
 			virtual int64 size() = 0;
+			virtual void flush() = 0;
 		};
 
 		class FileStream : public Stream {

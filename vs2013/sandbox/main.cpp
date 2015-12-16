@@ -205,9 +205,9 @@ void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, 
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	//NO_ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	NO_ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 	
-	ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
+	//ENGINE_MAIN(hInstance, hPrevInstance, lpCmdLine, nCmdShow);
 
 	return 0;
 }

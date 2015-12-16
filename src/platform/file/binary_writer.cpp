@@ -4,9 +4,10 @@
 namespace sani {
 	namespace io {
 
-		BinaryWriter::BinaryWriter(FileStream* stream)
+		BinaryWriter::BinaryWriter(Stream* stream)
 			: stream(stream) {}
 
+		// TODO should this free the stream or not?
 		BinaryWriter::~BinaryWriter() {}
 
 		void BinaryWriter::write(uint8 value) {

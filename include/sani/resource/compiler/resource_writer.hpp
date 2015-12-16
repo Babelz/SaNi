@@ -7,6 +7,7 @@
 #include <vector>
 #include <typeindex>
 #include <map>
+#include "sani/core/io/memory_stream.hpp"
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceTypeWriter);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceCompiler);
@@ -33,10 +34,12 @@ namespace sani {
 
 				/// Writers the typewriters used to write this object
 				void writeTypeWriters();
+				MemoryStream memoryStream;
+				FileStream* fileStream;
 			public:
 
 				// This assumes the file is opened already!
-				ResourceWriter(FileStream* stream, const ResourceCompiler* compiler);
+				ResourceWriter(FileStream* fileStream, const ResourceCompiler* compiler);
 				~ResourceWriter();
 
 				/// TODO this is hax, we need streambuf or smthing
