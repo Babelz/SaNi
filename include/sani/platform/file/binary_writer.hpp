@@ -9,9 +9,9 @@ namespace sani {
 	namespace io {
 		class BinaryWriter {
 		private:
-			const FileStream* stream;
+			FileStream* stream;
 		public:
-			BinaryWriter(const FileStream* stream);
+			BinaryWriter(FileStream* stream);
 			~BinaryWriter();
 			void flush() const;
 			void write(uint8 value);

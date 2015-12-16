@@ -19,7 +19,7 @@ namespace sani {
 				GraphicsDevice* graphicsDevice;
 			public:
 				/// Initializes new resource reader
-				ResourceReader(const FileStream* stream, ResourceManager& manager, GraphicsDevice* device);
+				ResourceReader(FileStream* stream, ResourceManager& manager, GraphicsDevice* device);
 				~ResourceReader();
 
 				/// Gets the global resource manager used in whole engine
@@ -30,7 +30,7 @@ namespace sani {
 				/// Reads the whole asset, this method assumes the 
 				/// type readers are already initialized
 				/// @param readers The initialized list of all readers
-				void* readAsset(const ResoureTypeReaderManager& readers) const;
+				void* readAsset(const ResoureTypeReaderManager& readers);
 			};
 		}
 	}

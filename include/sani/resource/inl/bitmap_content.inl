@@ -29,7 +29,7 @@ namespace sani {
 		void PixelBitmapContent<PixelType>::tryGetFormat(graphics::SurfaceFormat* out) const {
 			using namespace sani::math;
 			using namespace sani::graphics;
-			if (typeid(PixelType) == typeid(Vec4f)) {
+			if (typeid(PixelType) == typeid(Vector4<unsigned char>)) {
 				*out = SurfaceFormat::ColorRGBA;
 			}		
 		}

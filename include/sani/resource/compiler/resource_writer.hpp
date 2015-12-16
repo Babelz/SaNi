@@ -36,7 +36,7 @@ namespace sani {
 			public:
 
 				// This assumes the file is opened already!
-				ResourceWriter(const FileStream* stream, const ResourceCompiler* compiler);
+				ResourceWriter(FileStream* stream, const ResourceCompiler* compiler);
 				~ResourceWriter();
 
 				/// TODO this is hax, we need streambuf or smthing

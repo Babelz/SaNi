@@ -205,6 +205,12 @@
     <Filter Include="include\core\memory\inl">
       <UniqueIdentifier>{1d27b374-0f28-4fe1-baf8-d83952893e8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\io">
+      <UniqueIdentifier>{584a6e95-e6be-4414-8b8f-21c597c8633d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\io">
+      <UniqueIdentifier>{8604410b-5f32-4e54-9409-12becfb88048}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -485,6 +491,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\io\memory_stream.cpp">
+      <Filter>src\core\io</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -992,6 +1001,9 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\io\memory_stream.hpp">
+      <Filter>include\core\io</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

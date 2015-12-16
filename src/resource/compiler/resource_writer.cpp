@@ -21,7 +21,7 @@ namespace sani {
 				// TODO emscripte, ps4, xbox
 			};
 
-			ResourceWriter::ResourceWriter(const FileStream* stream, const ResourceCompiler* compiler) 
+			ResourceWriter::ResourceWriter(FileStream* stream, const ResourceCompiler* compiler) 
 				: BinaryWriter(stream), compiler(compiler) {
 
 			}
@@ -68,6 +68,7 @@ namespace sani {
 				if (writer == nullptr) {
 					throw std::runtime_error("Cant get writer for T");
 				}
+				write7BitEncodedInt(std::distance(writers.begin(), writers.find(type)));
 				writer->write(this, obj);
 			}
 
