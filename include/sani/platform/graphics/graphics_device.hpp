@@ -197,6 +197,8 @@ namespace sani {
 			void createVertexAttributePointer(const VertexAttributePointerDescription& description);
 			void disableVertexAttributePointer(const uint32 location);
 
+			void bindAttributeLocation(const uint32 shader, const uint32 index, const String& name);
+
 			~GraphicsDevice();
 		};
 	}
