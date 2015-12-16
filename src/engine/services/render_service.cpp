@@ -104,7 +104,7 @@ namespace sani {
 			}
 			void RenderService::getLayers(messages::DocumentMessage* const message) {
 				std::vector<Layer* const>* results = getEngine()->allocateShared<std::vector<Layer* const>>();
-				NEW_DYNAMIC_DEFAULT(std::vector<Layer* const>, results);
+				SANI_NEW_DYNAMIC_DEFAULT(std::vector<Layer* const>, results);
 				
 				for (Layer& layer : layers) results->push_back(&layer);
 
@@ -134,7 +134,7 @@ namespace sani {
 			}
 			void RenderService::getCameras(messages::DocumentMessage* const message) {
 				std::vector<Camera2D* const>* results = getEngine()->allocateShared<std::vector<Camera2D* const>>();
-				NEW_DYNAMIC_DEFAULT(std::vector<Camera2D* const>, results);
+				SANI_NEW_DYNAMIC_DEFAULT(std::vector<Camera2D* const>, results);
 
 				for (Camera2D& camera : cameras) results->push_back(&camera);
 
@@ -144,7 +144,7 @@ namespace sani {
 
 			void RenderService::getClearColor(messages::DocumentMessage* const message) {
 				graphics::Color* results = getEngine()->allocateShared<graphics::Color>();
-				NEW_DYNAMIC(graphics::Color, results, clearColor);
+				SANI_NEW_DYNAMIC(graphics::Color, results, clearColor);
 
 				message->setData(static_cast<void*>(&results));
 				message->markHandled();
@@ -200,7 +200,11 @@ namespace sani {
 
 				if (cameras.size() == 0) return;
 
-				for (Camera2D& camera : cameras) renderToCamera(camera);
+				for (Camera2D& camera : cameras) {
+					camera.computeTransformation();
+
+					renderToCamera(camera);
+				}
 			}
 		}
 	}

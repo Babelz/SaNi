@@ -5,6 +5,7 @@
 #include "sani/platform/platform_config.hpp"
 #include "sani/engine/service_registry.hpp"
 #include "sani/forward_declare.hpp"
+#include "sani/core/events.hpp"
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
@@ -30,6 +31,12 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			const HINSTANCE hInstance;
 #endif
+
+#if _DEBUG
+			SANI_DECLARE_EVENT(onInitialize, void(SaNiEngine* const));
+			SANI_DECLARE_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&));
+#endif
+
 			// Shared memory region used by the services to allocate
 			// temporary stuff such as results for messages.
 			HeapAllocator sharedServiceMemory;

@@ -360,19 +360,17 @@ namespace sani {
 				copyIndexData(renderElementData, &renderable->renderData);
 			}
 		}
-		void Renderer::renderElements(const Renderable* const renderables, const uint32 count) {
+
+		// TODO: hazard! fucks up memory.
+		/*void Renderer::renderElements(const Renderable* const renderables, const uint32 count) {
 			for (uint32 i = 0; i < count; i++) renderElement(&renderables[i]);
-		}
+		}*/
 
 		void Renderer::endRendering() {
 			renderBatchesCount = renderBatcher.getRenderBatchesCount();
 
 			checkBatchEffects();
 			updateBufferDatas();
-
-			auto a = glGetAttribLocation(defaultEffects[1], "vertex_position");
-			auto b = glGetAttribLocation(defaultEffects[1], "vertex_color");
-			auto c = glGetAttribLocation(defaultEffects[1], "texture_coordinates");
 
 			for (uint32 i = 0; i < renderBatchesCount; i++) flushRenderBatch(&renderBatches[i]);
 		}

@@ -106,7 +106,9 @@ namespace sani {
 			void beginRendering(const math::Mat4f& transform);
 
 			void renderElement(const Renderable* const renderable);
-			void renderElements(const Renderable* const renderables, const uint32 count);
+			
+			// TODO: hazard! fucks up memory!
+			//void renderElements(const Renderable* const renderables, const uint32 count);
 
 			void endRendering();
 			

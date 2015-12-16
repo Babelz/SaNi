@@ -32,6 +32,9 @@ namespace sani {
 			String name;
 
 			void typeInitialize();
+
+			void renderBottom(graphics::Renderer* const renderer);
+			void renderTop(graphics::Renderer* const renderer);
 		public:
 			Layer(const String& name, const LayerType type, const float32 order = 0.0f);
 			

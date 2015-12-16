@@ -68,7 +68,7 @@ namespace sani {
 			template <class T>
 			void RenderableManager<T>::getElements(messages::DocumentMessage* const message) {
 				std::list<T* const>* results = getEngine()->allocateShared<std::list<T* const>>();
-				NEW_DYNAMIC_DEFAULT(std::list<T* const>, results);
+				SANI_NEW_DYNAMIC_DEFAULT(std::list<T* const>, results);
 
 				for (T* const element : elements) results->push_back(element);
 

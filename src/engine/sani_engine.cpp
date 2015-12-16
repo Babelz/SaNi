@@ -34,6 +34,10 @@ namespace sani {
 															channels(&services),
 															hInstance(hInstance),
 															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic) {
+#if _DEBUG
+			SANI_INIT_EVENT(onInitialize, void(SaNiEngine* const engine));
+			SANI_INIT_EVENT(onUpdate, void(SaNiEngine* const engine, const EngineTime&));
+#endif
 		}
 #endif
 
@@ -115,39 +119,20 @@ namespace sani {
 			if (!initializeRenderService())			return false;
 			if (!initializeRenderableManagers())	return false;
 
-			/*
-				TODO: dbg stuff.
-			*/
-
+			// Add default layer and camera.
+			// TODO: remove once editor stuff is ready.
 			auto createLayer = createEmptyMessage<messages::CommandMessage>();
 			services::renderservice::createLayer(createLayer, "l1||1||0.0");
 
 			auto createCamera = createEmptyMessage<messages::CommandMessage>();
 			services::renderservice::createCamera(createCamera, "c1");
 
-			auto getLayers = createEmptyMessage<messages::DocumentMessage>();
-			services::renderservice::getLayers(getLayers);
-
-			auto createRect = createEmptyMessage<messages::DocumentMessage>();
-			services::renderablemanager::createElement(createRect, services::renderablemanager::ElementType::Rectangle);
-
 			auto getCameras = createEmptyMessage<messages::DocumentMessage>();
 			services::renderservice::getCameras(getCameras);
 
 			routeMessage(createLayer);
 			routeMessage(createCamera);
-			routeMessage(getLayers);
-			routeMessage(createRect);
 			routeMessage(getCameras);
-
-			std::vector<graphics::Layer* const>* layers = static_cast<std::vector<graphics::Layer* const>*>(getLayers->getData());
-			graphics::Layer* layer = *layers->begin();
-			deallocateShared(layers);
-
-			graphics::Rectangle* rect = static_cast<graphics::Rectangle*>(createRect->getData());
-			NEW_DYNAMIC(graphics::Rectangle, rect, 
-						256, 256, 128, 128);
-			layer->add(rect);
 
 			std::vector<graphics::Camera2D* const>* cameras = static_cast<std::vector<graphics::Camera2D* const>*>(getCameras->getData());
 			graphics::Camera2D* camera = *cameras->begin();
@@ -157,8 +142,11 @@ namespace sani {
 			camera->computeTransformation();
 
 			releaseMessage(getCameras);
-			releaseMessage(getLayers);
-			releaseMessage(createRect);
+
+#if _DEBUG
+			SANI_TRIGGER_EVENT(onInitialize, void(SaNiEngine* const), 
+							   this);
+#endif
 
 			// Create all initial services.
 			return true;
@@ -221,6 +209,11 @@ namespace sani {
 
 				// Update all services.
 				services.update(time);
+
+#if _DEBUG
+				SANI_TRIGGER_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&), 
+								   this, time);
+#endif
 			}
 
 			graphicsDevice->cleanUp();

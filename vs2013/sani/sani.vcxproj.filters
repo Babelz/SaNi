@@ -205,6 +205,9 @@
     <Filter Include="include\core\memory\inl">
       <UniqueIdentifier>{1d27b374-0f28-4fe1-baf8-d83952893e8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\impl">
+      <UniqueIdentifier>{51b4a1c8-4f5e-413e-8751-9c8bde3c1e0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -881,9 +884,6 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp">
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp">
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
@@ -989,9 +989,14 @@
     <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp">
+      <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
+      <Filter>include\engine\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
