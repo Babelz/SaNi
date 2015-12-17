@@ -2,6 +2,8 @@
 #include "sani/engine/messaging/messages/query_message.hpp"
 #include "sani/engine/messaging/messages/command_message.hpp"
 
+#include <sstream>
+
 namespace sani {
 
 	namespace engine {
@@ -25,9 +27,14 @@ namespace sani {
 					message->setContents(path);
 				}
 
-				void openFile(messages::QueryMessage* const message, const String& path) {
+				void openFile(messages::QueryMessage* const message, const String& path, const io::Filemode filemode) {
 					decorateMessage<messages::QueryMessage>(message, FilesystemServiceCommands::OpenFile);
-					message->setContents(path);
+					
+					String contents = path;
+					contents += "||";
+					contents += std::to_string(static_cast<uint32>(filemode));
+					
+					message->setContents(contents);
 				}
 
 				void closeFile(messages::CommandMessage* const message) {

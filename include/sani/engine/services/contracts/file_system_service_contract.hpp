@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/platform/file/file_stream.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
@@ -44,7 +45,7 @@ namespace sani {
 
 				void fileExists(messages::QueryMessage* const message, const String& path);
 				
-				void openFile(messages::QueryMessage* const message, const String& path);
+				void openFile(messages::QueryMessage* const message, const String& path, const io::Filemode filemode);
 
 				void closeFile(messages::CommandMessage* const message);
 				
