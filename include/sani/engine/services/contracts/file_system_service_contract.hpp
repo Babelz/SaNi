@@ -1,7 +1,9 @@
 #pragma once
 
-#include "sani/engine/messaging/messages/document_message.hpp"
+#include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
+
+SANI_FORWARD_DECLARE_3(sani, engine, messages, QueryMessage);
 
 namespace sani {
 
@@ -39,19 +41,19 @@ namespace sani {
 					TODO: comment.
 				*/
 
-				void fileExists(messages::DocumentMessage* const message);
+				void fileExists(messages::QueryMessage* const message);
 				
-				void openFile(messages::DocumentMessage* const message);
+				void openFile(messages::QueryMessage* const message);
 
-				void closeFile(messages::DocumentMessage* const message);
+				void closeFile(messages::QueryMessage* const message);
 				
-				void isAbsolutePath(messages::DocumentMessage* const message);
+				void isAbsolutePath(messages::QueryMessage* const message);
 				
-				void getFileDataString(messages::DocumentMessage* const message);
+				void getFileDataString(messages::QueryMessage* const message);
 
-				void listFiles(messages::DocumentMessage* const message);
+				void listFiles(messages::QueryMessage* const message);
 
-				void getFileData(messages::DocumentMessage* const message);
+				void getFileData(messages::QueryMessage* const message);
 			}
 		}
 	}

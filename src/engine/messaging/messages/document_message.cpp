@@ -9,7 +9,7 @@ namespace sani {
 		namespace messages {
 
 			DocumentMessage::DocumentMessage() : Message(MessageType::Document),
-												data(nullptr) {
+  												 data(nullptr) {
 			}
 
 			void DocumentMessage::setCommand(const uint32 command) {
