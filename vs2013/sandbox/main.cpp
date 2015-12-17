@@ -33,7 +33,7 @@
 
 #include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/graphics/renderables/circle.hpp"
-
+#include "sani/resource/sprite_font.hpp"
 #include "sani/engine/sani_engine.hpp"
 
 using namespace sani::resource;
@@ -58,6 +58,7 @@ void NO_ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLin
 	FileSystem fileSystem;
 	ResourceManager resources(&fileSystem, &graphicsDevice);
 	Texture2D* tuksu = resources.load<Texture2D>("../../assets/tuksu.snb");
+	SpriteFont* font = resources.load<SpriteFont>("../../assets/font.snb");
 	//volatile Effect* effect = resources.load<Effect>("../../assets/polygon.snb");
 
 	window.sizeChanged += SANI_EVENT_HANDLER(void(), ([&window, &graphicsDevice, &camera]() {

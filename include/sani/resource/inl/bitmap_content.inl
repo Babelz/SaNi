@@ -31,7 +31,8 @@ namespace sani {
 			using namespace sani::graphics;
 			if (typeid(PixelType) == typeid(Vector4<unsigned char>)) {
 				*out = SurfaceFormat::ColorRGBA;
-			}		
+			}
+			
 		}
 
 		template <class PixelType>
@@ -84,7 +85,7 @@ namespace sani {
 			uint32 size = getWidth() * getHeight();
 			
 			// resize the vector to fit all pixels in bytes
-			outPixels.resize(size * sizeof(PixelType));
+			//outPixels.resize(size * sizeof(PixelType));
 			// find the correct starting address and correct type
 			unsigned char* ptr = (unsigned char*)pixels;
 			outPixels.insert(
@@ -95,6 +96,14 @@ namespace sani {
 				// calculate the ending address in bytes of pixels
 				ptr + size * sizeof(PixelType)
 				);
+		}
+
+
+		template <class PixelType>
+		void PixelBitmapContent<PixelType>::setPixelData(std::vector<unsigned char>& pixels) {
+			uint32 size = getWidth() * getHeight();
+			SANI_ASSERT(size * sizeof(PixelType) >= pixels.size());
+			std::memcpy(this->pixels, pixels.data(), size * sizeof(PixelType));
 		}
 	}
 }

@@ -56,9 +56,8 @@ namespace sani {
 					}
 					readers.push_back(reader);
 				}
-				uint32 index = read7BitEncodedInt();
-				// TODO because there is only 1 reader atm we just assume it exist, FIX ME
-				// TODO should this be fixed?
+				uint32 index = static_cast<uint32>(read7BitEncodedInt());
+				
 				return (*readers[index]).read((this));
 			}
 

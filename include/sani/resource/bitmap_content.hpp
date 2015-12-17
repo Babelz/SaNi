@@ -4,7 +4,11 @@
 #include "sani/types.hpp"
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/core/math/rectangle.hpp"
+#include "sani/resource/serialization.hpp"
+#include "sani/forward_declare.hpp"
 #include <vector>
+SANI_FORWARD_DECLARE_3(sani, resource, reader, BitmapContentReader);
+
 namespace sani {
 	namespace resource {
 
@@ -30,6 +34,7 @@ namespace sani {
 			inline const uint32 getHeight() const;
 
 			virtual void getPixelData(std::vector<unsigned char>& pixels) const = 0;
+			virtual void setPixelData(std::vector<unsigned char>& pixels) = 0;
 		};
 
 		template <class PixelType>
@@ -53,9 +58,10 @@ namespace sani {
 			PixelType& getPixel(uint32 y, uint32 x) const;
 
 			virtual void getPixelData(std::vector<unsigned char>& pixels) const;
+			virtual void setPixelData(std::vector<unsigned char>& pixels) override;
 		};
 
 	}
 }
-
+SANI_DESERIALIZABLE_WITH(sani::resource::BitmapContent, sani::resource::reader::BitmapContentReader);
 #include "inl/bitmap_content.inl"

@@ -495,6 +495,9 @@
     <ClCompile Include="..\..\src\core\io\memory_stream.cpp">
       <Filter>src\core\io</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\reader\bitmap_content_reader.cpp">
+      <Filter>src\resource\reader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1004,6 +1007,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\io\memory_stream.hpp">
       <Filter>include\core\io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\sprite_font.hpp">
+      <Filter>include\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\reader\bitmap_content_reader.hpp">
+      <Filter>include\resource\reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

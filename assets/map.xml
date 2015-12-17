@@ -1,10 +1,10 @@
 <assets>
-		<asset filename="tuksu.png" 
+	<asset filename="font.spritefont"
+		importer="sani::resource::pipeline::SpriteFontDescriptionImporter" /> 
+	<asset filename="tuksu.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
 		writer="sani::resource::compiler::Texture2DWriter" />
-	<asset filename="font.spritefont"
-		importer="sani::resource::pipeline::SpriteFontDescriptionImporter" /> 
 	<asset filename="polygon.vert" 
 		importer="sani::resource::pipeline::EffectImporter" 
 		processor="sani::resource::processor::EffectProcessor"

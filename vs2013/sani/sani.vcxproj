@@ -246,6 +246,7 @@
     <ClCompile Include="..\..\src\resource\processor\effect_processor.cpp" />
     <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp" />
     <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp" />
+    <ClCompile Include="..\..\src\resource\reader\bitmap_content_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
@@ -412,6 +413,7 @@
     <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\reader\bitmap_content_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader.hpp" />
@@ -424,6 +426,7 @@
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
     <ClInclude Include="..\..\include\sani\resource\serialization.hpp" />
     <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\sprite_font.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
