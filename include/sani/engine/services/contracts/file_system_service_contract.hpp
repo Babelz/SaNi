@@ -3,7 +3,9 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
+SANI_FORWARD_DECLARE_3(sani, engine, messages, CommandMessage);
 SANI_FORWARD_DECLARE_3(sani, engine, messages, QueryMessage);
+SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 
 namespace sani {
 
@@ -32,28 +34,26 @@ namespace sani {
 
 					GetFileDataString	= 5,
 
-					ListFiles			= 6,
-
-					GetFileData			= 7
+					ListFiles			= 6
 				};
 
 				/*
 					TODO: comment.
 				*/
 
-				void fileExists(messages::QueryMessage* const message);
+				void fileExists(messages::QueryMessage* const message, const String& path);
 				
-				void openFile(messages::QueryMessage* const message);
+				void openFile(messages::QueryMessage* const message, const String& path);
 
-				void closeFile(messages::QueryMessage* const message);
+				void closeFile(messages::CommandMessage* const message);
 				
-				void isAbsolutePath(messages::QueryMessage* const message);
+				void isAbsolutePath(messages::QueryMessage* const message, const String& path);
 				
-				void getFileDataString(messages::QueryMessage* const message);
+				void getFileDataString(messages::QueryMessage* const message, const String& path);
 
-				void listFiles(messages::QueryMessage* const message);
+				void listFiles(messages::QueryMessage* const message, const String& path);
 
-				void getFileData(messages::QueryMessage* const message);
+				void getFileData(messages::QueryMessage* const message, const String& path);
 			}
 		}
 	}

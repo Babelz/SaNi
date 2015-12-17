@@ -21,8 +21,6 @@ namespace sani {
 
 				void setData(void* const data);
 				void* getData();
-
-				void clearData();
 			};
 		}
 	}

@@ -25,10 +25,6 @@ namespace sani {
 			void* DocumentMessage::getData() {
 				return data;
 			}
-
-			void DocumentMessage::clearData() {
-				data = nullptr;
-			}
 		}
 	}
 }
