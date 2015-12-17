@@ -28,6 +28,10 @@ namespace sani {
 			FontDescription* getDescription() const;
 
 			BitmapContent* getTexture() const;
+
+			const Glyphs& getGlyphs() const;
+
+			const Characters& getCharacters() const;
 		};
 	}
 }

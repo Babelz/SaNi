@@ -19,5 +19,14 @@ namespace sani {
 		BitmapContent* SpriteFontContent::getTexture() const {
 			return texture;
 		}
+
+		const std::vector<math::Recti>& SpriteFontContent::getGlyphs() const {
+			return glyphs;
+		}
+
+		const std::vector<unsigned short>& SpriteFontContent::getCharacters() const {
+			return characters;
+		}
+
 	}
 }
