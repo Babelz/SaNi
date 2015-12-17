@@ -1041,6 +1041,9 @@
     <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
+      <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

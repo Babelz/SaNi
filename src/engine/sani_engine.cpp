@@ -209,6 +209,8 @@ namespace sani {
 								   this, time);
 #endif
 			}
+
+			services.terminate();
 		}
 		void SaNiEngine::quit() {
 			running = false;
