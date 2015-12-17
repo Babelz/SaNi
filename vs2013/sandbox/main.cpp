@@ -44,6 +44,7 @@
 #include "sani/engine/messaging/messages/document_message.hpp"
 
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
+#include "sani/resource/sprite_font.hpp"
 
 using namespace sani::resource;
 using namespace sani::graphics;
@@ -231,7 +232,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 }
 
 #if _DEBUG
+
+FileSystem fileSystem;
+ResourceManager* resources;
 void initialize(SaNiEngine* const engine) {
+
+	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
+	renderservice::getGraphicsDevice(getGraphicsDevice);
+	engine->routeMessage(getGraphicsDevice);
+
+	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
+	engine->releaseMessage(getGraphicsDevice);
+
+	resources = new ResourceManager(&fileSystem, graphicsDevice);
+	Texture2D* tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
+	SpriteFont* font = resources->load<SpriteFont>("../../assets/font.snb");
+
 	std::vector<sani::graphics::Rectangle*> rects;
 
 	for (uint32 i = 1; i < 8; i++) {
@@ -249,6 +265,11 @@ void initialize(SaNiEngine* const engine) {
 		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
 		SANI_NEW_DYNAMIC(sani::graphics::Rectangle, rectangle,
 						 x, y, w, h);
+
+		rectangle->texture = tuksu;
+		rectangle->fill = color::white;
+		recomputeVertices(*rectangle);
+		updateRenderData(*rectangle);
 
 		engine->releaseMessage(createRectangleMessage);
 
