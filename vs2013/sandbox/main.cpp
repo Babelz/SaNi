@@ -237,7 +237,14 @@ FileSystem fileSystem;
 ResourceManager* resources;
 void initialize(SaNiEngine* const engine) {
 
-	resources = new ResourceManager(&fileSystem, engine->getGraphicsDevice());
+	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
+	renderservice::getGraphicsDevice(getGraphicsDevice);
+	engine->routeMessage(getGraphicsDevice);
+
+	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
+	engine->releaseMessage(getGraphicsDevice);
+
+	resources = new ResourceManager(&fileSystem, graphicsDevice);
 	Texture2D* tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
 	SpriteFont* font = resources->load<SpriteFont>("../../assets/font.snb");
 
