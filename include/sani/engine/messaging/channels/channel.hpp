@@ -53,6 +53,12 @@ namespace sani {
 				void route(messages::Message* const message);
 
 				virtual ~Channel();
+
+				Channel(Channel& other) = delete;
+				Channel(Channel&& other) = delete;
+
+				Channel& operator =(Channel& other) = delete;
+				Channel& operator =(Channel&& other) = delete;
 			};
 		}
 	}

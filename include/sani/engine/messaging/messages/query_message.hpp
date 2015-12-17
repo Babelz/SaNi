@@ -14,7 +14,7 @@ namespace sani {
 			/// Message that merges command and document functionalities 
 			/// inside a single message. Query messages are used with 
 			/// specialized operations that require a given command, 
-			/// some input for it and return data back to the user.
+			/// some input for it and return data back to the sender.
 			class QueryMessage : public Message {
 			private:
 				String contents;

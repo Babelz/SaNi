@@ -14,9 +14,7 @@ namespace sani {
 				static void decorateMessage(T* const message, const CVarServiceCommands cVarServiceCommand) {
 					const uint32 command = static_cast<uint32>(cVarServiceCommand);
 
-					message->getRecipients().clear();
 					message->getRecipients().add("cvar service");
-
 					message->setCommand(command);
 				}
 

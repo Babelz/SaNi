@@ -4,8 +4,7 @@
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/core/cvar/cvar.hpp"
-
-#include <list>
+#include "sani/core/cvar/cvar_file.hpp"
 
 SANI_FORWARD_DECLARE_3(sani, engine, messages, DocumentMessage);
 SANI_FORWARD_DECLARE_3(sani, engine, messages, QueryMessage);
@@ -30,6 +29,8 @@ namespace sani {
 
 				void generateDefaultConfig();
 				void loadConfig();
+
+				void compile(std::list<CVarFile>& files);
 
 				void getCVar(messages::QueryMessage* const message);
 				

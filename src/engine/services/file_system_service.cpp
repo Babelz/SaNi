@@ -37,6 +37,9 @@ namespace sani {
 				case FilesystemServiceCommands::GetFileData:
 					getFileData(message);
 					return;
+				case FilesystemServiceCommands::ListFiles:
+					listFiles(message);
+					return;
 				default:
 					// TODO: dead letter.
 					return;
@@ -140,7 +143,7 @@ namespace sani {
 
 				const String fileContents = fileSystem.getFileDataString(path);
 				String* result = getEngine()->allocateShared<String>();
-				SANI_NEW_DYNAMIC_DEFAULT(String, result);
+				SANI_NEW_DYNAMIC(String, result, fileContents);
 
 				message->setResults(result);
 				message->markHandled();

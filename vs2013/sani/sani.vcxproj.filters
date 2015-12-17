@@ -942,9 +942,6 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\document_message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp">
-      <Filter>include\engine\messaging\messages</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\utils\convert.hpp">
       <Filter>include\core\utils</Filter>
     </ClInclude>
@@ -1052,6 +1049,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\query_channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\message.hpp">
+      <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

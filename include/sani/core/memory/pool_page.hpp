@@ -25,7 +25,7 @@ namespace sani {
 	public:
 		PoolPage(const int32 size);
 
-		/// Returns true ig the given address is located
+		/// Returns true if the given address is located
 		/// in the pages address space.
 		inline bool isInAddressSpace(const IntPtr address);
 		/// Returns true if the page can be used for allocations.
@@ -36,7 +36,7 @@ namespace sani {
 		inline T* allocate();
 		/// Deallocates the given element and calls it's 
 		/// destructor.
-		inline bool deallocate(T* element);
+		inline void deallocate(T* element);
 
 		~PoolPage();
 

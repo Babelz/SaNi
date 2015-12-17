@@ -38,6 +38,8 @@ namespace sani {
 		}
 
 		ChannelManager::~ChannelManager() {
+			// TODO: deleting query channels throws and exception.
+
 			for (uint32 i = 0; i < MESSAGE_TYPES_COUNT; i++) delete channels[i];
 
 			delete[] channels;

@@ -16,9 +16,7 @@ namespace sani {
 				static void decorateMessage(T* const message, const FilesystemServiceCommands filesystemServiceCommands) {
 					const uint32 command = static_cast<uint32>(filesystemServiceCommands);
 
-					message->getRecipients().clear();
 					message->getRecipients().addRecipient("file system service");
-
 					message->setCommand(command);
 				}
 
@@ -37,8 +35,9 @@ namespace sani {
 					message->setContents(contents);
 				}
 
-				void closeFile(messages::CommandMessage* const message) {
+				void closeFile(messages::CommandMessage* const message, const String& path) {
 					decorateMessage<messages::CommandMessage>(message, FilesystemServiceCommands::CloseFile);
+					message->setData(path);
 				}
 
 				void isAbsolutePath(messages::QueryMessage* const message, const String& path) {

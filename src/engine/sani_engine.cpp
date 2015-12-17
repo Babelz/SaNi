@@ -23,6 +23,8 @@
 #include "sani/engine/services/file_system_service.hpp"
 #include "sani/graphics/renderables/renderables.hpp"
 
+#include "sani/engine/services/cvar_service.hpp"
+
 #include "sani/graphics/layer.hpp"
 
 namespace sani {
@@ -66,7 +68,11 @@ namespace sani {
 			return !fileSystemService->hasErrors();
 		}
 		bool SaNiEngine::initializeCVarSystem() {
-			return true;
+			CVarService* cvarService = new CVarService(this);
+			services.registerService(cvarService);
+			cvarService->start();
+
+			return !cvarService->hasErrors();
 		}
 		bool SaNiEngine::initializeGraphics() {
 			// Window init.
@@ -135,6 +141,7 @@ namespace sani {
 			*/
 
 			if (!initializeFilesystem())			return false;
+			if (!initializeCVarSystem())			return false;
 			if (!initializeGraphics())				return false;
 			if (!initializeRenderableManagers())	return false;
 

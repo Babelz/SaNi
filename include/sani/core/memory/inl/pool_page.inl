@@ -32,7 +32,7 @@ namespace sani {
 	}
 
 	template <class T>
-	bool PoolPage<T>::deallocate(T* element) {
+	void PoolPage<T>::deallocate(T* element) {
 		// No address space checks, do it in the allocator.
 		// Just assume this element is located in this pages
 		// address space.
@@ -40,7 +40,5 @@ namespace sani {
 
 		releasedElements.push(element);
 		element->~T();
-
-		return true;
 	}
 }

@@ -47,7 +47,7 @@ namespace sani {
 				
 				void openFile(messages::QueryMessage* const message, const String& path, const io::Filemode filemode);
 
-				void closeFile(messages::CommandMessage* const message);
+				void closeFile(messages::CommandMessage* const message, const String& path);
 				
 				void isAbsolutePath(messages::QueryMessage* const message, const String& path);
 				
