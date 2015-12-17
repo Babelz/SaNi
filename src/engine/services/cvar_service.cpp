@@ -1,8 +1,10 @@
+#include "sani/engine/services/contracts/file_system_service_contract.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
 #include "sani/engine/messaging/messages/query_message.hpp"
 #include "sani/engine/services/contracts/cvar_service_contract.hpp"
 #include "sani/engine/messaging/state_message.hpp"
 #include "sani/engine/services/cvar_service.hpp"
+#include "sani/engine/sani_engine.hpp"
 
 namespace sani {
 
@@ -54,6 +56,11 @@ namespace sani {
 			}
 
 			void CVarService::initialize() {
+				SaNiEngine* const engine = getEngine();
+				
+				auto openFile = engine->createEmptyMessage<messages::QueryMessage>();
+				filesystemservice::openFile(openFile, "configuration\\main.fg", io::Filemode::Read);
+				engine->routeMessage(openFile);
 			}
 			void CVarService::syncCVars() {
 			}

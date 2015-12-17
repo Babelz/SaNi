@@ -6,7 +6,7 @@ namespace sani {
 
 	namespace engine {
 
-		const uint32 MESSAGE_TYPES_COUNT = 5;
+		const uint32 MESSAGE_TYPES_COUNT = 6;
 
 		/// Enum of supported message types.
 		enum class MessageType : uint32 {

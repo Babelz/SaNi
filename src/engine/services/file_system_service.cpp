@@ -71,6 +71,13 @@ namespace sani {
 				const String& path = tokens[0];
 				const Filemode filemode = static_cast<Filemode>(utils::toUInt32(tokens[1]));
 
+				if (!fileSystem.fileExists(path)) {
+					message->setResults(nullptr);
+					message->markHandled();
+
+					return;
+				}
+
 				FileStream* fileStream = nullptr;
 				
 				fileSystem.openFile(path, filemode, &fileStream);
@@ -80,6 +87,12 @@ namespace sani {
 			}
 			void FileSystemService::closeFile(messages::CommandMessage* const message) {
 				const String& path = message->getData();
+
+				if (!fileSystem.fileExists(path)) {
+					message->markHandled();
+
+					return;
+				}
 
 				fileSystem.closeFile(path);
 
@@ -98,6 +111,14 @@ namespace sani {
 
 			void FileSystemService::getFileData(messages::QueryMessage* const message) {
 				const String& path = message->getContents();
+				
+				if (!fileSystem.fileExists(path)) {
+					message->setResults(nullptr);
+					message->markHandled();
+
+					return;
+				}
+
 				FileStream* stream = nullptr;
 				int64 size = 0;
 
@@ -109,6 +130,13 @@ namespace sani {
 			}
 			void FileSystemService::getFileDataString(messages::QueryMessage* const message) {
 				const String& path = message->getContents();
+
+				if (!fileSystem.fileExists(path)) {
+					message->setResults(nullptr);
+					message->markHandled();
+
+					return;
+				}
 
 				const String fileContents = fileSystem.getFileDataString(path);
 				String* result = getEngine()->allocateShared<String>();

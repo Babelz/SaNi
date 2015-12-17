@@ -183,6 +183,7 @@
     <ClCompile Include="..\..\src\engine\messaging\channels\command_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channels\query_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp" />
@@ -327,6 +328,7 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\document_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\query_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\command_message.hpp" />

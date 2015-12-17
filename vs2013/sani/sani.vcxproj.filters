@@ -511,6 +511,9 @@
     <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\channels\query_channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1046,6 +1049,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
       <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\query_channel.hpp">
+      <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
