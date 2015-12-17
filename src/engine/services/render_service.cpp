@@ -52,6 +52,13 @@ namespace sani {
 					getCameras(message);
 					return;
 				case RenderServiceCommands::GetClearColor:
+					getClearColor(message);
+					return;
+				case RenderServiceCommands::GetGraphicsDevice:
+					getGraphicsDevice(message);
+					return;
+				case RenderServiceCommands::GetWindow:
+					getWindow(message);
 					return;
 				default:
 					// TODO: dead letter.
@@ -78,6 +85,7 @@ namespace sani {
 					setClearColor(message);
 					return;
 				default:
+					// TODO: dead letter?
 					return;
 				}
 			}
@@ -184,6 +192,15 @@ namespace sani {
 				clearColor.b = utils::toFloat32(tokens[2]);
 				clearColor.a = utils::toFloat32(tokens[3]);
 
+				message->markHandled();
+			}
+
+			void RenderService::getGraphicsDevice(messages::DocumentMessage* const message) {
+				message->setData(graphicsDevice);
+				message->markHandled();
+			}
+			void RenderService::getWindow(messages::DocumentMessage* const message) {
+				message->setData(window);
 				message->markHandled();
 			}
 

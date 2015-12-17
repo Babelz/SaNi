@@ -64,6 +64,9 @@ namespace sani {
 				void getClearColor(messages::DocumentMessage* const message);
 				void setClearColor(messages::CommandMessage* const message);
 
+				void getGraphicsDevice(messages::DocumentMessage* const message);
+				void getWindow(messages::DocumentMessage* const message);
+
 				void renderToCamera(const graphics::Camera2D& camera);
 			protected:
 				void handleStateMessage(StateMessage* const message) final override;
