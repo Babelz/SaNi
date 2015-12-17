@@ -438,6 +438,7 @@
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
+    <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
