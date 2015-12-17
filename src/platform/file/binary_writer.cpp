@@ -4,9 +4,10 @@
 namespace sani {
 	namespace io {
 
-		BinaryWriter::BinaryWriter(const FileStream* stream)
+		BinaryWriter::BinaryWriter(Stream* stream)
 			: stream(stream) {}
 
+		// TODO should this free the stream or not?
 		BinaryWriter::~BinaryWriter() {}
 
 		void BinaryWriter::write(uint8 value) {
@@ -73,7 +74,8 @@ namespace sani {
 				--index;
 			}
 			if (!reached && index < 0) {
-				stream->write('\0', sizeof(char));
+				uint8 a = 0;
+				stream->write(&a, sizeof(uint8));
 			}
 		}
 

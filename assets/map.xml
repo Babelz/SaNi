@@ -1,4 +1,6 @@
 <assets>
+	<asset filename="font.spritefont"
+		importer="sani::resource::pipeline::SpriteFontDescriptionImporter" /> 
 	<asset filename="tuksu.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
@@ -11,6 +13,4 @@
 		importer="sani::resource::pipeline::EffectImporter" 
 		processor="sani::resource::processor::EffectProcessor"
 		writer="sani::resource::compiler::EffectImporter" />
-	<asset filename="font.spritefont"
-		importer="sani::resource::pipeline::SpriteFontDescriptionImporter" /> 
 </assets>

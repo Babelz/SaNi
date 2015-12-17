@@ -163,12 +163,12 @@ namespace sani {
 						imgHeight = static_cast<uint32>(rect.height()),
 						imgSize = imgWidth * imgHeight;
 
-					PixelBitmapContent<sani::math::Vec4>* pixels = new PixelBitmapContent<sani::math::Vec4f>(imgWidth, imgHeight);
+					PixelBitmapContent<sani::math::Vector4<unsigned char>>* pixels = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(imgWidth, imgHeight);
 					
 					for (Span& s : outlineSpans) {
 						for (int w = 0; w < s.width; ++w) {
 							int32 index = (int)((imgHeight - 1 - (s.y - rect.ymin)) * imgWidth + s.x - rect.xmin + w);
-							pixels->setPixel(index, sani::math::Vec4(1.f, 1.f, 1.f, s.coverage / 255.f)); // white
+							pixels->setPixel(index, sani::math::Vector4<unsigned char>(255, 255, 255, s.coverage)); // white
 						}
 					}
 
@@ -222,7 +222,7 @@ namespace sani {
 				uint32 outputHeight = calculateOutputHeight(glyphs);
 
 
-				BitmapContent* bitmap = new PixelBitmapContent<sani::math::Vec4f>(outputWidth, outputHeight);
+				BitmapContent* bitmap = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(outputWidth, outputHeight);
 
 				uint32 xOffset = 0u;
 				// TODO add max width

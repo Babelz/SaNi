@@ -4,7 +4,7 @@
 namespace sani {
 	namespace resource {
 		namespace reader {
-			ResourceReader::ResourceReader(const FileStream* stream,
+			ResourceReader::ResourceReader(FileStream* stream,
 				ResourceManager& manager, GraphicsDevice* device)
 				: BinaryReader(stream), manager(manager), graphicsDevice(device) {
 
@@ -20,7 +20,7 @@ namespace sani {
 				return graphicsDevice;
 			}
 
-			void* ResourceReader::readAsset(const ResoureTypeReaderManager& typeReaders) const {
+			void* ResourceReader::readAsset(const ResoureTypeReaderManager& typeReaders) {
 				// Ensure its SNB file
 				char magic[4] = { 0 };
 				magic[0] = readByte();
@@ -43,7 +43,6 @@ namespace sani {
 				// TODO can there be more than 1?
 				// at least now there cant be...
 
-				std::vector<ResourceTypeReader*> readers;
 				readers.reserve(typeReaderCount);
 
 				// read the strings
@@ -56,10 +55,9 @@ namespace sani {
 					}
 					readers.push_back(reader);
 				}
-
-				// TODO because there is only 1 reader atm we just assume it exist, FIX ME
-				// TODO should this be fixed?
-				return (*readers[0]).read(const_cast<ResourceReader*>(this));
+				uint32 index = static_cast<uint32>(read7BitEncodedInt());
+				
+				return (*readers[index]).read((this));
 			}
 
 		}
