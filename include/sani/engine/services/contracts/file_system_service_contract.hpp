@@ -17,7 +17,7 @@ namespace sani {
 					TODO: add definition.
 				*/
 
-				enum class FilesystemCommands : uint32 {
+				enum class FilesystemServiceCommands : uint32 {
 					FileExists			= 0,
 
 					OpenFile			= 1,
@@ -30,7 +30,9 @@ namespace sani {
 
 					GetFileDataString	= 5,
 
-					ListFiles			= 6
+					ListFiles			= 6,
+
+					GetFileData			= 7
 				};
 
 				/*
@@ -46,8 +48,10 @@ namespace sani {
 				void isAbsolutePath(messages::DocumentMessage* const message);
 				
 				void getFileDataString(messages::DocumentMessage* const message);
-				
+
 				void listFiles(messages::DocumentMessage* const message);
+
+				void getFileData(messages::DocumentMessage* const message);
 			}
 		}
 	}
