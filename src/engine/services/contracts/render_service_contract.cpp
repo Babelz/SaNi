@@ -51,6 +51,14 @@ namespace sani {
 				void getCameras(messages::DocumentMessage* const message) {
 					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetCameras);
 				}
+
+				void getGraphicsDevice(messages::DocumentMessage* const message) {
+					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetGraphicsDevice);
+				}
+
+				void getWindow(messages::DocumentMessage* const message) {
+					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetWindow);
+				}
 			}
 		}
 	}

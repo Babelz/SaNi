@@ -33,7 +33,8 @@ namespace sani {
 		SaNiEngine::SaNiEngine(const HINSTANCE hInstance) : services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
 															channels(&services),
 															hInstance(hInstance),
-															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic) {
+															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic),
+															running(false) {
 #if _DEBUG
 			SANI_INIT_EVENT(onInitialize, void(SaNiEngine* const engine));
 			SANI_INIT_EVENT(onUpdate, void(SaNiEngine* const engine, const EngineTime&));
@@ -57,7 +58,7 @@ namespace sani {
 
 		bool SaNiEngine::initializeGraphics() {
 			// Window init.
-			window = new graphics::Window(hInstance, 1280, 720);
+			graphics::Window* const window = new graphics::Window(hInstance, 1280, 720);
 
 			if (!window->initialize()) return false;
 
@@ -65,21 +66,25 @@ namespace sani {
 			window->show();
 
 			// Device init.
-			graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
-														  hInstance,
-														  1280,
-														  720);
+			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
+																						  hInstance,
+																						  1280,
+																						  720);
 
 			if (!graphicsDevice->initialize()) return false;
 
 			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
 
+			if (!initializeRenderService(graphicsDevice, window)) return false;
+
 			return true;
 		}
-		bool SaNiEngine::initializeRenderService() {
-			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
+		bool SaNiEngine::initializeRenderService(sani::graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window) {
+			services::RenderService* renderService = new services::RenderService(this, graphicsDevice, window);
 			services.registerService(renderService);
 			renderService->start();
+
+			if (renderService->hasErrors()) return false;
 
 			return true;
 		}
@@ -116,32 +121,7 @@ namespace sani {
 			// RUN!
 
 			if (!initializeGraphics())				return false;
-			if (!initializeRenderService())			return false;
 			if (!initializeRenderableManagers())	return false;
-
-			// Add default layer and camera.
-			// TODO: remove once editor stuff is ready.
-			auto createLayer = createEmptyMessage<messages::CommandMessage>();
-			services::renderservice::createLayer(createLayer, "l1||1||0.0");
-
-			auto createCamera = createEmptyMessage<messages::CommandMessage>();
-			services::renderservice::createCamera(createCamera, "c1");
-
-			auto getCameras = createEmptyMessage<messages::DocumentMessage>();
-			services::renderservice::getCameras(getCameras);
-
-			routeMessage(createLayer);
-			routeMessage(createCamera);
-			routeMessage(getCameras);
-
-			std::vector<graphics::Camera2D* const>* cameras = static_cast<std::vector<graphics::Camera2D* const>*>(getCameras->getData());
-			graphics::Camera2D* camera = *cameras->begin();
-			deallocateShared(cameras);
-
-			camera->setViewport(graphicsDevice->getViewport());
-			camera->computeTransformation();
-
-			releaseMessage(getCameras);
 
 #if _DEBUG
 			SANI_TRIGGER_EVENT(onInitialize, void(SaNiEngine* const), 
@@ -190,13 +170,12 @@ namespace sani {
 			// TODO: add services.
 			if (!initialize()) return;
 
+			running = true;
+
 			sani::Time last = sani::Clock::now();
 			sani::Time start = sani::Clock::now();
 			
-			while (window->isOpen()) {
-				// Clear last frame and listen for window events.
-				window->listen();
-
+			while (running) {
 				sani::Time current = sani::Clock::now();
 
 				auto delta = current - last;
@@ -215,16 +194,12 @@ namespace sani {
 								   this, time);
 #endif
 			}
-
-			graphicsDevice->cleanUp();
 		}
 		void SaNiEngine::quit() {
-			window->close();
+			running = false;
 		}
 
 		SaNiEngine::~SaNiEngine() {
-			delete graphicsDevice;
-			delete window;
 		}
 	}
 }
