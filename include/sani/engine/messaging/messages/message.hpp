@@ -41,6 +41,12 @@ namespace sani {
 				MessageType getType() const;
 
 				virtual ~Message();
+
+				Message(Message& other) = delete;
+				Message(Message&& other) = delete;
+
+				Message& operator =(Message& other) = delete;
+				Message& operator =(Message&& other) = delete;
 			};
 		}
 	}

@@ -3,8 +3,8 @@
 namespace sani {
 
 	template <class T>
-	PoolPage<T>::PoolPage(const int32 size) : size(size),
-		poolpointer(0) {
+	PoolPage<T>::PoolPage(const int32 size) : size(size), 
+											  poolpointer(0) {
 		memory = new T[size];
 
 		lowAddress = reinterpret_cast<IntPtr>(&memory[0]);

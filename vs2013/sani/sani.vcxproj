@@ -183,6 +183,7 @@
     <ClCompile Include="..\..\src\engine\messaging\channels\command_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\channels\query_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp" />
@@ -195,6 +196,7 @@
     <ClCompile Include="..\..\src\engine\services\circle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\file_system_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
@@ -326,10 +328,11 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\document_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\query_channel.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channel_manager.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\command_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\document_message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\query_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp" />
@@ -338,9 +341,11 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
@@ -437,6 +442,7 @@
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
+    <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />

@@ -20,7 +20,10 @@
 #include "sani/engine/services/circle_manager.hpp"
 #include "sani/engine/services/triangle_manager.hpp"
 
+#include "sani/engine/services/file_system_service.hpp"
 #include "sani/graphics/renderables/renderables.hpp"
+
+#include "sani/engine/services/cvar_service.hpp"
 
 #include "sani/graphics/layer.hpp"
 
@@ -56,6 +59,21 @@ namespace sani {
 			// TODO: notify cameras that the views bounds have changed.
 		}
 
+
+		bool SaNiEngine::initializeFilesystem() {
+			FileSystemService* fileSystemService = new FileSystemService(this);
+			services.registerService(fileSystemService);
+			fileSystemService->start();
+
+			return !fileSystemService->hasErrors();
+		}
+		bool SaNiEngine::initializeCVarSystem() {
+			CVarService* cvarService = new CVarService(this);
+			services.registerService(cvarService);
+			cvarService->start();
+
+			return !cvarService->hasErrors();
+		}
 		bool SaNiEngine::initializeGraphics() {
 			// Window init.
 			graphics::Window* const window = new graphics::Window(hInstance, 1280, 720);
@@ -84,9 +102,7 @@ namespace sani {
 			services.registerService(renderService);
 			renderService->start();
 
-			if (renderService->hasErrors()) return false;
-
-			return true;
+			return !renderService->hasErrors();
 		}
 		bool SaNiEngine::initializeRenderableManagers() {
 			SpriteManager* spriteManager		= new services::SpriteManager(this);
@@ -120,6 +136,12 @@ namespace sani {
 			// Load game data
 			// RUN!
 
+			/*
+				TODO: add error messages.
+			*/
+
+			if (!initializeFilesystem())			return false;
+			if (!initializeCVarSystem())			return false;
 			if (!initializeGraphics())				return false;
 			if (!initializeRenderableManagers())	return false;
 
@@ -194,6 +216,8 @@ namespace sani {
 								   this, time);
 #endif
 			}
+
+			services.terminate();
 		}
 		void SaNiEngine::quit() {
 			running = false;

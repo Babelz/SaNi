@@ -15,8 +15,6 @@ namespace sani {
 		class RecipientList {
 		private:
 			std::vector<const String> recipients;
-
-			uint32 count;
 		public:
 			RecipientList();
 

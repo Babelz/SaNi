@@ -13,12 +13,9 @@ namespace sani {
 				template<class T>
 				static void decorateMessage(T* const message, const RenderServiceCommands renderServiceCommand) {
 					const uint32 command = static_cast<uint32>(renderServiceCommand);
-
-					message->setCommand(command);
-					
-					message->getRecipients().clear();
-
+				
 					message->getRecipients().addRecipient("render service");
+					message->setCommand(command);
 				}
 				
 				template<class T>

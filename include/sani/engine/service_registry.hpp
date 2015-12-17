@@ -52,6 +52,9 @@ namespace sani {
 			
 			bool hasErrors() const;
 
+			/// Terminates and unregisteres all services.
+			void terminate();
+
 			~ServiceRegistry();
 
 			/*

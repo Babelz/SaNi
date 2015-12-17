@@ -62,6 +62,10 @@ namespace sani {
 			return false;
 		}
 
+		void ServiceRegistry::terminate() {
+			for (EngineService* const service : services) service->terminate();
+		}
+
 		ServiceRegistry::~ServiceRegistry() {
 			for (EngineService* const service : services) delete service;
 		}

@@ -81,6 +81,8 @@ namespace sani {
 
 			SANI_INIT_EVENT(sizeChanged, void());
 			SANI_INIT_EVENT(closed, void());
+
+			WIN32_ASSERT();
 		}
 
 		// Private.

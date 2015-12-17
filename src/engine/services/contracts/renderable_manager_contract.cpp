@@ -23,8 +23,6 @@ namespace sani {
 
 					const String& recipient = recipients[recipentIndex];
 
-					message->getRecipients().clear();
-
 					message->getRecipients().addRecipient(recipient);
 					message->setCommand(command);
 				}

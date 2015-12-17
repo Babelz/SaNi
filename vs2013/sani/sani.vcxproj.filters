@@ -507,8 +507,12 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\sprite_font.cpp">
-      <Filter>src\resource</Filter>
+    <ClCompile Include="..\..\src\resource\sprite_font.cpp" />
+    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\channels\query_channel.cpp">
+      <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -938,9 +942,6 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\document_message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp">
-      <Filter>include\engine\messaging\messages</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\utils\convert.hpp">
       <Filter>include\core\utils</Filter>
     </ClInclude>
@@ -1035,6 +1036,21 @@
       <Filter>include\resource\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\query_message.hpp">
+      <Filter>include\engine\messaging\messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp">
+      <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\query_channel.hpp">
+      <Filter>include\engine\messaging\channels</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
   </ItemGroup>

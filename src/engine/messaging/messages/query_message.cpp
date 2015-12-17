@@ -5,8 +5,10 @@ namespace sani {
 	namespace engine {
 		
 		namespace messages {
+
 			QueryMessage::QueryMessage() : Message(MessageType::Query),
-										   results(nullptr) {
+										   results(nullptr),
+										   command(0) {
 			}
 
 			void QueryMessage::setContents(const String& contents) {

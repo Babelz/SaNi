@@ -36,9 +36,9 @@ namespace sani {
 					// Initialize.
 					renderer.initialize();
 					initialize();
-
-					message->handled = true;
 				}
+
+				EngineService::handleStateMessage(message);
 			}
 
 			void RenderService::handleDocumentMessage(messages::DocumentMessage* const message) {
