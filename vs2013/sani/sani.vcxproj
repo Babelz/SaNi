@@ -458,6 +458,7 @@
     <None Include="..\..\include\sani\graphics\inl\render_element_data.inl" />
     <None Include="..\..\include\sani\graphics\inl\render_helper.inl" />
     <None Include="..\..\include\sani\graphics\inl\sprite.inl" />
+    <None Include="..\..\include\sani\graphics\inl\text.inl" />
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />

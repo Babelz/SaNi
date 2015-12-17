@@ -507,6 +507,9 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\sprite_font.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1107,6 +1110,9 @@
     </None>
     <None Include="..\..\include\sani\core\memory\inl\pool_page.inl">
       <Filter>include\core\memory\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\text.inl">
+      <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace sani {
 					characters.push_back(reader->readUint16());
 				}
 
-				SpriteFont* out = new SpriteFont(texture, glyphs);
+				SpriteFont* out = new SpriteFont(texture, glyphs, characters);
 
 				return out;
 			}
