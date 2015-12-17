@@ -18,7 +18,12 @@ namespace sani {
 			namespace filesystemservice {
 
 				/*
-					TODO: add definition.
+					File system service definition
+
+					Purpose of the service: Provide a platform independent interface
+											for the other services and the games to 
+											work with files, directories and 
+											file streams.
 				*/
 
 				enum class FilesystemServiceCommands : uint32 {
@@ -36,10 +41,6 @@ namespace sani {
 
 					ListFiles			= 6
 				};
-
-				/*
-					TODO: comment.
-				*/
 
 				void fileExists(messages::QueryMessage* const message, const String& path);
 				

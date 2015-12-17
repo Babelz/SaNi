@@ -11,7 +11,9 @@ namespace sani {
 			FileSystemService::FileSystemService(SaNiEngine* const engine) : EngineService("file system service", engine) {
 			}
 
-			void FileSystemService::handleDocumentMessage(messages::DocumentMessage* const message) {
+			void FileSystemService::handleQueryMessage(messages::DocumentMessage* const message) {
+			}
+			void FileSystemService::handleCommandMessage(messages::DocumentMessage* const message) {
 			}
 
 			void FileSystemService::fileExists(messages::DocumentMessage* const message) {
@@ -34,8 +36,16 @@ namespace sani {
 			}
 
 			void FileSystemService::receive(messages::Message* const message) {
-			}
-			void FileSystemService::update(const EngineTime& time) {
+				const MessageType messageType = message->getType();
+
+				switch (messageType) {
+				case MessageType::Query:
+					break;
+				case MessageType::Command:
+					break;
+				default:
+					break;
+				}
 			}
 		}
 	}

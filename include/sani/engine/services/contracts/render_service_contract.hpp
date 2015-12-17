@@ -58,25 +58,37 @@ namespace sani {
 				};
 
 				/// Generates a message that will causes the service to create a new layer with given name.
+				/// Message is released after it has been handled.
 				void createLayer(messages::CommandMessage* const message, const String& layerInformation);
 
 				/// Generates a message that will causes the service to delete the layer with given name.
+				/// Message is released after it has been handled.
 				void deleteLayer(messages::CommandMessage* const message, const String& layerInformation);
 
 				/// Generates a message that will return all layers.
+				/// User must release the message and the shared
+				/// memory contained in the message after handling.
 				void getLayers(messages::DocumentMessage* const message);
 
 				/// Generates a message that will causes the service to create a new camera with given name.
+				/// Message is released after it has been handled.
 				void createCamera(messages::CommandMessage* const message, const String& cameraInformation);
 
 				/// Generates a message that will causes the service to delete the camera with given name.
+				/// Message is released after it has been handled.
 				void deleteCamera(messages::CommandMessage* const message, const String& cameraInformation);
 
 				/// Generates a message that will return all Camera2Ds.
+				/// User must release the message and the shared
+				/// memory contained in the message after handling.
 				void getCameras(messages::DocumentMessage* const message);
 
+				/// Generates a message that will return the graphics device.
+				/// User must release the message after it has been handled.
 				void getGraphicsDevice(messages::DocumentMessage* const message);
 
+				/// Generates a message that will return the window.
+				/// User must release the message after it has been handled.
 				void getWindow(messages::DocumentMessage* const message);
 			}
 		}

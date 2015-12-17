@@ -17,7 +17,8 @@ namespace sani {
 			private:	
 				sani::io::FileSystem fileSystem;
 
-				void handleDocumentMessage(messages::DocumentMessage* const message);
+				void handleQueryMessage(messages::DocumentMessage* const message);
+				void handleCommandMessage(messages::DocumentMessage* const message);
 
 				void fileExists(messages::DocumentMessage* const message);
 				void openFile(messages::DocumentMessage* const message);
@@ -34,7 +35,6 @@ namespace sani {
 				FileSystemService(SaNiEngine* const engine);
 
 				void receive(messages::Message* const message) final override;
-				void update(const EngineTime& time) final override;
 			};
 		}
 	}
