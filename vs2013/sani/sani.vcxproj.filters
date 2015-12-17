@@ -504,6 +504,9 @@
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp">
+      <Filter>src\engine\messaging\messages</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1027,6 +1030,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp">
       <Filter>include\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\query_message.hpp">
+      <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

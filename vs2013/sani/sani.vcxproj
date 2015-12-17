@@ -188,6 +188,7 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\document_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\peer_to_peer_message.cpp" />
+    <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
@@ -328,6 +329,7 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\command_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\document_message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\messaging\messages\query_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\message_type.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp" />
