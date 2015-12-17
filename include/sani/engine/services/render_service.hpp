@@ -71,7 +71,7 @@ namespace sani {
 			protected:
 				void handleStateMessage(StateMessage* const message) final override;
 			public:
-				RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
+				RenderService(SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 
 				void receive(messages::Message* const message) final override;
 				void update(const EngineTime& time) final override;
