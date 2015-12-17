@@ -63,11 +63,7 @@ namespace sani {
 		}
 
 		void ServiceRegistry::terminate() {
-			for (EngineService* const service : services) {
-				service->terminate();
-				
-				unregisterService(service);
-			}
+			for (EngineService* const service : services) service->terminate();
 		}
 
 		ServiceRegistry::~ServiceRegistry() {

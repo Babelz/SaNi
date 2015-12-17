@@ -508,6 +508,9 @@
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\resource\sprite_font.cpp" />
+    <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1042,7 +1045,7 @@
       <Filter>src\engine\services\contracts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
-      <Filter>include\engine\services\contracts</Filter>
+      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
