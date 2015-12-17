@@ -66,6 +66,7 @@ namespace sani {
 			return !fileSystemService->hasErrors();
 		}
 		bool SaNiEngine::initializeCVarSystem() {
+			return true;
 		}
 		bool SaNiEngine::initializeGraphics() {
 			// Window init.
@@ -129,6 +130,11 @@ namespace sani {
 			// Load game data
 			// RUN!
 
+			/*
+				TODO: add error messages.
+			*/
+
+			if (!initializeFilesystem())			return false;
 			if (!initializeGraphics())				return false;
 			if (!initializeRenderableManagers())	return false;
 
