@@ -560,7 +560,7 @@ namespace sani {
 			GLint result = 0;
 
 			glGetProgramiv(program, GL_LINK_STATUS, &result);
-
+			
 			CHECK_FOR_ERRORS();
 
 			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to link shader to a program", __FUNCTION__, __LINE__));
@@ -666,6 +666,10 @@ namespace sani {
 			glDisableVertexAttribArray(location);
 			
 			CHECK_FOR_ERRORS();
+		}
+
+		void GraphicsDevice::bindAttributeLocation(const uint32 shader, const uint32 index, const String& name) {
+			glBindAttribLocation(shader, index, name.c_str());
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

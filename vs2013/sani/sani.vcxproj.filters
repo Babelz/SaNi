@@ -498,6 +498,12 @@
     <ClCompile Include="..\..\src\resource\reader\bitmap_content_reader.cpp">
       <Filter>src\resource\reader</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\file_system_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1001,7 +1007,6 @@
     <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
@@ -1013,6 +1018,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\bitmap_content_reader.hpp">
       <Filter>include\resource\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp">
+      <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp">
+      <Filter>include\resource\compiler</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
