@@ -338,6 +338,7 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
