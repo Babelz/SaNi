@@ -6,6 +6,7 @@
 #include "sani/engine/services/render_service.hpp"
 #include "sani/core/utils/string_utils.hpp"
 #include "sani/core/utils/convert.hpp"
+#include "sani/platform/graphics/window.hpp"
 #include "sani/engine/sani_engine.hpp"
 #include "sani/graphics/layer.hpp"
 
@@ -18,16 +19,23 @@ namespace sani {
 			using namespace renderservice;
 			using namespace graphics;
 
-			RenderService::RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice) : EngineService("render service", engine),
-																															 graphicsDevice(graphicsDevice),
-																															 renderer(graphicsDevice),
-																															 clearColor(color::black) {
+			RenderService::RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window) 
+				: EngineService("render service", engine),
+				  graphicsDevice(graphicsDevice),
+				  window(window),
+				  renderer(graphicsDevice),
+				  clearColor(color::black) {
+			}
+
+			void RenderService::windowClosed(SaNiEngine* const engine) {
+				engine->quit();
 			}
 
 			void RenderService::handleStateMessage(StateMessage* const message) {
 				if (message->oldState == ServiceState::Uninitialized) {
 					// Initialize.
 					renderer.initialize();
+					initialize();
 
 					message->handled = true;
 				}
@@ -72,6 +80,21 @@ namespace sani {
 				default:
 					return;
 				}
+			}
+
+			void RenderService::initialize() {
+				// Initialize default viewport.
+				Viewport viewport = Viewport(0, 0, window->getClientWidth(), window->getClientHeight());
+				graphicsDevice->setViewport(viewport);
+
+				// Initialize default camera and layer.
+				// TODO: remove in the future.
+				cameras.push_back(Camera2D(viewport));
+				layers.push_back(Layer("def_layer", LayerType::Dynamic, 0.0f));
+
+				// Listen for window exit events so we can close the engine after
+				// the window has been closed.
+				window->closed += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowClosed, getEngine()));
 			}
 
 			void RenderService::createLayer(messages::CommandMessage* const message) {
@@ -195,6 +218,8 @@ namespace sani {
 				}
 			}
 			void RenderService::update(const EngineTime& time) {
+				window->listen();
+
 				// No need to render if there are no cameras.
 				graphicsDevice->clear(clearColor.r, clearColor.g, clearColor.b, clearColor.a);
 
@@ -205,6 +230,13 @@ namespace sani {
 
 					renderToCamera(camera);
 				}
+			}
+
+			RenderService::~RenderService() {
+				graphicsDevice->cleanUp();
+				
+				delete graphicsDevice;
+				delete window;
 			}
 		}
 	}

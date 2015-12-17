@@ -37,12 +37,11 @@ namespace sani {
 			SANI_DECLARE_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&));
 #endif
 
+			bool running;
+
 			// Shared memory region used by the services to allocate
 			// temporary stuff such as results for messages.
 			HeapAllocator sharedServiceMemory;
-
-			graphics::GraphicsDevice* graphicsDevice;
-			graphics::Window* window;
 
 			ServiceRegistry services;
 			ChannelManager channels;
@@ -50,7 +49,7 @@ namespace sani {
 			static void windowSizeChanged(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 			
 			bool initializeGraphics();
-			bool initializeRenderService();
+			bool initializeRenderService(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 			bool initializeRenderableManagers();
 
 			/// Initializes the engine.

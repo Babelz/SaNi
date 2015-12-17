@@ -36,21 +36,25 @@ namespace sani {
 
 				/// List of all known commands for the render service.
 				enum class RenderServiceCommands : uint32 {
-					CreateLayer		= 0,
+					CreateLayer			= 0,
 
-					DeleteLayer		= 1,
+					DeleteLayer			= 1,
 
-					GetLayers		= 2,
+					GetLayers			= 2,
 
-					CreateCamera	= 3,
+					CreateCamera		= 3,
 
-					DeleteCamera	= 4,
+					DeleteCamera		= 4,
 
-					GetCameras		= 5,
+					GetCameras			= 5,
 
-					GetClearColor	= 6,
+					GetClearColor		= 6,
 
-					SetClearColor	= 7
+					SetClearColor		= 7,
+
+					GetGraphicsDevice	= 8,
+
+					GetWindow			= 9
 				};
 
 				/// Generates a message that will causes the service to create a new layer with given name.
@@ -70,6 +74,10 @@ namespace sani {
 
 				/// Generates a message that will return all Camera2Ds.
 				void getCameras(messages::DocumentMessage* const message);
+
+				void getGraphicsDevice(messages::DocumentMessage* const message);
+
+				void getWindow(messages::DocumentMessage* const message);
 			}
 		}
 	}
