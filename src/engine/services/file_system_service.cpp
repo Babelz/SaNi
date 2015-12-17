@@ -97,12 +97,36 @@ namespace sani {
 			}
 
 			void FileSystemService::getFileData(messages::QueryMessage* const message) {
+				const String& path = message->getContents();
+				FileStream* stream = nullptr;
+				int64 size = 0;
+
+				fileSystem.openFile(path, Filemode::Read, &stream);
+				unsigned char* data = fileSystem.getFileData(path, size);
 				
+				message->setResults(message);
+				message->markHandled();
 			}
 			void FileSystemService::getFileDataString(messages::QueryMessage* const message) {
+				const String& path = message->getContents();
+
+				const String fileContents = fileSystem.getFileDataString(path);
+				String* result = getEngine()->allocateShared<String>();
+				SANI_NEW_DYNAMIC_DEFAULT(String, result);
+
+				message->setResults(result);
+				message->markHandled();
 			}
 
 			void FileSystemService::listFiles(messages::QueryMessage* const message) {
+				const String& path = message->getContents();
+				std::vector<String>* files = getEngine()->allocateShared<std::vector<String>>();
+				SANI_NEW_DYNAMIC_DEFAULT(std::vector<String>, files);
+
+				fileSystem.listFiles(*files, path);
+
+				message->setResults(files);
+				message->markHandled();
 			}
 
 			void FileSystemService::receive(messages::Message* const message) {
