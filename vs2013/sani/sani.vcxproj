@@ -256,6 +256,7 @@
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
     <ClCompile Include="..\..\src\resource\spritefont_content.cpp" />
+    <ClCompile Include="..\..\src\resource\sprite_font.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />

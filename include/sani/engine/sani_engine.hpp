@@ -61,6 +61,12 @@ namespace sani {
 			SaNiEngine(const HINSTANCE hInstance);
 #endif
 
+#if _DEBUG
+			inline graphics::GraphicsDevice* const getGraphicsDevice() {
+				return graphicsDevice;
+			}
+#endif
+
 			/// Returns the first service with given name and ID.
 			EngineService* const locateService(const String& name, const uint32 id);
 			/// Returns the first service with given name.
