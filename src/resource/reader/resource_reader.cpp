@@ -43,7 +43,6 @@ namespace sani {
 				// TODO can there be more than 1?
 				// at least now there cant be...
 
-				std::vector<ResourceTypeReader*> readers;
 				readers.reserve(typeReaderCount);
 
 				// read the strings
