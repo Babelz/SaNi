@@ -14,6 +14,27 @@ namespace sani {
 				Texture2D* texture = reader->readObject<Texture2D>();
 				std::vector<sani::math::Rect32> glyphs;
 
+				uint32 glyphCount = static_cast<uint32>(reader->read7BitEncodedInt());
+				glyphs.reserve(glyphCount);
+
+				for (uint32 i = 0; i < glyphCount; ++i) {
+					math::Recti rect;
+					rect.x = reader->readInt32();
+					rect.y = reader->readInt32();
+					rect.w = reader->readInt32();
+					rect.h = reader->readInt32();
+					glyphs.push_back(rect);
+				}
+
+				std::vector<unsigned short> characters;
+
+				uint32 charCount = static_cast<uint32>(reader->read7BitEncodedInt());
+				characters.reserve(charCount);
+
+				for (uint32 i = 0; i < charCount; ++i) {
+					characters.push_back(reader->readUint16());
+				}
+
 				SpriteFont* out = new SpriteFont(texture, glyphs);
 
 				return out;
