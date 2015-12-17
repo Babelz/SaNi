@@ -30,9 +30,7 @@ namespace sani {
 
 					GetFileDataString	= 5,
 
-					ListFiles			= 6,
-
-					GetFileData			= 7
+					ListFiles			= 6
 				};
 
 				/*
