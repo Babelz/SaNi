@@ -29,6 +29,8 @@ namespace sani {
 			Circle(const float32 radius, const uint32 vertices);
 			Circle(const float32 radius);
 			Circle();
+			
+			~Circle() = default;
 		};
 
 		inline void recomputeVertices(Circle& circle);

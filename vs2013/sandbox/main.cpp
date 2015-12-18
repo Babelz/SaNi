@@ -7,6 +7,8 @@
 
 #include <Windows.h>
 
+#endif
+
 #include "sani/core/memory/memory.hpp"
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 #include "sani/graphics/renderer.hpp"
@@ -214,6 +216,7 @@ void update(SaNiEngine* const engine, const sani::EngineTime& time);
 //
 //	graphicsDevice.cleanUp();
 //}
+
 void ENGINE_MAIN(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	SaNiEngine engine(hInstance);
 
@@ -231,65 +234,118 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 
-#if _DEBUG
-
-FileSystem fileSystem;
-ResourceManager* resources;
 void initialize(SaNiEngine* const engine) {
-
-	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
-	renderservice::getGraphicsDevice(getGraphicsDevice);
-	engine->routeMessage(getGraphicsDevice);
-
-	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
-	engine->releaseMessage(getGraphicsDevice);
-
-	resources = new ResourceManager(&fileSystem, graphicsDevice);
-	Texture2D* tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
-	SpriteFont* font = resources->load<SpriteFont>("../../assets/font.snb");
-
-	std::vector<sani::graphics::Rectangle*> rects;
-
-	for (uint32 i = 1; i < 8; i++) {
-		const float32 w = 64.0f;
-		const float32 h = 64.0f;
-
-		const float32 x = i * 64.0f + w;
-		const float32 y = i * 64.0f + h;
-		
-		auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
-		createElement(createRectangleMessage, ElementType::Rectangle);
-		
-		engine->routeMessage(createRectangleMessage);
-
-		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
-		SANI_NEW_DYNAMIC(sani::graphics::Rectangle, rectangle,
-						 x, y, w, h);
-
-		rectangle->texture = tuksu;
-		rectangle->fill = color::white;
-		recomputeVertices(*rectangle);
-		updateRenderData(*rectangle);
-
-		engine->releaseMessage(createRectangleMessage);
-
-		rects.push_back(rectangle);
-	}
-
-	auto getLayersMessage = engine->createEmptyMessage<DocumentMessage>();
-	getLayers(getLayersMessage);
-	engine->routeMessage(getLayersMessage);
-
-	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
+	auto getLayers = engine->createEmptyMessage<messages::DocumentMessage>();
+	renderservice::getLayers(getLayers);
+	engine->routeMessage(getLayers);
+	
+	auto layers = static_cast<std::vector<Layer* const>*>(getLayers->getData());
 	auto layer = layers->at(0);
 
-	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
-
-	engine->releaseMessage(getLayersMessage);
+	engine->releaseMessage(getLayers);
 	engine->deallocateShared(layers);
+
+	for (uint32 i = 0; i < 5; i++) {
+		auto createCircle = engine->createEmptyMessage<messages::DocumentMessage>();
+		renderablemanager::createElement(createCircle, ElementType::Circle);
+		engine->routeMessage(createCircle);
+		engine->releaseMessage(createCircle);
+
+		auto circle = static_cast<Circle*>(createCircle->getData());
+		//SANI_NEW_DYNAMIC(Circle, circle,
+		//				   128.0f + i * 256.0f, 128.0f, 128.0f, 5 + i * 2);
+		circle = new(circle)Circle(128.0f + i * 256.0f, 128.0f, 128.0f, 5 + i * 2);
+		
+		circle->borderThickness = 4.0f * i;
+
+		if (i == 3) {
+			circle->transform.scale.x = 2.0f;
+			circle->transform.scale.y = 0.5f;
+		}
+
+		recomputeVertices(*circle);
+		updateRenderData(*circle);
+
+		layer->add(circle);
+	}
+
+	for (uint32 i = 0; i < 5; i++) {
+		auto createTriangle = engine->createEmptyMessage<messages::DocumentMessage>();
+		renderablemanager::createElement(createTriangle, ElementType::Triangle);
+		engine->routeMessage(createTriangle);
+		engine->releaseMessage(createTriangle);
+		
+		auto triangle = static_cast<Triangle*>(createTriangle->getData());
+		//SANI_NEW_DYNAMIC(Triangle, triangle,
+		//				   128.0f + 128.0f * i, 300.0f, 96.0f, 71.0f);
+		triangle = new(triangle)Triangle(128.0f + 128.0f * i, 300.0f, 96.0f, 71.0f);
+
+
+		layer->add(triangle);
+	}
 }
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {
 }
-#endif
 
-#endif
+//#if _DEBUG
+//
+//FileSystem fileSystem;
+//ResourceManager* resources;
+//void initialize(SaNiEngine* const engine) {
+//
+//	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
+//	renderservice::getGraphicsDevice(getGraphicsDevice);
+//	engine->routeMessage(getGraphicsDevice);
+//
+//	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
+//	engine->releaseMessage(getGraphicsDevice);
+//
+//	resources = new ResourceManager(&fileSystem, graphicsDevice);
+//	Texture2D* tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
+//	SpriteFont* font = resources->load<SpriteFont>("../../assets/font.snb");
+//
+//	std::vector<sani::graphics::Rectangle*> rects;
+//
+//	for (uint32 i = 1; i < 8; i++) {
+//		const float32 w = 64.0f;
+//		const float32 h = 64.0f;
+//
+//		const float32 x = i * 64.0f + w;
+//		const float32 y = i * 64.0f + h;
+//		
+//		auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
+//		createElement(createRectangleMessage, ElementType::Rectangle);
+//		
+//		engine->routeMessage(createRectangleMessage);
+//
+//		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
+//		SANI_NEW_DYNAMIC(sani::graphics::Rectangle, rectangle,
+//						 x, y, w, h);
+//
+//		rectangle->texture = tuksu;
+//		rectangle->fill = color::white;
+//		recomputeVertices(*rectangle);
+//		updateRenderData(*rectangle);
+//
+//		engine->releaseMessage(createRectangleMessage);
+//
+//		rects.push_back(rectangle);
+//	}
+//
+//	auto getLayersMessage = engine->createEmptyMessage<DocumentMessage>();
+//	getLayers(getLayersMessage);
+//	engine->routeMessage(getLayersMessage);
+//
+//	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
+//	auto layer = layers->at(0);
+//
+//	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+//
+//	engine->releaseMessage(getLayersMessage);
+//	engine->deallocateShared(layers);
+//}
+//void update(SaNiEngine* const engine, const sani::EngineTime& time) {
+//}
+//#endif
+//
+//#endif

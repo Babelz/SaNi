@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#define SANI_NEW_DYNAMIC_DEFAULT(type, ptr)	new (ptr) type()
+#define SANI_NEW_DYNAMIC_DEFAULT(type, ptr)	    new (ptr) type()
 #define SANI_NEW_DYNAMIC(type, ptr, ...)	    new (ptr) type(##__VA_ARGS__)
 
 #define BLOCK_1KB		1024

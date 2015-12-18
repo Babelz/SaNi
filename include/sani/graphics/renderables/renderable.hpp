@@ -33,7 +33,7 @@ namespace sani {
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);
 			Renderable(const uint32 vertices, const uint32 renderElements);
 
-			~Renderable();
+			virtual ~Renderable();
 
 			/*
 				Common interface operations between renderables:
