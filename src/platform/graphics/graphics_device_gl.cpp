@@ -469,42 +469,30 @@ namespace sani {
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
 			// Assume that the render texture has been initialized and generated.
 
-			/*
-				TODO: impl multisampling.
-			*/
-#if 0
 			// Generate frame buffer.
 			glGenFramebuffers(1, &frameBuffer);
 			glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 
 			// Check for errors.
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
-
-			// Assume the texture is generated and in a valid state.
-			glBindTexture(GL_TEXTURE_2D, texture);
-
-			CHECK_FOR_ERRORS(); if (hasErrors()) return;
-
+			/*
 			// Generate depth buffer.
 			glGenRenderbuffers(1, &depthBuffer);
 			glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
 
-			CHECK_FOR_ERRORS(); if (hasErrors()) return;
+			CHECK_FOR_ERRORS(); if (hasErrors()) return;*/
 
-		// WIN32	glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture, 0);
-		// ANDROID  glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, glTexture, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 
-			GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
+		/*	GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
 			//glDrawBuffers(1, drawBuffers);
 
-			glBindRenderbuffer(GL_RENDERBUFFER, 0);
-			glBindTexture(GL_TEXTURE_2D, 0);
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glBindRenderbuffer(GL_RENDERBUFFER, 0);*/
+			//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
 			CHECK_FOR_ERRORS();
-#endif
 		}
 
 		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {

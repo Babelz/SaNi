@@ -32,6 +32,9 @@ namespace sani {
 				case RenderableManagerCommands::GetElements:
 					getElements(message);
 					return;
+				case RenderableManagerCommands::EnqueueForUpdates:
+					queueForUpdates(message);
+					return;
 				default:
 					return;
 				}

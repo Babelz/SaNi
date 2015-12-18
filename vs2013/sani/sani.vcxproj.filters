@@ -1127,6 +1127,9 @@
     <None Include="..\..\include\sani\core\memory\inl\pool_page.inl">
       <Filter>include\core\memory\inl</Filter>
     </None>
+    <None Include="..\..\include\sani\graphics\inl\text.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt">

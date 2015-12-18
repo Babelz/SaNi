@@ -166,7 +166,7 @@ namespace sani {
 
 					PixelBitmapContent<sani::math::Vector4<unsigned char>>* pixels = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(imgWidth, imgHeight);
 					
-					for (Span& s : outlineSpans) {
+					for (Span& s : spans) { // outlineSpans actually !!!!! TODO
 						for (int w = 0; w < s.width; ++w) {
 							int32 index = (int)((imgHeight - 1 - (s.y - rect.ymin)) * imgWidth + s.x - rect.xmin + w);
 							pixels->setPixel(index, sani::math::Vector4<unsigned char>(255, 255, 255, s.coverage)); // white

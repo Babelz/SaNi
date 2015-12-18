@@ -91,7 +91,7 @@ namespace sani {
 
 			void CVarService::generateDefaultConfig() {
 				// TODO: impl default config.
-				throw std::runtime_error("not implemented");
+				//throw std::runtime_error("not implemented");
 			}
 			void CVarService::loadConfig() {
 				//// TODO: fix duplicated strings.

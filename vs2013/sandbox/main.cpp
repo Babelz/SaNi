@@ -234,14 +234,99 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 
+void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
+	float offx = 400;
+	float offy = 350;
+	for (uint32 i = 0; i < text.size(); ++i) {
+		unsigned short c = static_cast<unsigned short>(text[i]);
+		auto it = std::find_if(font->characters.begin(), font->characters.end(), [c](unsigned short a) {
+			return c == a;
+		});
+
+		if (it == font->characters.end()) throw std::runtime_error("asd");
+
+		uint32 index = std::distance(font->characters.begin(), it) - 1;
+		auto rect = font->glyphs[index];
+		auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
+		createElement(createRectangleMessage, ElementType::Rectangle);
+
+		engine->routeMessage(createRectangleMessage);
+
+		const float32 w = rect.w;
+		const float32 h = rect.h;
+
+		const float32 x = offx;
+		const float32 y = offy;
+
+		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
+		SANI_NEW_DYNAMIC(sani::graphics::Rectangle, rectangle,
+			x, y, w, h);
+
+		rectangle->texture = font->texture;
+		rectangle->fill = color::blue;
+		rectangle->textureSource = sani::math::Rectf(rect.x, rect.y, rect.h, rect.w);
+		recomputeVertices(*rectangle);
+		setupShapeForRendering(rectangle, rectangle->borderThickness);
+		// top left x
+		float s0 = rect.x / (float)font->texture->getWidth();
+		// top left y
+		float t0 = rect.y / (float)font->texture->getHeight();
+		// bottom right x
+		float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
+		// bottom right y
+		float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
+
+		rectangle->renderData.vertices[0].textureCoordinates.x = s0;
+		rectangle->renderData.vertices[0].textureCoordinates.y = t0;
+
+		rectangle->renderData.vertices[1].textureCoordinates.x = s1;
+		rectangle->renderData.vertices[1].textureCoordinates.y = t0;
+
+		rectangle->renderData.vertices[2].textureCoordinates.x = s0;
+		rectangle->renderData.vertices[2].textureCoordinates.y = t1;
+
+		rectangle->renderData.vertices[3].textureCoordinates.x = s1;
+		rectangle->renderData.vertices[3].textureCoordinates.y = t1;
+
+		recomputeVertices(*rectangle);
+		useTexturing(rectangle);
+
+		engine->releaseMessage(createRectangleMessage);
+
+		rects.push_back(rectangle);
+		offx += w;
+	}
+}
+
 FileSystem fileSystem;
 ResourceManager* resources;
+
+std::vector<Circle*> circles;
+std::vector<sani::graphics::Rectangle*> rects;
+
+void updateCamera(SaNiEngine* engine, GraphicsDevice* graphicsDevice, Window* wnd) {
+	auto getCamera = engine->createEmptyMessage<messages::DocumentMessage>();
+	renderservice::getCameras(getCamera);
+	engine->routeMessage(getCamera);
+
+	auto cameras = static_cast<std::vector<Camera2D* const>*>(getCamera->getData());
+	auto camera = cameras->at(0);
+
+	const uint32 w = wnd->getWidth();
+	const uint32 h = wnd->getHeight();
+
+	graphicsDevice->setViewport(Viewport(0, 0, w, h));
+	camera->setViewport(Viewport(0, 0, w, h));
+
+	engine->releaseMessage(getCamera);
+	engine->deallocateShared(cameras);
+}
 
 void initialize(SaNiEngine* const engine) {
 	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
 	renderservice::getGraphicsDevice(getGraphicsDevice);
 	engine->routeMessage(getGraphicsDevice);
-	
+
 	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
 	engine->releaseMessage(getGraphicsDevice);
 
@@ -253,7 +338,7 @@ void initialize(SaNiEngine* const engine) {
 	auto getLayers = engine->createEmptyMessage<messages::DocumentMessage>();
 	renderservice::getLayers(getLayers);
 	engine->routeMessage(getLayers);
-	
+
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayers->getData());
 	auto layer = layers->at(0);
 
@@ -268,16 +353,11 @@ void initialize(SaNiEngine* const engine) {
 
 		auto circle = static_cast<Circle*>(createCircle->getData());
 		SANI_NEW_DYNAMIC(Circle, circle,
-						 128.0f + i * 256.0f, 128.0f, 128.0f, 5 + i * 2);
-		
+			128.0f + i * 256.0f, 128.0f, 128.0f, 5 + i * 2);
+
 		circle->borderThickness = 4.0f * i;
 
 		if (i == 4) {
-			circle->transform.scale.x = 2.0f;
-			circle->transform.scale.y = 0.5f;
-
-			circle->borderThickness = 0.0f;
-
 			circle->fill = color::blue;
 		}
 
@@ -285,6 +365,8 @@ void initialize(SaNiEngine* const engine) {
 		updateRenderData(*circle);
 
 		layer->add(circle);
+
+		circles.push_back(circle);
 	}
 
 	for (uint32 i = 0; i < 5; i++) {
@@ -292,10 +374,10 @@ void initialize(SaNiEngine* const engine) {
 		renderablemanager::createElement(createTriangle, ElementType::Triangle);
 		engine->routeMessage(createTriangle);
 		engine->releaseMessage(createTriangle);
-		
+
 		auto triangle = static_cast<Triangle*>(createTriangle->getData());
 		SANI_NEW_DYNAMIC(Triangle, triangle,
-						 256.0f, 256.0f);
+			256.0f, 256.0f);
 
 		triangle->transform.position.x = 96.0f + i * 300.0f;
 		triangle->transform.position.y = 300.0f;
@@ -309,12 +391,12 @@ void initialize(SaNiEngine* const engine) {
 	}
 
 	for (uint32 i = 0; i < 5; i++) {
-		auto createTriangle = engine->createEmptyMessage<messages::DocumentMessage>();
-		renderablemanager::createElement(createTriangle, ElementType::Rectangle);
-		engine->routeMessage(createTriangle);
-		engine->releaseMessage(createTriangle);
+		auto createRectangle = engine->createEmptyMessage<messages::DocumentMessage>();
+		renderablemanager::createElement(createRectangle, ElementType::Rectangle);
+		engine->routeMessage(createRectangle);
+		engine->releaseMessage(createRectangle);
 
-		auto rectangle = static_cast<sani::graphics::Rectangle*>(createTriangle->getData());
+		auto rectangle = static_cast<sani::graphics::Rectangle*>(createRectangle->getData());
 		rectangle = new(rectangle)sani::graphics::Rectangle(0.0f + i * 300.0f, 550.0f, siqu->getWidth(), siqu->getHeight());
 
 		rectangle->texture = siqu;
@@ -324,9 +406,49 @@ void initialize(SaNiEngine* const engine) {
 		updateRenderData(*rectangle);
 
 		layer->add(rectangle);
+
+		rects.push_back(rectangle);
 	}
+
+	std::vector<sani::graphics::Rectangle*> txtRects;
+
+	createText(font, "BONGOJONGO", graphicsDevice, engine, txtRects);
+
+	for (auto* r : txtRects) {
+		layer->add(r);
+	}
+
+	auto getWindow = engine->createEmptyMessage<messages::DocumentMessage>();
+	renderservice::getWindow(getWindow);
+	engine->routeMessage(getWindow);
+
+	auto wnd = static_cast<Window*>(getWindow->getData());
+	wnd->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(updateCamera, engine, graphicsDevice, wnd));
+
+	engine->releaseMessage(getWindow);
 }
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {
+	for (auto* c : circles) {
+		c->transform.rotation += 0.005f * time.getFrameTime();
+
+		auto updateElement = engine->createEmptyMessage<messages::DocumentMessage>();
+		renderablemanager::queueForUpdates(updateElement, ElementType::Circle);
+		updateElement->setData(c);
+		
+		engine->routeMessage(updateElement);
+		engine->releaseMessage(updateElement);
+	}
+
+	for (auto* c : rects) {
+		c->transform.rotation += 0.005f * time.getFrameTime();
+
+		auto updateElement = engine->createEmptyMessage<messages::DocumentMessage>();
+		renderablemanager::queueForUpdates(updateElement, ElementType::Rectangle);
+		updateElement->setData(c);
+
+		engine->routeMessage(updateElement);
+		engine->releaseMessage(updateElement);
+	}
 }
 
 //#if _DEBUG
