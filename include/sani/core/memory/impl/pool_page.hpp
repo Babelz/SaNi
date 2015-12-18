@@ -3,9 +3,9 @@
 namespace sani {
 
 	template <class T>
-	PoolPage<T>::PoolPage(const int32 size) : size(size), 
+	PoolPage<T>::PoolPage(const int32 size) : size(size * sizeof(T)), 
 											  poolpointer(0) {
-		memory = new T[size];
+		memory = new char[size * sizeof(T)];
 
 		lowAddress = reinterpret_cast<IntPtr>(&memory[0]);
 		highAddress = reinterpret_cast<IntPtr>(&memory[size - 1]);

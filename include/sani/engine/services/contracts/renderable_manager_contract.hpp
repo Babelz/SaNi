@@ -41,10 +41,10 @@ namespace sani {
 					DeleteElement = 1,
 
 					/// Updates given elements vertex and render data.
-					EnqueueForUpdates = 3,
+					EnqueueForUpdates = 2,
 
 					/// Returns all elements of a given type to the user.
-					GetElements = 4
+					GetElements = 3
 				};
 
 				enum class ElementType : uint32 {

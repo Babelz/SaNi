@@ -9,20 +9,20 @@ namespace sani {
 	}
 	template <class T>
 	bool PoolPage<T>::canAllocate() const {
-		return poolpointer < size || releasedElements.size() > 0;
+		return poolpointer < size || releasedHandles.size() > 0;
 	}
 
 	template <class T>
 	T* PoolPage<T>::allocate() {
 		T* element = nullptr;
 
-		if (!releasedElements.empty()) {
-			element = releasedElements.top();
-			releasedElements.pop();
+		if (!releasedHandles.empty()) {
+			element = reinterpret_cast<T*>(releasedHandles.top());
+			releasedHandles.pop();
 		} else {
 			if (poolpointer < size) {
-				element = &memory[poolpointer];
-				poolpointer++;
+				element = reinterpret_cast<T*>(&memory[poolpointer]);
+				poolpointer += sizeof(T);
 			}
 		}
 
@@ -38,7 +38,9 @@ namespace sani {
 		// address space.
 		SANI_ASSERT(element != nullptr);
 
-		releasedElements.push(element);
+		// TODO: check if this works.
+		// had to change the mem to char*... 
+		releasedHandles.push(reinterpret_cast<char*>(element));
 		element->~T();
 	}
 }

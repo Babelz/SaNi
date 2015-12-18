@@ -234,7 +234,22 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	return 0;
 }
 
+FileSystem fileSystem;
+ResourceManager* resources;
+
 void initialize(SaNiEngine* const engine) {
+	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
+	renderservice::getGraphicsDevice(getGraphicsDevice);
+	engine->routeMessage(getGraphicsDevice);
+	
+	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
+	engine->releaseMessage(getGraphicsDevice);
+
+	resources = new ResourceManager(&fileSystem, graphicsDevice);
+	Texture2D* tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
+	Texture2D* siqu = resources->load<Texture2D>("../../assets/siqu.snb");
+	SpriteFont* font = resources->load<SpriteFont>("../../assets/font.snb");
+
 	auto getLayers = engine->createEmptyMessage<messages::DocumentMessage>();
 	renderservice::getLayers(getLayers);
 	engine->routeMessage(getLayers);
@@ -252,15 +267,18 @@ void initialize(SaNiEngine* const engine) {
 		engine->releaseMessage(createCircle);
 
 		auto circle = static_cast<Circle*>(createCircle->getData());
-		//SANI_NEW_DYNAMIC(Circle, circle,
-		//				   128.0f + i * 256.0f, 128.0f, 128.0f, 5 + i * 2);
-		circle = new(circle)Circle(128.0f + i * 256.0f, 128.0f, 128.0f, 5 + i * 2);
+		SANI_NEW_DYNAMIC(Circle, circle,
+						 128.0f + i * 256.0f, 128.0f, 128.0f, 5 + i * 2);
 		
 		circle->borderThickness = 4.0f * i;
 
-		if (i == 3) {
+		if (i == 4) {
 			circle->transform.scale.x = 2.0f;
 			circle->transform.scale.y = 0.5f;
+
+			circle->borderThickness = 0.0f;
+
+			circle->fill = color::blue;
 		}
 
 		recomputeVertices(*circle);
@@ -276,12 +294,36 @@ void initialize(SaNiEngine* const engine) {
 		engine->releaseMessage(createTriangle);
 		
 		auto triangle = static_cast<Triangle*>(createTriangle->getData());
-		//SANI_NEW_DYNAMIC(Triangle, triangle,
-		//				   128.0f + 128.0f * i, 300.0f, 96.0f, 71.0f);
-		triangle = new(triangle)Triangle(128.0f + 128.0f * i, 300.0f, 96.0f, 71.0f);
+		SANI_NEW_DYNAMIC(Triangle, triangle,
+						 256.0f, 256.0f);
 
+		triangle->transform.position.x = 96.0f + i * 300.0f;
+		triangle->transform.position.y = 300.0f;
+		triangle->texture = tuksu;
+		triangle->fill = color::white;
+
+		recomputeVertices(*triangle);
+		updateRenderData(*triangle);
 
 		layer->add(triangle);
+	}
+
+	for (uint32 i = 0; i < 5; i++) {
+		auto createTriangle = engine->createEmptyMessage<messages::DocumentMessage>();
+		renderablemanager::createElement(createTriangle, ElementType::Rectangle);
+		engine->routeMessage(createTriangle);
+		engine->releaseMessage(createTriangle);
+
+		auto rectangle = static_cast<sani::graphics::Rectangle*>(createTriangle->getData());
+		rectangle = new(rectangle)sani::graphics::Rectangle(0.0f + i * 300.0f, 550.0f, siqu->getWidth(), siqu->getHeight());
+
+		rectangle->texture = siqu;
+		rectangle->fill = color::white;
+
+		recomputeVertices(*rectangle);
+		updateRenderData(*rectangle);
+
+		layer->add(rectangle);
 	}
 }
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {

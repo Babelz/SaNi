@@ -20,8 +20,8 @@ namespace sani {
 		
 		int32 poolpointer;
 
-		std::stack<T*> releasedElements;
-		T* memory;
+		std::stack<char*> releasedHandles;
+		char* memory;
 	public:
 		PoolPage(const int32 size);
 
