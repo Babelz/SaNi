@@ -2,7 +2,7 @@
 
 #include "sani/types.hpp"
 
-#define PI			3.14159265358f
-#define HALF_PI		1.57079632679f
+const float32 PI		= 3.14159265358f;
+const float32 HALF_PI	= 1.57079632679f;
 
 #include "func/trigonometric_func.hpp"

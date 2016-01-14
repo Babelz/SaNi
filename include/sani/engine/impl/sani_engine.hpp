@@ -9,7 +9,7 @@ namespace sani {
 			T type;
 
 			T* message = static_cast<T*>(createEmptyMessage(type.getType()));
-			NEW_DYNAMIC_DEFAULT(T, message);
+			NEW_DYNAMIC_DEFAULT<T>(message);
 
 			return message;
 		}

@@ -148,8 +148,7 @@ namespace sani {
 			deallocateShared(layers);
 
 			graphics::Rectangle* rect = static_cast<graphics::Rectangle*>(createRect->getData());
-			NEW_DYNAMIC(graphics::Rectangle, rect, 
-						32, 32, 128, 128);
+			NEW_DYNAMIC<graphics::Rectangle>(rect, 32, 32, 128, 128);
 			graphics::updateRenderData(*rect);
 			graphics::recomputeBounds(*rect);
 			layer->add(rect);

@@ -28,69 +28,33 @@ namespace sani {
 	namespace graphics {
 
 		enum class BufferUsage {
-			/*
-
-				#define GL_STREAM_DRAW		0x88E0
-				#define GL_STREAM_READ		0x88E1
-				#define GL_STREAM_COPY		0x88E2
-				#define GL_STATIC_DRAW		0x88E4
-				#define GL_STATIC_READ		0x88E5
-				#define GL_STATIC_COPY		0x88E6
-				#define GL_DYNAMIC_DRAW		0x88E8
-				#define GL_DYNAMIC_READ		0x88E9
-				#define GL_DYNAMIC_COPY		0x88EA
-				#define GL_SAMPLES_PASSED	0x8914
-
-				*/
-
 			// Buffers data will be modified once and used many times.
-			Static = GL_STATIC_DRAW,
+			Static	= GL_STATIC_DRAW,
 
 			// Buffers data will be modified repeatedly and used many times.
 			Dynamic = GL_DYNAMIC_DRAW,
 
 			// Buffers data will be changed after every use, or almost every use.
-			Stream = GL_STREAM_DRAW
+			Stream  = GL_STREAM_DRAW
 		};
 
 		enum class BufferType {
-			/*
-				#define GL_ARRAY_BUFFER			0x8892
-				#define GL_ELEMENT_ARRAY_BUFFER 0x8893
-				*/
-
 			ElementArrayBuffer = GL_ELEMENT_ARRAY_BUFFER,
-			ArrayBuffer = GL_ARRAY_BUFFER
+			ArrayBuffer		   = GL_ARRAY_BUFFER
 		};
 
 		enum class PrimitiveType {
-			/*
-				#define GL_BYTE				0x1400
-				#define GL_UNSIGNED_BYTE	0x1401
-				#define GL_SHORT			0x1402
-				#define GL_UNSIGNED_SHORT	0x1403
-				#define GL_INT				0x1404
-				#define GL_UNSIGNED_INT		0x1405
-				#define GL_FLOAT			0x1406
-				#define GL_DOUBLE			0x140A
-				*/
-
-			Byte = GL_BYTE,
-			UByte = GL_UNSIGNED_BYTE,
-			Short = GL_SHORT,
-			UShort = GL_UNSIGNED_SHORT,
-			Int = GL_INT,
-			UInt = GL_UNSIGNED_INT,
-			Float = GL_FLOAT
+			Byte    = GL_BYTE,
+			UByte   = GL_UNSIGNED_BYTE,
+			Short   = GL_SHORT,
+			UShort  = GL_UNSIGNED_SHORT,
+			Int     = GL_INT,
+			UInt    = GL_UNSIGNED_INT,
+			Float   = GL_FLOAT
 		};
 
 		enum class ShaderType {
-			/*
-				#define GL_FRAGMENT_SHADER	0x8B30
-				#define GL_VERTEX_SHADER	0x8B31
-				*/
-
-			Vertex = GL_VERTEX_SHADER,
+			Vertex   = GL_VERTEX_SHADER,
 			Fragment = GL_FRAGMENT_SHADER
 		};
 
@@ -103,35 +67,24 @@ namespace sani {
 		};
 
 		enum class RenderMode {
-			/*
-				#define GL_POINTS						0x0000
-				#define GL_LINES						0x0001
-				#define GL_LINE_LOOP					0x0002
-				#define GL_LINE_STRIP					0x0003
-				#define GL_TRIANGLES					0x0004
-				#define GL_TRIANGLE_STRIP				0x0005
-				#define GL_TRIANGLE_FAN					0x0006
-				#define GL_LINES_ADJACENCY				0x000A
-				#define GL_LINE_STRIP_ADJACENCY			0x000B
-				#define GL_TRIANGLES_ADJACENCY			0x000C
-				#define GL_TRIANGLE_STRIP_ADJACENCY		0x000D
-				*/
-
-			Points = GL_LINES,
+			Points    = GL_LINES,
 			LineStrip = GL_LINE_STRIP,
-			LineLoop = GL_LINE_LOOP,
-			Lines = GL_LINES,
-#if 0
+			LineLoop  = GL_LINE_LOOP,
+			Lines     = GL_LINES,
+
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			LineStripAdjacency = GL_LINE_STRIP_ADJACENCY,
-			LinesAdjacency = GL_LINES_ADJACENCY,
+			LinesAdjacency     = GL_LINES_ADJACENCY,
 #endif
+
 			TriangleStrip = GL_TRIANGLE_STRIP,
-			TriangleFan = GL_TRIANGLE_FAN,
-			Triangles = GL_TRIANGLES,
-#if 0
+			TriangleFan   = GL_TRIANGLE_FAN,
+			Triangles     = GL_TRIANGLES,
+
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			TriangleStripAdjacency = GL_TRIANGLE_STRIP_ADJACENCY,
-			TrianglesAdjancency = GL_TRIANGLES_ADJACENCY,
-			Patches = GL_PATCHES
+			TrianglesAdjancency    = GL_TRIANGLES_ADJACENCY,
+			Patches			       = GL_PATCHES
 #endif
 		};
 
@@ -168,7 +121,8 @@ namespace sani {
 
 		enum class TextureTarget : uint32 {
 			Texture2D = GL_TEXTURE_2D,
-#if 0
+
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			Texture3D = GL_TEXTURE_3D
 #endif
 		};
@@ -176,31 +130,32 @@ namespace sani {
 		enum class TextureParameterName : uint32 {
 			TextureMagFilter = GL_TEXTURE_MAG_FILTER,
 			TextureMinFilter = GL_TEXTURE_MIN_FILTER,
-			TextureWrapS = GL_TEXTURE_WRAP_S,
-			TextureWrapT = GL_TEXTURE_WRAP_T
+			TextureWrapS	 = GL_TEXTURE_WRAP_S,
+			TextureWrapT	 = GL_TEXTURE_WRAP_T
 		};
 
 		enum class TextureWrapMode {
-			Repeat = GL_REPEAT,
+			Repeat		   = GL_REPEAT,
 			MirroredRepeat = GL_MIRRORED_REPEAT,
-			ClampToEdge = GL_CLAMP_TO_EDGE,
-#if 0
-			ClampToBorder = GL_CLAMP_TO_BORDER
+			ClampToEdge    = GL_CLAMP_TO_EDGE,
+
+#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
+			ClampToBorder  = GL_CLAMP_TO_BORDER
 #endif
 		};
 
 		enum class TextureMagFilter {
 			Nearest = GL_NEAREST,
-			Linear = GL_LINEAR
+			Linear  = GL_LINEAR
 		};
 
 		enum class TextureMinFilter {
-			Nearest = GL_NEAREST,
-			Linear = GL_LINEAR,
+			Nearest				 = GL_NEAREST,
+			Linear				 = GL_LINEAR,
 			NearestMipmapNearest = GL_NEAREST_MIPMAP_NEAREST,
-			LinearMipmapNearest = GL_LINEAR_MIPMAP_NEAREST,
-			NearestMipmapLinear = GL_NEAREST_MIPMAP_LINEAR,
-			LinearMipmapLinear = GL_LINEAR_MIPMAP_LINEAR
+			LinearMipmapNearest  = GL_LINEAR_MIPMAP_NEAREST,
+			NearestMipmapLinear  = GL_NEAREST_MIPMAP_LINEAR,
+			LinearMipmapLinear   = GL_LINEAR_MIPMAP_LINEAR
 		};
 
 		struct TextureDescription {
