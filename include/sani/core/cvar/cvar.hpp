@@ -12,7 +12,7 @@ namespace sani {
 	/// Represents non-generic cvar.
 	class CVar {
 	private:
-		// Wrap some value field types to union
+		// Wrap some value fields to union
 		// so we can save few bytes at best.
 		union {
 			int32 int32Val;
@@ -20,7 +20,6 @@ namespace sani {
 			float64 float64Val;
 		};
 
-		// TODO: could this be moved to an union by any chance?
 		String stringVal;
 
 		const std::list<CVarRequireStatement> statements;

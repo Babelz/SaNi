@@ -1,6 +1,5 @@
 #include "sani/platform/platform_config.hpp"
 
-// TODO: does it matter if we just with the win32 builds?
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/core/cvar/link_record.hpp"
@@ -30,9 +29,6 @@ TEST_CASE("CVar loading and file tests", "[cvar]") {
 
 TEST_CASE("CVar conditionals", "[cvar]") {
 
-	/*
-		TODO: test more or test in production ":D"
-	*/
 	SECTION("Statements") {
 		const int a = 5;
 		const int b = 5;

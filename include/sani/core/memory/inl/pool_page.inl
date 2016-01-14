@@ -38,8 +38,6 @@ namespace sani {
 		// address space.
 		SANI_ASSERT(element != nullptr);
 
-		// TODO: check if this works.
-		// had to change the mem to char*... 
 		releasedHandles.push(reinterpret_cast<char*>(element));
 		element->~T();
 	}

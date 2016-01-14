@@ -14,10 +14,6 @@ namespace sani {
 			const math::Vec3f& scale = circle.transform.scale;
 			const float32 rotation = circle.transform.rotation;
 
-			/*
-				TODO: borders, rotation.
-			*/
-
 			const float32 sin = math::sin(rotation);
 			const float32 cos = math::cos(rotation);
 

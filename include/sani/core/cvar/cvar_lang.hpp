@@ -9,9 +9,6 @@
 
 namespace sani {
 
-	// TODO: is this kind of stuff ok?
-	//		 ie consts in some namespace with some helpers (like a util class)
-
 	namespace cvarlang {
 
 		enum class ConditionalOperators {

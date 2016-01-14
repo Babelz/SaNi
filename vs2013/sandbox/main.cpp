@@ -85,6 +85,7 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice);
 	
 	std::vector<sani::graphics::Rectangle*> rects;
+	auto tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
 
 	for (uint32 i = 1; i < 8; i++) {
 		const float32 w = 64.0f;
@@ -110,6 +111,16 @@ void initialize(SaNiEngine* const engine) {
 		rects.push_back(rectangle);
 	}
 
+	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();
+	createElement(createCircleMessage, ElementType::Circle);
+
+	engine->routeMessage(createCircleMessage);
+
+	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
+	NEW_DYNAMIC(sani::graphics::Circle, circle, 200, 200, 100, 8);
+
+	engine->releaseMessage(createCircleMessage);
+
 	auto getLayersMessage = engine->createEmptyMessage<DocumentMessage>();
 	getLayers(getLayersMessage);
 	engine->routeMessage(getLayersMessage);
@@ -118,6 +129,7 @@ void initialize(SaNiEngine* const engine) {
 	auto layer = layers->at(0);
 
 	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+	layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
