@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani\types.hpp"
+
 #include <cstdint>
 
 template<typename T>

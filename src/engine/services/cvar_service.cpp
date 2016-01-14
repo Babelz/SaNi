@@ -172,7 +172,7 @@ namespace sani {
 
 			void CVarService::listCVars(messages::DocumentMessage* const message) {
 				std::vector<CVar* const>* cvars = getEngine()->allocateShared<std::vector<CVar* const>>();
-				SANI_NEW_DYNAMIC_DEFAULT(std::vector<CVar* const>, cvars);
+				NEW_DYNAMIC_DEFAULT<std::vector<CVar* const>>(cvars);
 
 				for (CVar& cvar : this->cvars) cvars->push_back(&cvar);
 
