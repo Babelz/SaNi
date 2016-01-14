@@ -50,8 +50,5 @@ namespace sani {
 		Sprite::Sprite(resource::Texture2D* const texture)
 			: Sprite(texture, 0.0f, 0.0f, static_cast<float32>(texture->getHeight()), static_cast<float32>(texture->getWidth())) {
 		}
-		Sprite::Sprite()
-			: Sprite(texture, 0.0f, 0.0f, 0.0f, 0.0f) {
-		}
 	}
 }

@@ -32,7 +32,6 @@ namespace sani {
 			Triangle(const float32 x, const float32 y, const float32 width, const float32 height);
 			Triangle(const math::Vec2f& position, const math::Vec2f& size);
 			Triangle(const float32 width, const float32 height);
-			Triangle();
 		};
 
 		inline void recomputeVertices(Triangle& triangle);

@@ -104,5 +104,33 @@ namespace sani {
 			bottomRightVertex->textureCoordinates.x = 1.0f;
 			bottomRightVertex->textureCoordinates.y = 0.0f;
 		}
+
+		void applyDefaultCircleTextureCoordinates(VertexPositionColorTexture** const vertices, const float32 rotation, const float32 radius, const math::Rectf* const textureSource, const uint32 count) {
+
+			for (uint32 i = 0; i < count; i++) {
+				const auto fi = 2.0f * PI * i / (count) * 2.0f;
+
+				const auto x = cos(fi + PI);
+				const auto y = sin(fi + PI);
+
+				auto bl = vertices[i];
+				
+				bl->textureCoordinates.x = -x * 0.5f + 0.5f;
+				bl->textureCoordinates.y = y * 0.5f + 0.5f;
+
+
+				//float32 xcos = cos(bl->vertexPositionColor.position.x);
+				//float32 ysin = sin(bl->vertexPositionColor.position.y);
+
+				//bl->textureCoordinates.x = 0.0 * xcos;
+				//bl->textureCoordinates.y = 1.0f * ysin;
+
+				//xcos = cos(bl->vertexPositionColor.position.x);
+				//ysin = sin(bl->vertexPositionColor.position.y);
+
+				//br->textureCoordinates.x = 1.0 * xcos;
+				//br->textureCoordinates.y = 1.0f * ysin;
+			}
+		}
 	}
 }
