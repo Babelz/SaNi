@@ -83,9 +83,7 @@ void initialize(SaNiEngine* const engine) {
 	engine->releaseMessage(getGraphicsDevice);
 
 	resources = new ResourceManager(&fileSystem, graphicsDevice);
-	Texture2D* tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
-	SpriteFont* font = resources->load<SpriteFont>("../../assets/font.snb");
-
+	
 	std::vector<sani::graphics::Rectangle*> rects;
 
 	for (uint32 i = 1; i < 8; i++) {
@@ -101,10 +99,9 @@ void initialize(SaNiEngine* const engine) {
 		engine->routeMessage(createRectangleMessage);
 
 		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
-		NEW_DYNAMIC<sani::graphics::Rectangle>(rectangle, x, y, w, h);
+		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
-		rectangle->texture = tuksu;
-		rectangle->fill = color::white;
+		rectangle->fill = color::green;
 		recomputeVertices(*rectangle);
 		updateRenderData(*rectangle);
 

@@ -4,15 +4,8 @@
 
 #include <cstdint>
 
-template<typename T>
-inline void NEW_DYNAMIC_DEFAULT(T* const ptr) {
-	new (ptr)T();
-}
-
-template<typename T>
-inline void NEW_DYNAMIC(T* const ptr, ...) {
-	new (ptr)T(__VA_ARGS__);
-}
+#define NEW_DYNAMIC(type, ptr, ...) new (ptr)type(##__VA_ARGS__)
+#define NEW_DYNAMIC_DEFAULT(type, ptr) new (ptr)type()
 
 const int32 BLOCK_1KB		= 1024;
 const int32 BLOCK_2KB		= 2048;
