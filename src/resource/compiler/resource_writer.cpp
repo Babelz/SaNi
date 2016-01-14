@@ -21,8 +21,8 @@ namespace sani {
 				// TODO emscripte, ps4, xbox
 			};
 
-			ResourceWriter::ResourceWriter(const FileStream* stream, const ResourceCompiler* compiler) 
-				: BinaryWriter(stream), compiler(compiler) {
+			ResourceWriter::ResourceWriter(FileStream* fileStream, const ResourceCompiler* compiler)
+				: BinaryWriter(&memoryStream), compiler(compiler), fileStream(fileStream) {
 
 			}
 			ResourceWriter::~ResourceWriter() {}
@@ -68,19 +68,35 @@ namespace sani {
 				if (writer == nullptr) {
 					throw std::runtime_error("Cant get writer for T");
 				}
+				write7BitEncodedInt(std::distance(writers.begin(), writers.find(type)));
 				writer->write(this, obj);
 			}
 
 			void ResourceWriter::flush(const std::type_index& type, const ResourceItem* obj) {
-				// this is hax, just so we have the writer in list...
-				getWriter(type);
+				// write the final object..
+				writeObject(type, obj);
+
+
+				// swap the stream now
+				Stream* currentStream = stream;
+				stream = fileStream;
+
+				// we are writing now to file so
+				// 1) the object has wrote all the type readers
+				// 2) memory stream has all data from object
+				// 3) we need to get the data from stream
+
 				// write the header..
 				writeHeader();
 				// write the readers to deserialize
 				writeTypeWriters();
-				// write the final object..
-				writeObject(type, obj);
 
+				int64 memorySize = memoryStream.size();
+				std::vector<unsigned char> buffer;
+				buffer.resize(memorySize);
+				memoryStream.seek(SeekPosition::Begin, 0);
+				memoryStream.read(buffer.data(), memorySize);
+				fileStream->write(buffer.data(), memorySize);
 				BinaryWriter::flush();
 			}
 		}

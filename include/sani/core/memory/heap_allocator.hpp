@@ -36,7 +36,7 @@ namespace sani {
 
 		/// Allocates a new memory block of size of T.
 		/// These blocks should never be deleted, but 
-		/// instead use the heaps deallocte method.
+		/// instead use the heaps deallocate method.
 		/// Deallocate pools the memory and calls
 		/// the destructor of the given object.
 		template<class T>

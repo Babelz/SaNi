@@ -13,12 +13,9 @@ namespace sani {
 				template<class T>
 				static void decorateMessage(T* const message, const RenderServiceCommands renderServiceCommand) {
 					const uint32 command = static_cast<uint32>(renderServiceCommand);
-
+				
+					message->getRecipients().addRecipient("render service");
 					message->setCommand(command);
-					
-					message->getRecipents().clear();
-
-					message->getRecipents().addRecipent("render service");
 				}
 				
 				template<class T>
@@ -50,6 +47,14 @@ namespace sani {
 
 				void getCameras(messages::DocumentMessage* const message) {
 					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetCameras);
+				}
+
+				void getGraphicsDevice(messages::DocumentMessage* const message) {
+					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetGraphicsDevice);
+				}
+
+				void getWindow(messages::DocumentMessage* const message) {
+					decorateMessage<messages::DocumentMessage>(message, RenderServiceCommands::GetWindow);
 				}
 			}
 		}

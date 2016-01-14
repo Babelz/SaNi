@@ -14,6 +14,7 @@ SANI_FORWARD_DECLARE_3(sani, engine, messages, CommandMessage);
 
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 SANI_FORWARD_DECLARE_2(sani, engine, SaNiEngine);
+SANI_FORWARD_DECLARE_2(sani, graphics, Window);
 
 namespace sani {
 
@@ -24,6 +25,8 @@ namespace sani {
 			class RenderService final : public EngineService {
 			private:
 				graphics::GraphicsDevice* const graphicsDevice;
+				graphics::Window* const window;
+
 				graphics::Renderer renderer;
 
 				std::list<graphics::Camera2D> cameras;
@@ -32,12 +35,20 @@ namespace sani {
 				graphics::Color clearColor;
 
 				/*
+					Event handlers.
+				*/
+
+				static void windowClosed(SaNiEngine* const engine);
+
+				/*
 					Message handling.
 				*/
 
 				void handleDocumentMessage(messages::DocumentMessage* const message);
 				void handleCommandMessage(messages::CommandMessage* const message);
 				
+				void initialize();
+
 				/*
 					Command functions.				
 				*/
@@ -53,14 +64,19 @@ namespace sani {
 				void getClearColor(messages::DocumentMessage* const message);
 				void setClearColor(messages::CommandMessage* const message);
 
+				void getGraphicsDevice(messages::DocumentMessage* const message);
+				void getWindow(messages::DocumentMessage* const message);
+
 				void renderToCamera(const graphics::Camera2D& camera);
 			protected:
 				void handleStateMessage(StateMessage* const message) final override;
 			public:
-				RenderService(engine::SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice);
+				RenderService(SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 
 				void receive(messages::Message* const message) final override;
 				void update(const EngineTime& time) final override;
+
+				~RenderService() final override;
 			};
 		}
 	}

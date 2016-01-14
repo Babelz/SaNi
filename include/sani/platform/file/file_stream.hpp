@@ -30,7 +30,25 @@ namespace sani {
 			return static_cast<Filemode>(static_cast<uint32>(a) | static_cast<uint32>(b));
 		}
 
-		class FileStream {
+		class Stream {
+		private:
+			// disable copying
+			Stream(const Stream& stream) = delete;
+			Stream(Stream&& stream) = delete;
+			Stream& operator =(const Stream& stream) = delete;
+			Stream& operator =(Stream&& stream) = delete;
+		public:
+			Stream() = default;
+			virtual ~Stream() = default;
+			virtual int64 read(unsigned char* buffer, const int32 size) = 0;
+			virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) = 0;
+			virtual uint32 write(const unsigned char* data, const int32 size) = 0;
+			virtual void seek(const SeekPosition seekpos, const long offset) = 0;
+			virtual int64 size() = 0;
+			virtual void flush() = 0;
+		};
+
+		class FileStream : public Stream {
 		protected:
 			const String filePath;
 			const Filemode mode;
@@ -38,18 +56,14 @@ namespace sani {
 			
 			FileStream(const String& filePath, const Filemode mode);
 			virtual ~FileStream();
-			// disable copying
-			FileStream(const FileStream& fileStream) = delete;
-			FileStream(FileStream&& fileStream) = delete;
-			FileStream& operator =(const FileStream& fileStream) = delete;
-			FileStream& operator =(FileStream&& fileStream) = delete;
+
 
 			/// Reads the data from current position
 			///
 			/// @param buffer The buffer where to read 
 			/// @param size The amount of bytes to read
 			/// @return The bytes how much was read
-			virtual int64 read(unsigned char* buffer, const int32 size) const = 0;
+			virtual int64 read(unsigned char* buffer, const int32 size) = 0;
 
 			/// Reads the data from offset position
 			///
@@ -57,28 +71,28 @@ namespace sani {
 			/// @param offset Where to seek
 			/// @param size The amount of bytes to read
 			/// @return The bytes how much was read
-			virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) const = 0;
+			virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) = 0;
 
 			/// Writes the data to file
 			/// 
 			/// @param data The data that needs to be written
 			/// @param size The size of the data measured in bytes
 			/// @return The bytes written
-			virtual uint32 write(const unsigned char* data, const int32 size) const = 0;
+			virtual uint32 write(const unsigned char* data, const int32 size) = 0;
 
 			/// Seeks in the file stream
 			///
 			/// @param seekpos What position is used as the origin
 			/// @param offset How many bytes are traversed
-			virtual void seek(const SeekPosition seekpos, const long offset) const = 0;
+			virtual void seek(const SeekPosition seekpos, const long offset) = 0;
 
-			virtual int64 size() const = 0;
+			virtual int64 size() = 0;
 
 			inline Filemode getOpenMode() const;
 			inline const String& getPath() const;
 
 			/// Flushs the file stream
-			virtual void flush() const = 0;
+			virtual void flush() = 0;
 		};
 
 		namespace priv {
@@ -88,12 +102,12 @@ namespace sani {
 			public:
 				FileStreamImpl(const String& filePath, const Filemode mode, FILE* handle);
 				~FileStreamImpl();
-				virtual int64 read(unsigned char* buffer, const int32 size) const;
-				virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) const;
-				virtual uint32 write(const unsigned char* data, const int32 size) const;
-				virtual void seek(const SeekPosition seekpos, const long offset) const;
-				virtual void flush() const;
-				virtual int64 size() const;
+				virtual int64 read(unsigned char* buffer, const int32 size) ;
+				virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) ;
+				virtual uint32 write(const unsigned char* data, const int32 size) ;
+				virtual void seek(const SeekPosition seekpos, const long offset) ;
+				virtual void flush() ;
+				virtual int64 size() ;
 			};
 		}
 	}

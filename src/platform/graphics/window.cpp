@@ -81,6 +81,8 @@ namespace sani {
 
 			SANI_INIT_EVENT(sizeChanged, void());
 			SANI_INIT_EVENT(closed, void());
+
+			WIN32_ASSERT();
 		}
 
 		// Private.
@@ -230,16 +232,13 @@ namespace sani {
 		}
 
 		void Window::setSize(const int32 width, const int32 height) {
-			if (impl->cImpl.initialized) {
-				const uint32 oldWidth = impl->cImpl.width;
-				const uint32 oldHeight = impl->cImpl.height;
+			impl->cImpl.width = width;
+			impl->cImpl.height = height;
 
+			if (impl->cImpl.initialized) {
 				SANI_TRIGGER_VOID_EVENT(sizeChanged, void());
 
 				MoveWindow(impl->hWnd, impl->cImpl.x, impl->cImpl.y, width, height, TRUE);
-			} else {
-				impl->cImpl.width = width;
-				impl->cImpl.height = height;
 			}
 		}
 		void Window::setWidth(const int32 width) {

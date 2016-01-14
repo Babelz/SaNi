@@ -3,6 +3,8 @@
 #include "sani/resource/reader/texture2d_reader.hpp"
 #include "sani/resource/reader/effect_reader.hpp"
 #include <algorithm>
+#include "sani/resource/reader/bitmap_content_reader.hpp"
+#include "sani/resource/reader/spritefont_reader.hpp"
 
 namespace sani {
 	namespace resource {
@@ -17,6 +19,8 @@ namespace sani {
 				using namespace sani::resource::reader;
 				registerTypeReader<Texture2DReader>();
 				registerTypeReader<EffectReader>();
+				registerTypeReader<BitmapContentReader>();
+				registerTypeReader<SpriteFontReader>();
 			}
 
 			ResourceTypeReader* ResoureTypeReaderManager::getReaderByName(const String& name) const {
@@ -24,7 +28,7 @@ namespace sani {
 					return reader->getReaderName() == name;
 				});
 
-				if (*r) return *r;
+				if (r != typeReaders.end()) return *r;
 
 				return nullptr;
 			}

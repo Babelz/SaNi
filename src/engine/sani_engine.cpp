@@ -15,17 +15,17 @@
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
-
 #include "sani/engine/services/rectangle_manager.hpp"
 #include "sani/engine/services/sprite_manager.hpp"
 #include "sani/engine/services/circle_manager.hpp"
 #include "sani/engine/services/triangle_manager.hpp"
 
+#include "sani/engine/services/file_system_service.hpp"
 #include "sani/graphics/renderables/renderables.hpp"
 
-#include "sani/graphics/layer.hpp"
+#include "sani/engine/services/cvar_service.hpp"
 
-#include "sani/engine/services/renderable_manager.hpp"
+#include "sani/graphics/layer.hpp"
 
 namespace sani {
 
@@ -36,7 +36,12 @@ namespace sani {
 		SaNiEngine::SaNiEngine(const HINSTANCE hInstance) : services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
 															channels(&services),
 															hInstance(hInstance),
-															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic) {
+															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic),
+															running(false) {
+#if _DEBUG
+			SANI_INIT_EVENT(onInitialize, void(SaNiEngine* const engine));
+			SANI_INIT_EVENT(onUpdate, void(SaNiEngine* const engine, const EngineTime&));
+#endif
 		}
 #endif
 
@@ -54,9 +59,24 @@ namespace sani {
 			// TODO: notify cameras that the views bounds have changed.
 		}
 
+
+		bool SaNiEngine::initializeFilesystem() {
+			FileSystemService* fileSystemService = new FileSystemService(this);
+			services.registerService(fileSystemService);
+			fileSystemService->start();
+
+			return !fileSystemService->hasErrors();
+		}
+		bool SaNiEngine::initializeCVarSystem() {
+			CVarService* cvarService = new CVarService(this);
+			services.registerService(cvarService);
+			cvarService->start();
+
+			return !cvarService->hasErrors();
+		}
 		bool SaNiEngine::initializeGraphics() {
 			// Window init.
-			window = new graphics::Window(hInstance, 1280, 720);
+			graphics::Window* const window = new graphics::Window(hInstance, 1280, 720);
 
 			if (!window->initialize()) return false;
 
@@ -64,23 +84,25 @@ namespace sani {
 			window->show();
 
 			// Device init.
-			graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
-														  hInstance,
-														  1280,
-														  720);
+			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
+																						  hInstance,
+																						  1280,
+																						  720);
 
 			if (!graphicsDevice->initialize()) return false;
 
 			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
 
+			if (!initializeRenderService(graphicsDevice, window)) return false;
+
 			return true;
 		}
-		bool SaNiEngine::initializeRenderService() {
-			services::RenderService* renderService = new services::RenderService(this, graphicsDevice);
+		bool SaNiEngine::initializeRenderService(sani::graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window) {
+			services::RenderService* renderService = new services::RenderService(this, graphicsDevice, window);
 			services.registerService(renderService);
 			renderService->start();
 
-			return true;
+			return !renderService->hasErrors();
 		}
 		bool SaNiEngine::initializeRenderableManagers() {
 			SpriteManager* spriteManager		= new services::SpriteManager(this);
@@ -114,54 +136,19 @@ namespace sani {
 			// Load game data
 			// RUN!
 
-			if (!initializeGraphics()) return false;
-			if (!initializeRenderService()) return false;
-			if (!initializeRenderableManagers()) return false;
-
 			/*
-				TODO: dbg stuff.
+				TODO: add error messages.
 			*/
 
-			auto createLayer = createEmptyMessage<messages::CommandMessage>();
-			services::renderservice::createLayer(createLayer, "l1||1||0.0");
+			if (!initializeFilesystem())			return false;
+			if (!initializeCVarSystem())			return false;
+			if (!initializeGraphics())				return false;
+			if (!initializeRenderableManagers())	return false;
 
-			auto createCamera = createEmptyMessage<messages::CommandMessage>();
-			services::renderservice::createCamera(createCamera, "c1");
-
-			auto getLayers = createEmptyMessage<messages::DocumentMessage>();
-			services::renderservice::getLayers(getLayers);
-
-			auto createRect = createEmptyMessage<messages::DocumentMessage>();
-			services::renderablemanager::createElement(createRect, services::renderablemanager::ElementType::Rectangle);
-
-			auto getCameras = createEmptyMessage<messages::DocumentMessage>();
-			services::renderservice::getCameras(getCameras);
-
-			routeMessage(createLayer);
-			routeMessage(createCamera);
-			routeMessage(getLayers);
-			routeMessage(createRect);
-			routeMessage(getCameras);
-
-			std::vector<graphics::Layer* const>* layers = static_cast<std::vector<graphics::Layer* const>*>(getLayers->getData());
-			graphics::Layer* layer = *layers->begin();
-			deallocateShared(layers);
-
-			graphics::Rectangle* rect = static_cast<graphics::Rectangle*>(createRect->getData());
-			NEW_DYNAMIC<graphics::Rectangle>(rect, 32, 32, 128, 128);
-			graphics::updateRenderData(*rect);
-			graphics::recomputeBounds(*rect);
-			layer->add(rect);
-
-			std::vector<graphics::Camera2D* const>* cameras = static_cast<std::vector<graphics::Camera2D* const>*>(getCameras->getData());
-			graphics::Camera2D* camera = *cameras->begin();
-			deallocateShared(cameras);
-
-			camera->setViewport(graphicsDevice->getViewport());
-			camera->computeTransformation();
-
-			releaseMessage(getCameras);
-			releaseMessage(getLayers);
+#if _DEBUG
+			SANI_TRIGGER_EVENT(onInitialize, void(SaNiEngine* const), 
+							   this);
+#endif
 
 			// Create all initial services.
 			return true;
@@ -205,13 +192,12 @@ namespace sani {
 			// TODO: add services.
 			if (!initialize()) return;
 
+			running = true;
+
 			sani::Time last = sani::Clock::now();
 			sani::Time start = sani::Clock::now();
 			
-			while (window->isOpen()) {
-				// Clear last frame and listen for window events.
-				window->listen();
-
+			while (running) {
 				sani::Time current = sani::Clock::now();
 
 				auto delta = current - last;
@@ -224,17 +210,20 @@ namespace sani {
 
 				// Update all services.
 				services.update(time);
+
+#if _DEBUG
+				SANI_TRIGGER_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&), 
+								   this, time);
+#endif
 			}
 
-			graphicsDevice->cleanUp();
+			services.terminate();
 		}
 		void SaNiEngine::quit() {
-			window->close();
+			running = false;
 		}
 
 		SaNiEngine::~SaNiEngine() {
-			delete graphicsDevice;
-			delete window;
 		}
 	}
 }

@@ -27,7 +27,7 @@ namespace sani {
 					uint32 bytes = static_cast<uint32>(reader->read7BitEncodedInt());
 					// alloc vector & read the pixels
 					faces.push_back(PixelData(bytes));
-					faces.reserve(bytes);
+					
 					PixelData& data = faces[i];
 					// TODO do readContainer or something
 					for (size_t j = 0; j < bytes; ++j) {

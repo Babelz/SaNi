@@ -10,7 +10,7 @@ namespace sani {
 			namespace renderablemanager {
 
 				// Used to translate element type to recipent.
-				static const String recipents[] = {
+				static const String recipients[] = {
 					"rectangle manager",		// Rectangle.
 					"triangle manager",			// Triangle.
 					"sprite manager",			// Sprite.
@@ -18,14 +18,12 @@ namespace sani {
 				};
 
 				static void decorateMessage(messages::DocumentMessage* const message, const RenderableManagerCommands renderableManagerCommand, const ElementType type) {
-					static uint32 recipentIndex = static_cast<uint32>(type);
-					static uint32 command		= static_cast<uint32>(renderableManagerCommand);
-					
-					const String& recipent = recipents[recipentIndex];
+					const uint32 recipentIndex = static_cast<uint32>(type);
+					const uint32 command = static_cast<uint32>(renderableManagerCommand);
 
-					message->getRecipents().clear();
+					const String& recipient = recipients[recipentIndex];
 
-					message->getRecipents().addRecipent(recipent);
+					message->getRecipients().addRecipient(recipient);
 					message->setCommand(command);
 				}
 

@@ -5,10 +5,16 @@ namespace sani {
 		namespace compiler{
 			void BitmapContentWriter::write(ResourceWriter* writer, const void* value) {
 				const BitmapContent* content = static_cast<const BitmapContent*> (value);
-				//writer->write(content->getWidth());
-				//writer->write(content->getHeight());
+				writer->write(content->getWidth());
+				writer->write(content->getHeight());
+
 				std::vector<unsigned char> pixels;
 				content->getPixelData(pixels);
+
+				writer->write7BitEncodedInt(pixels.size());
+				for (std::vector<unsigned char>::size_type i = 0; i < pixels.size(); ++i) {
+					writer->write((uint8)pixels[i]);
+				}
 			}
 		}
 	}

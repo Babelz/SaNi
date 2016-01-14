@@ -10,6 +10,8 @@ namespace sani {
 		
 		namespace services {
 
+			using namespace renderablemanager;
+
 			template <class T>
 			RenderableManager<T>::RenderableManager(const String& name, const ElementType type, engine::SaNiEngine* const engine) : EngineService(name, engine),
 																																	type(type),
@@ -29,6 +31,9 @@ namespace sani {
 					return;
 				case RenderableManagerCommands::GetElements:
 					getElements(message);
+					return;
+				case RenderableManagerCommands::EnqueueForUpdates:
+					queueForUpdates(message);
 					return;
 				default:
 					return;
@@ -90,6 +95,8 @@ namespace sani {
 
 					updateRenderData(*element);
 				}
+
+				elementsToUpdate.clear();
 			}
 		}
 	}

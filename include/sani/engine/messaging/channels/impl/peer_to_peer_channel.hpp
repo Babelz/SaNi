@@ -17,7 +17,7 @@ namespace sani {
 			template <typename T>
 			void PeerToPeerChannel<T>::routeMessage(messages::Message* const message) {
 				// p2p messages should always have only one recipent.
-				const String& recipentName = *message->getRecipents().begin();
+				const String& recipentName = *message->getRecipients().begin();
 
 				// Send the message to the recipent.
 				services::EngineService* const recipent = getServiceRegistry()->locate(recipentName);
@@ -35,7 +35,7 @@ namespace sani {
 			}
 			template <typename T>
 			void PeerToPeerChannel<T>::releaseMessage(messages::Message* const message) {
-				messagePool.deallocate(static_cast<T* const>(message));
+				messagePool.deallocate(static_cast<T*>(message));
 			}
 		}
 	}

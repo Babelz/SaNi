@@ -2,7 +2,6 @@
 
 #include "sani/engine/messaging/channels/peer_to_peer_channel.hpp"
 #include "sani/engine/messaging/messages/command_message.hpp"
-#include "sani/forward_declare.hpp"
 
 namespace sani {
 

@@ -7,26 +7,26 @@ namespace sani {
 	namespace io {
 		class BinaryReader {
 		private:
-			const FileStream* stream;
+			FileStream* stream;
 		public:
-			BinaryReader(const FileStream* stream);
+			BinaryReader(FileStream* stream);
 			virtual ~BinaryReader();
-			int16 readInt16() const;
-			int32 readInt32() const;
-			int64 readInt64() const;
+			int16 readInt16() ;
+			int32 readInt32() ;
+			int64 readInt64() ;
 
-			uint16 readUint16() const;
-			uint32 readUint32() const;
-			uint64 readUint64() const;
+			uint16 readUint16() ;
+			uint32 readUint32() ;
+			uint64 readUint64() ;
 
-			float32 readSingle() const;
+			float32 readSingle() ;
 
-			String readString() const;
-			float64 readDouble() const;
+			String readString() ;
+			float64 readDouble() ;
 
-			uint8 readByte() const;
-			char readChar() const;
-			uint64 read7BitEncodedInt() const;
+			uint8 readByte() ;
+			char readChar() ;
+			uint64 read7BitEncodedInt() ;
 
 		};
 	}

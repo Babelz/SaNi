@@ -35,7 +35,13 @@ namespace sani {
 			/// and should inspect after the message has been 
 			/// flagged as handled. Commands are sent trough 
 			/// p2p channel.
-			Command			= 4
+			Command			= 4,
+
+			/// Message that has some contents, command and 
+			/// must return some result value. If the message
+			/// does not return a result after processing,
+			/// it should be handled as failed.
+			Query			= 5
 		};
 	}
 }

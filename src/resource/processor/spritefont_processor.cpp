@@ -32,6 +32,7 @@ namespace sani {
 				float32 bearingX;
 				float32 bearingY;
 				float32 advance;
+				sani::math::Recti source;
 			public:
 				Glyph() : pixels(nullptr), character('\0') {}
 			};
@@ -163,12 +164,12 @@ namespace sani {
 						imgHeight = static_cast<uint32>(rect.height()),
 						imgSize = imgWidth * imgHeight;
 
-					PixelBitmapContent<sani::math::Vec4>* pixels = new PixelBitmapContent<sani::math::Vec4f>(imgWidth, imgHeight);
+					PixelBitmapContent<sani::math::Vector4<unsigned char>>* pixels = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(imgWidth, imgHeight);
 					
-					for (Span& s : outlineSpans) {
+					for (Span& s : spans) { // outlineSpans actually !!!!! TODO
 						for (int w = 0; w < s.width; ++w) {
 							int32 index = (int)((imgHeight - 1 - (s.y - rect.ymin)) * imgWidth + s.x - rect.xmin + w);
-							pixels->setPixel(index, sani::math::Vec4(1.f, 1.f, 1.f, s.coverage / 255.f)); // white
+							pixels->setPixel(index, sani::math::Vector4<unsigned char>(255, 255, 255, s.coverage)); // white
 						}
 					}
 
@@ -196,14 +197,6 @@ namespace sani {
 				return face;
 			}
 
-			struct GlyphWrapper {
-				Glyph* source;
-				uint32 x;
-				uint32 y;
-				uint32 width;
-				uint32 height;
-			};
-
 			static uint32 calculateOutputWidth(const std::vector<Glyph>& glyphs) {
 				return std::accumulate(glyphs.begin(), glyphs.end(), 0, [](uint32 r, const Glyph& g) {
 					return 1 + r + g.pixels->getWidth() + 1;
@@ -217,23 +210,25 @@ namespace sani {
 				})->pixels->getHeight();
 			}
 
-			static BitmapContent* packGlyphs(const std::vector<Glyph>& glyphs) {
+			static BitmapContent* packGlyphs(std::vector<Glyph>& glyphs) {
 				uint32 outputWidth = calculateOutputWidth(glyphs);
 				uint32 outputHeight = calculateOutputHeight(glyphs);
 
 
-				BitmapContent* bitmap = new PixelBitmapContent<sani::math::Vec4f>(outputWidth, outputHeight);
+				BitmapContent* bitmap = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(outputWidth, outputHeight);
 
 				uint32 xOffset = 0u;
 				// TODO add max width
 				uint32 yOffset = 0u;
 
-				for (const auto& glyph : glyphs) {
+				for (auto& glyph : glyphs) {
 					BitmapContent* pixels = glyph.pixels;
 					uint32 width = pixels->getWidth();
 					uint32 height = pixels->getHeight();
 					sani::math::Recti source(0, 0, height, width);
 					sani::math::Recti destination(1 + xOffset, yOffset, height, width);
+					// TODO move this
+					glyph.source = destination;
 					bitmap->copyFrom(pixels, source, destination);
 					xOffset += width;
 				}
@@ -266,7 +261,13 @@ namespace sani {
 
 				BitmapContent* bitmap = packGlyphs(glyphs);
 
-				SpriteFontContent* output = new SpriteFontContent(desc, bitmap);
+				// TODO create func for this
+				std::vector<sani::math::Recti> sources;
+				for (auto& glyph : glyphs) {
+					sources.push_back(glyph.source);
+				}
+
+				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, sources, characters);
 
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
