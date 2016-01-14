@@ -18,10 +18,6 @@
 // Lets figure out our platform from compiler environment variable
 #define SANI_TARGET_PLATFORM		SANI_PLATFORM_UNKOWN
 
-/************************************************************************/
-/*                TODO THESE NEEDS TO BE TESTED!!!!!!!                  */
-/************************************************************************/
-
 // win32
 // http://stackoverflow.com/questions/430424/are-there-any-macros-to-determine-if-my-code-is-being-compiled-to-windows
 #if ((defined(__WIN32__) || defined(_WIN32)))

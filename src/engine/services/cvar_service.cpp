@@ -23,11 +23,8 @@ namespace sani {
 			}
 
 			void CVarService::handleStateMessage(StateMessage* const message) {
-				if (message->oldState == ServiceState::Uninitialized) {
-					initialize();
-				} else if (message->newState == ServiceState::Terminated) {
-					syncCVars();
-				}
+				if (message->oldState == ServiceState::Uninitialized)		initialize();
+				else if (message->newState == ServiceState::Terminated)		syncCVars();
 
 				EngineService::handleStateMessage(message);
 			}
@@ -67,81 +64,116 @@ namespace sani {
 			void CVarService::initialize() {
 				SaNiEngine* const engine = getEngine();
 				
+				// Attempt to open the configuration file.
 				auto openFile = engine->createEmptyMessage<messages::QueryMessage>();
 				filesystemservice::openFile(openFile, "config\\main.cfg", io::Filemode::Read);
 				engine->routeMessage(openFile);
 
 				if (openFile->success()) {
+					// Got the file, load the config from it and close it.
 					auto closeFile = engine->createEmptyMessage<messages::CommandMessage>();
 					filesystemservice::closeFile(closeFile, "config\\main.cfg");
 					engine->routeMessage(closeFile);
 
 					loadConfig();
 
+					// Close the file.
 					engine->releaseMessage(closeFile);
+
+					configuration.isDefault = false;
 				} else {
+					// No config file was defined, generate a default config.
 					generateDefaultConfig();
+
+					configuration.isDefault = true;
 				}
 				
 				engine->releaseMessage(openFile);
 			}
 			void CVarService::syncCVars() {
-				// TODO: sync cvars.
+				if (configuration.canSync) {
+					// TODO: sync cvars.
+				}
 			}
 
 			void CVarService::generateDefaultConfig() {
 				// TODO: impl default config.
 				//throw std::runtime_error("not implemented");
+				const String defaultCVarConfiguration(
+					"window_width 1280\n"
+					"window_height 720\n"
+					"back_buffer_width 1280\n"
+					"back_buffer_height 720\n"
+				);
 			}
 			void CVarService::loadConfig() {
-				//// TODO: fix duplicated strings.
+				const String config("config");
+
+				const String configRoot(config + "\\");
+				
 				SaNiEngine* const engine = getEngine();
 
+				// List all cvar files we can find.
 				auto listFiles = engine->createEmptyMessage<messages::QueryMessage>();
-				filesystemservice::listFiles(listFiles, "config");
+				filesystemservice::listFiles(listFiles, config);
 				engine->routeMessage(listFiles);
+				SANI_ASSERT(listFiles->wasHandled());
 
 				std::vector<String>* files = static_cast<std::vector<String>*>(listFiles->getResults());
 				std::list<CVarFile> cvarFiles;
 
+				// Get contents of each file.
 				for (const String& file : *files) {
+					// Open file.
 					auto openFile = engine->createEmptyMessage<messages::QueryMessage>();
-					filesystemservice::openFile(openFile, "config\\" + file, io::Filemode::Read);
+					filesystemservice::openFile(openFile, configRoot + file, io::Filemode::Read);
 					engine->routeMessage(openFile);
+					SANI_ASSERT(openFile->wasHandled());
 					
+					// Get the data string aka files contents.
 					auto getFileDataString = engine->createEmptyMessage<messages::QueryMessage>();
-					filesystemservice::getFileDataString(getFileDataString, "config\\" + file);
+					filesystemservice::getFileDataString(getFileDataString, configRoot + file);
 					engine->routeMessage(getFileDataString);
+					SANI_ASSERT(getFileDataString->wasHandled());
 
+					// Close the file.
 					auto closeFile = engine->createEmptyMessage<messages::CommandMessage>();
-					filesystemservice::closeFile(closeFile, "config\\" + file);
+					filesystemservice::closeFile(closeFile, configRoot + file);
 					engine->routeMessage(closeFile);
+					SANI_ASSERT(closeFile->wasHandled());
 
+					// Get the contents.
 					String* contents = static_cast<String*>(getFileDataString->getResults());
 					cvarFiles.push_back(CVarFile(file, *contents));
 
+					// Release messages that have been processed.
 					engine->releaseMessage(openFile);
 					engine->releaseMessage(getFileDataString);
 					engine->releaseMessage(closeFile);
 
+					// Deallocate shared contents string.
 					engine->deallocateShared(contents);
 				}
 
 				engine->releaseMessage(listFiles);
 
+				// Deallocate shared fiels vector.
 				engine->deallocateShared(files);
 
+				// "Compile" all cvar files that we could find.
 				compile(cvarFiles);
 			}
 
 			void CVarService::compile(std::list<CVarFile>& files) {
+				const String mainFileName("main.cfg");
+
 				LinkRecord record;
 
 				CVarLinker linker;
-				linker.link("main.cfg", files, &record);
+				linker.link(mainFileName, files, &record);
 
 				CVarCompiler compiler;
-				compiler.compile("main.cfg", files, cvars, records);
+				compiler.compile(mainFileName, files, cvars, records);
 			}
 
 			void CVarService::getCVar(messages::QueryMessage* const message) {

@@ -125,8 +125,8 @@ void initialize(SaNiEngine* const engine) {
 	
 	circle->texture = tuksu;
 	circle->fill = color::white;
-	circle->textureSource.w = tuksu->getWidth();
-	circle->textureSource.h = tuksu->getHeight();
+	circle->textureSource.w = static_cast<float32>(tuksu->getWidth());
+	circle->textureSource.h = static_cast<float32>(tuksu->getHeight());
 
 	recomputeVertices(*circle);
 	updateRenderData(*circle);
@@ -149,6 +149,8 @@ void initialize(SaNiEngine* const engine) {
 	engine->deallocateShared(layers);
 }
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {
+	c->transform.rotation += 0.01f;
+	recomputeVertices(*c);
 	updateRenderData(*c);
 }
 

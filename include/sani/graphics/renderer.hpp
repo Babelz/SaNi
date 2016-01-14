@@ -107,9 +107,6 @@ namespace sani {
 
 			void renderElement(const Renderable* const renderable);
 			
-			// TODO: hazard! fucks up memory!
-			//void renderElements(const Renderable* const renderables, const uint32 count);
-
 			void endRendering();
 			
 			// TODO: should the renderer have a batcher? 
