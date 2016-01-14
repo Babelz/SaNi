@@ -105,31 +105,27 @@ namespace sani {
 			bottomRightVertex->textureCoordinates.y = 0.0f;
 		}
 
-		void applyDefaultCircleTextureCoordinates(VertexPositionColorTexture** const vertices, const float32 rotation, const float32 radius, const math::Rectf* const textureSource, const uint32 count) {
-
-			for (uint32 i = 0; i < count; i++) {
-				const auto fi = 2.0f * PI * i / (count) * 2.0f;
-
-				const auto x = cos(fi + PI);
-				const auto y = sin(fi + PI);
-
-				auto bl = vertices[i];
+		void applyDefaultCircleTextureCoordinates(VertexPositionColorTexture* const vertices, const float32 rotation, const float32 radius, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight, const uint32 count) {
+			// TODO: WIP, not sure if it works the right way...
+			
+			for (uint32 i = 1; i + 1 < count; i += 2) {
+				const auto blFi = 2.0f * PI * i / count * 2.0f;
+				const auto brFi = 2.0f * PI * (i + 1) / count * 2.0f;
 				
-				bl->textureCoordinates.x = -x * 0.5f + 0.5f;
-				bl->textureCoordinates.y = y * 0.5f + 0.5f;
+				VertexPositionColorTexture* const bl = &vertices[i];
+				VertexPositionColorTexture* const br = &vertices[i + 1];
 
+				const float32 blX = cos(blFi + PI) + textureSource->left() / textureWidth;//+ textureSource->left() / textureWidth;
+				const float32 blY = sin(blFi + PI) + textureSource->top() / textureHeight;
 
-				//float32 xcos = cos(bl->vertexPositionColor.position.x);
-				//float32 ysin = sin(bl->vertexPositionColor.position.y);
+				bl->textureCoordinates.x = -blX * 0.5f + 0.5f; //-x * 0.5f + 0.5f;
+				bl->textureCoordinates.y = blY * 0.5f + 0.5f; //y * 0.5f + 0.5f;
 
-				//bl->textureCoordinates.x = 0.0 * xcos;
-				//bl->textureCoordinates.y = 1.0f * ysin;
+				const float32 brX = cos(brFi + PI) + textureSource->left() / textureWidth;
+				const float32 brY = sin(brFi + PI) + textureSource->top() / textureHeight;
 
-				//xcos = cos(bl->vertexPositionColor.position.x);
-				//ysin = sin(bl->vertexPositionColor.position.y);
-
-				//br->textureCoordinates.x = 1.0 * xcos;
-				//br->textureCoordinates.y = 1.0f * ysin;
+				br->textureCoordinates.x = -brX * 0.5f + 0.5f; //-x * 0.5f + 0.5f;
+				br->textureCoordinates.y = brY * 0.5f + 0.5f; //y * 0.5f + 0.5f;
 			}
 		}
 	}

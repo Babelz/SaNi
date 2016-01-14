@@ -92,18 +92,16 @@ namespace sani {
 			if (circle.texture == nullptr) {
 				useSolidFill(&circle);
 			} else {
-				std::vector<VertexPositionColorTexture*> vertices;
-
-				for (int32 i = 1; i < circle.renderData.vertices.size(); i++) vertices.push_back(&circle.renderData.vertices[i]);
-
-				applyDefaultCircleTextureCoordinates(vertices.data(),
+				applyDefaultCircleTextureCoordinates(circle.renderData.vertices.data(),
 													 circle.transform.rotation,
 													 circle.radius,
 													 &circle.textureSource,
+													 static_cast<float32>(circle.texture->getWidth()),
+													 static_cast<float32>(circle.texture->getHeight()),
 													 circle.renderData.vertices.size() - 1);
 
-				circle.renderData.vertices[0].textureCoordinates.x = 0.5f;
-				circle.renderData.vertices[0].textureCoordinates.y = 0.5f;//0.5f;
+				circle.renderData.vertices[0].textureCoordinates.x = (circle.textureSource.right() / circle.texture->getWidth()) * 0.5f; //0.5f;
+				circle.renderData.vertices[0].textureCoordinates.y = (circle.textureSource.bottom() / circle.texture->getHeight()) * 0.5f; //0.5f;
 
 				useTexturing(&circle);
 			}

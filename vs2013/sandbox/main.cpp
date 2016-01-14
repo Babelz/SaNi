@@ -121,10 +121,12 @@ void initialize(SaNiEngine* const engine) {
 	engine->routeMessage(createCircleMessage);
 
 	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
-	NEW_DYNAMIC(sani::graphics::Circle, circle, 200, 200, 100, 8);
+	NEW_DYNAMIC(sani::graphics::Circle, circle, 200, 200, 100, 128);
 	
 	circle->texture = tuksu;
 	circle->fill = color::white;
+	circle->textureSource.w = tuksu->getWidth();
+	circle->textureSource.h = tuksu->getHeight();
 
 	recomputeVertices(*circle);
 	updateRenderData(*circle);
@@ -147,11 +149,6 @@ void initialize(SaNiEngine* const engine) {
 	engine->deallocateShared(layers);
 }
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {
-	c->textureSource.x += 0.1f;
-	c->textureSource.y += 0.1f;
-	c->textureSource.h = 128.0f;
-	c->textureSource.w = 128.0f;
-
 	updateRenderData(*c);
 }
 

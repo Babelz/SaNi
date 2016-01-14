@@ -76,7 +76,7 @@ namespace sani {
 		
 		inline void applyDefaultRectangleTextureCoordinates(VertexPositionColorTexture** const vertices);
 		
-		inline void applyDefaultCircleTextureCoordinates(VertexPositionColorTexture** const vertices, const float32 rotation, const float32 radius, const math::Rectf* const textureSource, const uint32 count);
+		inline void applyDefaultCircleTextureCoordinates(VertexPositionColorTexture* const vertices, const float32 rotation, const float32 radius, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight, const uint32 count);
 	}
 }
 
