@@ -628,18 +628,6 @@ namespace sani {
 			location = getUniformLocation(shader, name);
 		}
 
-		UniformType GraphicsDevice::translateUniformType(const uint32 type) const {
-			using UniformTypeList = std::map <uint32, UniformType>;
-
-			static UniformTypeList types = {
-				{ GL_FLOAT,			UniformType::Float32 },
-				{ GL_FLOAT_MAT3,	UniformType::Mat3F },
-				{ GL_FLOAT_MAT4,	UniformType::Mat4F},
-			};
-
-			return types[type];
-		}
-
 		void GraphicsDevice::generateBuffer(uint32& buffer) {
 			glGenBuffers(1, &buffer);
 

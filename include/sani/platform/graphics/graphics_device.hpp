@@ -4,7 +4,6 @@
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
 
-#include <map>
 #include <stack>
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
@@ -183,8 +182,6 @@ namespace sani {
 			int32 getUniformLocation(const uint32 shader, const String& name) const;
 
 			void getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount) const;
-
-			UniformType translateUniformType(const uint32 type) const;
 
 			/*
 				Buffer operations.

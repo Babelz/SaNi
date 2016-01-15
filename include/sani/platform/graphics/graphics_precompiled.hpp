@@ -60,12 +60,12 @@ namespace sani {
 
 		enum class UniformType {
 			// Data type expected: float 4 * 4.
-			Mat4F = 1,
+			Mat4F = GL_FLOAT_MAT4,
 
 			// Data type excepted: float 3 * 3.
-			Mat3F = 2,
+			Mat3F = GL_FLOAT_MAT3,
 
-			Float32 = 3
+			Float32 = GL_FLOAT
 		};
 
 		enum class RenderMode {

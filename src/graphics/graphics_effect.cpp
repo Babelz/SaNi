@@ -45,9 +45,7 @@ namespace sani {
 
 				device->getUniformInformation(effect, i, location, name, type, valuesCount);
 				
-				UniformType uniformType = device->translateUniformType(type);
-
-				uniforms.push_back(EffectUniform(device, effect, uniformType, location, name));
+				uniforms.push_back(EffectUniform(device, effect, static_cast<UniformType>(type), location, name));
 			}
 		}
 		
