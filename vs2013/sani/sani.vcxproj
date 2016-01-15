@@ -204,6 +204,7 @@
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\triangle_manager.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\graphics_effect.cpp" />
     <ClCompile Include="..\..\src\graphics\layer.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />

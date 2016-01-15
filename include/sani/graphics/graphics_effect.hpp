@@ -22,7 +22,7 @@ namespace sani {
 			const uint32 location;
 			const String name;
 		public:
-			EffectUniform(const uint32 location, const String& name);
+			EffectUniform(const UniformType type, const uint32 location, const String& name);
 
 			UniformType getType() const;
 			const String& getName() const;
@@ -45,6 +45,8 @@ namespace sani {
 			const uint32 effect;
 
 			UniformList uniforms;
+
+			void locateEffectUniforms();
 		public:
 			GraphicsEffect(GraphicsDevice* const device, const uint32 effect);
 

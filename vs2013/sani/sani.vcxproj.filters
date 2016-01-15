@@ -523,6 +523,9 @@
     <ClCompile Include="..\..\src\core\interfaces\error_logger.cpp">
       <Filter>src\core\interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\graphics_effect.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

@@ -15,6 +15,7 @@
 #define CHECK_FOR_ERRORS() checkForErrors(__FUNCTION__, __LINE__)
 
 namespace sani {
+	
 	namespace graphics {
 
 		/*
@@ -176,6 +177,12 @@ namespace sani {
 			/// @param[in] data data to be inserted in the uniform location
 			void setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type);
 
+			int32 getUniformsCount(const uint32 shader);
+
+			int32 getUniformLocation(const uint32 shader, const String& name);
+
+			void getUniformInformation(const uint32 shader, const int32 location, String& name, const int32& type, const int32& valuesCount);
+
 			/*
 				Buffer operations.
 			*/
@@ -204,4 +211,3 @@ namespace sani {
 		};
 	}
 }
-
