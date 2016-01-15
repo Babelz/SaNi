@@ -54,6 +54,18 @@ namespace sani {
 		}
 
 		template <class PixelType>
+		void sani::resource::PixelBitmapContent<PixelType>::flipVertical() {
+			uint32 w = getWidth();
+			uint32 h = getHeight();
+			for (uint32 r = 0; r < (h / 2); r++) {
+				for (uint32 c = 0; c != w; ++c) {
+					std::swap(pixels[r * w + c], pixels[(h - 1 - r) * w + c]);
+				}
+			}
+		}
+
+
+		template <class PixelType>
 		void PixelBitmapContent<PixelType>::copyFrom(BitmapContent* fromThis,
 			const sani::math::Recti& sourceArea, const sani::math::Recti& destinationArea) {
 

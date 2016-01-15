@@ -47,6 +47,7 @@
 
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
 #include "sani/resource/sprite_font.hpp"
+#include "sani/resource/spritefont_content.hpp"
 
 using namespace sani::resource;
 using namespace sani::graphics;
@@ -71,6 +72,70 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	engine.start();
 	
 	return 0;
+}
+
+void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
+	float offx = 400;
+	float offy = 350;
+	for (uint32 i = 0; i < text.size(); ++i) {
+		uint32 c = static_cast<uint32>(text[i]);
+		auto it = std::find_if(font->characters.begin(), font->characters.end(), [c](uint32 a) {
+			return c == a;
+		});
+
+		if (it == font->characters.end()) throw std::runtime_error("asd");
+
+		uint32 index = std::distance(font->characters.begin(), it) - 1;
+		GlyphContent& glyph = font->glyphs[index];
+		auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
+		createElement(createRectangleMessage, ElementType::Rectangle);
+
+		engine->routeMessage(createRectangleMessage);
+
+		auto& rect = glyph.source;
+		const uint32 w = rect.w;
+		const uint32 h = rect.h;
+
+		const float32 x = offx + glyph.xOffset;
+		const float32 y = offy - glyph.xOffset + font->texture->getHeight();
+
+		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
+		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
+
+		rectangle->texture = font->texture;
+		rectangle->fill = color::blue;
+		rectangle->textureSource = sani::math::Rectf(rect.x, rect.y, rect.h, rect.w);
+		recomputeVertices(*rectangle);
+		setupShapeForRendering(rectangle, rectangle->borderThickness);
+		// top left x
+		float s0 = rect.x / (float)font->texture->getWidth();
+		// top left y
+		float t0 = rect.y / (float)font->texture->getHeight();
+		// bottom right x
+		float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
+		// bottom right y
+		float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
+
+		rectangle->renderData.vertices[0].textureCoordinates.x = s0;
+		rectangle->renderData.vertices[0].textureCoordinates.y = t1;
+
+		rectangle->renderData.vertices[1].textureCoordinates.x = s1;
+		rectangle->renderData.vertices[1].textureCoordinates.y = t1;
+
+		rectangle->renderData.vertices[2].textureCoordinates.x = s0;
+		rectangle->renderData.vertices[2].textureCoordinates.y = t0;
+
+		rectangle->renderData.vertices[3].textureCoordinates.x = s1;
+		rectangle->renderData.vertices[3].textureCoordinates.y = t0;
+
+		recomputeVertices(*rectangle);
+		useTexturing(rectangle);
+
+		engine->releaseMessage(createRectangleMessage);
+
+		rects.push_back(rectangle);
+		offx += w;
+	}
 }
 
 sani::graphics::Circle* c;
