@@ -6,10 +6,6 @@ namespace sani {
 
 	namespace graphics {
 
-		/*
-			TODO: impl texturing.
-		*/
-
 		/// @class Triangle triangle.hpp "sani/graphics/triangle.hpp"
 		/// @author voidbab
 		/// 

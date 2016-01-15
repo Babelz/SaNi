@@ -92,19 +92,25 @@ namespace sani {
 			if (circle.texture == nullptr) {
 				useSolidFill(&circle);
 			} else {
-				// TODO: WIP, does not have "default" sourcing.
+				if (circle.textureSource.isEmpty()) {
+					// Create default sourcing if the source is empty.	
+					circle.textureSource = math::Rectf(0.0f, 0.0f, static_cast<float32>(circle.texture->getWidth(), static_cast<float32>(circle.texture->getHeight())));
+				}
 
+				// Apply coordinatess.
 				applyCircleTextureCoordinates(circle.renderData.vertices.data(),
 											  circle.transform.rotation,
 											  circle.radius,
 											  &circle.textureSource,
 											  static_cast<float32>(circle.texture->getWidth()),
 											  static_cast<float32>(circle.texture->getHeight()),
-											  circle.renderData.vertices.size() - 1);
+											  circle.renderData.vertices.size());
 
+				// Set center vertex coordinates.
 				circle.renderData.vertices[0].textureCoordinates.x = (circle.textureSource.right() / circle.texture->getWidth()) * 0.5f; //0.5f;
 				circle.renderData.vertices[0].textureCoordinates.y = (circle.textureSource.bottom() / circle.texture->getHeight()) * 0.5f; //0.5f;
 
+				// Apply texturing.
 				useTexturing(&circle);
 			}
 

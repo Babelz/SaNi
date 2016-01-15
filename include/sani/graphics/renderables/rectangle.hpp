@@ -6,10 +6,6 @@ namespace sani {
 	
 	namespace graphics {
 
-		/*
-			TODO: impl texturing support.
-		*/
-
 		/// @class Rectangle rectangle.hpp "sani/graphics/rectangle.hpp"
 		/// @author voidbab
 		/// 

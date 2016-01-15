@@ -106,8 +106,6 @@ namespace sani {
 		}
 
 		void applyCircleTextureCoordinates(VertexPositionColorTexture* const vertices, const float32 rotation, const float32 radius, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight, const uint32 count) {
-			// TODO: WIP, not sure if it works the right way...
-			
 			for (uint32 i = 1; i + 1 < count; i += 2) {
 				const auto blFi = 2.0f * PI * i / count * 2.0f;
 				const auto brFi = 2.0f * PI * (i + 1) / count * 2.0f;
@@ -115,17 +113,17 @@ namespace sani {
 				VertexPositionColorTexture* const bl = &vertices[i];
 				VertexPositionColorTexture* const br = &vertices[i + 1];
 
-				const float32 blX = cos(blFi + PI) + textureSource->left() / textureWidth;//+ textureSource->left() / textureWidth;
+				const float32 blX = cos(blFi + PI) + textureSource->left() / textureWidth;
 				const float32 blY = sin(blFi + PI) + textureSource->top() / textureHeight;
 
 				bl->textureCoordinates.x = -blX * 0.5f + 0.5f; //-x * 0.5f + 0.5f;
-				bl->textureCoordinates.y = blY * 0.5f + 0.5f; //y * 0.5f + 0.5f;
+				bl->textureCoordinates.y = blY * 0.5f + 0.5f;  //y * 0.5f + 0.5f;
 
 				const float32 brX = cos(brFi + PI) + textureSource->left() / textureWidth;
 				const float32 brY = sin(brFi + PI) + textureSource->top() / textureHeight;
 
 				br->textureCoordinates.x = -brX * 0.5f + 0.5f; //-x * 0.5f + 0.5f;
-				br->textureCoordinates.y = brY * 0.5f + 0.5f; //y * 0.5f + 0.5f;
+				br->textureCoordinates.y = brY * 0.5f + 0.5f;  //y * 0.5f + 0.5f;
 			}
 		}
 	}

@@ -8,10 +8,6 @@ namespace sani {
 
 	namespace graphics {
 
-		/*
-			TODO: Move impl to .cpp
-		*/
-
 		/// @class Buffer buffer.hpp "sani/graphics/buffer.hpp"
 		/// @author voidbab
 		///
