@@ -5,7 +5,7 @@
 
 namespace sani {
 
-	CVarParser::CVarParser() {
+	CVarParser::CVarParser() : ErrorLogger() {
 	}
 
 	void CVarParser::findLogicalOperator(const String& str, size_t& pos) const {
@@ -35,7 +35,7 @@ namespace sani {
 		}
 
 		// Check for errors.
-		if (len == 0) pushError(SANI_ERROR_MESSAGE("invalid or unsupported operator, skipping compilation, line is \"" + str + "\""));
+		if (len == 0) ErrorLogger::pushError(SANI_ERROR_MESSAGE("invalid or unsupported operator, skipping compilation, line is \"" + str + "\""));
 	}
 
 	void CVarParser::parseConditionalExpression(String& exprStr, cvarlang::IntermediateCondition& intermediateCondition) {
@@ -108,7 +108,7 @@ namespace sani {
 
 			// Check for type mismatch.
 			if (intermediateCondition.rhsType != intermediateCondition.lhsType) {
-				pushError(SANI_ERROR_MESSAGE("type mismatch between variables in a require statement, expression: " + origExpr));
+				ErrorLogger::pushError(SANI_ERROR_MESSAGE("type mismatch between variables in a require statement, expression: " + origExpr));
 			}
 		}
 
@@ -152,7 +152,7 @@ namespace sani {
 		if (sepPos != str.npos) {
 			// Check for invalid string declaration.
 			if (str[str.size() - 1] != '"') {
-				pushError(SANI_ERROR_MESSAGE("invalid string declaration, line is " + str));
+				ErrorLogger::pushError(SANI_ERROR_MESSAGE("invalid string declaration, line is " + str));
 
 				return;
 			}
@@ -172,13 +172,13 @@ namespace sani {
 		if (tokens.size() != 2) {
 			// Too few tokens.
 			if (tokens.size() < 2) {
-				pushError(SANI_ERROR_MESSAGE("too few tokens, skipping compilation, line is \"" + str + "\""));
+				ErrorLogger::pushError(SANI_ERROR_MESSAGE("too few tokens, skipping compilation, line is \"" + str + "\""));
 
 				return;
 			} else if (tokens.size() > 2) {
 				// Too many tokens.
 				if (*tokens.begin() != cvarlang::lang::VolatileKeyword) {
-					pushError(SANI_ERROR_MESSAGE("too many tokens, skipping compilation, line is \"" + str + "\""));
+					ErrorLogger::pushError(SANI_ERROR_MESSAGE("too many tokens, skipping compilation, line is \"" + str + "\""));
 
 					return;
 				} 
@@ -201,7 +201,7 @@ namespace sani {
 
 		// Check for invalid value string.
 		if (type == cvarlang::ValueType::NoValue) {
-			pushError(SANI_ERROR_MESSAGE("unsupported or invalid value declaration, line is \"" + str + "\""));
+			ErrorLogger::pushError(SANI_ERROR_MESSAGE("unsupported or invalid value declaration, line is \"" + str + "\""));
 
 			return;
 		}

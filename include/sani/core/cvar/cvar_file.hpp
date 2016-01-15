@@ -10,7 +10,7 @@ namespace sani {
 	///
 	/// Class holding initial string representation of
 	/// a CVar file.
-	class CVarFile {
+	class CVarFile final {
 	private:
 		const String filename;
 

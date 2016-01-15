@@ -4,9 +4,15 @@ namespace sani {
 	
 	namespace interfaces {
 
+		/// Push new error to the logger.
+		void ErrorLogger::pushError(const String& error) {
+			errors.push(error);
+		}
+
 		void ErrorLogger::copyErrors(ErrorLogger& other) {
 			while (other.hasErrors()) pushError(other.getNextError());
 		}
+
 		bool ErrorLogger::hasErrors() const {
 			return !errors.empty();
 		}

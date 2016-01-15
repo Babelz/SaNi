@@ -8,7 +8,7 @@
 
 namespace sani {
 
-	CVarCompiler::CVarCompiler() {
+	CVarCompiler::CVarCompiler() : ErrorLogger() {
 		generateStatementGenerators();
 	}
 
@@ -40,22 +40,12 @@ namespace sani {
 			std::bind(&sani::CVarCompiler::generateCVarCVarExpression, this, _1, _2, _3)));
 	}
 
-	void CVarCompiler::copyErrors(CVarParser* parser) {
-		while (parser->hasErrors()) errorBuffer.push(parser->getNextError());
-	}
-	void CVarCompiler::copyErrors(CVarTokenizer* tokenizer) {
-		while (tokenizer->hasErrors()) errorBuffer.push(tokenizer->getNextError());
-	}
-	void CVarCompiler::copyErrors(CVarLinker* linker) {
-		while (linker->hasErrors()) errorBuffer.push(linker->getNextError());
-	}
-
 	void CVarCompiler::checkIfIsRedeclaration(CVarList& cvars, CVarToken& token, IntermediateCVar& intermediateCVar) {
 		if (containsCVar(cvars,intermediateCVar.name)) {
 			const String message = SANI_ERROR_MESSAGE("redeclaration of cvar " + intermediateCVar.name + " at file " + token.getFilename() +
 													  " at line " + std::to_string(token.getLineNumber()));
 
-			errorBuffer.push(message);
+			ErrorLogger::pushError(message);
 		}
 	}
 	bool CVarCompiler::containsCVar(CVarList& cvars, const String& name) const {
@@ -64,16 +54,6 @@ namespace sani {
 		}
 
 		return false;
-	}
-
-	bool CVarCompiler::hasErrors() const {
-		return errorBuffer.size() != 0;
-	}
-	String CVarCompiler::getNextError() {
-		String error(errorBuffer.top());
-		errorBuffer.pop();
-
-		return error;
 	}
 
 	void CVarCompiler::compile(CVarList& cvars, RecordList& records, TokenList& tokens) {
@@ -104,7 +84,7 @@ namespace sani {
 
 				checkIfIsRedeclaration(cvars, *i, intermediateCVar);
 
-				if (parser.hasErrors()) copyErrors(&parser);
+				if (parser.hasErrors()) copyErrors(parser);
 
 				// Emit cvar.
 				generateCVar(cvars, statements, &intermediateCVar);
@@ -163,10 +143,10 @@ namespace sani {
 			auto last = tokens.begin();
 			std::advance(last, tokens.size() - 1);
 
-			errorBuffer.push(SANI_ERROR_MESSAGE("require scope was not closed at the end of require block at file " + last->getFilename()));
+			ErrorLogger::pushError(SANI_ERROR_MESSAGE("require scope was not closed at the end of require block at file " + last->getFilename()));
 		}
 
-		if (parser.hasErrors()) copyErrors(&parser);
+		if (parser.hasErrors()) copyErrors(parser);
 	}
 
 	void CVarCompiler::generateCVar(CVarList& cvars, StatementList& statements, const IntermediateCVar* intermediateCVar) const  {
@@ -284,7 +264,7 @@ namespace sani {
 			}
 		}
 
-		errorBuffer.push(SANI_ERROR_MESSAGE("no cvar with name " + name + " was found at this time"));
+		ErrorLogger::pushError(SANI_ERROR_MESSAGE("no cvar with name " + name + " was found at this time"));
 
 		return nullptr;
 	}
@@ -295,9 +275,7 @@ namespace sani {
 		LinkRecord linkRecord;
 		linker.link(filename, files, &linkRecord);
 
-		if (linker.hasErrors()) {
-			copyErrors(&linker);
-		}
+		if (linker.hasErrors()) copyErrors(linker);
 
 		// Get linked files.
 		std::list<CVarFile*> linkedFiles;
@@ -313,7 +291,7 @@ namespace sani {
 		std::list<CVarToken> tokens;
 		tokenizer.tokenize(linkedFiles, tokens);
 
-		if (tokenizer.hasErrors()) copyErrors(&tokenizer);
+		if (tokenizer.hasErrors()) copyErrors(tokenizer);
 
 		// Try parse and emit.
 		compile(cvars, records, tokens);

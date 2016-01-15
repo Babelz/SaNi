@@ -4,16 +4,14 @@
 #include "sani/core/cvar/cvar_lang.hpp"
 #include "sani/core/cvar/cvar_token.hpp"
 #include "sani/types.hpp"
-#include <stack>
+#include <vector>
 
 namespace sani {
-
-	typedef	std::stack<String> ErrorBuffer;
 
 	namespace cvarlang {
 
 		// Class containing intermediate cvar representation.
-		struct IntermediateCVar {
+		struct IntermediateCVar final  {
 			cvarlang::ValueType type;
 
 			// Name of the var.
@@ -31,7 +29,7 @@ namespace sani {
 		};
 
 		// Class that contains intermediate requirement expression representation
-		struct IntermediateCondition {
+		struct IntermediateCondition final  {
 			String lhs;
 			String rhs;
 
@@ -59,7 +57,7 @@ namespace sani {
 		};
 
 		// Class that contains intermediate require statement representation.
-		struct IntermediateRequireStatement {
+		struct IntermediateRequireStatement final  {
 			std::vector<IntermediateCondition> conditions;
 			bool blockEnding;
 			String message;
@@ -72,6 +70,8 @@ namespace sani {
 		};
 	}
 
+	using namespace interfaces;
+
 	/// @class CVarParser cvar_parser.hpp "sani/core/cvar/cvar_parser.hpp"
 	/// @author voidbab
 	///
@@ -79,7 +79,7 @@ namespace sani {
 	/// to intermediate representation of the language. These
 	/// intermediate tokens then will be consumed by a emitter
 	/// that can generate cvars from them.
-	class CVarParser : public interfaces::ErrorLogger {
+	class CVarParser final : public ErrorLogger {
 	private:
 		/// Finds position of next logical operator in given string.
 		void findLogicalOperator(const String& str, size_t& pos) const;

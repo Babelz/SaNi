@@ -7,7 +7,7 @@
 
 namespace sani {
 
-	CVarLinker::CVarLinker() {
+	CVarLinker::CVarLinker() : ErrorLogger() {
 	}
 
 	CVarFile* const CVarLinker::findFile(const String& filename, std::list<CVarFile>& files) {
@@ -16,7 +16,7 @@ namespace sani {
 		});
 
 		if (file == files.end()) {
-			pushError(SANI_ERROR_MESSAGE("could not find file with name " + filename));
+			ErrorLogger::pushError(SANI_ERROR_MESSAGE("could not find file with name " + filename));
 
 			return nullptr;
 		}
@@ -54,7 +54,7 @@ namespace sani {
 		if (other != root) {
 			if (rootRecord->isLinked(other)) {
 				// TODO: how do i recursive include guard.
-				errorBuffer.push(SANI_ERROR_MESSAGE("found unneeded include of file " + other->getFilename()));
+				ErrorLogger::pushError(SANI_ERROR_MESSAGE("found unneeded include of file " + other->getFilename()));
 				
 				return;
 			} 
@@ -67,7 +67,7 @@ namespace sani {
 
 		// Require that the scope is 0.
 		if (scope != 0) {
-			pushError(SANI_ERROR_MESSAGE("link error, can't include files inside require statements"));
+			ErrorLogger::pushError(SANI_ERROR_MESSAGE("link error, can't include files inside require statements"));
 
 			return;
 		}
@@ -78,7 +78,7 @@ namespace sani {
 
 		// Check wether the file we want to link exists.
 		if (other == nullptr) {
-			pushError(SANI_ERROR_MESSAGE("could not find file with name " + line));
+			ErrorLogger::pushError(SANI_ERROR_MESSAGE("could not find file with name " + line));
 			
 			return;
 		}
@@ -95,20 +95,6 @@ namespace sani {
 		} else {
 			scope++;
 		}
-	}
-
-	void CVarLinker::pushError(const String& message) {
-		errorBuffer.push(message);
-	}
-
-	bool CVarLinker::hasErrors() const {
-		return !errorBuffer.empty();
-	}
-	String CVarLinker::getNextError() {
-		String message = errorBuffer.top();
-		errorBuffer.pop();
-
-		return message;
 	}
 
 	void CVarLinker::link(const String& filename, std::list<CVarFile>& files, LinkRecord* const linkRecord) {

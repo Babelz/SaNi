@@ -47,15 +47,17 @@ namespace sani {
 	class CVarTokenizer;
 	class CVarLinker;
 
+	using namespace interfaces;
+
 	/// @class CVarCompiler cvar_compiler.hpp "sani/core/cvar/cvar_compiler.hpp"
 	/// @author voidbab
 	///
 	/// Class that turns configuration source data into usable
 	/// cvars and requirements.
-	class CVarCompiler : public interfaces::ErrorLogger {
+	class CVarCompiler final : public ErrorLogger {
 	private:
-		typedef std::function<bool(const IntermediateCondition&)> StatementGeneratorCondition;
-		typedef std::function<void(const IntermediateCondition&, Condition&, CVarList&)> StatementGenerator;
+		using StatementGeneratorCondition = std::function<bool(const IntermediateCondition&)>;
+		using StatementGenerator		  = std::function<void(const IntermediateCondition&, Condition&, CVarList&)>;
 
 		struct RequireStatementGenerator {
 			const StatementGeneratorCondition condition;
@@ -67,10 +69,6 @@ namespace sani {
 		};
 
 		std::list<RequireStatementGenerator> statementGenerators;
-
-		void copyErrors(CVarParser* parser);
-		void copyErrors(CVarTokenizer* tokenizer);
-		void copyErrors(CVarLinker* linker);
 
 		void checkIfIsRedeclaration(CVarList& cvars, CVarToken& token, IntermediateCVar& intermediateCVar);
 		bool containsCVar(CVarList& cvars, const String& name) const;
@@ -104,9 +102,6 @@ namespace sani {
 		void generateStatementGenerators();
 	public:
 		CVarCompiler();
-
-		bool hasErrors() const;
-		String getNextError();
 
 		/// Compiles all given files.
 		/// @param[in] file file that should be compiled
