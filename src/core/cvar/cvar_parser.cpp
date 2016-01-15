@@ -8,10 +8,6 @@ namespace sani {
 	CVarParser::CVarParser() {
 	}
 
-	void CVarParser::pushError(const String& error) {
-		errorBuffer.push(error);
-	}
-
 	void CVarParser::findLogicalOperator(const String& str, size_t& pos) const {
 		if (cvarlang::lang::containsLogicalAnd(str))	pos = str.find(cvarlang::lang::And);
 		if (cvarlang::lang::containsLogicalOr(str))		pos = str.find(cvarlang::lang::Or);
@@ -130,16 +126,6 @@ namespace sani {
 
 			exprStr = exprStr.substr(2);
 		}
-	}
-
-	bool CVarParser::hasErrors() const {
-		return errorBuffer.size() != 0;
-	}
-	String CVarParser::getNextError() {
-		String error(errorBuffer.top());
-		errorBuffer.pop();
-
-		return error;
 	}
 
 	void CVarParser::parseCvar(String str, cvarlang::IntermediateCVar& intermediateCVar) {

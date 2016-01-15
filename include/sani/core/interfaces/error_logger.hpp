@@ -17,7 +17,12 @@ namespace sani {
 		private:
 			ErrorBuffer errors;
 		protected:
+			/// Push new error to the logger.
 			void pushError(const String& error);
+			
+			/// Copies errors from the other logger. 
+			/// This clears the other loggers error buffer.
+			void copyErrors(ErrorLogger& other);
 		public:
 			ErrorLogger() = default;
 

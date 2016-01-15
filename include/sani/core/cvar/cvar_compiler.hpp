@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/core/interfaces/error_logger.hpp"
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/core/cvar/cvar_token.hpp"
 #include "sani/forward_declare.hpp"
@@ -36,7 +37,6 @@ namespace sani {
 	typedef std::list<CVarRequireStatement> StatementList;
 	typedef std::list<CVarRecord> RecordList;
 	typedef std::list<CVarToken> TokenList;
-	typedef	std::stack<String> ErrorBuffer;
 	typedef std::list<CVar> CVarList;
 
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateCVar);
@@ -52,7 +52,7 @@ namespace sani {
 	///
 	/// Class that turns configuration source data into usable
 	/// cvars and requirements.
-	class CVarCompiler {
+	class CVarCompiler : public interfaces::ErrorLogger {
 	private:
 		typedef std::function<bool(const IntermediateCondition&)> StatementGeneratorCondition;
 		typedef std::function<void(const IntermediateCondition&, Condition&, CVarList&)> StatementGenerator;
@@ -67,8 +67,6 @@ namespace sani {
 		};
 
 		std::list<RequireStatementGenerator> statementGenerators;
-
-		ErrorBuffer errorBuffer;
 
 		void copyErrors(CVarParser* parser);
 		void copyErrors(CVarTokenizer* tokenizer);
