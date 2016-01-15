@@ -246,7 +246,7 @@ namespace sani {
 
 				// import the actual font now
 				FT_Face face = createFontFace(desc);
-				
+			
 				const std::vector<unsigned short>& characters = desc->getCharacters();
 				std::vector<Glyph> glyphs;
 				glyphs.reserve(characters.size());
@@ -261,13 +261,19 @@ namespace sani {
 
 				BitmapContent* bitmap = packGlyphs(glyphs);
 
-				// TODO create func for this
-				std::vector<sani::math::Recti> sources;
+				std::vector<GlyphContent> glyphContent;
+				glyphContent.reserve(characters.size());
 				for (auto& glyph : glyphs) {
-					sources.push_back(glyph.source);
+					glyphContent.push_back(GlyphContent{
+						glyph.character,
+						glyph.source,
+						glyph.bearingX,
+						glyph.bearingY,
+						glyph.advance
+					});
 				}
 
-				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, sources, characters);
+				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, glyphContent);
 
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);

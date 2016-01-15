@@ -3,10 +3,9 @@
 #include "sani/resource/bitmap_content.hpp"
 namespace sani {
 	namespace resource {
-		SpriteFontContent::SpriteFontContent(FontDescription* desc, BitmapContent* texture,
-			const Glyphs& glyphs, const Characters& characters)
+		SpriteFontContent::SpriteFontContent(FontDescription* desc, BitmapContent* texture, const Glyphs& glyphs)
 			: ResourceItem(), description(desc), texture(texture), 
-			glyphs(glyphs), characters(characters)  {
+			glyphs(glyphs) {
 
 		}
 
@@ -20,12 +19,8 @@ namespace sani {
 			return texture;
 		}
 
-		const std::vector<math::Recti>& SpriteFontContent::getGlyphs() const {
+		const std::vector<GlyphContent>& SpriteFontContent::getGlyphs() const {
 			return glyphs;
-		}
-
-		const std::vector<unsigned short>& SpriteFontContent::getCharacters() const {
-			return characters;
 		}
 
 	}

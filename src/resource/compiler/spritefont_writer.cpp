@@ -33,26 +33,22 @@ namespace sani {
 				// TODO this should be texture...
 				writer->writeObject(std::type_index(typeid(Texture2DContent)), &texcontent);
 
-				typedef std::vector<unsigned short> Characters;
-				typedef std::vector<math::Recti> Glyphs;
+				using Glyphs = std::vector<GlyphContent>;
 								
 				const Glyphs& glyphs = content->getGlyphs();
 				// write sources
 				writer->write7BitEncodedInt(glyphs.size());
 				
-				for (const auto& rect : glyphs) {
+				for (const auto& glyph : glyphs) {
 					// TODO create writer for this
-					writer->write(rect.x);
-					writer->write(rect.y);
-					writer->write(rect.w);
-					writer->write(rect.h);
-				}
-
-				const Characters& characters = content->getCharacters();
-				// write characters
-				writer->write7BitEncodedInt(characters.size());
-				for (unsigned short ch : characters) {
-					writer->write(ch);
+					writer->write(glyph.character);
+					writer->write(glyph.source.x);
+					writer->write(glyph.source.y);
+					writer->write(glyph.source.w);
+					writer->write(glyph.source.h);
+					writer->write(glyph.xOffset);
+					writer->write(glyph.yOffset);
+					writer->write(glyph.xAdvance);
 				}
 			}
 		}

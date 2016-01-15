@@ -2,6 +2,7 @@
 #include "sani/resource/reader/spritefont_reader.hpp"
 #include "sani/resource/texture2d.hpp"
 #include "sani/resource/sprite_font.hpp"
+#include "sani/resource/spritefont_content.hpp"
 
 namespace sani {
 	namespace resource {
@@ -12,30 +13,28 @@ namespace sani {
 
 			void* SpriteFontReader::read(ResourceReader* reader) {
 				Texture2D* texture = reader->readObject<Texture2D>();
-				std::vector<sani::math::Rect32> glyphs;
+				std::vector<GlyphContent> glyphs;
 
 				uint32 glyphCount = static_cast<uint32>(reader->read7BitEncodedInt());
 				glyphs.reserve(glyphCount);
 
 				for (uint32 i = 0; i < glyphCount; ++i) {
-					math::Recti rect;
-					rect.x = reader->readInt32();
-					rect.y = reader->readInt32();
-					rect.w = reader->readInt32();
-					rect.h = reader->readInt32();
-					glyphs.push_back(rect);
+					glyphs.push_back(GlyphContent{ 0 });
+					GlyphContent& glyph = glyphs.back();
+					glyph.character = reader->readUint32();
+					
+					glyph.source.x = reader->readInt32();
+					glyph.source.y = reader->readInt32();
+					glyph.source.w = reader->readInt32();
+					glyph.source.h = reader->readInt32();
+					
+					glyph.xOffset = reader->readSingle();
+					glyph.yOffset = reader->readSingle();
+					glyph.xAdvance = reader->readSingle();
+					
 				}
 
-				std::vector<unsigned short> characters;
-
-				uint32 charCount = static_cast<uint32>(reader->read7BitEncodedInt());
-				characters.reserve(charCount);
-
-				for (uint32 i = 0; i < charCount; ++i) {
-					characters.push_back(reader->readUint16());
-				}
-
-				SpriteFont* out = new SpriteFont(texture, glyphs, characters);
+				SpriteFont* out = new SpriteFont(texture, glyphs);
 
 				return out;
 			}
