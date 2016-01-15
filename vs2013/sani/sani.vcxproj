@@ -362,6 +362,7 @@
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\layer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\layer_type.hpp" />

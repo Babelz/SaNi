@@ -1065,6 +1065,9 @@
     <ClInclude Include="..\..\include\sani\core\interfaces\error_logger.hpp">
       <Filter>include\core\interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
