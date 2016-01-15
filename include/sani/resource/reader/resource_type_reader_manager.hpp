@@ -1,12 +1,17 @@
 #pragma once
+
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 #include <vector>
 
 SANI_FORWARD_DECLARE_3(sani, resource, reader, ResourceTypeReader);
+
 namespace sani {
+
 	namespace resource {
+
 		namespace reader {
+
 			/// Holds information about type readers to be used for
 			/// reading different datatypes
 			///
@@ -26,6 +31,7 @@ namespace sani {
 				void registerTypeReader() {
 					typeReaders.push_back(new T);
 				}
+
 				/// Register all standard type readers to manager
 				void registerStandardTypes();
 

@@ -5,7 +5,9 @@
 #include <string>
 
 namespace sani {
+
 	namespace resource {
+
 		class EffectContent : public ResourceItem {
 		private:
 			String vertexCode;

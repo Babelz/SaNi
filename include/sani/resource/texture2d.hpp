@@ -1,15 +1,18 @@
 #pragma once
+
 #include "sani/platform/graphics/texture.hpp"
 #include "sani/types.hpp"
 #include "sani/resource/resource.hpp"
 #include "sani/resource/serialization.hpp"
 #include <vector>
 #include "sani/core/math/rectangle.hpp"
+
 SANI_FORWARD_DECLARE_3(sani, resource, reader, Texture2DReader);
 SANI_FORWARD_DECLARE_2(sani, resource, Texture2DContent);
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 
 namespace sani {
+
 	namespace resource {
 
 		/// Represents a texture graphics resource
@@ -86,10 +89,9 @@ namespace sani {
 			/// @param[in] elementCount How many pixels to be copied
 			void getData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount);
 		};
-		
 	}
 }
+
 // TODO this can be moved to somewhere else?
 SANI_DESERIALIZABLE_WITH(sani::resource::Texture2DContent, sani::resource::reader::Texture2DReader);
 //SANI_SERIALIZABLE_WITH(sani::resource::Texture2DContent, sani::resource::compiler::Texture2DWriter);
-

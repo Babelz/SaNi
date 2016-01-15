@@ -1,4 +1,5 @@
 #pragma once
+
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/resource/reader/resource_type_reader_manager.hpp"
@@ -9,10 +10,13 @@ SANI_FORWARD_DECLARE_2(sani, io, FileSystem);
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 
 namespace sani {
+
 	namespace resource {
+
 		using namespace io;
 		using namespace graphics;
 		using namespace reader;
+
 		/// Asset manager which holds all the resources loaded
 		/// to engine
 		///
@@ -30,6 +34,7 @@ namespace sani {
 		public:
 			// TODO services needed, this is for debug
 			ResourceManager(FileSystem* fileSystem, GraphicsDevice* graphicsDevice);
+
 			template <class T>
 			T* load(const String& asset) {
 				return static_cast<T*>(load(asset));

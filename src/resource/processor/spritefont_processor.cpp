@@ -7,22 +7,23 @@
 #include "sani/core/math/rectangle.hpp"
 #include "sani/resource/bitmap_content.hpp"
 #include "sani/core/math/vector4.hpp"
+
 #include FT_FREETYPE_H
 #include FT_STROKER_H
 #include FT_GLYPH_H
 
 namespace sani {
+
 	namespace resource {
+
 		namespace processor {
 
 			static FT_Library library;
 
 			SpriteFontProcessor::SpriteFontProcessor() {
-
 			}
 
 			SpriteFontProcessor::~SpriteFontProcessor() {
-
 			}
 
 			class Glyph {

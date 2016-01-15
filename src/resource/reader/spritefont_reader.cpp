@@ -5,11 +5,16 @@
 #include "sani/resource/spritefont_content.hpp"
 
 namespace sani {
-	namespace resource {
-		namespace reader {
-			SpriteFontReader::SpriteFontReader() {}
 
-			SpriteFontReader::~SpriteFontReader() {}
+	namespace resource {
+
+		namespace reader {
+
+			SpriteFontReader::SpriteFontReader() {
+			}
+
+			SpriteFontReader::~SpriteFontReader() {
+			}
 
 			void* SpriteFontReader::read(ResourceReader* reader) {
 				Texture2D* texture = reader->readObject<Texture2D>();

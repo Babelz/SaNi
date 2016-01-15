@@ -1,5 +1,7 @@
 #include "sani/platform/platform_config.hpp"
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+
 #include "sani/platform.hpp"
 #include "sani/platform/file/file_system.hpp"
 #include "sani/resource/spritefont_content.hpp"
@@ -12,20 +14,21 @@
 #include <iostream>
 #include <algorithm>
 
-
-
-
 static int CALLBACK EnumFontFamiliesExProc(ENUMLOGFONTEX *lpelfe, NEWTEXTMETRICEX *lpntme, int FontType, LPARAM lParam) {
 	LPARAM* l = (LPARAM*)lParam;
+
 	*l = TRUE;
+
 	return 0;
 }
 
 static bool platformIsFontInstalled(const char* faceName) {
 	const int MaxSize = 512;
+
 	if (strlen(faceName) > MaxSize) {
 		throw std::runtime_error("Not enough memory");
 	}
+
 	wchar_t lz[MaxSize] = { 0 };
 	mbstowcs(lz, faceName, strlen(faceName));
 	HDC hdc = GetDC(NULL);
@@ -66,7 +69,6 @@ static String platformGetFontPath(const String& faceName) {
 
 	// Look for a matching font name
 	do {
-
 		wsFontFile.clear();
 		valueDataSize = maxValueDataSize;
 		valueNameSize = maxValueNameSize;
@@ -109,15 +111,16 @@ static String platformGetFontPath(const String& faceName) {
 }
 
 namespace sani {
+
 	namespace resource {
+
 		namespace pipeline {
 
-			SpriteFontDescriptionImporter::SpriteFontDescriptionImporter() 
-				: ContentImporter() {
-
+			SpriteFontDescriptionImporter::SpriteFontDescriptionImporter() : ContentImporter() {
 			}
 
-			SpriteFontDescriptionImporter::~SpriteFontDescriptionImporter() { }
+			SpriteFontDescriptionImporter::~SpriteFontDescriptionImporter() { 
+			}
 
 			ResourceItem* SpriteFontDescriptionImporter::import(const String& filename, io::FileSystem* fileSystem) const {
 				using namespace sani::io;
@@ -137,6 +140,7 @@ namespace sani {
 					fileSystem->closeFile(filename);
 					throw;
 				}
+
 				fileSystem->closeFile(filename);
 				
 				XmlNode root, nameNode, sizeNode, spacingNode, regionsNode, outlineNode, outlineTypeNode, outlineWidthNode;
@@ -194,17 +198,18 @@ namespace sani {
 				
 				if (fileSystem->fileExists(assetFolderPath)) {
 					desc->setFontPath(assetFolderPath);
-				}
-				else {
+				} else {
 					// it is a system font
 					if (!platformIsFontInstalled(nameOfFont.c_str())){
 						throw std::runtime_error(String("Can find font ") + nameOfFont);
 					}
 					desc->setFontPath(platformGetFontPath(nameOfFont));
 				}
+
 				return desc;
 			}
 		}
 	}
 }
+
 #endif

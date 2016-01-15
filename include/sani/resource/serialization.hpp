@@ -14,6 +14,7 @@ public:
 	}
 };
 
+// TODO: what is this?
 #if 0
 template <class T> class SerializableWith {
 public:

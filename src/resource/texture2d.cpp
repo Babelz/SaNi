@@ -4,28 +4,28 @@
 #include <algorithm>
 #include <stdexcept>
 
-
 namespace sani {
+
 	namespace resource {
+
 		using namespace graphics;
-		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height)
-			: Texture(device, width, height), levelCount(1) {
+
+		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height) : Texture(device, width, height), 
+																										  levelCount(1) {
 			generateTexture(device, width, height, false, SurfaceFormat::ColorRGBA, SurfaceType::Texture);
 		}
 
-		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format)
+		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format) 
 			: Texture(device, width, height), levelCount(((mipmap) ? calculateLevelCount(width, height) : 1)) {
 			generateTexture(device, width, height, mipmap, format, SurfaceType::Texture);
 		}
 
-		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, 
-							 const bool mipmap, const SurfaceFormat format, const SurfaceType type)
+		Texture2D::Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, const SurfaceFormat format, const SurfaceType type)
 							 : Texture(device, width, height), levelCount(((mipmap) ? calculateLevelCount(width, height) : 1)) {
 			generateTexture(device, width, height, mipmap, format, type);
 		}
 
 		Texture2D::~Texture2D() {
-			
 		}
 
 		void Texture2D::generateTexture(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format, SurfaceType type) {
@@ -45,37 +45,43 @@ namespace sani {
 			}
 
 			device->bindTexture(renderTexture);
+
 			device->setTextureParameter(
 				TextureTarget::Texture2D,
 				TextureParameterName::TextureMinFilter,
 				static_cast<int>((mipmap) ? TextureMinFilter::LinearMipmapLinear : TextureMinFilter::Linear)
 				);
+
 			device->setTextureParameter(
 				TextureTarget::Texture2D,
 				TextureParameterName::TextureMagFilter,
 				static_cast<int>(TextureMagFilter::Linear)
 				);
+
 			device->setTextureParameter(
 				TextureTarget::Texture2D,
 				TextureParameterName::TextureWrapS,
 				static_cast<int>(wrap)
 				);
+
 			device->setTextureParameter(
 				TextureTarget::Texture2D,
 				TextureParameterName::TextureWrapT,
 				static_cast<int>(wrap)
 				);
 
-
 			device->unbindTexture();
 		}
 
 		void Texture2D::setData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount) {
 			uint32 startBytes = sizeof(unsigned char) * startIndex;
+
 			const unsigned char* ptr = data.data() + startIndex;
+
 			if (rect != nullptr) {
 				throw std::logic_error("not implemented");
 			}
+
 			int x, y, w, h;
 			x = y = 0;
 			w = std::max(getWidth() >> level, 1u);
@@ -91,6 +97,7 @@ namespace sani {
 				SurfaceFormat::ColorRGBA,
 				data.data()
 				);
+
 			device->unbindTexture();
 		}
 
@@ -98,8 +105,10 @@ namespace sani {
 			if (rect != nullptr) {
 				throw std::logic_error("Not implemented");
 			}
+
 			device->bindTexture(renderTexture);
 			data.reserve(getWidth() * getHeight() * 4);
+
 			device->getTextureData(
 				TextureTarget::Texture2D,
 				level,
@@ -110,11 +119,13 @@ namespace sani {
 
 		uint32 Texture2D::calculateLevelCount(uint32 width, uint32 height) {
 			uint32 levels = 0;
+
 			while (width > 1 && height > 1) {
 				++levels;
 				width /= 2;
 				height /= 2;
 			}
+
 			return levels;
 		}
 	}

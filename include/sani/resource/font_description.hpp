@@ -100,7 +100,6 @@ namespace sani {
 			inline const std::vector<unsigned short>& getCharacters() const {
 				return characters;
 			}
-			
 		};
 	}
 }

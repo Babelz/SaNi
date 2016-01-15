@@ -1,6 +1,8 @@
 #include "../bitmap_content.hpp"
 #include "sani/debug.hpp"
+
 namespace sani {
+
 	namespace resource {
 
 		inline const uint32 BitmapContent::getWidth() const {
@@ -24,32 +26,34 @@ namespace sani {
 			delete[] pixels;
 		}
 
-
 		template <class PixelType>
 		void PixelBitmapContent<PixelType>::tryGetFormat(graphics::SurfaceFormat* out) const {
 			using namespace sani::math;
 			using namespace sani::graphics;
+
 			if (typeid(PixelType) == typeid(Vector4<unsigned char>)) {
 				*out = SurfaceFormat::ColorRGBA;
 			}
-			
 		}
 
 		template <class PixelType>
 		void PixelBitmapContent<PixelType>::setPixel(uint32 index, const PixelType& value) {
 			SANI_ASSERT(index < (width * height));
+
 			pixels[index] = value;
 		}
 
 		template <class PixelType>
 		void PixelBitmapContent<PixelType>::setPixel(uint32 y, uint32 x, const PixelType& pxl) {
 			SANI_ASSERT(y < height && x < width);
+
 			pixels[y * width + x] = pxl;
 		}
 
 		template <class PixelType>
 		PixelType& PixelBitmapContent<PixelType>::getPixel(uint32 y, uint32 x) const {
 			SANI_ASSERT(y < height && x < width);
+
 			return pixels[y * width + x];
 		}
 
@@ -60,23 +64,24 @@ namespace sani {
 			graphics::SurfaceFormat fmt;
 			fromThis->tryGetFormat(&fmt);
 			// TODO fix this
-			SANI_ASSERT(format == fmt 
-				&& sourceArea.w == destinationArea.w 
-				&& sourceArea.h == destinationArea.h);
+			SANI_ASSERT(format == fmt && 
+						sourceArea.w == destinationArea.w && 
+						sourceArea.h == destinationArea.h);
 		
 			PixelBitmapContent<PixelType>* from = static_cast<PixelBitmapContent<PixelType>*>(fromThis);
 
 			uint32 destY = destinationArea.y;
 			uint32 destX = destinationArea.x;
+
 			for (int y = sourceArea.y; y < sourceArea.y + sourceArea.h; ++y) {
 				for (int x = sourceArea.x; x < sourceArea.x + sourceArea.w; ++x) {
 					setPixel(destY, destX, from->getPixel(y, x));
 					++destX;
 				}
+
 				++destY;
 				destX = destinationArea.x;
 			}
-
 		}
 
 		template <class PixelType>
@@ -97,7 +102,6 @@ namespace sani {
 				ptr + size * sizeof(PixelType)
 				);
 		}
-
 
 		template <class PixelType>
 		void PixelBitmapContent<PixelType>::setPixelData(std::vector<unsigned char>& pixels) {

@@ -7,9 +7,11 @@
 #include "sani/resource/serialization.hpp"
 #include "sani/forward_declare.hpp"
 #include <vector>
+
 SANI_FORWARD_DECLARE_3(sani, resource, reader, BitmapContentReader);
 
 namespace sani {
+
 	namespace resource {
 
 		/// Class which represents image content
@@ -26,8 +28,9 @@ namespace sani {
 			/// @param[out] out nullptr if the type is not recognized or the surface format if found
 			virtual void tryGetFormat(graphics::SurfaceFormat* out) const = 0;
 			
-			virtual void copyFrom(BitmapContent* from,
-				const sani::math::Rect32i& sourceArea, const sani::math::Rect32i& destinationArea) = 0;
+			virtual void copyFrom(BitmapContent* from, 
+							      const sani::math::Rect32i& sourceArea, 
+								  const sani::math::Rect32i& destinationArea) = 0;
 
 			inline const uint32 getWidth() const;
 
@@ -52,7 +55,8 @@ namespace sani {
 			void setPixel(uint32 index, const PixelType& value);
 
 			virtual void copyFrom(BitmapContent* from,
-				const sani::math::Rect32i& sourceArea, const sani::math::Rect32i& destinationArea);
+								  const sani::math::Rect32i& sourceArea, 
+								  const sani::math::Rect32i& destinationArea);
 
 			void setPixel(uint32 y, uint32 x, const PixelType& pxl);
 			PixelType& getPixel(uint32 y, uint32 x) const;
@@ -63,5 +67,7 @@ namespace sani {
 
 	}
 }
+
 SANI_DESERIALIZABLE_WITH(sani::resource::BitmapContent, sani::resource::reader::BitmapContentReader);
+
 #include "inl/bitmap_content.inl"
