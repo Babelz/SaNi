@@ -30,10 +30,6 @@ namespace sani {
 		}
 		inline uint32 toUInt32(const String& str) {
 			static_assert(sizeof(unsigned int) == sizeof(uint32), "size miss match");
-			
-			/*
-				TODO: is this x platform?
-			*/
 
 			std::istringstream reader(str);
 

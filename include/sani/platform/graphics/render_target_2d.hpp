@@ -4,10 +4,6 @@
 #include "sani/types.hpp"
 #include "sani/platform/graphics/texture.hpp"
 
-/*
-	TODO: inherit from Texture when it has been implemented.
-*/
-
 namespace sani {
 	namespace graphics {
 

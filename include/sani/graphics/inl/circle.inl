@@ -14,10 +14,6 @@ namespace sani {
 			const math::Vec3f& scale = circle.transform.scale;
 			const float32 rotation = circle.transform.rotation;
 
-			/*
-				TODO: borders, rotation.
-			*/
-
 			const float32 sin = math::sin(rotation);
 			const float32 cos = math::cos(rotation);
 
@@ -92,6 +88,27 @@ namespace sani {
 
 		void updateRenderData(Circle& circle) {
 			setupShapeForRendering(&circle, circle.borderThickness);
+			
+			if (circle.texture == nullptr) {
+				useSolidFill(&circle);
+			} else {
+				// TODO: WIP, does not have "default" sourcing.
+
+				applyCircleTextureCoordinates(circle.renderData.vertices.data(),
+											  circle.transform.rotation,
+											  circle.radius,
+											  &circle.textureSource,
+											  static_cast<float32>(circle.texture->getWidth()),
+											  static_cast<float32>(circle.texture->getHeight()),
+											  circle.renderData.vertices.size() - 1);
+
+				circle.renderData.vertices[0].textureCoordinates.x = (circle.textureSource.right() / circle.texture->getWidth()) * 0.5f; //0.5f;
+				circle.renderData.vertices[0].textureCoordinates.y = (circle.textureSource.bottom() / circle.texture->getHeight()) * 0.5f; //0.5f;
+
+				useTexturing(&circle);
+			}
+
+			updateGroupIdentifier(circle);
 		}
 	}
 }

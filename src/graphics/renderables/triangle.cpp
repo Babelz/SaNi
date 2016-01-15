@@ -78,8 +78,5 @@ namespace sani {
 		Triangle::Triangle(const float32 width, const float32 height) 
 			: Triangle(width / 2.0f, 0.0f, 0.0f, height, width, height) {
 		}
-		Triangle::Triangle() 
-			: Triangle(0.0f, 0.0f, 1.0f, 1.0f) {
-		}
 	}
 }

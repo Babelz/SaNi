@@ -1,4 +1,7 @@
 #include <functional>
 
-#define SANI_ACTION(signature)							std::function<signature>
-#define SANI_FUNC_CALLER(signature, callback)	        std::function<std::function<signature>>
+template <typename T>
+using FunctionCaller = std::function < std::function<T> > ;
+
+template <typename T>
+using Action = std::function < T > ;

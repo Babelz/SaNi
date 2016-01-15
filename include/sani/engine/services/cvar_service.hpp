@@ -16,8 +16,31 @@ namespace sani {
 
 		namespace services {
 
+			/// Contains runtime information regarding the 
+			/// current cvar configuration.
+			struct CVarConfiguration {
+				// TODO: can we sync shit while running 
+				//		 on android?
+				const bool canSync;
+
+				bool isDefault;
+
+				CVarConfiguration() : isDefault(false),
+									  #if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
+										canSync(true)
+									  #elif
+										canSync(false)
+									  #endif 
+									  {
+				}
+
+				~CVarConfiguration() = default;
+			};
+
 			class CVarService : public EngineService {
 			private:
+				CVarConfiguration configuration;
+
 				std::list<CVarRecord> records;
 				std::list<CVar> cvars;
 
