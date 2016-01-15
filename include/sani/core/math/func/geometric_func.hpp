@@ -81,8 +81,6 @@ namespace sani {
 		
 		template <typename T>
 		Vector3<T> cross(const Vector3<T>& a, const Vector3<T>& b);
-
-		// TODO cross, distance etc
 	}
 }
 

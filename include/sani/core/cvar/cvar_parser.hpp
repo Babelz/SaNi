@@ -1,18 +1,17 @@
 #pragma once
 
+#include "sani/core/interfaces/error_logger.hpp"
 #include "sani/core/cvar/cvar_lang.hpp"
 #include "sani/core/cvar/cvar_token.hpp"
 #include "sani/types.hpp"
-#include <stack>
+#include <vector>
 
 namespace sani {
-
-	typedef	std::stack<String> ErrorBuffer;
 
 	namespace cvarlang {
 
 		// Class containing intermediate cvar representation.
-		struct IntermediateCVar {
+		struct IntermediateCVar final  {
 			cvarlang::ValueType type;
 
 			// Name of the var.
@@ -30,7 +29,7 @@ namespace sani {
 		};
 
 		// Class that contains intermediate requirement expression representation
-		struct IntermediateCondition {
+		struct IntermediateCondition final  {
 			String lhs;
 			String rhs;
 
@@ -58,7 +57,7 @@ namespace sani {
 		};
 
 		// Class that contains intermediate require statement representation.
-		struct IntermediateRequireStatement {
+		struct IntermediateRequireStatement final  {
 			std::vector<IntermediateCondition> conditions;
 			bool blockEnding;
 			String message;
@@ -71,6 +70,8 @@ namespace sani {
 		};
 	}
 
+	using namespace interfaces;
+
 	/// @class CVarParser cvar_parser.hpp "sani/core/cvar/cvar_parser.hpp"
 	/// @author voidbab
 	///
@@ -78,21 +79,8 @@ namespace sani {
 	/// to intermediate representation of the language. These
 	/// intermediate tokens then will be consumed by a emitter
 	/// that can generate cvars from them.
-	class CVarParser {
+	class CVarParser final : public ErrorLogger {
 	private:
-
-		/*
-			TODO: could move these error methods to some
-				  common interface?
-
-				  Few classes in the cvar module use the same implementation,
-				  so does the graphics device.
-		*/
-
-		ErrorBuffer errorBuffer;
-
-		void pushError(const String& error);
-
 		/// Finds position of next logical operator in given string.
 		void findLogicalOperator(const String& str, size_t& pos) const;
 		/// Finds position and length of next conditional operator in given string.
@@ -103,9 +91,6 @@ namespace sani {
 		void parseConditionalExpression(String& exprStr, cvarlang::IntermediateCondition& intermediateCondition);
 	public:
 		CVarParser();
-
-		bool hasErrors() const;
-		String getNextError();
 
 		/// Parses intermediate cvar from given string.
 		void parseCvar(String str, cvarlang::IntermediateCVar& intermediateCVar);

@@ -6,14 +6,14 @@
 
 namespace sani {
 
-	typedef std::function<bool(void)> Condition;
+	using Condition = std::function<bool(void)>;
 
 	/// @class CVarCondition cvar_condition.hpp "sani/core/cvar/cvar_condition.hpp"
 	/// @author voidbab
 	///
 	/// Represents a condition that must be met before the 
 	/// CVar can be changed.
-	class CVarCondition {
+	class CVarCondition final {
 	private:
 		const Condition condition;
 		const cvarlang::LogicalOperators oper;

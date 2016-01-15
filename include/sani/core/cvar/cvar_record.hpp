@@ -10,7 +10,7 @@ namespace sani {
 	///
 	/// Contains runtime and compile time information about cvars.
 	/// Used to store cvars to files when the engine gets closed.
-	class CVarRecord {
+	class CVarRecord final {
 	private:
 		const CVarToken token;
 		const CVar& cvar;			// Runtime cvar.

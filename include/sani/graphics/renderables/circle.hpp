@@ -10,10 +10,6 @@ namespace sani {
 		#define VERTICES_ROUGH_CIRCLE	9
 		#define VERTICES_SMOOTH_CIRCLE	36
 
-		/*
-			TODO: impl texturing support.
-		*/
-
 		class Circle : public Renderable {
 		public:
 			float32 borderThickness;

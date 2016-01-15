@@ -5,21 +5,7 @@
 
 namespace sani {
 
-	CVarTokenizer::CVarTokenizer() {
-	}
-
-	void CVarTokenizer::pushError(const String& error) {
-		errorBuffer.push(error);
-	}
-
-	bool CVarTokenizer::hasErrors() const {
-		return errorBuffer.size() != 0;
-	}
-	String CVarTokenizer::getNextError() {
-		String error(errorBuffer.top());
-		errorBuffer.pop();
-
-		return error;
+	CVarTokenizer::CVarTokenizer() : ErrorLogger() {
 	}
 
 	void CVarTokenizer::tokenize(const std::list<CVarFile*>& files, std::list<CVarToken>& tokens) {
@@ -72,7 +58,7 @@ namespace sani {
 					if (trimmed.size() == cvarlang::lang::RequireKeyword.size() || cvarlang::lang::isValidRequire(line)) {
 						type = cvarlang::TokenType::Require;
 					} else {														  
-						pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + ", at file " + file->getFilename()));
+						ErrorLogger::pushError(SANI_ERROR_MESSAGE("invalid require statement at line " + std::to_string(i) + ", at file " + file->getFilename()));
 					}
 
 					lastRequire = true;
@@ -80,7 +66,7 @@ namespace sani {
 					if (cvarlang::lang::isValidDeclaration(line)) {
 						type = cvarlang::TokenType::Declaration;
 					} else										  {
-						pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + ", at file " + file->getFilename()));
+						ErrorLogger::pushError(SANI_ERROR_MESSAGE("invalid declaration at line" + std::to_string(i) + ", at file " + file->getFilename()));
 					}
 
 					lastRequire = false;
@@ -96,7 +82,7 @@ namespace sani {
 
 				if (type == cvarlang::TokenType::Invalid) {
 					// Push error, invalid line.
-					pushError(SANI_ERROR_MESSAGE("invalid token at line " + std::to_string(i) + ", at file " + file->getFilename()));
+					ErrorLogger::pushError(SANI_ERROR_MESSAGE("invalid token at line " + std::to_string(i) + ", at file " + file->getFilename()));
 				} else {
 					// Should be a valid token.
 					tokens.push_back(CVarToken(type, i, file->getFilename(), line));

@@ -211,6 +211,12 @@
     <Filter Include="src\core\io">
       <UniqueIdentifier>{8604410b-5f32-4e54-9409-12becfb88048}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\interfaces">
+      <UniqueIdentifier>{78863daa-88dd-47bf-b260-6ec8e33015a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\interfaces">
+      <UniqueIdentifier>{1fcebf22-1e8d-41e0-8462-ba820a12a206}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -513,6 +519,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\messaging\channels\query_channel.cpp">
       <Filter>src\engine\messaging\channels</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\interfaces\error_logger.cpp">
+      <Filter>src\core\interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1052,6 +1061,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\interfaces\error_logger.hpp">
+      <Filter>include\core\interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

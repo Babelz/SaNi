@@ -173,6 +173,7 @@
     <ClCompile Include="..\..\src\core\cvar\cvar_token.cpp" />
     <ClCompile Include="..\..\src\core\cvar\cvar_tokenizer.cpp" />
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
+    <ClCompile Include="..\..\src\core\interfaces\error_logger.cpp" />
     <ClCompile Include="..\..\src\core\io\memory_stream.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
@@ -281,6 +282,7 @@
     <ClInclude Include="..\..\include\sani\core\events.hpp" />
     <ClInclude Include="..\..\include\sani\core\func.hpp" />
     <ClInclude Include="..\..\include\sani\core\inl\events.inl" />
+    <ClInclude Include="..\..\include\sani\core\interfaces\error_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\io\memory_stream.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />

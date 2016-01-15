@@ -9,7 +9,7 @@ namespace sani {
 	/// @author voidbab
 	///
 	/// Represents a set of conditions.
-	class CVarRequireStatement {
+	class CVarRequireStatement final  {
 	private:
 		const std::vector<CVarCondition> conditions;
 		const String message;

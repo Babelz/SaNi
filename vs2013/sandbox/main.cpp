@@ -149,8 +149,10 @@ void initialize(SaNiEngine* const engine) {
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 }
+
+#include "sani/core/math/trigonometric.hpp"
+
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {
-	c->transform.rotation += 0.01f;
 	recomputeVertices(*c);
 	updateRenderData(*c);
 }

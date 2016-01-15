@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/core/interfaces/error_logger.hpp"
 #include "sani/core/cvar/cvar_file.hpp"
 #include "sani/types.hpp"
 #include <stack>
@@ -7,19 +8,17 @@
 
 namespace sani {
 	
-	typedef std::stack<String> ErrorBuffer;
-
 	class LinkRecord;
+
+	using namespace interfaces;
 
 	/// @class CVarLinker cvar_linker.hpp "sani/core/cvar/cvar_linker.hpp"
 	/// @author voidbab
 	/// 
 	/// Class responsible of linking files with
 	/// given root file.
-	class CVarLinker {
+	class CVarLinker final : public ErrorLogger {
 	private:
-		ErrorBuffer errorBuffer;
-
 		LinkRecord* rootRecord;
 		uint32 scope;
 
@@ -29,14 +28,9 @@ namespace sani {
 		void copyContents(CVarFile* const file, const uint32 lineIndex, const String& line, std::list<CVarFile>& files);
 		void linkFile(CVarFile* const file, String& line, std::list<CVarFile>& files);
 
-		void updateScope(const String& line);
-		
-		void pushError(const String& message);
+		void updateScope(const String& line);	
 	public:
 		CVarLinker();
-
-		bool hasErrors() const;
-		String getNextError();
 
 		void link(const String& filename, std::list<CVarFile>& files, LinkRecord* const record);
 

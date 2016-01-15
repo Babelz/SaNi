@@ -10,7 +10,7 @@ namespace sani {
 	/// @author voidbab
 	///
 	/// Represents non-generic cvar.
-	class CVar {
+	class CVar final {
 	private:
 		// Wrap some value fields to union
 		// so we can save few bytes at best.

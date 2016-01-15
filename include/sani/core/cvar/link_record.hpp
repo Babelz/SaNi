@@ -12,7 +12,7 @@ namespace sani {
 	///
 	/// Class used to store information about the file
 	/// linkages. Used to compile the files in correct order.
-	class LinkRecord {
+	class LinkRecord final {
 	private:
 		std::vector<CVarFile*> links;
 		CVarFile* root;

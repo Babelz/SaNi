@@ -28,7 +28,6 @@
 // Linux
 // http://stackoverflow.com/questions/4605842/how-to-identify-platform-compiler-from-preprocessor-macros
 // Don't know if apple defines __linux__
-// TODO: maybe we should define LINUX or _LINUX in premake4?
 #if defined(__linux__) && !defined(__APPLE__)
 #undef SANI_TARGET_PLATFORM
 #define SANI_TARGET_PLATFORM SANI_PLATFORM_LINUX
@@ -55,7 +54,6 @@ You can #include <TargetConditionals.h> inside #ifdef __APPLE__, which then give
 
 
 // Android
-// TODO: I guess we need to change our build system maybe?
 // http://stackoverflow.com/questions/6374523/how-to-detect-compilation-by-android-ndk-in-a-c-c-file
 #if defined(ANDROID)
 #undef  SANI_TARGET_PLATFORM

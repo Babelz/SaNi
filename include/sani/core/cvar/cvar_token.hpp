@@ -9,7 +9,7 @@ namespace sani {
 	///
 	/// Contains compile time information about cvars.
 	/// Also used when files are synced.
-	class CVarToken {
+	class CVarToken final {
 	private:
 		const cvarlang::TokenType type;
 

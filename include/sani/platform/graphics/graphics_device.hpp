@@ -1,4 +1,5 @@
 #pragma once
+
 #include "sani/platform/graphics/graphics_error.hpp"
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
@@ -38,8 +39,8 @@ namespace sani {
 		struct Viewport;
 		struct TextureDescription;
 		class RenderTarget2D;
-		
-		typedef std::stack<GraphicsError> ErrorBuffer;
+
+		using ErrorBuffer = std::stack<GraphicsError>;
 
 		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
