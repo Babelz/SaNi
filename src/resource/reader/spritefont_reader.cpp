@@ -12,13 +12,13 @@ namespace sani {
 
 			void* SpriteFontReader::read(ResourceReader* reader) {
 				Texture2D* texture = reader->readObject<Texture2D>();
-				std::vector<sani::math::Rect32> glyphs;
+				std::vector<sani::math::Rect32i> glyphs;
 
 				uint32 glyphCount = static_cast<uint32>(reader->read7BitEncodedInt());
 				glyphs.reserve(glyphCount);
 
 				for (uint32 i = 0; i < glyphCount; ++i) {
-					math::Recti rect;
+					math::Rect32i rect;
 					rect.x = reader->readInt32();
 					rect.y = reader->readInt32();
 					rect.w = reader->readInt32();

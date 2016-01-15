@@ -70,7 +70,7 @@ namespace sani {
 			device->unbindTexture();
 		}
 
-		void Texture2D::setData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount) {
+		void Texture2D::setData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount) {
 			uint32 startBytes = sizeof(unsigned char) * startIndex;
 			const unsigned char* ptr = data.data() + startIndex;
 			if (rect != nullptr) {
@@ -94,7 +94,7 @@ namespace sani {
 			device->unbindTexture();
 		}
 
-		void Texture2D::getData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount) {
+		void Texture2D::getData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount) {
 			if (rect != nullptr) {
 				throw std::logic_error("Not implemented");
 			}

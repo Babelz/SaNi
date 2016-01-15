@@ -18,7 +18,7 @@ namespace sani {
 		class SpriteFont : public Resource {
 		public:
 			using Characters = std::vector<uint16>;
-			using Glyph		 = sani::math::Rect32;
+			using Glyph		 = sani::math::Rect32i;
 			using Glyphs     = std::vector<Glyph>;
 			
 			Texture2D* texture;

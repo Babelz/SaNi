@@ -32,7 +32,7 @@ namespace sani {
 				float32 bearingX;
 				float32 bearingY;
 				float32 advance;
-				sani::math::Recti source;
+				sani::math::Rect32i source;
 			public:
 				Glyph() : pixels(nullptr), character('\0') {}
 			};
@@ -225,8 +225,8 @@ namespace sani {
 					BitmapContent* pixels = glyph.pixels;
 					uint32 width = pixels->getWidth();
 					uint32 height = pixels->getHeight();
-					sani::math::Recti source(0, 0, height, width);
-					sani::math::Recti destination(1 + xOffset, yOffset, height, width);
+					sani::math::Rect32i source(0, 0, height, width);
+					sani::math::Rect32i destination(1 + xOffset, yOffset, height, width);
 					// TODO move this
 					glyph.source = destination;
 					bitmap->copyFrom(pixels, source, destination);
@@ -262,7 +262,7 @@ namespace sani {
 				BitmapContent* bitmap = packGlyphs(glyphs);
 
 				// TODO create func for this
-				std::vector<sani::math::Recti> sources;
+				std::vector<sani::math::Rect32i> sources;
 				for (auto& glyph : glyphs) {
 					sources.push_back(glyph.source);
 				}

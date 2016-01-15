@@ -17,7 +17,8 @@ namespace sani {
 		/// 
 		class Texture2D : public Resource, public graphics::Texture {
 		private:
-			typedef std::vector<unsigned char> PixelData;
+			using PixelData = std::vector<unsigned char>;
+			
 			const uint32 levelCount;
 
 			/// Generates texture and sets filters 
@@ -73,7 +74,7 @@ namespace sani {
 			/// @param[in] data The pixels to be set
 			/// @param[in] startIndex The index where to start copying pixels
 			/// @param[in] elementCount How many pixels to be copied
-			void setData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount);
+			void setData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount);
 
 			/// Gets the pixel data from textures level
 			/// 
@@ -83,7 +84,7 @@ namespace sani {
 			/// @param[out] data The container where to read the pixel data
 			/// @param[in] startIndex The index where to start copying pixels
 			/// @param[in] elementCount How many pixels to be copied
-			void getData(graphics::GraphicsDevice* device, const int level, const math::Recti* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount);
+			void getData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount);
 		};
 		
 	}

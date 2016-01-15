@@ -21,6 +21,6 @@ namespace sani {
 			~VertexPositionColor() = default;
 		};
 
-		typedef VertexPositionColor VPC;
+		using VPC = VertexPositionColor;
 	}
 }

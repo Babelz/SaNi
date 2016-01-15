@@ -27,7 +27,7 @@ namespace sani {
 			virtual void tryGetFormat(graphics::SurfaceFormat* out) const = 0;
 			
 			virtual void copyFrom(BitmapContent* from,
-				const sani::math::Recti& sourceArea, const sani::math::Recti& destinationArea) = 0;
+				const sani::math::Rect32i& sourceArea, const sani::math::Rect32i& destinationArea) = 0;
 
 			inline const uint32 getWidth() const;
 
@@ -52,7 +52,7 @@ namespace sani {
 			void setPixel(uint32 index, const PixelType& value);
 
 			virtual void copyFrom(BitmapContent* from,
-				const sani::math::Recti& sourceArea, const sani::math::Recti& destinationArea);
+				const sani::math::Rect32i& sourceArea, const sani::math::Rect32i& destinationArea);
 
 			void setPixel(uint32 y, uint32 x, const PixelType& pxl);
 			PixelType& getPixel(uint32 y, uint32 x) const;

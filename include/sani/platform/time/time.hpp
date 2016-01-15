@@ -7,13 +7,9 @@
 
 namespace sani {
 
-	typedef std::chrono::high_resolution_clock				Clock;
+	using Clock = std::chrono::high_resolution_clock;
 
-	typedef std::chrono::high_resolution_clock::time_point	Time;
-
-	/*
-		TODO: inline?
-	*/
+	using Time = std::chrono::high_resolution_clock::time_point;
 
 	float32 toHours(const Time& time);
 

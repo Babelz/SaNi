@@ -94,7 +94,7 @@ namespace sani {
 			} else {
 				if (circle.textureSource.isEmpty()) {
 					// Create default sourcing if the source is empty.	
-					circle.textureSource = math::Rectf(0.0f, 0.0f, static_cast<float32>(circle.texture->getWidth(), static_cast<float32>(circle.texture->getHeight())));
+					circle.textureSource = math::Rect32f(0.0f, 0.0f, static_cast<float32>(circle.texture->getWidth(), static_cast<float32>(circle.texture->getHeight())));
 				}
 
 				// Apply coordinatess.

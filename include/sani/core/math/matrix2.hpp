@@ -126,11 +126,10 @@ namespace sani {
 		template<typename T>
 		inline const Vector2<T>& operator*=(Vector2<T>& lhs, const Matrix2<T>& rhs);
 
-		typedef Matrix2<float> Mat2;
-		typedef Matrix2<float> Mat2f;
-		typedef Matrix2<double> Mat2d;
-		typedef Matrix2<unsigned int> Mat2u;
-		typedef Matrix2<int> Mat2i;
+		using Mat2f = Matrix2<float>;
+		using Mat2d = Matrix2<double>;
+		using Mat2u = Matrix2<unsigned int>;
+		using Mat2i = Matrix2<int>;
 	}
 }
 

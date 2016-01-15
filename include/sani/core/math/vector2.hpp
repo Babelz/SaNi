@@ -135,11 +135,10 @@ namespace sani {
 		template <typename T>
 		inline const Vector2<T> operator*(const T& lhs, const Vector2<T>& rhs);
 
-		typedef Vector2<float> Vec2;
-		typedef Vector2<float> Vec2f;
-		typedef Vector2<double> Vec2d;
-		typedef Vector2<int> Vec2i;
-		typedef Vector2<unsigned int> Vec2u;
+		using Vec2f = Vector2<float>;
+		using Vec2d = Vector2<double>;
+		using Vec2i = Vector2<int>;
+		using Vec2ui = Vector2<unsigned int>;
 	}
 	
 }

@@ -20,7 +20,7 @@ namespace sani {
 			return texture;
 		}
 
-		const std::vector<math::Recti>& SpriteFontContent::getGlyphs() const {
+		const std::vector<math::Rect32i>& SpriteFontContent::getGlyphs() const {
 			return glyphs;
 		}
 

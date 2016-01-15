@@ -55,7 +55,7 @@ namespace sani {
 
 		template <class PixelType>
 		void PixelBitmapContent<PixelType>::copyFrom(BitmapContent* fromThis,
-			const sani::math::Recti& sourceArea, const sani::math::Recti& destinationArea) {
+			const sani::math::Rect32i& sourceArea, const sani::math::Rect32i& destinationArea) {
 
 			graphics::SurfaceFormat fmt;
 			fromThis->tryGetFormat(&fmt);

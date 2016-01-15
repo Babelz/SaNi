@@ -160,11 +160,10 @@ namespace sani {
 		template <typename T>
 		inline const Vector4<T> operator*(const T& lhs, const Vector4<T>& rhs);
 
-		typedef Vector4<float> Vec4;
-		typedef Vector4<float> Vec4f;
-		typedef Vector4<double> Vec4d;
-		typedef Vector4<int> Vec4i;
-		typedef Vector4<unsigned int> Vec4u;
+		using Vec4f = Vector4<float>;
+		using Vec4d = Vector4<double>;
+		using Vec4i = Vector4<int>;
+		using Vec4u = Vector4<unsigned int>;
 	}
 
 }

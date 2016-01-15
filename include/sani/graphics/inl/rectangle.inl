@@ -11,7 +11,7 @@ namespace sani {
 			const math::Vec3f& position = rectangle.transform.position;
 			const math::Vec3f& origin = rectangle.transform.origin;
 			const math::Vec3f& scale = rectangle.transform.scale;
-			const math::Rectf& localBounds = rectangle.localBounds;
+			const math::Rect32f& localBounds = rectangle.localBounds;
 			const float32 rotation = rectangle.transform.rotation;
 
 			const float32 sin = math::sin(rotation);

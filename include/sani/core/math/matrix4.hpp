@@ -148,11 +148,10 @@ namespace sani {
 		template<typename T>
 		inline const Vector4<T>& operator*=(Vector4<T>& lhs, const Matrix4<T>& rhs);
 
-		typedef Matrix4<float> Mat4;
-		typedef Matrix4<float> Mat4f;
-		typedef Matrix4<double> Mat4d;
-		typedef Matrix4<unsigned int> Mat4u;
-		typedef Matrix4<int> Mat4i;
+		using Mat4f = Matrix4<float>;
+		using Mat4d = Matrix4<double>;
+		using Mat4u = Matrix4<unsigned int>;
+		using Mat4i = Matrix4<int>;
 	}
 }
 

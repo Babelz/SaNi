@@ -33,8 +33,8 @@ namespace sani {
 				// TODO this should be texture...
 				writer->writeObject(std::type_index(typeid(Texture2DContent)), &texcontent);
 
-				typedef std::vector<unsigned short> Characters;
-				typedef std::vector<math::Recti> Glyphs;
+				using Characters = std::vector<unsigned short>;
+				using Glyphs	 = std::vector<math::Rect32i>;
 								
 				const Glyphs& glyphs = content->getGlyphs();
 				// write sources

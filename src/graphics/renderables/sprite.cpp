@@ -41,7 +41,7 @@ namespace sani {
 		Sprite::Sprite(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size)
 			: Sprite(texture, position.x, position.y, size.y, size.x) {
 		}
-		Sprite::Sprite(resource::Texture2D* const texture, const math::Rectf& bounds)
+		Sprite::Sprite(resource::Texture2D* const texture, const math::Rect32f& bounds)
 			: Sprite(texture, bounds.x, bounds.y, bounds.h, bounds.w) {
 		}
 		Sprite::Sprite(resource::Texture2D* const texture, const math::Vec2f& size)

@@ -28,6 +28,6 @@ namespace sani {
 			~VertexPositionColorTexture() = default;
 		};
 
-		typedef VertexPositionColorTexture VPCT;
+		using VPCT = VertexPositionColorTexture;
 	}
 }
