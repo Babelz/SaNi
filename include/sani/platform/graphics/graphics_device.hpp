@@ -181,7 +181,7 @@ namespace sani {
 
 			int32 getUniformLocation(const uint32 shader, const String& name);
 
-			void getUniformInformation(const uint32 shader, const int32 location, String& name, const int32& type, const int32& valuesCount);
+			void getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount);
 
 			/*
 				Buffer operations.

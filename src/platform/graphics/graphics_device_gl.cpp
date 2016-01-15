@@ -601,6 +601,33 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
+		int32 GraphicsDevice::getUniformsCount(const uint32 shader) {
+			int32 count = -1;
+
+			glGetProgramiv(shader, GL_ACTIVE_UNIFORMS, &count);
+
+			return count;
+		}
+
+		int32 GraphicsDevice::getUniformLocation(const uint32 shader, const String& name) {
+			return glGetUniformLocation(shader, name.c_str());
+		}
+
+		void GraphicsDevice::getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount) {
+			char namebuff[128];
+
+			int32 namelen = -1;
+
+			// Get name len, values, count, type and name.
+			glGetActiveUniform(shader, index, sizeof(namebuff) - 1, &namelen, &valuesCount, &type, namebuff);
+			
+			// Copy name if we got the info.
+			if (namelen != -1) name = String(std::begin(namebuff), std::begin(namebuff) + namelen);
+
+			// Get location of the uniform.
+			location = getUniformLocation(shader, name);
+		}
+
 		void GraphicsDevice::generateBuffer(uint32& buffer) {
 			glGenBuffers(1, &buffer);
 
