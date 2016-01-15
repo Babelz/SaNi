@@ -1,3 +1,4 @@
+#include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/graphics/graphics_effect.hpp"
 
 namespace sani {
@@ -8,9 +9,8 @@ namespace sani {
 			Uniform class impl.
 		*/
 
-		EffectUniform::EffectUniform(const UniformType type, const uint32 location, const String& name) : type(type),
-																				  location(location), 
-																				  name(name){
+		EffectUniform::EffectUniform(GraphicsDevice* const device, const uint32 effect, const UniformType type, const uint32 location, const String& name) 
+			: effect(effect), device(device), type(type), location(location), name(name) {
 		}
 
 		UniformType EffectUniform::getType() const {
@@ -22,6 +22,9 @@ namespace sani {
 		uint32 EffectUniform::getLocation() const {
 			return location;
 		}
+		void EffectUniform::setData(void* data) {
+			device->setShaderUniform(effect, name.c_str(), data, type);
+		}
 
 		/*
 			Effect class impl.
@@ -32,17 +35,32 @@ namespace sani {
 		}
 
 		void GraphicsEffect::locateEffectUniforms() {
-			const int32 total = -1;
+			int32 count = device->getUniformsCount(effect);
 
+			for (int32 i = 0; i < count; i++) {
+				String	name;
+				int32	location;
+				uint32	type;
+				int32	valuesCount;
+
+				device->getUniformInformation(effect, i, location, name, type, valuesCount);
+				
+				UniformType uniformType = device->translateUniformType(type);
+
+				uniforms.push_back(EffectUniform(device, effect, uniformType, location, name));
+			}
 		}
 		
-		uint32 GraphicsEffect::getEffectID() const {
+		uint32 GraphicsEffect::getEffect() const {
+			return effect;
 		}
 
-		void GraphicsEffect::listUniforms(UniformList& uniforms) {
+		void GraphicsEffect::listUniforms(UniformList& uniforms) const {
+			uniforms = this->uniforms;
 		}
 
 		GraphicsEffect::~GraphicsEffect() {
+			device->deleteShader(effect);
 		}
 	}
 }

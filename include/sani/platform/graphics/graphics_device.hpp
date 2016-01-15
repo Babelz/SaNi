@@ -4,6 +4,7 @@
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
 
+#include <map>
 #include <stack>
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
@@ -42,7 +43,7 @@ namespace sani {
 		class RenderTarget2D;
 
 		using ErrorBuffer = std::stack<GraphicsError>;
-
+		
 		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
 		/// 
@@ -177,11 +178,13 @@ namespace sani {
 			/// @param[in] data data to be inserted in the uniform location
 			void setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type);
 
-			int32 getUniformsCount(const uint32 shader);
+			int32 getUniformsCount(const uint32 shader) const;
 
-			int32 getUniformLocation(const uint32 shader, const String& name);
+			int32 getUniformLocation(const uint32 shader, const String& name) const;
 
-			void getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount);
+			void getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount) const;
+
+			UniformType translateUniformType(const uint32 type) const;
 
 			/*
 				Buffer operations.

@@ -601,7 +601,7 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		int32 GraphicsDevice::getUniformsCount(const uint32 shader) {
+		int32 GraphicsDevice::getUniformsCount(const uint32 shader) const {
 			int32 count = -1;
 
 			glGetProgramiv(shader, GL_ACTIVE_UNIFORMS, &count);
@@ -609,11 +609,11 @@ namespace sani {
 			return count;
 		}
 
-		int32 GraphicsDevice::getUniformLocation(const uint32 shader, const String& name) {
+		int32 GraphicsDevice::getUniformLocation(const uint32 shader, const String& name) const {
 			return glGetUniformLocation(shader, name.c_str());
 		}
 
-		void GraphicsDevice::getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount) {
+		void GraphicsDevice::getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount) const {
 			char namebuff[128];
 
 			int32 namelen = -1;
@@ -626,6 +626,18 @@ namespace sani {
 
 			// Get location of the uniform.
 			location = getUniformLocation(shader, name);
+		}
+
+		UniformType GraphicsDevice::translateUniformType(const uint32 type) const {
+			using UniformTypeList = std::map <uint32, UniformType>;
+
+			static UniformTypeList types = {
+				{ GL_FLOAT,			UniformType::Float32 },
+				{ GL_FLOAT_MAT3,	UniformType::Mat3F },
+				{ GL_FLOAT_MAT4,	UniformType::Mat4F},
+			};
+
+			return types[type];
 		}
 
 		void GraphicsDevice::generateBuffer(uint32& buffer) {

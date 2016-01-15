@@ -18,15 +18,19 @@ namespace sani {
 		/// A effect uniform that is contained in the graphics effect.
 		class EffectUniform final {
 		private:
+			GraphicsDevice* const device;
+			
+			const uint32 effect;
 			const UniformType type;
 			const uint32 location;
 			const String name;
 		public:
-			EffectUniform(const UniformType type, const uint32 location, const String& name);
+			EffectUniform(GraphicsDevice* const device, const uint32 effect, const UniformType type, const uint32 location, const String& name);
 
 			UniformType getType() const;
 			const String& getName() const;
 			uint32 getLocation() const;
+			void setData(void* data);
 			
 			~EffectUniform() = default;
 		};
@@ -50,9 +54,9 @@ namespace sani {
 		public:
 			GraphicsEffect(GraphicsDevice* const device, const uint32 effect);
 
-			uint32 getEffectID() const;
+			uint32 getEffect() const;
 			
-			void listUniforms(UniformList& uniforms);
+			void listUniforms(UniformList& uniforms) const;
 		
 			~GraphicsEffect();
 		};
