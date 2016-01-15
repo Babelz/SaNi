@@ -15,18 +15,26 @@ namespace sani {
 
 	namespace resource {
 
+		struct GlyphContent {
+			uint32 character;
+			sani::math::Recti source;
+			float32 xOffset;
+			float32 yOffset;
+			float32 xAdvance;
+		};
+
 		class SpriteFontContent : public ResourceItem {
 		private:
-			using Glyph		 = math::Rect32i;
-			using Glyphs	 = std::vector<Glyph>;
-			using Characters = std::vector<unsigned short>;
+			using Glyphs = std::vector<GlyphContent>;
+			using Characters = std::vector<uint32>;
 
 			FontDescription* description;
 			BitmapContent* texture;
 			Glyphs glyphs;
 			Characters characters;
 		public:
-			SpriteFontContent(FontDescription* desc, BitmapContent* texture, const Glyphs& glyphs, const Characters& characters);
+			SpriteFontContent(FontDescription* desc, BitmapContent* texture, const Glyphs& glyphs);
+			~SpriteFontContent();
 
 			FontDescription* getDescription() const;
 
@@ -35,8 +43,6 @@ namespace sani {
 			const Glyphs& getGlyphs() const;
 
 			const Characters& getCharacters() const;
-
-			~SpriteFontContent();
 		};
 	}
 }

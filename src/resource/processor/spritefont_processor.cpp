@@ -32,7 +32,7 @@ namespace sani {
 				float32 bearingX;
 				float32 bearingY;
 				float32 advance;
-				sani::math::Rect32i source;
+				sani::math::Recti source;
 			public:
 				Glyph() : pixels(nullptr), character('\0') {}
 			};
@@ -225,8 +225,8 @@ namespace sani {
 					BitmapContent* pixels = glyph.pixels;
 					uint32 width = pixels->getWidth();
 					uint32 height = pixels->getHeight();
-					sani::math::Rect32i source(0, 0, height, width);
-					sani::math::Rect32i destination(1 + xOffset, yOffset, height, width);
+					sani::math::Recti source(0, 0, height, width);
+					sani::math::Recti destination(1 + xOffset, yOffset, height, width);
 					// TODO move this
 					glyph.source = destination;
 					bitmap->copyFrom(pixels, source, destination);
@@ -246,7 +246,7 @@ namespace sani {
 
 				// import the actual font now
 				FT_Face face = createFontFace(desc);
-				
+			
 				const std::vector<unsigned short>& characters = desc->getCharacters();
 				std::vector<Glyph> glyphs;
 				glyphs.reserve(characters.size());
@@ -261,13 +261,19 @@ namespace sani {
 
 				BitmapContent* bitmap = packGlyphs(glyphs);
 
-				// TODO create func for this
-				std::vector<sani::math::Rect32i> sources;
+				std::vector<GlyphContent> glyphContent;
+				glyphContent.reserve(characters.size());
 				for (auto& glyph : glyphs) {
-					sources.push_back(glyph.source);
+					glyphContent.push_back(GlyphContent{
+						glyph.character,
+						glyph.source,
+						glyph.bearingX,
+						glyph.bearingY,
+						glyph.advance
+					});
 				}
 
-				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, sources, characters);
+				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, glyphContent);
 
 				// font height
 				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);

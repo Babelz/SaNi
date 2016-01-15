@@ -13,22 +13,16 @@ SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 namespace sani {
 	
 	namespace resource {
-
-		// TODO: Demo hax, fix.
+		struct GlyphContent;
 		class SpriteFont : public Resource {
 		public:
-			using Characters = std::vector<uint16>;
-			using Glyph		 = sani::math::Rect32i;
-			using Glyphs     = std::vector<Glyph>;
-			
+			using Characters = std::vector<uint32>;
+			using Glyphs = std::vector<GlyphContent>;
 			Texture2D* texture;
 			Characters characters;
 			Glyphs glyphs;
 		public:
-			SpriteFont(Texture2D* texture, const Glyphs& glyphs, const Characters& characters);
-
-			void createStaticText(const String& text, graphics::GraphicsDevice* device);
-
+			SpriteFont(Texture2D* texture, const Glyphs& glyphs);
 			~SpriteFont();
 		};
 	}

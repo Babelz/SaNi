@@ -88,6 +88,7 @@ void initialize(SaNiEngine* const engine) {
 	
 	std::vector<sani::graphics::Rectangle*> rects;
 	auto tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
+	volatile auto font = resources->load<SpriteFont>("../../assets/font.snb");
 
 	for (uint32 i = 1; i < 8; i++) {
 		const float32 w = 64.0f;
