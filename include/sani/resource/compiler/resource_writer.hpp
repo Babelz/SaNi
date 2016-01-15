@@ -1,5 +1,6 @@
 #pragma once
 #include "sani/platform/platform_config.hpp"
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/platform/file/binary_writer.hpp"
@@ -8,20 +9,26 @@
 #include <typeindex>
 #include <unordered_map>
 #include "sani/core/io/memory_stream.hpp"
+
 SANI_FORWARD_DECLARE_2(sani, io, FileStream);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceTypeWriter);
 SANI_FORWARD_DECLARE_3(sani, resource, compiler, ResourceCompiler);
 SANI_FORWARD_DECLARE_2(sani, resource, ResourceItem);
 
 namespace sani {
+
 	using namespace math;
 	using namespace io;
+
 	namespace resource {
+
 		namespace compiler {
+
 			class ResourceWriter : public io::BinaryWriter {
 			private:
 				static const char Platforms[];
 				static const uint8 Version = 1;
+
 				std::unordered_map<std::type_index, ResourceTypeWriter*> writers;
 				const ResourceCompiler* compiler;
 
@@ -34,12 +41,13 @@ namespace sani {
 
 				/// Writers the typewriters used to write this object
 				void writeTypeWriters();
+
 				MemoryStream memoryStream;
 				FileStream* fileStream;
 			public:
-
 				// This assumes the file is opened already!
 				ResourceWriter(FileStream* fileStream, const ResourceCompiler* compiler);
+
 				~ResourceWriter();
 
 				/// TODO this is hax, we need streambuf or smthing
@@ -76,6 +84,7 @@ namespace sani {
 		}
 	}
 }
+
 #include "resource_writer.inl"
 
 #endif

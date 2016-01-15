@@ -27,7 +27,6 @@ namespace sani {
 			uint8 readByte() ;
 			char readChar() ;
 			uint64 read7BitEncodedInt() ;
-
 		};
 	}
 }

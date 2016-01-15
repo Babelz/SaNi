@@ -1,4 +1,5 @@
 #include "sani/platform/platform_config.hpp"
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/resource/compiler/resource_writer.hpp"
@@ -7,9 +8,13 @@
 #include "sani/resource/compiler/resource_compiler.hpp"
 
 namespace sani {
+
 	using namespace io;
+
 	namespace resource {
+
 		namespace compiler {
+
 			// DO NOT CHANGE THESE, THEY ARE FOLLOWING THE PLATFORM CONFIG
 			const char ResourceWriter::Platforms[] = {
 				'w', // win32
@@ -25,6 +30,7 @@ namespace sani {
 				: BinaryWriter(&memoryStream), compiler(compiler), fileStream(fileStream) {
 
 			}
+
 			ResourceWriter::~ResourceWriter() {}
 
 			void ResourceWriter::writeHeader() {
@@ -44,6 +50,7 @@ namespace sani {
 
 			void ResourceWriter::writeTypeWriters() {
 				write7BitEncodedInt(writers.size());
+
 				for (auto& kv : writers) {
 					write(kv.second->getRuntimeReader());
 				}
@@ -56,6 +63,7 @@ namespace sani {
 					writers[info] = w;
 					return w;
 				}
+
 				// we have the typewriter already
 				return writers[info];
 			}
@@ -64,10 +72,12 @@ namespace sani {
 				if (obj == nullptr) {
 					throw std::runtime_error("obj is nullptr");
 				}
+
 				ResourceTypeWriter* writer = getWriter(type);
 				if (writer == nullptr) {
 					throw std::runtime_error("Cant get writer for T");
 				}
+
 				write7BitEncodedInt(std::distance(writers.begin(), writers.find(type)));
 				writer->write(this, obj);
 			}
@@ -75,7 +85,6 @@ namespace sani {
 			void ResourceWriter::flush(const std::type_index& type, const ResourceItem* obj) {
 				// write the final object..
 				writeObject(type, obj);
-
 
 				// swap the stream now
 				Stream* currentStream = stream;
@@ -92,11 +101,15 @@ namespace sani {
 				writeTypeWriters();
 
 				int64 memorySize = memoryStream.size();
+
 				std::vector<unsigned char> buffer;
 				buffer.resize(memorySize);
+
 				memoryStream.seek(SeekPosition::Begin, 0);
+
 				memoryStream.read(buffer.data(), memorySize);
 				fileStream->write(buffer.data(), memorySize);
+
 				BinaryWriter::flush();
 			}
 		}

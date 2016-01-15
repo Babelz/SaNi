@@ -3,8 +3,8 @@
 namespace sani {
 	
 	HeapBlock::HeapBlock(char* handle, const uint32 size) : handle(handle),
-		size(size),
-		released(false) {
+															size(size),
+															released(false) {
 	}
 
 	void HeapBlock::shrink(const uint32 bytes) {

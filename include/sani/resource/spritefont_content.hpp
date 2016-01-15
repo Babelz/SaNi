@@ -17,7 +17,7 @@ namespace sani {
 
 		struct GlyphContent {
 			uint32 character;
-			sani::math::Recti source;
+			sani::math::Rect32i source;
 			float32 xOffset;
 			float32 yOffset;
 			float32 xAdvance;

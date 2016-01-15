@@ -6,7 +6,7 @@ namespace sani {
 	template<class T>
 	T* HeapPage::allocate() {
 		const size_t size = sizeof(T);
-
+		
 		// Free memory has been used, check for blocks.
 		if (pagepointer + size > this->size) {
 			if (releasedBlocks.size() == 0) return nullptr;

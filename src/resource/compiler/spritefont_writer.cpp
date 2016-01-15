@@ -7,15 +7,16 @@
 #include "sani/resource/texture2d.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace compiler {
 
-			SpriteFontWriter::SpriteFontWriter() 
-				: ResourceTypeWriter() {
-
+			SpriteFontWriter::SpriteFontWriter() : ResourceTypeWriter() {
 			}
 
-			SpriteFontWriter::~SpriteFontWriter() { }
+			SpriteFontWriter::~SpriteFontWriter() {
+			}
 
 			String SpriteFontWriter::getRuntimeReader() const {
 				return DeserializableWith<SpriteFontContent>::value();

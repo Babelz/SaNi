@@ -12,6 +12,12 @@ namespace sani {
 
 		namespace compiler {
 			
+			Texture2DWriter::Texture2DWriter() : ResourceTypeWriter() {
+			}
+
+			Texture2DWriter::~Texture2DWriter() {
+			}
+
 			void Texture2DWriter::write(ResourceWriter* writer, const void* value) {
 				using PixelData		= std::vector<unsigned char>;
 				using MipmapChain	= std::vector < PixelData>;
