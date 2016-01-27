@@ -16,7 +16,6 @@ namespace sani {
 			}
 
 			uint32 FileStreamImpl::read(unsigned char* buffer, const uint32 size) {
-				// TODO check if the mode contains read
 				SANI_ASSERT((static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Read)) == static_cast<uint32>(Filemode::Read));
 				uint32 readBytes = fread(buffer, sizeof(unsigned char), size, handle);
 				return readBytes;

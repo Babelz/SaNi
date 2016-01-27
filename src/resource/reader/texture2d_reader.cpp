@@ -34,7 +34,6 @@ namespace sani {
 					faces.push_back(PixelData(bytes));
 					
 					PixelData& data = faces[i];
-					// TODO do readContainer or something
 					for (size_t j = 0; j < bytes; ++j) data[j] = reader->readByte();
 				}
 

@@ -23,7 +23,6 @@ namespace sani {
 			Magick::Image img;
 			img.read(width, height, "RGBA", Magick::CharPixel, faces.back().data());
 			// flip the buffers 
-			// TODO this can be done more efficiently?
 			img.flip();
 			// write the flipped pixels back
 			img.write(0, 0, width, height, "RGBA", Magick::CharPixel, faces.back().data());
