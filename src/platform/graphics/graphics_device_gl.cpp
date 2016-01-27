@@ -184,7 +184,8 @@ namespace sani {
 
 			// Initialize backbuffer.
 			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
-			setRenderTarget(new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight));
+			// Set render target to default.
+			setRenderTarget(impl->cImpl.backbuffer);
 
 			setViewport(viewport);
 
@@ -375,17 +376,17 @@ namespace sani {
 			CHECK_FOR_ERRORS();
 		}
 
-		int32 GraphicsDevice::surfaceFormatToOpenGl(const SurfaceFormat fmt) {
-			// TODO when theres more move this elsewhere maybe?
+		int32 GraphicsDevice::surfaceFormatToOpenGL(const SurfaceFormat fmt) {
 			GLint glFormat = 0;
-			switch (fmt)
-			{
+			
+			switch (fmt) {
 			case SurfaceFormat::ColorRGBA:
 				glFormat = GL_RGBA;
 				break;
 			default:
 				throw std::runtime_error("not supported format");
 			}
+			
 			return glFormat;
 		}
 
@@ -394,15 +395,9 @@ namespace sani {
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			GLint glFormat = GraphicsDevice::surfaceFormatToOpenGl(desc.format);
-			setTextureData(
-				TextureTarget::Texture2D,
-				0,
-				desc.format,
-				desc.width,
-				desc.height,
-				desc.format,
-				nullptr);
+			GLint glFormat = GraphicsDevice::surfaceFormatToOpenGL(desc.format);
+
+			setTextureData(TextureTarget::Texture2D, 0, desc.format, desc.width, desc.height, desc.format, nullptr);
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			CHECK_FOR_ERRORS();
@@ -413,33 +408,29 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setTextureData(const TextureTarget target, const int level, const SurfaceFormat internalFormat,
-			const int width, const int height, const SurfaceFormat format, const unsigned char* data) {
+											const int width, const int height, const SurfaceFormat format, const unsigned char* data) {
 
-			GLint glformat = surfaceFormatToOpenGl(format);
-			GLint internalGlformat = surfaceFormatToOpenGl(format);
-			glTexImage2D(
-				static_cast<GLenum>(target),
-				level,
-				internalGlformat,
-				width,
-				height,
-				0,
-				glformat,
-				GL_UNSIGNED_BYTE,
-				data
-				);
+			GLint glformat = surfaceFormatToOpenGL(format);
+			GLint internalGlformat = surfaceFormatToOpenGL(format);
+			
+			glTexImage2D(static_cast<GLenum>(target),
+						level,
+						internalGlformat,
+						width,
+						height,
+						0,
+						glformat,
+						GL_UNSIGNED_BYTE,
+						data);
 		}
 
-		void GraphicsDevice::getTextureData(const TextureTarget target, const int level,
-			const SurfaceFormat format, unsigned char* data) {
+		void GraphicsDevice::getTextureData(const TextureTarget target, const int level, const SurfaceFormat format, unsigned char* data) {
 #if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
-			glGetTexImage(
-				static_cast<GLenum>(target),
-				level,
-				surfaceFormatToOpenGl(format),
-				GL_UNSIGNED_BYTE,
-				data
-				);
+			glGetTexImage(static_cast<GLenum>(target),
+						  level,
+						  surfaceFormatToOpenGL(format),
+						  GL_UNSIGNED_BYTE,
+						  data);
 #else
 			throw std::logic_error("not implemented");
 #endif
@@ -455,6 +446,7 @@ namespace sani {
 
 			// Check for errors.
 			CHECK_FOR_ERRORS(); if (hasErrors()) return;
+			
 			/*
 			// Generate depth buffer.
 			glGenRenderbuffers(1, &depthBuffer);

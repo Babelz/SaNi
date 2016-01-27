@@ -116,11 +116,6 @@ namespace sani {
 			ColorRGBA
 		};
 
-		enum class SurfaceType {
-			Texture,
-			RenderTarget
-		};
-
 		enum class TextureTarget : uint32 {
 			Texture2D = GL_TEXTURE_2D,
 
@@ -165,10 +160,13 @@ namespace sani {
 			uint32 height;
 			uint32 levels;
 			SurfaceFormat format;
-			SurfaceType type;
 
 			TextureDescription()
-				: width(0), height(0), levels(1), format(SurfaceFormat::ColorRGBA), type(SurfaceType::Texture) {}
+				: width(0), height(0), levels(1), format(SurfaceFormat::ColorRGBA) {
+			}
+
+			~TextureDescription() {
+			}
 		};
 	}
 }

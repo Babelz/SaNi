@@ -31,6 +31,15 @@ namespace sani {
 			uint32 getID() const;
 			
 			virtual ~Texture();
+
+			bool operator ==(const Texture& lhs) const;
+			bool operator !=(const Texture& lhs) const;
+
+			Texture(Texture& other) = delete;
+			Texture(Texture&& other) = delete;
+
+			Texture& operator =(Texture& other) = delete;
+			Texture& operator =(Texture&& other) = delete;
 		};
 	}
 }

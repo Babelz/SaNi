@@ -31,8 +31,7 @@ namespace sani {
 			/// @param[in] height The height of the texture
 			/// @param[in] mipmap Should it generate mipmaps?
 			/// @param[in] format The surface format for texture
-			/// @param[in] type The type of this texture
-			void generateTexture(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, graphics::SurfaceFormat format, graphics::SurfaceType type);
+			void generateTexture(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, graphics::SurfaceFormat format);
 		public:
 			/// Generates new 2D texture without mipmaps
 			/// 
@@ -47,8 +46,7 @@ namespace sani {
 			/// @param[in] width The width of the texture
 			/// @param[in] height The height of the texture
 			/// @param[in] mipmap Should it generate mipmaps?
-			/// @param[in] format The surface format for texture
-			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, graphics::SurfaceFormat format);
+			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap);
 
 			/// Generates new 2D texture with specific surface format and optional mipmaps
 			/// 
@@ -58,7 +56,7 @@ namespace sani {
 			/// @param[in] mipmap Should it generate mipmaps?
 			/// @param[in] format The surface format for texture
 			/// @param[in] type The type of this texture
-			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, const graphics::SurfaceFormat format, const graphics::SurfaceType type);
+			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, const graphics::SurfaceFormat format);
 
 			/// Default deconstructor
 			~Texture2D();

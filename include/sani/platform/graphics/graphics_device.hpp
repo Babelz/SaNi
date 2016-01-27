@@ -59,7 +59,7 @@ namespace sani {
 
 			void checkForErrors(const char* func, const int32 line);
 
-			static int32 surfaceFormatToOpenGl(const SurfaceFormat fmt);
+			static int32 surfaceFormatToOpenGL(const SurfaceFormat fmt);
 		public:
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			GraphicsDevice();
