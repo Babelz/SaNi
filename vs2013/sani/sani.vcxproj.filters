@@ -217,6 +217,9 @@
     <Filter Include="src\core\interfaces">
       <UniqueIdentifier>{1fcebf22-1e8d-41e0-8462-ba820a12a206}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\cvar\impl">
+      <UniqueIdentifier>{caea5355-285d-45a1-afac-3cabfb2b0a51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1147,6 +1150,9 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\text.inl">
       <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\cvar\impl\cvar_lang.inl">
+      <Filter>include\core\cvar\impl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

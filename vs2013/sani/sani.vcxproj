@@ -449,6 +449,7 @@
     <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\include\sani\core\cvar\impl\cvar_lang.inl" />
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
     <None Include="..\..\include\sani\core\math\func\transform.inl" />
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />

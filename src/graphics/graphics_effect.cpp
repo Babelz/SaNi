@@ -58,6 +58,7 @@ namespace sani {
 		}
 
 		GraphicsEffect::~GraphicsEffect() {
+			device->useProgram(0);
 			device->deleteShader(effect);
 		}
 	}

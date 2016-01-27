@@ -7,6 +7,15 @@
 #include "sani/core/math/math.hpp"
 
 using namespace sani::math;
+
+using Mat2 = Mat2f;
+using Mat3 = Mat3f;
+using Mat4 = Mat4f;
+
+using Vec2 = Vec2f;
+using Vec3 = Vec3f;
+using Vec4 = Vec4f;
+
 TEST_CASE("Mat2x2 test cases", "[matrix]") {
 
 	SECTION("Operators") {

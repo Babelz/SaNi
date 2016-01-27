@@ -3,6 +3,8 @@
 
 using namespace sani::math;
 
+using Rect = Rect32i;
+
 TEST_CASE("Rectangle test cases", "[rectangle]") {
 
 	SECTION("Operators") {
@@ -24,6 +26,8 @@ TEST_CASE("Rectangle test cases", "[rectangle]") {
 		REQUIRE(r1 == r2);
 	}
 
+	using Rectf = Rect32f;
+
 	SECTION("Functions") {
 		Rectf r(10.0f, 10.0f, 32.0f, 32.0f);
 		REQUIRE(r.center().x == 26.0f);
@@ -41,7 +45,7 @@ TEST_CASE("Rectangle test cases", "[rectangle]") {
 		REQUIRE(Rectf(0.0f, 0.0f, 0.0f).isEmpty());
 
 		REQUIRE(r.intersects(Rectf(5.0f, 5.0f, 32.0f, 32.0f)));
-		REQUIRE(r.contains(Vec2(16.0f, 16.0f)));
+		REQUIRE(r.contains(Vec2f(16.0f, 16.0f)));
 		REQUIRE(r.contains(16.0f, 16.0f));
 	}
 }
