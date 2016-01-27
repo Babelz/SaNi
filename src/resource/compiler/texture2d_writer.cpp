@@ -37,7 +37,6 @@ namespace sani {
 					
 					// write the byte count
 					writer->write7BitEncodedInt(face.size());
-
 					for (size_t i = 0; i < face.size(); ++i) writer->write((uint8)face[i]);
 				}
 			}

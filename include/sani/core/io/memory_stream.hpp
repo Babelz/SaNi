@@ -10,11 +10,12 @@ namespace sani {
 		// TODO: document and fix.
 		class MemoryStream : public Stream {
 		private:
-			std::vector<unsigned char> buffer;
-			uint64 position = 0u;
-			uint32 dataSize = 0;
+			unsigned char* buffer;
+			uint32 position;
+			uint32 dataSize;
+			uint32 elements;
 		public:
-			MemoryStream() = default;
+			MemoryStream();;
 			
 			virtual uint32 read(unsigned char* buffer, const uint32 size) override;
 			virtual uint32 read(unsigned char* buffer, const int32 offset, const uint32 size) override;
@@ -27,7 +28,7 @@ namespace sani {
 
 			virtual void flush() override;
 
-			virtual ~MemoryStream() = default;	
+			virtual ~MemoryStream();
 		};
 	}
 }

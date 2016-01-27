@@ -4,10 +4,18 @@
 namespace sani {
 	namespace io{
 
-		uint32 MemoryStream::read(unsigned char* buffer, const uint32 size)  {
-			std::memcpy(buffer, this->buffer.data() + position, size);
+		MemoryStream::MemoryStream() 
+			: dataSize(32u), buffer(nullptr), position(0u), elements(0u) {
+			buffer = static_cast<unsigned char*>(std::realloc(buffer, dataSize));
+		}
+
+		MemoryStream::~MemoryStream() {
+			free( buffer);
+		}
+
+		uint32 MemoryStream::read(unsigned char* outBuffer, const uint32 size)  {
+			std::memcpy(outBuffer, buffer + position, size);
 			position += size;
-			// hmm how?
 			return size;
 		}
 
@@ -16,19 +24,15 @@ namespace sani {
 		}
 
 		uint32 MemoryStream::write(const unsigned char* data, const uint32 size)  {
-			// TODO fix this, demo hax
-			
-			if ((dataSize + size) >= buffer.size()) {
-				uint32 newSize = static_cast<uint32>(dataSize + size * 2u);
-				//buffer.resize(newSize);
+			if ((position + size) >= dataSize) {
+				// TODO this can be changed
+				dataSize = (dataSize) * 2u + size;
+				buffer = static_cast<unsigned char*>(std::realloc(buffer, dataSize));
 			}
-			buffer.insert(
-				buffer.begin() + position, 
-				data, 
-				data + size);
-			dataSize += size;
+			std::memcpy(buffer + position, data, size);
+			elements += size;
 			position += size;
-			return static_cast<uint32>(size);
+			return size;
 		}
 
 		void MemoryStream::seek(const SeekPosition seekpos, const long offset)  {
@@ -45,7 +49,7 @@ namespace sani {
 		}
 
 		uint32 MemoryStream::size()  {
-			return dataSize;
+			return elements;
 		}
 
 		void MemoryStream::flush() {
