@@ -100,7 +100,7 @@ namespace sani {
 				// write the readers to deserialize
 				writeTypeWriters();
 
-				int64 memorySize = memoryStream.size();
+				auto memorySize = memoryStream.size();
 
 				std::vector<unsigned char> buffer;
 				buffer.resize(memorySize);

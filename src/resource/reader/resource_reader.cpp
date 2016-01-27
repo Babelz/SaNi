@@ -35,17 +35,13 @@ namespace sani {
 				}
 
 				// read platform
-				// TODO WHY?
 				readByte();
 				// read version
-				// TODO WHY?
 				readByte();
 
 				// type readers are initialized, get the list of used type readers
 				// read the count of type readers
 				uint32 typeReaderCount = static_cast<uint32>(read7BitEncodedInt());
-				// TODO can there be more than 1?
-				// at least now there cant be...
 
 				readers.reserve(typeReaderCount);
 

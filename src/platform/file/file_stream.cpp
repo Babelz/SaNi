@@ -15,21 +15,20 @@ namespace sani {
 
 			}
 
-			int64 FileStreamImpl::read(unsigned char* buffer, const int32 size) {
-				// TODO check if the mode contains read
+			uint32 FileStreamImpl::read(unsigned char* buffer, const uint32 size) {
 				SANI_ASSERT((static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Read)) == static_cast<uint32>(Filemode::Read));
-				int64 readBytes = fread(buffer, sizeof(unsigned char), size, handle);
+				uint32 readBytes = fread(buffer, sizeof(unsigned char), size, handle);
 				return readBytes;
 			}
 
-			uint32 FileStreamImpl::write(const unsigned char* data, const int32 size) {
+			uint32 FileStreamImpl::write(const unsigned char* data, const uint32 size) {
 				SANI_ASSERT((static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Write)) == static_cast<uint32>(Filemode::Write) || (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Truncate)) == static_cast<uint32>(Filemode::Truncate));
 				SANI_ASSERT(data != nullptr);
 				uint32 wroteBytes = fwrite(data, sizeof(unsigned char), size, handle);
 				return wroteBytes;
 			}
 
-			int64 FileStreamImpl::read(unsigned char* buffer, const int32 offset, const int32 size) {
+			uint32 FileStreamImpl::read(unsigned char* buffer, const int32 offset, const uint32 size) {
 				throw std::logic_error("Not implemented");
 			}
 
@@ -45,10 +44,10 @@ namespace sani {
 				fflush(handle);
 			}
 
-			int64 FileStreamImpl::size() {
+			uint32 FileStreamImpl::size() {
 				long current = ftell(handle);
 				fseek(handle, 0L, SEEK_END);
-				int64 size = ftell(handle);
+				uint32 size = ftell(handle);
 				fseek(handle, current, SEEK_SET);
 				return size;
 			}
