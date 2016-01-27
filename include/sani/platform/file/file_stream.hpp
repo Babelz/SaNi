@@ -40,11 +40,11 @@ namespace sani {
 		public:
 			Stream() = default;
 			virtual ~Stream() = default;
-			virtual int64 read(unsigned char* buffer, const int32 size) = 0;
-			virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) = 0;
-			virtual uint32 write(const unsigned char* data, const int32 size) = 0;
+			virtual uint32 read(unsigned char* buffer, const uint32 size) = 0;
+			virtual uint32 read(unsigned char* buffer, const int32 offset, const uint32 size) = 0;
+			virtual uint32 write(const unsigned char* data, const uint32 size) = 0;
 			virtual void seek(const SeekPosition seekpos, const long offset) = 0;
-			virtual int64 size() = 0;
+			virtual uint32 size() = 0;
 			virtual void flush() = 0;
 		};
 
@@ -63,7 +63,7 @@ namespace sani {
 			/// @param buffer The buffer where to read 
 			/// @param size The amount of bytes to read
 			/// @return The bytes how much was read
-			virtual int64 read(unsigned char* buffer, const int32 size) = 0;
+			virtual uint32 read(unsigned char* buffer, const uint32 size) = 0;
 
 			/// Reads the data from offset position
 			///
@@ -71,14 +71,14 @@ namespace sani {
 			/// @param offset Where to seek
 			/// @param size The amount of bytes to read
 			/// @return The bytes how much was read
-			virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) = 0;
+			virtual uint32 read(unsigned char* buffer, const int32 offset, const uint32 size) = 0;
 
 			/// Writes the data to file
 			/// 
 			/// @param data The data that needs to be written
 			/// @param size The size of the data measured in bytes
 			/// @return The bytes written
-			virtual uint32 write(const unsigned char* data, const int32 size) = 0;
+			virtual uint32 write(const unsigned char* data, const uint32 size) = 0;
 
 			/// Seeks in the file stream
 			///
@@ -86,7 +86,7 @@ namespace sani {
 			/// @param offset How many bytes are traversed
 			virtual void seek(const SeekPosition seekpos, const long offset) = 0;
 
-			virtual int64 size() = 0;
+			virtual uint32 size() = 0;
 
 			inline Filemode getOpenMode() const;
 			inline const String& getPath() const;
@@ -102,12 +102,12 @@ namespace sani {
 			public:
 				FileStreamImpl(const String& filePath, const Filemode mode, FILE* handle);
 				~FileStreamImpl();
-				virtual int64 read(unsigned char* buffer, const int32 size) ;
-				virtual int64 read(unsigned char* buffer, const int32 offset, const int32 size) ;
-				virtual uint32 write(const unsigned char* data, const int32 size) ;
-				virtual void seek(const SeekPosition seekpos, const long offset) ;
-				virtual void flush() ;
-				virtual int64 size() ;
+				virtual uint32 read(unsigned char* buffer, const uint32 size) override;
+				virtual uint32 read(unsigned char* buffer, const int32 offset, const uint32 size) override;
+				virtual uint32 write(const unsigned char* data, const uint32 size) override;
+				virtual void seek(const SeekPosition seekpos, const long offset) override;
+				virtual void flush() override;
+				virtual uint32 size() override;
 			};
 		}
 	}

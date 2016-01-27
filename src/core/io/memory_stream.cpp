@@ -4,18 +4,18 @@
 namespace sani {
 	namespace io{
 
-		int64 MemoryStream::read(unsigned char* buffer, const int32 size)  {
+		uint32 MemoryStream::read(unsigned char* buffer, const uint32 size)  {
 			std::memcpy(buffer, this->buffer.data() + position, size);
 			position += size;
 			// hmm how?
 			return size;
 		}
 
-		int64 MemoryStream::read(unsigned char* buffer, const int32 offset, const int32 size)  {
+		uint32 MemoryStream::read(unsigned char* buffer, const int32 offset, const uint32 size)  {
 			throw std::logic_error("not implemented");
 		}
 
-		uint32 MemoryStream::write(const unsigned char* data, const int32 size)  {
+		uint32 MemoryStream::write(const unsigned char* data, const uint32 size)  {
 			// TODO fix this, demo hax
 			
 			if ((dataSize + size) >= buffer.size()) {
@@ -44,7 +44,7 @@ namespace sani {
 			}
 		}
 
-		int64 MemoryStream::size()  {
+		uint32 MemoryStream::size()  {
 			return dataSize;
 		}
 
