@@ -8,12 +8,10 @@
 // Contains WindowsGL and LinuxGL implementations of the graphics device.
 
 /*
-	TODO: when creating other implementations, refactor the implementation class and
-		  the device class as some fields and functions are common across 
-		  implementations and APIs.
+	Common implementation declaration.
 */
-
 namespace sani {
+
 	namespace graphics {
 
 		class GraphicsDevice::Cimpl {
@@ -48,6 +46,7 @@ namespace sani {
 
 // Win32 impl.
 namespace sani {
+
 	namespace graphics {
 
 		// Private Win32GL Impl class.
@@ -154,30 +153,6 @@ namespace sani {
 				errorBuffer.push(GRAPHICS_ERROR(1282));
 			}
 
-#pragma region OpenGL version selection
-			// TODO: use 3.3 always or just get the newest supported version?
-			// TODO: select OpenGL version to use.
-			/*GLint initAttribs[] =
-			{
-			WGL_CONTEXT_MAJOR_VERSION_ARB, 3,
-			WGL_CONTEXT_MINOR_VERSION_ARB, 3,
-
-			// Uncomment this for forward compatibility mode
-			//WGL_CONTEXT_FLAGS_ARB, WGL_CONTEXT_FORWARD_COMPATIBLE_BIT_ARB,
-			// Uncomment this for Compatibility profile
-			//WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_COMPATIBILITY_PROFILE_BIT_ARB,
-
-			WGL_CONTEXT_PROFILE_MASK_ARB, WGL_CONTEXT_CORE_PROFILE_BIT_ARB,
-			0
-			};
-
-			// Try set the attribs spec version of the context. Fallback to the first one if this
-			// one fails.
-			HGLRC compHRC = wglCreateContextAttribsARB(impl->deviceContext, 0, initAttribs);
-			if (compHRC && wglMakeCurrent(impl->deviceContext, compHRC)) impl->renderingContext = compHRC;
-			*/
-#pragma endregion
-
 			// Check for pre-init errors.
 			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
 
@@ -209,7 +184,7 @@ namespace sani {
 
 			// Initialize backbuffer.
 			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
-			setRenderTarget(nullptr);
+			setRenderTarget(new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight));
 
 			setViewport(viewport);
 
@@ -293,6 +268,7 @@ namespace sani {
 
 // Common impl of the graphics device.
 namespace sani {
+
 	namespace graphics {
 
 		void GraphicsDevice::checkForErrors(const char* func, const int32 line) {
@@ -321,9 +297,13 @@ namespace sani {
 			const GLuint textures[] = { impl->cImpl.backbuffer->getID() };
 			glDeleteTextures(1, textures);
 			
-			const GLuint buffers[] = { impl->cImpl.backbuffer->getFramebuffer(),
-									   impl->cImpl.backbuffer->getColorBuffer(),
-									   impl->cImpl.backbuffer->getDepthBuffer() };
+			const GLuint buffers[] = 
+			{ 
+				impl->cImpl.backbuffer->getFramebuffer(),
+				impl->cImpl.backbuffer->getColorBuffer(),
+				impl->cImpl.backbuffer->getDepthBuffer() 
+			};
+
 			glDeleteBuffers(3, buffers);
 
 			delete impl->cImpl.backbuffer;

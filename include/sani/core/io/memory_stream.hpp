@@ -7,7 +7,7 @@ namespace sani {
 	
 	namespace io {
 		
-		// TODO: document and fix.
+		// TODO: document and fix. Siquel.
 		class MemoryStream : public Stream {
 		private:
 			unsigned char* buffer;
