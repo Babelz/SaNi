@@ -19,21 +19,16 @@ namespace sani {
 			uint32 backBufferWidth;
 			uint32 backBufferHeight;
 
-			// Default back buffer of the device.
-			// Everything gets drawn to this.
-			RenderTarget2D* backbuffer;
-			RenderTarget2D* currentRenderTarget;
-
 			Viewport viewport;
+
+			RenderTarget2D* currentRenderTarget;
 
 			Cimpl() : backBufferWidth(0),
 					  backBufferHeight(0),
-					  backbuffer(nullptr),
 					  currentRenderTarget(nullptr) {
 			}
 
 			~Cimpl() {
-				delete backbuffer;
 			}
 		};
 	}
@@ -182,11 +177,6 @@ namespace sani {
 				return false;
 			}
 
-			// Initialize backbuffer.
-			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
-			// Set render target to default.
-			setRenderTarget(impl->cImpl.backbuffer);
-
 			setViewport(viewport);
 
 			// No errors, init ok.
@@ -206,18 +196,38 @@ namespace sani {
 		}
 
 		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
-			/*
-				TODO: implement drawing from the backbuffer once some rendering can be done.
-			*/
 
+			#pragma region Old implementation without frame buffer
+			/*
+			TODO: implement drawing from the backbuffer once some rendering can be done.
+			*/
+			/*
+			glClearColor(r, g, b, a);
+			glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getFramebuffer());
+			*/
+			//SwapBuffers(impl->deviceContext);
+
+			//// Change clear color for the GL.
+			//glClearColor(r, g, b, a);
+
+			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			//CHECK_FOR_ERRORS();
+#pragma endregion
+			
+			// First pass.
+			//glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getID());
+			
+			glClearColor(r, g, b, a);
+			
 			SwapBuffers(impl->deviceContext);
 
-			// Change clear color for the GL.
-			glClearColor(r, g, b, a);
-
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+			
 			CHECK_FOR_ERRORS();
+			// Draw the scene???...
+
+			// Second pass. Render our back buffer.
 		}
 	}
 }
@@ -281,40 +291,6 @@ namespace sani {
 			}
 		}
 
-		uint32 GraphicsDevice::getBackBufferWidth() const {
-			return impl->cImpl.backBufferWidth;
-		}
-		uint32 GraphicsDevice::getBackBufferHeight() const {
-			return impl->cImpl.backBufferHeight;
-		}
-
-		void GraphicsDevice::setBackBufferWidth(const uint32 newWidth) {
-			impl->cImpl.backBufferWidth = newWidth;
-		}
-		void GraphicsDevice::setBackBufferHeight(const uint32 newHeight) {
-			impl->cImpl.backBufferHeight = newHeight;
-		}
-		void GraphicsDevice::applyBackbufferChanges() {
-			const GLuint textures[] = { impl->cImpl.backbuffer->getID() };
-			glDeleteTextures(1, textures);
-			
-			const GLuint buffers[] = 
-			{ 
-				impl->cImpl.backbuffer->getFramebuffer(),
-				impl->cImpl.backbuffer->getColorBuffer(),
-				impl->cImpl.backbuffer->getDepthBuffer() 
-			};
-
-			glDeleteBuffers(3, buffers);
-
-			delete impl->cImpl.backbuffer;
-
-			impl->cImpl.backbuffer = new RenderTarget2D(this, impl->cImpl.backBufferWidth, impl->cImpl.backBufferHeight);
-			setRenderTarget(nullptr);
-
-			CHECK_FOR_ERRORS();
-		}
-
 		bool GraphicsDevice::hasErrors() const {
 			return !errorBuffer.empty();
 		}
@@ -352,10 +328,11 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
-			if (renderTarget == nullptr) impl->cImpl.currentRenderTarget = impl->cImpl.backbuffer;
-			else						 impl->cImpl.currentRenderTarget = renderTarget;
+			impl->cImpl.currentRenderTarget = renderTarget;
 
-			glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getFramebuffer());
+			const int32 buffer = renderTarget == nullptr ? 0 : renderTarget->getFramebuffer();
+
+			glBindFramebuffer(GL_FRAMEBUFFER, buffer);
 
 			/*
 
@@ -395,9 +372,10 @@ namespace sani {
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			GLint glFormat = GraphicsDevice::surfaceFormatToOpenGL(desc.format);
+			const GLint glFormat = GraphicsDevice::surfaceFormatToOpenGL(desc.format);
 
 			setTextureData(TextureTarget::Texture2D, 0, desc.format, desc.width, desc.height, desc.format, nullptr);
+			
 			glBindTexture(GL_TEXTURE_2D, 0);
 
 			CHECK_FOR_ERRORS();
@@ -410,18 +388,18 @@ namespace sani {
 		void GraphicsDevice::setTextureData(const TextureTarget target, const int level, const SurfaceFormat internalFormat,
 											const int width, const int height, const SurfaceFormat format, const unsigned char* data) {
 
-			GLint glformat = surfaceFormatToOpenGL(format);
-			GLint internalGlformat = surfaceFormatToOpenGL(format);
+			const GLint glformat = surfaceFormatToOpenGL(format);
+			const GLint internalGlformat = surfaceFormatToOpenGL(format);
 			
 			glTexImage2D(static_cast<GLenum>(target),
-						level,
-						internalGlformat,
-						width,
-						height,
-						0,
-						glformat,
-						GL_UNSIGNED_BYTE,
-						data);
+						 level,
+						 internalGlformat,
+						 width,
+						 height,
+						 0,
+						 glformat,
+						 GL_UNSIGNED_BYTE,
+						 data);
 		}
 
 		void GraphicsDevice::getTextureData(const TextureTarget target, const int level, const SurfaceFormat format, unsigned char* data) {
@@ -438,33 +416,34 @@ namespace sani {
 		}
 
 		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
-			// Assume that the render texture has been initialized and generated.
-
 			// Generate frame buffer.
 			glGenFramebuffers(1, &frameBuffer);
 			glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 
-			// Check for errors.
-			CHECK_FOR_ERRORS(); if (hasErrors()) return;
+			if (glCheckFramebufferStatus(GL_DRAW_BUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+				errorBuffer.push(GraphicsError("Could not create framebuffer", __FUNCTION__, __LINE__));
+
+				return;
+			}
+
+			// Generate texture.
+			glGenTextures(1, &texture);
+			glBindTexture(GL_TEXTURE_2D, texture);
+
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			
-			/*
-			// Generate depth buffer.
-			glGenRenderbuffers(1, &depthBuffer);
-			glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
-
-			CHECK_FOR_ERRORS(); if (hasErrors()) return;*/
-
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 
-		/*	GLenum drawBuffers[1] = { GL_COLOR_ATTACHMENT0 };
-			//glDrawBuffers(1, drawBuffers);
-
-			glBindRenderbuffer(GL_RENDERBUFFER, 0);*/
-			//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-			CHECK_FOR_ERRORS();
+			// Generate render buffer. Does this work with GLES 2.*?
+			// TODO: using color buffer as the render buffer object. Fix this.
+			glGenRenderbuffers(1, &colorBuffer);
+			glBindRenderbuffer(GL_RENDERBUFFER, colorBuffer);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
+			glBindRenderbuffer(GL_RENDERBUFFER, 0);
+			
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, colorBuffer);
 		}
 
 		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {

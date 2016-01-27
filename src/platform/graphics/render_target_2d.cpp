@@ -10,13 +10,6 @@ namespace sani {
 																										  colorBuffer(0),
 																										  depthBuffer(0) {
 
-			TextureDescription description;
-			description.format = SurfaceFormat::ColorRGBA;
-			description.height = height;
-			description.width = width;
-			description.levels = 1;
-
-			device->generateTexture(renderTexture, description);
 			device->generateRenderTarget2D(renderTexture, colorBuffer, framebuffer, depthBuffer, width, height);
 		}
 

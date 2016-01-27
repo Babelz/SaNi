@@ -72,17 +72,6 @@ namespace sani {
 			void setFullscreen();
 			void setWindowed();
 #endif
-			/// Returns the width of the back buffer.
-			uint32 getBackBufferWidth() const;
-			/// Returns the height of the back buffer.
-			uint32 getBackBufferHeight() const;
-
-			// Sets the width of the back buffer.
-			void setBackBufferWidth(const uint32 newWidth);
-			/// Sets the height of the back buffer.
-			void setBackBufferHeight(const uint32 newHeight);
-
-			void applyBackbufferChanges();
 
 			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;

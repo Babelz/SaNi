@@ -53,9 +53,6 @@ namespace sani {
 
 			graphicsDevice->setViewport(viewport);
 
-			graphicsDevice->setBackBufferWidth(viewport.width);
-			graphicsDevice->setBackBufferHeight(viewport.height);
-
 			// TODO: notify cameras that the views bounds have changed.
 		}
 

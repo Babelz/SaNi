@@ -1,7 +1,10 @@
 #pragma once
 
 #include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsEffect);
 
 namespace sani {
 	
@@ -27,7 +30,7 @@ namespace sani {
 			// ID of the texture.
 			uint32 texture;
 			// ID of the effect this element is using.
-			uint32 effect;
+			GraphicsEffect* effect;
 
 			// Render mode that this element will use.
 			RenderMode renderMode;

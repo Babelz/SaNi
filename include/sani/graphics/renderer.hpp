@@ -8,6 +8,8 @@
 #include "sani/core/math/matrix4.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/graphics/buffer.hpp"
+#include "sani/graphics/graphics_effect.hpp"
+#include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/types.hpp"
 
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
@@ -43,7 +45,7 @@ namespace sani {
 			// 0 null, 1 and 2 are valid.
 			RenderSetup* renderSetups[RENDER_STATES_COUNT];
 			// 0 null, 1 and 2 are valid.
-			uint32 defaultEffects[RENDER_STATES_COUNT];
+			GraphicsEffect defaultEffects[RENDER_STATES_COUNT];
 
 			// API buffers.
 			uint32 vertexBuffer;
