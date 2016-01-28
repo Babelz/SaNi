@@ -75,6 +75,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 }
 
 void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
+	
 	float offx = 400;
 	float offy = 350;
 	for (uint32 i = 0; i < text.size(); ++i) {
@@ -85,7 +86,7 @@ void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEn
 
 		if (it == font->characters.end()) throw std::runtime_error("asd");
 
-		uint32 index = std::distance(font->characters.begin(), it) - 1;
+		uint32 index = std::distance(font->characters.begin(), it) - 0;
 		GlyphContent& glyph = font->glyphs[index];
 		auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
 		createElement(createRectangleMessage, ElementType::Rectangle);
@@ -97,14 +98,14 @@ void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEn
 		const uint32 h = rect.h;
 
 		const float32 x = offx + glyph.xOffset;
-		const float32 y = offy - glyph.xOffset + font->texture->getHeight();
+		const float32 y = offy - glyph.yOffset + font->texture->getHeight();
 
 		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
 		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
 		rectangle->texture = font->texture;
 		rectangle->fill = color::blue;
-		rectangle->textureSource = sani::math::Rectf(rect.x, rect.y, rect.h, rect.w);
+		//rectangle->textureSource = sani::math::Rectf(rect.x, rect.y, rect.h, rect.w);
 		recomputeVertices(*rectangle);
 		setupShapeForRendering(rectangle, rectangle->borderThickness);
 		// top left x
@@ -116,15 +117,21 @@ void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEn
 		// bottom right y
 		float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
 
+
+
+		rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y, 0.f), color::blue };
 		rectangle->renderData.vertices[0].textureCoordinates.x = s0;
 		rectangle->renderData.vertices[0].textureCoordinates.y = t1;
 
+		rectangle->renderData.vertices[1].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y, 0.f), color::blue };
 		rectangle->renderData.vertices[1].textureCoordinates.x = s1;
 		rectangle->renderData.vertices[1].textureCoordinates.y = t1;
 
+		rectangle->renderData.vertices[2].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y + h, 0.f), color::blue };
 		rectangle->renderData.vertices[2].textureCoordinates.x = s0;
 		rectangle->renderData.vertices[2].textureCoordinates.y = t0;
 
+		rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), color::blue };
 		rectangle->renderData.vertices[3].textureCoordinates.x = s1;
 		rectangle->renderData.vertices[3].textureCoordinates.y = t0;
 
@@ -133,7 +140,7 @@ void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEn
 
 		engine->releaseMessage(createRectangleMessage);
 
-		rects.push_back(rectangle);
+		//rects.push_back(rectangle);
 		offx += w;
 	}
 }
@@ -155,31 +162,32 @@ void initialize(SaNiEngine* const engine) {
 	auto tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
 	volatile auto font = resources->load<SpriteFont>("../../assets/font.snb");
 
-	for (uint32 i = 1; i < 8; i++) {
-		const float32 w = 64.0f;
-		const float32 h = 64.0f;
+	//for (uint32 i = 1; i < 8; i++) {
+	//	const float32 w = 64.0f;
+	//	const float32 h = 64.0f;
 
-		const float32 x = i * 64.0f + w;
-		const float32 y = i * 64.0f + h;
-		
-		auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
-		createElement(createRectangleMessage, ElementType::Rectangle);
-		
-		engine->routeMessage(createRectangleMessage);
+	//	const float32 x = i * 64.0f + w;
+	//	const float32 y = i * 64.0f + h;
+	//	
+	//	auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
+	//	createElement(createRectangleMessage, ElementType::Rectangle);
+	//	
+	//	engine->routeMessage(createRectangleMessage);
 
-		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
-		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
+	//	sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
+	//	NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
-		rectangle->texture = tuksu;
+	//	rectangle->texture = tuksu;
 
-		rectangle->fill = color::white;
-		recomputeVertices(*rectangle);
-		updateRenderData(*rectangle);
+	//	rectangle->fill = color::white;
+	//	recomputeVertices(*rectangle);
+	//	updateRenderData(*rectangle);
 
-		engine->releaseMessage(createRectangleMessage);
+	//	engine->releaseMessage(createRectangleMessage);
 
-		rects.push_back(rectangle);
-	}
+	//	rects.push_back(rectangle);
+	//}
+	createText(font, "asdfghjkl", graphicsDevice, engine, rects);
 
 	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();
 	createElement(createCircleMessage, ElementType::Circle);
