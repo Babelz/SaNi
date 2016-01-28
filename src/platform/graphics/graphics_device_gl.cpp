@@ -266,11 +266,14 @@ namespace sani {
 		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
 			// Draw to render target.
 			//setRenderTarget(nullptr);
-			
+			// TODO: impl frame buffering...
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 			glClearColor(r, g, b, a);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			SwapBuffers(impl->deviceContext);
+
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			CHECK_FOR_ERRORS;
 		}

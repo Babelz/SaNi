@@ -57,7 +57,6 @@ namespace sani {
 				/// @see ResourceWriter::writeObject
 				void flush(const std::type_index&, const ResourceItem*);
 
-				// TODO this needs to be public
 				void writeObject(const std::type_index&, const ResourceItem*);
 
 				template <class T>

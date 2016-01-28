@@ -11,10 +11,6 @@ namespace sani {
 	/// such as total time and frame time.
 	class EngineTime {
 	private:
-		/*
-			TODO: do we need anything else?
-		*/
-
 		/// Total time elapsed.
 		const float64 totalTime;
 		/// Current frametime.

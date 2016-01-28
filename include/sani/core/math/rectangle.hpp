@@ -25,9 +25,9 @@ namespace sani {
 			T w;
 
 			template <typename U>
-			Rectangle(const U x, const U y, const U h, const U w);
+			Rectangle(const U x, const U y, const U w, const U h);
 
-			Rectangle(const T x, const T y, const T h, const T w);
+			Rectangle(const T x, const T y, const T w, const T h);
 			
 			template <typename U>
 			Rectangle(const U x, const U y, const U size);

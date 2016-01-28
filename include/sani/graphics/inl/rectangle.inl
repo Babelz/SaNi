@@ -69,7 +69,7 @@ namespace sani {
 				math::Vec3f borderVertexPositions[] {
 					math::Vec3f(0.0f, 0.0f, 0.0f),																				// Top left
 					math::Vec3f(localBounds.w + doubleBorderThickness, 0.0f, 0.0f) * scale,										// Top right
-					math::Vec3f(-doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale,						// Bottom left
+					math::Vec3f(-doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale,					// Bottom left
 					math::Vec3f(localBounds.w + doubleBorderThickness, localBounds.h + doubleBorderThickness, 0.0f) * scale		// Bottom right
 				};
 

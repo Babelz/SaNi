@@ -64,7 +64,6 @@ namespace sani {
 			virtual void getPixelData(std::vector<unsigned char>& pixels) const;
 			virtual void setPixelData(std::vector<unsigned char>& pixels) override;
 		};
-
 	}
 }
 
