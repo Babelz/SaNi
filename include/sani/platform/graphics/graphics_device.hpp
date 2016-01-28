@@ -120,7 +120,13 @@ namespace sani {
 			/// @param[in] depthBuffer depth buffer to be generated for the target
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
-			void generateRenderTarget2D(uint32& texture, uint32& colorBuffer, uint32& frameBuffer, uint32& depthBuffer, const uint32 width, const uint32 height);
+			void generateRenderTarget2D(uint32& texture, uint32& frameBuffer, const uint32 width, const uint32 height);
+
+			void resizeBackbuffer(const uint32 width, const uint32 height);
+
+			/*
+				Texture operations.
+			*/
 
 			/// Sets texture parameter to texture
 			/// This function assumes the texture is binded already 
@@ -135,6 +141,7 @@ namespace sani {
 								const unsigned char* data);
 
 			void getTextureData(const TextureTarget target, const int level, const SurfaceFormat format, unsigned char* data);
+			void deleteTexture(const uint32 texture);
 
 			/*
 				Shader operations.
@@ -187,6 +194,7 @@ namespace sani {
 			/// Sets given buffers data.
 			void setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
 			void setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data);
+			void deleteBuffer(const uint32 buffer);
 
 			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
 			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices);

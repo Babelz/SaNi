@@ -24,10 +24,30 @@ namespace sani {
 			RenderTarget2D* currentRenderTarget;
 			RenderTarget2D* defaultRenderTarget;
 
+			VertexAttributePointerDescription vertexDescription;
+			VertexAttributePointerDescription textureDescription;
+
+			uint32 screenBuffer;
+
 			Cimpl() : backBufferWidth(0),
 					  backBufferHeight(0),
 					  currentRenderTarget(nullptr),
-					  defaultRenderTarget(nullptr) {
+					  defaultRenderTarget(nullptr),
+					  screenBuffer(0) {
+
+				vertexDescription.location = 0;
+				vertexDescription.count = 2;
+				vertexDescription.type = PrimitiveType::Float;
+				vertexDescription.normalized = false;
+				vertexDescription.stride = sizeof(float32)* 4;
+				vertexDescription.offset = 0;
+
+				textureDescription.location = 1;
+				textureDescription.count = 2;
+				textureDescription.type = PrimitiveType::Float;
+				textureDescription.normalized = false;
+				textureDescription.stride = sizeof(float32)* 4;
+				textureDescription.offset = sizeof(float32)* 2;
 			}
 
 			~Cimpl() {
@@ -172,7 +192,7 @@ namespace sani {
 
 			Viewport viewport(0, 0, clntRect.right - clntRect.left, clntRect.bottom - clntRect.top);
 
-			impl->cImpl.defaultRenderTarget = new RenderTarget2D(this, 800, 600);
+			impl->cImpl.defaultRenderTarget = new RenderTarget2D(this, viewport.width, viewport.height);
 			setRenderTarget(nullptr);
 
 			// Post-init error checks.
@@ -189,6 +209,22 @@ namespace sani {
 
 			// Create the screen shader.
 			createScreenShader();
+
+			// Create the screen buffer.
+			const GLfloat quadVertices[] = {
+				// Positions   // TexCoords
+				-1.0f, 1.0f, 0.0f, 1.0f,
+				-1.0f, -1.0f, 0.0f, 0.0f,
+				1.0f, -1.0f, 1.0f, 0.0f,
+
+				-1.0f, 1.0f, 0.0f, 1.0f,
+				1.0f, -1.0f, 1.0f, 0.0f,
+				1.0f, 1.0f, 1.0f, 1.0f
+			};
+
+			glGenBuffers(1, &impl->cImpl.screenBuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, impl->cImpl.screenBuffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
 
 			// No errors, init ok.
 			return true;
@@ -252,22 +288,8 @@ namespace sani {
 			return hasErrors();
 		}
 
-		const static GLfloat quadVertices[] = {
-			// Positions   // TexCoords
-			-1.0f, 1.0f, 0.0f, 1.0f,
-			-1.0f, -1.0f, 0.0f, 0.0f,
-			1.0f, -1.0f, 1.0f, 0.0f,
-
-			-1.0f, 1.0f, 0.0f, 1.0f,
-			1.0f, -1.0f, 1.0f, 0.0f,
-			1.0f, 1.0f, 1.0f, 1.0f
-		};
-
 		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
-			// Draw to render target.
-			//setRenderTarget(nullptr);
-			// TODO: impl frame buffering...
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			setRenderTarget(nullptr);
 
 			glClearColor(r, g, b, a);
 
@@ -278,45 +300,24 @@ namespace sani {
 			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::present() {
-			//Draw the last frame.
-			//glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
-			//glClearColor(0, 0, 0, 1);
-			//glClear(GL_COLOR_BUFFER_BIT);
+			//Draw the last frame to back buffer.
+			glBindFramebuffer(GL_FRAMEBUFFER, 0); 
+			glClearColor(0, 0, 0, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
 
-			//glBindTexture(GL_TEXTURE_2D, impl->cImpl.currentRenderTarget->getID());
+			glBindTexture(GL_TEXTURE_2D, impl->cImpl.currentRenderTarget->getID());
 
-			//useProgram(impl->screenShader);
+			useProgram(impl->screenShader);
 			
-			//GLuint vertexbuffer;
-			//glGenBuffers(1, &vertexbuffer);
-			//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-			//glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+			glBindBuffer(GL_ARRAY_BUFFER, impl->cImpl.screenBuffer);
 
-			//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+			this->createVertexAttributePointer(impl->cImpl.vertexDescription);
+			this->createVertexAttributePointer(impl->cImpl.textureDescription);
 
-			//VertexAttributePointerDescription vertexDescription;
-			//vertexDescription.location = 0;
-			//vertexDescription.count = 2;
-			//vertexDescription.type = PrimitiveType::Float;
-			//vertexDescription.normalized = false;
-			//vertexDescription.stride = sizeof(float32) * 4;
-			//vertexDescription.offset = 0;
+			glDrawArrays(GL_TRIANGLES, 0, 6);
 
-			//VertexAttributePointerDescription textureDescription;
-			//textureDescription.location = 1;
-			//textureDescription.count = 2;
-			//textureDescription.type = PrimitiveType::Float;
-			//textureDescription.normalized = false;
-			//textureDescription.stride = sizeof(float32) * 4;
-			//textureDescription.offset = sizeof(float32) * 2;
-
-			//this->createVertexAttributePointer(vertexDescription);
-			//this->createVertexAttributePointer(textureDescription);
-
-			//glDrawArrays(GL_TRIANGLES, 0, 6); // Starting from vertex 0; 3 vertices total -> 1 triangle
-
-			//glDisableVertexAttribArray(0);
-			//glDisableVertexAttribArray(1);
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
 		}
 	}
 }
@@ -505,8 +506,11 @@ namespace sani {
 #endif
 
 		}
+		void GraphicsDevice::deleteTexture(const uint32 texture) {
+			glDeleteTextures(1, &texture);
+		}
 
-		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, uint32& colorBuffer, uint32& depthBuffer, const uint32 width, const uint32 height) {
+		void GraphicsDevice::generateRenderTarget2D(uint32& texture, uint32& frameBuffer, const uint32 width, const uint32 height) {
 			// Generate frame buffer.
 			glGenFramebuffers(1, &frameBuffer);
 			glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
@@ -517,26 +521,23 @@ namespace sani {
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 			IF_ERRORS_RETURN;
 
-			glBindTexture(GL_TEXTURE_2D, 0);
-
-			// Generate render buffer. Does this work with GLES 2.*?
-			// TODO: using color buffer as the render buffer object. Fix this.
-			glGenRenderbuffers(1, &colorBuffer);
-			glBindRenderbuffer(GL_RENDERBUFFER, colorBuffer);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-			glBindRenderbuffer(GL_RENDERBUFFER, 0);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
 			IF_ERRORS_RETURN;
-
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, colorBuffer);
 
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) errorBuffer.push(GraphicsError("Could not create render target 2D", __FUNCTION__, __LINE__));
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glBindTexture(GL_TEXTURE_2D, 0);
+		}
+
+		void GraphicsDevice::resizeBackbuffer(const uint32 width, const uint32 height) {
+			delete impl->cImpl.defaultRenderTarget;
+			
 		}
 
 		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {
@@ -696,6 +697,9 @@ namespace sani {
 			glBufferSubData(static_cast<GLenum>(type), offset, bytes, data);
 
 			CHECK_FOR_ERRORS;
+		}
+		void GraphicsDevice::deleteBuffer(const uint32 buffer) {
+			glDeleteBuffers(1, &buffer);
 		}
 
 		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {

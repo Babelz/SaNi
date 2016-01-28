@@ -19,9 +19,12 @@ namespace sani {
 		private:
 			const uint32 width;
 			const uint32 height;
+			GraphicsDevice* const device;
 		protected:
 			// Identifier of the texture, required at least by the OpenGL.
 			uint32 renderTexture;
+
+			GraphicsDevice* const getDevice();
 		public:
 			Texture(GraphicsDevice* device, const uint32 width, const uint32 height);
 			

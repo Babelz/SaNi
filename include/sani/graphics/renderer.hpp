@@ -22,11 +22,6 @@ namespace sani {
 
 	namespace graphics {
 
-		/*
-			FIX: remove batching process from the renderer and 
-			     move it to the render batcher.
-		*/
-
 		/// @class Renderer renderer.hpp "sani/graphics/renderer.hpp"
 		/// @author voidbab
 		///
@@ -96,12 +91,6 @@ namespace sani {
 
 			bool initialize();
 
-			/*
-				TODO: add effect binding functions.
-				TODO: create shader wrapper (effect class)
-				TODO: create default shaders for this level of rendering (basic vtx and basic shader)
-			*/
-
 			/// Begins rendering elements with given arguments.
 			/// @param[in] transformation transformation
 			void beginRendering(const math::Mat4f& transform);
@@ -110,20 +99,6 @@ namespace sani {
 			
 			void endRendering();
 			
-			// TODO: should the renderer have a batcher? 
-			//	     static layers need this, but i think
-			//       that static layers could just be a collection
-			//       of render targets (texture batches)
-			//
-			//void beginBatching();
-			//void batchElement(const Renderable* const renderable);
-			//void endBatching(std::vector<RenderBatch>& batches, Buffer<float32>& vertices);
-
-			// TODO: impl post processing when render targets 
-			//		 are working.
-			//
-			//void endRendering(Effect* const postProcessor);
-
 			~Renderer();
 		};
 	}

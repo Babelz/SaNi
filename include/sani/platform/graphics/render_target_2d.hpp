@@ -17,18 +17,14 @@ namespace sani {
 		class RenderTarget2D : public Texture {
 		private:
 			uint32 framebuffer;
-			uint32 colorBuffer;
-			uint32 depthBuffer;
 		public:
 			/// Creates new instance of the render target class, generates 
 			/// all required buffers for it and initializes it.
 			RenderTarget2D(GraphicsDevice* device, const uint32 width, const uint32 height);
 			
-			/// Returns the color buffer.
-			uint32 getColorBuffer() const;
-			/// Returns the depth buffer.
-			uint32 getDepthBuffer() const;
 			uint32 getFramebuffer() const;
+			
+			~RenderTarget2D();
 		};
 	}
 }
