@@ -8,7 +8,8 @@ namespace sani {
 	HeapPage::HeapPage(const uint32 size) : size(size),
 											pagepointer(0),
 											missedBytes(0),
-											fragmentation(0.0f) {
+											fragmentation(0.0f),
+											bytesUsed(0) {
 		memory = new char[size];
 	}
 
@@ -110,6 +111,10 @@ namespace sani {
 
 		fragmentation = 0.0f;
 		missedBytes = 0;
+	}
+
+	uint64 HeapPage::getBytesUsed() const {
+		return bytesUsed;
 	}
 
 	HeapPage::~HeapPage() {

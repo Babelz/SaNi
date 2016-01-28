@@ -42,6 +42,11 @@ namespace sani {
 		/// Returns the count of pages.
 		int32 pagesCount() const;
 
+		/// Returns the total amount of bytes used.
+		uint64 getBytesUsed() const;
+		/// Returns the current capacity of the allocator.
+		uint64 getTotalBytes() const;
+
 		~PagePoolAllocator();
 
 		PagePoolAllocator(const PagePoolAllocator&) = delete;

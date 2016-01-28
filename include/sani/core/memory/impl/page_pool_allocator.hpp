@@ -63,6 +63,19 @@ namespace sani {
 	}
 
 	template <class T>
+	uint64 PagePoolAllocator<T>::getBytesUsed() const {
+		uint64 bytesUsed = 0;
+
+		for (PoolPage<T>* page : pages) bytesUsed += page->getBytesUsed();
+
+		return bytesUsed;
+	}
+	template <class T>
+	uint64 PagePoolAllocator<T>::getTotalBytes() const {
+		return sizeof(T) * pages.size() * pageSize;
+	}
+
+	template <class T>
 	PagePoolAllocator<T>::~PagePoolAllocator() {
 		for (PoolPage<T>* page : pages) delete page;
 	}

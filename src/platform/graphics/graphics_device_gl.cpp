@@ -265,52 +265,55 @@ namespace sani {
 
 		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
 			// Draw to render target.
-			setRenderTarget(nullptr);
+			//setRenderTarget(nullptr);
 			
+			glClearColor(r, g, b, a);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 			SwapBuffers(impl->deviceContext);
 
 			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::present() {
 			//Draw the last frame.
-			glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
-			glClearColor(0, 0, 0, 1);
-			glClear(GL_COLOR_BUFFER_BIT);
+			//glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
+			//glClearColor(0, 0, 0, 1);
+			//glClear(GL_COLOR_BUFFER_BIT);
 
-			glBindTexture(GL_TEXTURE_2D, impl->cImpl.currentRenderTarget->getID());
+			//glBindTexture(GL_TEXTURE_2D, impl->cImpl.currentRenderTarget->getID());
 
-			useProgram(impl->screenShader);
+			//useProgram(impl->screenShader);
+			
+			//GLuint vertexbuffer;
+			//glGenBuffers(1, &vertexbuffer);
+			//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+			//glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
 
-			GLuint vertexbuffer;
-			glGenBuffers(1, &vertexbuffer);
-			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+			//glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 
-			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+			//VertexAttributePointerDescription vertexDescription;
+			//vertexDescription.location = 0;
+			//vertexDescription.count = 2;
+			//vertexDescription.type = PrimitiveType::Float;
+			//vertexDescription.normalized = false;
+			//vertexDescription.stride = sizeof(float32) * 4;
+			//vertexDescription.offset = 0;
 
-			VertexAttributePointerDescription vertexDescription;
-			vertexDescription.location = 0;
-			vertexDescription.count = 2;
-			vertexDescription.type = PrimitiveType::Float;
-			vertexDescription.normalized = false;
-			vertexDescription.stride = sizeof(float32) * 4;
-			vertexDescription.offset = 0;
+			//VertexAttributePointerDescription textureDescription;
+			//textureDescription.location = 1;
+			//textureDescription.count = 2;
+			//textureDescription.type = PrimitiveType::Float;
+			//textureDescription.normalized = false;
+			//textureDescription.stride = sizeof(float32) * 4;
+			//textureDescription.offset = sizeof(float32) * 2;
 
-			VertexAttributePointerDescription textureDescription;
-			textureDescription.location = 1;
-			textureDescription.count = 2;
-			textureDescription.type = PrimitiveType::Float;
-			textureDescription.normalized = false;
-			textureDescription.stride = sizeof(float32) * 4;
-			textureDescription.offset = sizeof(float32) * 2;
+			//this->createVertexAttributePointer(vertexDescription);
+			//this->createVertexAttributePointer(textureDescription);
 
-			this->createVertexAttributePointer(vertexDescription);
-			this->createVertexAttributePointer(textureDescription);
+			//glDrawArrays(GL_TRIANGLES, 0, 6); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
-			glDrawArrays(GL_TRIANGLES, 0, 6); // Starting from vertex 0; 3 vertices total -> 1 triangle
-
-			glDisableVertexAttribArray(0);
-			glDisableVertexAttribArray(1);
+			//glDisableVertexAttribArray(0);
+			//glDisableVertexAttribArray(1);
 		}
 	}
 }
