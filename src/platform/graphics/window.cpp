@@ -135,7 +135,7 @@ namespace sani {
 						1,
 						PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,		// Flags.
 						PFD_TYPE_RGBA,													// The kind of framebuffer. RGBA for palette.
-						32,																// Colordepth of the framebuffer.
+						32,																// Color depth of the framebuffer.
 						0, 0, 0, 0, 0, 0,
 						0,
 						0,

@@ -22,7 +22,6 @@ namespace sani {
 																   vertexBuffer(0),
 																   indexBuffer(0),
 																   texture(0),
-																   effect(0),
 																   renderBatchesCount(0),
 																   renderBatcher(defaultEffects, RENDER_STATES_COUNT) {
 			renderBatches.resize(32);
@@ -151,15 +150,15 @@ namespace sani {
 			graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
 			graphicsDevice->setBufferData(BufferType::ArrayBuffer,
-										 vertices.getSize() * sizeof(float32),
-										 vertices.data(),
-										 BufferUsage::Dynamic);
+										  vertices.getSize() * sizeof(float32),
+										  vertices.data(),
+										  BufferUsage::Dynamic);
 
 
 			graphicsDevice->setBufferData(BufferType::ElementArrayBuffer,
-										 indices.getSize() * sizeof(uint32),
-										 indices.data(),
-										 BufferUsage::Dynamic);
+										  indices.getSize() * sizeof(uint32),
+										  indices.data(),
+										  BufferUsage::Dynamic);
 		}
 
 		void Renderer::updateVertexBufferSize() {

@@ -22,10 +22,12 @@ namespace sani {
 			Viewport viewport;
 
 			RenderTarget2D* currentRenderTarget;
+			RenderTarget2D* defaultRenderTarget;
 
 			Cimpl() : backBufferWidth(0),
 					  backBufferHeight(0),
-					  currentRenderTarget(nullptr) {
+					  currentRenderTarget(nullptr),
+					  defaultRenderTarget(nullptr) {
 			}
 
 			~Cimpl() {
@@ -69,6 +71,8 @@ namespace sani {
 			// Should the adapter be working in fullscreen mode.
 			bool fullscreen;
 
+			uint32 screenShader;
+
 			// Common impl.
 			Cimpl cImpl;
 
@@ -78,7 +82,8 @@ namespace sani {
 					 hInstance(NULL),
 					 fullscreen(false),
 					 windowedLocationX(0),
-					 windowedLocationY(0) {
+					 windowedLocationY(0),
+					 screenShader(0) {
 			}
 		};
 
@@ -149,12 +154,12 @@ namespace sani {
 			}
 
 			// Check for pre-init errors.
-			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
+			IF_ERRORS_RETURN false;
 
 			// Enable GL settings.
 			glEnable(GL_BLEND);
 
-			CHECK_FOR_ERRORS(); if (hasErrors()) return false;
+			IF_ERRORS_RETURN false;
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			
@@ -167,8 +172,11 @@ namespace sani {
 
 			Viewport viewport(0, 0, clntRect.right - clntRect.left, clntRect.bottom - clntRect.top);
 
+			impl->cImpl.defaultRenderTarget = new RenderTarget2D(this, 800, 600);
+			setRenderTarget(nullptr);
+
 			// Post-init error checks.
-			CHECK_FOR_ERRORS();
+			IF_ERRORS_RETURN false;
 
 			if (hasErrors()) {
 				// Clean up before returning.
@@ -179,11 +187,60 @@ namespace sani {
 
 			setViewport(viewport);
 
+			// Create the screen shader.
+			createScreenShader();
+
 			// No errors, init ok.
 			return true;
 		}
+		void GraphicsDevice::createScreenShader() {
+			// TODO: does not work with GLES, fix this or just dump Android...
+
+			const char* screenShaderVertexSource =
+				"#version 330 core\n"
+				"layout(location = 0) in vec2 position;"
+				"layout(location = 1) in vec2 texCoords;\n"
+				""
+				"out vec2 TexCoords;"
+
+				"void main()"
+				"{"
+				"	gl_Position = vec4(position.x, position.y, 0.0f, 1.0f);"
+				"	TexCoords = texCoords;"
+				"}";
+
+			const char* screenShaderFragmentSource =
+				"#version 330 core\n"
+				"in vec2 TexCoords;"
+				"out vec4 color;"
+				""
+				"uniform sampler2D screenTexture;"
+				""
+				"void main()"
+				"{"
+				"	gl_FragColor = texture2D(screenTexture, TexCoords);"
+				"   //gl_FragColor = vec4(1, 0, 0, 1);\n"
+				"}";
+
+			uint32 vertex = 0;
+			uint32 fragment = 0;
+			uint32 effect = 0;
+
+			compileShader(vertex, screenShaderVertexSource, ShaderType::Vertex);
+			IF_ERRORS_RETURN;
+
+			compileShader(fragment, screenShaderFragmentSource, ShaderType::Fragment);
+			IF_ERRORS_RETURN;
+
+			createProgram(impl->screenShader);
+			linkToProgram(impl->screenShader, vertex, true);
+			linkToProgram(impl->screenShader, fragment, true);
+			linkProgram(impl->screenShader);
+			IF_ERRORS_RETURN;
+		}
+
 		bool GraphicsDevice::cleanUp() {
-			CHECK_FOR_ERRORS();
+			IF_ERRORS_RETURN false;
 
 			// Swap context and delete it.
 			wglDeleteContext(impl->renderingContext);
@@ -195,39 +252,65 @@ namespace sani {
 			return hasErrors();
 		}
 
+		const static GLfloat quadVertices[] = {
+			// Positions   // TexCoords
+			-1.0f, 1.0f, 0.0f, 1.0f,
+			-1.0f, -1.0f, 0.0f, 0.0f,
+			1.0f, -1.0f, 1.0f, 0.0f,
+
+			-1.0f, 1.0f, 0.0f, 1.0f,
+			1.0f, -1.0f, 1.0f, 0.0f,
+			1.0f, 1.0f, 1.0f, 1.0f
+		};
+
 		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
-
-			#pragma region Old implementation without frame buffer
-			/*
-			TODO: implement drawing from the backbuffer once some rendering can be done.
-			*/
-			/*
-			glClearColor(r, g, b, a);
-			glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getFramebuffer());
-			*/
-			//SwapBuffers(impl->deviceContext);
-
-			//// Change clear color for the GL.
-			//glClearColor(r, g, b, a);
-
-			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			//CHECK_FOR_ERRORS();
-#pragma endregion
-			
-			// First pass.
-			//glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getID());
-			
-			glClearColor(r, g, b, a);
+			// Draw to render target.
+			setRenderTarget(nullptr);
 			
 			SwapBuffers(impl->deviceContext);
 
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			
-			CHECK_FOR_ERRORS();
-			// Draw the scene???...
+			CHECK_FOR_ERRORS;
+		}
+		void GraphicsDevice::present() {
+			//Draw the last frame.
+			glBindFramebuffer(GL_FRAMEBUFFER, 0); // back to default
+			glClearColor(0, 0, 0, 1);
+			glClear(GL_COLOR_BUFFER_BIT);
 
-			// Second pass. Render our back buffer.
+			glBindTexture(GL_TEXTURE_2D, impl->cImpl.currentRenderTarget->getID());
+
+			useProgram(impl->screenShader);
+
+			GLuint vertexbuffer;
+			glGenBuffers(1, &vertexbuffer);
+			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+			glBufferData(GL_ARRAY_BUFFER, sizeof(quadVertices), quadVertices, GL_STATIC_DRAW);
+
+			glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+
+			VertexAttributePointerDescription vertexDescription;
+			vertexDescription.location = 0;
+			vertexDescription.count = 2;
+			vertexDescription.type = PrimitiveType::Float;
+			vertexDescription.normalized = false;
+			vertexDescription.stride = sizeof(float32) * 4;
+			vertexDescription.offset = 0;
+
+			VertexAttributePointerDescription textureDescription;
+			textureDescription.location = 1;
+			textureDescription.count = 2;
+			textureDescription.type = PrimitiveType::Float;
+			textureDescription.normalized = false;
+			textureDescription.stride = sizeof(float32) * 4;
+			textureDescription.offset = sizeof(float32) * 2;
+
+			this->createVertexAttributePointer(vertexDescription);
+			this->createVertexAttributePointer(textureDescription);
+
+			glDrawArrays(GL_TRIANGLES, 0, 6); // Starting from vertex 0; 3 vertices total -> 1 triangle
+
+			glDisableVertexAttribArray(0);
+			glDisableVertexAttribArray(1);
 		}
 	}
 }
@@ -247,7 +330,9 @@ namespace sani {
 
 #include <GLES2/gl2.h>
 #include <stdexcept>
+
 namespace sani {
+
 	namespace graphics {
 
 		class GraphicsDevice::Impl {
@@ -256,7 +341,6 @@ namespace sani {
 		};
 
 		GraphicsDevice::GraphicsDevice() : impl(new Impl) {
-
 		}
 
 		void GraphicsDevice::clear(const float32 r, const float32 g, const float32 b, const float32 a) {
@@ -264,7 +348,7 @@ namespace sani {
 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 	}
 }
@@ -310,7 +394,7 @@ namespace sani {
 			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y,
 				       impl->cImpl.viewport.width, impl->cImpl.viewport.height);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		Viewport GraphicsDevice::getViewport() const {
 			return impl->cImpl.viewport;
@@ -319,21 +403,22 @@ namespace sani {
 		void GraphicsDevice::bindTexture(const uint32 texture) {
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::unbindTexture() {
 			glBindTexture(GL_TEXTURE_2D, 0);
 			
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
-			impl->cImpl.currentRenderTarget = renderTarget;
+			impl->cImpl.currentRenderTarget = renderTarget == nullptr ? impl->cImpl.defaultRenderTarget : renderTarget;
 
-			const int32 buffer = renderTarget == nullptr ? 0 : renderTarget->getFramebuffer();
+			glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getFramebuffer());
 
-			glBindFramebuffer(GL_FRAMEBUFFER, buffer);
-
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			
 			/*
 
 				http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
@@ -350,7 +435,7 @@ namespace sani {
 
 			*/
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		int32 GraphicsDevice::surfaceFormatToOpenGL(const SurfaceFormat fmt) {
@@ -378,7 +463,7 @@ namespace sani {
 			
 			glBindTexture(GL_TEXTURE_2D, 0);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		void GraphicsDevice::setTextureParameter(const TextureTarget target, const TextureParameterName field, int value) {
@@ -419,22 +504,19 @@ namespace sani {
 			// Generate frame buffer.
 			glGenFramebuffers(1, &frameBuffer);
 			glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-
-			if (glCheckFramebufferStatus(GL_DRAW_BUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-				errorBuffer.push(GraphicsError("Could not create framebuffer", __FUNCTION__, __LINE__));
-
-				return;
-			}
+			
+			IF_ERRORS_RETURN;
 
 			// Generate texture.
 			glGenTextures(1, &texture);
 			glBindTexture(GL_TEXTURE_2D, texture);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, 0);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture, 0);
+			IF_ERRORS_RETURN;
+
+			glBindTexture(GL_TEXTURE_2D, 0);
 
 			// Generate render buffer. Does this work with GLES 2.*?
 			// TODO: using color buffer as the render buffer object. Fix this.
@@ -442,8 +524,13 @@ namespace sani {
 			glBindRenderbuffer(GL_RENDERBUFFER, colorBuffer);
 			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);
-			
+			IF_ERRORS_RETURN;
+
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, colorBuffer);
+
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) errorBuffer.push(GraphicsError("Could not create render target 2D", __FUNCTION__, __LINE__));
+
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
 
 		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {
@@ -464,7 +551,7 @@ namespace sani {
 			glCompileShader(shader);
 			glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 
 			// Push custom error.
 			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to compile shader", __FUNCTION__, __LINE__));
@@ -472,13 +559,13 @@ namespace sani {
 		void GraphicsDevice::deleteShader(const uint32 shader) {
 			glDeleteShader(shader);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		void GraphicsDevice::createProgram(uint32& program) {
 			program = glCreateProgram();
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 
 			if (program == 0) {
 				errorBuffer.push(GraphicsError("Could not create shader program", __FUNCTION__, __LINE__));
@@ -491,7 +578,7 @@ namespace sani {
 
 			if (dispose) deleteShader(shader);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::linkProgram(const uint32 program) {
 			glLinkProgram(program);
@@ -500,7 +587,7 @@ namespace sani {
 
 			glGetProgramiv(program, GL_LINK_STATUS, &result);
 			
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 
 			if (result != GL_TRUE) errorBuffer.push(GraphicsError("Failed to link shader to a program", __FUNCTION__, __LINE__));
 		}
@@ -508,7 +595,7 @@ namespace sani {
 		void GraphicsDevice::useProgram(const uint32 program) {
 			glUseProgram(program);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		void GraphicsDevice::setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type) {
@@ -518,7 +605,7 @@ namespace sani {
 
 			// Uniform not found.
 			if (uniformLocation == -1) {
-				CHECK_FOR_ERRORS();
+				CHECK_FOR_ERRORS;
 
 				std::stringstream ss;
 
@@ -549,7 +636,7 @@ namespace sani {
 
 			glUseProgram(0);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		int32 GraphicsDevice::getUniformsCount(const uint32 shader) const {
@@ -582,38 +669,38 @@ namespace sani {
 		void GraphicsDevice::generateBuffer(uint32& buffer) {
 			glGenBuffers(1, &buffer);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::bindBuffer(uint32& buffer, const BufferType type) {
 			glBindBuffer(static_cast<GLenum>(type), buffer);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::unbindBuffer(const BufferType type) {
 			glBindBuffer(static_cast<GLenum>(type), 0);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage) {
 			glBufferData(static_cast<GLenum>(type), bytes, data, static_cast<GLenum>(usage));
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data) {
 			glBufferSubData(static_cast<GLenum>(type), offset, bytes, data);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {
 			glDrawArrays(static_cast<GLenum>(mode), first, last);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
 			glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), (void*)indices);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		void GraphicsDevice::createVertexAttributePointer(const VertexAttributePointerDescription& description) {
@@ -626,12 +713,12 @@ namespace sani {
 								  description.stride,
 								  (void*)description.offset);
 
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::disableVertexAttributePointer(const uint32 location) {
 			glDisableVertexAttribArray(location);
 			
-			CHECK_FOR_ERRORS();
+			CHECK_FOR_ERRORS;
 		}
 
 		void GraphicsDevice::bindAttributeLocation(const uint32 shader, const uint32 index, const String& name) {

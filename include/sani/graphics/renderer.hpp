@@ -71,8 +71,7 @@ namespace sani {
 
 			math::Mat4f transform;
 			uint32 texture;
-			uint32 effect;
-
+			
 			void generateDefaultShaders();
 			void generateRenderSetups();
 			void generateBuffers();

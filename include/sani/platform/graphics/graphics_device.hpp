@@ -12,7 +12,8 @@
 
 #endif
 
-#define CHECK_FOR_ERRORS() checkForErrors(__FUNCTION__, __LINE__)
+#define IF_ERRORS_RETURN checkForErrors(__FUNCTION__, __LINE__); if (hasErrors()) return
+#define CHECK_FOR_ERRORS checkForErrors(__FUNCTION__, __LINE__)
 
 namespace sani {
 	
@@ -60,6 +61,7 @@ namespace sani {
 			void checkForErrors(const char* func, const int32 line);
 
 			static int32 surfaceFormatToOpenGL(const SurfaceFormat fmt);
+			void createScreenShader();
 		public:
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			GraphicsDevice();
@@ -92,6 +94,7 @@ namespace sani {
 			/// Clears the device. Swaps the back
 			/// and front buffer.
 			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
+			void present();
 			
 			/*
 				Texture and render target operations.
@@ -124,15 +127,14 @@ namespace sani {
 			void setTextureParameter(const TextureTarget target, const TextureParameterName field, int value);
 
 			void setTextureData(const TextureTarget target,
-				const int level,
-				const SurfaceFormat internalFormat,
-				const int width,
-				const int height,
-				const SurfaceFormat format,
-				const unsigned char* data);
+								const int level,
+								const SurfaceFormat internalFormat,
+								const int width,
+								const int height,
+								const SurfaceFormat format,
+								const unsigned char* data);
 
-			void getTextureData(const TextureTarget target, const int level,
-				const SurfaceFormat format, unsigned char* data);
+			void getTextureData(const TextureTarget target, const int level, const SurfaceFormat format, unsigned char* data);
 
 			/*
 				Shader operations.
@@ -185,8 +187,6 @@ namespace sani {
 			/// Sets given buffers data.
 			void setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
 			void setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data);
-
-			/// Draws array elements.
 
 			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
 			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices);

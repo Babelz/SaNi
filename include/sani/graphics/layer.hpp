@@ -6,6 +6,7 @@
 
 #include <vector>
 
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 SANI_FORWARD_DECLARE_2(sani, graphics, Renderable);
 SANI_FORWARD_DECLARE_2(sani, graphics, Renderer);
 
@@ -19,6 +20,7 @@ namespace sani {
 		/// Groups elements together for rendering.
 		class Layer {
 		private:
+
 			// Bottom part of the layer (all elements that have z value smaller than 0.0f)
 			std::vector<graphics::Renderable* const> bottom;
 			// Top part of the layer (all elements with z value of 0.0f or greater)
