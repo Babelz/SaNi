@@ -538,6 +538,7 @@ namespace sani {
 		void GraphicsDevice::resizeBackbuffer(const uint32 width, const uint32 height) {
 			delete impl->cImpl.defaultRenderTarget;
 			
+			impl->cImpl.defaultRenderTarget = new RenderTarget2D(this, width, height);
 		}
 
 		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {
