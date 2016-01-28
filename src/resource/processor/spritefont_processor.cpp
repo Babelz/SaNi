@@ -170,10 +170,10 @@ namespace sani {
 					for (Span& s : spans) { // outlineSpans actually !!!!! TODO
 						for (int w = 0; w < s.width; ++w) {
 							int32 index = (int)((imgHeight - 1 - (s.y - rect.ymin)) * imgWidth + s.x - rect.xmin + w);
-							pixels->setPixel(index, sani::math::Vector4<unsigned char>(255, 255, 255, s.coverage)); // white
+							pixels->setPixel(index, sani::math::Vector4<unsigned char>(255, 255, 255, s.coverage)); // white							
 						}
 					}
-
+					pixels->flipVertical();
 					out.pixels = pixels;
 				}
 				else {
@@ -261,7 +261,7 @@ namespace sani {
 				}
 
 				BitmapContent* bitmap = packGlyphs(glyphs);
-
+				
 				std::vector<GlyphContent> glyphContent;
 				glyphContent.reserve(characters.size());
 				for (auto& glyph : glyphs) {
