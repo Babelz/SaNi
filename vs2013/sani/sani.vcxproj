@@ -204,6 +204,7 @@
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\triangle_manager.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
+    <ClCompile Include="..\..\src\graphics\graphics_effect.cpp" />
     <ClCompile Include="..\..\src\graphics\layer.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
@@ -362,6 +363,7 @@
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\layer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\layer_type.hpp" />
@@ -447,6 +449,7 @@
     <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\include\sani\core\cvar\impl\cvar_lang.inl" />
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl" />
     <None Include="..\..\include\sani\core\math\func\transform.inl" />
     <None Include="..\..\include\sani\core\math\func\transform_2d.inl" />

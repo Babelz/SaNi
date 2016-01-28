@@ -37,27 +37,27 @@ namespace sani {
 			applyRotationToBottomRightVertex(&globalPositions[3], &vertexPositions[3], dx, dy, sin, cos);
 		}
 
-		void computeTopLeftTextureCoordinate(math::Vec2f* const uv, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+		void computeTopLeftTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->left() / textureWidth;
 			uv->y = -(-textureHeight + textureSource->top()) / textureHeight;
 		}
 
-		void computeTopRightTextureCoordinate(math::Vec2f* const uv, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+		void computeTopRightTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->right() / textureWidth;
 			uv->y = -(-textureHeight + textureSource->top()) / textureHeight;
 		}
 
-		void computeBottomLeftTextureCoordinate(math::Vec2f* const uv, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+		void computeBottomLeftTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->left() / textureWidth;
 			uv->y = -(-textureHeight + textureSource->bottom()) / textureHeight;
 		}
 
-		void computeBottomRightTextureCoordinate(math::Vec2f* const uv, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+		void computeBottomRightTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->right() / textureWidth;
 			uv->y = -(-textureHeight + textureSource->bottom()) / textureHeight;
 		}
 
-		void computeRectangleTextureCoordinates(math::Vec2f** const uvs, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+		void computeRectangleTextureCoordinates(math::Vec2f** const uvs, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			math::Vec2f* const topLeft = uvs[0];
 			computeTopLeftTextureCoordinate(topLeft, textureSource, textureWidth, textureHeight);
 
@@ -71,8 +71,8 @@ namespace sani {
 			computeBottomRightTextureCoordinate(bottomRight, textureSource, textureWidth, textureHeight);
 		}
 
-		void computeTriangleTextureCoordinates(math::Vec2f** const uvs, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight) {
-			math::Rectf const topSource(textureSource->x + textureSource->w * 0.5f,
+		void computeTriangleTextureCoordinates(math::Vec2f** const uvs, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
+			math::Rect32f const topSource(textureSource->x + textureSource->w * 0.5f,
 									    textureSource->y,
 									    textureSource->h,
 									    textureSource->w);
@@ -105,7 +105,7 @@ namespace sani {
 			bottomRightVertex->textureCoordinates.y = 0.0f;
 		}
 
-		void applyCircleTextureCoordinates(VertexPositionColorTexture* const vertices, const float32 rotation, const float32 radius, const math::Rectf* const textureSource, const float32 textureWidth, const float32 textureHeight, const uint32 count) {
+		void applyCircleTextureCoordinates(VertexPositionColorTexture* const vertices, const float32 rotation, const float32 radius, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight, const uint32 count) {
 			for (uint32 i = 1; i + 1 < count; i += 2) {
 				const auto blFi = 2.0f * PI * i / count * 2.0f;
 				const auto brFi = 2.0f * PI * (i + 1) / count * 2.0f;

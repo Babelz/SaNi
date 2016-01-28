@@ -49,6 +49,20 @@ namespace sani {
 		return false;
 	}
 
+	uint64 HeapAllocator::getBytesUsed() const {
+		uint64 bytesUsed = 0;
+
+		for (HeapPage* page : pages) bytesUsed += page->getBytesUsed();
+
+		return bytesUsed;
+	}
+	uint64 HeapAllocator::getTotalBytes() const {
+		return pageSize * pages.size();
+	}
+	uint64 HeapAllocator::getPageSize() const {
+		return pageSize;
+	}
+
 	HeapAllocator::~HeapAllocator() {
 		for (HeapPage* page : pages) delete page;
 	}

@@ -24,10 +24,10 @@ namespace sani {
 			RenderData renderData;
 			Transform transform;
 
-			math::Rectf globalBounds;
-			math::Rectf localBounds;
+			math::Rect32f globalBounds;
+			math::Rect32f localBounds;
 
-			math::Rectf textureSource;
+			math::Rect32f textureSource;
 			resource::Texture2D* texture;
 
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);

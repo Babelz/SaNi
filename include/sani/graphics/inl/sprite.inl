@@ -10,7 +10,7 @@ namespace sani {
 			const math::Vec3f& position = sprite.transform.position;
 			const math::Vec3f& origin = sprite.transform.origin;
 			const math::Vec3f& scale = sprite.transform.scale;
-			const math::Rectf& localBounds = sprite.localBounds;
+			const math::Rect32f& localBounds = sprite.localBounds;
 			const float32 rotation = sprite.transform.rotation;
 
 			const float32 sin = math::sin(rotation);

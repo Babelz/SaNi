@@ -2,14 +2,19 @@
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/resource/effect.hpp"
+
 namespace sani {
+
 	namespace resource {
+
 		namespace reader {
-			EffectReader::~EffectReader() {}
+
+			EffectReader::~EffectReader() {
+			}
 
 			void* EffectReader::read(ResourceReader* reader) {
 				// lets try this
-				uint8 compiled = reader->readByte();
+				const uint8 compiled = reader->readByte();
 
 				// if its compiled 
 				// 1) we need to be sure to have extension supported

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "sani/resource/resource.hpp"
 
 #include <vector>
@@ -13,7 +14,9 @@ SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 namespace sani {
 	
 	namespace resource {
+
 		struct GlyphContent;
+
 		class SpriteFont : public Resource {
 		public:
 			using Characters = std::vector<uint32>;

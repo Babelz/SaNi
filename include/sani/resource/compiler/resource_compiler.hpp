@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sani/platform/platform_config.hpp"
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include <typeindex>
@@ -13,8 +14,11 @@
 #include "sani/resource/processor/resource_processor.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace compiler {
+
 			class ResourceCompiler {
 			private:
 				io::FileSystem fileSystem;
@@ -26,17 +30,20 @@ namespace sani {
 				String contentRoot;
 				String filePath;
 				String outputPath;
+
 				void initialize();
 			public:
 				ResourceCompiler();
+
 				~ResourceCompiler();
-				// TODO move to inl
+
+				// TODO: move to inl
 				template <class T, class U>
 				void mapWriter() {
 					lookup[std::type_index(typeid(T))] = new U;
 				}
 
-				// TODO move to inl
+				// TODO: move to inl
 				template <class T, class U>
 				void mapProcessor() {
 					processors[std::type_index(typeid(T))] = new U;

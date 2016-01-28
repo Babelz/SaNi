@@ -7,17 +7,17 @@ namespace sani {
 
 			template <typename T>
 			template <typename U>
-			Rectangle<T>::Rectangle(const U x, const U y, const U h, const U w) : x(static_cast<T>(x)),
+			Rectangle<T>::Rectangle(const U x, const U y, const U w, const U h) : x(static_cast<T>(x)),
 																				  y(static_cast<T>(y)),
-																				  h(static_cast<T>(h)),
-																				  w(static_cast<T>(w)) {
+																				  w(static_cast<T>(w)),
+																				  h(static_cast<T>(h)) {
 			}
 			
 			template <typename T>
-			Rectangle<T>::Rectangle(const T x, const T y, const T h, const T w) : x(x),
+			Rectangle<T>::Rectangle(const T x, const T y, const T w, const T h) : x(x),
 																				  y(y),
-																				  h(h),
-																				  w(w) {
+																				  w(w),
+																				  h(h) {
 			}
 			
 			template <typename T>

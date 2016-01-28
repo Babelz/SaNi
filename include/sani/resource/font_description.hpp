@@ -1,9 +1,12 @@
 #pragma once
+
 #include "resource_item.hpp"
 #include "sani/types.hpp"
 #include <vector>
 #include <tuple>
+
 namespace sani {
+	
 	namespace resource {
 
 		enum class OutlineType {
@@ -12,8 +15,9 @@ namespace sani {
 			Outer
 		};
 
-		typedef std::tuple<unsigned short, unsigned short> CharacterRegion;
-		typedef std::vector<CharacterRegion> CharacterRegionCollection;
+		using CharacterRegion			= std::tuple<unsigned short, unsigned short>;
+		using CharacterRegionCollection = std::vector<CharacterRegion>;
+
 		class FontDescription : public ResourceItem {
 		private:
 			String fontName;
@@ -96,7 +100,6 @@ namespace sani {
 			inline const std::vector<unsigned short>& getCharacters() const {
 				return characters;
 			}
-			
 		};
 	}
 }

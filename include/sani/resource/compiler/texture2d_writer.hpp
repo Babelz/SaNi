@@ -1,5 +1,7 @@
 #pragma once
+
 #include "sani/platform/platform_config.hpp"
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/resource/compiler/resource_type_writer.hpp"
@@ -8,14 +10,17 @@
 #include "sani/resource/texture2d_content.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace compiler {
+
 			class Texture2DWriter : public ResourceTypeWriter {
 			public:
-				Texture2DWriter() : ResourceTypeWriter() {
+				Texture2DWriter();
+					
+				~Texture2DWriter();
 
-				}
-				~Texture2DWriter() {}
 				void write(ResourceWriter* writer, const void* value) override;
 
 				virtual String getRuntimeReader() const {

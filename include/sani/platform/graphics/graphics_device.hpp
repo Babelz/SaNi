@@ -12,9 +12,11 @@
 
 #endif
 
-#define CHECK_FOR_ERRORS() checkForErrors(__FUNCTION__, __LINE__)
+#define IF_ERRORS_RETURN checkForErrors(__FUNCTION__, __LINE__); if (hasErrors()) return
+#define CHECK_FOR_ERRORS checkForErrors(__FUNCTION__, __LINE__)
 
 namespace sani {
+	
 	namespace graphics {
 
 		/*
@@ -41,7 +43,7 @@ namespace sani {
 		class RenderTarget2D;
 
 		using ErrorBuffer = std::stack<GraphicsError>;
-
+		
 		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
 		/// 
@@ -58,7 +60,8 @@ namespace sani {
 
 			void checkForErrors(const char* func, const int32 line);
 
-			static int32 surfaceFormatToOpenGl(const SurfaceFormat fmt);
+			static int32 surfaceFormatToOpenGL(const SurfaceFormat fmt);
+			void createScreenShader();
 		public:
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			GraphicsDevice();
@@ -71,17 +74,6 @@ namespace sani {
 			void setFullscreen();
 			void setWindowed();
 #endif
-			/// Returns the width of the back buffer.
-			uint32 getBackBufferWidth() const;
-			/// Returns the height of the back buffer.
-			uint32 getBackBufferHeight() const;
-
-			// Sets the width of the back buffer.
-			void setBackBufferWidth(const uint32 newWidth);
-			/// Sets the height of the back buffer.
-			void setBackBufferHeight(const uint32 newHeight);
-
-			void applyBackbufferChanges();
 
 			/// Returns true if the error buffer contains errors.
 			bool hasErrors() const;
@@ -102,6 +94,7 @@ namespace sani {
 			/// Clears the device. Swaps the back
 			/// and front buffer.
 			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
+			void present();
 			
 			/*
 				Texture and render target operations.
@@ -127,22 +120,28 @@ namespace sani {
 			/// @param[in] depthBuffer depth buffer to be generated for the target
 			/// @param[in] width width of the render target
 			/// @param[in] height of the render target
-			void generateRenderTarget2D(uint32& texture, uint32& colorBuffer, uint32& frameBuffer, uint32& depthBuffer, const uint32 width, const uint32 height);
+			void generateRenderTarget2D(uint32& texture, uint32& frameBuffer, const uint32 width, const uint32 height);
+
+			void resizeBackbuffer(const uint32 width, const uint32 height);
+
+			/*
+				Texture operations.
+			*/
 
 			/// Sets texture parameter to texture
 			/// This function assumes the texture is binded already 
 			void setTextureParameter(const TextureTarget target, const TextureParameterName field, int value);
 
 			void setTextureData(const TextureTarget target,
-				const int level,
-				const SurfaceFormat internalFormat,
-				const int width,
-				const int height,
-				const SurfaceFormat format,
-				const unsigned char* data);
+								const int level,
+								const SurfaceFormat internalFormat,
+								const int width,
+								const int height,
+								const SurfaceFormat format,
+								const unsigned char* data);
 
-			void getTextureData(const TextureTarget target, const int level,
-				const SurfaceFormat format, unsigned char* data);
+			void getTextureData(const TextureTarget target, const int level, const SurfaceFormat format, unsigned char* data);
+			void deleteTexture(const uint32 texture);
 
 			/*
 				Shader operations.
@@ -176,6 +175,12 @@ namespace sani {
 			/// @param[in] data data to be inserted in the uniform location
 			void setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type);
 
+			int32 getUniformsCount(const uint32 shader) const;
+
+			int32 getUniformLocation(const uint32 shader, const String& name) const;
+
+			void getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount) const;
+
 			/*
 				Buffer operations.
 			*/
@@ -189,8 +194,7 @@ namespace sani {
 			/// Sets given buffers data.
 			void setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
 			void setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data);
-
-			/// Draws array elements.
+			void deleteBuffer(const uint32 buffer);
 
 			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
 			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices);
@@ -204,4 +208,3 @@ namespace sani {
 		};
 	}
 }
-

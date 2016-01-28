@@ -32,6 +32,7 @@ namespace sani {
 		std::priority_queue<HeapBlock> releasedBlocks;
 		std::list<HeapBlock> blocks;
 
+		uint64 bytesUsed;
 		uint32 pagepointer;
 
 		void joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks);
@@ -52,6 +53,8 @@ namespace sani {
 		bool shouldDefragment() const;
 		bool fragmented() const;
 		void defragment();
+
+		uint64 getBytesUsed() const;
 
 		~HeapPage();
 

@@ -29,10 +29,10 @@ namespace sani {
 	}
 
 	void CVar::initialize(const String& value) {
-		if		(type == cvarlang::ValueType::StringVal)	stringVal = value.substr(1, value.size() - 2);
-		else if (type == cvarlang::ValueType::IntVal)		int32Val = std::atoi(value.c_str());
-		else if (type == cvarlang::ValueType::FloatVal)		float32Val = static_cast<float32>(std::atof(value.c_str()));
-		else if (type == cvarlang::ValueType::DoubleVal)	float64Val = std::atof(value.c_str());
+		if		(type == cvarlang::ValueType::StringVal)	stringVal	= value.substr(1, value.size() - 2);
+		else if (type == cvarlang::ValueType::IntVal)		int32Val	= std::atoi(value.c_str());
+		else if (type == cvarlang::ValueType::FloatVal)		float32Val	= static_cast<float32>(std::atof(value.c_str()));
+		else if (type == cvarlang::ValueType::DoubleVal)	float64Val	= std::atof(value.c_str());
 	}
 
 	cvarlang::ValueType CVar::getType() const {
@@ -109,10 +109,6 @@ namespace sani {
 
 	CVar::~CVar() {
 	}
-
-	/*
-		TODO: fix these with some delegation... Too much duplication.
-	*/
 
 	bool CVar::operator == (const CVar& other) const {
 		if (type == cvarlang::ValueType::StringVal) {

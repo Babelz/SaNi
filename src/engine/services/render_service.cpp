@@ -247,6 +247,8 @@ namespace sani {
 
 					renderToCamera(camera);
 				}
+
+				graphicsDevice->present();
 			}
 
 			RenderService::~RenderService() {

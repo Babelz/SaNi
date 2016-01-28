@@ -59,6 +59,13 @@ namespace sani {
 		/// Returns true if the heap contains fragmentation.
 		bool fragmented() const;
 
+		/// Returns the total amount of bytes used.
+		uint64 getBytesUsed() const;
+		/// Returns the current capacity of the allocator.
+		uint64 getTotalBytes() const;
+		/// Returns the size of the page.
+		uint64 getPageSize() const;
+
 		~HeapAllocator();
 
 		HeapAllocator& operator =(HeapAllocator& other) = delete;

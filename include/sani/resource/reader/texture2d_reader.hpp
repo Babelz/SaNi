@@ -3,8 +3,11 @@
 #include "sani/resource/reader/resource_type_reader.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace reader {
+
 			/// Reads 2D texture content
 			/// 
 			/// @author siquel

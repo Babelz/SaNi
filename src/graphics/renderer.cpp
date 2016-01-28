@@ -12,18 +12,18 @@ namespace sani {
 		#define INITIAL_BUFFER_ELEMENTS_COUNT 32768
 		
 		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
-		// Keep the buffer usage as dynamic (memory as the limit).
+		// Keep the buffer usage as dynamic (max RAM as the limit).
 
 		Renderer::Renderer(GraphicsDevice* const graphicsDevice) : graphicsDevice(graphicsDevice),
-																  vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
-																  indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
-																  verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
-																  indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
-																  vertexBuffer(0),
-																  indexBuffer(0),
-																  texture(0),
-																  effect(0),
-																  renderBatchesCount(0) {
+																   vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+																   indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
+																   verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
+																   indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
+																   vertexBuffer(0),
+																   indexBuffer(0),
+																   texture(0),
+																   renderBatchesCount(0),
+																   renderBatcher(defaultEffects, RENDER_STATES_COUNT) {
 			renderBatches.resize(32);
 			indexTransformBuffer.resize(32);
 		}
@@ -133,42 +133,9 @@ namespace sani {
 											"	gl_FragColor = texture2D(sampler, out_texture_coordinates) * out_vertex_color;"
 											"}";
 
-			uint32 vertex = 0;
-			uint32 fragment = 0;
-			uint32 defaultPolygonEffect = 0;
-			uint32 defaultTexturedPolygonEffect = 0;
-
-			// Create default polygon shader.
-			graphicsDevice->compileShader(vertex, defaultPolygonVertexSource, ShaderType::Vertex);
-			SANI_ASSERT(!graphicsDevice->hasErrors());
-
-			graphicsDevice->compileShader(fragment, defaultPolygonFragmentSource, ShaderType::Fragment);
-			SANI_ASSERT(!graphicsDevice->hasErrors());
-
-			graphicsDevice->createProgram(defaultPolygonEffect);
-			graphicsDevice->linkToProgram(defaultPolygonEffect, vertex, true);
-			graphicsDevice->linkToProgram(defaultPolygonEffect, fragment, true);
-			graphicsDevice->linkProgram(defaultPolygonEffect);
-			assert(!graphicsDevice->hasErrors());
-
-			vertex = fragment = 0;
-			
-			// Create default textured polygon shader.
-			graphicsDevice->compileShader(vertex, defaultTexturedPolygonVertexSource, ShaderType::Vertex);
-			SANI_ASSERT(!graphicsDevice->hasErrors());
-
-			graphicsDevice->compileShader(fragment, defaultTexturedPolygonFragmentSource, ShaderType::Fragment);
-			SANI_ASSERT(!graphicsDevice->hasErrors());
-
-			graphicsDevice->createProgram(defaultTexturedPolygonEffect);
-			graphicsDevice->linkToProgram(defaultTexturedPolygonEffect, vertex, true);
-			graphicsDevice->linkToProgram(defaultTexturedPolygonEffect, fragment, true);
-			graphicsDevice->linkProgram(defaultTexturedPolygonEffect);
-			SANI_ASSERT(!graphicsDevice->hasErrors());
-
-			defaultEffects[static_cast<uint32>(RenderState::Waiting)]			= 0;
-			defaultEffects[static_cast<uint32>(RenderState::Polygons)]			= defaultPolygonEffect;
-			defaultEffects[static_cast<uint32>(RenderState::TexturedPolygons)]	= defaultTexturedPolygonEffect;
+			defaultEffects[static_cast<uint32>(RenderState::Waiting)]			= GraphicsEffect();
+			defaultEffects[static_cast<uint32>(RenderState::Polygons)]			= GraphicsEffect::compile(graphicsDevice, defaultPolygonVertexSource, defaultPolygonFragmentSource);
+			defaultEffects[static_cast<uint32>(RenderState::TexturedPolygons)]  = GraphicsEffect::compile(graphicsDevice, defaultTexturedPolygonVertexSource, defaultTexturedPolygonFragmentSource);
 		}
 		void Renderer::generateRenderSetups() {
 			renderSetups[static_cast<uint32>(RenderState::Waiting)]				= nullptr;
@@ -183,15 +150,15 @@ namespace sani {
 			graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
 			graphicsDevice->setBufferData(BufferType::ArrayBuffer,
-										 vertices.getSize() * sizeof(float32),
-										 vertices.data(),
-										 BufferUsage::Dynamic);
+										  vertices.getSize() * sizeof(float32),
+										  vertices.data(),
+										  BufferUsage::Dynamic);
 
 
 			graphicsDevice->setBufferData(BufferType::ElementArrayBuffer,
-										 indices.getSize() * sizeof(uint32),
-										 indices.data(),
-										 BufferUsage::Dynamic);
+										  indices.getSize() * sizeof(uint32),
+										  indices.data(),
+										  BufferUsage::Dynamic);
 		}
 
 		void Renderer::updateVertexBufferSize() {
@@ -233,7 +200,7 @@ namespace sani {
 			const uint32 vertexElementOffset			 = renderElementData->offset;
 
 			const uint32 first							 = renderElementData->first;
-			const uint32 last							 = renderElementData->last + 1;	// Add one to keep the index as zero-based.
+			const uint32 last							 = renderElementData->last + 1;
 
 			const uint32 firstVertexElement				 = first * (elementVertexElementsCount + vertexElementOffset);
 			const uint32 lastVertexElement				 = last * (elementVertexElementsCount + vertexElementOffset);
@@ -299,7 +266,7 @@ namespace sani {
 				// TODO: not safe but works.
 				RenderBatch& renderBatch = renderBatches[i];
 				
-				renderBatch.effect = renderBatch.effect <= 2 ? defaultEffects[renderBatch.effect] : renderBatch.effect;
+				renderBatch.effect = renderBatch.effect <= 2 ? defaultEffects[renderBatch.effect].getEffect() : renderBatch.effect;
 			}
 		}
 		void Renderer::updateBufferDatas() {
@@ -339,8 +306,9 @@ namespace sani {
 		}
 
 		void Renderer::beginRendering(const math::Mat4f& transform) {
-			graphicsDevice->setShaderUniform(defaultEffects[1], "transform", (void*)&transform, UniformType::Mat4F);
-			graphicsDevice->setShaderUniform(defaultEffects[2], "transform", (void*)&transform, UniformType::Mat4F);
+			// Set default effects transform uniform values.
+			defaultEffects[1].findUniform("transform")->setData((void*)&transform);
+			defaultEffects[2].findUniform("transform")->setData((void*)&transform);
 
 			prepareRendering();
 		}
@@ -360,11 +328,6 @@ namespace sani {
 				copyIndexData(renderElementData, &renderable->renderData);
 			}
 		}
-
-		// TODO: hazard! fucks up memory.
-		/*void Renderer::renderElements(const Renderable* const renderables, const uint32 count) {
-			for (uint32 i = 0; i < count; i++) renderElement(&renderables[i]);
-		}*/
 
 		void Renderer::endRendering() {
 			renderBatchesCount = renderBatcher.getRenderBatchesCount();

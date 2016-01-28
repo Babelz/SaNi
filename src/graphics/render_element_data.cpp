@@ -11,7 +11,7 @@ namespace sani {
 												 offset(0),
 												 groupIdentifier(0),
 												 texture(0),
-												 effect(0),
+												 effect(nullptr),
 												 renderMode(RenderMode::Triangles) {
 		}
 

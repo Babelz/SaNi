@@ -18,6 +18,7 @@ namespace sani {
 
 		const int32 size;
 		
+		uint64 bytesUsed;
 		int32 poolpointer;
 
 		std::stack<char*> releasedHandles;
@@ -37,6 +38,8 @@ namespace sani {
 		/// Deallocates the given element and calls it's 
 		/// destructor.
 		inline void deallocate(T* element);
+
+		uint64 getBytesUsed() const;
 
 		~PoolPage();
 

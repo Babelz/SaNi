@@ -25,9 +25,9 @@ namespace sani {
 			T w;
 
 			template <typename U>
-			Rectangle(const U x, const U y, const U h, const U w);
+			Rectangle(const U x, const U y, const U w, const U h);
 
-			Rectangle(const T x, const T y, const T h, const T w);
+			Rectangle(const T x, const T y, const T w, const T h);
 			
 			template <typename U>
 			Rectangle(const U x, const U y, const U size);
@@ -62,20 +62,16 @@ namespace sani {
 		};
 		/* Type definitions */
 
-		typedef Rectangle<uint32> Rectu32;
-		typedef Rectangle<uint16> Rectu16;
-		typedef Rectangle<uint8> Rectu8;
+		using Rectu32i	= Rectangle<uint32>;
+		using Rectu16i	= Rectangle<uint16>;
+		using Rectu8i	= Rectangle<uint8>;
 
-		typedef Rectangle<int32> Rect32;
-		typedef Rectangle<int16> Rect16;
-		typedef Rectangle<int8> Rect8;
+		using Rect32i	= Rectangle<int32>;
+		using Rect16i	= Rectangle<int16>;
+		using Rect8i	= Rectangle<int8>;
 
-		typedef Rectangle<float64> Rectd;
-		typedef Rectangle<float32> Rectf;
-		typedef Rectangle<int32> Recti;
-
-		// Creates new rectangle using "int" as template type.
-		typedef Rectangle<int32> Rect;
+		using Rect64f	= Rectangle<float64>;
+		using Rect32f	= Rectangle<float32>;
 	}
 }
 

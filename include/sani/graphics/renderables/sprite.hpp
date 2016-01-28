@@ -21,7 +21,7 @@ namespace sani {
 
 			Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 h, const float32 w);
 			Sprite(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size);
-			Sprite(resource::Texture2D* const texture, const math::Rectf& bounds);
+			Sprite(resource::Texture2D* const texture, const math::Rect32f& bounds);
 			Sprite(resource::Texture2D* const texture, const math::Vec2f& size);
 			Sprite(resource::Texture2D* const texture);
 		};

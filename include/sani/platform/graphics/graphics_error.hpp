@@ -3,6 +3,7 @@
 #include "sani/types.hpp"
 
 namespace sani {
+
 	namespace graphics {
 		
 		// Creates new instance of the graphics error by translating the 
@@ -29,9 +30,6 @@ namespace sani {
 		public:
 
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
-			// TODO: implement API checking 
-			//       for WinGL and WinDX.
-
 			GraphicsError(const GLuint apiErrorCode, const String& function, const int32 lineNumber);
 			/// Creates new instance of the GraphicsError object with a custom error message.
 			GraphicsError(const String& message, const String& function, const int32 lineNumber);

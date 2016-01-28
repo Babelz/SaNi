@@ -4,11 +4,17 @@ namespace sani {
 
 	template <class T>
 	PoolPage<T>::PoolPage(const int32 size) : size(size * sizeof(T)), 
-											  poolpointer(0) {
+											  poolpointer(0),
+											  bytesUsed(0) {
 		memory = new char[size * sizeof(T)];
 
 		lowAddress = reinterpret_cast<IntPtr>(&memory[0]);
 		highAddress = reinterpret_cast<IntPtr>(&memory[size - 1]);
+	}
+
+	template <class T>
+	uint64 PoolPage<T>::getBytesUsed() const {
+		return bytesUsed;
 	}
 
 	template <class T>

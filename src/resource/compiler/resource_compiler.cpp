@@ -12,9 +12,13 @@
 #include "sani/core/parser/xml_parser.hpp"
 #include <iostream>
 #include "sani/resource/font_description.hpp"
+
 namespace sani {
+
 	namespace resource {
+
 		namespace compiler {
+
 			ResourceCompiler::ResourceCompiler() {
 				initialize();
 			}
@@ -27,10 +31,12 @@ namespace sani {
 
 			void ResourceCompiler::initialize() {
 				using namespace sani::resource::compiler;
+
 				mapWriter<Texture2DContent, Texture2DWriter>();
 				mapWriter<EffectContent, EffectWriter>();
 				mapWriter<SpriteFontContent, SpriteFontWriter>();
 				mapWriter<BitmapContent, BitmapContentWriter>();
+
 				//map<Effect, EffectWriter>();
 				importers.reserve(32u);
 				importers.push_back(new pipeline::Texture2DImporter);
@@ -50,20 +56,19 @@ namespace sani {
 				if (!fileSystem.openFile(fullPath, Filemode::Read, &stream)) {
 					throw std::runtime_error("cant open build file");
 				}
+
 				parser::XmlDocument document;
+
 				try {
 					document.load(stream);
 					XmlNode assets;
 					
-					if (!document.firstNode("assets", assets)) {
-						return;
-					}
+					if (!document.firstNode("assets", assets)) return;
 
 					std::vector<XmlNode> childs;
 					assets.getChildNodes(childs);
 
 					for (auto& child : childs) {
-
 						XmlAttribute filenameAttr;
 						if (!child.attribute("filename", filenameAttr)) {
 							throw std::runtime_error("No filename attribute");
@@ -73,6 +78,7 @@ namespace sani {
 						if (!child.attribute("importer", importerAttr)) {
 							throw std::runtime_error("No importer attribute");
 						}
+
 						String importerString = importerAttr.value();
 						auto it = std::find_if(importers.begin(), importers.end(), [&importerString](pipeline::ContentImporter* imp) {
 							return imp->getImporterName() == importerString;
@@ -81,6 +87,7 @@ namespace sani {
 						if (it == importers.end()) {
 							throw std::runtime_error(String("No importer called ") + importerString);
 						}
+
 						// TODO do we need processor and shit?
 						pipeline::ContentImporter* importer = *it;
 						importerMap[filenameAttr.value()] = importer;
@@ -91,6 +98,7 @@ namespace sani {
 				catch (const parser::XmlException& ex) {
 					std::cout << ex.what() << std::endl;
 				}
+
 				fileSystem.closeFile(fullPath);
 			}
 
@@ -123,6 +131,7 @@ namespace sani {
 				if (!fileSystem.openFile(outputPath, io::Filemode::Truncate, &file)) {
 					throw "cant open file!";
 				}
+
 				ContentImporter* importer = getImporterFor(path);
 				ResourceItem* data = importer->import(filePath, &fileSystem);
 
@@ -139,6 +148,7 @@ namespace sani {
 				if (!processors.count(type)) {
 					throw std::runtime_error(String("No processor for ") + type.name());
 				}
+
 				return processors.at(type);
 			}
 
@@ -146,14 +156,13 @@ namespace sani {
 				if (!importerMap.count(asset)) {
 					throw std::runtime_error("No importer specified for " + asset);
 				}
+
 				return importerMap.at(asset);
 			}
-
 
 			ResourceTypeWriter* ResourceCompiler::getWriter(const std::type_index& t) const {
 				return lookup.at(t);
 			}
-
 
 			const String& ResourceCompiler::getFilePath() const {
 				return filePath;

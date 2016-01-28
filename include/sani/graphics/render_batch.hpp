@@ -20,10 +20,6 @@ namespace sani {
 		/// rendered.
 		class RenderBatch final {
 		public:
-			/*
-				Public fields.
-			*/
-
 			// First vertex position.
 			uint32 verticesBegin;
 			uint32 verticesCount;
@@ -42,10 +38,6 @@ namespace sani {
 			// State elements.
 			VertexMode vertexMode;
 			RenderMode renderMode;
-
-			/*
-				Public methods.
-			*/
 
 			RenderBatch();
 

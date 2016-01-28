@@ -3,17 +3,15 @@
 #include "sani/graphics/render_batcher.hpp"
 #include "sani/graphics/render_batch.hpp"
 #include "sani/graphics/render_state.hpp"
+#include "sani/graphics/graphics_effect.hpp"
 
 namespace sani {
 
 	namespace graphics {
 
-		RenderBatcher::RenderBatcher() : renderBatches(nullptr),
-										 renderBatch(nullptr),
-										 renderBatchesCount(0),
-										 vertexElements(0),
-										 indexElements(0),
-										 nextOffset(0) {
+		RenderBatcher::RenderBatcher(GraphicsEffect* const defaultEffects, const uint32 defaultEffectsCount)
+			: renderBatches(nullptr), renderBatch(nullptr), renderBatchesCount(0), vertexElements(0), indexElements(0),
+			  nextOffset(0), defaultEffects(defaultEffects), defaultEffectsCount(defaultEffectsCount) {
 		}
 
 		void RenderBatcher::updateOffset() {
@@ -51,7 +49,7 @@ namespace sani {
 			renderBatch->renderMode			= renderElementData->renderMode;
 
 			renderBatch->texture			= renderElementData->texture;
-			renderBatch->effect				= renderElementData->effect == 0 ? static_cast<uint32>(renderState) : renderElementData->effect;
+			renderBatch->effect				= renderElementData->effect == nullptr ? defaultEffects[static_cast<uint32>(renderState)].getEffect() : renderElementData->effect->getEffect();
 			renderBatch->renderSetup		= static_cast<uint32>(renderState);
 
 			// Check for possible vertex elements offset for this batch element.

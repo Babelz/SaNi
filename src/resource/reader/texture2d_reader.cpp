@@ -4,15 +4,19 @@
 #include "sani/resource/texture2d.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace reader {
-			Texture2DReader::~Texture2DReader() {}
+
+			Texture2DReader::~Texture2DReader() {
+			}
 
 			void* Texture2DReader::read(ResourceReader* reader) {
 				using namespace sani::graphics;
 
-				typedef std::vector<unsigned char> PixelData;
-				typedef std::vector < PixelData> MipmapChain;
+				using PixelData		= std::vector<unsigned char>;
+				using MipmapChain	= std::vector <PixelData>;
 
 				const uint32 width = reader->readUint32();
 				const uint32 height = reader->readUint32();
@@ -25,23 +29,20 @@ namespace sani {
 				for (size_t i = 0; i < faceCount; ++i) {
 					// read the byte count
 					uint32 bytes = static_cast<uint32>(reader->read7BitEncodedInt());
+
 					// alloc vector & read the pixels
 					faces.push_back(PixelData(bytes));
 					
 					PixelData& data = faces[i];
-					// TODO do readContainer or something
-					for (size_t j = 0; j < bytes; ++j) {
-						data[j] = reader->readByte();
-					}
+					for (size_t j = 0; j < bytes; ++j) data[j] = reader->readByte();
 				}
 
 				GraphicsDevice* device = reader->getGraphicsDevice();
 
 				Texture2D* out = new Texture2D(device, width, height, faceCount > 1, SurfaceFormat::ColorRGBA);
 
-				for (size_t level = 0; level < faceCount; ++level) {
-					out->setData(device, level, nullptr, faces[level], 0, faces.size());
-				}
+				for (size_t level = 0; level < faceCount; ++level) out->setData(device, level, nullptr, faces[level], 0, faces.size());
+				
 				return out;
 			}
 		}

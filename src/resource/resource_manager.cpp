@@ -2,10 +2,13 @@
 #include "sani/platform/file/file_system.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
+
 namespace sani {
+
 	namespace resource {
-		ResourceManager::ResourceManager(FileSystem* fileSystem, GraphicsDevice* gdevice)
-			: fileSystem(fileSystem), graphicsDevice(gdevice) {
+
+		ResourceManager::ResourceManager(FileSystem* fileSystem, GraphicsDevice* gdevice) : fileSystem(fileSystem), 
+																						    graphicsDevice(gdevice) {
 			typeReaders.registerStandardTypes();
 		}
 
@@ -13,6 +16,7 @@ namespace sani {
 			if (resources.find(asset) != resources.end()) return resources[asset];
 
 			using namespace reader;
+
 			FileStream* stream;
 			if (!fileSystem->openFile(asset, Filemode::Read, &stream)) {
 				throw std::runtime_error("File not found!");
@@ -31,7 +35,9 @@ namespace sani {
 				(void)ex;
 				throw;
 			}
+
 			fileSystem->closeFile(asset);
+
 			return nullptr;
 		}
 	}

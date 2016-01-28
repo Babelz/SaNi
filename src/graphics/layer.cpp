@@ -18,14 +18,14 @@ namespace sani {
 		}
 
 		void Layer::renderBottom(sani::graphics::Renderer* const renderer) {
-			if (bottom.size() > 0) {
-				for (graphics::Renderable* const renderable : bottom) renderer->renderElement(renderable);
-			}
+			if (bottom.size() == 0) return;
+
+			for (graphics::Renderable* const renderable : bottom) renderer->renderElement(renderable);
 		}
 		void Layer::renderTop(sani::graphics::Renderer* const renderer) {
-			if (top.size() > 0)	{
-				for (graphics::Renderable* const renderable : top) renderer->renderElement(renderable);
-			}
+			if (top.size() == 0) return;
+			
+			for (graphics::Renderable* const renderable : top) renderer->renderElement(renderable);
 		}
 		
 		LayerType Layer::getType() const { 

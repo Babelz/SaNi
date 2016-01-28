@@ -34,18 +34,18 @@ namespace sani {
 
 	using namespace sani::cvarlang;
 
-	typedef std::list<CVarRequireStatement> StatementList;
-	typedef std::list<CVarRecord> RecordList;
-	typedef std::list<CVarToken> TokenList;
-	typedef std::list<CVar> CVarList;
+	using StatementList = std::list<CVarRequireStatement>;
+	using RecordList	= std::list<CVarRecord>;
+	using TokenList		= std::list<CVarToken>;
+	using CVarList		= std::list<CVar>;
 
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateCVar);
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateCondition);
 	SANI_FORWARD_DECLARE_STRUCT_1(cvarlang, IntermediateRequireStatement);
 	
-	class CVarParser;
-	class CVarTokenizer;
-	class CVarLinker;
+	SANI_FORWARD_DECLARE(CVarParser);
+	SANI_FORWARD_DECLARE(CVarTokenizer);
+	SANI_FORWARD_DECLARE(CVarLinker);
 
 	using namespace interfaces;
 

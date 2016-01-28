@@ -1,6 +1,7 @@
 #include "sani/platform/graphics/graphics_error.hpp"
 
 namespace sani {
+
 	namespace graphics {
 
 		// WinGL/Android implementations of the graphics error.

@@ -7,22 +7,23 @@
 #include "sani/core/math/rectangle.hpp"
 #include "sani/resource/bitmap_content.hpp"
 #include "sani/core/math/vector4.hpp"
+
 #include FT_FREETYPE_H
 #include FT_STROKER_H
 #include FT_GLYPH_H
 
 namespace sani {
+
 	namespace resource {
+
 		namespace processor {
 
 			static FT_Library library;
 
 			SpriteFontProcessor::SpriteFontProcessor() {
-
 			}
 
 			SpriteFontProcessor::~SpriteFontProcessor() {
-
 			}
 
 			class Glyph {
@@ -32,7 +33,7 @@ namespace sani {
 				float32 bearingX;
 				float32 bearingY;
 				float32 advance;
-				sani::math::Recti source;
+				sani::math::Rect32i source;
 			public:
 				Glyph() : pixels(nullptr), character('\0') {}
 			};
@@ -225,8 +226,8 @@ namespace sani {
 					BitmapContent* pixels = glyph.pixels;
 					uint32 width = pixels->getWidth();
 					uint32 height = pixels->getHeight();
-					sani::math::Recti source(0, 0, height, width);
-					sani::math::Recti destination(1 + xOffset, yOffset, height, width);
+					sani::math::Rect32i source(0, 0, height, width);
+					sani::math::Rect32i destination(1 + xOffset, yOffset, height, width);
 					// TODO move this
 					glyph.source = destination;
 					bitmap->copyFrom(pixels, source, destination);

@@ -7,8 +7,11 @@
 #include "sani/resource/reader/spritefont_reader.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace reader {
+
 			ResoureTypeReaderManager::~ResoureTypeReaderManager() {
 				for (size_t i = 0; i < typeReaders.size(); ++i) {
 					delete typeReaders[i];

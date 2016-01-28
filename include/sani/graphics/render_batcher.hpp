@@ -5,6 +5,7 @@
 
 #include <vector>
 
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsEffect);
 SANI_FORWARD_DECLARE_2(sani, graphics, RenderBatch);
 SANI_FORWARD_DECLARE_2(sani, graphics, RenderElementData);
 
@@ -18,6 +19,10 @@ namespace sani {
 		/// Class responsible of generating batches from given set of renderable elements.
 		class RenderBatcher final {
 		private:
+			// Default effects given by the renderer.
+			GraphicsEffect* const defaultEffects;
+			const uint32 defaultEffectsCount;
+
 			// Batch pointer to some external set of batches.
 			std::vector<RenderBatch>* renderBatches;
 			// How many batches we have created.
@@ -38,7 +43,7 @@ namespace sani {
 			/// Returns true if the given element should be batched alone.
 			bool shouldBeBatchedAlone(const RenderElementData* renderElementData) const;
 			
-			/// Initializes currebt batch with the data contained
+			/// Initializes current batch with the data contained
 			/// in given element data.
 			void initializeBatch(const RenderElementData* const renderElementData);
 			/// Applies the given element data to current batch.
@@ -46,12 +51,12 @@ namespace sani {
 
 			void swapBatch();
 		public:
-			RenderBatcher();
+			RenderBatcher(GraphicsEffect* const defaultEffects, const uint32 count);
 			
 			/// Prepares the batcher for batching. Should
 			/// always be called before batching.
 			void prepareBatching(std::vector<RenderBatch>* const renderBatches);
-
+			
 			/// Returns count of batches.
 			uint32 getRenderBatchesCount() const;
 			/// Returns the next offset that should be applied.

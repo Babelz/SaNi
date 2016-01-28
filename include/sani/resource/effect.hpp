@@ -10,7 +10,9 @@ SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
 SANI_FORWARD_DECLARE_2(sani, resource, EffectContent);
 
 namespace sani {
+
 	namespace resource {
+
 		class Effect : public Resource {
 		private:
 			uint32 id;
@@ -21,4 +23,5 @@ namespace sani {
 		};
 	}
 }
+
 SANI_DESERIALIZABLE_WITH(sani::resource::EffectContent, sani::resource::reader::EffectReader);

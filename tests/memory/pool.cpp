@@ -38,11 +38,13 @@ TEST_CASE("Pool", "[pool]") {
 		REQUIRE(e->a == 0);
 		REQUIRE(e->b == 0);
 
-		e->a = 10;
-		e->b = 10;
+		e->a = 11;
+		e->b = 12;
+		b->a = 13;
+		b->b = 14;
 
-		REQUIRE(e->a == b->a);
-		REQUIRE(e->b == b->b);
+		REQUIRE(e->a != b->a);
+		REQUIRE(e->b != b->b);
 
 		pool::Foo* g = allocator.allocate();
 		NEW_DYNAMIC_DEFAULT(pool::Foo, g);
@@ -50,7 +52,9 @@ TEST_CASE("Pool", "[pool]") {
 		REQUIRE(g->b == 0);
 
 		g->a = 10;
-		g->b = 10;
+		g->b = 12;
+		c->a = 10;
+		c->b = 12;
 		
 		REQUIRE(g->a == c->a);
 		REQUIRE(g->b == c->b);
