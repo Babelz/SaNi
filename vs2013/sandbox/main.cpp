@@ -1,5 +1,7 @@
 #include <iostream>
-
+#include <locale>
+#include <string>
+#include <codecvt>
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
@@ -8,7 +10,8 @@
 #include <Windows.h>
 
 #endif
-
+using String16 = std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>;
+using String8 = std::basic_string<char, std::char_traits<char>, std::allocator<char>>;
 #include "sani/core/memory/memory.hpp"
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 #include "sani/graphics/renderer.hpp"
@@ -48,6 +51,7 @@
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
 #include "sani/resource/sprite_font.hpp"
 #include "sani/resource/spritefont_content.hpp"
+#include <xlocbuf>
 
 using namespace sani::resource;
 using namespace sani::graphics;
@@ -74,13 +78,13 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	return 0;
 }
 
-void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
+void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
 	float start = 400;
 	float offx = start;
 	float offy = 0;
 	float spacing = font->texture->getHeight();
 	for (uint32 i = 0; i < text.size(); ++i) {
-		uint32 c = static_cast<uint32>(text[i]);
+		uint32 c = static_cast<uint32>((text[i]));
 
 		switch (c) {
 		case '\r':
@@ -117,7 +121,7 @@ void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEn
 			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
 			rectangle->texture = font->texture;
-			rectangle->fill = color::blue;
+			rectangle->fill = color::red;
 			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
 			recomputeVertices(*rectangle);
 			setupShapeForRendering(rectangle, rectangle->borderThickness);
@@ -130,19 +134,19 @@ void createText(SpriteFont* font, const String& text, GraphicsDevice* gd, SaNiEn
 			// bottom right y
 			float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
 
-			rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y, 0.f), color::blue };
+			rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
 			rectangle->renderData.vertices[0].textureCoordinates.x = s0;
 			rectangle->renderData.vertices[0].textureCoordinates.y = t1;
 
-			rectangle->renderData.vertices[1].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y, 0.f), color::blue };
+			rectangle->renderData.vertices[1].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y, 0.f), Color(0.93f, 0.0f, 0.0f, 1.f) };
 			rectangle->renderData.vertices[1].textureCoordinates.x = s1;
 			rectangle->renderData.vertices[1].textureCoordinates.y = t1;
 
-			rectangle->renderData.vertices[2].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y + h, 0.f), color::blue };
+			rectangle->renderData.vertices[2].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y + h, 0.f), Color(0.86f, 0.0f, 0.0f, 1.f) };
 			rectangle->renderData.vertices[2].textureCoordinates.x = s0;
 			rectangle->renderData.vertices[2].textureCoordinates.y = t0;
 
-			rectangle->renderData.vertices[3].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), color::blue };
+			rectangle->renderData.vertices[3].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
 			rectangle->renderData.vertices[3].textureCoordinates.x = s1;
 			rectangle->renderData.vertices[3].textureCoordinates.y = t0;
 
@@ -202,7 +206,14 @@ void initialize(SaNiEngine* const engine) {
 
 	//	rects.push_back(rectangle);
 	//}
-	createText(font, "asdfghjkl\ndssds   dssdsdsddss", graphicsDevice, engine, rects);
+
+	using StringConverter =
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t, std::allocator<wchar_t>, std::allocator<char>>;
+	
+
+	StringConverter conv;
+	String16 gg = conv.from_bytes("\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0");
+	createText(font, gg, graphicsDevice, engine, rects);
 
 	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();
 	createElement(createCircleMessage, ElementType::Circle);

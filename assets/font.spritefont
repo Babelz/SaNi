@@ -9,6 +9,10 @@
 			<start>32</start>
 			<end>127</end>
 		</character_region>
+		<character_region>
+			<start>228</start>
+			<end>246</end>
+		</character_region>
 	</character_regions>
 	<outline>
 		<type>2</type>  <!-- default None -->
