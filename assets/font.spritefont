@@ -1,5 +1,5 @@
 <spritefont>
-	<name>Arial Black</name>
+	<name>Arial Bold</name>
 	<!--<style>Italic?</style> or something? -->
 	<size>50</size>
 	<spacing>0</spacing>
@@ -10,8 +10,8 @@
 			<end>127</end>
 		</character_region>
 		<character_region>
-			<start>132</start>
-			<end>153</end>
+			<start>228</start>
+			<end>246</end>
 		</character_region>
 	</character_regions>
 	<outline>

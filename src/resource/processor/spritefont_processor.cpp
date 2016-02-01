@@ -129,6 +129,15 @@ namespace sani {
 					FT_Stroker_Done(stroker);
 					FT_Done_Glyph(glyph);
 
+
+					float32 bearingX = static_cast<float32>(face->glyph->metrics.horiBearingX >> 6); // left
+					float32 bearingY = static_cast<float32>(face->glyph->metrics.horiBearingY >> 6); // top
+					float32 advance = static_cast<float32>(face->glyph->advance.x >> 6); // offset
+
+					out.bearingX = bearingX;
+					out.bearingY = bearingY;
+					out.advance = advance;
+
 					// TODO what now
 					if (spans.empty()) {
 						return;
@@ -152,13 +161,7 @@ namespace sani {
 						rect.include(sani::math::Vec2i(s.x + s.width - 1, s.y));
 					}
 
-					float32 bearingX = static_cast<float32>(face->glyph->metrics.horiBearingX >> 6); // left
-					float32 bearingY = static_cast<float32>(face->glyph->metrics.horiBearingY >> 6); // top
-					float32 advance = static_cast<float32>(face->glyph->advance.x >> 6); // offset
 
-					out.bearingX = bearingX;
-					out.bearingY = bearingY;
-					out.advance = advance;
 
 					// Get some metrics of our image.
 					uint32 imgWidth = static_cast<uint32>(rect.width()),
@@ -200,6 +203,9 @@ namespace sani {
 
 			static uint32 calculateOutputWidth(const std::vector<Glyph>& glyphs) {
 				return std::accumulate(glyphs.begin(), glyphs.end(), 0, [](uint32 r, const Glyph& g) {
+					// TODO fix nullptr
+					if (g.pixels == nullptr) return 0u;
+
 					return 1 + r + g.pixels->getWidth() + 1;
 				});
 			}
@@ -207,6 +213,9 @@ namespace sani {
 			static uint32 calculateOutputHeight(const std::vector<Glyph>& glyphs) {
 				// TODO max width shaiba
 				return std::max_element(glyphs.begin(), glyphs.end(), [](const Glyph& a, const Glyph& b) {
+					// TODO figure out something for these nullptrs
+					if (a.pixels == nullptr) return true;
+					else if (b.pixels == nullptr) return false;
 					return a.pixels->getHeight() < b.pixels->getHeight();
 				})->pixels->getHeight();
 			}
@@ -224,10 +233,17 @@ namespace sani {
 
 				for (auto& glyph : glyphs) {
 					BitmapContent* pixels = glyph.pixels;
+
+					// white space and stuff
+					if (pixels == nullptr) {
+						glyph.source = math::Rect32i{ 0, 0, 0, 0 };
+						continue;
+					}
+
 					uint32 width = pixels->getWidth();
 					uint32 height = pixels->getHeight();
-					sani::math::Rect32i source(0, 0, height, width);
-					sani::math::Rect32i destination(1 + xOffset, yOffset, height, width);
+					sani::math::Rect32i source(0, 0, width, height);
+					sani::math::Rect32i destination(1 + xOffset, yOffset, width, height);
 					// TODO move this
 					glyph.source = destination;
 					bitmap->copyFrom(pixels, source, destination);
@@ -255,9 +271,7 @@ namespace sani {
 				for (auto character : characters) {
 					Glyph glyph;
 					importGlyph(desc, character, face, glyph);
-					if (glyph.pixels != nullptr) {
-						glyphs.push_back(glyph);
-					}
+					glyphs.push_back(glyph);
 				}
 
 				BitmapContent* bitmap = packGlyphs(glyphs);
