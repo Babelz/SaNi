@@ -4,9 +4,7 @@
 namespace sani {
 
 	template<class T>
-	T* HeapPage::allocate() {
-		const auto size = sizeof(T);
-		
+	T* HeapPage::allocate(const uint32 size) {
 		// Free memory has been used, check for blocks.
 		if (pagepointer + size > this->size) {
 			if (releasedBlocks.size() == 0) return nullptr;
@@ -43,9 +41,8 @@ namespace sani {
 			bytesUsed += size;
 
 			return reinterpret_cast<T*>(releasedBlock.getHandle());
-		}
-		else {
-			// We have some free space left, allocate from there.
+		} else {
+			// Heap pointer is pointing to some free space that we have left, allocate from there.
 			char* handle = &memory[pagepointer];
 
 			blocks.push_back(HeapBlock(handle, size));
@@ -61,7 +58,7 @@ namespace sani {
 	bool HeapPage::deallocate(T* element) {
 		SANI_ASSERT(element != nullptr);
 
-		char* handle = reinterpret_cast<char*>(element);
+		char* const handle = reinterpret_cast<char* const>(element);
 
 		for (HeapBlock& block : blocks) {
 			if (block.getHandle() == handle) {
@@ -72,8 +69,7 @@ namespace sani {
 				block.release();
 
 				// Reduce bytes used.
-				const auto size = sizeof(element);
-				bytesUsed -= size;
+				bytesUsed -= block.getSize();
 
 				return true;
 			}

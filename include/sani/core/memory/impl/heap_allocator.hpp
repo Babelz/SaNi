@@ -1,16 +1,16 @@
 #include "sani/core/memory/heap_allocator.hpp"
 
 namespace sani {
-	
+
 	template<class T>
 	T* HeapAllocator::allocate() {
-		const size_t size = sizeof(T);
+		const uint32 size = align(sizeof(T));	// Adds the <= WORD_SIZE padding to the block size.
 		T* element = nullptr;
 
 		for (HeapPage* page : pages) {
 			if (!page->canAllocate(size)) continue;
 
-			element = page->allocate<T>();
+			element = page->allocate<T>(size);
 
 			if (element == nullptr) {
 				// Could not allocate, see if we could defrag this
@@ -19,7 +19,7 @@ namespace sani {
 				if (defragmentationPolicy == DefragmentationPolicy::Automatic) {
 					if (page->shouldDefragment()) page->defragment();
 
-					element = page->allocate<T>();
+					element = page->allocate<T>(size);
 
 					if (element != nullptr) return element;
 				}
@@ -34,7 +34,7 @@ namespace sani {
 		HeapPage* page = new HeapPage(pageSize);
 		pages.push_back(page);
 
-		return page->allocate<T>();
+		return page->allocate<T>(size);
 	}
 
 	template<class T>

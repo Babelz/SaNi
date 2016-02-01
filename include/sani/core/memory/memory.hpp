@@ -19,6 +19,18 @@ const int32 BLOCK_256KB		= 262144;
 const int32 BLOCK_512KB		= 524288;
 const int32 BLOCK_1024KB	= 1048576;
 
-const int32 ALIGNMENT		= 4;
+// On ARM and X86 platforms the word size should be 4-bytes.
+// Could this check be done at compile time.
+const int32 WORD_SIZE		= sizeof(int);
 
-using IntPtr = uintptr_t;
+using IntPtr				= uintptr_t;
+
+static_assert(WORD_SIZE == 4, "WORD_SIZE != 4");
+
+namespace sani {
+
+	/// Returns the aligned bytes count.
+	inline uint32 align(const uint32 bytes);
+}
+
+#include "sani/core/memory/inl/memory.inl"

@@ -9,23 +9,25 @@ namespace sani {
 
 	namespace graphics {
 
-		#define INITIAL_BUFFER_ELEMENTS_COUNT 32768
+		const static int32 INITIAL_BUFFER_SIZE = 32768;
+		const static int32 INITIAL_RENDER_BATCHERS_COUNT = 32;
+		const static int32 INITIAL_INDEX_TRANSFORM_BUFFER_SIZE = 32;
 		
 		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
 		// Keep the buffer usage as dynamic (max RAM as the limit).
 
 		Renderer::Renderer(GraphicsDevice* const graphicsDevice) : graphicsDevice(graphicsDevice),
-																   vertices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
-																   indices(INITIAL_BUFFER_ELEMENTS_COUNT, BufferSizing::Dynamic),
-																   verticesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
-																   indicesSize(INITIAL_BUFFER_ELEMENTS_COUNT),
+																   vertices(INITIAL_BUFFER_SIZE, BufferSizing::Dynamic),
+																   indices(INITIAL_BUFFER_SIZE, BufferSizing::Dynamic),
+																   verticesSize(INITIAL_BUFFER_SIZE),
+																   indicesSize(INITIAL_BUFFER_SIZE),
 																   vertexBuffer(0),
 																   indexBuffer(0),
 																   texture(0),
 																   renderBatchesCount(0),
 																   renderBatcher(defaultEffects, RENDER_STATES_COUNT) {
-			renderBatches.resize(32);
-			indexTransformBuffer.resize(32);
+			renderBatches.resize(INITIAL_RENDER_BATCHERS_COUNT);
+			indexTransformBuffer.resize(INITIAL_INDEX_TRANSFORM_BUFFER_SIZE);
 		}
 
 		void Renderer::generateDefaultShaders() {
@@ -190,9 +192,7 @@ namespace sani {
 		void Renderer::applyVertexOffset() {
 			const uint32 nextOffset = renderBatcher.getNextOffset();
 
-			if (nextOffset > 0) {
-				vertices.offset(nextOffset);
-			}
+			if (nextOffset > 0) vertices.offset(nextOffset);
 		}
 
 		void Renderer::copyVertexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {

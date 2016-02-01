@@ -18,7 +18,7 @@ namespace sani {
 			// No need to add offset.
 			if (renderBatchesCount <= 1) return;
 
-			const RenderBatch* last = &renderBatches->operator[](renderBatchesCount - 2);
+			const RenderBatch* const last = &renderBatches->operator[](renderBatchesCount - 2);
 
 			// No need to add offset, same vertex elements count.
 			if (last->elementsData->vertexElements == renderBatch->elementsData->vertexElements) return;

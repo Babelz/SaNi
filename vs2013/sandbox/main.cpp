@@ -78,91 +78,91 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	return 0;
 }
 
-void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
-	float start = 400;
-	float offx = start;
-	float offy = 0;
-	float spacing = font->texture->getHeight();
-	for (uint32 i = 0; i < text.size(); ++i) {
-		uint32 c = static_cast<uint32>((text[i]));
-
-		switch (c) {
-		case '\r':
-			continue;
-		case '\n':
-			offx = start;
-			offy += spacing;
-			continue;
-		default:
-
-			auto it = std::find_if(font->characters.begin(), font->characters.end(), [c](uint32 a) {
-				return c == a;
-			});
-
-
-			if (it == font->characters.end()) throw std::runtime_error("asd");
-
-			uint32 index = std::distance(font->characters.begin(), it) - 0;
-			GlyphContent& glyph = font->glyphs[index];
-
-			auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
-			createElement(createRectangleMessage, ElementType::Rectangle);
-
-			engine->routeMessage(createRectangleMessage);
-
-			auto& rect = glyph.source;
-			const uint32 w = rect.w;
-			const uint32 h = rect.h;
-
-			const float32 x = offx + glyph.xOffset;
-			const float32 y = offy - glyph.yOffset + font->texture->getHeight();
-
-			sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
-			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
-
-			rectangle->texture = font->texture;
-			rectangle->fill = color::red;
-			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
-			recomputeVertices(*rectangle);
-			setupShapeForRendering(rectangle, rectangle->borderThickness);
-			// top left x
-			float s0 = rect.x / (float)font->texture->getWidth();
-			// top left y
-			float t0 = rect.y / (float)font->texture->getHeight();
-			// bottom right x
-			float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
-			// bottom right y
-			float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
-
-			rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
-			rectangle->renderData.vertices[0].textureCoordinates.x = s0;
-			rectangle->renderData.vertices[0].textureCoordinates.y = t1;
-
-			rectangle->renderData.vertices[1].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y, 0.f), Color(0.93f, 0.0f, 0.0f, 1.f) };
-			rectangle->renderData.vertices[1].textureCoordinates.x = s1;
-			rectangle->renderData.vertices[1].textureCoordinates.y = t1;
-
-			rectangle->renderData.vertices[2].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y + h, 0.f), Color(0.86f, 0.0f, 0.0f, 1.f) };
-			rectangle->renderData.vertices[2].textureCoordinates.x = s0;
-			rectangle->renderData.vertices[2].textureCoordinates.y = t0;
-
-			rectangle->renderData.vertices[3].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
-			rectangle->renderData.vertices[3].textureCoordinates.x = s1;
-			rectangle->renderData.vertices[3].textureCoordinates.y = t0;
-
-
-		//	recomputeVertices(*rectangle);
-		//	updateRenderData(*rectangle);
-			useTexturing(rectangle);
-
-			engine->releaseMessage(createRectangleMessage);
-
-			rects.push_back(rectangle);
-			offx += glyph.xAdvance;
-		}
-		
-	}
-}
+//void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
+//	float start = 400;
+//	float offx = start;
+//	float offy = 0;
+//	float spacing = font->texture->getHeight();
+//	for (uint32 i = 0; i < text.size(); ++i) {
+//		uint32 c = static_cast<uint32>((text[i]));
+//
+//		switch (c) {
+//		case '\r':
+//			continue;
+//		case '\n':
+//			offx = start;
+//			offy += spacing;
+//			continue;
+//		default:
+//
+//			auto it = std::find_if(font->characters.begin(), font->characters.end(), [c](uint32 a) {
+//				return c == a;
+//			});
+//
+//
+//			if (it == font->characters.end()) throw std::runtime_error("asd");
+//
+//			uint32 index = std::distance(font->characters.begin(), it) - 0;
+//			GlyphContent& glyph = font->glyphs[index];
+//
+//			auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
+//			createElement(createRectangleMessage, ElementType::Rectangle);
+//
+//			engine->routeMessage(createRectangleMessage);
+//
+//			auto& rect = glyph.source;
+//			const uint32 w = rect.w;
+//			const uint32 h = rect.h;
+//
+//			const float32 x = offx + glyph.xOffset;
+//			const float32 y = offy - glyph.yOffset + font->texture->getHeight();
+//
+//			sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
+//			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
+//
+//			rectangle->texture = font->texture;
+//			rectangle->fill = color::red;
+//			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
+//			recomputeVertices(*rectangle);
+//			setupShapeForRendering(rectangle, rectangle->borderThickness);
+//			// top left x
+//			float s0 = rect.x / (float)font->texture->getWidth();
+//			// top left y
+//			float t0 = rect.y / (float)font->texture->getHeight();
+//			// bottom right x
+//			float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
+//			// bottom right y
+//			float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
+//
+//			rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
+//			rectangle->renderData.vertices[0].textureCoordinates.x = s0;
+//			rectangle->renderData.vertices[0].textureCoordinates.y = t1;
+//
+//			rectangle->renderData.vertices[1].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y, 0.f), Color(0.93f, 0.0f, 0.0f, 1.f) };
+//			rectangle->renderData.vertices[1].textureCoordinates.x = s1;
+//			rectangle->renderData.vertices[1].textureCoordinates.y = t1;
+//
+//			rectangle->renderData.vertices[2].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y + h, 0.f), Color(0.86f, 0.0f, 0.0f, 1.f) };
+//			rectangle->renderData.vertices[2].textureCoordinates.x = s0;
+//			rectangle->renderData.vertices[2].textureCoordinates.y = t0;
+//
+//			rectangle->renderData.vertices[3].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
+//			rectangle->renderData.vertices[3].textureCoordinates.x = s1;
+//			rectangle->renderData.vertices[3].textureCoordinates.y = t0;
+//
+//
+//		//	recomputeVertices(*rectangle);
+//		//	updateRenderData(*rectangle);
+//			useTexturing(rectangle);
+//
+//			engine->releaseMessage(createRectangleMessage);
+//
+//			rects.push_back(rectangle);
+//			offx += glyph.xAdvance;
+//		}
+//		
+//	}
+//}
 
 sani::graphics::Circle* c;
 
@@ -178,43 +178,43 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice);
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
-	volatile auto font = resources->load<SpriteFont>("../../assets/font.snb");
+	auto tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");/*
+	volatile auto font = resources->load<SpriteFont>("../../assets/font.snb");*/
 
-	//for (uint32 i = 1; i < 8; i++) {
-	//	const float32 w = 64.0f;
-	//	const float32 h = 64.0f;
+	for (uint32 i = 1; i < 8; i++) {
+		const float32 w = 64.0f;
+		const float32 h = 64.0f;
 
-	//	const float32 x = i * 64.0f + w;
-	//	const float32 y = i * 64.0f + h;
-	//	
-	//	auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
-	//	createElement(createRectangleMessage, ElementType::Rectangle);
-	//	
-	//	engine->routeMessage(createRectangleMessage);
+		const float32 x = i * 64.0f + w;
+		const float32 y = i * 64.0f + h;
+		
+		auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
+		createElement(createRectangleMessage, ElementType::Rectangle);
+		
+		engine->routeMessage(createRectangleMessage);
 
-	//	sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
-	//	NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
+		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
+		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
-	//	rectangle->texture = tuksu;
+		rectangle->texture = tuksu;
 
-	//	rectangle->fill = color::white;
-	//	recomputeVertices(*rectangle);
-	//	updateRenderData(*rectangle);
+		rectangle->fill = color::white;
+		recomputeVertices(*rectangle);
+		updateRenderData(*rectangle);
 
-	//	engine->releaseMessage(createRectangleMessage);
+		engine->releaseMessage(createRectangleMessage);
 
-	//	rects.push_back(rectangle);
-	//}
+		rects.push_back(rectangle);
+	}
 
 	using StringConverter =
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t, std::allocator<wchar_t>, std::allocator<char>>;
 	
 
-	StringConverter conv;
+	/*StringConverter conv;
 	String16 gg = conv.from_bytes("\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0");
 	createText(font, gg, graphicsDevice, engine, rects);
-
+*/
 	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();
 	createElement(createCircleMessage, ElementType::Circle);
 

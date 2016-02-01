@@ -84,13 +84,26 @@ struct MA4 {
 
 TEST_CASE("Heap", "[heap]") {
 
-	SECTION("Heap alignment") {
-		auto fs = sizeof(MA1);
-		auto bfs = sizeof(MA2);
-		auto kf = sizeof(MA3);
-		auto masf = sizeof(MA4);
+	SECTION("Alignment tests") {
+		// Test that alignment algo works.
+		std::vector<int32> sizes;
 
-		std::cout << fs << std::endl;
+		for (int32 i = 1; i < BLOCK_512KB; i++) if (i % 4 != 0) sizes.push_back(i);
+		
+		// Do "alignment" to keep chunks at 4-byte boundaries.
+		for (auto size : sizes) { 
+			const auto bytes = size < 4 ? WORD_SIZE : size;
+			
+			if (bytes == WORD_SIZE) continue;
+			
+			const auto memmod = bytes % WORD_SIZE;
+			const auto pad = (WORD_SIZE - memmod);
+			const auto allocbytes = pad + bytes;
+			const auto allocmod = allocbytes % WORD_SIZE;
+
+			REQUIRE(allocmod == 0);
+			REQUIRE(pad <= WORD_SIZE);
+		}
 	}
 
 	SECTION("Heap with dynamic memory") {

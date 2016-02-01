@@ -35,9 +35,8 @@ namespace sani {
 		uint64 bytesUsed;
 		uint32 pagepointer;
 
-		uint32 align(const uint32 size) const;
-
-		void joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks);
+		void joinBlocks(std::list<HeapBlock> &newReleasedBlocks, std::list<HeapBlock> &newBlocks);
+		void freeBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks);
 		void generateNewReleasedQueue(std::list<HeapBlock>& newReleasedBlocks);
 	public:
 		HeapPage(const uint32 size);
@@ -46,8 +45,11 @@ namespace sani {
 
 		inline bool canAllocate(const uint32 size);
 
+		/// Allocates new element of type T with given amount of bytes
+		/// to reserve for storage. This value can contain padding
+		/// to keep the size of the chunk in word boundaries.
 		template<class T> 
-		inline T* allocate();
+		inline T* allocate(const uint32 bytes);
 
 		template<class T>
 		inline bool deallocate(T* element);

@@ -7,8 +7,8 @@ namespace sani {
 
 	namespace graphics {
 		
-		#define VERTICES_ROUGH_CIRCLE	9
-		#define VERTICES_SMOOTH_CIRCLE	36
+		const uint32 VERTICES_ROUGH_CIRCLE = 9;
+		const uint32 VERTICES_SMOOTH_CIRCLE = 36;
 
 		class Circle : public Renderable {
 		public:

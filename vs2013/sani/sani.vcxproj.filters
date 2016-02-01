@@ -729,9 +729,6 @@
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp">
       <Filter>include\core\memory</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\contracts.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\defragmentation_policy.hpp">
       <Filter>include\core\memory</Filter>
     </ClInclude>
@@ -1153,6 +1150,9 @@
     </None>
     <None Include="..\..\include\sani\core\cvar\impl\cvar_lang.inl">
       <Filter>include\core\cvar\impl</Filter>
+    </None>
+    <None Include="..\..\include\sani\core\memory\inl\memory.inl">
+      <Filter>include\core\memory\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

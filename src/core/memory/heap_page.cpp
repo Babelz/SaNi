@@ -13,24 +13,47 @@ namespace sani {
 		memory = new char[size];
 	}
 
-	uint32 HeapPage::align(const uint32 size) const {
-		const uint32 mod = size / ALIGNMENT;
+	void HeapPage::joinBlocks(std::list<HeapBlock> &newReleasedBlocks, std::list<HeapBlock> &newBlocks)
+	{
+		auto current = blocks.begin();
 
-		return size + mod;
+		while (current != blocks.end()) {
+			if (current->isReleased()) {
+				// Found released blocks, look forward for more
+				// released blocks.
+				HeapBlock& head = *current;
+				uint32 bytes = 0;
+
+				while (current != blocks.end() && current->isReleased()) {
+					bytes += current->getSize();
+
+					current++;
+				}
+
+				const uint32 diff = bytes - head.getSize();
+				head.grow(diff);
+
+				newReleasedBlocks.push_back(head);
+				newBlocks.push_back(head);
+			} else {
+				// Just push the block to block list, it is occupied.
+				newBlocks.push_back(*current);
+
+				current++;
+			}
+		}
 	}
-
-	void HeapPage::joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks) {
+	void HeapPage::freeBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks) {
 		// Copy new blocks.
 		blocks = newBlocks;
 
 		// Check if we can join some values.
 		IntPtr pageHighAddress = reinterpret_cast<IntPtr>(&memory[pagepointer]);
-		auto current = newBlocks.end();
-		current--;
+		std::list<HeapBlock>::reverse_iterator current = newBlocks.rbegin();
 
 		// Start looking from the end of new blocks.
 		// Use the new blocks listing, not the instance list.
-		while (current != newBlocks.begin() && current->isReleased()) {
+		while (current != newBlocks.rend() && current->isReleased()) {
 			const IntPtr blockHighAddress = reinterpret_cast<IntPtr>(current->getHandle()) + current->getSize();
 
 			// If both are pointing to the same memory location,
@@ -46,7 +69,7 @@ namespace sani {
 				newReleasedBlocks.remove(*current);
 				blocks.remove(*current);
 
-				current--;
+				current++;
 			} else {
 				// If we can't join the first block to the free memory region,
 				// there is no point going trough other blocks.
@@ -74,46 +97,19 @@ namespace sani {
 
 		// Go trough the heap starting from the beginning and
 		// look for released blocks.
-		std::list<HeapBlock>::iterator current = blocks.begin();
 		std::list<HeapBlock> newReleasedBlocks;
 		std::list<HeapBlock> newBlocks;
 
-		while (current != blocks.end()) {
-			if (current->isReleased()) {
-				// Found released blocks, look forward for more
-				// released blocks.
-				HeapBlock& head = *current;
-				uint32 bytes = 0;
-				
-				while (current != blocks.end() && current->isReleased()) {
-					bytes += current->getSize();
-
-					current++;
-				}
-
-				const uint32 diff = bytes - head.getSize();
-				head.grow(diff);
-				
-				newReleasedBlocks.push_back(head);
-				newBlocks.push_back(head);
-			} else {
-				// Just push the block to block list, it is occupied.
-				newBlocks.push_back(*current);
-
-				current++;
-			}
-		}
+		// Join released blocks together that are aligned next
+		// to each other.
+		joinBlocks(newReleasedBlocks, newBlocks);
 
 		// See if we can join some blocks to the main memory region 
 		// where the page pointer is pointing to.
-		if (newBlocks.size() != 0) {
-			joinBlocks(newBlocks, newReleasedBlocks);
-		}
+		freeBlocks(newBlocks, newReleasedBlocks);
 		
 		// Generate new released priority queue.
-		if (newReleasedBlocks.size() != 0) {
-			generateNewReleasedQueue(newReleasedBlocks);
-		}
+		generateNewReleasedQueue(newReleasedBlocks);
 
 		fragmentation = 0.0f;
 		missedBytes = 0;

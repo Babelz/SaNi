@@ -186,7 +186,6 @@ namespace sani {
 		}
 
 		void SaNiEngine::start() {
-			// TODO: add services.
 			if (!initialize()) return;
 
 			running = true;
