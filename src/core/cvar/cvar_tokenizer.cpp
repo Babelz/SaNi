@@ -28,7 +28,7 @@ namespace sani {
 				if (cvarlang::lang::containsTabs(line))								std::runtime_error("tabs not supported");
 				
 				/*
-					TODO: add support for tabs.
+					TODOF: add support for tabs.
 				*/
 
 				// Check what type the line could be.

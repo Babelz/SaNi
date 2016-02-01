@@ -36,7 +36,7 @@ namespace sani {
 		}
 
 		void MemoryStream::seek(const SeekPosition seekpos, const long offset)  {
-			// TODO is this correct`?
+			// TODO is this correct?
 			if (seekpos == SeekPosition::Begin) {
 				position = offset;
 			}

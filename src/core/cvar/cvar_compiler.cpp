@@ -160,8 +160,7 @@ namespace sani {
 		std::vector<CVarCondition> conditions;
 
 		/*
-			TODO: missing the boolean not (!) operator for bool expressions.
-			They could come handy.
+			TODOF: missing the boolean not (!) operator for bool expressions. They could come handy.
 		*/
 
 		for (const cvarlang::IntermediateCondition& intermediateCondition : intermediateRequireStatement->conditions) {

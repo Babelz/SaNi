@@ -53,7 +53,7 @@ namespace sani {
 
 		if (other != root) {
 			if (rootRecord->isLinked(other)) {
-				// TODO: how do i recursive include guard.
+				// TEST: Not sure if the recursive include "guard" is working.
 				ErrorLogger::pushError(SANI_ERROR_MESSAGE("found unneeded include of file " + other->getFilename()));
 				
 				return;
