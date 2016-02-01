@@ -21,7 +21,7 @@ namespace sani {
 			/// 
 			/// @author siquel
 			class ResourceReader : public io::BinaryReader {
-				// TODO add functions to read matrices vectors and stuff
+				// TODOF: add functions to read matrices vectors and stuff
 			private:
 				ResourceManager& manager;
 				GraphicsDevice* graphicsDevice;
@@ -48,16 +48,4 @@ namespace sani {
 	}
 }
 
-// TODO move to inl
-
-template <class ObjectType>
-ObjectType* sani::resource::reader::ResourceReader::readObject() {
-	uint32 index = static_cast<uint32>(read7BitEncodedInt());
-
-	SANI_ASSERT(index < readers.size());
-
-	ResourceTypeReader* reader = readers[index];
-
-	return static_cast<ObjectType*>(reader->read(this));
-}
-
+#include "sani/resource/reader/inl/resource_reader.hpp"

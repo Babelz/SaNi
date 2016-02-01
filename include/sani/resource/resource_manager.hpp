@@ -32,7 +32,6 @@ namespace sani {
 			ResourceManager(const ResourceManager& mgr) = delete;
 			ResourceManager& operator=(const ResourceManager& mgr) = delete;
 		public:
-			// TODO services needed, this is for debug
 			ResourceManager(FileSystem* fileSystem, GraphicsDevice* graphicsDevice);
 
 			template <class T>

@@ -69,7 +69,6 @@ namespace sani {
 			return *(double*)&val;
 		}
 
-		// TODO does this need to be null terminated?
 		String BinaryReader::readString() {
 			uint64 size = read7BitEncodedInt();
 			String str;

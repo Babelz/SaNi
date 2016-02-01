@@ -53,7 +53,7 @@ namespace sani {
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
 			shapeRenderData.last = 2;
-			shapeRenderData.vertexElements = 7;		// TODO: no texturing.
+			shapeRenderData.vertexElements = 7;	
 			shapeRenderData.offset = 2;
 
 			RenderElementData& borderRenderData = renderData.renderElements[1];

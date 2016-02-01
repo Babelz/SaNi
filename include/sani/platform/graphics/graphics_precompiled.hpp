@@ -14,7 +14,7 @@
 static_assert(sizeof(GLuint) == sizeof(uint32), "sizeof(GLuint) != sizeof(uint32)");
 
 /*
-	TODO: when implementing DirectX begins, 
+	TODOF: when implementing DirectX begins, 
 		  create two headers that contain 
 		  mappings for OpenGL and DirectX.
 	      
@@ -23,6 +23,7 @@ static_assert(sizeof(GLuint) == sizeof(uint32), "sizeof(GLuint) != sizeof(uint32
 		  All GL functionalities are not supported
 		  yet and many of the will never be implemented.
 */
+
 namespace sani {
 
 	namespace graphics {

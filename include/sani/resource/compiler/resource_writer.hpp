@@ -50,7 +50,6 @@ namespace sani {
 
 				~ResourceWriter();
 
-				/// TODO this is hax, we need streambuf or smthing
 				/// Writes and flushes the object to stream
 				/// @see ResourceWriter::writeHeader
 				/// @see ResourceWriter::writeTypeWriters
@@ -84,6 +83,6 @@ namespace sani {
 	}
 }
 
-#include "resource_writer.inl"
+#include "sani/resource/compiler/impl/resource_writer.hpp"
 
 #endif

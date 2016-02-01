@@ -90,6 +90,5 @@ namespace sani {
 	}
 }
 
-// TODO this can be moved to somewhere else?
 SANI_DESERIALIZABLE_WITH(sani::resource::Texture2DContent, sani::resource::reader::Texture2DReader);
 //SANI_SERIALIZABLE_WITH(sani::resource::Texture2DContent, sani::resource::compiler::Texture2DWriter);

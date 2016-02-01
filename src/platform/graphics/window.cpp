@@ -75,10 +75,6 @@ namespace sani {
 			impl->cImpl.width = width;
 			impl->cImpl.height = height;
 
-			/*
-				TODO: add calling logic.
-			*/
-
 			SANI_INIT_EVENT(sizeChanged, void());
 			SANI_INIT_EVENT(closed, void());
 
@@ -88,16 +84,11 @@ namespace sani {
 		// Private.
 
 		LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
-			/*
-				TODO: window goes to black and stops 
-					  rendering when moved, fix it.
-
-					  When moving or resizing the window, 
-					  windows blocks the calling thread by pumping 
-					  messages to this function. Create new
-					  thread for the OpelGL to use?
-			*/
-
+			// There is a "problem" with the windows message pump.
+			// When the window is being resized or dragged, the scene
+			// won't get refreshed (aka redrawn). This could be fixed 
+			// by adding a new thread (or?). Do this in the future 
+			// if it makes any sense.
 			Window* window;
 
 			// Sent prior to the WM_CREATE message when a window is first created.
@@ -116,8 +107,6 @@ namespace sani {
 				window = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWL_USERDATA));
 			}
 
-			// TODO: use window if needed.
-
 			switch (message) {
 				// Close the application.
 				case WM_DESTROY:
@@ -128,7 +117,6 @@ namespace sani {
 				case WM_CREATE:
 				{
 					// Initialize for OpenGL, set pixel format.
-					// TODO: select between OpenGL and DX.
 					PIXELFORMATDESCRIPTOR pfd = 
 					{
 						sizeof(PIXELFORMATDESCRIPTOR),
@@ -364,10 +352,17 @@ namespace sani {
 			RegisterClassEx(&windowClass);
 			WIN32_ASSERT();
 
-			// TODO: set style to WS_OVERLAPPEDWINDOW for WinDX and 
-			//		 CS_OWNDC for OpenGL. Create rendering API detection.
+			// Set style to WS_OVERLAPPEDWINDOW for WinDX and 
+			// CS_OWNDC for OpenGL. Do this once the rendering API detection 
+			// has been implemented.
 
-			// TODO: open the window to the center of the display.
+			// Set position to center of the screen.
+			const int32 left = GetSystemMetrics(SM_CXSCREEN);
+			const int32 bottom = GetSystemMetrics(SM_CYSCREEN);
+
+			impl->cImpl.x = (left / 2) - (impl->cImpl.width / 2);
+			impl->cImpl.y = (bottom / 2) - (impl->cImpl.height / 2);
+
 			// Create the window.
 			impl->hWnd = CreateWindowEx(NULL,
 										windowClass.lpszClassName,

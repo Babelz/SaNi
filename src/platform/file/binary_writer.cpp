@@ -4,11 +4,11 @@
 namespace sani {
 	namespace io {
 
-		BinaryWriter::BinaryWriter(Stream* stream)
-			: stream(stream) {}
+		BinaryWriter::BinaryWriter(Stream* stream) : stream(stream) {
+		}
 
-		// TODO should this free the stream or not?
-		BinaryWriter::~BinaryWriter() {}
+		BinaryWriter::~BinaryWriter() {
+		}
 
 		void BinaryWriter::write(uint8 value) {
 			stream->write((unsigned char*)&value, sizeof(uint8));
@@ -60,21 +60,31 @@ namespace sani {
 			int index = 3;
 			bool reached = false;
 			uint64 mask = 0x7Fu << (index * 7);
+
 			while (index >= 0) {
 				uint64 val = (mask & value);
+
 				if (val > 0 || reached) {
+
 					reached = true;
+
 					val >>= index * 7;
-					if (index > 0)
-						val |= 0x80;
-					uint8 asd = (uint8)val;
-					stream->write((unsigned char*)&asd, sizeof(uint8));
+
+					if (index > 0) val |= 0x80;
+
+					uint8 u8val = (uint8)val;
+
+					stream->write((unsigned char*)&u8val, sizeof(uint8));
 				}
+
 				mask >>= 7;
+
 				--index;
 			}
+
 			if (!reached && index < 0) {
 				uint8 a = 0;
+
 				stream->write(&a, sizeof(uint8));
 			}
 		}

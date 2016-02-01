@@ -17,7 +17,8 @@ namespace sani {
 		private:
 			uint32 id;
 		public:
-			// TODO this is just for school and is going to fixed when time
+			// TODO: this is just for school and is going to fixed when time
+			// OBSOLOTE(?): replaced with sani/graphics/graphics_effect
 			Effect(graphics::GraphicsDevice* device, const String& vcdode, const String& fcode);
 			uint32 getProgram() const;
 		};

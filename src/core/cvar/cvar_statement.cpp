@@ -14,11 +14,6 @@ namespace sani {
 	}
 
 	bool CVarRequireStatement::operator()() const {
-		/*
-			TODO: idk, looks kinda funkeyy, maybe refactor?
-				  could fix with a transition table.
-		*/
-
 		// No conditions, can always write.
 		if (conditions.size() == 0) return true;
 
@@ -44,14 +39,11 @@ namespace sani {
 				second = &conditions[i];
 				result = (*current)() && (*second)();
 
-				// Pre inc to get first at next iteration.
+				// Pre-inc to get first at next iteration.
 				i++;
 			} else if (conditions[i].getOperator() == sani::cvarlang::LogicalOperators::Or) {
 				bool orResult = false;
 				bool beforeOr = result;
-
-				// TODO: pff...
-				//		 refactor?...
 
 				// || a || b || c 
 				while (i < conditions.size() || current->getOperator() == cvarlang::LogicalOperators::Or) {

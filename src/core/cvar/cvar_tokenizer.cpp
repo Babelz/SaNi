@@ -51,10 +51,8 @@ namespace sani {
 					// Meaning that this one must be a start of an require
 					// statement, not an end.
 
-					/*
-						TODO: add logic to support multiple operators here?
-					*/
-
+					// Could the logic to support multiple operators be added here?
+					
 					if (trimmed.size() == cvarlang::lang::RequireKeyword.size() || cvarlang::lang::isValidRequire(line)) {
 						type = cvarlang::TokenType::Require;
 					} else {														  

@@ -410,6 +410,7 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\compiler\impl\resource_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
@@ -473,8 +474,9 @@
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
-    <None Include="..\..\include\sani\resource\compiler\resource_writer.inl" />
+    <None Include="..\..\include\sani\resource\compiler\inl\resource_compiler.hpp" />
     <None Include="..\..\include\sani\resource\inl\bitmap_content.inl" />
+    <None Include="..\..\include\sani\resource\reader\inl\resource_reader.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt" />

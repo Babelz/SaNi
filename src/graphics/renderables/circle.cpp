@@ -13,8 +13,6 @@ namespace sani {
 
 			fill = color::red;
 
-			// TODO: texture coordinates.
-
 			transform.position.x = x;
 			transform.position.y = y;
 			transform.origin.x = radius;
@@ -26,7 +24,7 @@ namespace sani {
 			RenderElementData& shapeRenderData = renderData.renderElements[0];
 			shapeRenderData.first = 0;
 			shapeRenderData.last = vertices + 1;	// +1 caused by center vertex.
-			shapeRenderData.vertexElements = 7;		// TODO: no texturing.
+			shapeRenderData.vertexElements = 7;		
 			shapeRenderData.offset = 2;
 			shapeRenderData.renderMode = RenderMode::TriangleFan;
 

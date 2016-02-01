@@ -1,6 +1,6 @@
 #include "catch/catch.hpp"
 #include "eventmath.h"
-#if 0
+
 TEST_CASE("Event tests", "[events]") {
 	SECTION("Usage") {
 		EventMath math;
@@ -49,4 +49,3 @@ TEST_CASE("Event tests", "[events]") {
 		REQUIRE(!math.onAdd.hasSubscribers());
 	}
 }
-#endif

@@ -53,7 +53,7 @@ namespace sani {
 
 			graphicsDevice->setViewport(viewport);
 
-			// TODO: notify cameras that the views bounds have changed.
+			// TODOF: notify cameras if device or window sizes change.
 		}
 
 

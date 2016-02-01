@@ -113,6 +113,9 @@ namespace sani {
 			impl->deviceContext = GetDC(hWnd);
 			impl->cImpl.backBufferWidth = backBufferWidth;
 			impl->cImpl.backBufferHeight = backBufferHeight;
+
+			SANI_INIT_EVENT(backbufferSizeChanged, void(const uint32, const uint32, const uint32, const uint32));
+			SANI_INIT_EVENT(viewportSizeChanged, void(const Viewport&, const Viewport&));
 		}
 
 		bool GraphicsDevice::isFullscreen() const {
@@ -161,7 +164,6 @@ namespace sani {
 			// have done it already.
 
 			// Create context and set it active.
-			// TODO: add error handling to init and context creation.
 			impl->renderingContext = wglCreateContext(impl->deviceContext);
 			wglMakeCurrent(impl->deviceContext, impl->renderingContext);
 
@@ -230,7 +232,7 @@ namespace sani {
 			return true;
 		}
 		void GraphicsDevice::createScreenShader() {
-			// TODO: does not work with GLES, fix this or just dump Android...
+			// Not sure if this does work with GLES, fix this or just dump Android...
 
 			const char* screenShaderVertexSource =
 				"#version 330 core\n"
@@ -396,10 +398,16 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setViewport(const Viewport& viewport) {
+			const Viewport oldViewport = impl->cImpl.viewport;
+
 			impl->cImpl.viewport = viewport;
 
 			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y,
 				       impl->cImpl.viewport.width, impl->cImpl.viewport.height);
+
+			SANI_TRIGGER_EVENT(viewportSizeChanged, 
+							   void(const Viewport&, const Viewport&),
+							   oldViewport, viewport);
 
 			CHECK_FOR_ERRORS;
 		}
@@ -536,9 +544,16 @@ namespace sani {
 		}
 
 		void GraphicsDevice::resizeBackbuffer(const uint32 width, const uint32 height) {
+			const uint32 oldWidth = impl->cImpl.defaultRenderTarget->getWidth();
+			const uint32 oldHeight = impl->cImpl.defaultRenderTarget->getHeight();
+
 			delete impl->cImpl.defaultRenderTarget;
-			
+
 			impl->cImpl.defaultRenderTarget = new RenderTarget2D(this, width, height);
+
+			SANI_TRIGGER_EVENT(backbufferSizeChanged, 
+							   void(const uint32, const uint32, const uint32, const uint32),
+							   oldWidth, oldHeight, width, height);
 		}
 
 		void GraphicsDevice::compileShader(uint32& shader, const char* source, const ShaderType type) {
@@ -626,17 +641,13 @@ namespace sani {
 				return;
 			}
 
-			/*
-				TODO: is this just fine? support all needed uniforms an not all of them.
-			*/
-
 			// Set the uniform value.
 			switch (type) {
 			case UniformType::Mat4F:
-				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
+				glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, static_cast<GLfloat*>(data));
 				break;
 			case UniformType::Mat3F:
-				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, reinterpret_cast<GLfloat*>(data));
+				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, static_cast<GLfloat*>(data));
 				break;
 			default:
 				throw std::logic_error("Invalid or unsupported uniform type");

@@ -37,17 +37,11 @@ namespace sani {
 
 				~ResourceCompiler();
 
-				// TODO: move to inl
 				template <class T, class U>
-				void mapWriter() {
-					lookup[std::type_index(typeid(T))] = new U;
-				}
+				void mapWriter();
 
-				// TODO: move to inl
 				template <class T, class U>
-				void mapProcessor() {
-					processors[std::type_index(typeid(T))] = new U;
-				}
+				void mapProcessor();
 
 				ResourceTypeWriter* getWriter(const std::type_index& t) const;
 
@@ -67,5 +61,7 @@ namespace sani {
 		}
 	}
 }
+
+#include "sani/resource/compiler/impl/resource_compiler.hpp"
 
 #endif

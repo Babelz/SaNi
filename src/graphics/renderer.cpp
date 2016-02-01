@@ -263,7 +263,6 @@ namespace sani {
 
 		void Renderer::checkBatchEffects() {
 			for (uint32 i = 0; i < renderBatchesCount; i++) {
-				// TODO: not safe but works.
 				RenderBatch& renderBatch = renderBatches[i];
 				
 				renderBatch.effect = renderBatch.effect <= 2 ? defaultEffects[renderBatch.effect].getEffect() : renderBatch.effect;

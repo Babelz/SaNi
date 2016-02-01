@@ -61,7 +61,7 @@ You can #include <TargetConditionals.h> inside #ifdef __APPLE__, which then give
 #endif
 
 // WP8 
-// TODO How to?
+// TODOF: How to?
 #if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 #undef  SANI_TARGET_PLATFORM
 #define SANI_TARGET_PLATFORM         SANI_PLATFORM_WP8

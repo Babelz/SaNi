@@ -220,6 +220,15 @@
     <Filter Include="include\core\cvar\impl">
       <UniqueIdentifier>{caea5355-285d-45a1-afac-3cabfb2b0a51}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\resource\reader\impl">
+      <UniqueIdentifier>{b360f07a-e73d-411a-be70-f54f9c0733ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\resource\compiler\impl">
+      <UniqueIdentifier>{cd4145df-73f8-43a2-b94d-60c109d4e28a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\resource\inl">
+      <UniqueIdentifier>{34059104-7a0e-4379-a08b-7d1fa92a4e88}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1071,6 +1080,9 @@
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\compiler\impl\resource_writer.hpp">
+      <Filter>include\resource\compiler\impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1093,9 +1105,6 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl">
       <Filter>include\graphics\inl</Filter>
-    </None>
-    <None Include="..\..\include\sani\resource\compiler\resource_writer.inl">
-      <Filter>include\resource\compiler</Filter>
     </None>
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl">
       <Filter>include\graphics\inl</Filter>
@@ -1124,9 +1133,6 @@
     <None Include="..\..\include\sani\graphics\inl\buffer.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
-    <None Include="..\..\include\sani\resource\inl\bitmap_content.inl">
-      <Filter>include\resource</Filter>
-    </None>
     <None Include="..\..\include\sani\engine\messaging\messages\peer_to_peer_message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </None>
@@ -1153,6 +1159,15 @@
     </None>
     <None Include="..\..\include\sani\core\memory\inl\memory.inl">
       <Filter>include\core\memory\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\resource\reader\inl\resource_reader.hpp">
+      <Filter>include\resource\reader\impl</Filter>
+    </None>
+    <None Include="..\..\include\sani\resource\compiler\inl\resource_compiler.hpp">
+      <Filter>include\resource\compiler\impl</Filter>
+    </None>
+    <None Include="..\..\include\sani\resource\inl\bitmap_content.inl">
+      <Filter>include\resource\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
