@@ -12,7 +12,6 @@
 #include "sani/platform/file/file_stream.hpp"
 #include <vector>
 #include <map>
-#include <map>
 
 SANI_FORWARD_DECLARE_2(sani, io, BinaryReader);
 SANI_FORWARD_DECLARE_2(sani, io, BinaryWriter);

@@ -39,22 +39,22 @@ namespace sani {
 
 		void computeTopLeftTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->left() / textureWidth;
-			uv->y = -(-textureHeight + textureSource->top()) / textureHeight;
+			uv->y = (textureSource->bottom()) / textureHeight;
 		}
 
 		void computeTopRightTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->right() / textureWidth;
-			uv->y = -(-textureHeight + textureSource->top()) / textureHeight;
+			uv->y = (textureSource->bottom()) / textureHeight;
 		}
 
 		void computeBottomLeftTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->left() / textureWidth;
-			uv->y = -(-textureHeight + textureSource->bottom()) / textureHeight;
+			uv->y = (textureSource->top()) / textureHeight;
 		}
 
 		void computeBottomRightTextureCoordinate(math::Vec2f* const uv, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
 			uv->x = textureSource->right() / textureWidth;
-			uv->y = -(-textureHeight + textureSource->bottom()) / textureHeight;
+			uv->y = (textureSource->top()) / textureHeight;
 		}
 
 		void computeRectangleTextureCoordinates(math::Vec2f** const uvs, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {
@@ -69,6 +69,15 @@ namespace sani {
 
 			math::Vec2f* const bottomRight = uvs[3];
 			computeBottomRightTextureCoordinate(bottomRight, textureSource, textureWidth, textureHeight);
+
+			//// top left x
+			//float s0 = rect.x / (float)font->texture->getWidth();
+			//// top left y
+			//float t0 = rect.y / (float)font->texture->getHeight();
+			//// bottom right x
+			//float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
+			//// bottom right y
+			//float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
 		}
 
 		void computeTriangleTextureCoordinates(math::Vec2f** const uvs, const math::Rect32f* const textureSource, const float32 textureWidth, const float32 textureHeight) {

@@ -34,6 +34,14 @@ namespace sani {
 			spriteRenderData.offset = 0;
 			spriteRenderData.indices = 6;
 
+			renderData.vertexIndices[0] = 0;
+			renderData.vertexIndices[1] = 1;
+			renderData.vertexIndices[2] = 2;
+
+			renderData.vertexIndices[3] = 2;
+			renderData.vertexIndices[4] = 1;
+			renderData.vertexIndices[5] = 3;
+
 			recomputeBounds(*this);
 			recomputeVertices(*this);
 			updateRenderData(*this);

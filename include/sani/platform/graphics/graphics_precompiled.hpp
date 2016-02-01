@@ -33,10 +33,7 @@ namespace sani {
 			Static	= GL_STATIC_DRAW,
 
 			// Buffers data will be modified repeatedly and used many times.
-			Dynamic = GL_DYNAMIC_DRAW,
-
-			// Buffers data will be changed after every use, or almost every use.
-			Stream  = GL_STREAM_DRAW
+			Dynamic = GL_DYNAMIC_DRAW
 		};
 
 		enum class BufferType {
