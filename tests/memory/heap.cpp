@@ -69,7 +69,29 @@ struct DynamicFoo {
 	}
 };
 
+struct MA1 {
+	char m_str[3];
+};
+struct MA2 {
+	char m_str[7];
+};
+struct MA3 {
+	char m_str[21];
+};
+struct MA4 {
+	char m_str[31];
+};
+
 TEST_CASE("Heap", "[heap]") {
+
+	SECTION("Heap alignment") {
+		auto fs = sizeof(MA1);
+		auto bfs = sizeof(MA2);
+		auto kf = sizeof(MA3);
+		auto masf = sizeof(MA4);
+
+		std::cout << fs << std::endl;
+	}
 
 	SECTION("Heap with dynamic memory") {
 		sani::HeapAllocator allocator(sizeof(DynamicFoo) * 4, 1, sani::DefragmentationPolicy::Manual);

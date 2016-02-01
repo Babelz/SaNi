@@ -3,7 +3,7 @@
 
 namespace sani {
 
-	static const float32 FRAGMENTATION_THRESHOLD = 0.10f;
+	const float32 FRAGMENTATION_THRESHOLD = 0.10f;
 
 	HeapPage::HeapPage(const uint32 size) : size(size),
 											pagepointer(0),
@@ -11,6 +11,12 @@ namespace sani {
 											fragmentation(0.0f),
 											bytesUsed(0) {
 		memory = new char[size];
+	}
+
+	uint32 HeapPage::align(const uint32 size) const {
+		const uint32 mod = size / ALIGNMENT;
+
+		return size + mod;
 	}
 
 	void HeapPage::joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks) {

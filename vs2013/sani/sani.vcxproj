@@ -267,7 +267,6 @@
     <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\include\sani\contracts.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_condition.hpp" />
     <ClInclude Include="..\..\include\sani\core\cvar\cvar_file.hpp" />

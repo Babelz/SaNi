@@ -19,4 +19,6 @@ const int32 BLOCK_256KB		= 262144;
 const int32 BLOCK_512KB		= 524288;
 const int32 BLOCK_1024KB	= 1048576;
 
+const int32 ALIGNMENT		= 4;
+
 using IntPtr = uintptr_t;

@@ -214,7 +214,7 @@ void initialize(SaNiEngine* const engine) {
 	engine->routeMessage(getLayersMessage);
 
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
-	auto layer = layers->at(0);
+	auto layer = layers->operator[](0);
 
 	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
 	layer->add(circle);

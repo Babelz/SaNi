@@ -35,6 +35,8 @@ namespace sani {
 		uint64 bytesUsed;
 		uint32 pagepointer;
 
+		uint32 align(const uint32 size) const;
+
 		void joinBlocks(std::list<HeapBlock>& newBlocks, std::list<HeapBlock>& newReleasedBlocks);
 		void generateNewReleasedQueue(std::list<HeapBlock>& newReleasedBlocks);
 	public:

@@ -18,7 +18,7 @@ namespace sani {
 			// No need to add offset.
 			if (renderBatchesCount <= 1) return;
 
-			const RenderBatch* last = &renderBatches->at(renderBatchesCount - 2);
+			const RenderBatch* last = &renderBatches->operator[](renderBatchesCount - 2);
 
 			// No need to add offset, same vertex elements count.
 			if (last->elementsData->vertexElements == renderBatch->elementsData->vertexElements) return;
@@ -56,7 +56,6 @@ namespace sani {
 			updateOffset();
 
 			renderBatch->verticesBegin = vertexElements / renderElementData->vertexElements;
-
 		}
 		void RenderBatcher::applyToBatch(const RenderElementData* const renderElementData) {
 			// Add one to keep the indexes as zero based.
@@ -70,7 +69,7 @@ namespace sani {
 		}
 
 		void RenderBatcher::swapBatch() {
-			renderBatch = &renderBatches->at(renderBatchesCount);
+			renderBatch = &renderBatches->operator[](renderBatchesCount);
 			renderBatch->resetBatch();
 
 			renderBatchesCount++;
@@ -102,14 +101,11 @@ namespace sani {
 		void RenderBatcher::batchElement(const RenderElementData* const renderElementData, const uint32 elementCounter, const uint32 elementsCount) {
 			if (renderBatch->elementsData == nullptr) {
 				initializeBatch(renderElementData);
-			}
-
-			if (shouldBeBatchedAlone(renderElementData)) {
+			} else if (shouldBeBatchedAlone(renderElementData)) {
 				swapBatch();
 
 				initializeBatch(renderElementData);
-			}
-			else if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
+			} else if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
 				// Check if we can batch this element to some recent batch.
 				// If we can't just create new batch.
 				if (renderBatchesCount >= 1 && (elementCounter < renderBatchesCount)) {
@@ -118,7 +114,7 @@ namespace sani {
 					uint32 i = batchesBegin;
 
 					while (i < renderBatchesCount) {
-						RenderBatch* const recentRenderBatch = &renderBatches->at(i);
+						RenderBatch* const recentRenderBatch = &renderBatches->operator[](i);
 
 						if (recentRenderBatch->elementsData->groupIdentifier == renderElementData->groupIdentifier) {
 							RenderBatch* const temp = renderBatch;
