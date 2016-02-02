@@ -10,8 +10,6 @@
 #include <Windows.h>
 
 #endif
-using String16 = std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>;
-using String8 = std::basic_string<char, std::char_traits<char>, std::allocator<char>>;
 #include "sani/core/memory/memory.hpp"
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 #include "sani/graphics/renderer.hpp"
@@ -190,7 +188,7 @@ void initialize(SaNiEngine* const engine) {
 	}
 
 	using StringConverter =
-		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t, std::allocator<wchar_t>, std::allocator<char>>;
+		std::wstring_convert<std::codecvt_utf8_utf16<char16>, char16, std::allocator<char16>, std::allocator<char8>>;
 	
 
 	StringConverter conv;
