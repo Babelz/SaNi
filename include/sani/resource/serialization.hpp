@@ -14,23 +14,6 @@ public:
 	}
 };
 
-// TODO: what is this?
-#if 0
-template <class T> class SerializableWith {
-public:
-	static sani::resource::compiler::ResourceTypeWriter* value() {
-		// TODO error
-		//static_assert(0, "This type doesnt have serialization specified");
-		return String();
-	}
-};
-#endif
-
 #define SANI_DESERIALIZABLE_WITH(c, c1)\
 template<> class DeserializableWith<c> { \
 public: static String value() { return #c1; } };
-
-#define SANI_SERIALIZABLE_WITH(c, c1) \
-template<> class SerializableWith<c> { \
-	public: static sani::resource::compiler::ResourceTypeWriter* value() { \
-		return new c1; } };

@@ -25,7 +25,6 @@ namespace sani {
 
 		uint32 MemoryStream::write(const unsigned char* data, const uint32 size)  {
 			if ((position + size) >= dataSize) {
-				// TODO this can be changed
 				dataSize = (dataSize) * 2u + size;
 				buffer = static_cast<unsigned char*>(std::realloc(buffer, dataSize));
 			}
@@ -36,7 +35,6 @@ namespace sani {
 		}
 
 		void MemoryStream::seek(const SeekPosition seekpos, const long offset)  {
-			// TODO is this correct?
 			if (seekpos == SeekPosition::Begin) {
 				position = offset;
 			}

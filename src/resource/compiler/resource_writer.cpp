@@ -15,6 +15,7 @@ namespace sani {
 
 		namespace compiler {
 
+			// TODOF i guess we dont even need these?
 			// DO NOT CHANGE THESE, THEY ARE FOLLOWING THE PLATFORM CONFIG
 			const char ResourceWriter::Platforms[] = {
 				'w', // win32
@@ -23,7 +24,6 @@ namespace sani {
 				'a', // android
 				'W', // windows phone
 				'i' // iOS
-				// TODO emscripte, ps4, xbox
 			};
 
 			ResourceWriter::ResourceWriter(FileStream* fileStream, const ResourceCompiler* compiler)

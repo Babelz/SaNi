@@ -138,7 +138,7 @@ namespace sani {
 					out.bearingY = bearingY;
 					out.advance = advance;
 
-					// TODO what now
+					// Its empty, like space etc. we should allocate pixels tho? TODO
 					if (spans.empty()) {
 						return;
 					}

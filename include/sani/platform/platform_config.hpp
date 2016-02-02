@@ -19,26 +19,18 @@
 #define SANI_TARGET_PLATFORM		SANI_PLATFORM_UNKOWN
 
 // win32
-// http://stackoverflow.com/questions/430424/are-there-any-macros-to-determine-if-my-code-is-being-compiled-to-windows
 #if ((defined(__WIN32__) || defined(_WIN32)))
 #undef SANI_TARGET_PLATFORM
 #define SANI_TARGET_PLATFORM SANI_PLATFORM_WIN32
 #endif
 
 // Linux
-// http://stackoverflow.com/questions/4605842/how-to-identify-platform-compiler-from-preprocessor-macros
-// Don't know if apple defines __linux__
 #if defined(__linux__) && !defined(__APPLE__)
 #undef SANI_TARGET_PLATFORM
 #define SANI_TARGET_PLATFORM SANI_PLATFORM_LINUX
 #endif
 
 // Mac and iOS
-/*
-From stackoverflow: 
-__APPLE__ is set for both OS X and iOS. 
-You can #include <TargetConditionals.h> inside #ifdef __APPLE__, which then gives you a TARGET_OS_IPHONE #define
-*/
 #if defined(__APPLE__)
 #include "TargetConditionals.h"
 #undef  SANI_TARGET_PLATFORM
@@ -54,14 +46,12 @@ You can #include <TargetConditionals.h> inside #ifdef __APPLE__, which then give
 
 
 // Android
-// http://stackoverflow.com/questions/6374523/how-to-detect-compilation-by-android-ndk-in-a-c-c-file
 #if defined(ANDROID)
 #undef  SANI_TARGET_PLATFORM
 #define SANI_TARGET_PLATFORM         SANI_PLATFORM_ANDROID
 #endif
 
 // WP8 
-// TODOF: How to?
 #if defined(WINAPI_FAMILY) && (WINAPI_FAMILY == WINAPI_FAMILY_PHONE_APP)
 #undef  SANI_TARGET_PLATFORM
 #define SANI_TARGET_PLATFORM         SANI_PLATFORM_WP8
