@@ -125,6 +125,8 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
 			recomputeVertices(*rectangle);
 			setupShapeForRendering(rectangle, rectangle->borderThickness);
+
+			/*
 			// top left x
 			float s0 = rect.x / (float)font->texture->getWidth();
 			// top left y
@@ -148,7 +150,7 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 
 			rectangle->renderData.vertices[3].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
 			rectangle->renderData.vertices[3].textureCoordinates.x = s1;
-			rectangle->renderData.vertices[3].textureCoordinates.y = t0;
+			rectangle->renderData.vertices[3].textureCoordinates.y = t0;*/
 
 			rectangle->transform.origin.x = 0.0f;
 			rectangle->transform.origin.y = 0.0f;

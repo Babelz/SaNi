@@ -41,11 +41,7 @@ namespace sani {
 				
 				for (const auto& glyph : glyphs) {
 					writer->write(glyph.character);
-					// TODO create writer rect
-					writer->write(glyph.source.x);
-					writer->write(glyph.source.y);
-					writer->write(glyph.source.w);
-					writer->write(glyph.source.h);
+					writer->writeRectangle(glyph.source);
 					writer->write(glyph.xOffset);
 					writer->write(glyph.yOffset);
 					writer->write(glyph.xAdvance);

@@ -113,6 +113,13 @@ namespace sani {
 				BinaryWriter::flush();
 			}
 
+			void ResourceWriter::writeRectangle(const math::Rectangle<int32>& rect) {
+				write(rect.x);
+				write(rect.y);
+				write(rect.w);
+				write(rect.h);
+			}
+
 			void ResourceWriter::writeMatrix(const math::Matrix4<float32>& mat) {
 				write(mat[0][0]);
 				write(mat[0][1]);

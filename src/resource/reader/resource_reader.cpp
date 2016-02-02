@@ -64,12 +64,11 @@ namespace sani {
 			}
 
 			sani::math::Rectangle<int32> ResourceReader::readRectangle()  {
-				return sani::math::Rectangle<int32>(
-					readInt32(),
-					readInt32(),
-					readInt32(),
-					readInt32()
-					);
+				int32 x = readInt32();
+				int32 y = readInt32();
+				int32 w = readInt32();
+				int32 h = readInt32();
+				return sani::math::Rectangle<int32>(x, y, w, h);
 			}
 
 			sani::math::Matrix4<float32> ResourceReader::readMatrix() {
