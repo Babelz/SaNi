@@ -52,7 +52,6 @@ namespace sani {
 				return size;
 			}
 
-			// TODO: reference counting
 			FileStreamImpl::~FileStreamImpl() {
 				// flcose flushes the buffer
 				fclose(handle);
