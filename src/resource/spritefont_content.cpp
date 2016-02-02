@@ -15,6 +15,7 @@ namespace sani {
 		}
 
 		SpriteFontContent::~SpriteFontContent() { 
+			delete texture;
 		}
 
 		FontDescription* SpriteFontContent::getDescription() const {

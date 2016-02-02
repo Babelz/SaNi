@@ -138,8 +138,10 @@ namespace sani {
 					out.bearingY = bearingY;
 					out.advance = advance;
 
-					// Its empty, like space etc. we should allocate pixels tho? TODO
+					// Its empty, like space etc.
 					if (spans.empty()) {
+						// create empty bitmap
+						out.pixels = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(0u, 0u);
 						return;
 					}
 
@@ -203,8 +205,7 @@ namespace sani {
 
 			static uint32 calculateOutputWidth(const std::vector<Glyph>& glyphs) {
 				return std::accumulate(glyphs.begin(), glyphs.end(), 0, [](uint32 r, const Glyph& g) {
-					// TODO fix nullptr
-					if (g.pixels == nullptr) return 0u;
+					if (g.pixels->getWidth() == 0u) return 0u;
 
 					return 1 + r + g.pixels->getWidth() + 1;
 				});
@@ -213,9 +214,6 @@ namespace sani {
 			static uint32 calculateOutputHeight(const std::vector<Glyph>& glyphs) {
 				// TODO max width shaiba
 				return std::max_element(glyphs.begin(), glyphs.end(), [](const Glyph& a, const Glyph& b) {
-					// TODO figure out something for these nullptrs
-					if (a.pixels == nullptr) return true;
-					else if (b.pixels == nullptr) return false;
 					return a.pixels->getHeight() < b.pixels->getHeight();
 				})->pixels->getHeight();
 			}
@@ -235,7 +233,7 @@ namespace sani {
 					BitmapContent* pixels = glyph.pixels;
 
 					// white space and stuff
-					if (pixels == nullptr) {
+					if (pixels->getWidth() == 0 || pixels->getHeight() == 0) {
 						glyph.source = math::Rect32i{ 0, 0, 0, 0 };
 						continue;
 					}
@@ -244,10 +242,12 @@ namespace sani {
 					uint32 height = pixels->getHeight();
 					sani::math::Rect32i source(0, 0, width, height);
 					sani::math::Rect32i destination(1 + xOffset, yOffset, width, height);
-					// TODO move this
+					
 					glyph.source = destination;
 					bitmap->copyFrom(pixels, source, destination);
 					xOffset += width;
+
+					delete pixels;
 				}
 
 				return bitmap;
@@ -289,7 +289,7 @@ namespace sani {
 				}
 
 				// font height
-				volatile float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
+				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
 
 				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, glyphContent, lineSpacing);
 
