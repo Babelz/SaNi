@@ -298,6 +298,7 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector4.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\math.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\matrix.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix4.hpp" />

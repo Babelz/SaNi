@@ -1083,6 +1083,9 @@
     <ClInclude Include="..\..\include\sani\resource\compiler\impl\resource_writer.hpp">
       <Filter>include\resource\compiler\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\matrix.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

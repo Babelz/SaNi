@@ -58,26 +58,9 @@ namespace sani {
 
 				void writeObject(const std::type_index&, const ResourceItem*);
 
-				template <class T>
-				void writeContainer(const std::vector<T>& v);
+				void writeMatrix(const math::Matrix4<float32>& mat);
 
-				template <class T>
-				void writeMatrix(const math::Matrix2<T>& mat);
-
-				template <class T>
-				void writeMatrix(const math::Matrix3<T>& mat);
-
-				template <class T>
-				void writeMatrix(const math::Matrix4<T>& mat);
-
-				template <class T>
-				void writeVector(const math::Vector2<T>& vec);
-
-				template <class T>
-				void writeVector(const math::Vector3<T>& vec);
-
-				template <class T>
-				void writeVector(const math::Vector4<T>& vec);
+				void writeRectangle(const math::Rectangle<int32>& rect);
 			};
 		}
 	}

@@ -62,6 +62,24 @@ namespace sani {
 				
 				return (*readers[index]).read((this));
 			}
+
+			sani::math::Rectangle<int32> ResourceReader::readRectangle()  {
+				return sani::math::Rectangle<int32>(
+					readInt32(),
+					readInt32(),
+					readInt32(),
+					readInt32()
+					);
+			}
+
+			sani::math::Matrix4<float32> ResourceReader::readMatrix() {
+				return sani::math::Matrix4<float32>(
+					readSingle(), readSingle(), readSingle(), readSingle(),
+					readSingle(), readSingle(), readSingle(), readSingle(),
+					readSingle(), readSingle(), readSingle(), readSingle(),
+					readSingle(), readSingle(), readSingle(), readSingle()
+					);
+			}
 		}
 	}
 }

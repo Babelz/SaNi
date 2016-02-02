@@ -112,6 +112,28 @@ namespace sani {
 
 				BinaryWriter::flush();
 			}
+
+			void ResourceWriter::writeMatrix(const math::Matrix4<float32>& mat) {
+				write(mat[0][0]);
+				write(mat[0][1]);
+				write(mat[0][2]);
+				write(mat[0][3]);
+
+				write(mat[1][0]);
+				write(mat[1][1]);
+				write(mat[1][2]);
+				write(mat[1][3]);
+
+				write(mat[2][0]);
+				write(mat[2][1]);
+				write(mat[2][2]);
+				write(mat[2][3]);
+
+				write(mat[3][0]);
+				write(mat[3][1]);
+				write(mat[3][2]);
+				write(mat[3][3]);
+			}
 		}
 	}
 }
