@@ -46,6 +46,8 @@ namespace sani {
 					writer->write(glyph.yOffset);
 					writer->write(glyph.xAdvance);
 				}
+
+				writer->write(content->getLineSpacing());
 			}
 		}
 	}

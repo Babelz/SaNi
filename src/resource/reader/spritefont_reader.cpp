@@ -36,7 +36,9 @@ namespace sani {
 					
 				}
 
-				SpriteFont* out = new SpriteFont(texture, glyphs);
+				float32 lineSpacing = reader->readSingle();
+
+				SpriteFont* out = new SpriteFont(texture, glyphs, lineSpacing);
 
 				return out;
 			}

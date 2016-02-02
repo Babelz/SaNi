@@ -82,7 +82,7 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 	float start = 400;
 	float offx = start;
 	float offy = 0;
-	float spacing = font->texture->getHeight();
+	float spacing = font->lineSpacing;
 	for (uint32 i = 0; i < text.size(); ++i) {
 		uint32 c = static_cast<uint32>((text[i]));
 
@@ -115,7 +115,7 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			const uint32 h = rect.h;
 
 			const float32 x = offx + glyph.xOffset;
-			const float32 y = offy - glyph.yOffset + font->texture->getHeight();
+			const float32 y = offy - glyph.yOffset + spacing; //+ font->texture->getHeight();
 
 			sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
 			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
@@ -126,32 +126,6 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			recomputeVertices(*rectangle);
 			setupShapeForRendering(rectangle, rectangle->borderThickness);
 
-			/*
-			// top left x
-			float s0 = rect.x / (float)font->texture->getWidth();
-			// top left y
-			float t0 = rect.y / (float)font->texture->getHeight();
-			// bottom right x
-			float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
-			// bottom right y
-			float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
-
-			rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
-			rectangle->renderData.vertices[0].textureCoordinates.x = s0;
-			rectangle->renderData.vertices[0].textureCoordinates.y = t1;
-
-			rectangle->renderData.vertices[1].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y, 0.f), Color(0.93f, 0.0f, 0.0f, 1.f) };
-			rectangle->renderData.vertices[1].textureCoordinates.x = s1;
-			rectangle->renderData.vertices[1].textureCoordinates.y = t1;
-
-			rectangle->renderData.vertices[2].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y + h, 0.f), Color(0.86f, 0.0f, 0.0f, 1.f) };
-			rectangle->renderData.vertices[2].textureCoordinates.x = s0;
-			rectangle->renderData.vertices[2].textureCoordinates.y = t0;
-
-			rectangle->renderData.vertices[3].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
-			rectangle->renderData.vertices[3].textureCoordinates.x = s1;
-			rectangle->renderData.vertices[3].textureCoordinates.y = t0;*/
-
 			rectangle->transform.origin.x = 0.0f;
 			rectangle->transform.origin.y = 0.0f;
 
@@ -160,7 +134,6 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			useTexturing(rectangle);
 
 			engine->releaseMessage(createRectangleMessage);
-
 
 			rects.push_back(rectangle);
 			offx += glyph.xAdvance;

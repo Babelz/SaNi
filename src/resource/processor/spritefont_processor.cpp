@@ -288,12 +288,10 @@ namespace sani {
 					});
 				}
 
-				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, glyphContent);
-
 				// font height
-				float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
-				// The height used to calculate the Y offset for each character.
-				float yOffsetMin = static_cast<float>(-face->size->metrics.ascender >> 6);
+				volatile float lineSpacing = static_cast<float>(face->size->metrics.height >> 6);
+
+				SpriteFontContent* output = new SpriteFontContent(desc, bitmap, glyphContent, lineSpacing);
 
 				FT_Done_Face(face);
 				FT_Done_FreeType(library);
