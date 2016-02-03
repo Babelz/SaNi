@@ -15,6 +15,7 @@ namespace sani {
 
 		namespace compiler {
 
+			// TODOF i guess we dont even need these?
 			// DO NOT CHANGE THESE, THEY ARE FOLLOWING THE PLATFORM CONFIG
 			const char ResourceWriter::Platforms[] = {
 				'w', // win32
@@ -23,7 +24,6 @@ namespace sani {
 				'a', // android
 				'W', // windows phone
 				'i' // iOS
-				// TODO emscripte, ps4, xbox
 			};
 
 			ResourceWriter::ResourceWriter(FileStream* fileStream, const ResourceCompiler* compiler)
@@ -111,6 +111,35 @@ namespace sani {
 				fileStream->write(buffer.data(), memorySize);
 
 				BinaryWriter::flush();
+			}
+
+			void ResourceWriter::writeRectangle(const math::Rectangle<int32>& rect) {
+				write(rect.x);
+				write(rect.y);
+				write(rect.w);
+				write(rect.h);
+			}
+
+			void ResourceWriter::writeMatrix(const math::Matrix4<float32>& mat) {
+				write(mat[0][0]);
+				write(mat[0][1]);
+				write(mat[0][2]);
+				write(mat[0][3]);
+
+				write(mat[1][0]);
+				write(mat[1][1]);
+				write(mat[1][2]);
+				write(mat[1][3]);
+
+				write(mat[2][0]);
+				write(mat[2][1]);
+				write(mat[2][2]);
+				write(mat[2][3]);
+
+				write(mat[3][0]);
+				write(mat[3][1]);
+				write(mat[3][2]);
+				write(mat[3][3]);
 			}
 		}
 	}

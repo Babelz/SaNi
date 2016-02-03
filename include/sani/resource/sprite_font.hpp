@@ -24,8 +24,9 @@ namespace sani {
 			Texture2D* texture;
 			Characters characters;
 			Glyphs glyphs;
+			float32 lineSpacing;
 		public:
-			SpriteFont(Texture2D* texture, const Glyphs& glyphs);
+			SpriteFont(Texture2D* texture, const Glyphs& glyphs, float32 lineSpacing);
 			~SpriteFont();
 		};
 	}

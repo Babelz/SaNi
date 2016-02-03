@@ -6,13 +6,16 @@ namespace sani {
 
 	namespace resource {
 
-		SpriteFontContent::SpriteFontContent(FontDescription* desc, BitmapContent* texture, const Glyphs& glyphs) : ResourceItem(), 
-																													description(desc), 
-																													texture(texture), 
-																													glyphs(glyphs) {
+		SpriteFontContent::SpriteFontContent(FontDescription* desc, BitmapContent* texture, 
+			const Glyphs& glyphs, const float32 lineSpacing) :  ResourceItem(), 
+																description(desc), 
+																texture(texture), 
+																glyphs(glyphs),
+																lineSpacing(lineSpacing) {
 		}
 
 		SpriteFontContent::~SpriteFontContent() { 
+			delete texture;
 		}
 
 		FontDescription* SpriteFontContent::getDescription() const {

@@ -13,10 +13,132 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\compiler">
+      <UniqueIdentifier>{a19740a5-f536-447b-8a44-b6c220bff662}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\pipeline">
+      <UniqueIdentifier>{f3887fdf-0af6-40be-ba3f-ef3b0bc90bad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\processor">
+      <UniqueIdentifier>{07e477b7-e45f-4311-b941-5857d916715a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sani">
+      <UniqueIdentifier>{8f57b3af-6daf-4ef7-a7ef-bb0b04344bd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sani\resource">
+      <UniqueIdentifier>{73c66aa2-446a-445c-9f16-1f4bb22edf50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sani\resource\compiler">
+      <UniqueIdentifier>{5aaefd45-5ab2-47fb-9861-2918d56eb6da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sani\resource\pipeline">
+      <UniqueIdentifier>{aaa66ad5-a073-40ff-912b-1b0e6d79a766}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\sani\resource\processor">
+      <UniqueIdentifier>{38f6d2cd-457c-475c-95f2-479bf37f9f75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\processor\effect_processor.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\processor\spritefont_processor.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\processor\texture2d_processor.cpp">
+      <Filter>Source Files\processor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\pipeline\effect_importer.cpp">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\pipeline\spritefont_description_importer.cpp">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\pipeline\texture2d_importer.cpp">
+      <Filter>Source Files\pipeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\compiler\bitmap_content_writer.cpp">
+      <Filter>Source Files\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\compiler\effect_writer.cpp">
+      <Filter>Source Files\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\compiler\resource_compiler.cpp">
+      <Filter>Source Files\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\compiler\resource_writer.cpp">
+      <Filter>Source Files\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\compiler\spritefont_writer.cpp">
+      <Filter>Source Files\compiler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\tools\src\pipeline-compiler\src\compiler\texture2d_writer.cpp">
+      <Filter>Source Files\compiler</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\bitmap_content_writer.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\compilers.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\effect_writer.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\impl\resource_compiler.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\impl\resource_writer.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\resource_compiler.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\resource_type_writer.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\resource_writer.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\spritefont_writer.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\compiler\texture2d_writer.hpp">
+      <Filter>Header Files\sani\resource\compiler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\pipeline\content_importer.hpp">
+      <Filter>Header Files\sani\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\pipeline\effect_importer.hpp">
+      <Filter>Header Files\sani\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\pipeline\importers.hpp">
+      <Filter>Header Files\sani\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\pipeline\spritefont_description_importer.hpp">
+      <Filter>Header Files\sani\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\pipeline\texture2d_importer.hpp">
+      <Filter>Header Files\sani\resource\pipeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\processor\effect_processor.hpp">
+      <Filter>Header Files\sani\resource\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\processor\processors.hpp">
+      <Filter>Header Files\sani\resource\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\processor\resource_processor.hpp">
+      <Filter>Header Files\sani\resource\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\processor\spritefont_processor.hpp">
+      <Filter>Header Files\sani\resource\processor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\tools\src\pipeline-compiler\include\sani\resource\processor\texture2d_processor.hpp">
+      <Filter>Header Files\sani\resource\processor</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -75,7 +75,7 @@ namespace sani {
 
 			graphics::SurfaceFormat fmt;
 			fromThis->tryGetFormat(&fmt);
-			// TODO fix this
+			// TODOF It should be possible to copy stuff where the source and destination are different
 			SANI_ASSERT(format == fmt && 
 						sourceArea.w == destinationArea.w && 
 						sourceArea.h == destinationArea.h);

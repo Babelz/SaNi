@@ -28,11 +28,11 @@ namespace sani {
 			GraphicsDevice* graphicsDevice;
 			std::map<String, Resource*> resources;
 			ResoureTypeReaderManager typeReaders;
-
+			String8 contentRoot;
 			ResourceManager(const ResourceManager& mgr) = delete;
 			ResourceManager& operator=(const ResourceManager& mgr) = delete;
 		public:
-			ResourceManager(FileSystem* fileSystem, GraphicsDevice* graphicsDevice);
+			ResourceManager(FileSystem* fileSystem, GraphicsDevice* graphicsDevice, const String8& contentRoot);
 
 			template <class T>
 			T* load(const String& asset) {
@@ -40,6 +40,8 @@ namespace sani {
 			}
 
 			void* load(const String& asset);
+
+			void unload();
 		};
 	}
 }

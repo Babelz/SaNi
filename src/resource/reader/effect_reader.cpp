@@ -19,9 +19,7 @@ namespace sani {
 				// if its compiled 
 				// 1) we need to be sure to have extension supported
 				// 2) we just need to read the compiled data
-				// TODO
 				if (compiled) {
-					// TODO replace this with non-null terminated
 					String binary = reader->readString();
 					// glProgramnBinaryETC shit..
 					throw std::logic_error("Not implemented");
@@ -33,7 +31,6 @@ namespace sani {
 				String vertexCode = reader->readString();
 				// then fragment
 				String fragmentCode = reader->readString();
-				// TODO if thers more?
 
 				// compile shaders
 				GraphicsDevice* device = reader->getGraphicsDevice();

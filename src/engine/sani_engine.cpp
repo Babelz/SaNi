@@ -38,7 +38,7 @@ namespace sani {
 															hInstance(hInstance),
 															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic),
 															running(false) {
-#if _DEBUG
+#if 1 //_DEBUG
 			SANI_INIT_EVENT(onInitialize, void(SaNiEngine* const engine));
 			SANI_INIT_EVENT(onUpdate, void(SaNiEngine* const engine, const EngineTime&));
 #endif
@@ -142,7 +142,7 @@ namespace sani {
 			if (!initializeGraphics())				return false;
 			if (!initializeRenderableManagers())	return false;
 
-#if _DEBUG
+#if 1 //_DEBUG
 			SANI_TRIGGER_EVENT(onInitialize, void(SaNiEngine* const), 
 							   this);
 #endif
@@ -207,7 +207,7 @@ namespace sani {
 				// Update all services.
 				services.update(time);
 
-#if _DEBUG
+#if 1 //_DEBUG
 				SANI_TRIGGER_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&), 
 								   this, time);
 #endif

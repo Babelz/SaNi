@@ -19,10 +19,10 @@ namespace sani {
 			T x;
 			/// Y component.
 			T y;
-			/// Height.
-			T h;
 			/// Width.
 			T w;
+			/// Height.
+			T h;
 
 			template <typename U>
 			Rectangle(const U x, const U y, const U w, const U h);
@@ -52,8 +52,6 @@ namespace sani {
 			inline bool contains(const Vector2<T>& v) const;
 			
 			inline bool intersects(const Rectangle& r) const;
-
-			inline void include(const Vector2<T>& r);
 			// Operators.
 
 			inline bool operator ==(const Rectangle& r) const;

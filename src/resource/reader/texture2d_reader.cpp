@@ -22,8 +22,6 @@ namespace sani {
 				const uint32 height = reader->readUint32();
 				const uint64 faceCount = reader->read7BitEncodedInt();
 
-				////////////////// TODO COMPRESSION /////////////
-
 				// read all the faces, the largest one is stored as first
 				MipmapChain faces;
 				for (size_t i = 0; i < faceCount; ++i) {

@@ -10,8 +10,6 @@
 #include <Windows.h>
 
 #endif
-using String16 = std::basic_string<wchar_t, std::char_traits<wchar_t>, std::allocator<wchar_t>>;
-using String8 = std::basic_string<char, std::char_traits<char>, std::allocator<char>>;
 #include "sani/core/memory/memory.hpp"
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 #include "sani/graphics/renderer.hpp"
@@ -63,7 +61,7 @@ using namespace sani::engine::services::renderservice;
 void initialize(SaNiEngine* const engine);
 void update(SaNiEngine* const engine, const sani::EngineTime& time);
 
-#if _DEBUG
+#if 1
 
 FileSystem fileSystem;
 ResourceManager* resources;
@@ -82,7 +80,7 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 	float start = 400;
 	float offx = start;
 	float offy = 0;
-	float spacing = font->texture->getHeight();
+	float spacing = font->lineSpacing;
 	for (uint32 i = 0; i < text.size(); ++i) {
 		uint32 c = static_cast<uint32>((text[i]));
 
@@ -115,7 +113,7 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			const uint32 h = rect.h;
 
 			const float32 x = offx + glyph.xOffset;
-			const float32 y = offy - glyph.yOffset + font->texture->getHeight();
+			const float32 y = offy - glyph.yOffset + spacing; //+ font->texture->getHeight();
 
 			sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
 			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
@@ -125,30 +123,6 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
 			recomputeVertices(*rectangle);
 			setupShapeForRendering(rectangle, rectangle->borderThickness);
-			// top left x
-			float s0 = rect.x / (float)font->texture->getWidth();
-			// top left y
-			float t0 = rect.y / (float)font->texture->getHeight();
-			// bottom right x
-			float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
-			// bottom right y
-			float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
-
-			rectangle->renderData.vertices[0].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
-			rectangle->renderData.vertices[0].textureCoordinates.x = s0;
-			rectangle->renderData.vertices[0].textureCoordinates.y = t1;
-
-			rectangle->renderData.vertices[1].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y, 0.f), Color(0.93f, 0.0f, 0.0f, 1.f) };
-			rectangle->renderData.vertices[1].textureCoordinates.x = s1;
-			rectangle->renderData.vertices[1].textureCoordinates.y = t1;
-
-			rectangle->renderData.vertices[2].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x, y + h, 0.f), Color(0.86f, 0.0f, 0.0f, 1.f) };
-			rectangle->renderData.vertices[2].textureCoordinates.x = s0;
-			rectangle->renderData.vertices[2].textureCoordinates.y = t0;
-
-			rectangle->renderData.vertices[3].vertexPositionColor = VertexPositionColor{ sani::math::Vec3f(x + w, y + h, 0.f), Color(1.f, 0.33f, 0.33f, 1.f) };
-			rectangle->renderData.vertices[3].textureCoordinates.x = s1;
-			rectangle->renderData.vertices[3].textureCoordinates.y = t0;
 
 			rectangle->transform.origin.x = 0.0f;
 			rectangle->transform.origin.y = 0.0f;
@@ -158,7 +132,6 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			useTexturing(rectangle);
 
 			engine->releaseMessage(createRectangleMessage);
-
 
 			rects.push_back(rectangle);
 			offx += glyph.xAdvance;
@@ -178,11 +151,11 @@ void initialize(SaNiEngine* const engine) {
 	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
 	engine->releaseMessage(getGraphicsDevice);
 
-	resources = new ResourceManager(&fileSystem, graphicsDevice);
+	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
-	volatile auto font = resources->load<SpriteFont>("../../assets/font.snb");
+	auto tuksu = resources->load<Texture2D>("tuksu");
+	auto font = resources->load<SpriteFont>("font");
 
 	for (uint32 i = 1; i < 8; i++) {
 		const float32 w = 100.0f;
@@ -215,7 +188,7 @@ void initialize(SaNiEngine* const engine) {
 	}
 
 	using StringConverter =
-		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>, wchar_t, std::allocator<wchar_t>, std::allocator<char>>;
+		std::wstring_convert<std::codecvt_utf8_utf16<char16>, char16, std::allocator<char16>, std::allocator<char8>>;
 	
 
 	StringConverter conv;

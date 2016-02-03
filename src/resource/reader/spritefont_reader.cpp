@@ -28,10 +28,7 @@ namespace sani {
 					GlyphContent& glyph = glyphs.back();
 					glyph.character = reader->readUint32();
 					
-					glyph.source.x = reader->readInt32();
-					glyph.source.y = reader->readInt32();
-					glyph.source.w = reader->readInt32();
-					glyph.source.h = reader->readInt32();
+					glyph.source = reader->readRectangle();
 					
 					glyph.xOffset = reader->readSingle();
 					glyph.yOffset = reader->readSingle();
@@ -39,7 +36,9 @@ namespace sani {
 					
 				}
 
-				SpriteFont* out = new SpriteFont(texture, glyphs);
+				float32 lineSpacing = reader->readSingle();
+
+				SpriteFont* out = new SpriteFont(texture, glyphs, lineSpacing);
 
 				return out;
 			}

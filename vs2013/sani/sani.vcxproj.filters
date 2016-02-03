@@ -70,17 +70,11 @@
     <Filter Include="include\resource">
       <UniqueIdentifier>{f4a3f3b4-5b18-4884-aadb-33206d195790}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\resource\pipeline">
-      <UniqueIdentifier>{5160978b-4a84-4e7e-9d44-02a4b7a169c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\resource\reader">
       <UniqueIdentifier>{31340b85-5bae-4d5d-8d19-e359e31785e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\resource\reader">
       <UniqueIdentifier>{7b3aa4f9-8594-42f6-a02e-e7ee3c60de57}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\resource\compiler">
-      <UniqueIdentifier>{6437e6d5-d2df-4ceb-aa2b-41f6ea2fab58}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\platform\graphics">
       <UniqueIdentifier>{5464db1b-8ef4-4cb8-a2df-a455b4c54927}</UniqueIdentifier>
@@ -99,12 +93,6 @@
     </Filter>
     <Filter Include="include\platform\file\inl">
       <UniqueIdentifier>{512943e6-3375-41eb-9024-2082172f3c6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\resource\pipeline">
-      <UniqueIdentifier>{9212275f-bd69-4f85-9141-56bcb7de4b99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\resource\processor">
-      <UniqueIdentifier>{09d385b1-76c3-47ff-8912-92585c26d1ef}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\graphics">
       <UniqueIdentifier>{0da9388a-a359-45a7-8c37-4f957381ca97}</UniqueIdentifier>
@@ -126,9 +114,6 @@
     </Filter>
     <Filter Include="src\graphics\setups">
       <UniqueIdentifier>{32be1caa-d02f-48a6-aa0e-d508fc049c4f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\resource\processor">
-      <UniqueIdentifier>{fbfd0dbe-7e0e-4855-a40d-6a33436eca5b}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\graphics\renderables">
       <UniqueIdentifier>{5ab31bd3-8d2b-4bf2-a798-91ed8d49eb7b}</UniqueIdentifier>
@@ -193,9 +178,6 @@
     <Filter Include="include\engine\services\contracts">
       <UniqueIdentifier>{f41234ac-b2a4-444c-8b20-1ef4dd597ea1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\resource\compiler">
-      <UniqueIdentifier>{8b8e7f0d-0f59-4c41-b5a8-cc0f6fa2ee62}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\engine\services\impl">
       <UniqueIdentifier>{cd847568-ad12-40b5-b5bf-fde2c602cc56}</UniqueIdentifier>
     </Filter>
@@ -222,9 +204,6 @@
     </Filter>
     <Filter Include="include\resource\reader\impl">
       <UniqueIdentifier>{b360f07a-e73d-411a-be70-f54f9c0733ac}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\resource\compiler\impl">
-      <UniqueIdentifier>{cd4145df-73f8-43a2-b94d-60c109d4e28a}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\resource\inl">
       <UniqueIdentifier>{34059104-7a0e-4379-a08b-7d1fa92a4e88}</UniqueIdentifier>
@@ -285,15 +264,6 @@
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp">
       <Filter>src\resource\reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\resource\resource_manager.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
@@ -333,9 +303,6 @@
     <ClCompile Include="..\..\src\resource\texture2d.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp">
-      <Filter>src\resource\pipeline</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp">
       <Filter>src\core\memory</Filter>
     </ClCompile>
@@ -360,17 +327,11 @@
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp">
-      <Filter>src\resource\processor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\graphics\transformable.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp">
       <Filter>src\graphics\renderables</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\resource_compiler.cpp">
-      <Filter>src\resource\compiler</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\platform\graphics\color.cpp">
       <Filter>src\graphics</Filter>
@@ -398,12 +359,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\resource\effect_content.cpp">
       <Filter>src\resource</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\processor\effect_processor.cpp">
-      <Filter>src\resource\processor</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\pipeline\effect_importer.cpp">
-      <Filter>src\resource\pipeline</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp">
       <Filter>src\graphics\renderables</Filter>
@@ -474,15 +429,6 @@
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp">
       <Filter>src\core\parser</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\pipeline\spritefont_description_importer.cpp">
-      <Filter>src\resource\pipeline</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp">
-      <Filter>src\resource\processor</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp">
       <Filter>src\resource\reader</Filter>
     </ClCompile>
@@ -504,9 +450,6 @@
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\compiler\bitmap_content_writer.cpp">
-      <Filter>src\resource\compiler</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClCompile>
@@ -525,7 +468,6 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\sprite_font.cpp" />
     <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
@@ -537,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\graphics_effect.cpp">
       <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\sprite_font.cpp">
+      <Filter>src\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -654,9 +599,6 @@
     <ClInclude Include="..\..\include\sani\resource\resource.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp">
-      <Filter>include\resource\pipeline</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
@@ -674,18 +616,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp">
       <Filter>include\resource\reader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp">
       <Filter>include\platform\file</Filter>
@@ -714,17 +644,8 @@
     <ClInclude Include="..\..\include\sani\resource\serialization.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp">
-      <Filter>include\resource\processor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp">
       <Filter>include\resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp">
-      <Filter>include\resource\processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp">
-      <Filter>include\resource\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp">
       <Filter>include\resource</Filter>
@@ -816,12 +737,6 @@
     <ClInclude Include="..\..\include\sani\graphics\color.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -861,20 +776,8 @@
     <ClInclude Include="..\..\include\sani\resource\effect.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp">
-      <Filter>include\resource\pipeline</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\effect_content.hpp">
       <Filter>include\resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\processor\effect_processor.hpp">
-      <Filter>include\resource\processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\processor\processors.hpp">
-      <Filter>include\resource\processor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp">
-      <Filter>include\resource\pipeline</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp">
       <Filter>include\graphics\renderables</Filter>
@@ -990,15 +893,6 @@
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp">
       <Filter>include\core\parser</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_description_importer.hpp">
-      <Filter>include\resource\pipeline</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp">
-      <Filter>include\resource\processor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp">
       <Filter>include\resource\reader</Filter>
     </ClInclude>
@@ -1053,9 +947,6 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp">
-      <Filter>include\resource\compiler</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\messages\query_message.hpp">
       <Filter>include\engine\messaging\messages</Filter>
     </ClInclude>
@@ -1080,8 +971,8 @@
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\resource\compiler\impl\resource_writer.hpp">
-      <Filter>include\resource\compiler\impl</Filter>
+    <ClInclude Include="..\..\include\sani\core\math\matrix.hpp">
+      <Filter>include\core\math</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1162,9 +1053,6 @@
     </None>
     <None Include="..\..\include\sani\resource\reader\inl\resource_reader.hpp">
       <Filter>include\resource\reader\impl</Filter>
-    </None>
-    <None Include="..\..\include\sani\resource\compiler\inl\resource_compiler.hpp">
-      <Filter>include\resource\compiler\impl</Filter>
     </None>
     <None Include="..\..\include\sani\resource\inl\bitmap_content.inl">
       <Filter>include\resource\inl</Filter>

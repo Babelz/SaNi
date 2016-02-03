@@ -59,7 +59,7 @@ namespace sani {
 			Texture2D(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, const graphics::SurfaceFormat format);
 
 			/// Default deconstructor
-			~Texture2D();
+			virtual ~Texture2D();
 
 			/// Calculates the mip map level count
 			/// 

@@ -7,8 +7,10 @@ namespace sani {
 
 	namespace resource {
 
-		SpriteFont::SpriteFont(Texture2D* texture, const Glyphs& glyphs) : texture(texture), 
-																		   glyphs(glyphs) {
+		SpriteFont::SpriteFont(Texture2D* texture, const Glyphs& glyphs, float32 lineSpacing) 
+																		 : texture(texture), 
+																		   glyphs(glyphs),
+																		   lineSpacing(lineSpacing) {
 			characters.reserve(glyphs.size());
 
 			for (auto& g : glyphs) {

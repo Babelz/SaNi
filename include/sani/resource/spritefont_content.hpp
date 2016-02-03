@@ -32,8 +32,9 @@ namespace sani {
 			BitmapContent* texture;
 			Glyphs glyphs;
 			Characters characters;
+			float32 lineSpacing;
 		public:
-			SpriteFontContent(FontDescription* desc, BitmapContent* texture, const Glyphs& glyphs);
+			SpriteFontContent(FontDescription* desc, BitmapContent* texture, const Glyphs& glyphs, const float32 lineSpacing);
 			~SpriteFontContent();
 
 			FontDescription* getDescription() const;
@@ -43,6 +44,8 @@ namespace sani {
 			const Glyphs& getGlyphs() const;
 
 			const Characters& getCharacters() const;
+
+			inline const float32 getLineSpacing() const { return lineSpacing;  }
 		};
 	}
 }

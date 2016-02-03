@@ -30,8 +30,6 @@ namespace sani {
 
 				writer->write7BitEncodedInt(mipmaps.size());
 
-				///// TODO COMPRESS ////
-
 				for (size_t i = 0; i < mipmaps.size(); ++i) {
 					const PixelData& face = mipmaps[i];
 					

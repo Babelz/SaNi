@@ -22,8 +22,9 @@ namespace sani {
 		}
 
 		bool FileSystem::openFile(const String& path, const Filemode mode, FileStream** stream) {
+			// don't support opening same file twice
 			if (isFileOpen(path)) {
-				throw std::logic_error("Not implemented reference counting yet");
+				return false;
 			}
 
 			char access[5] = { 0 };

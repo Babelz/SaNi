@@ -25,13 +25,12 @@ namespace sani {
 			void SpriteFontWriter::write(ResourceWriter* writer, const void* value) {
 				const SpriteFontContent* content = static_cast<const SpriteFontContent*>(value);
 
-				// TODO demo hax
+				// TODO BitmapContent and Texture2DContent should be the same?
 				BitmapContent* texture = content->getTexture();
 				std::vector<unsigned char> pixels;
 				pixels.reserve(texture->getWidth() * texture->getHeight() * sizeof(math::Vector4<unsigned char>));
 				texture->getPixelData(pixels);
 				Texture2DContent texcontent(texture->getWidth(), texture->getHeight(), pixels);
-				// TODO this should be texture...
 				writer->writeObject(std::type_index(typeid(Texture2DContent)), &texcontent);
 
 				using Glyphs = std::vector<GlyphContent>;
@@ -41,16 +40,14 @@ namespace sani {
 				writer->write7BitEncodedInt(glyphs.size());
 				
 				for (const auto& glyph : glyphs) {
-					// TODO create writer for this
 					writer->write(glyph.character);
-					writer->write(glyph.source.x);
-					writer->write(glyph.source.y);
-					writer->write(glyph.source.w);
-					writer->write(glyph.source.h);
+					writer->writeRectangle(glyph.source);
 					writer->write(glyph.xOffset);
 					writer->write(glyph.yOffset);
 					writer->write(glyph.xAdvance);
 				}
+
+				writer->write(content->getLineSpacing());
 			}
 		}
 	}

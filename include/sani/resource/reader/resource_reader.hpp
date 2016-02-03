@@ -3,6 +3,8 @@
 #include "sani/resource/resource_manager.hpp"
 #include "sani/platform/file/binary_reader.hpp"
 #include "sani/resource/reader/resource_type_reader_manager.hpp"
+#include "sani/core/math/rectangle.hpp"
+#include "sani/core/math/matrix.hpp"
 #include "sani/debug.hpp"
 
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
@@ -21,7 +23,6 @@ namespace sani {
 			/// 
 			/// @author siquel
 			class ResourceReader : public io::BinaryReader {
-				// TODOF: add functions to read matrices vectors and stuff
 			private:
 				ResourceManager& manager;
 				GraphicsDevice* graphicsDevice;
@@ -38,6 +39,12 @@ namespace sani {
 
 				template <class ObjectType>
 				ObjectType* readObject();
+
+				/// Reads int32 rectangle from the stream
+				sani::math::Rectangle<int32> readRectangle();
+
+				/// Reads 4x4 float32 matrix from the stream
+				sani::math::Matrix4<float32> readMatrix();
 
 				/// Reads the whole asset, this method assumes the 
 				/// type readers are already initialized
