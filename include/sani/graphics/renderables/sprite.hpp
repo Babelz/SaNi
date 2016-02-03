@@ -17,8 +17,6 @@ namespace sani {
 		public:
 			Color color;
 
-			resource::Texture2D* texture;
-
 			Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h);
 			Sprite(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size);
 			Sprite(resource::Texture2D* const texture, const math::Rect32f& bounds);

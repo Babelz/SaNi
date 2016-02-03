@@ -22,9 +22,9 @@ namespace sani {
 		/// that serves as the visible part of the particle.
 		class Particle final {
 		private:
-			const Vec2f velocity;
-			const float32 timeToLive;
-			const float32 angularVelocity;
+			Vec2f velocity;
+			float32 timeToLive;
+			float32 angularVelocity;
 			
 			float32 elapsedTime;
 
@@ -32,9 +32,17 @@ namespace sani {
 		public:
 			Particle(Texture2D* const texture, const Vec2f& position, const Vec2f& velocity, const float32 angle, 
 					 const float32 angularVelocity, const Color& color, const Vec2f& size, const float32 timeToLive);
+			
+			Particle(Texture2D* const texture);
+			
+			const RenderData& getRenderData() const;
+			Transform& getTransform();
 
-			/// Gets the sprite of the particle.
-			Sprite& getSprite();
+			void setVelocity(const Vec2f& velocity);
+			void setAngularVelocity(const float32 angularVelocity);
+			void setColor(const Color& color);
+			void setTimeToLive(const float32 time);
+			void setTexture(Texture2D* const texture);
 
 			/// Returns true if this particle is still alive.
 			bool alive() const;

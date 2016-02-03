@@ -486,6 +486,9 @@
     <ClCompile Include="..\..\src\graphics\renderables\particle.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\particle_emitter.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -982,6 +985,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\renderables\particle.hpp">
       <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\inl\particle_emitter.inl">
+      <Filter>include\graphics\inl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

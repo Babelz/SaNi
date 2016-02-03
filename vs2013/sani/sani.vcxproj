@@ -206,6 +206,7 @@
     <ClCompile Include="..\..\src\graphics\layer.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\particle.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\particle_emitter.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
@@ -352,6 +353,7 @@
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\inl\particle_emitter.inl" />
     <ClInclude Include="..\..\include\sani\graphics\layer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\layer_type.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp" />

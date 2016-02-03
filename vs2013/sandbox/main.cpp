@@ -192,7 +192,7 @@ void initialize(SaNiEngine* const engine) {
 	
 
 	StringConverter conv;
-	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"are you workings?\ngood memes\nmein panther\nhitlas");
+	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nniggas");
 	createText(font, gg, graphicsDevice, engine, rects);
 
 	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();
@@ -201,12 +201,14 @@ void initialize(SaNiEngine* const engine) {
 	engine->routeMessage(createCircleMessage);
 
 	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
-	NEW_DYNAMIC(sani::graphics::Circle, circle, 200, 200, 100, 128);
+	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
-	circle->texture = tuksu;
+	auto erkki = resources->load<Texture2D>("erkki");
+	circle->texture = erkki;
 	circle->fill = color::white;
-	circle->textureSource.w = static_cast<float32>(tuksu->getWidth());
-	circle->textureSource.h = static_cast<float32>(tuksu->getHeight());
+	circle->textureSource.w = static_cast<float32>(erkki->getWidth());
+	circle->textureSource.h = static_cast<float32>(erkki->getHeight());
+	circle->radius = 200;
 
 	recomputeVertices(*circle);
 	updateRenderData(*circle);
@@ -231,7 +233,12 @@ void initialize(SaNiEngine* const engine) {
 
 #include "sani/core/math/trigonometric.hpp"
 
+
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {
+	c->transform.rotation += 0.001f;
+	c->textureSource.x = std::sin(time.getTotalTime()) * 64.0f;
+	c->textureSource.y = std::cos(time.getTotalTime()) * 64.0f;
+	
 	recomputeVertices(*c);
 	updateRenderData(*c);
 }
