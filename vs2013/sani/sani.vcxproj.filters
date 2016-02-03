@@ -468,7 +468,6 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\resource\sprite_font.cpp" />
     <ClCompile Include="..\..\src\engine\services\cvar_service.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
@@ -480,6 +479,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\graphics_effect.cpp">
       <Filter>src\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\resource\sprite_font.cpp">
+      <Filter>src\resource</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
