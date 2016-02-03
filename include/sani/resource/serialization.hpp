@@ -1,7 +1,6 @@
 #pragma once
 
 #include "sani/types.hpp"
-#include "sani/resource/compiler/resource_type_writer.hpp"
 
 /// Provides the compile time reader to be used to read this type of
 /// resource

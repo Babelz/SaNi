@@ -90,7 +90,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;$(SolutionDir)..\thirdparty\freetype\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -239,20 +239,8 @@
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\bitmap_content.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\bitmap_content_writer.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\effect_writer.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\resource_compiler.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\resource_writer.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\spritefont_writer.cpp" />
-    <ClCompile Include="..\..\src\resource\compiler\texture2d_writer.cpp" />
     <ClCompile Include="..\..\src\resource\effect.cpp" />
     <ClCompile Include="..\..\src\resource\effect_content.cpp" />
-    <ClCompile Include="..\..\src\resource\pipeline\effect_importer.cpp" />
-    <ClCompile Include="..\..\src\resource\pipeline\spritefont_description_importer.cpp" />
-    <ClCompile Include="..\..\src\resource\pipeline\texture2d_importer.cpp" />
-    <ClCompile Include="..\..\src\resource\processor\effect_processor.cpp" />
-    <ClCompile Include="..\..\src\resource\processor\spritefont_processor.cpp" />
-    <ClCompile Include="..\..\src\resource\processor\texture2d_processor.cpp" />
     <ClCompile Include="..\..\src\resource\reader\bitmap_content_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
@@ -408,28 +396,9 @@
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\time.hpp" />
     <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\bitmap_content_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\compilers.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\effect_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\impl\resource_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\resource_compiler.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\resource_type_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\resource_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\spritefont_writer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\compiler\texture2d_writer.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\font_description.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\content_importer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\effect_importer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\importers.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\spritefont_description_importer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\pipeline\texture2d_importer.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\processor\effect_processor.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\processor\processors.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\processor\resource_processor.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\processor\spritefont_processor.hpp" />
-    <ClInclude Include="..\..\include\sani\resource\processor\texture2d_processor.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\bitmap_content_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\effect_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
@@ -475,7 +444,6 @@
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
-    <None Include="..\..\include\sani\resource\compiler\inl\resource_compiler.hpp" />
     <None Include="..\..\include\sani\resource\inl\bitmap_content.inl" />
     <None Include="..\..\include\sani\resource\reader\inl\resource_reader.hpp" />
   </ItemGroup>
