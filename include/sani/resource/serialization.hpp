@@ -8,8 +8,7 @@ template <typename T> class DeserializableWith {
 public:
 	static String value() {
 		// TODO error
-		return String();
-		//static_assert(0, "This type doesnt have serialization specified");
+		static_assert(0, "This type doesnt have serialization specified");
 	}
 };
 

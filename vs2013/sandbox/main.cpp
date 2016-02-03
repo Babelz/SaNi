@@ -151,11 +151,11 @@ void initialize(SaNiEngine* const engine) {
 	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
 	engine->releaseMessage(getGraphicsDevice);
 
-	resources = new ResourceManager(&fileSystem, graphicsDevice);
+	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto tuksu = resources->load<Texture2D>("../../assets/tuksu.snb");
-	volatile auto font = resources->load<SpriteFont>("../../assets/font.snb");
+	auto tuksu = resources->load<Texture2D>("tuksu");
+	auto font = resources->load<SpriteFont>("font");
 
 	for (uint32 i = 1; i < 8; i++) {
 		const float32 w = 100.0f;

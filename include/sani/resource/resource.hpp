@@ -8,6 +8,8 @@ namespace sani {
 		/// 
 		/// @author siquel
 		class Resource {
+		public:
+			virtual ~Resource() = default;
 		};
 	}
 }
