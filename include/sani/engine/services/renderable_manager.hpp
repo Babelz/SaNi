@@ -35,7 +35,8 @@ namespace sani {
 				RenderableManager(const String& name, const renderablemanager::ElementType type, engine::SaNiEngine* const engine);
 			public:
 				void receive(messages::Message* const message) final override;
-				void update(const EngineTime& time) final override;
+
+				void update(const EngineTime& time) override;
 			};
 		}
 	}

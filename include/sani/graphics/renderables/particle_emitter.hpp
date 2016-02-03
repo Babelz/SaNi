@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sani/graphics/renderables/renderable.hpp"
+#include <vector>
 
 namespace sani
 {
