@@ -1,5 +1,4 @@
 #include "sani/graphics/renderables/particle.hpp"
-
 #include "sani/graphics/graphics_effect.hpp"
 #include "sani/resource/texture2d.hpp"
 #include "sani/graphics/transform.hpp"

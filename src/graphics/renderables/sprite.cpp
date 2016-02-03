@@ -1,16 +1,19 @@
 #include "sani/graphics/renderables/sprite.hpp"
 #include "sani/graphics/vertex_helper.hpp"
 #include "sani/resource/texture2d.hpp"
+#include "sani/debug.hpp"
 
 namespace sani {
 
 	namespace graphics {
 
 		Sprite::Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(4, 6, 1) {
+			SANI_ASSERT(texture != nullptr);
+			
 			color = color::white;
 
-			localBounds.w = h;
-			localBounds.h = w;
+			localBounds.w = w;
+			localBounds.h = h;
 
 			VertexPositionColorTexture* vertices[] {
 				&renderData.vertices[0],
