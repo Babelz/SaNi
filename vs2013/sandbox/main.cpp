@@ -61,7 +61,7 @@ using namespace sani::engine::services::renderservice;
 void initialize(SaNiEngine* const engine);
 void update(SaNiEngine* const engine, const sani::EngineTime& time);
 
-#if _DEBUG
+#if 1
 
 FileSystem fileSystem;
 ResourceManager* resources;
