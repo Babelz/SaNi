@@ -35,15 +35,12 @@ namespace sani {
 			
 			Particle(Texture2D* const texture);
 			
-			const RenderData& getRenderData() const;
-			Transform& getTransform();
-
+			Sprite& getSprite();
+			
 			void setVelocity(const Vec2f& velocity);
 			void setAngularVelocity(const float32 angularVelocity);
-			void setColor(const Color& color);
 			void setTimeToLive(const float32 time);
-			void setTexture(Texture2D* const texture);
-
+			
 			/// Returns true if this particle is still alive.
 			bool alive() const;
 			/// Resets the state of the particle so that it can be used 

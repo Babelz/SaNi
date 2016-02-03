@@ -5,7 +5,6 @@
 #include "sani/graphics/renderables/particle.hpp"
 #include "sani/platform/time/engine_time.hpp"
 
-#include <stack>
 #include <vector>
 
 namespace sani {

@@ -18,11 +18,8 @@ namespace sani {
 		Particle::Particle(Texture2D* const texture) : Particle(texture, Vec2f(), Vec2f(), 0.0f, 0.0f, Color(), Vec2f(), 0.0f) {
 		}
 
-		const RenderData& Particle::getRenderData() const {
-			return sprite.renderData;
-		}
-		Transform& Particle::getTransform() {
-			return sprite.transform;
+		Sprite& Particle::getSprite() {
+			return sprite;
 		}
 
 		void Particle::setVelocity(const Vec2f& velocity) {
@@ -31,18 +28,8 @@ namespace sani {
 		void Particle::setAngularVelocity(const float32 angularVelocity) {
 			this->angularVelocity = angularVelocity;
 		}
-		void Particle::setColor(const Color& color) {
-			sprite.color = color;
-		}
 		void Particle::setTimeToLive(const float32 time) {
 			this->timeToLive = time;
-		}
-		void Particle::setTexture(Texture2D* const texture) {
-			SANI_ASSERT(texture != nullptr);
-
-			sprite.texture = texture;
-
-			updateRenderData(sprite);
 		}
 
 		bool Particle::alive() const {
