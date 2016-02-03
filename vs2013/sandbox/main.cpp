@@ -195,7 +195,7 @@ void initialize(SaNiEngine* const engine) {
 	
 
 	StringConverter conv;
-	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nniggas");
+	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
 	createText(font, gg, graphicsDevice, engine, rects);
 
 	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();

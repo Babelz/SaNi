@@ -1,7 +1,6 @@
 #pragma once
 
 #include "sani/graphics/renderables/particle_emitter.hpp"
-#include "sani/resource/texture2d.hpp"
 
 namespace sani {
 
