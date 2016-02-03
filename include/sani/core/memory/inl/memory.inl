@@ -4,14 +4,13 @@
 
 namespace sani {
 	
-	uint32 align(const uint32 bytes) {
+	uint32 pad(const uint32 bytes) {
 		const uint32 memmod = bytes % WORD_SIZE;
 
-		if (memmod == 0) return bytes;
+		if (memmod == 0) return 0;
 
 		const uint32 pad = WORD_SIZE - memmod;
-		const uint32 adjusted = bytes + pad;
-
-		return adjusted;
+		
+		return pad;
 	}
 }

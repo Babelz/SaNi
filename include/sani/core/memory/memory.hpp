@@ -30,7 +30,7 @@ static_assert(WORD_SIZE == 4, "WORD_SIZE != 4");
 namespace sani {
 
 	/// Returns the aligned bytes count.
-	inline uint32 align(const uint32 bytes);
+	inline uint32 pad(const uint32 bytes);
 }
 
 #include "sani/core/memory/inl/memory.inl"

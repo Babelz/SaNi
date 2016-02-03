@@ -49,7 +49,7 @@ namespace sani {
 		/// to reserve for storage. This value can contain padding
 		/// to keep the size of the chunk in word boundaries.
 		template<class T> 
-		inline T* allocate(const uint32 bytes);
+		inline T* allocate();
 
 		template<class T>
 		inline bool deallocate(T* element);

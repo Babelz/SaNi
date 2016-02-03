@@ -4,18 +4,21 @@
 namespace sani {
 
 	template<class T>
-	T* HeapPage::allocate(const uint32 size) {
+	T* HeapPage::allocate() {
+		const uint32 storageSize	= sizeof(T);
+		char* handle				= nullptr;
+		
 		// Free memory has been used, check for blocks.
-		if (pagepointer + size > this->size) {
+		if (pagepointer + storageSize > this->size) {
 			if (releasedBlocks.size() == 0) return nullptr;
 
 			HeapBlock& releasedBlock = releasedBlocks.top();
 
 			// Check if we can allocate from released blocks.
-			if (size <= releasedBlock.getSize()) {
+			if (storageSize <= releasedBlock.getSize()) {
 				releasedBlocks.pop();
 			} else {
-				missedBytes += size;
+				missedBytes += storageSize;
 
 				fragmentation = missedBytes / static_cast<float32>(this->size);
 
@@ -23,7 +26,7 @@ namespace sani {
 			}
 
 			// Allocate.
-			const uint32 diff = releasedBlock.getSize() - size;
+			const uint32 diff = releasedBlock.getSize() - storageSize;
 			releasedBlock.reserve();
 
 			if (diff > 0) {
@@ -38,20 +41,23 @@ namespace sani {
 				releasedBlocks.push(block);
 			}
 
-			bytesUsed += size;
+			bytesUsed += storageSize;
 
-			return reinterpret_cast<T*>(releasedBlock.getHandle());
+			handle = releasedBlock.getHandle();
 		} else {
 			// Heap pointer is pointing to some free space that we have left, allocate from there.
-			char* handle = &memory[pagepointer];
+			handle = &memory[pagepointer];
 
-			blocks.push_back(HeapBlock(handle, size));
+			blocks.push_back(HeapBlock(handle, storageSize));
 
-			pagepointer += size;
-			bytesUsed += size;
-
-			return reinterpret_cast<T*>(handle);
+			pagepointer += storageSize;
+			bytesUsed += storageSize;
 		}
+
+		// Align if needed and return.
+		T* element = reinterpret_cast<T*>(handle);
+
+		return element;
 	}
 
 	template<class T>
