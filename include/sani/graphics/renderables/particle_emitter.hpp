@@ -1,19 +1,20 @@
 #pragma once
 
-#include "sani/graphics/renderables/particle.hpp"
 #include "sani/graphics/renderables/renderable.hpp"
 #include "sani/graphics/renderables/particle.hpp"
 #include "sani/platform/time/engine_time.hpp"
+#include "sani/forward_declare.hpp"
 
 #include <vector>
+
+SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
 
 namespace sani {
 
 	namespace graphics {
 
-		using TextureList = std::vector<Texture2D*>;
-		using ParticleRef = std::reference_wrapper<Particle>;
-
+		using TextureList = std::vector<resource::Texture2D*>;
+		
 		class ParticleEmitter final : public Renderable {
 		public:
 			const TextureList textures;

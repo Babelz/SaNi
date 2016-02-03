@@ -10,6 +10,7 @@
 #include <Windows.h>
 
 #endif
+#include "sani/graphics/renderables/particle_emitter.hpp"
 #include "sani/core/memory/memory.hpp"
 #include "sani/engine/services/contracts/render_service_contract.hpp"
 #include "sani/graphics/renderer.hpp"
@@ -52,8 +53,8 @@
 #include <xlocbuf>
 
 using namespace sani::resource;
-using namespace sani::graphics;
 using namespace sani::engine;
+using namespace sani::graphics;
 using namespace sani::engine::messages;
 using namespace sani::engine::services::renderablemanager;
 using namespace sani::engine::services::renderservice;
@@ -136,9 +137,11 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			rects.push_back(rectangle);
 			offx += glyph.xAdvance;
 		}
-		
 	}
 }
+
+#include "sani/graphics/renderables/particle_emitter.hpp"
+//sani::graphics::ParticleEmitter* em;
 
 sani::graphics::Circle* c;
 
@@ -232,7 +235,7 @@ void initialize(SaNiEngine* const engine) {
 }
 
 #include "sani/core/math/trigonometric.hpp"
-
+#include "sani/platform/time/engine_time.hpp"
 
 void update(SaNiEngine* const engine, const sani::EngineTime& time) {
 	c->transform.rotation += 0.001f;

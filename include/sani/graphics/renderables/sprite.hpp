@@ -1,13 +1,12 @@
 #pragma once
 
 #include "sani/graphics/renderables/renderable.hpp"
-#include "sani/forward_declare.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
 
 namespace sani {
 
 	namespace graphics {
-
-		SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
 
 		/// @class Sprite sprite.hpp "sani/graphics/renderables/sprite.hpp"
 		/// @author voidbab

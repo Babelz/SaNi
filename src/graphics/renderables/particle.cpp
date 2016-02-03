@@ -1,9 +1,10 @@
 #include "sani/graphics/renderables/particle.hpp"
-#include "sani/graphics/graphics_effect.hpp"
 #include "sani/resource/texture2d.hpp"
-#include "sani/graphics/transform.hpp"
 
 namespace sani {
+
+	using namespace math;
+	using namespace resource;
 
 	namespace graphics {
 
@@ -46,7 +47,7 @@ namespace sani {
 
 		void Particle::update(const EngineTime& time) {
 			// TODO: add delta to computation.
-			const float32 frameTime = time.getFrameTime();
+			const float32 frameTime = static_cast<float32>(time.getFrameTime());
 			
 			sprite.transform.position.x += velocity.x;
 			sprite.transform.position.y += velocity.y;

@@ -9,7 +9,7 @@ namespace sani {
 	///
 	/// Contains various time variables used to update the engine,
 	/// such as total time and frame time.
-	class EngineTime {
+	class EngineTime final {
 	private:
 		/// Total time elapsed.
 		const float64 totalTime;

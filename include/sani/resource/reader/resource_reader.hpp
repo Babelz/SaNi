@@ -41,10 +41,10 @@ namespace sani {
 				ObjectType* readObject();
 
 				/// Reads int32 rectangle from the stream
-				sani::math::Rectangle<int32> readRectangle();
+				math::Rectangle<int32> readRectangle();
 
 				/// Reads 4x4 float32 matrix from the stream
-				sani::math::Matrix4<float32> readMatrix();
+				math::Matrix4<float32> readMatrix();
 
 				/// Reads the whole asset, this method assumes the 
 				/// type readers are already initialized

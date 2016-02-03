@@ -46,8 +46,5 @@ namespace sani {
 
 			// No need to compute bounds yet and no need to copy vertex data.
 		}
-
-		ParticleEmitter::~ParticleEmitter() {
-		}
 	}
 }

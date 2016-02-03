@@ -1,17 +1,11 @@
 #pragma once
 
+#include "sani/forward_declare.hpp"
 #include "sani/core/math/vector2.hpp"
 #include "sani/graphics/renderables/sprite.hpp"
 #include "sani/platform/time/engine_time.hpp"
 
-SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsEffect);
-SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
-SANI_FORWARD_DECLARE_2(sani, graphics, Transform);
-
 namespace sani {
-
-	using namespace math;
-	using namespace resource;
 
 	namespace graphics {
 
@@ -30,14 +24,14 @@ namespace sani {
 
 			Sprite sprite;
 		public:
-			Particle(Texture2D* const texture, const Vec2f& position, const Vec2f& velocity, const float32 angle, 
-					 const float32 angularVelocity, const Color& color, const Vec2f& size, const float32 timeToLive);
+			Particle(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& velocity, const float32 angle,
+					 const float32 angularVelocity, const Color& color, const math::Vec2f& size, const float32 timeToLive);
 			
-			Particle(Texture2D* const texture);
+			Particle(resource::Texture2D* const texture);
 			
 			Sprite& getSprite();
 			
-			void setVelocity(const Vec2f& velocity);
+			void setVelocity(const math::Vec2f& velocity);
 			void setAngularVelocity(const float32 angularVelocity);
 			void setTimeToLive(const float32 time);
 			
