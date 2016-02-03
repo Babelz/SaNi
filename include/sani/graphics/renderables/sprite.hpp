@@ -24,6 +24,8 @@ namespace sani {
 			Sprite(resource::Texture2D* const texture, const math::Rect32f& bounds);
 			Sprite(resource::Texture2D* const texture, const math::Vec2f& size);
 			Sprite(resource::Texture2D* const texture);
+			
+			~Sprite() = default;
 		};
 
 		inline void recomputeVertices(Sprite& sprite);

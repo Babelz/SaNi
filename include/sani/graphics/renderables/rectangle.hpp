@@ -31,6 +31,8 @@ namespace sani {
 
 			Rectangle(const float32 x, const float32 y, const float32 w, const float32 h);
 			Rectangle(const math::Vec2f& position, const math::Vec2f& size);
+			
+			Rectangle() = default;
 		};
 
 		inline void recomputeVertices(Rectangle& rectangle);

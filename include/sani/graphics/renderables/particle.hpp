@@ -38,6 +38,9 @@ namespace sani {
 
 			/// Returns true if this particle is still alive.
 			bool alive() const;
+			/// Resets the state of the particle so that it can be used 
+			/// again after it has been "marked" as dead.
+			void reset(const Vec2f& position);
 
 			/// Updates the particle.
 			void update(const EngineTime& time);

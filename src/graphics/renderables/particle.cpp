@@ -23,6 +23,13 @@ namespace sani {
 			return elapsedTime < timeToLive;
 		}
 
+		void Particle::reset(const Vec2f& position) {
+			sprite.transform.position.x = position.x;
+			sprite.transform.position.y = position.y;
+
+			elapsedTime = 0.0f;
+		}
+
 		void Particle::update(const EngineTime& time) {
 			// TODO: add delta to computation.
 			const float32 frameTime = time.getFrameTime();
