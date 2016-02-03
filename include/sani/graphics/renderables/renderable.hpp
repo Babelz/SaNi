@@ -14,10 +14,10 @@ namespace sani {
 
 		class Renderer;
 		
-		/// @class Renderable renderable.hpp "sani/graphics/renderable.hpp"
+		/// @class Renderable renderable.hpp "sani/graphics/renderables/renderable.hpp"
 		/// @author voidbab
 		/// 
-		/// Interface for objects that can be rendered to the screen. Contains texture,
+		/// "Interface" for objects that can be rendered to the screen. Contains texture,
 		/// transform and bound data. 
 		class Renderable {
 		public:
@@ -40,6 +40,10 @@ namespace sani {
 					- recomputeVertices
 					- recomputeBounds
 					- canRender
+
+				These operations should have same interface and names as
+				they are used by some managers that require duck typing
+				of these operations.
 			*/
 		};
 

@@ -6,7 +6,7 @@ namespace sani {
 	
 	namespace graphics {
 
-		/// @class Rectangle rectangle.hpp "sani/graphics/rectangle.hpp"
+		/// @class Rectangle rectangle.hpp "sani/graphics/renderables/rectangle.hpp"
 		/// @author voidbab
 		/// 
 		/// Represents a rectangle that can have a fill color, 

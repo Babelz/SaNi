@@ -483,6 +483,9 @@
     <ClCompile Include="..\..\src\resource\sprite_font.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\particle.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

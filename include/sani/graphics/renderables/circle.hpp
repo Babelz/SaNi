@@ -10,7 +10,7 @@ namespace sani {
 		const uint32 VERTICES_ROUGH_CIRCLE = 9;
 		const uint32 VERTICES_SMOOTH_CIRCLE = 36;
 
-		/// @class Circle circle.hpp "sani/graphics/circle.hpp"
+		/// @class Circle circle.hpp "sani/graphics/renderables/circle.hpp"
 		/// @author voidbab
 		/// 
 		/// Represents a circle that can have a fill color, 

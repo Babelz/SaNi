@@ -6,7 +6,7 @@ namespace sani {
 
 	namespace graphics {
 
-		/// @class Triangle triangle.hpp "sani/graphics/triangle.hpp"
+		/// @class Triangle triangle.hpp "sani/graphics/renderables/triangle.hpp"
 		/// @author voidbab
 		/// 
 		/// Represents a triangle that can have a fill color, 

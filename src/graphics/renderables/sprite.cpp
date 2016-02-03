@@ -6,11 +6,11 @@ namespace sani {
 
 	namespace graphics {
 
-		Sprite::Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 h, const float32 w) : Renderable(4, 6, 1) {
+		Sprite::Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(4, 6, 1) {
 			color = color::white;
 
-			localBounds.w = w;
-			localBounds.h = h;
+			localBounds.w = h;
+			localBounds.h = w;
 
 			VertexPositionColorTexture* vertices[] {
 				&renderData.vertices[0],
