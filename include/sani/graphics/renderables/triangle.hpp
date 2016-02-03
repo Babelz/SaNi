@@ -11,7 +11,7 @@ namespace sani {
 		/// 
 		/// Represents a triangle that can have a fill color, 
 		/// texture and border of given color and thickness.
-		class Triangle : public Renderable {
+		class Triangle final : public Renderable {
 		public:
 			// Local position data.
 			math::Vec3f topPoint;

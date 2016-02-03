@@ -10,7 +10,7 @@ namespace sani {
 		const uint32 VERTICES_ROUGH_CIRCLE = 9;
 		const uint32 VERTICES_SMOOTH_CIRCLE = 36;
 
-		class Circle : public Renderable {
+		class Circle final : public Renderable {
 		public:
 			float32 borderThickness;
 			Color borderFill;

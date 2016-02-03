@@ -354,6 +354,7 @@
     <ClInclude Include="..\..\include\sani\graphics\layer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\layer_type.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\circle.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\particle_emitter.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderables.hpp" />

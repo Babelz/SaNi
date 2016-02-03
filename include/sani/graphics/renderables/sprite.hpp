@@ -13,7 +13,7 @@ namespace sani {
 		/// @author voidbab
 		///
 		/// Basic sprite class defined by transform, texture, effect and source.
-		class Sprite : public Renderable {
+		class Sprite final : public Renderable {
 		public:
 			Color color;
 

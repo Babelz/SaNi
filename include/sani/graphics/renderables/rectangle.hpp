@@ -12,7 +12,7 @@ namespace sani {
 		/// Represents a rectangle that can have a fill color, 
 		/// texture and border of given color and thickness.
 		/// Uses indexing for rendering.
-		class Rectangle : public Renderable {
+		class Rectangle final : public Renderable {
 		public:
 			/*
 				Element data layout
