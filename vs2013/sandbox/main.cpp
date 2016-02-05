@@ -206,7 +206,7 @@ void initialize(SaNiEngine* const engine) {
 	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
 	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
-	auto erkki = resources->load<Texture2D>("erkki");
+	auto erkki = resources->load<Texture2D>("tuksu");
 	circle->texture = erkki;
 	circle->fill = color::white;
 	circle->textureSource.w = static_cast<float32>(erkki->getWidth());

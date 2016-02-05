@@ -81,62 +81,85 @@ namespace sani {
 				float xmin, xmax, ymin, ymax;
 			};
 
-			static void importGlyph(FontDescription* desc, unsigned long character, FT_Face face, Glyph& out) {
-				
-				out.character = character;
+			static void renderOutline(FT_Face face, const int32 outlineWidth, std::vector<Span>& outlineSpans) {
+				FT_Stroker stroker = nullptr;
+				FT_Glyph glyph = nullptr;
+				FT_Outline* outline = nullptr;
+
+				// setup stroker
+				FT_Stroker_New(library, &stroker);
+
+				FT_Stroker_Set(stroker,
+					outlineWidth,
+					FT_STROKER_LINECAP_ROUND,
+					FT_STROKER_LINEJOIN_ROUND,
+					0);
+
+				if (FT_Get_Glyph(face->glyph, &glyph)){
+					throw std::runtime_error("Cant get glyph");
+				}
+
+				FT_Glyph_StrokeBorder(&glyph, stroker, 0, 1);
+				if (glyph->format != FT_GLYPH_FORMAT_OUTLINE) {
+					throw std::runtime_error("Not outline");
+				}
+
+				// render the outline spans to the span list
+				outline = &reinterpret_cast<FT_OutlineGlyph>(glyph)->outline;
+				renderSpans(outline, &outlineSpans);
+
+				// Clean up afterwards.
+				FT_Stroker_Done(stroker);
+				FT_Done_Glyph(glyph);
+			}
+
+			static Rect buildImageRect(const std::vector<Span>& spans) {
+				Rect rect(
+					static_cast<float>(spans.front().x),
+					static_cast<float>(spans.front().y),
+					static_cast<float>(spans.front().x),
+					static_cast<float>(spans.front().y)
+					);
+
+				for (auto& s : spans) {
+					rect.include(sani::math::Vec2i(s.x, s.y));
+					rect.include(sani::math::Vec2i(s.x + s.width - 1, s.y));
+				}
+				return rect;
+			}
+
+			static void renderSpansToBitmap(const std::vector<Span>& spans, const Rect& imgRect, PixelBitmapContent<sani::math::Vector4<unsigned char>>* to) {
+				const int32 imgWidth = imgRect.width();
+				const int32 imgHeight = imgRect.height();
+				for (const Span& s : spans) {
+					for (int w = 0; w < s.width; ++w) {
+						int32 index = (int)((imgHeight - 1 - (s.y - imgRect.ymin)) * imgWidth + s.x - imgRect.xmin + w);
+						to->setPixel(index, sani::math::Vector4<unsigned char>(255, 255, 255, s.coverage)); // white							
+					}
+				}
+				to->flipVertical();
+			}
+
+			static void importGlyph(FontDescription* desc, unsigned short character, FT_Face face, Glyph& out) {
 				FT_UInt gindex = FT_Get_Char_Index(face, character);
 				
+				std::vector<Span> spans;
+
 				if (FT_Load_Glyph(face, gindex, FT_LOAD_NO_BITMAP)) {
 					throw std::runtime_error("FT_Load_Glyph failed");
 				}
-				
-				if (desc->getOutlineType() == OutlineType::Outer) {
-					if (face->glyph->format != FT_GLYPH_FORMAT_OUTLINE) {
-						throw std::runtime_error("No outline");
-					}
 
-					int32 outlineWidth = static_cast<int32>(desc->getOutlineWidth()* 64.f);
-					FT_Stroker stroker;
-					FT_Glyph glyph;
-					FT_Outline* outline = nullptr;
-					std::vector<Span> spans, outlineSpans;
+				if (face->glyph->format != FT_GLYPH_FORMAT_OUTLINE) {
+					throw std::runtime_error("No outline");
+				}
 
+				out.character = character;
+				out.bearingX = static_cast<float32>(face->glyph->metrics.horiBearingX >> 6); // left
+				out.bearingY = static_cast<float32>(face->glyph->metrics.horiBearingY >> 6); // top
+				out.advance = static_cast<float32>(face->glyph->advance.x >> 6); // offset
+
+				if (desc->getOutlineType() == OutlineType::None) {
 					renderSpans(&face->glyph->outline, &spans);
-
-					// setup stroker
-					FT_Stroker_New(library, &stroker);
-
-					FT_Stroker_Set(stroker,
-						outlineWidth,
-						FT_STROKER_LINECAP_ROUND,
-						FT_STROKER_LINEJOIN_ROUND,
-						0);
-
-					if (FT_Get_Glyph(face->glyph, &glyph)){
-						throw std::runtime_error("Cant get glyph");
-					}
-
-					FT_Glyph_StrokeBorder(&glyph, stroker, 0, 1);
-					if (glyph->format != FT_GLYPH_FORMAT_OUTLINE) {
-						throw std::runtime_error("Not outline");
-					}
-
-					// render the outline spans to the span list
-					outline = &reinterpret_cast<FT_OutlineGlyph>(glyph)->outline;
-					renderSpans(outline, &outlineSpans);
-
-					// Clean up afterwards.
-					FT_Stroker_Done(stroker);
-					FT_Done_Glyph(glyph);
-
-
-					float32 bearingX = static_cast<float32>(face->glyph->metrics.horiBearingX >> 6); // left
-					float32 bearingY = static_cast<float32>(face->glyph->metrics.horiBearingY >> 6); // top
-					float32 advance = static_cast<float32>(face->glyph->advance.x >> 6); // offset
-
-					out.bearingX = bearingX;
-					out.bearingY = bearingY;
-					out.advance = advance;
 
 					// Its empty, like space etc.
 					if (spans.empty()) {
@@ -145,25 +168,42 @@ namespace sani {
 						return;
 					}
 
-					// build
-					Rect rect(
-						static_cast<float>(spans.front().x),
-						static_cast<float>(spans.front().y),
-						static_cast<float>(spans.front().x),
-						static_cast<float>(spans.front().y)
-						);
+					Rect rect = buildImageRect(spans);
+					// Get some metrics of our image.
+					uint32 imgWidth = static_cast<uint32>(rect.width()),
+						imgHeight = static_cast<uint32>(rect.height()),
+						imgSize = imgWidth * imgHeight;
 
-					for (auto& s : spans) {
-						rect.include(sani::math::Vec2i(s.x, s.y));
-						rect.include(sani::math::Vec2i(s.x + s.width - 1, s.y));
+					PixelBitmapContent<sani::math::Vector4<unsigned char>>* pixels = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(imgWidth, imgHeight);
+					renderSpansToBitmap(spans, rect, pixels);
+
+					out.pixels = pixels;
+
+				}
+				else if (desc->getOutlineType() == OutlineType::Outer) {
+
+					int32 outlineWidth = static_cast<int32>(desc->getOutlineWidth() * 64.f);
+					
+					std::vector<Span> outlineSpans;
+
+					renderSpans(&face->glyph->outline, &spans);
+
+					renderOutline(face, outlineWidth, outlineSpans);
+
+					// Its empty, like space etc.
+					if (spans.empty()) {
+						// create empty bitmap
+						out.pixels = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(0u, 0u);
+						return;
 					}
 
+					Rect rect = buildImageRect(spans);
+
+					// TODO figure out something for this
 					for (auto& s : outlineSpans) {
 						rect.include(sani::math::Vec2i(s.x, s.y));
 						rect.include(sani::math::Vec2i(s.x + s.width - 1, s.y));
 					}
-
-
 
 					// Get some metrics of our image.
 					uint32 imgWidth = static_cast<uint32>(rect.width()),
@@ -172,13 +212,8 @@ namespace sani {
 
 					PixelBitmapContent<sani::math::Vector4<unsigned char>>* pixels = new PixelBitmapContent<sani::math::Vector4<unsigned char>>(imgWidth, imgHeight);
 					
-					for (Span& s : spans) { // outlineSpans actually !!!!! TODO
-						for (int w = 0; w < s.width; ++w) {
-							int32 index = (int)((imgHeight - 1 - (s.y - rect.ymin)) * imgWidth + s.x - rect.xmin + w);
-							pixels->setPixel(index, sani::math::Vector4<unsigned char>(255, 255, 255, s.coverage)); // white							
-						}
-					}
-					pixels->flipVertical();
+					// TODO normal spans too
+					renderSpansToBitmap(outlineSpans, rect, pixels); 
 					out.pixels = pixels;
 				}
 				else {
@@ -205,7 +240,9 @@ namespace sani {
 
 			static uint32 calculateOutputWidth(const std::vector<Glyph>& glyphs) {
 				return std::accumulate(glyphs.begin(), glyphs.end(), 0, [](uint32 r, const Glyph& g) {
-					if (g.pixels->getWidth() == 0u) return 0u;
+					if (g.pixels->getWidth() == 0u) {
+						return r;
+					}
 
 					return 1 + r + g.pixels->getWidth() + 1;
 				});

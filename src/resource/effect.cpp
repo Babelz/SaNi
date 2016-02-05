@@ -8,7 +8,6 @@ namespace sani {
 		Effect::Effect(graphics::GraphicsDevice* device, const String& vcode, const String& fcode) {
 			uint32 vertex, fragment;
 
-			// TODO error check or soemthing?
 			device->compileShader(vertex, vcode.c_str(), graphics::ShaderType::Vertex);
 			device->compileShader(fragment, fcode.c_str(), graphics::ShaderType::Vertex);
 

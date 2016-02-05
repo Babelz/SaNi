@@ -7,7 +7,7 @@
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
 		writer="sani::resource::compiler::Texture2DWriter" />
-	<asset filename="erkki.png" 
+	<!--<asset filename="erkki.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
 		writer="sani::resource::compiler::Texture2DWriter" />
@@ -18,7 +18,7 @@
 	<asset filename="dank_jyge.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
-		writer="sani::resource::compiler::Texture2DWriter" />
+		writer="sani::resource::compiler::Texture2DWriter" />-->
 	<asset filename="polygon.vert" 
 		importer="sani::resource::pipeline::EffectImporter" 
 		processor="sani::resource::processor::EffectProcessor"
