@@ -9,25 +9,25 @@ namespace sani {
 
 	namespace graphics {
 
-		const static int32 INITIAL_BUFFER_SIZE = 32768;
-		const static int32 INITIAL_RENDER_BATCHERS_COUNT = 32;
-		const static int32 INITIAL_INDEX_TRANSFORM_BUFFER_SIZE = 32;
+		const static int32 InitialBufferSize = 32768;
+		const static int32 InitialRenderBatchesCount = 32;
+		const static int32 InitialIndexTransformBufferSize = 32;
 		
 		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
 		// Keep the buffer usage as dynamic (max RAM as the limit).
 
 		Renderer::Renderer(GraphicsDevice* const graphicsDevice) : graphicsDevice(graphicsDevice),
-																   vertices(INITIAL_BUFFER_SIZE, BufferSizing::Dynamic),
-																   indices(INITIAL_BUFFER_SIZE, BufferSizing::Dynamic),
-																   verticesSize(INITIAL_BUFFER_SIZE),
-																   indicesSize(INITIAL_BUFFER_SIZE),
+																   vertices(InitialBufferSize, BufferSizing::Dynamic),
+																   indices(InitialBufferSize, BufferSizing::Dynamic),
+																   verticesSize(InitialBufferSize),
+																   indicesSize(InitialBufferSize),
 																   vertexBuffer(0),
 																   indexBuffer(0),
 																   texture(0),
 																   renderBatchesCount(0),
-																   renderBatcher(defaultEffects, RENDER_STATES_COUNT) {
-			renderBatches.resize(INITIAL_RENDER_BATCHERS_COUNT);
-			indexTransformBuffer.resize(INITIAL_INDEX_TRANSFORM_BUFFER_SIZE);
+																   renderBatcher(defaultEffects, RenderStatesCount) {
+			renderBatches.resize(InitialRenderBatchesCount);
+			indexTransformBuffer.resize(InitialIndexTransformBufferSize);
 		}
 
 		void Renderer::generateDefaultShaders() {
@@ -338,7 +338,7 @@ namespace sani {
 		}
 
 		Renderer::~Renderer() {
-			for (uint32 i = 0; i < RENDER_STATES_COUNT; i++) delete renderSetups[i];
+			for (uint32 i = 0; i < RenderStatesCount; i++) delete renderSetups[i];
 		}
 	}
 }

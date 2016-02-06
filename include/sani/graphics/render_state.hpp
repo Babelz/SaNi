@@ -6,7 +6,7 @@ namespace sani {
 
 	namespace graphics {
 
-		const uint32 RENDER_STATES_COUNT = 3;
+		const uint32 RenderStatesCount = 3;
 
 		/// Defines the state of the render batch.
 		enum class RenderState : uint32 {

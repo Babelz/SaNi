@@ -7,8 +7,8 @@ namespace sani {
 
 	namespace graphics {
 		
-		const uint32 VERTICES_ROUGH_CIRCLE = 9;
-		const uint32 VERTICES_SMOOTH_CIRCLE = 36;
+		const uint32 RoughCircle = 9;
+		const uint32 SmoothCircle = 36;
 
 		/// @class Circle circle.hpp "sani/graphics/renderables/circle.hpp"
 		/// @author voidbab

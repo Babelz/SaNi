@@ -43,7 +43,7 @@ namespace sani {
 		}
 		Circle::Circle(const float32 radius, const uint32 vertices) : Circle(0.0f, 0.0f, radius, vertices) {
 		}
-		Circle::Circle(const float32 radius) : Circle(0.0f, 0.0f, radius, VERTICES_SMOOTH_CIRCLE) {
+		Circle::Circle(const float32 radius) : Circle(0.0f, 0.0f, radius, SmoothCircle) {
 		}
 	}
 }

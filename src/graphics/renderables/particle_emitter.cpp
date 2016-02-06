@@ -12,11 +12,11 @@ namespace sani {
 			as a "proxy" for the particles.
 		*/
 
-		const uint32 VERTICES_IN_SPRITE = 4;
-		const uint32 INDICES_IN_SPRITE	= 6;
+		const uint32 SpriteVerticesCount = 4;
+		const uint32 SpriteIndicesCount	= 6;
 
 		ParticleEmitter::ParticleEmitter(const TextureList& textures, const uint32 maxParticles)
-			: textures(textures), maxParticles(maxParticles), Renderable(VERTICES_IN_SPRITE * maxParticles, maxParticles * INDICES_IN_SPRITE, 1) {
+			: textures(textures), maxParticles(maxParticles), Renderable(SpriteVerticesCount * maxParticles, maxParticles * SpriteIndicesCount, 1) {
 			
 			// Generate particles.
 			SANI_ASSERT(textures.size() != 0);
@@ -24,9 +24,9 @@ namespace sani {
 			for (uint32 i = 0; i < maxParticles; i++) particles.push_back(Particle(*textures.begin()));
 			
 			// Generate indices.
-			const uint32 indicesCount = maxParticles * INDICES_IN_SPRITE;
+			const uint32 indicesCount = maxParticles * SpriteIndicesCount;
 
-			for (uint32 i = 0; i < indicesCount; i += VERTICES_IN_SPRITE) {
+			for (uint32 i = 0; i < indicesCount; i += SpriteVerticesCount) {
 				renderData.vertexIndices[i]		= i;
 				renderData.vertexIndices[i + 1] = i + 1;
 				renderData.vertexIndices[i + 2] = i + 2;
@@ -39,7 +39,7 @@ namespace sani {
 			// Setup render element data.
 			RenderElementData& particleRenderData = renderData.renderElements[0];
 			particleRenderData.first = 0;
-			particleRenderData.last = maxParticles * VERTICES_IN_SPRITE;
+			particleRenderData.last = maxParticles * SpriteVerticesCount;
 			particleRenderData.vertexElements = 9;
 			particleRenderData.offset = 0;
 			particleRenderData.indices = 6;

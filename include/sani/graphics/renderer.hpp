@@ -38,9 +38,9 @@ namespace sani {
 			*/
 
 			// 0 null, 1 and 2 are valid.
-			RenderSetup* renderSetups[RENDER_STATES_COUNT];
+			RenderSetup* renderSetups[RenderStatesCount];
 			// 0 null, 1 and 2 are valid.
-			GraphicsEffect defaultEffects[RENDER_STATES_COUNT];
+			GraphicsEffect defaultEffects[RenderStatesCount];
 
 			// API buffers.
 			uint32 vertexBuffer;

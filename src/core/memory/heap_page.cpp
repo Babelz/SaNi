@@ -3,7 +3,7 @@
 
 namespace sani {
 
-	const float32 FRAGMENTATION_THRESHOLD = 0.10f;
+	const float32 FragmentationTreshhold = 0.10f;
 
 	HeapPage::HeapPage(const uint32 size) : size(size),
 											pagepointer(0),
@@ -87,7 +87,7 @@ namespace sani {
 	}
 
 	bool HeapPage::shouldDefragment() const {
-		return fragmentation >= FRAGMENTATION_THRESHOLD && fragmented();
+		return fragmentation >= FragmentationTreshhold && fragmented();
 	}
 	bool HeapPage::fragmented() const {
 		return missedBytes > 0 || releasedBlocks.size() > 0;
