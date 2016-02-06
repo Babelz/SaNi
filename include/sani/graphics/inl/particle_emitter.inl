@@ -7,59 +7,62 @@ namespace sani {
 	namespace graphics {
 
 		void recomputeVertices(ParticleEmitter& emitter) {
-			// Update sprite vertices.
-			// Copy vertex data from the particles.
-			//uint32 vertexIndex = 0;
-
-			//for (uint32 i = 0; i < emitter.particles.size(); i++) {
-			//	Particle& particle = emitter.particles[i];
-			//	Sprite& sprite = particle.getSprite();
-
-			//	VertexPositionColorTexture* spriteVertices[] {
-			//		&sprite.renderData.vertices[0],		// Top-left.
-			//		&sprite.renderData.vertices[1],		// Top-right.
-			//		&sprite.renderData.vertices[2],	    // Bottom-left.
-			//		&sprite.renderData.vertices[3]		// Bottom-right.
-			//	};
-
-			//	const int32 size = 64;
-
-			//	sprite.localBounds.w = size;
-			//	sprite.localBounds.h = size;
-			//	sprite.transform.position.x = size * i;
-			//	sprite.transform.position.y = 0;
-
-			//	// Update vertices.
-			//	recomputeVertices(sprite);
-
-			//	// Copy vertex data.
-			//	emitter.renderData.vertices[vertexIndex++] = sprite.renderData.vertices[0];		// Top-left.
-			//	emitter.renderData.vertices[vertexIndex++] = sprite.renderData.vertices[1];		// Top-right.
-			//	emitter.renderData.vertices[vertexIndex++] = sprite.renderData.vertices[2];		// Bottom-left.
-			//	emitter.renderData.vertices[vertexIndex++] = sprite.renderData.vertices[3];		// Bottom-right.
-			//}
+			// Update particle data.
+			for (Particle& particle : emitter.particles) recomputeVertices(particle);
 		}
 		void recomputeBounds(ParticleEmitter& emitter) {
-			// Compute bounds of the emitter.
-			// X = min left
-			// W = max right - x
-			// Y = min top
-			// H = max bottom - y
-
 			// This is an quite costly operation, when the emitter
 			// has an initial implementation, pre-compute these values
-			// from the particle attributes we get from the user.
-			//for (Particle& particle : emitter.particles) recomputeBounds(particle.getSprite());
+			// from the particle attributes we get from the user?
 
-			// Recompute emitter bounds.
-			// TODO: recompute emitter bounds.
+			// Update particle bounds and find max x and y.
+			float32 right = 0.0f;
+			float32 bottom = 0.0f;
+
+			for (Particle& particle : emitter.particles) {
+				recomputeBounds(particle);
+				
+				if (particle.globalBounds.right() > right)		right = particle.globalBounds.right();
+				if (particle.globalBounds.bottom() > bottom)	bottom = particle.globalBounds.bottom();
+			}
+
+			// Find min x and y.
+			float32 x = right;
+			float32 y = bottom;
+
+			for (Particle& particle : emitter.particles) {
+				if (particle.globalBounds.left() < x)	x = particle.globalBounds.left();
+				if (particle.globalBounds.top() < y)	y = particle.globalBounds.top();
+			}
+
+			emitter.globalBounds.x = x;
+			emitter.globalBounds.y = y;
+			emitter.globalBounds.w = right - x;
+			emitter.globalBounds.h = bottom - y;
 		}
 
 		void updateRenderData(ParticleEmitter& emitter) {
 			// Update sprites render data.
-			//emitter.renderData.renderElements[0].texture = emitter.particles[0].getSprite().texture->getID();
+			emitter.renderData.renderElements[0].texture = emitter.texture->getID();
 
-			//for (Particle& particle : emitter.particles) updateRenderData(particle.getSprite());
+			if (!emitter.textureSource.isEmpty()) {
+				for (Particle& particle : emitter.particles) {
+					// TODO: sourcing...
+				}
+			} else {
+				for (Particle& particle : emitter.particles) {
+					VertexPositionColorTexture* vertices[] {
+						&particle.vertices[0],
+						&particle.vertices[1],
+						&particle.vertices[2],
+						&particle.vertices[3]
+					};
+
+					applyDefaultRectangleTextureCoordinates(vertices);
+				}
+			}
+
+			updateGroupIdentifier(emitter);
 		}
 
 		void update(ParticleEmitter& emitter, const EngineTime& time) {

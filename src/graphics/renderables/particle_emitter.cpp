@@ -13,19 +13,19 @@ namespace sani {
 
 			// Generate particles.
 			particles.resize(maxParticles);
-			
+
 			// Generate indices.
 			const uint32 indicesCount = maxParticles * ParticleIndicesCount;
-			int32 vertexIndicesPointer = 0;
+			int32 vertexIndexPointer = 0;
 
 			for (uint32 i = 0; i < indicesCount; i += ParticleVerticesCount) {
-				renderData.vertexIndices[vertexIndicesPointer++] = i;
-				renderData.vertexIndices[vertexIndicesPointer++] = i + 1;
-				renderData.vertexIndices[vertexIndicesPointer++] = i + 2;
+				renderData.vertexIndices[vertexIndexPointer++] = i;
+				renderData.vertexIndices[vertexIndexPointer++] = i + 1;
+				renderData.vertexIndices[vertexIndexPointer++] = i + 2;
 				
-				renderData.vertexIndices[vertexIndicesPointer++] = i + 2;
-				renderData.vertexIndices[vertexIndicesPointer++] = i + 1;
-				renderData.vertexIndices[vertexIndicesPointer++] = i + 3;
+				renderData.vertexIndices[vertexIndexPointer++] = i + 2;
+				renderData.vertexIndices[vertexIndexPointer++] = i + 1;
+				renderData.vertexIndices[vertexIndexPointer++] = i + 3;
 			}
 
 			// Setup render element data.
