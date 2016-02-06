@@ -208,6 +208,12 @@
     <Filter Include="include\resource\inl">
       <UniqueIdentifier>{34059104-7a0e-4379-a08b-7d1fa92a4e88}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\hid">
+      <UniqueIdentifier>{ca644640-f44a-451e-a72d-8bf10204d112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\hid">
+      <UniqueIdentifier>{0cb666b1-4acf-4059-9433-a31cd5feac0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -488,6 +494,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\particle_emitter.cpp">
       <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hid\raw_input_listener_win32.cpp">
+      <Filter>src\hid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -988,6 +997,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\inl\particle_emitter.inl">
       <Filter>include\graphics\inl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\hid\keyboard.hpp">
+      <Filter>include\hid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\hid\raw_input_listener.hpp">
+      <Filter>include\hid</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\hid\input_manager.hpp">
+      <Filter>include\hid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

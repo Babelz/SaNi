@@ -220,6 +220,7 @@
     <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\transformable.cpp" />
     <ClCompile Include="..\..\src\graphics\render_data.cpp" />
+    <ClCompile Include="..\..\src\hid\raw_input_listener_win32.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
@@ -381,6 +382,9 @@
     <ClInclude Include="..\..\include\sani\graphics\vertex_mode.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\vertex_position_color_texture.hpp" />
+    <ClInclude Include="..\..\include\sani\hid\input_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\hid\keyboard.hpp" />
+    <ClInclude Include="..\..\include\sani\hid\raw_input_listener.hpp" />
     <ClInclude Include="..\..\include\sani\platform.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
