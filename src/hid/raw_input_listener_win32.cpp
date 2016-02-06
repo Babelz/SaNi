@@ -66,12 +66,58 @@ namespace sani {
 			if (raw->header.dwType == RIM_TYPEKEYBOARD) {
 				const RAWKEYBOARD& rawKB = raw->data.keyboard;
 
-				UINT virtualKey = rawKB.VKey;
-				std::cout << virtualKey << std::endl;
+				UINT vkey = rawKB.VKey;
 				UINT scanCode = rawKB.MakeCode;
 				UINT flags = rawKB.Flags;
 				// fake key, discard it
-				if (virtualKey == 255) return;
+				if (vkey == 255) return;
+
+				// the raw input cant figure out left/right vkeys, so we need to do little hax to get them
+				// MapVirtualKey will fix the right/left problem, but won't work with Alt and CTRL
+				if (vkey == VK_SHIFT) {
+					vkey = MapVirtualKey(scanCode, MAPVK_VSC_TO_VK_EX);
+				}
+				else if (vkey == VK_NUMLOCK) {
+					// correct PAUSE/BREAK and NUM LOCK silliness, and set the extended bit
+					scanCode = (MapVirtualKey(vkey, MAPVK_VK_TO_VSC) | 0x100);
+				}
+
+				const bool isE0 = ((flags & RI_KEY_E0) != 0);
+				const bool isE1 = ((flags & RI_KEY_E1) != 0);
+
+				// for escaped sequences, turn the virtual key into the correct scan code using MapVirtualKey.
+				// however, MapVirtualKey is unable to map VK_PAUSE, hence we map that by hand.
+				if (vkey == VK_PAUSE)
+					scanCode = 0x45;
+				else
+					scanCode = MapVirtualKey(vkey, MAPVK_VK_TO_VSC);
+
+				// decipher the rest, CTRL, alt and so on..
+				switch (vkey)
+				{
+				case VK_CONTROL: vkey = (isE0) ? VK_RCONTROL : VK_LCONTROL; break;
+				case VK_MENU: vkey = (isE0) ? VK_RMENU : VK_LMENU; break;
+					/* numpad enter
+				case VK_RETURN:
+					vkey = (isE0) ? NUMPAD_ENTER 
+					*/
+					// the standard INSERT, DELETE, HOME, END, PRIOR and NEXT keys will always have their e0 bit set, but the
+					// corresponding keys on the NUMPAD will not.
+				case VK_INSERT: vkey = (!isE0) ? VK_NUMPAD0 : VK_INSERT; break;
+					// numpad decimal
+				case VK_DELETE: vkey = (!isE0) ? VK_DECIMAL : VK_DELETE; break;
+				case VK_HOME: vkey = (!isE0) ? VK_NUMPAD7 : VK_HOME; break;
+				case VK_END: vkey = (!isE0) ? VK_NUMPAD1 : VK_END; break;
+				case VK_PRIOR: vkey = (!isE0) ? VK_NUMPAD9 : VK_PRIOR; break;
+				case VK_NEXT: vkey = (!isE0) ? VK_NUMPAD3 : VK_NEXT; break;
+					// the standard arrow keys will always have their e0 bit set, but the
+					// corresponding keys on the NUMPAD will not.
+				case VK_LEFT: vkey = (!isE0) ? VK_NUMPAD4 : VK_LEFT; break;
+				case VK_RIGHT: vkey = (!isE0) ? VK_NUMPAD6 : VK_RIGHT; break;
+				case VK_UP: vkey = (!isE0) ? VK_NUMPAD8 : VK_UP; break;
+				case VK_DOWN: vkey = (!isE0) ? VK_NUMPAD2 : VK_DOWN; break;
+				case VK_CLEAR: vkey = (!isE0) ? VK_NUMPAD5 : VK_CLEAR; break;
+				}
 			}
 		}
 
