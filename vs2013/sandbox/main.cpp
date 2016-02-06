@@ -51,7 +51,7 @@
 #include "sani/resource/sprite_font.hpp"
 #include "sani/resource/spritefont_content.hpp"
 #include <xlocbuf>
-
+#include "sani/hid/raw_input_listener.hpp"
 using namespace sani::resource;
 using namespace sani::engine;
 using namespace sani::graphics;
@@ -70,6 +70,7 @@ namespace sandbox {
 
 FileSystem fileSystem;
 ResourceManager* resources;
+sani::hid::RawInputListener inputListener;
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	SaNiEngine engine(hInstance);
@@ -239,6 +240,8 @@ void initialize(SaNiEngine* const engine) {
 
 	em = new ParticleEmitter(tuksu, 8);
 	layer->add(em);
+
+	inputListener.init();
 }
 
 #include "sani/core/math/trigonometric.hpp"
@@ -249,6 +252,7 @@ void initialize(SaNiEngine* const engine) {
 namespace sandbox {
 	
 	void update(SaNiEngine* const engine, const sani::EngineTime& time) {
+		inputListener.update();
 		c->transform.rotation += 0.001f;
 		c->renderData.renderElements[0].renderMode = RenderMode::TriangleFan;
 		c->textureSource.x = std::cos(time.getTotalTime()) * 32.0f;

@@ -2,6 +2,7 @@
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
 #include "sani/hid/raw_input_listener.hpp"
+#include <iostream>
 
 namespace sani {
 	namespace hid {
@@ -55,6 +56,25 @@ namespace sani {
 			}
 		}
 
+		void RawInputListener::handleRawInput(const MSG& msg) {
+			char buffer[sizeof(RAWINPUT)] = {};
+			UINT size = sizeof(RAWINPUT);
+			GetRawInputData(reinterpret_cast<HRAWINPUT>(msg.lParam), RID_INPUT, buffer, &size, sizeof(RAWINPUTHEADER));
+
+			// extract keyboard raw input data
+			RAWINPUT* raw = reinterpret_cast<RAWINPUT*>(buffer);
+			if (raw->header.dwType == RIM_TYPEKEYBOARD) {
+				const RAWKEYBOARD& rawKB = raw->data.keyboard;
+
+				UINT virtualKey = rawKB.VKey;
+				std::cout << virtualKey << std::endl;
+				UINT scanCode = rawKB.MakeCode;
+				UINT flags = rawKB.Flags;
+				// fake key, discard it
+				if (virtualKey == 255) return;
+			}
+		}
+
 		void RawInputListener::init() {
 			// register mouse
 			RAWINPUTDEVICE device;
@@ -64,8 +84,17 @@ namespace sani {
 			device.dwFlags = 0;
 
 			RegisterRawInputDevices(&device, 1, sizeof(device));
+
 			DWORD error = GetLastError();
 
+			RAWINPUTDEVICE keyboard;
+			keyboard.usUsagePage = 0x01;
+			keyboard.usUsage = 0x06;
+			keyboard.dwFlags = RIDEV_NOLEGACY;        // do not generate legacy messages such as WM_KEYDOWN
+			keyboard.hwndTarget = NULL;
+			RegisterRawInputDevices(&keyboard, 1, sizeof(keyboard));
+
+			error = GetLastError();
 		}
 
 		void RawInputListener::update() {
@@ -76,11 +105,8 @@ namespace sani {
 				DispatchMessage(&msg);
 
 				switch (msg.message) {
-				case WM_KEYDOWN:
-					// key down
-					break;
-				case WM_KEYUP:
-					// key up
+				case WM_INPUT:
+					handleRawInput(msg);
 					break;
 				}
 			}

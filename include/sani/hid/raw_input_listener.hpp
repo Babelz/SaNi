@@ -14,6 +14,7 @@ namespace sani {
 		public:
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 			sani::hid::Key rawKeyToKeyCode(const WPARAM& param);
+			void handleRawInput(const MSG& msg);
 #endif
 			void init();
 			void update();
