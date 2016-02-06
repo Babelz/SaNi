@@ -8,6 +8,19 @@ namespace sani {
 
 		sani::hid::Key RawInputListener::rawKeyToKeyCode(const WPARAM& param) {
 			switch (param) {
+				// Digits
+			case 0x30: return Key::D0;
+			case 0x31: return Key::D1;
+			case 0x32: return Key::D2;
+			case 0x33: return Key::D3;
+			case 0x34: return Key::D4;
+			case 0x35: return Key::D5;
+			case 0x36: return Key::D6;
+			case 0x37: return Key::D7;
+			case 0x38: return Key::D8;
+			case 0x39: return Key::D9;
+
+				// Letters
 			case 0x41: return Key::A;
 			case 0x42: return Key::B;
 			case 0x43: return Key::C;
