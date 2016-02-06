@@ -13,17 +13,14 @@ namespace sani {
 
 	namespace graphics {
 
-		using TextureList = std::vector<resource::Texture2D*>;
-		
 		class ParticleEmitter final : public Renderable {
 		public:
-			const TextureList textures;
 			const uint32 maxParticles;
 
 			/// List containing all the particles we are using.
 			std::vector<Particle> particles;
 
-			ParticleEmitter(const TextureList& textures, const uint32 maxParticles);
+			ParticleEmitter(resource::Texture2D* const texture, const uint32 maxParticles);
 
 			~ParticleEmitter() = default;
 		};

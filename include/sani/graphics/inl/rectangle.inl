@@ -100,15 +100,15 @@ namespace sani {
 			} else {
 				// Use texturing, recompute texture coordinates if needed.
 				if (!rectangle.textureSource.isEmpty()) {
-					math::Vec2f* textureCoordinates[] {
-						&rectangle.renderData.vertices[0].textureCoordinates,
-						&rectangle.renderData.vertices[1].textureCoordinates,
-						&rectangle.renderData.vertices[2].textureCoordinates,
-						&rectangle.renderData.vertices[3].textureCoordinates
+					VertexPositionColorTexture* vertices[] {
+						&rectangle.renderData.vertices[0],
+						&rectangle.renderData.vertices[1],
+						&rectangle.renderData.vertices[2],
+						&rectangle.renderData.vertices[3]
 					};
 
-					computeRectangleTextureCoordinates(textureCoordinates, 
-													   &rectangle.textureSource, 
+					computeRectangleTextureCoordinates(vertices,
+													   rectangle.textureSource, 
 													   static_cast<float32>(rectangle.texture->getWidth()), 
 													   static_cast<float32>(rectangle.texture->getHeight()));
 				}
