@@ -226,13 +226,13 @@ namespace sani {
 		}
 		void Renderer::copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
 			const uint32 indicesCount					= renderElementData->indices;
-			const uint32* indicesData					= reinterpret_cast<const uint32* const>(renderData->vertexIndices.data());
+			const uint32* indicesData					= reinterpret_cast<const uint32*>(renderData->vertexIndices.data());
 
 			const uint32 elementVertexElementsCount		= renderElementData->vertexElements;
 			const uint32 bufferVertexElementsCount		= vertices.getElementsCount() / elementVertexElementsCount;
 			const uint32 vertexOffset					= bufferVertexElementsCount - (renderElementData->last + 1 - renderElementData->first);
 
-			if (indexTransformBuffer.size() < indicesCount) indexTransformBuffer.reserve(indexTransformBuffer.size() * 2);
+			if (indexTransformBuffer.size() < indicesCount) indexTransformBuffer.resize(indexTransformBuffer.size() + indicesCount);
 
 			for (uint32 i = 0; i < indicesCount; i++) indexTransformBuffer[i] = indicesData[i] + vertexOffset;
 

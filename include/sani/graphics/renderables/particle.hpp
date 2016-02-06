@@ -1,50 +1,54 @@
 #pragma once
 
-#include "sani/forward_declare.hpp"
+#include "sani/graphics/vertex_position_color_texture.hpp"
+#include "sani/graphics/transform.hpp"
 #include "sani/core/math/vector2.hpp"
-#include "sani/graphics/renderables/sprite.hpp"
-#include "sani/platform/time/engine_time.hpp"
+#include "sani/core/math/rectangle.hpp"
 
 namespace sani {
 
 	namespace graphics {
 
+		const uint32 ParticleVerticesCount		 = 4;
+		const uint32 ParticleIndicesCount		 = 6;
+		const uint32 ParticleVertexElementsCount = 9;
+
 		/// @class Particle particle.hpp "sani/graphics/renderables/particle.hpp"
 		/// @author voidbab
 		/// 
-		/// Class that wraps all particle related information and the sprite 
-		/// that serves as the visible part of the particle.
+		/// TODO: document
 		class Particle final {
-		private:
+		public:
+			// Particle vertices.
+			VertexPositionColorTexture vertices[ParticleVerticesCount];
+			// Transform of particle.
+			Transform transform;
+
+			// Global bounds of the particle.
+			Rect32f globalBounds;
+			// Local bounds of the particle.
+			Rect32f localBounds;
+
+			// Velocity of the particle.
 			Vec2f velocity;
-			float32 timeToLive;
-			float32 angularVelocity;
 			
+			// Time the particle has until it is being disposed.
+			float32 timeToLive;
+
+			// Time elapsed from spawn.
 			float32 elapsedTime;
 
-			Sprite sprite;
-		public:
-			Particle(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& velocity, const float32 angle,
-					 const float32 angularVelocity, const Color& color, const math::Vec2f& size, const float32 timeToLive);
-			
-			Particle(resource::Texture2D* const texture);
-			
-			Sprite& getSprite();
-			
-			void setVelocity(const math::Vec2f& velocity);
-			void setAngularVelocity(const float32 angularVelocity);
-			void setTimeToLive(const float32 time);
-			
-			/// Returns true if this particle is still alive.
-			bool alive() const;
-			/// Resets the state of the particle so that it can be used 
-			/// again after it has been "marked" as dead.
-			void reset(const Vec2f& position);
+			// Angular velocity of the particle.
+			float32 angularVelocity;
 
-			/// Updates the particle.
-			void update(const EngineTime& time);
+			Particle();
 
 			~Particle() = default;
 		};
+
+		inline void recomputeVertices(Particle& particle);
+		inline void recomputeBounds(Particle& particle);
 	}
 }
+
+#include "sani/graphics/inl/particle.inl"

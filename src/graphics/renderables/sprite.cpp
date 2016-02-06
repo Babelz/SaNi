@@ -7,9 +7,9 @@ namespace sani {
 
 	namespace graphics {
 
-		Sprite::Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(4, 6, 1) {
+		Sprite::Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(4, 6, 1, texture) {
 			SANI_ASSERT(texture != nullptr);
-			
+
 			color = color::white;
 
 			localBounds.w = w;

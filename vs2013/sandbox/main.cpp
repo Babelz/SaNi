@@ -60,7 +60,11 @@ using namespace sani::engine::services::renderablemanager;
 using namespace sani::engine::services::renderservice;
 
 void initialize(SaNiEngine* const engine);
-void update(SaNiEngine* const engine, const sani::EngineTime& time);
+
+namespace sandbox {
+
+	void update(SaNiEngine* const engine, const sani::EngineTime& time);
+}
 
 #if 1
 
@@ -70,7 +74,7 @@ ResourceManager* resources;
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;
-	engine.onUpdate += update;
+	engine.onUpdate += sandbox::update;
 
 	engine.start();
 	
@@ -141,7 +145,7 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 }
 
 #include "sani/graphics/renderables/particle_emitter.hpp"
-//sani::graphics::ParticleEmitter* em;
+sani::graphics::ParticleEmitter* em;
 
 sani::graphics::Circle* c;
 
@@ -232,18 +236,33 @@ void initialize(SaNiEngine* const engine) {
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
+
+	em = new ParticleEmitter(tuksu, 8);
+	layer->add(em);
 }
 
 #include "sani/core/math/trigonometric.hpp"
 #include "sani/platform/time/engine_time.hpp"
 
-void update(SaNiEngine* const engine, const sani::EngineTime& time) {
-	c->transform.rotation += 0.001f;
-	c->textureSource.x = std::sin(time.getTotalTime()) * 64.0f;
-	c->textureSource.y = std::cos(time.getTotalTime()) * 64.0f;
+// Horrible as fuck, can we get something "nicer" 
+// any time soon?...
+namespace sandbox {
 	
-	recomputeVertices(*c);
-	updateRenderData(*c);
+	void update(SaNiEngine* const engine, const sani::EngineTime& time) {
+		c->transform.rotation += 0.001f;
+		c->renderData.renderElements[0].renderMode = RenderMode::TriangleFan;
+		c->textureSource.x = std::cos(time.getTotalTime()) * 32.0f;
+		c->textureSource.y = std::sin(time.getTotalTime()) * 32.0f;
+
+		recomputeVertices(*c);
+		updateRenderData(*c);
+
+		recomputeVertices(*em);
+		updateRenderData(*em);
+		recomputeBounds(*em);
+
+		sani::graphics::update(*em, time);
+	}
 }
 
 #endif

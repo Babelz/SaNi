@@ -45,7 +45,7 @@ namespace sani {
 			renderBatch->indicesBegin = indexElements * sizeof(uint32);
 
 			const RenderState renderState	= renderElementData->texture == 0 ? RenderState::Polygons : RenderState::TexturedPolygons;
-			renderBatch->vertexMode			= renderElementData->indices == 0 ? VertexMode::NoIndexing : VertexMode::Indexed;
+			renderBatch->vertexMode			= renderElementData->indices ==	0 ? VertexMode::NoIndexing : VertexMode::Indexed;
 			renderBatch->renderMode			= renderElementData->renderMode;
 
 			renderBatch->texture			= renderElementData->texture;

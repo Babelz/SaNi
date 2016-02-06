@@ -54,22 +54,26 @@ namespace sani {
 			sprite.globalBounds.x = position.x;
 			sprite.globalBounds.y = position.y;
 			sprite.globalBounds.w = sprite.localBounds.w * scale.x;
-			sprite.globalBounds.w = sprite.localBounds.h * scale.y;
+			sprite.globalBounds.h = sprite.localBounds.h * scale.y;
 		}
 
 		void updateRenderData(Sprite& sprite) {
-			if (!sprite.textureSource.isEmpty()) {
-					math::Vec2f* textureCoordinates[] {
-						&sprite.renderData.vertices[0].textureCoordinates,
-						&sprite.renderData.vertices[1].textureCoordinates,
-						&sprite.renderData.vertices[2].textureCoordinates,
-						&sprite.renderData.vertices[3].textureCoordinates
-					};
+			sprite.renderData.renderElements[0].texture = sprite.texture->getID();
 
-					computeRectangleTextureCoordinates(textureCoordinates, 
-													   &sprite.textureSource, 
+			VertexPositionColorTexture* vertices[] {
+				&sprite.renderData.vertices[0],
+				&sprite.renderData.vertices[1],
+			    &sprite.renderData.vertices[2],
+				&sprite.renderData.vertices[3]
+			};
+
+			if (!sprite.textureSource.isEmpty()) {
+					computeRectangleTextureCoordinates(vertices,
+													   sprite.textureSource, 
 													   static_cast<float32>(sprite.texture->getWidth()),
 													   static_cast<float32>(sprite.texture->getHeight()));
+			} else {
+				applyDefaultRectangleTextureCoordinates(vertices);
 			}
 
 			updateGroupIdentifier(sprite);

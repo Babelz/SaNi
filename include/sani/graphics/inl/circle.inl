@@ -101,7 +101,7 @@ namespace sani {
 				applyCircleTextureCoordinates(circle.renderData.vertices.data(),
 											  circle.transform.rotation,
 											  circle.radius,
-											  &circle.textureSource,
+											  circle.textureSource,
 											  static_cast<float32>(circle.texture->getWidth()),
 											  static_cast<float32>(circle.texture->getHeight()),
 											  circle.renderData.vertices.size());

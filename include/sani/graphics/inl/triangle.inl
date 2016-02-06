@@ -117,14 +117,14 @@ namespace sani {
 				useSolidFill(&triangle);
 			} else {
 				if (!triangle.textureSource.isEmpty()) {
-					math::Vec2f* textureCoordinates[] {
-						&triangle.renderData.vertices[0].textureCoordinates,
-						&triangle.renderData.vertices[1].textureCoordinates,
-						&triangle.renderData.vertices[2].textureCoordinates
+					VertexPositionColorTexture* vertices[] {
+						&triangle.renderData.vertices[0],
+						&triangle.renderData.vertices[1],
+						&triangle.renderData.vertices[2]
 					};
 
-					computeTriangleTextureCoordinates(textureCoordinates, 
-													  &triangle.textureSource, 
+					computeTriangleTextureCoordinates(vertices, 
+													  triangle.textureSource, 
 													  static_cast<float32>(triangle.texture->getWidth()),
 													  static_cast<float32>(triangle.texture->getHeight()));
 				}
