@@ -231,8 +231,8 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	//for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
-	//layer->add(circle);
+	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+	layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
@@ -250,8 +250,9 @@ namespace sandbox {
 	
 	void update(SaNiEngine* const engine, const sani::EngineTime& time) {
 		c->transform.rotation += 0.001f;
-		c->textureSource.x = std::sin(time.getTotalTime()) * 64.0f;
-		c->textureSource.y = std::cos(time.getTotalTime()) * 64.0f;
+		c->renderData.renderElements[0].renderMode = RenderMode::TriangleFan;
+		c->textureSource.x = std::cos(time.getTotalTime()) * 32.0f;
+		c->textureSource.y = std::sin(time.getTotalTime()) * 32.0f;
 
 		recomputeVertices(*c);
 		updateRenderData(*c);
