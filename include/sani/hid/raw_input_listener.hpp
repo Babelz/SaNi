@@ -13,7 +13,7 @@ namespace sani {
 		class RawInputListener {
 		public:
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
-			sani::hid::Key rawKeyToKeyCode(const WPARAM& param);
+			sani::hid::Key rawKeyToKeyCode(const UINT param);
 			void handleRawInput(const MSG& msg);
 #endif
 			void init();

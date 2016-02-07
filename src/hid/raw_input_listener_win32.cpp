@@ -7,8 +7,19 @@
 namespace sani {
 	namespace hid {
 
-		sani::hid::Key RawInputListener::rawKeyToKeyCode(const WPARAM& param) {
-			switch (param) {
+		sani::hid::Key RawInputListener::rawKeyToKeyCode(const UINT vkey) {
+			switch (vkey) {
+
+			case VK_ESCAPE: return Key::Escape;
+			case VK_LCONTROL: return Key::LControl;
+			case VK_LSHIFT: return Key::LShift;
+			case VK_LMENU: return Key::LAlt;
+			case VK_LWIN: return Key::LSystem;
+
+			case VK_RCONTROL: return Key::RControl;
+			case VK_RSHIFT: return Key::RShift;
+			case VK_RMENU: return Key::RAlt;
+			case VK_RWIN: return Key::RSystem;
 				// Digits
 			case 0x30: return Key::D0;
 			case 0x31: return Key::D1;
@@ -118,6 +129,12 @@ namespace sani {
 				case VK_DOWN: vkey = (!isE0) ? VK_NUMPAD2 : VK_DOWN; break;
 				case VK_CLEAR: vkey = (!isE0) ? VK_NUMPAD5 : VK_CLEAR; break;
 				}
+
+				bool isDown = !((flags & RI_KEY_BREAK) != 0);
+				// TODO trigger event
+			}
+			else if (raw->header.dwType == RIM_TYPEMOUSE) {
+				// TODO mouse
 			}
 		}
 
