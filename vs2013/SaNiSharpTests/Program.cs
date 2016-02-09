@@ -35,7 +35,7 @@ namespace SaNi.Tests
             }
         }
 
-        private sealed class CppPInvokeTest : ITest
+        private sealed class CppPInvokeSqrtTest : ITest
         {
             public unsafe void Run()
             {
@@ -63,7 +63,6 @@ namespace SaNi.Tests
         {
             private const int JobIterations = 1000000;
 
-            [MethodImpl(MethodImplOptions.NoOptimization)]
             public void Run()
             {
                 int j = 0;
@@ -76,7 +75,7 @@ namespace SaNi.Tests
             }
         }
 
-        private sealed class CppInvokeLongJobTest: ITest
+        private sealed class CppPInvokeLongJobTest: ITest
         {
             public void Run()
             {
@@ -98,17 +97,17 @@ namespace SaNi.Tests
         {
             var tests = new PerformanceTestCase[] 
             {
-                new PerformanceTestCase("C++ P\\Invoke sqrt", new CppPInvokeTest()),
-                new PerformanceTestCase("C# sqrt", new CSharpSqrtTest()),
+                new PerformanceTestCase("C++ P\\Invoke sqrt", new CppPInvokeSqrtTest()),
                 new PerformanceTestCase("C++\\CLI sqrt", new CppCliWrapperSqrtTest()),
+                new PerformanceTestCase("C# sqrt", new CSharpSqrtTest()),
 
-                new PerformanceTestCase("C++ P\\Invoke long job", new CppInvokeLongJobTest()),
-                new PerformanceTestCase("C# long job", new CSharpLongJobTest()),
-                new PerformanceTestCase("C++\\CLI long job", new CppCliWrapperLongJobTest())
+                new PerformanceTestCase("C++ P\\Invoke long job", new CppPInvokeLongJobTest()),
+                new PerformanceTestCase("C++\\CLI long job", new CppCliWrapperLongJobTest()),
+                new PerformanceTestCase("C# long job", new CSharpLongJobTest())
             };
 
             Array.ForEach(tests, t => t.Run(TestExecutionMethod.Unsafe));
-            Array.ForEach(tests, t => Console.WriteLine("Time took by the \"{0}\" test: {1}ms\n", t.Name, Math.Round(t.Time.TotalMilliseconds, 2)));
+            Array.ForEach(tests, t => Console.WriteLine("Time took by the \"{0}\" test: {1}ms", t.Name, Math.Round(t.Time.TotalMilliseconds, 2)));
 
             Console.ReadKey();
         }
