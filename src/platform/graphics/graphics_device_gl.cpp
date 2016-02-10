@@ -304,7 +304,7 @@ namespace sani {
 		void GraphicsDevice::present() {
 			//Draw the last frame to back buffer.
 			glBindFramebuffer(GL_FRAMEBUFFER, 0); 
-			glClearColor(0, 0, 0, 1);
+			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			glBindTexture(GL_TEXTURE_2D, impl->cImpl.currentRenderTarget->getID());

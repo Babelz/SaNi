@@ -10,13 +10,13 @@ namespace sani {
 		/// 
 		/// Basic viewport implementation.
 		struct Viewport {
-			uint32 x;
-			uint32 y;
+			int32 x;
+			int32 y;
 
 			uint32 width;
 			uint32 height;
 
-			Viewport(const uint32 x, const uint32 y, const uint32 width, const uint32 height);
+			Viewport(const int32 x, const int32 y, const uint32 width, const uint32 height);
 			Viewport(const Viewport& viewport);
 			Viewport();
 
