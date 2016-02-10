@@ -25,26 +25,35 @@ namespace ShaderEditor.GL
         // gdi32.dll.
         [DllImport(GDI_DLL)]
         public static unsafe extern int ChoosePixelFormat(uint hDC, PixelFormatDescriptor* pfd);
+
         [DllImport(GDI_DLL)]
         public static unsafe extern int SetPixelFormat(uint hDC, int iPixelFormat, PixelFormatDescriptor* pfd);
+
         [DllImport(GDI_DLL)]
         public static extern int SwapBuffers(uint hDC);
 
         // opengl32.dll.
         [DllImport(GL_DLL, EntryPoint = "wglMakeCurrent")]
         public static extern int WGLMakeCurrent(uint hDC, int hglrc);
+
         [DllImport(GL_DLL, EntryPoint = "wglCreateContext")]
         public static extern int WGLCreateContext(uint hDC);
+
         [DllImport(GL_DLL, EntryPoint = "glClear")]
         public static extern void GLClear(uint mask);
+
         [DllImport(GL_DLL, EntryPoint = "glClearColor")]
         public static extern void GLClearColor(float r, float g, float b, float a);
+
         [DllImport(GL_DLL, EntryPoint = "glViewport")]
         public static extern void GLViewport(int x, int y, uint w, uint h);
+
         [DllImport(GL_DLL, EntryPoint = "glGetError")]
         public static extern uint GLGetError();
+
         [DllImport(GL_DLL, EntryPoint = "glEnable")]
         public static extern void GLEnable(uint cap);
+
         [DllImport(GL_DLL, EntryPoint = "glBlendFunc")]
         public static extern void GLBlendFunc(uint sfactor, uint dfactor);
 
@@ -68,11 +77,6 @@ namespace ShaderEditor.GL
 
             int glContext = WGLCreateContext(deviceContextLocation);
             WGLMakeCurrent(deviceContextLocation, glContext);
-
-            GLBlendFunc(GL_ENUMS.GL_SRC_ALPHA, GL_ENUMS.GL_ONE_MINUS_SRC_ALPHA);
-            GLEnable(GL_ENUMS.GL_BLEND);
-
-            GLViewport(0, 0, 300, 300);
         }
     }
 }

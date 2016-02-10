@@ -29,6 +29,27 @@ namespace ShaderEditor
         public MainWindow()
         {
             InitializeComponent();
+
+            OpenGLControl glControl = new OpenGLControl();
+            glControl.OpenGLInitialized += glControl_OpenGLInitialized;
+            glControl.OpenGLRender += glControl_OpenGLRender;
+            glHost.Child = glControl;
+
+            glControl.InitializeOpenGL();
+            glControl.StartRendering();
+        }
+
+        private void glControl_OpenGLRender(object sender, EventArgs e)
+        {
+            OpenGLControl glControl = sender as OpenGLControl;
+
+            OpenGL.GLClearColor(0.0f, 0.20f, 0.0f, 1.0f);
+            
+            OpenGL.GLClear(GL_ENUMS.GL_COLOR_BUFFER_BIT);
+        }
+
+        private void glControl_OpenGLInitialized(object sender, EventArgs e)
+        {
         }
     }
 }
