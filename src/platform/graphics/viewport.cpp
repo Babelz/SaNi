@@ -3,10 +3,10 @@
 namespace sani {
 	namespace graphics {
 		
-		Viewport::Viewport(const uint32 x, const uint32 y, const uint32 width, const uint32 height) : x(x),
-																									  y(y),
-																									  width(width),
-																									  height(height) {
+		Viewport::Viewport(const int32 x, const int32 y, const uint32 width, const uint32 height) : x(x),
+																									y(y),
+																									width(width),
+																									height(height) {
 		}
 		Viewport::Viewport(const Viewport& viewport) : x(viewport.x),
 													   y(viewport.y),

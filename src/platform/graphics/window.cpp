@@ -213,8 +213,7 @@ namespace sani {
 				ShowWindow(impl->hWnd, SW_RESTORE);
 
 				impl->cImpl.isMinimized = false;
-			}
-			else {
+			} else {
 				ShowWindow(impl->hWnd, SW_SHOW);
 			}
 		}
