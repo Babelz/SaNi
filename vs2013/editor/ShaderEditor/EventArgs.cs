@@ -8,7 +8,7 @@ namespace ShaderEditor
 {
     public sealed class InitializationEventArgs : EventArgs
     {
-        public static const InitializationEventArgs Empty = new InitializationEventArgs();
+        public static readonly new InitializationEventArgs Empty = new InitializationEventArgs();
 
         public InitializationEventArgs()
             : base()
@@ -18,7 +18,7 @@ namespace ShaderEditor
 
     public sealed class RenderingEventArgs : EventArgs
     {
-        public static const RenderingEventArgs Empty = new RenderingEventArgs();
+        public static readonly new RenderingEventArgs Empty = new RenderingEventArgs();
 
         public RenderingEventArgs()
             : base()

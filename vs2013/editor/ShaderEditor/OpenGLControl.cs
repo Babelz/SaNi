@@ -43,6 +43,9 @@ namespace ShaderEditor
                 SetupRenderingTimer();
             }
         }
+        /// <summary>
+        /// Returns the last frames FPS.
+        /// </summary>
         public int FPS
         {
             get
@@ -93,8 +96,6 @@ namespace ShaderEditor
             graphics.ReleaseHdc(handleDeviceContext);
 
             renderTimeMeasurer.Stop();
-
-            this.frameTime = renderTimeMeasurer.Elapsed.TotalMilliseconds;
         }
 
         private void SetupRenderingTimer()
