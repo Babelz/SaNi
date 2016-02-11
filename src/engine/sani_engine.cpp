@@ -24,6 +24,8 @@
 #include "sani/graphics/renderables/renderables.hpp"
 
 #include "sani/engine/services/cvar_service.hpp"
+#include "sani/core/cvar/cvar.hpp"
+#include "sani/engine/services/contracts/cvar_service_contract.hpp"
 
 #include "sani/graphics/layer.hpp"
 
@@ -192,7 +194,24 @@ namespace sani {
 
 			sani::Time last = sani::Clock::now();
 			sani::Time start = sani::Clock::now();
+
+			// TODO: testing if the cvars get synced.
+			auto* getCVars = createEmptyMessage<messages::DocumentMessage>();
+			const uint32 command = static_cast<uint32>(2);
+
+			getCVars->getRecipients().addRecipient("cvar service");
+			getCVars->setCommand(command);
+
+			routeMessage(getCVars);
+
+			auto* vars = reinterpret_cast<std::vector<CVar* const>*>(getCVars->getData());
 			
+			CVar* const window_height = vars->operator[](0);
+			CVar* const window_width = vars->operator[](1);
+			
+			window_width->write(800);
+			window_height->write(600);
+
 			while (running) {
 				sani::Time current = sani::Clock::now();
 

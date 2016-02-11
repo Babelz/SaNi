@@ -10,6 +10,7 @@
 #include "sani/core/cvar/cvar_compiler.hpp"
 #include "sani/core/cvar/cvar_linker.hpp"
 #include "sani/core/cvar/link_record.hpp"
+#include "sani/platform/environment.hpp"
 
 namespace sani {
 
@@ -57,10 +58,6 @@ namespace sani {
 				}
 			}
 
-			/*
-				TODO: remove duplicated messages.
-			*/
-
 			void CVarService::initialize() {
 				SaNiEngine* const engine = getEngine();
 				
@@ -91,54 +88,118 @@ namespace sani {
 				engine->releaseMessage(openFile);
 			}
 			void CVarService::syncCVars() {
-				if (configuration.canSync) {
-					// TODO: sync cvars.
+				if (!configuration.canSync) return;
+				if (records.size() == 0)	return;
+				
+				SaNiEngine* engine = getEngine();
+				
+				String currentFilename;
+				CVarFile file;
+
+				io::FileStream* stream = nullptr;
+				
+				for (CVarRecord& record : records) {
+					// Swap or open file for the first time.
+					if (record.getFilename() != currentFilename) {
+						auto openFile = engine->createEmptyMessage<messages::QueryMessage>();
+						filesystemservice::openFile(openFile, ConfigRoot + record.getFilename(), io::Filemode::Truncate);
+						engine->routeMessage(openFile);
+						SANI_ASSERT(openFile->wasHandled());
+
+						if (stream != nullptr) {
+							syncFile(file, stream, currentFilename);
+						}
+
+						stream = static_cast<io::FileStream*>(openFile->getResults());
+
+						engine->releaseMessage(openFile);
+						
+						currentFilename = record.getFilename();
+						file = *std::find_if(cvarFiles.begin(), cvarFiles.end(), [&currentFilename](const CVarFile& cvarFile) {
+							return currentFilename == cvarFile.getFilename();
+						});
+					}
+
+					if (record.shouldSync()) {
+						// Sync.
+						file.overwriteLineAtIndex(record.getLineNumber(), record.generateSyncedStringRepresentation());
+					}
 				}
+
+				syncFile(file, stream, currentFilename);
+
+				auto closeFile = engine->createEmptyMessage<messages::CommandMessage>();
+				filesystemservice::closeFile(closeFile, ConfigRoot + currentFilename);
+				engine->routeMessage(closeFile);
+				SANI_ASSERT(closeFile->wasHandled());
+
+				engine->releaseMessage(closeFile);
+			}
+
+			void CVarService::syncFile(CVarFile &file, io::FileStream* stream, String currentFilename)
+			{
+				SaNiEngine* engine = getEngine();
+
+				for (uint32 i = 0; i < file.getLinesCount(); i++) {
+					const String line = file.lineAtIndex(i) + sani::env::NewLine;
+
+					const unsigned char* cstr = reinterpret_cast<const unsigned char*>(line.c_str());
+					
+					stream->write(cstr, line.size());
+				}
+
+				auto closeFile = engine->createEmptyMessage<messages::CommandMessage>();
+				filesystemservice::closeFile(closeFile, ConfigRoot + currentFilename);
+				engine->routeMessage(closeFile);
+				SANI_ASSERT(closeFile->wasHandled());
+
+				engine->releaseMessage(closeFile);
 			}
 
 			void CVarService::generateDefaultConfig() {
-				// TODO: impl default config.
-				//throw std::runtime_error("not implemented");
-				const String defaultCVarConfiguration(
-					"window_width 1280\n"
-					"window_height 720\n"
-					"back_buffer_width 1280\n"
-					"back_buffer_height 720\n"
+				// This is the default configuration that 
+				// games with no cvar file need to use.
+				const String defaultConfiguration(
+					"volatile window_width 1280\n"
+					"volatile window_height 720\n"
+					""
+					"volatile back_buffer_width 1280\n"
+					"volatile back_buffer_height 720\n"
 				);
+
+				std::list<CVarFile> cvarFiles;
+				cvarFiles.push_back(CVarFile("main.cfg", defaultConfiguration));
+
+				compile(cvarFiles);
 			}
 			void CVarService::loadConfig() {
-				const String config("config");
-
-				const String configRoot(config + "\\");
-				
 				SaNiEngine* const engine = getEngine();
 
 				// List all cvar files we can find.
 				auto listFiles = engine->createEmptyMessage<messages::QueryMessage>();
-				filesystemservice::listFiles(listFiles, config);
+				filesystemservice::listFiles(listFiles, Config);
 				engine->routeMessage(listFiles);
 				SANI_ASSERT(listFiles->wasHandled());
 
 				std::vector<String>* files = static_cast<std::vector<String>*>(listFiles->getResults());
-				std::list<CVarFile> cvarFiles;
 
 				// Get contents of each file.
 				for (const String& file : *files) {
 					// Open file.
 					auto openFile = engine->createEmptyMessage<messages::QueryMessage>();
-					filesystemservice::openFile(openFile, configRoot + file, io::Filemode::Read);
+					filesystemservice::openFile(openFile, ConfigRoot + file, io::Filemode::Read);
 					engine->routeMessage(openFile);
 					SANI_ASSERT(openFile->wasHandled());
 					
 					// Get the data string aka files contents.
 					auto getFileDataString = engine->createEmptyMessage<messages::QueryMessage>();
-					filesystemservice::getFileDataString(getFileDataString, configRoot + file);
+					filesystemservice::getFileDataString(getFileDataString, ConfigRoot + file);
 					engine->routeMessage(getFileDataString);
 					SANI_ASSERT(getFileDataString->wasHandled());
 
 					// Close the file.
 					auto closeFile = engine->createEmptyMessage<messages::CommandMessage>();
-					filesystemservice::closeFile(closeFile, configRoot + file);
+					filesystemservice::closeFile(closeFile, ConfigRoot + file);
 					engine->routeMessage(closeFile);
 					SANI_ASSERT(closeFile->wasHandled());
 
@@ -157,7 +218,7 @@ namespace sani {
 
 				engine->releaseMessage(listFiles);
 
-				// Deallocate shared fiels vector.
+				// Deallocate shared files vector.
 				engine->deallocateShared(files);
 
 				// "Compile" all cvar files that we could find.

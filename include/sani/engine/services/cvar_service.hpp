@@ -43,8 +43,12 @@ namespace sani {
 			/// Service providing access to cvars.
 			class CVarService final : public EngineService {
 			private:
+				const String Config = String("config");
+				const String ConfigRoot = String(Config + "\\");
+
 				CVarConfiguration configuration;
 
+				std::list<CVarFile> cvarFiles;
 				std::list<CVarRecord> records;
 				std::list<CVar> cvars;
 
@@ -55,6 +59,8 @@ namespace sani {
 				void initialize();
 				/// Sync all cvars to a file.
 				void syncCVars();
+
+				void syncFile(CVarFile &file, io::FileStream* stream, String currentFilename);
 
 				/// Generate default configuration.
 				void generateDefaultConfig();

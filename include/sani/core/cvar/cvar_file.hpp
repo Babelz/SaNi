@@ -12,11 +12,12 @@ namespace sani {
 	/// a CVar file.
 	class CVarFile final {
 	private:
-		const String filename;
+		String filename;
 
 		std::vector<String> lines;
 	public:
 		CVarFile(const String& filename, const String& contents);
+		CVarFile();
 
 		/// Returns the filename.
 		const String& getFilename() const;
@@ -26,6 +27,7 @@ namespace sani {
 		/// Returns given line at given index.
 		const String& lineAtIndex(const size_t index) const;
 		String& lineAtIndex(const size_t index);
+		void overwriteLineAtIndex(const size_t index, const String& newLine);
 
 		/// Removes line at given index from the "file".
 		void removeLineAtIndex(const size_t index);

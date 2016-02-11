@@ -2,13 +2,14 @@
 #include "sani/core/cvar/cvar_record.hpp"
 #include "sani/core/cvar/cvar_lang.hpp"
 #include <sstream>
+#include <iostream>
 
 namespace sani {
 
 	CVarRecord::CVarRecord(const CVarToken& token, const CVar& cvar) :  token(token),
 																		cvar(cvar) {
 		const String line = token.getLine();
-		const size_t spos = line.find(' ');
+		const size_t spos = line.find_last_of(' ');
 
 		if (spos != line.npos) {
 			originalValue = line.substr(spos + 1, line.size() - spos);

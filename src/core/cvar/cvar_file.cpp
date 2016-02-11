@@ -16,6 +16,8 @@ namespace sani {
 			lines.push_back(line);
 		}
 	}
+	CVarFile::CVarFile() {
+	}
 
 	const String& CVarFile::getFilename() const {
 		return filename;
@@ -28,6 +30,9 @@ namespace sani {
 	}
 	String& CVarFile::lineAtIndex(const size_t index) {
 		return lines[index];
+	}
+	void CVarFile::overwriteLineAtIndex(const size_t index, const String& newLine) {
+		lines[index] = newLine;
 	}
 	
 	void CVarFile::removeLineAtIndex(const size_t index) {

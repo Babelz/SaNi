@@ -25,20 +25,11 @@
     <Filter Include="include\platform">
       <UniqueIdentifier>{6e9262b0-c011-46e7-8a78-54a97cfd0331}</UniqueIdentifier>
     </Filter>
-    <Filter Include="include\platform\win32">
-      <UniqueIdentifier>{b91bce75-4e52-4626-ae98-0dab4adde1b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\platform\linux">
-      <UniqueIdentifier>{79c8e2ba-7e7b-4b65-946d-e8a52efcc42f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\core\math">
       <UniqueIdentifier>{6cfd7f9b-efc7-467f-8b50-2e968cee1649}</UniqueIdentifier>
     </Filter>
     <Filter Include="include\core\math\impl">
       <UniqueIdentifier>{e35b5fde-9d44-4b7a-a8da-e26e296c701e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="include\platform\wp">
-      <UniqueIdentifier>{1da9948e-eeb4-4b34-9459-7c53463d0bf8}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\platform\wp8">
       <UniqueIdentifier>{e287d895-ef32-4a20-876a-c9b587e4e265}</UniqueIdentifier>
@@ -1012,6 +1003,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\impl\preallocated_array.hpp">
       <Filter>include\core\memory\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\environment.hpp">
+      <Filter>include\platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
