@@ -41,12 +41,17 @@ namespace sani {
 		/// the destructor of the given object.
 		template<class T>
 		inline T* allocate();
+		template<class T>
+		inline T* allocate(const uint32 length);
 
 		/// Releases the given object and calls it destructor.
 		/// This object should not be used after this method has 
 		/// been called.
 		template<class T>
 		bool deallocate(T* element);
+		/// Releases the given memory region.
+		template<class T>
+		bool deallocate(T* elements, const uint32 length);
 
 		uint32 pagesCount() const;
 

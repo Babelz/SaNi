@@ -37,7 +37,11 @@ namespace sani {
 				~CVarConfiguration() = default;
 			};
 
-			class CVarService : public EngineService {
+			/// @class CVarService cvar_service.hpp "sani/engine/service/cvar_service.hpp"
+			/// @author voidbab
+			///
+			/// Service providing access to cvars.
+			class CVarService final : public EngineService {
 			private:
 				CVarConfiguration configuration;
 
@@ -47,18 +51,26 @@ namespace sani {
 				void handleDocumentMessage(messages::DocumentMessage* const message);
 				void handleQueryMessage(messages::QueryMessage* const message);
 
+				/// Initialize the service.
 				void initialize();
+				/// Sync all cvars to a file.
 				void syncCVars();
 
+				/// Generate default configuration.
 				void generateDefaultConfig();
+				/// Load configuration.
 				void loadConfig();
 
+				/// Compile given cvar files.
 				void compile(std::list<CVarFile>& files);
 
+				/// Returns cvar with given name.
 				void getCVar(messages::QueryMessage* const message);
 				
+				/// Queries for given cvar.
 				void containsCVar(messages::QueryMessage* const message);
 
+				/// List all services.
 				void listCVars(messages::DocumentMessage* const message);
 			protected:
 				void handleStateMessage(StateMessage* const message) final override;

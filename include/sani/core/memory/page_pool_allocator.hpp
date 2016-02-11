@@ -35,9 +35,11 @@ namespace sani {
 
 		/// Allocates new element of type T.
 		T* allocate();
+		T* allocate(const uint32 length);
 
 		/// Deallocates the given element.
 		bool deallocate(T* element);
+		bool deallocate(T* elements, const uint32 length);
 
 		/// Returns the count of pages.
 		int32 pagesCount() const;

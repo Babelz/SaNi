@@ -5,9 +5,15 @@ namespace sani {
 
 	template<class T>
 	T* HeapPage::allocate() {
-		const uint32 storageSize	= sizeof(T);
-		char* handle				= nullptr;
-		
+		return allocate<T>(1);
+	}
+	template<class T>
+	inline T* HeapPage::allocate(const uint32 length) {
+		const uint32 storageSize = sizeof(T) * length;
+		char* handle = nullptr;
+
+		if (storageSize > size) return nullptr;
+
 		// Free memory has been used, check for blocks.
 		if (pagepointer + storageSize > this->size) {
 			if (releasedBlocks.size() == 0) return nullptr;
@@ -60,16 +66,9 @@ namespace sani {
 		return element;
 	}
 
-	template<class T>
-	bool HeapPage::deallocate(T* element) {
-		SANI_ASSERT(element != nullptr);
-
-		char* const handle = reinterpret_cast<char* const>(element);
-
+	bool HeapPage::internalDeallocate(char* const handle) {
 		for (HeapBlock& block : blocks) {
 			if (block.getHandle() == handle) {
-				element->~T();
-
 				releasedBlocks.push(block);
 
 				block.release();
@@ -79,6 +78,36 @@ namespace sani {
 
 				return true;
 			}
+		}
+
+		return false;
+	}
+
+	template<class T>
+	bool HeapPage::deallocate(T* element) {
+		SANI_ASSERT(element != nullptr);
+
+		char* const handle = reinterpret_cast<char* const>(element);
+
+		if (internalDeallocate(handle)) {
+			element->~T();
+
+			return true;
+		}
+
+		return false;
+	}
+
+	template<class T>
+	inline bool HeapPage::deallocate(T* elements, const uint32 length) {
+		SANI_ASSERT(elements != nullptr);
+
+		char* const firstHandle = reinterpret_cast<char* const>(element);
+		
+		if (internalDeallocate(firstHandle)) {
+			for (uint32 i = 0; i < elements; i++) elements[i]->~T();
+
+			return true;
 		}
 
 		return false;

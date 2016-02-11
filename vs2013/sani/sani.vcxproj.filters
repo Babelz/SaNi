@@ -1007,6 +1007,12 @@
     <ClInclude Include="..\..\include\sani\hid\input_manager.hpp">
       <Filter>include\hid</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\preallocated_array.hpp">
+      <Filter>include\core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\impl\preallocated_array.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

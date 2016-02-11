@@ -306,9 +306,11 @@
     <ClInclude Include="..\..\include\sani\core\memory\impl\heap_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\impl\preallocated_array.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\preallocated_array.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\convert.hpp" />

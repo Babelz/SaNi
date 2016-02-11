@@ -16,15 +16,15 @@ namespace sani {
 		IntPtr lowAddress;
 		IntPtr highAddress;
 
-		const int32 size;
+		const uint32 size;
 		
 		uint64 bytesUsed;
-		int32 poolpointer;
+		uint32 poolpointer;
 
 		std::stack<char*> releasedHandles;
 		char* memory;
 	public:
-		PoolPage(const int32 size);
+		PoolPage(const uint32 size);
 
 		/// Returns true if the given address is located
 		/// in the pages address space.
@@ -35,9 +35,11 @@ namespace sani {
 		/// Attempts to allocate. If this page can't be used
 		/// for allocations, a null pointer will be returned.
 		inline T* allocate();
+		inline T* allocate(const uint32 length);
 		/// Deallocates the given element and calls it's 
 		/// destructor.
 		inline void deallocate(T* element);
+		inline void deallocate(T* elements, const uint32 length);
 
 		uint64 getBytesUsed() const;
 

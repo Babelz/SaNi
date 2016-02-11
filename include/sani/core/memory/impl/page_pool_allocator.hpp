@@ -43,12 +43,35 @@ namespace sani {
 		return page->allocate();
 	}
 	template <class T>
+	T* PagePoolAllocator<T>::allocate(const uint32 length) {
+		if (length > pageSize) return nullptr;
+
+		for (PoolPage<T>* page : pages) {
+			T* elements = page->allocate(length);
+
+			if (elements != nullptr) return elements;
+		}
+
+		PoolPage<T>* page = new PoolPage<T>(pageSize);
+		pages.push_back(page);
+
+		return page->allocate(length);
+	}
+
+	template <class T>
 	bool PagePoolAllocator<T>::deallocate(T* element) {
-		const IntPtr address = reinterpret_cast<IntPtr>(element);
+		return deallocate(element, 1);
+	}
+	
+	template <class T>
+	bool PagePoolAllocator<T>::deallocate(T* elements, const uint32 length) {
+		SANI_ASSERT(length < pageSize);
+
+		const IntPtr address = reinterpret_cast<IntPtr>(&elements[0]);
 
 		for (PoolPage<T>* page : pages) {
 			if (page->isInAddressSpace(address)) {
-				page->deallocate(element);
+				page->deallocate(elements, length);
 
 				return true;
 			}
