@@ -8,7 +8,8 @@ namespace sani {
 	}
 	template<class T>
 	T* HeapAllocator::allocate(const uint32 length) {
-		const uint32 size = sizeof(T) * length;
+		const uint32 sizet = sizeof(T);
+		const uint32 size = sizet * length;
 		T* element = nullptr;
 
 		// Can't allocate as the requested block is larger than the
@@ -57,15 +58,16 @@ namespace sani {
 		SANI_ASSERT(elements != nullptr);
 
 		/// Find the page this block is located at.
-		const IntPtr firstHandle = reinterpret_cast<IntPtr>(elements[0]);
-		HeapPage* elementsPage = nullptr;
+		const IntPtr firstHandle = reinterpret_cast<IntPtr>(&elements[0]);
 		
 		for (HeapPage* page : pages) {
 			if (page->isInAddressSpace(firstHandle)) {
-				elementsPage = page;
+				page->deallocate(elements, length);
 
-				break;
+				return true;
 			}
 		}
+		
+		return false;
 	}
 }

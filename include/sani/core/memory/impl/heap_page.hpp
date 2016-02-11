@@ -97,10 +97,10 @@ namespace sani {
 
 	template<class T>
 	inline bool HeapPage::deallocate(T* elements, const uint32 length) {
-		char* const firstHandle = reinterpret_cast<char* const>(element);
+		char* const firstHandle = reinterpret_cast<char* const>(&elements[0]);
 		
 		if (internalDeallocate(firstHandle)) {
-			for (uint32 i = 0; i < elements; i++) elements[i]->~T();
+			for (uint32 i = 0; i < length; i++) (&elements[i])->~T();
 
 			return true;
 		}

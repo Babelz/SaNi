@@ -1,6 +1,7 @@
 #pragma once
 
 #include "sani/types.hpp"
+#include <iterator>
 
 namespace sani {
 
@@ -9,25 +10,25 @@ namespace sani {
 	///
 	/// Preallocated static array that can be used with custom allocators.
 	/// Works with heap and pool allocators only.
-	template<typename Element, class Allocator>
+	template<typename ElementType, class AllocatorType>
 	class PreallocatedStaticArray final {
 	private:
-		Element* elements;
-		Allocator& allocator;
+		ElementType* elements;
+		AllocatorType& allocator;
 
 		const uint32 length;
-		
-		Element* allocate();
-		void deallocate();
+
+		ElementType* heapAllocate();
+		ElementType* poolAllocate();
+
+		void heapDeallocate();
+		void poolDeallocate();
 	public:
-		PreallocatedStaticArray(const uint32 length, Allocator& allocator);
+		PreallocatedStaticArray(const uint32 length, AllocatorType& allocator);
 
-		/// Does bound check and returns the element pointed by the given index.
-		Element* at(const uint32 index);
-		Element* operator[](const uint32 index);
+		uint32 size() const;
 
-		decltype(auto) begin();
-		decltype(auto) end();
+		ElementType& operator[](const uint32 index);
 
 		~PreallocatedStaticArray();
 
@@ -39,4 +40,4 @@ namespace sani {
 	};
 }
 
-#include "sani/core/memory/preallocated_array.hpp"
+#include "sani/core/memory/impl/preallocated_array.hpp"
