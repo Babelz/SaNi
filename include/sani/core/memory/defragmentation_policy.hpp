@@ -12,6 +12,6 @@ namespace sani {
 
 		/// Manual defragmentation. User must 
 		/// manage defragmentation calls.
-		Manual
+		ManualUserCall
 	};
 }

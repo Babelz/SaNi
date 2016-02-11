@@ -65,6 +65,7 @@ namespace sani {
 	
 	template <class T>
 	bool PagePoolAllocator<T>::deallocate(T* elements, const uint32 length) {
+		SANI_ASSERT(elements != nullptr);
 		SANI_ASSERT(length < pageSize);
 
 		const IntPtr address = reinterpret_cast<IntPtr>(&elements[0]);

@@ -56,18 +56,12 @@ namespace sani {
 
 	template <class T>
 	void PoolPage<T>::deallocate(T* element) {
-		// No address space checks, do it in the allocator.
-		// Just assume this element is located in this pages
-		// address space.
-		SANI_ASSERT(element != nullptr);
-
 		releasedHandles.push(reinterpret_cast<char*>(element));
+
 		element->~T();
 	}
 	template <class T>
 	void PoolPage<T>::deallocate(T* elements, const uint32 length) {
-		SANI_ASSERT(elements != nullptr);
-
 		for (uint32 i = 0; i < length; i++) {
 			T* element = &elements[i];
 

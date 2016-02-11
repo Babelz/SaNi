@@ -84,30 +84,8 @@ struct MA4 {
 
 TEST_CASE("Heap", "[heap]") {
 
-	SECTION("Alignment tests") {
-		// Test that alignment algo works.
-		std::vector<int32> sizes;
-
-		for (int32 i = 1; i < BLOCK_512KB; i++) if (i % 4 != 0) sizes.push_back(i);
-		
-		// Do "alignment" to keep chunks at 4-byte boundaries.
-		for (auto size : sizes) { 
-			const auto bytes = size < 4 ? WORD_SIZE : size;
-			
-			if (bytes == WORD_SIZE) continue;
-			
-			const auto memmod = bytes % WORD_SIZE;
-			const auto pad = (WORD_SIZE - memmod);
-			const auto allocbytes = pad + bytes;
-			const auto allocmod = allocbytes % WORD_SIZE;
-
-			REQUIRE(allocmod == 0);
-			REQUIRE(pad <= WORD_SIZE);
-		}
-	}
-
 	SECTION("Heap with dynamic memory") {
-		sani::HeapAllocator allocator(sizeof(DynamicFoo) * 4, 1, sani::DefragmentationPolicy::Manual);
+		sani::HeapAllocator allocator(sizeof(DynamicFoo) * 4, 1, sani::DefragmentationPolicy::ManualUserCall);
 
 		DynamicFoo* a = allocator.allocate<DynamicFoo>();
 		NEW_DYNAMIC_DEFAULT(DynamicFoo, a);
@@ -128,7 +106,7 @@ TEST_CASE("Heap", "[heap]") {
 	}
 
 	SECTION("Heap allocator pages") {
-		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::Manual);
+		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::ManualUserCall);
 
 		int32* a = allocator.allocate<int32>();
 		int32* b = allocator.allocate<int32>();
@@ -138,7 +116,7 @@ TEST_CASE("Heap", "[heap]") {
 	}
 
 	SECTION("Realloc at first released") {
-		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::Manual);
+		sani::HeapAllocator allocator(8, 1, sani::DefragmentationPolicy::ManualUserCall);
 
 		int32* a = allocator.allocate<int32>();
 		int32* b = allocator.allocate<int32>();
@@ -154,7 +132,7 @@ TEST_CASE("Heap", "[heap]") {
 	}
 
 	SECTION("Alloc diff types") {
-		sani::HeapAllocator allocator(16, 1, sani::DefragmentationPolicy::Manual);
+		sani::HeapAllocator allocator(16, 1, sani::DefragmentationPolicy::ManualUserCall);
 
 		Foo* foo = allocator.allocate<Foo>();
 		Kek* kek = allocator.allocate<Kek>();
@@ -188,7 +166,7 @@ TEST_CASE("Heap", "[heap]") {
 	}
 
 	SECTION("Alloc diff types") {
-		sani::HeapAllocator allocator(16, 1, sani::DefragmentationPolicy::Manual);
+		sani::HeapAllocator allocator(16, 1, sani::DefragmentationPolicy::ManualUserCall);
 
 		// Heap: | 4 | 4 | 4 | 4 |
 		int* a = allocator.allocate<int>();
@@ -215,7 +193,7 @@ TEST_CASE("Heap", "[heap]") {
 	}
 
 	SECTION("Fragmentation") {
-		sani::HeapAllocator allocator(64, 1, sani::DefragmentationPolicy::Manual);
+		sani::HeapAllocator allocator(64, 1, sani::DefragmentationPolicy::ManualUserCall);
 		REQUIRE(!allocator.fragmented());
 
 		// Fill.

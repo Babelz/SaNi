@@ -12,8 +12,6 @@ namespace sani {
 		const uint32 storageSize = sizeof(T) * length;
 		char* handle = nullptr;
 
-		if (storageSize > size) return nullptr;
-
 		// Free memory has been used, check for blocks.
 		if (pagepointer + storageSize > this->size) {
 			if (releasedBlocks.size() == 0) return nullptr;
@@ -27,6 +25,7 @@ namespace sani {
 				missedBytes += storageSize;
 
 				fragmentation = missedBytes / static_cast<float32>(this->size);
+				fragmentation = fragmentation > 1.0f ? 1.0f : fragmentation;
 
 				return nullptr;
 			}
@@ -85,8 +84,6 @@ namespace sani {
 
 	template<class T>
 	bool HeapPage::deallocate(T* element) {
-		SANI_ASSERT(element != nullptr);
-
 		char* const handle = reinterpret_cast<char* const>(element);
 
 		if (internalDeallocate(handle)) {
@@ -100,8 +97,6 @@ namespace sani {
 
 	template<class T>
 	inline bool HeapPage::deallocate(T* elements, const uint32 length) {
-		SANI_ASSERT(elements != nullptr);
-
 		char* const firstHandle = reinterpret_cast<char* const>(element);
 		
 		if (internalDeallocate(firstHandle)) {

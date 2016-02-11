@@ -46,12 +46,16 @@ namespace sani {
 
 	template<class T>
 	bool HeapAllocator::deallocate(T* element) {
+		SANI_ASSERT(element != nullptr);
+
 		for (HeapPage* page : pages) if (page->deallocate<T>(element)) return true;
 
 		return false;
 	}
 	template<class T>
 	bool HeapAllocator::deallocate(T* elements, const uint32 length) {
+		SANI_ASSERT(elements != nullptr);
+
 		/// Find the page this block is located at.
 		const IntPtr firstHandle = reinterpret_cast<IntPtr>(elements[0]);
 		HeapPage* elementsPage = nullptr;
@@ -59,10 +63,9 @@ namespace sani {
 		for (HeapPage* page : pages) {
 			if (page->isInAddressSpace(firstHandle)) {
 				elementsPage = page;
+
 				break;
 			}
 		}
-
-		
 	}
 }

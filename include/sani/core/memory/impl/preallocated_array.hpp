@@ -10,12 +10,6 @@ namespace sani {
 																								  allocator(allocator) {
 	}
 
-
-	template<typename Element, class Allocator>
-	Element* PreallocatedStaticArray::allocate() {
-		if (typeid(allocator) == typeid(HeapAllocator)) return allocator.allocate<()
-	}
-
 	template<typename Element, class Allocator>
 	void PreallocatedStaticArray::deallocate() {
 	}
