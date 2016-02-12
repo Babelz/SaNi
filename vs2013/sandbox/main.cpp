@@ -72,7 +72,30 @@ FileSystem fileSystem;
 ResourceManager* resources;
 sani::hid::RawInputListener inputListener;
 
+#include <stdio.h>
+#include <io.h>
+#include <fcntl.h>
+#include <windows.h>
+
+void openConsole() {
+	AllocConsole();
+
+	HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
+	int hCrt = _open_osfhandle((long)handle_out, 0x4000);
+	FILE* hf_out = _fdopen(hCrt, "w");
+	setvbuf(hf_out, NULL, _IONBF, 1);
+	*stdout = *hf_out;
+
+	HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
+	hCrt = _open_osfhandle((long)handle_in, 0x4000);
+	FILE* hf_in = _fdopen(hCrt, "r");
+	setvbuf(hf_in, NULL, _IONBF, 128);
+	*stdin = *hf_in;
+}
+
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+	openConsole();
+
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;
 	engine.onUpdate += sandbox::update;
@@ -240,7 +263,7 @@ void initialize(SaNiEngine* const engine) {
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(erkki, 128);
+	em = new ParticleEmitter(erkki, 32);
 	em->transform.position.x = 1280 / 2.0f;
 	em->transform.position.y = 720 / 2.0f;
 
@@ -259,7 +282,7 @@ void initialize(SaNiEngine* const engine) {
 // Horrible as fuck, can we get something "nicer" 
 // any time soon?...
 namespace sandbox {
-	
+
 	void update(SaNiEngine* const engine, const sani::EngineTime& time) {
 		inputListener.update();
 		c->transform.rotation += 0.001f;

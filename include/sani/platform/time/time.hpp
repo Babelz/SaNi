@@ -18,4 +18,6 @@ namespace sani {
 	float32 toSeconds(const Time& time);
 
 	float32 toMilliseconds(const Time& time);
+
+	float32 toMicroSeconds(const Time& time);
 }

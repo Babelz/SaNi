@@ -17,4 +17,8 @@ namespace sani {
 	float32 toMilliseconds(const Time& time) {
 		return static_cast<float32>(std::chrono::duration_cast<std::chrono::milliseconds>(time.time_since_epoch()).count());
 	}
+
+	float32 toMicroSeconds(const Time& time) {
+		return static_cast<float32>(std::chrono::duration_cast<std::chrono::microseconds>(time.time_since_epoch()).count());
+	}
 }
