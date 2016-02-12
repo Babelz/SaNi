@@ -11,8 +11,16 @@ namespace sani {
 		
 			SANI_ASSERT(texture != nullptr);
 
+			// Create default setup.
+			ParticleRenderSetup defaultSetup;
+			defaultSetup.texture = texture;
+			defaultSetup.source = Rect32f(0.0f, 0.0f,  static_cast<float32>(texture->getWidth()),  static_cast<float32>(texture->getHeight()));
+			generator.setups.push_back(defaultSetup);
+
 			// Generate particles.
-			particles.resize(maxParticles);
+			for (uint32 i = 0; i < maxParticles; i++) {
+				particles.push_back(Particle(texture));
+			}
 
 			// Generate indices.
 			const uint32 indicesCount = maxParticles * ParticleIndicesCount;

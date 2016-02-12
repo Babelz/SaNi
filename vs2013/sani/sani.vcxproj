@@ -445,7 +445,6 @@
     <None Include="..\..\include\sani\graphics\inl\buffer.inl" />
     <None Include="..\..\include\sani\graphics\inl\camera2d.inl" />
     <None Include="..\..\include\sani\graphics\inl\circle.inl" />
-    <None Include="..\..\include\sani\graphics\inl\particle.inl" />
     <None Include="..\..\include\sani\graphics\inl\rectangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\renderable.inl" />
     <None Include="..\..\include\sani\graphics\inl\render_element_data.inl" />

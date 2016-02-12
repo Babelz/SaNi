@@ -1,9 +1,11 @@
 #pragma once
 
-#include "sani/graphics/vertex_position_color_texture.hpp"
-#include "sani/graphics/transform.hpp"
 #include "sani/core/math/vector2.hpp"
 #include "sani/core/math/rectangle.hpp"
+#include "sani/graphics/renderables/sprite.hpp"
+#include "sani/forward_declare.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
 
 namespace sani {
 
@@ -16,18 +18,11 @@ namespace sani {
 		/// @class Particle particle.hpp "sani/graphics/renderables/particle.hpp"
 		/// @author voidbab
 		/// 
-		/// TODO: document
+		/// Represents a single particle.
 		class Particle final {
 		public:
-			// Particle vertices.
-			VertexPositionColorTexture vertices[ParticleVerticesCount];
-			// Transform of particle.
-			Transform transform;
-
-			// Global bounds of the particle.
-			Rect32f globalBounds;
-			// Local bounds of the particle.
-			Rect32f localBounds;
+			// Sprite of the particle.
+			Sprite sprite;
 
 			// Velocity of the particle.
 			Vec2f velocity;
@@ -41,14 +36,9 @@ namespace sani {
 			// Angular velocity of the particle.
 			float32 angularVelocity;
 
-			Particle();
+			Particle(resource::Texture2D* const texture);
 
 			~Particle() = default;
 		};
-
-		inline void recomputeVertices(Particle& particle);
-		inline void recomputeBounds(Particle& particle);
 	}
 }
-
-#include "sani/graphics/inl/particle.inl"

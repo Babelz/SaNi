@@ -40,7 +40,7 @@
 #elif defined(TARGET_OS_MAC)
 #define SANI_TARGET_PLATFORM		SANI_PLATFORM_MAC
 #else
-#error "Don't know if it's Mac or iPhone/Pad"
+#error "Don't know if it's Mac, iPhone or iPad"
 #endif
 #endif
 

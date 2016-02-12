@@ -1,17 +1,27 @@
 #pragma once
 
 #include "sani/graphics/renderables/particle_emitter.hpp"
+#include "sani/core/math/random.hpp"
 
 namespace sani {
 
 	namespace graphics {
 
 		void recomputeVertices(ParticleEmitter& emitter) {
-			#pragma region 
-			// Update particle data.
-			//for (Particle& particle : emitter.particles) recomputeVertices(particle);
-			#pragma endregion
+			uint32 vertexPointer = 0;
 
+			for (Particle& particle : emitter.particles) {
+				Sprite& sprite = particle.sprite;
+
+				// Recompute particle vertices.
+				recomputeVertices(sprite);
+
+				// Extract vertex data.
+				emitter.renderData.vertices[vertexPointer++] = sprite.renderData.vertices[0];
+				emitter.renderData.vertices[vertexPointer++] = sprite.renderData.vertices[1];
+				emitter.renderData.vertices[vertexPointer++] = sprite.renderData.vertices[2];
+				emitter.renderData.vertices[vertexPointer++] = sprite.renderData.vertices[3];
+			}
 		}
 		void recomputeBounds(ParticleEmitter& emitter) {
 			#pragma region 
@@ -74,16 +84,45 @@ namespace sani {
 
 		}
 
-		void update(ParticleEmitter& emitter, const EngineTime& time) {
-			#pragma region 
-			// Update particles.
-			/*int j = 0; 
-			for (auto& p : emitter.particles) {
-				p.getSprite().transform.position =
-			}*/
-			//for (Particle& particle : emitter.particles) particle.update(time);
-			#pragma endregion
+		inline void initializeParticles(ParticleEmitter& emitter) {
+			for (Particle& particle : emitter.particles) resetParticle(particle);
+		}
 
+		void update(ParticleEmitter& emitter, const EngineTime& time) {
+			// Do rendering stuff the easy way, just "hide"
+			// particles that are not visible so we don't
+			// need to recompute the indices etc.
+
+			const float32 frameTime = time.getFrameTime();
+
+			for (Particle& particle : emitter.particles) {
+				if (particle.elapsedTime > particle.elapsedTime) {
+					resetParticle(particle);
+
+					continue;
+				}
+
+				particle.elapsedTime += frameTime;
+
+				Sprite& sprite = particle.sprite;
+				
+				Vec2f position(sprite.transform.position.x, sprite.transform.position.y);
+				position += particle.velocity * frameTime;
+
+				sprite.transform.position = emitter.transform.position;
+				sprite.transform.rotation += particle.angularVelocity * frameTime;
+				sprite.transform.position.x = position.x;
+				sprite.transform.position.y = position.y;
+			}
+		}
+
+		// Static helpers.
+		static float32 randomFloat(const float32 min, const float32 max) {
+			return math::random
+		}
+
+		inline void resetParticle(Particle& particle) {
+			
 		}
 	}
 }

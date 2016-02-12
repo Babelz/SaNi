@@ -150,6 +150,8 @@ sani::graphics::ParticleEmitter* em;
 
 sani::graphics::Circle* c;
 
+#include "sani/core/memory/memory.hpp"
+
 void initialize(SaNiEngine* const engine) {
 
 	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
@@ -232,13 +234,20 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
-	layer->add(circle);
+	//for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+	//layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
 	em = new ParticleEmitter(tuksu, 8);
+	em->transform.position.x = 0;
+	em->transform.position.y = 0;
+
+	Vec2f psize(32.0f, 32.0f);
+	em->generator.minSize = psize;
+	em->generator.maxSize = psize;
+
 	layer->add(em);
 
 	inputListener.init();
