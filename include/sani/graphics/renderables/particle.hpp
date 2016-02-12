@@ -24,7 +24,7 @@ namespace sani {
 			// Sprite of the particle.
 			Sprite sprite;
 
-			// Velocity of the particle.
+			Vec2f acceleration;
 			Vec2f velocity;
 			
 			// Time the particle has until it is being disposed.
@@ -34,7 +34,11 @@ namespace sani {
 			float32 elapsedTime;
 
 			// Angular velocity of the particle.
+			float32 angularAcceleration;
 			float32 angularVelocity;
+
+			Vec2f scaleAcceleration;
+			Vec2f scaleVelocity;
 
 			Particle(resource::Texture2D* const texture);
 

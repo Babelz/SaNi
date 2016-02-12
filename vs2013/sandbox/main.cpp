@@ -234,19 +234,19 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	//for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
-	//layer->add(circle);
+	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+	layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(tuksu, 8);
-	em->transform.position.x = 0;
-	em->transform.position.y = 0;
+	em = new ParticleEmitter(erkki, 128);
+	em->transform.position.x = 1280 / 2.0f;
+	em->transform.position.y = 720 / 2.0f;
 
-	Vec2f psize(32.0f, 32.0f);
-	em->generator.minSize = psize;
-	em->generator.maxSize = psize;
+	ParticleGenerator& gen = em->generator;
+
+	initializeParticles(*em);
 
 	layer->add(em);
 

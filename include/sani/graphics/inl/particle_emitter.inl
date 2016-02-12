@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/graphics/renderables/particle_emitter.hpp"
-#include "sani/core/math/random.hpp"
+#include "sani/core/math/rand.hpp"
 
 namespace sani {
 
@@ -24,95 +24,69 @@ namespace sani {
 			}
 		}
 		void recomputeBounds(ParticleEmitter& emitter) {
-			#pragma region 
-			// This is an quite costly operation, when the emitter
-			// has an initial implementation, pre-compute these values
-			// from the particle attributes we get from the user?
-
-			// Update particle bounds and find max x and y.
-			//float32 right = 0.0f;
-			//float32 bottom = 0.0f;
-
-			//for (Particle& particle : emitter.particles) {
-			//	recomputeBounds(particle);
-			//	
-			//	if (particle.globalBounds.right() > right)		right = particle.globalBounds.right();
-			//	if (particle.globalBounds.bottom() > bottom)	bottom = particle.globalBounds.bottom();
-			//}
-
-			//// Find min x and y.
-			//float32 x = right;
-			//float32 y = bottom;
-
-			//for (Particle& particle : emitter.particles) {
-			//	if (particle.globalBounds.left() < x)	x = particle.globalBounds.left();
-			//	if (particle.globalBounds.top() < y)	y = particle.globalBounds.top();
-			//}
-
-			//emitter.globalBounds.x = x;
-			//emitter.globalBounds.y = y;
-			//emitter.globalBounds.w = right - x;
-			//emitter.globalBounds.h = bottom - y;
-			#pragma endregion
-
+			for (Particle& particle : emitter.particles) {
+				recomputeBounds(particle.sprite);
+			}
 		}
 
 		void updateRenderData(ParticleEmitter& emitter) {
-			#pragma region 
-			// Update sprites render data.
-			//emitter.renderData.renderElements[0].texture = emitter.texture->getID();
+			for (Particle& particle : emitter.particles) {
+				updateRenderData(particle.sprite);
+			}
 
-			//if (!emitter.textureSource.isEmpty()) {
-			//	for (Particle& particle : emitter.particles) {
-			//		// TODO: sourcing...
-			//	}
-			//} else {
-			//	for (Particle& particle : emitter.particles) {
-			//		VertexPositionColorTexture* vertices[] {
-			//			&particle.vertices[0],
-			//			&particle.vertices[1],
-			//			&particle.vertices[2],
-			//			&particle.vertices[3]
-			//		};
-
-			//		applyDefaultRectangleTextureCoordinates(vertices);
-			//	}
-			//}
-
-			//updateGroupIdentifier(emitter);
-			#pragma endregion
-
+			updateGroupIdentifier(emitter);
 		}
 
-		inline void initializeParticles(ParticleEmitter& emitter) {
-			for (Particle& particle : emitter.particles) resetParticle(particle);
+		void initializeParticles(ParticleEmitter& emitter) {
+			for (Particle& particle : emitter.particles) resetParticle(emitter, particle);
+		}
+
+		static void updateAcceleration(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
+			particle.acceleration.x += generator.accelerationVariance.x * delta;
+			particle.acceleration.y += generator.accelerationVariance.y * delta;
+		}
+		static void updateAngularAcceleration(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
+			particle.angularAcceleration += generator.angularAccelerationVariance * delta;
+		}
+
+		static void applyVelocityUpdates(Particle& particle, const float32 delta) {
+			particle.angularVelocity += particle.angularAcceleration * delta;
+			particle.velocity.x += particle.acceleration.x * delta;
+			particle.velocity.y += particle.acceleration.y * delta;
+		}
+		static void applyPositionUpdates(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
+			particle.sprite.transform.rotation += particle.angularVelocity * delta;
+			particle.sprite.transform.position.x += particle.velocity.x * delta;
+			particle.sprite.transform.position.y += particle.velocity.y * delta;
 		}
 
 		void update(ParticleEmitter& emitter, const EngineTime& time) {
-			// Do rendering stuff the easy way, just "hide"
-			// particles that are not visible so we don't
-			// need to recompute the indices etc.
-
-			const float32 frameTime = time.getFrameTime();
+			const float32 delta = static_cast<float32>(time.getFrameTime());
 
 			for (Particle& particle : emitter.particles) {
-				if (particle.elapsedTime > particle.elapsedTime) {
-					resetParticle(particle);
+				// Particle is "dead", reset it.
+				if (particle.elapsedTime > particle.timeToLive) {
+					resetParticle(emitter, particle);
 
 					continue;
 				}
 
-				particle.elapsedTime += frameTime;
+				particle.elapsedTime += delta;
 
-				Sprite& sprite = particle.sprite;
-				
-				Vec2f position(sprite.transform.position.x, sprite.transform.position.y);
-				position += particle.velocity * frameTime;
+				if (emitter.generator.varyingAcceleration)		updateAcceleration(particle, emitter.generator, delta);
+				if (emitter.generator.varyingAngularVelocity)	updateAngularAcceleration(particle, emitter.generator, delta);
 
-				sprite.transform.position = emitter.transform.position;
+				applyVelocityUpdates(particle, delta);
+				applyPositionUpdates(particle, emitter.generator, delta);
+
+				/*float percent = (static_cast<float>(j) / static_cast<float>(emitter.maxParticles));
+				float rad = percent * 2.0f  * 3.14;
+				j++;
+
 				sprite.transform.rotation += particle.angularVelocity * frameTime;
-				sprite.transform.position.x = position.x;
-				sprite.transform.position.y = position.y;
+				sprite.transform.position.x += particle.velocity.x * cos(rad) * 3.14;
+				sprite.transform.position.y += particle.velocity.y * sin(rad) * 3.14;
+				*/
 			}
 		}
 
@@ -120,11 +94,77 @@ namespace sani {
 		static float32 randomFloat(const float32 min, const float32 max) {
 			return rand::nextFloat32(min, max);
 		}
-		static Vec2f randomVector2(const Vec2f& min, const Vec2f& max) {
+		static Vec2f randomVec2(const Vec2f& min, const Vec2f& max) {
+			Vec2f randVec2;
+
+			randVec2.x = rand::nextFloat32(min.x, max.x);
+			randVec2.y = rand::nextFloat32(min.y, max.y);
+			
+			return randVec2;
+		}
+		static Color randomColor(const Color& min, const Color& max) {
+			Color randColor;
+
+			randColor.r = rand::nextFloat32(min.r, max.r);
+			randColor.g = rand::nextFloat32(min.g, max.g);
+			randColor.b = rand::nextFloat32(min.b, max.b);
+			randColor.a = rand::nextFloat32(min.a, max.a);
+
+			return randColor;
 		}
 
-		inline void resetParticle(Particle& particle) {
+		inline void resetParticle(ParticleEmitter& emitter, Particle& particle) {
+			ParticleGenerator& generator = emitter.generator;
+			Sprite& sprite = particle.sprite;
+			Transform& transform = sprite.transform;
 			
+			// Apply new velocity.
+			particle.velocity = generator.varyingVelocity ? randomVec2(generator.startVelocity, generator.startVelocity + generator.velocityVariance) :
+														   generator.startVelocity;
+
+			// Apply new acceleration.
+			particle.acceleration = generator.varyingAcceleration ? randomVec2(generator.startAcceleration, generator.startAcceleration + generator.accelerationVariance) :
+																	generator.startAcceleration;
+
+			// Apply new size.
+			sprite.localBounds.w = generator.startSize.x;
+			sprite.localBounds.h = generator.startSize.y;
+
+			transform.origin.x = sprite.localBounds.w / 2.0f;
+			transform.origin.y = sprite.localBounds.h / 2.0f;
+
+			// Apply new scale.
+			const Vec2f scale = generator.varyingScale ? randomVec2(generator.startScale, generator.startScale + generator.scaleVariance) :
+													     generator.startScale;
+
+			transform.scale.x = scale.x;
+			transform.scale.y = scale.y;
+
+			// Apply scale acceleration.
+
+			// Apply scale velocity.
+
+			// Apply new angular velocity.
+			particle.angularVelocity = generator.varyingAngularVelocity ? rand::nextFloat32(generator.startAngularVelocity, generator.startAngularVelocity + generator.angularVelocityVariance) :
+																		 generator.startAngularVelocity;
+
+			// Apply new angular acceleration.
+			particle.angularAcceleration = generator.varyingAngularAcceleration ? rand::nextFloat32(generator.startAngularAcceleration, generator.startAngularAcceleration + generator.angularAccelerationVariance) :
+																				  generator.startAngularAcceleration;
+
+			// Apply new time and reset elapsed.
+			particle.timeToLive = generator.varyingTimeToLive ?  rand::nextFloat32(generator.startTimeToLive, generator.startTimeToLive + generator.maxTimeToLiveVariance) :
+																 generator.startTimeToLive;
+			
+			sprite.color = generator.varyingColor ? randomColor(generator.startColor, generator.colorVariance) :
+												   generator.startColor;
+
+			// Reset state.
+			transform.position		= emitter.transform.position;
+			transform.position.x	-= sprite.localBounds.w / 2.0f;
+			transform.position.y	-= sprite.localBounds.w / 2.0f;
+			transform.rotation		= 0.0f;
+			particle.elapsedTime	= 0.0f;
 		}
 	}
 }

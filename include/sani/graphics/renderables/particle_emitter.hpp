@@ -4,6 +4,7 @@
 #include "sani/graphics/renderables/particle.hpp"
 #include "sani/platform/time/engine_time.hpp"
 #include "sani/forward_declare.hpp"
+#include "sani/graphics/color.hpp"
 
 #include <vector>
 
@@ -14,34 +15,54 @@ namespace sani {
 	namespace graphics {
 
 		struct ParticleRenderSetup final {
-			resource::Texture2D* texture		{ nullptr };
 			math::Rect32f source;
-
-			Color color							{ color::white };
-			bool overrideGeneratorColor			{ true };
 		};
 
 		struct ParticleGenerator final {
-			math::Vec2f minSize					{ math::Vec2f(30.0f, 30.0f) };
-			math::Vec2f maxSize					{ math::Vec2f(30.0f, 30.0f) };
-			bool randomSize						{ false };
+			math::Vec2f startVelocity;
+			math::Vec2f velocityVariance;
+			bool varyingVelocity					{ false };
 
-			float32 minAngularVelocity			{ 30.0f };
-			float32 maxAngularVelocity			{ 30.0f };
-			bool randomAngularVelocity			{ 30.0f };
+			math::Vec2f startAcceleration;
+			math::Vec2f accelerationVariance;
+			bool varyingAcceleration;
 
-			float32 minTimeToLive				{ 30.0f };
-			float32 maxTimeToLive				{ 30.0f };
-			bool randomTimeToLive				{ false };
+			math::Vec2f startSize					{ math::Vec2f(32.0f, 32.0f) };
+			
+			math::Vec2f startScale					{ math::Vec2f(1.0f, 1.0f) };
+			math::Vec2f scaleVariance;
+			bool varyingScale						{ false };
 
-			Color minColor						{ color::white };
-			Color maxColor						{ color::white };
-			bool randomColor					{ false };
+			math::Vec2f scaleAcceleration;
+			math::Vec2f scaleAccelerationVariance;
+			bool varyingScaleAcceleration			{ false };
+			bool useScaleAcceleration				{ false };
+
+			math::Vec2f scaleVelocity;
+			math::Vec2f scaleVelocityVariance;
+			bool varyingScaleVelocity				{ false };
+			bool useScaleVelocity					{ false };
+
+			float32 startAngularVelocity			{ 0.0f };
+			float32 angularVelocityVariance			{ 0.0f };
+			bool varyingAngularVelocity				{ false };
+			
+			float32 startAngularAcceleration		{ 0.0f };
+			float32 angularAccelerationVariance		{ 0.0f };
+			bool varyingAngularAcceleration			{ false };
+
+			float32 startTimeToLive					{ 0.0f };
+			float32 maxTimeToLiveVariance			{ 0.0f };
+			bool varyingTimeToLive					{ false };
+
+			Color startColor						{ color::white };
+			Color colorVariance						{ color::white };
+			bool varyingColor						{ false };
 
 			std::vector<ParticleRenderSetup> setups;
-			uint32 minSetupIndex				{ 0 };
-			uint32 maxSetupIndex				{ 0 };
-			bool randomSetup					{ false };
+			uint32 firstSetupIndex					{ 0 };
+			uint32 lastSetupIndex					{ 0 };
+			bool varyingSetup						{ false };
 		};
 
 		class ParticleEmitter final : public Renderable {
@@ -67,7 +88,7 @@ namespace sani {
 
 		inline void initializeParticles(ParticleEmitter& emitter);
 
-		inline void resetParticle(Particle& particle, const ParticleGenerator& generator);
+		inline void resetParticle(ParticleEmitter& generator, Particle& particle);
 	}
 }
 

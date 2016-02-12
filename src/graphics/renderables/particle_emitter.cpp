@@ -13,7 +13,6 @@ namespace sani {
 
 			// Create default setup.
 			ParticleRenderSetup defaultSetup;
-			defaultSetup.texture = texture;
 			defaultSetup.source = Rect32f(0.0f, 0.0f,  static_cast<float32>(texture->getWidth()),  static_cast<float32>(texture->getHeight()));
 			generator.setups.push_back(defaultSetup);
 
@@ -39,10 +38,11 @@ namespace sani {
 			// Setup render element data.
 			RenderElementData& particleRenderData = renderData.renderElements[0];
 			particleRenderData.first = 0;
-			particleRenderData.last = (maxParticles * ParticleVerticesCount);
+			particleRenderData.last = (maxParticles * ParticleVerticesCount) - ParticleVertexElementsCount;
 			particleRenderData.vertexElements = 9;
 			particleRenderData.offset = 0;
 			particleRenderData.indices = indicesCount;
+			particleRenderData.texture = texture->getID();
 
 			renderData.renderElementsCount = 1;
 			// No need to compute bounds yet and no need to copy vertex data.

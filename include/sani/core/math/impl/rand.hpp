@@ -1,7 +1,7 @@
 #include "sani/core/math/rand.hpp"
 #include <random>
 
-#define ASSERT_MIN_MAX() SANI_ASSERT(min < max)
+#define ASSERT_MIN_MAX() SANI_ASSERT(min <= max)
 
 namespace sani {
 
@@ -12,18 +12,10 @@ namespace sani {
 			static std::default_random_engine generator;
 
 			inline int8 nextInt8(const int8 min, const int8 max) {
-				ASSERT_MIN_MAX();
-
-				std::uniform_int_distribution<int8> dist(min, max);
-
-				return dist(generator);
+				return static_cast<int8>(nextInt16(static_cast<int16>(min), static_cast<int16>(max)));
 			}
 			inline uint8 nextUInt8(const int8 min, const int8 max) {
-				ASSERT_MIN_MAX();
-
-				std::uniform_int_distribution<uint8> dist(min, max);
-
-				return dist(generator);
+				return static_cast<uint8>(nextUInt16(static_cast<uint16>(min), static_cast<uint16>(max)));
 			}
 
 			inline int16 nextInt16(const int16 min, const int16 max) {
