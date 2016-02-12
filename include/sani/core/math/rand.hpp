@@ -6,7 +6,7 @@ namespace sani {
 
 	namespace math {
 
-		namespace random {
+		namespace rand {
 
 			inline int8 nextInt8(const int8 min, const int8 max);
 			inline uint8 nextUInt8(const int8 min, const int8 max);
@@ -26,4 +26,4 @@ namespace sani {
 	}
 }
 
-#include "sani/core/math/impl/random.hpp"
+#include "sani/core/math/impl/rand.hpp"

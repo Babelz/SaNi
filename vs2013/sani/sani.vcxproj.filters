@@ -788,12 +788,6 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\math\random.hpp">
-      <Filter>include\core\math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\math\impl\random.hpp">
-      <Filter>include\core\math\impl</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp">
       <Filter>include\engine</Filter>
     </ClInclude>
@@ -1006,6 +1000,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\environment.hpp">
       <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\rand.hpp">
+      <Filter>include\core\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\math\impl\rand.hpp">
+      <Filter>include\core\math\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

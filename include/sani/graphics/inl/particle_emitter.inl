@@ -118,7 +118,9 @@ namespace sani {
 
 		// Static helpers.
 		static float32 randomFloat(const float32 min, const float32 max) {
-			return math::random
+			return rand::nextFloat32(min, max);
+		}
+		static Vec2f randomVector2(const Vec2f& min, const Vec2f& max) {
 		}
 
 		inline void resetParticle(Particle& particle) {

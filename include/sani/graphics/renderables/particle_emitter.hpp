@@ -67,7 +67,7 @@ namespace sani {
 
 		inline void initializeParticles(ParticleEmitter& emitter);
 
-		inline void resetParticle(Particle& particle);
+		inline void resetParticle(Particle& particle, const ParticleGenerator& generator);
 	}
 }
 

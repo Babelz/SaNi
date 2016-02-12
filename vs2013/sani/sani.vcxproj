@@ -281,7 +281,7 @@
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\matrix4.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\impl\random.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\impl\rand.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\impl\vector3.hpp" />
@@ -291,7 +291,7 @@
     <ClInclude Include="..\..\include\sani\core\math\matrix2.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix3.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\matrix4.hpp" />
-    <ClInclude Include="..\..\include\sani\core\math\random.hpp" />
+    <ClInclude Include="..\..\include\sani\core\math\rand.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\rectangle.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\trigonometric.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\value_ptr.hpp" />

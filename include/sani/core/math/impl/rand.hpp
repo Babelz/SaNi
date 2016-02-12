@@ -1,4 +1,4 @@
-#include "sani/core/math/random.hpp"
+#include "sani/core/math/rand.hpp"
 #include <random>
 
 #define ASSERT_MIN_MAX() SANI_ASSERT(min < max)
@@ -7,7 +7,7 @@ namespace sani {
 
 	namespace math {
 		
-		namespace random {
+		namespace rand {
 
 			static std::default_random_engine generator;
 
