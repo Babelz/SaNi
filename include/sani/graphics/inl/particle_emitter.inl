@@ -41,23 +41,30 @@ namespace sani {
 			for (Particle& particle : emitter.particles) resetParticle(emitter, particle);
 		}
 
-		static void updateAcceleration(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
-			particle.acceleration.x += generator.accelerationVariance.x * delta;
-			particle.acceleration.y += generator.accelerationVariance.y * delta;
-		}
-		static void updateAngularAcceleration(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
-			particle.angularAcceleration += generator.angularAccelerationVariance * delta;
-		}
-
-		static void applyVelocityUpdates(Particle& particle, const float32 delta) {
-			particle.angularVelocity += particle.angularAcceleration * delta;
+		// Static helpers.
+		static void updateVelocity(Particle& particle, const float32 delta) {
 			particle.velocity.x += particle.acceleration.x * delta;
 			particle.velocity.y += particle.acceleration.y * delta;
 		}
-		static void applyPositionUpdates(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
+		static void updateAngularVelocity(Particle& particle, const float32 delta) {
+			particle.angularVelocity += particle.angularAcceleration * delta;
+		}
+		static void updateScaleVelocity(Particle& particle, const float32 delta) {
+			particle.scaleVelocity.x += particle.scaleAcceleration.x * delta;
+			particle.scaleVelocity.y += particle.scaleAcceleration.y * delta;
+		}
+		static void updateFader(Particle& particle, const float32 delta) {
+		}
+
+		static void applyVelocity(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
+			generator.velocityFunction(particle, generator, delta);
+		}
+		static void applyAngularVelocity(Particle& particle, const float32 delta) {
 			particle.sprite.transform.rotation += particle.angularVelocity * delta;
-			particle.sprite.transform.position.x += particle.velocity.x * delta;
-			particle.sprite.transform.position.y += particle.velocity.y * delta;
+		}
+		static void applyScaleVelocity(Particle& particle, const float32 delta) {
+			particle.sprite.transform.scale.x += particle.scaleVelocity.x * delta;
+			particle.sprite.transform.scale.y += particle.scaleVelocity.y * delta;
 		}
 
 		void update(ParticleEmitter& emitter, const EngineTime& time) {
@@ -65,7 +72,7 @@ namespace sani {
 
 			for (Particle& particle : emitter.particles) {
 				// Particle is "dead", reset it.
-				if (particle.elapsedTime > particle.timeToLive) {
+				if (particle.elapsedTime > particle.decayTime) {
 					resetParticle(emitter, particle);
 
 					continue;
@@ -73,11 +80,13 @@ namespace sani {
 
 				particle.elapsedTime += delta;
 
-				if (emitter.generator.varyingAcceleration)		updateAcceleration(particle, emitter.generator, delta);
-				if (emitter.generator.varyingAngularVelocity)	updateAngularAcceleration(particle, emitter.generator, delta);
-
-				applyVelocityUpdates(particle, delta);
-				applyPositionUpdates(particle, emitter.generator, delta);
+				updateVelocity(particle, delta);
+				updateAngularVelocity(particle, delta);
+				updateScaleVelocity(particle, delta);
+				
+				applyVelocity(particle, emitter.generator, delta);
+				applyAngularVelocity(particle, delta);
+				applyScaleVelocity(particle, delta);
 
 				/*float percent = (static_cast<float>(j) / static_cast<float>(emitter.maxParticles));
 				float rad = percent * 2.0f  * 3.14;
@@ -113,8 +122,8 @@ namespace sani {
 			return randColor;
 		}
 
-		inline void resetParticle(ParticleEmitter& emitter, Particle& particle) {
-			ParticleGenerator& generator = emitter.generator;
+		void resetParticle(const ParticleEmitter& emitter, Particle& particle) {
+			const ParticleGenerator& generator = emitter.generator;
 			Sprite& sprite = particle.sprite;
 			Transform& transform = sprite.transform;
 			
@@ -123,8 +132,8 @@ namespace sani {
 														   generator.startVelocity;
 
 			// Apply new acceleration.
-			particle.acceleration = generator.varyingAcceleration ? randomVec2(generator.startAcceleration, generator.startAcceleration + generator.accelerationVariance) :
-																	generator.startAcceleration;
+			particle.acceleration = generator.varyingAcceleration ? randomVec2(generator.baseAcceleration, generator.baseAcceleration + generator.accelerationVariance) :
+																	generator.baseAcceleration;
 
 			// Apply new size.
 			sprite.localBounds.w = generator.startSize.x;
@@ -134,36 +143,71 @@ namespace sani {
 			transform.origin.y = sprite.localBounds.h / 2.0f;
 
 			// Apply new scale.
-			const Vec2f scale = generator.varyingScale ? randomVec2(generator.startScale, generator.startScale + generator.scaleVariance) :
-													     generator.startScale;
+			const Vec2f scale = generator.varyingScale ? randomVec2(generator.baseScale, generator.baseScale + generator.scaleVariance) :
+													     generator.baseScale;
 
 			transform.scale.x = scale.x;
 			transform.scale.y = scale.y;
 
 			// Apply scale acceleration.
+			Vec2f scaleAcceleration;
+
+			if (generator.useScaleAcceleration) {
+				scaleAcceleration = generator.varyingScaleAcceleration ? randomVec2(generator.baseScaleAcceleration, generator.baseScaleAcceleration + generator.scaleAccelerationVariance) :
+																		 generator.baseScaleAcceleration;
+			}
+
+			particle.scaleAcceleration = scaleAcceleration;
 
 			// Apply scale velocity.
+			Vec2f scaleVelocity;
+
+			if (generator.useScaleVelocity) {
+				scaleVelocity = generator.varyingScaleVelocity ? randomVec2(generator.baseScaleVelocity, generator.baseScaleVelocity + generator.scaleVelocityVariance) :
+																 generator.baseScaleVelocity;
+			}
+
+			particle.scaleVelocity = scaleVelocity;
 
 			// Apply new angular velocity.
-			particle.angularVelocity = generator.varyingAngularVelocity ? rand::nextFloat32(generator.startAngularVelocity, generator.startAngularVelocity + generator.angularVelocityVariance) :
-																		 generator.startAngularVelocity;
+			particle.angularVelocity = generator.varyingAngularVelocity ? rand::nextFloat32(generator.baseAngularVelocity, generator.baseAngularVelocity + generator.angularVelocityVariance) :
+																		 generator.baseAngularVelocity;
 
 			// Apply new angular acceleration.
-			particle.angularAcceleration = generator.varyingAngularAcceleration ? rand::nextFloat32(generator.startAngularAcceleration, generator.startAngularAcceleration + generator.angularAccelerationVariance) :
-																				  generator.startAngularAcceleration;
+			particle.angularAcceleration = generator.varyingAngularAcceleration ? rand::nextFloat32(generator.baseAngularAcceleration, generator.baseAngularAcceleration + generator.angularAccelerationVariance) :
+																				  generator.baseAngularAcceleration;
 
 			// Apply new time and reset elapsed.
-			particle.timeToLive = generator.varyingTimeToLive ?  rand::nextFloat32(generator.startTimeToLive, generator.startTimeToLive + generator.maxTimeToLiveVariance) :
-																 generator.startTimeToLive;
+			particle.decayTime = generator.varyingDecayTime ?  rand::nextFloat32(generator.baseDecayTime, generator.baseDecayTime + generator.decayTimeVariance) :
+															   generator.baseDecayTime;
 			
-			sprite.color = generator.varyingColor ? randomColor(generator.startColor, generator.colorVariance) :
-												   generator.startColor;
+			sprite.color = generator.varyingColor ? randomColor(generator.color, generator.colorVariance) :
+												    generator.color;
+
+			// Apply new setup.
+			uint32 attributeListIndex = generator.varyingAttributes ? rand::nextInt32(generator.firstAttributeListIndex, generator.lastAttributeListIndex) :
+																	  generator.firstAttributeListIndex;
+
+			const ParticleRenderAttributeList& attributeList = generator.attributeLists[attributeListIndex];
+
+			sprite.textureSource = attributeList.source;
+
+			// Reset position.
+			Vec2f positionOffset;
+
+			if (generator.varyingSpawnLocation) {
+				positionOffset = randomVec2(generator.spawnLocationMinOffset, generator.spawnLocationMaxOffset);
+			}
+
+			transform.position = emitter.transform.position;
+			transform.position.x -= (sprite.localBounds.w / 2.0f);
+			transform.position.y -= (sprite.localBounds.w / 2.0f);
+			transform.position.x += positionOffset.x;
+			transform.position.y += positionOffset.y;
 
 			// Reset state.
-			transform.position		= emitter.transform.position;
-			transform.position.x	-= sprite.localBounds.w / 2.0f;
-			transform.position.y	-= sprite.localBounds.w / 2.0f;
-			transform.rotation		= 0.0f;
+			transform.rotation		= 0.0f; 
+
 			particle.elapsedTime	= 0.0f;
 		}
 	}

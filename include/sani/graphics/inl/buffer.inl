@@ -10,7 +10,9 @@ namespace sani {
 				if (bufferPointer + offset > size) throw std::runtime_error("Buffer overflow");
 			} else if (bufferSizing == BufferSizing::Dynamic) {
 				if (bufferPointer + offset > size) {
-					size *= 2;
+					const uint32 requiredSize = bufferPointer + offset;
+					
+					while (size < requiredSize) size *= 2;
 
 					memory.resize(size);
 				}

@@ -6,15 +6,23 @@ namespace sani {
 
 	namespace graphics {
 
+		void defaultVelocityFunction(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
+			particle.sprite.transform.rotation += particle.angularVelocity * delta;
+			particle.sprite.transform.position.x += particle.velocity.x * delta;
+			particle.sprite.transform.position.y += particle.velocity.y * delta;
+		}
+
 		ParticleEmitter::ParticleEmitter(Texture2D* const texture, const uint32 maxParticles) 
 			: maxParticles(maxParticles), Renderable(maxParticles * ParticleVerticesCount, maxParticles * ParticleVertexElementsCount, 1, texture) {
 		
 			SANI_ASSERT(texture != nullptr);
 
 			// Create default setup.
-			ParticleRenderSetup defaultSetup;
+			ParticleRenderAttributeList defaultSetup;
 			defaultSetup.source = Rect32f(0.0f, 0.0f,  static_cast<float32>(texture->getWidth()),  static_cast<float32>(texture->getHeight()));
-			generator.setups.push_back(defaultSetup);
+			
+			generator.attributeLists.push_back(defaultSetup);
+			generator.velocityFunction = defaultVelocityFunction;
 
 			// Generate particles.
 			for (uint32 i = 0; i < maxParticles; i++) {

@@ -7,7 +7,7 @@ namespace sani {
 
 	namespace graphics {
 
-		Particle::Particle(Texture2D* const texute) : timeToLive(0.0f), 
+		Particle::Particle(Texture2D* const texute) : decayTime(0.0f), 
 													  angularAcceleration(0.0f),
 													  angularVelocity(0.0f),
 													  elapsedTime(0.0f),

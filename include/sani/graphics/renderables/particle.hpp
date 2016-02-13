@@ -28,7 +28,7 @@ namespace sani {
 			Vec2f velocity;
 			
 			// Time the particle has until it is being disposed.
-			float32 timeToLive;
+			float32 decayTime;
 
 			// Time elapsed from spawn.
 			float32 elapsedTime;

@@ -236,8 +236,8 @@ void initialize(SaNiEngine* const engine) {
 	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
 	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
-	auto erkki = resources->load<Texture2D>("tuksu");
-	circle->texture = erkki;
+	auto erkki = resources->load<Texture2D>("part");
+	circle->texture = tuksu;
 	circle->fill = color::white;
 	circle->textureSource.w = static_cast<float32>(erkki->getWidth());
 	circle->textureSource.h = static_cast<float32>(erkki->getHeight());
@@ -263,11 +263,25 @@ void initialize(SaNiEngine* const engine) {
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(erkki, 32);
+	em = new ParticleEmitter(erkki, 1024);
 	em->transform.position.x = 1280 / 2.0f;
-	em->transform.position.y = 720 / 2.0f;
+	em->transform.position.y = 600;
 
 	ParticleGenerator& gen = em->generator;
+
+	gen.startVelocity = { -0.05f, -0.5f };
+	gen.velocityVariance = { 0.10f, 0.0f };
+	gen.varyingVelocity = true;
+
+	gen.baseDecayTime = 250.0f;
+	gen.decayTimeVariance = 100.0f;
+	gen.varyingDecayTime = true;
+
+	gen.spawnLocationMinOffset = { -32.0f, 0.0f };
+	gen.spawnLocationMaxOffset = { 32.0f, 0.0f };
+	gen.varyingSpawnLocation = true;
+
+	gen.color = color::red;
 
 	initializeParticles(*em);
 

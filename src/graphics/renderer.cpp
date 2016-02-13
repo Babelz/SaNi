@@ -4,16 +4,17 @@
 #include "sani/graphics/setups/render_setups.hpp"
 #include "sani/graphics/render_batch.hpp"
 #include "sani/graphics/renderer.hpp"
+#include "sani/core/memory/memory.hpp"
 
 namespace sani {
 
 	namespace graphics {
 
-		const static int32 InitialBufferSize = 32768;
+		const static int32 InitialBufferSize = BLOCK_1024KB / sizeof(float32);
 		const static int32 InitialRenderBatchesCount = 32;
 		const static int32 InitialIndexTransformBufferSize = 32;
 		
-		// For starters, reserve 128kb worth of vertex memory (32768 float32 elements).
+		// For starters, reserve 1024kb worth of vertex memory.
 		// Keep the buffer usage as dynamic (max RAM as the limit).
 
 		Renderer::Renderer(GraphicsDevice* const graphicsDevice) : graphicsDevice(graphicsDevice),
