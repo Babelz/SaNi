@@ -15,11 +15,11 @@ namespace sani {
 
 	namespace graphics {
 
-		struct ParticleGenerator;
+		class ParticleEmitter;
 
-		using VelocityFunction = std::function<void(Particle&, const ParticleGenerator&, const float32)>;
+		using VelocityFunction = std::function<void(Particle&, const ParticleEmitter&, const float32)>;
 
-		void defaultVelocityFunction(Particle& particle, const ParticleGenerator& generator, const float32 delta);
+		void defaultVelocityFunction(Particle& particle, const ParticleEmitter& emitter, const float32 delta);
 
 		struct ParticleRenderAttributeList final {
 			math::Rect32f source;

@@ -6,8 +6,7 @@ namespace sani {
 
 	namespace graphics {
 
-		void defaultVelocityFunction(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
-			particle.sprite.transform.rotation += particle.angularVelocity * delta;
+		void defaultVelocityFunction(Particle& particle, const ParticleEmitter& emitter, const float32 delta) {
 			particle.sprite.transform.position.x += particle.velocity.x * delta;
 			particle.sprite.transform.position.y += particle.velocity.y * delta;
 		}

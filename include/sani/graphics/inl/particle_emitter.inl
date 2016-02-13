@@ -56,8 +56,8 @@ namespace sani {
 		static void updateFader(Particle& particle, const float32 delta) {
 		}
 
-		static void applyVelocity(Particle& particle, const ParticleGenerator& generator, const float32 delta) {
-			generator.velocityFunction(particle, generator, delta);
+		static void applyVelocity(Particle& particle, const ParticleEmitter& emitter, const float32 delta) {
+			emitter.generator.velocityFunction(particle, emitter, delta);
 		}
 		static void applyAngularVelocity(Particle& particle, const float32 delta) {
 			particle.sprite.transform.rotation += particle.angularVelocity * delta;
@@ -82,11 +82,13 @@ namespace sani {
 
 				updateVelocity(particle, delta);
 				updateAngularVelocity(particle, delta);
-				updateScaleVelocity(particle, delta);
 				
-				applyVelocity(particle, emitter.generator, delta);
+				if (emitter.generator.useScaleAcceleration) updateScaleVelocity(particle, delta);
+				
+				applyVelocity(particle, emitter, delta);
 				applyAngularVelocity(particle, delta);
-				applyScaleVelocity(particle, delta);
+
+				if (emitter.generator.useScaleVelocity) applyScaleVelocity(particle, delta);
 
 				/*float percent = (static_cast<float>(j) / static_cast<float>(emitter.maxParticles));
 				float rad = percent * 2.0f  * 3.14;

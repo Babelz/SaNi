@@ -239,8 +239,8 @@ void initialize(SaNiEngine* const engine) {
 	auto erkki = resources->load<Texture2D>("part");
 	circle->texture = tuksu;
 	circle->fill = color::white;
-	circle->textureSource.w = static_cast<float32>(erkki->getWidth());
-	circle->textureSource.h = static_cast<float32>(erkki->getHeight());
+	circle->textureSource.w = static_cast<float32>(tuksu->getWidth());
+	circle->textureSource.h = static_cast<float32>(tuksu->getHeight());
 	circle->radius = 200;
 
 	recomputeVertices(*circle);
@@ -269,19 +269,24 @@ void initialize(SaNiEngine* const engine) {
 
 	ParticleGenerator& gen = em->generator;
 
-	gen.startVelocity = { -0.05f, -0.5f };
-	gen.velocityVariance = { 0.10f, 0.0f };
+	gen.startVelocity = { 0.0f, -0.5f };
+	gen.velocityVariance = { 0.0f, 0.25f };
 	gen.varyingVelocity = true;
 
 	gen.baseDecayTime = 250.0f;
-	gen.decayTimeVariance = 100.0f;
+	gen.decayTimeVariance = 300.0f;
 	gen.varyingDecayTime = true;
 
 	gen.spawnLocationMinOffset = { -32.0f, 0.0f };
 	gen.spawnLocationMaxOffset = { 32.0f, 0.0f };
 	gen.varyingSpawnLocation = true;
 
+	gen.baseScaleVelocity.x = 0.001f;
+	gen.baseScaleVelocity.y = 0.001f;
+	gen.useScaleVelocity = true;
+
 	gen.color = color::red;
+	gen.color.a = 0.45f;
 
 	initializeParticles(*em);
 
