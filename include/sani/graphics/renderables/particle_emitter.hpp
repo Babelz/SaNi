@@ -15,73 +15,103 @@ namespace sani {
 
 	namespace graphics {
 
-		class ParticleEmitter;
+		struct ParticleEmitter;
 
 		using VelocityFunction = std::function<void(Particle&, const ParticleEmitter&, const float32)>;
 
 		void defaultVelocityFunction(Particle& particle, const ParticleEmitter& emitter, const float32 delta);
+
+		/// How the emitter is intended to function.
+		enum class EmitFunction {
+			/// Emitting particles is stopped when the emitter
+			/// is destroyed or when user stops it.
+			Continuous,
+
+			/// Emitter will emit particles once and 
+			// requires a user called reset.
+			Once
+		};
+
+		/// How particles should disappear.
+		enum class ParticleDecayFunction {
+			/// Particles fade before they get decayed.
+			Fade,
+
+			/// Particles get hidden/reseted when they decay.
+			Disappear
+		};
 
 		struct ParticleRenderAttributeList final {
 			math::Rect32f source;
 		};
 
 		struct ParticleGenerator final {
+			std::vector<ParticleRenderAttributeList> attributeLists;
+
+			VelocityFunction velocityFunction;
+
 			math::Vec2f spawnLocationMinOffset;
 			math::Vec2f spawnLocationMaxOffset;
-			bool varyingSpawnLocation				{ false };
 
 			math::Vec2f startVelocity;
 			math::Vec2f velocityVariance;
-			bool varyingVelocity					{ false };
 
 			math::Vec2f baseAcceleration;
 			math::Vec2f accelerationVariance;
-			bool varyingAcceleration;
 
 			math::Vec2f startSize					{ math::Vec2f(32.0f, 32.0f) };
 			
 			math::Vec2f baseScale					{ math::Vec2f(1.0f, 1.0f) };
 			math::Vec2f scaleVariance;
-			bool varyingScale						{ false };
 
 			math::Vec2f baseScaleAcceleration;
 			math::Vec2f scaleAccelerationVariance;
-			bool varyingScaleAcceleration			{ false };
-			bool useScaleAcceleration				{ false };
 
 			math::Vec2f baseScaleVelocity;
 			math::Vec2f scaleVelocityVariance;
+			
+			Color color								{ color::white };
+			Color colorVariance						{ color::white };
+
+			bool varyingSpawnLocation				{ false };
+			bool varyingVelocity					{ false };
+			bool varyingAcceleration				{ false };
+			bool varyingScale						{ false };
+			bool varyingScaleAcceleration			{ false };
+			bool useScaleAcceleration				{ false };
 			bool varyingScaleVelocity				{ false };
 			bool useScaleVelocity					{ false };
+			bool varyingAngularVelocity				{ false };
+			bool varyingAngularAcceleration			{ false };
+			bool varyingDecayTime					{ false };
+			bool varyingColor						{ false };
+			bool varyingAttributes					{ false };
 
 			float32 baseAngularVelocity				{ 0.0f };
 			float32 angularVelocityVariance			{ 0.0f };
-			bool varyingAngularVelocity				{ false };
-			
+
 			float32 baseAngularAcceleration			{ 0.0f };
 			float32 angularAccelerationVariance		{ 0.0f };
-			bool varyingAngularAcceleration			{ false };
 
 			float32 baseDecayTime					{ 0.0f };
 			float32 decayTimeVariance				{ 0.0f };
-			bool varyingDecayTime					{ false };
-
-			Color color								{ color::white };
-			Color colorVariance						{ color::white };
-			bool varyingColor						{ false };
-
-			std::vector<ParticleRenderAttributeList> attributeLists;
 
 			uint32 firstAttributeListIndex			{ 0 };
 			uint32 lastAttributeListIndex			{ 0 };
-			bool varyingAttributes					{ false };
-
-			VelocityFunction velocityFunction;
+			
+			uint32 framesToFade						{ 0 };
+			uint32 framesToFadeVariance				{ 0 };
 		};
 
 		class ParticleEmitter final : public Renderable {
 		public:
 			const uint32 maxParticles;
+
+			ParticleDecayFunction particleDecayFunction;
+			EmitFunction emitFunction;
+
+			uint32 decayedParticles;
+			bool emitting;
 
 			/// List containing all the particles we are using.
 			std::vector<Particle> particles;

@@ -5,7 +5,8 @@ namespace sani {
 	namespace graphics {
 
 		Renderable::Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements, resource::Texture2D* const texture) : renderData(vertices, indices, renderElements),
-																																			   texture(texture) {
+																																			   texture(texture),
+																																			   visible(true) {
 		}
 		Renderable::Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements) : Renderable(vertices, indices, renderElements, nullptr) {
 		}

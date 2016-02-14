@@ -11,7 +11,9 @@ namespace sani {
 													  angularAcceleration(0.0f),
 													  angularVelocity(0.0f),
 													  elapsedTime(0.0f),
-													  sprite(texute) {
+													  sprite(texute),
+													  framesToFade(0),
+													  fadeDelta(Color(0.0f, 0.0f, 0.0, 0.0f)) {
 		}
 	}
 }

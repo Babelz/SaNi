@@ -314,6 +314,8 @@ namespace sani {
 		}
 
 		void Renderer::renderElement(const Renderable* const renderable) {
+			if (!renderable->visible) return;
+
 			elementsCount = renderable->renderData.renderElementsCount;
 
 			for (elementCounter = 0; elementCounter < elementsCount; elementCounter++) {

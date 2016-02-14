@@ -12,7 +12,8 @@ namespace sani {
 		}
 
 		ParticleEmitter::ParticleEmitter(Texture2D* const texture, const uint32 maxParticles) 
-			: maxParticles(maxParticles), Renderable(maxParticles * ParticleVerticesCount, maxParticles * ParticleVertexElementsCount, 1, texture) {
+			: maxParticles(maxParticles), Renderable(maxParticles * ParticleVerticesCount, maxParticles * ParticleVertexElementsCount, 1, texture),
+			  emitFunction(EmitFunction::Continuous), particleDecayFunction(ParticleDecayFunction::Disappear), decayedParticles(0), emitting(true) {
 		
 			SANI_ASSERT(texture != nullptr);
 
@@ -50,7 +51,7 @@ namespace sani {
 			particleRenderData.offset = 0;
 			particleRenderData.indices = indicesCount;
 			particleRenderData.texture = texture->getID();
-
+			
 			renderData.renderElementsCount = 1;
 			// No need to compute bounds yet and no need to copy vertex data.
 		}

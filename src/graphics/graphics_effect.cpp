@@ -34,6 +34,8 @@ namespace sani {
 
 		GraphicsEffect::GraphicsEffect(GraphicsDevice* const device, const uint32 effect) : device(device),
 																							effect(effect) {
+			SANI_ASSERT(device != nullptr);
+
 			locateEffectUniforms();
 		}
 		GraphicsEffect::GraphicsEffect(GraphicsEffect& other) : device(other.device),
@@ -95,6 +97,8 @@ namespace sani {
 		}
 
 		GraphicsEffect GraphicsEffect::compile(GraphicsDevice* const device, const String& vertexSource, const String& fragmentSource) {
+			SANI_ASSERT(device != nullptr);
+
 			uint32 vertex	= 0;
 			uint32 fragment = 0;
 			uint32 effect	= 0;

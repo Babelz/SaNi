@@ -263,10 +263,10 @@ void initialize(SaNiEngine* const engine) {
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(erkki, 1024);
+	em = new ParticleEmitter(erkki, 1024 * 5);
 	em->transform.position.x = 1280 / 2.0f;
 	em->transform.position.y = 600;
-
+	
 	ParticleGenerator& gen = em->generator;
 
 	gen.startVelocity = { 0.0f, -0.5f };
@@ -280,10 +280,6 @@ void initialize(SaNiEngine* const engine) {
 	gen.spawnLocationMinOffset = { -32.0f, 0.0f };
 	gen.spawnLocationMaxOffset = { 32.0f, 0.0f };
 	gen.varyingSpawnLocation = true;
-
-	gen.baseScaleVelocity.x = 0.001f;
-	gen.baseScaleVelocity.y = 0.001f;
-	gen.useScaleVelocity = true;
 
 	gen.color = color::red;
 	gen.color.a = 0.45f;

@@ -36,6 +36,7 @@ namespace sani {
 
 		namespace color {
 
+			const Color transparent(0.0f, 0.0f, 0.0f, 0.0f);
 			const Color black(0.0f, 0.0f, 0.0f, 1.0f);
 			const Color white(1.0f, 1.0f, 1.0f, 1.0f);
 			const Color red(1.0f, 0.0f, 0.0f, 1.0f);

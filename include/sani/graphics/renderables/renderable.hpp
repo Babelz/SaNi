@@ -30,6 +30,8 @@ namespace sani {
 			math::Rect32f textureSource;
 			resource::Texture2D* texture;
 
+			bool visible;
+
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements, resource::Texture2D* const texture);
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);
 			Renderable(const uint32 vertices, const uint32 renderElements);

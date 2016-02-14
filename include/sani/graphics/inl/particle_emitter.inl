@@ -73,8 +73,9 @@ namespace sani {
 			for (Particle& particle : emitter.particles) {
 				// Particle is "dead", reset it.
 				if (particle.elapsedTime > particle.decayTime) {
-					resetParticle(emitter, particle);
-
+					if (emitter.emitting)  resetParticle(emitter, particle);
+					else                   particle.sprite.color = color::transparent;
+					
 					continue;
 				}
 
