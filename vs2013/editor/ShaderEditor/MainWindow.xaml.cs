@@ -45,7 +45,7 @@ namespace ShaderEditor
 
             OpenGL.GLClearColor(0.0f, 0.20f, 0.0f, 1.0f);
             
-            OpenGL.GLClear(GL_ENUMS.GL_COLOR_BUFFER_BIT);
+            OpenGL.GLClear(GLEnums.ColorBufferBit);
         }
 
         private void glControl_OpenGLInitialized(object sender, EventArgs e)

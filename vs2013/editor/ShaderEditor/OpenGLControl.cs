@@ -136,8 +136,8 @@ namespace ShaderEditor
             IntPtr handle = this.Handle;
 
             OpenGL.CreateContext(handle);
-            OpenGL.GLEnable(GL_ENUMS.GL_BLEND);
-            OpenGL.GLBlendFunc(GL_ENUMS.GL_SRC_ALPHA, GL_ENUMS.GL_ONE_MINUS_SRC_ALPHA);
+            OpenGL.GLEnable(GLEnums.Blend);
+            OpenGL.GLBlendFunc(GLEnums.SrcAlpha, GLEnums.OneMinusSrcAlpha);
             
             if (OpenGLInitialized != null) OpenGLInitialized(this, InitializationEventArgs.Empty);
         }
