@@ -236,7 +236,7 @@ void initialize(SaNiEngine* const engine) {
 	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
 	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
-	auto erkki = resources->load<Texture2D>("part");
+	auto erkki = tuksu;//resources->load<Texture2D>("part");
 	circle->texture = tuksu;
 	circle->fill = color::white;
 	circle->textureSource.w = static_cast<float32>(tuksu->getWidth());
@@ -263,14 +263,14 @@ void initialize(SaNiEngine* const engine) {
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(erkki, 1024 * 5);
+	em = new ParticleEmitter(erkki, 1024);
 	em->transform.position.x = 1280 / 2.0f;
 	em->transform.position.y = 600;
 	
 	ParticleGenerator& gen = em->generator;
 
-	gen.startVelocity = { 0.0f, -0.5f };
-	gen.velocityVariance = { 0.0f, 0.25f };
+	gen.startVelocity = { -0.5f, -0.5f };
+	gen.velocityVariance = { 1.0f, 0.25f };
 	gen.varyingVelocity = true;
 
 	gen.baseDecayTime = 250.0f;
@@ -281,8 +281,17 @@ void initialize(SaNiEngine* const engine) {
 	gen.spawnLocationMaxOffset = { 32.0f, 0.0f };
 	gen.varyingSpawnLocation = true;
 
-	gen.color = color::red;
-	gen.color.a = 0.45f;
+	gen.baseAngularVelocity = 0.001f;
+	gen.angularVelocityVariance = 0.01f;
+	gen.varyingAngularVelocity = true;
+
+	gen.baseScale = { 1.0f, 1.0f };
+	gen.scaleVariance = { 0.5f, 0.5f };
+	gen.varyingScale = true;
+
+	gen.baseScaleVelocity = { 0.001f, 0.001f };
+	gen.scaleVelocityVariance = { 0.005f, 0.005f };
+	gen.useScaleVelocity = true;
 
 	initializeParticles(*em);
 
