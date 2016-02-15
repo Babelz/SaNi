@@ -61,13 +61,48 @@ namespace ShaderEditor.GL
         [DllImport(KERNEL_DLL)]
         public static extern uint GetLastError();
 
+        public static PixelFormatDescriptor CreateDefaultPixelFormatDescriptor()
+        {
+            // Create pfd.
+            PixelFormatDescriptor pfd = new PixelFormatDescriptor();
+
+            pfd.Size = (ushort)Marshal.SizeOf(typeof(PixelFormatDescriptor));
+            pfd.Version = 1;
+            pfd.Flags = PFDFlags.DrawToWindow | PFDFlags.SupportOpenGL | PFDFlags.DoubleBuffered;
+            pfd.PixelType = PFDPixelTypes.TypeRGBA;
+            pfd.ColorBits = 32;
+            pfd.RedBits = 0;
+            pfd.RedShift = 0;
+            pfd.GreenBits = 0;
+            pfd.GreenShift = 0;
+            pfd.BlueBits = 0;
+            pfd.BlueShift = 0;
+            pfd.AlphaBits = 0;
+            pfd.AlphaShift = 0;
+            pfd.AccumBits = 0;
+            pfd.AccumRedBits = 0;
+            pfd.AccumGreenBits = 0;
+            pfd.AccumBlueBits = 0;
+            pfd.AccumAlphaBits = 0;
+            pfd.DepthBits = 32;
+            pfd.StencilBits = 8;
+            pfd.AuxBuffers = 0;
+            pfd.LayerType = PDFLayerType.MainPlane;
+            pfd.Reserved = 0;
+            pfd.LayerMask = 0;
+            pfd.VisibleMask = 0;
+            pfd.DamageMask = 0;
+
+            return pfd;
+        }
+
         /// <summary>
         /// Creates a new OpenGL context using the given handle.
         /// </summary>
         /// <param name="hWnd"></param>
         public static unsafe void CreateContext(IntPtr hWnd)
         {
-            PixelFormatDescriptor pfd   = PixelFormatDescriptor.Create();
+            PixelFormatDescriptor pfd   = CreateDefaultPixelFormatDescriptor();
             IntPtr deviceContext        = GetDC(hWnd);
 
             uint deviceContextLocation  = (uint)deviceContext;

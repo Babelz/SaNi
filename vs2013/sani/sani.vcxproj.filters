@@ -489,6 +489,9 @@
     <ClCompile Include="..\..\src\hid\raw_input_listener_win32.cpp">
       <Filter>src\hid</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\win32\console_win32.cpp">
+      <Filter>src\platform\win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -709,9 +712,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\cvar\link_record.hpp">
       <Filter>include\core\cvar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp">
-      <Filter>include\core\logging</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\render_state.hpp">
       <Filter>include\graphics</Filter>
@@ -1006,6 +1006,15 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\math\impl\rand.hpp">
       <Filter>include\core\math\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\logging\logger.hpp">
+      <Filter>include\core\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\platform_functions.hpp">
+      <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\console.hpp">
+      <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -243,6 +243,7 @@
     <ClCompile Include="..\..\src\platform\linux\file_system_linux.cpp" />
     <ClCompile Include="..\..\src\platform\time\engine_time.cpp" />
     <ClCompile Include="..\..\src\platform\time\time.cpp" />
+    <ClCompile Include="..\..\src\platform\win32\console_win32.cpp" />
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\bitmap_content.cpp" />
@@ -279,7 +280,7 @@
     <ClInclude Include="..\..\include\sani\core\inl\events.inl" />
     <ClInclude Include="..\..\include\sani\core\interfaces\error_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\io\memory_stream.hpp" />
-    <ClInclude Include="..\..\include\sani\core\logging\debug_logger.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform_2d.hpp" />
@@ -394,6 +395,7 @@
     <ClInclude Include="..\..\include\sani\hid\keyboard.hpp" />
     <ClInclude Include="..\..\include\sani\hid\raw_input_listener.hpp" />
     <ClInclude Include="..\..\include\sani\platform.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\console.hpp" />
     <ClInclude Include="..\..\include\sani\platform\environment.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
@@ -407,6 +409,7 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\platform_functions.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\engine_time.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\impl\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />

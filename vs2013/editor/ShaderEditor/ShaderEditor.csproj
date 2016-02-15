@@ -69,14 +69,14 @@
     </Compile>
     <Compile Include="Delegates.cs" />
     <Compile Include="EventArgs.cs" />
-    <Compile Include="GL\GL_ENUMS.cs" />
+    <Compile Include="GL\GLEnums.cs" />
     <Compile Include="GL\OpenGL.cs" />
     <Compile Include="OpenGLControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="GL\PFD_FLAGS.cs" />
-    <Compile Include="GL\PFD_LAYER_TYPE.cs" />
-    <Compile Include="GL\PFD_PIXEL_TYPES.cs" />
+    <Compile Include="GL\PFDFlags.cs" />
+    <Compile Include="GL\PFDLayerType.cs" />
+    <Compile Include="GL\PFDPixelTypes.cs" />
     <Compile Include="GL\PixelFormatDescriptor.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

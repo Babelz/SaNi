@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShaderEditor.GL
 {
-    internal static class PFD_PIXEL_TYPES
+    internal static class PFDPixelTypes
     {
-        public const byte PFD_TYPE_RGBA         = 0;
-        public const byte PFD_TYPE_COLORINDEX   = 1;
+        public const byte TypeRGBA         = 0;
+        public const byte TypeColorindex   = 1;
     }
 }
