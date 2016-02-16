@@ -87,7 +87,7 @@ namespace sani {
 
 			MoveWindow(GetConsoleWindow(), rect.x, rect.y, static_cast<int32>(width), static_cast<int32>(height), true);
 		}
-		void setBufferSize(const uint32 columns, const uint32 rows) {
+		void resizeBuffer(const uint32 columns, const uint32 rows) {
 			SANI_ASSERT(consoleAllocated);
 
 			COORD size;

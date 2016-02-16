@@ -34,7 +34,7 @@ namespace sani {
 		void move(const int32 x, const int32 y);
 
 		void resize(const uint32 width, const uint32 height);
-		void setBufferSize(const uint32 columns, const uint32 rows);
+		void resizeBuffer(const uint32 columns, const uint32 rows);
 
 		/// Hides the system console.
 		void hide();
