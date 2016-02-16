@@ -60,8 +60,8 @@ TEST_CASE("CVar conditionals", "[cvar]") {
 TEST_CASE("CVar parsing", "[cvar]") {
 
 	SECTION("Record syncing") {
-		String line = String("			my_int_var 10 // uncle ebons reiseronis comments          ");
-		String syncReq = String("			my_int_var 128 // uncle ebons reiseronis comments          ");
+		String line = String("volatile my_int_var 10 // uncle ebons reiseronis comments");
+		String syncReq = String("volatile my_int_var 128 // uncle ebons reiseronis comments");
 		CVar cvar(cvarlang::ValueType::IntVal, "my_int_var", true, "10");
 		CVarToken token(cvarlang::TokenType::Declaration, 123, "perkele", line);
 

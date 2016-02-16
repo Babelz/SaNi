@@ -8,8 +8,9 @@ namespace sani {
 
 	CVarRecord::CVarRecord(const CVarToken& token, const CVar& cvar) :  token(token),
 																		cvar(cvar) {
+		// No need to check if volatile, the compiler should do this check.
 		const String line = token.getLine();
-		const size_t spos = line.find_last_of(' ');
+		const int32 spos = utils::strpos(line, " ", 2);
 
 		if (spos != line.npos) {
 			originalValue = line.substr(spos + 1, line.size() - spos);
