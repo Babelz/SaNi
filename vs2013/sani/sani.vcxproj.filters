@@ -1078,9 +1078,6 @@
     <None Include="..\..\include\sani\core\memory\inl\heap_block.inl">
       <Filter>include\core\memory\inl</Filter>
     </None>
-    <None Include="..\..\include\sani\core\memory\inl\heap_page.inl">
-      <Filter>include\core\memory\inl</Filter>
-    </None>
     <None Include="..\..\include\sani\core\memory\inl\pool_page.inl">
       <Filter>include\core\memory\inl</Filter>
     </None>

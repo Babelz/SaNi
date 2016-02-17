@@ -24,7 +24,7 @@ namespace sani {
 		const uint32 size;
 		char* memory;
 
-		// Bytes missed when we tried to allocate.
+		// Bytes missed when we have tried to allocate.
 		uint32 missedBytes;
 		// Fragmentation in percents.
 		// missedBytes / size.
@@ -33,7 +33,7 @@ namespace sani {
 		std::priority_queue<HeapBlock> releasedBlocks;
 		std::list<HeapBlock> blocks;
 
-		uint64 bytesUsed;
+		uint32 bytesUsed;
 		uint32 pagepointer;
 
 		void joinBlocks(std::list<HeapBlock> &newReleasedBlocks, std::list<HeapBlock> &newBlocks);
@@ -44,11 +44,11 @@ namespace sani {
 	public:
 		HeapPage(const uint32 size);
 
-		inline float32 getFragmentation() const;
+		float32 getFragmentation() const;
 
-		inline bool canAllocate(const uint32 size);
+		bool canAllocate(const uint32 size);
 
-		inline bool isInAddressSpace(const IntPtr address);
+		bool isInAddressSpace(const IntPtr address);
 
 		/// Allocates new element of type T with given amount of bytes
 		/// to reserve for storage. This value can contain padding
@@ -67,7 +67,7 @@ namespace sani {
 		bool fragmented() const;
 		void defragment();
 
-		uint64 getBytesUsed() const;
+		uint32 getBytesUsed() const;
 
 		~HeapPage();
 
@@ -80,4 +80,3 @@ namespace sani {
 }
 
 #include "sani/core/memory/impl/heap_page.hpp"
-#include "sani/core/memory/inl/heap_page.inl"

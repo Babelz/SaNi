@@ -3,7 +3,7 @@
 
 namespace sani {
 
-	const float32 FragmentationTreshhold = 0.10f;
+	const float32 FragmentationThreshold = 0.10f;
 
 	HeapPage::HeapPage(const uint32 size) : size(size),
 											pagepointer(0),
@@ -11,6 +11,21 @@ namespace sani {
 											fragmentation(0.0f),
 											bytesUsed(0) {
 		memory = new char[size];
+	}
+
+	float32 HeapPage::getFragmentation() const {
+		return fragmentation;
+	}
+
+	bool HeapPage::canAllocate(const uint32 size) {
+		return pagepointer + size <= this->size || releasedBlocks.size() > 0;
+	}
+
+	bool HeapPage::isInAddressSpace(const IntPtr address) {
+		const IntPtr lowAddress = reinterpret_cast<IntPtr>(&memory[0]);
+		const IntPtr highAddress = reinterpret_cast<IntPtr>(&memory[size - 1]);
+
+		return address >= lowAddress && address <= highAddress;
 	}
 
 	void HeapPage::joinBlocks(std::list<HeapBlock> &newReleasedBlocks, std::list<HeapBlock> &newBlocks)
@@ -87,7 +102,7 @@ namespace sani {
 	}
 
 	bool HeapPage::shouldDefragment() const {
-		return fragmentation >= FragmentationTreshhold && fragmented();
+		return fragmentation >= FragmentationThreshold && fragmented();
 	}
 	bool HeapPage::fragmented() const {
 		return missedBytes > 0 || releasedBlocks.size() > 0;
@@ -115,7 +130,7 @@ namespace sani {
 		missedBytes = 0;
 	}
 
-	uint64 HeapPage::getBytesUsed() const {
+	uint32 HeapPage::getBytesUsed() const {
 		return bytesUsed;
 	}
 

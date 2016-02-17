@@ -7,12 +7,14 @@ namespace sani {
 	T* HeapPage::allocate() {
 		return allocate<T>(1);
 	}
+
 	template<class T>
 	inline T* HeapPage::allocate(const uint32 length) {
 		const uint32 storageSize = sizeof(T) * length;
 		char* handle = nullptr;
 
 		// Free memory has been used, check for blocks.
+		// (realloc)
 		if (pagepointer + storageSize > this->size) {
 			if (releasedBlocks.size() == 0) return nullptr;
 
@@ -51,6 +53,7 @@ namespace sani {
 			handle = releasedBlock.getHandle();
 		} else {
 			// Heap pointer is pointing to some free space that we have left, allocate from there.
+			// (alloc)
 			handle = &memory[pagepointer];
 
 			blocks.push_back(HeapBlock(handle, storageSize));
