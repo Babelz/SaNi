@@ -39,11 +39,13 @@ namespace ShaderEditor
             glControl.StartRendering();
         }
 
+        Random rand = new Random();
+
         private void glControl_OpenGLRender(object sender, EventArgs e)
         {
             OpenGLControl glControl = sender as OpenGLControl;
 
-            OpenGL.GLClearColor(0.0f, 0.20f, 0.0f, 1.0f);
+            OpenGL.GLClearColor(0.0f, 1.0f, 0.0f, 0.25f);
             
             OpenGL.GLClear(GLEnums.ColorBufferBit);
         }

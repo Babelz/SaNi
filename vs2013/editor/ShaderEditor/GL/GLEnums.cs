@@ -13,5 +13,6 @@ namespace ShaderEditor.GL
         public const uint Blend                = 0x0BE2;
         public const uint SrcAlpha             = 0x0302;
         public const uint OneMinusSrcAlpha     = 0x0303;
+        public const uint Alpha                = 0x1906;
     }
 }

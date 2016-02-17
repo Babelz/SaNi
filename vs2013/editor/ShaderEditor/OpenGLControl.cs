@@ -137,6 +137,7 @@ namespace ShaderEditor
 
             OpenGL.CreateContext(handle);
             OpenGL.GLEnable(GLEnums.Blend);
+            OpenGL.GLEnable(GLEnums.Alpha);
             OpenGL.GLBlendFunc(GLEnums.SrcAlpha, GLEnums.OneMinusSrcAlpha);
             
             if (OpenGLInitialized != null) OpenGLInitialized(this, InitializationEventArgs.Empty);

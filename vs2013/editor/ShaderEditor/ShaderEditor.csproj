@@ -36,6 +36,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AurelienRibon.Ui.SyntaxHighlightBox">
+      <HintPath>..\Third party\WPF SyntaxHighlightBox\AurelienRibon.Ui.SyntaxHighlightBox.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />

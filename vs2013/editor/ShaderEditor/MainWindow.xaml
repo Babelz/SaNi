@@ -2,12 +2,32 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525" Background="Black">
+    <!-- Root -->
     <Grid>
+        <!-- Column and row definitions -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="25"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
         
-        <WindowsFormsHost Name="glHost" Margin="10" Opacity="0" Grid.RowSpan="2"/>
+        <!-- Menu area -->
+        <Menu Grid.ColumnSpan="2">
+        </Menu>
+        
+        <!-- GL view area -->
+        <!-- Form host that gets the user control GLControl once the window is being initialized -->
+        <WindowsFormsHost Name="glHost" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0, 0, 25, 0"/>
+        
+        <!-- Editor area -->
+        <TextBox Grid.Row="1" Grid.Column="1"/>
+
+        <GridSplitter Grid.Row="1" Width="25"/>
+        
+        <!-- Output area (to print info and errors) -->
     </Grid>
 </Window>
