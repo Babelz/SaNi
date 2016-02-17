@@ -1,0 +1,362 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:syncfusion="http://schemas.syncfusion.com/wpf">
+    <syncfusion:FormatsCollection x:Key="GLSLDesktopFormats">
+        <syncfusion:EditFormats Foreground="Green" FormatName="CommentFormat"/>
+
+        <syncfusion:EditFormats Foreground="Green" FormatName="MultilineCommentFormat"/>
+
+        <syncfusion:EditFormats Foreground="Blue" FormatName="KeywordFormat"/>
+
+        <syncfusion:EditFormats Foreground="Orange" FormatName="TypeFormat"/>
+
+        <syncfusion:EditFormats Foreground="Red" FormatName="StorageQualifierFormat"/>
+
+    </syncfusion:FormatsCollection>
+    <syncfusion:LexemCollection x:Key="GLSLDesktopLexems">
+        <syncfusion:Lexem StartText="const" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="in" ContainsEndText="False" IsMultiline="False" LexemType="Keyword" FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="out" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="attribute" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="uniform" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="varying" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="buffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="shared" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="centroid" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="sample" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="patch" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="inout" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="StorageQualifierFormat"/>
+
+        <syncfusion:Lexem StartText="attribute" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="const" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="uniform" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="varying" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="buffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="shared" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="coherent" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="volatile" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="restrict" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="readonly" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="writeonly" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="layout" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="flat" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="smooth" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="noperspective" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="patch" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="sample" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="break" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="continue" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="do" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="for" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="while" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="switch" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="case" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="default" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="if" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="else" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="subroutine" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="invariant" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="precise" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="discard" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="return" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="lowp" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="mediump" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="highp" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="precision" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="true" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="false" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="struct" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="KeywordFormat"/>
+
+        <syncfusion:Lexem StartText="uint" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uvec2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uvec3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uvec4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="atomic_uint" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat2x2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat2x3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat2x4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat2x2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat2x3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat2x4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat3x2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat3x3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat3x4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat3x2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat3x3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat3x4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat4x2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat4x3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="mat4x4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat4x2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat4x3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dmat4x4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="vec2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="vec3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="vec4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="ivec2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="ivec3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="ivec4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="bvec2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="bvec3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="bvec4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dvec2" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dvec3" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="dvec4" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="float" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="double" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="int" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="void" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="bool" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler1D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler3D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="samplerCube" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler1DShadow" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2DShadow" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="samplerCubeShadow" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler1DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler1DArrayShadow" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2DArrayShadow" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler1D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler2D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler3D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isamplerCube" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler1DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler2DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler1D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler2D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler3D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usamplerCube" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler1DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler2DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2DRect" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2DRectShadow" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler2DRect" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler2DRect" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="samplerBuffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isamplerBuffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usamplerBuffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2DMS" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler2DMS" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler2DMS" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="sampler2DMSArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isampler2DMSArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usampler2DMSArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="samplerCubeArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="samplerCubeArrayShadow" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="isamplerCubeArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="usamplerCubeArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image1D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage1D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage1D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image2D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage2D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage2D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image3D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage3D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage3D" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image2DRect" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage2DRect" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage2DRect" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="imageCube" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimageCube" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimageCube" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="imageBuffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimageBuffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimageBuffer" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image1DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage1DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage1DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image2DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage2DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage2DArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="imageCubeArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimageCubeArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimageCubeArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image2DMS" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage2DMS" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage2DMS" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="image2DMSArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="iimage2DMSArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword"  FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="uimage2DMSArray" ContainsEndText="False" IsMultiline="False" LexemType="Keyword" FormatName="TypeFormat"/>
+
+        <syncfusion:Lexem StartText="//" EndText="\r\n" IsMultiline="False" ContainsEndText="True" LexemType="Comment" FormatName="CommentFormat"/>
+        <!-- fughen regex and shit and C#... -->
+        <!--<syncfusion:Lexem StartText="\/\*.*\*\/" IsRegex="True" IsMultiline="False" ContainsEndText="False"  LexemType="Comment" FormatName="CommentFormat"/>-->
+
+    </syncfusion:LexemCollection>
+</ResourceDictionary>

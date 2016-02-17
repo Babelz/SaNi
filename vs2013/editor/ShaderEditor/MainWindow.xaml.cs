@@ -1,9 +1,16 @@
 ﻿using ShaderEditor.GL;
+using ShaderEditor.Languages;
+using Syncfusion.Windows.Edit;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -26,6 +33,10 @@ namespace ShaderEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region GLSL versions
+        private static readonly string GLSLDesktop = "GLSL Desktop";
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
@@ -37,9 +48,15 @@ namespace ShaderEditor
 
             glControl.InitializeOpenGL();
             glControl.StartRendering();
-        }
 
-        Random rand = new Random();
+            editControl.DocumentLanguage = Syncfusion.Windows.Edit.Languages.Custom;
+
+            GLSLDesktopLanguage language = new GLSLDesktopLanguage(editControl);
+            language.Lexem = Resources["GLSLDesktopLexems"] as LexemCollection;
+            language.Formats = Resources["GLSLDesktopFormats"] as FormatsCollection;
+
+            editControl.CustomLanguage = language;
+        }
 
         private void glControl_OpenGLRender(object sender, EventArgs e)
         {

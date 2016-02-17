@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "editor", "editor", "{11D7AF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderEditor", "editor\ShaderEditor\ShaderEditor.csproj", "{9F55067F-C7C6-4A64-8946-F043E9D529CB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadingLanguageParser", "ShadingLanguageParser\ShadingLanguageParser.csproj", "{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -210,6 +212,20 @@ Global
 		{9F55067F-C7C6-4A64-8946-F043E9D529CB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9F55067F-C7C6-4A64-8946-F043E9D529CB}.Release|Tegra-Android.ActiveCfg = Release|Any CPU
 		{9F55067F-C7C6-4A64-8946-F043E9D529CB}.Release|Win32.ActiveCfg = Release|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Debug|Tegra-Android.ActiveCfg = Debug|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|ARM.ActiveCfg = Release|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Tegra-Android.ActiveCfg = Release|Any CPU
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,5 +236,6 @@ Global
 		{7605BE66-B0F6-4D28-AB76-F71A23F9E0C3} = {213CCA72-C32F-4039-A6C9-8BA18FA985F3}
 		{507F05B5-E87D-4295-BF27-2406A336C899} = {FB72433A-6143-408C-BCCC-897225EE0A7E}
 		{9F55067F-C7C6-4A64-8946-F043E9D529CB} = {11D7AF4C-35E3-4501-9E62-A88223B7B38F}
+		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8} = {11D7AF4C-35E3-4501-9E62-A88223B7B38F}
 	EndGlobalSection
 EndGlobal
