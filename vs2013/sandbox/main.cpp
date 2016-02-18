@@ -79,6 +79,8 @@ sani::hid::RawInputListener inputListener;
 #include "sani/core/logging/system_console_logger.hpp"
 #include "sani/platform/console.hpp"
 
+#include "sani/core/logging/log_batcher.hpp"
+
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	sani::SystemConsoleLogger logger;
 	logger.logError("main", "is this red?");
@@ -86,6 +88,12 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	logger.logInfo("main", "is this green?");
 	sani::console::writeLine("is this default?");
 
+	sani::LogBatcher b;
+	b.beginLog("WinMain", "LOG MAIN");
+	b.logInfo("Ebin info1");
+	b.logInfo("Ebin info2");
+	b.logInfo("Ebin info3");
+	b.endLog(logger);
 
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;

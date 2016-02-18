@@ -15,21 +15,21 @@ namespace sani {
 	void SystemConsoleLogger::logError(const String& from, const String& message) {
 		console::textColor(console::ConsoleColor::Red);
 
-		console::writeLine("[" + from + "(ERR)]: " + message);
+		console::writeLine("[" + from + " (ERR)]: " + message);
 
 		console::resetColor();
 	}
 	void SystemConsoleLogger::logWarning(const String& from, const String& message) {
 		console::textColor(console::ConsoleColor::Yellow);
 
-		console::writeLine("[" + from + "(WRN)]: " + message);
+		console::writeLine("[" + from + " (WRN)]: " + message);
 
 		console::resetColor();
 	}
 	void SystemConsoleLogger::logInfo(const String& from, const String& message) {
 		console::textColor(console::ConsoleColor::DarkGreen);
 
-		console::writeLine("[" + from + "(NFO)]: " + message);
+		console::writeLine("[" + from + " (NFO)]: " + message);
 
 		console::resetColor();
 	}

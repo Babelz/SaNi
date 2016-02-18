@@ -181,7 +181,7 @@
     <ClCompile Include="..\..\src\core\io\memory_stream.cpp" />
     <ClCompile Include="..\..\src\core\logging\console_logger.cpp" />
     <ClCompile Include="..\..\src\core\logging\logging_helpers.cpp" />
-    <ClCompile Include="..\..\src\core\logging\log_batch.cpp" />
+    <ClCompile Include="..\..\src\core\logging\log_batcher.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
@@ -283,10 +283,12 @@
     <ClInclude Include="..\..\include\sani\core\inl\events.inl" />
     <ClInclude Include="..\..\include\sani\core\interfaces\error_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\io\memory_stream.hpp" />
-    <ClInclude Include="..\..\include\sani\core\logging\log_batch.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\impl\log_batcher.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\log_batcher.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\file_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\impl\logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\logging_helpers.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\log_level.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\system_console_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />

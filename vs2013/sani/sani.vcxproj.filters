@@ -504,7 +504,7 @@
     <ClCompile Include="..\..\src\core\logging\logging_helpers.cpp">
       <Filter>src\core\logging</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\core\logging\log_batch.cpp">
+    <ClCompile Include="..\..\src\core\logging\log_batcher.cpp">
       <Filter>src\core\logging</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1043,8 +1043,14 @@
     <ClInclude Include="..\..\include\sani\core\logging\logging_helpers.hpp">
       <Filter>include\core\logging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\logging\log_batch.hpp">
+    <ClInclude Include="..\..\include\sani\core\logging\log_batcher.hpp">
       <Filter>include\core\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\logging\log_level.hpp">
+      <Filter>include\core\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\logging\impl\log_batcher.hpp">
+      <Filter>include\core\logging\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

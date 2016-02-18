@@ -7,10 +7,10 @@ namespace sani {
 	}
 
 	void formatWarning(const String& from, String& warning) {
-		warning = "[" + from + "(ERR)]: " + warning;
+		warning = "[" + from + "(WARN)]: " + warning;
 	}
 
 	void formatInfo(const String& from, String& info) {
-		info = "[" + from + "(ERR)]: " + info;
+		info = "[" + from + "(INFO)]: " + info;
 	}
 }
