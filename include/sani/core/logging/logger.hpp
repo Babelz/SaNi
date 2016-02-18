@@ -12,9 +12,15 @@ namespace sani {
 		Info
 	};
 
+	/// @class Logger logger.cpp "sani/core/logging/logger.hpp"
+	/// @author voidbab
+	/// 
+	/// Serves as a base class for all loggers.
 	template<class T>
 	class Logger {
 	private:
+		bool inProcedure;
+
 		const String name;
 	protected:
 		Logger(const String& name);
