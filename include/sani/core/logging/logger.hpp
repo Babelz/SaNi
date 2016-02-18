@@ -30,3 +30,5 @@ namespace sani {
 		void logInfo(const String& from, const String& message);
 	};
 }
+
+#include "sani/core/logging/impl/logger.hpp"
