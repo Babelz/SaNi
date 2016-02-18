@@ -11,6 +11,7 @@ namespace sani {
 	struct LogBatchEntry final {
 		String line;
 		LogLevel level;
+		uint32 scope;
 
 		LogBatchEntry(const String& line, const LogLevel level);
 		LogBatchEntry();
@@ -33,6 +34,8 @@ namespace sani {
 	class LogBatcher final {
 	private:
 		LogBatch data;
+
+		uint32 scope;
 	public:
 		LogBatcher() = default;
 
@@ -41,6 +44,9 @@ namespace sani {
 		void logError(const String& message);
 		void logWarning(const String& message);
 		void logInfo(const String& message);
+
+		void incrementScope();
+		void decrementScope();
 
 		template<class T>
 		void endLog(T& logger);
