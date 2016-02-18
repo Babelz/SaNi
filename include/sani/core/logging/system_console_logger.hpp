@@ -5,13 +5,15 @@
 namespace sani {
 
 	class SystemConsoleLogger final : public Logger<SystemConsoleLogger> {
-	private:
-		void logError(const String& from, const String& message);
-		void logWarning(const String& from, const String& message);
-		void logInfo(const String& from, const String& message);
 	public:
 		SystemConsoleLogger();
 
-		~SystemConsoleLogger();
+		void logError(const String& from, const String& message);
+		void logWarning(const String& from, const String& message);
+		void logInfo(const String& from, const String& message);
+
+		// Should the logger close the system console once it 
+		// gets destroyed?
+		~SystemConsoleLogger() = default;
 	};
 }

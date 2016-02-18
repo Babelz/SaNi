@@ -26,9 +26,9 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
 
 		/// Opens the system console with given size and moves it to the given location.
-		void open(const uint32 width, const uint32 height, const int32 x, const int32 y);
+		void create(const uint32 width, const uint32 height, const int32 x, const int32 y);
 		/// Opens the system console with given width and height.
-		void open(const uint32 width, const uint32 height);
+		void create(const uint32 width, const uint32 height);
 
 		/// Moves the console to given location.
 		void move(const int32 x, const int32 y);
@@ -40,7 +40,11 @@ namespace sani {
 		void hide();
 		/// Hides and disposes the system console.
 		void close();
-		bool isOpen();
+		
+		bool created();
+		bool visible();
+
+		void show();
 
 		void write(const String& str);
 		void writeLine(const String& str);

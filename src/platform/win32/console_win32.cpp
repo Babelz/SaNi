@@ -22,7 +22,10 @@ namespace sani {
 
 	namespace console {
 
-		static bool consoleAllocated = false;
+		namespace  {
+			bool consoleAllocated = false;
+			bool consoleVisible = false;
+		}
 
 		static void allocateConsole() {
 			AllocConsole();
@@ -57,15 +60,13 @@ namespace sani {
 			bounds.h = cRect.bottom - cRect.top;
 		}
 
-		void open(const uint32 width, const uint32 height, const int32 x, const int32 y) {
+		void create(const uint32 width, const uint32 height, const int32 x, const int32 y) {
 			if (!consoleAllocated) allocateConsole();
-
-			ShowWindow(GetConsoleWindow(), SW_SHOW);
 
 			move(x, y);
 		}
-		void open(const uint32 width, const uint32 height) {
-			open(height, width, 0, 0);
+		void create(const uint32 width, const uint32 height) {
+			create(height, width, 0, 0);
 		}
 
 		void move(const int32 x, const int32 y) {
@@ -102,6 +103,8 @@ namespace sani {
 			SANI_ASSERT(consoleAllocated);
 
 			ShowWindow(GetConsoleWindow(), SW_HIDE);
+
+			consoleVisible = false;
 		}
 		void close() {
 			SANI_ASSERT(consoleAllocated);
@@ -111,9 +114,21 @@ namespace sani {
 			}
 
 			consoleAllocated = false;
+			consoleVisible = false;
 		}
-		bool isOpen() {
+		bool created() {
 			return consoleAllocated;
+		}
+		bool visible() {
+			return consoleVisible;
+		}
+
+		void show() {
+			SANI_ASSERT(consoleAllocated);
+
+			ShowWindow(GetConsoleWindow(), SW_SHOW);
+
+			consoleVisible = true;
 		}
 
 		void write(const String& str) {
