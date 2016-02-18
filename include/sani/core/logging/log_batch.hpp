@@ -5,25 +5,25 @@
 
 namespace sani {
 
-	struct BatchLogResults final {
+	struct LogBatchResults final {
 		const String from;
 		const String name;
 
 		const String log;
 
-		BatchLogResults(const String& from, const String& name, const String& log);
+		LogBatchResults(const String& from, const String& name, const String& log);
 
-		~BatchLogResults() = default;
+		~LogBatchResults() = default;
 	};
 
-	class BatchLog final {
+	class LogBatch final {
 	private:
 		String from;
 		String name;
 		
 		String log;
 	public:
-		BatchLog() = default;
+		LogBatch() = default;
 
 		void beginLog(String& from, String& name);
 
@@ -33,8 +33,8 @@ namespace sani {
 
 		void endLog(String& endMessage);
 		
-		void results(BatchLogResults& results);
+		void results(LogBatchResults& results);
 
-		~BatchLog() = default;
+		~LogBatch() = default;
 	};
 }
