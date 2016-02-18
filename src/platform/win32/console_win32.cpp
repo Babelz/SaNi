@@ -22,10 +22,59 @@ namespace sani {
 
 	namespace console {
 
-		namespace  {
-			bool consoleAllocated = false;
-			bool consoleVisible = false;
-		}
+		bool consoleAllocated = false;
+		bool consoleVisible = false;
+
+		// Translation table for Win32 console colors.
+		const int32 Colors[] = {
+			// Black.
+			0,
+
+			// DarkBlue.
+			FOREGROUND_BLUE,
+
+			// DarkGreen.
+			FOREGROUND_GREEN,
+
+			// DarkCyan.
+			FOREGROUND_GREEN | FOREGROUND_BLUE,
+
+			// DarkRed.
+			FOREGROUND_RED,
+
+			// DarkMagenta.
+			FOREGROUND_RED | FOREGROUND_BLUE,
+
+			// DarkYellow.
+			FOREGROUND_RED | FOREGROUND_GREEN,
+
+			// DarkGray.
+			FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
+
+			// Gray.
+			FOREGROUND_INTENSITY,
+
+			// Green.
+			FOREGROUND_INTENSITY | FOREGROUND_GREEN,
+
+			// Blue.
+			FOREGROUND_INTENSITY | FOREGROUND_BLUE,
+
+			// Cyan.
+			FOREGROUND_INTENSITY | FOREGROUND_GREEN | FOREGROUND_BLUE,
+
+			// Red.
+			FOREGROUND_INTENSITY | FOREGROUND_RED,
+
+			// Magenta.
+			FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_BLUE,
+
+			// Yellow.
+			FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN,
+
+			// White.
+			FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE,
+		};
 
 		static void allocateConsole() {
 			AllocConsole();
@@ -74,7 +123,7 @@ namespace sani {
 
 			ConsoleRect rect;
 
-			getWindowBounds(rect);
+			windowBounds(rect);
 
 			MoveWindow(GetConsoleWindow(), x, y, static_cast<int32>(rect.w), static_cast<int32>(rect.h), true);
 		}
@@ -84,7 +133,7 @@ namespace sani {
 
 			ConsoleRect rect;
 
-			getWindowBounds(rect);
+			windowBounds(rect);
 
 			MoveWindow(GetConsoleWindow(), rect.x, rect.y, static_cast<int32>(width), static_cast<int32>(height), true);
 		}
@@ -96,7 +145,7 @@ namespace sani {
 			size.X = static_cast<SHORT>(columns);
 			size.Y = static_cast<SHORT>(rows);
 
-			SetConsoleScreenBufferSize(GetConsoleWindow(), size);
+			SetConsoleScreenBufferSize(GetStdHandle(STD_OUTPUT_HANDLE), size);
 		}
 
 		void hide() {
@@ -148,12 +197,12 @@ namespace sani {
 			system("cls");
 		}
 
-		void getWindowBounds(ConsoleRect& bounds) {
+		void windowBounds(ConsoleRect& bounds) {
 			SANI_ASSERT(consoleAllocated);
 
 			getBounds(bounds);
 		}
-		void getBufferBounds(uint32& columns, uint32& rows) {
+		void bufferBounds(uint32& columns, uint32& rows) {
 			SANI_ASSERT(consoleAllocated);
 
 			CONSOLE_SCREEN_BUFFER_INFO bufferInfo;
@@ -163,11 +212,18 @@ namespace sani {
 			columns = static_cast<uint32>(bufferInfo.srWindow.Right - bufferInfo.srWindow.Left + 1);
 			rows = static_cast<uint32>(bufferInfo.srWindow.Bottom - bufferInfo.srWindow.Top + 1);
 		}
-		void getLargestBufferSize(uint32& columns, uint32& rows) {
-			COORD size = GetLargestConsoleWindowSize(GetConsoleWindow());
+		void largestBufferSize(uint32& columns, uint32& rows) {
+			COORD size = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
 
 			columns = static_cast<uint32>(size.X);
 			rows = static_cast<uint32>(size.Y);
+		}
+
+		void resetColor() {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Colors[static_cast<uint32>(ConsoleColor::DarkGray)]);
+		}
+		void textColor(const ConsoleColor color) {
+			SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), Colors[static_cast<uint32>(color)]);
 		}
 	}
 }

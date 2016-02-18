@@ -21,6 +21,25 @@ namespace sani {
 			~ConsoleRect() = default;
 		};
 
+		enum class ConsoleColor {
+			Black		= 0,
+			DarkBlue	= 1,
+			DarkGreen	= 2,
+			DarkCyan	= 3,
+			DarkRed		= 4,
+			DarkMagenta = 5,
+			DarkYellow	= 6,
+			DarkGray	= 7,
+			Gray		= 8,
+			Green		= 9,
+			Blue		= 10,
+			Cyan		= 11,
+			Red			= 12,
+			Magenta		= 13,
+			Yellow		= 14,
+			White		= 15
+		};
+
 		// Generate error if platform not valid. Console should only be used while 
 		// debugging.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
@@ -51,9 +70,12 @@ namespace sani {
 
 		void clear();
 
-		void getWindowBounds(ConsoleRect& rect);
-		void getBufferBounds(uint32& columns, uint32 rows);
-		void getLargestBufferSize(uint32& columns, uint32& rows);
+		void windowBounds(ConsoleRect& rect);
+		void bufferBounds(uint32& columns, uint32 rows);
+		void largestBufferSize(uint32& columns, uint32& rows);
+
+		void resetColor();
+		void textColor(const ConsoleColor color);
 #else
 	#ifdef CONSOLE_HPP
 		#error "Console not supported on the target platform"

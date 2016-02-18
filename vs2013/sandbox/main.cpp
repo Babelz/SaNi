@@ -76,25 +76,16 @@ sani::hid::RawInputListener inputListener;
 #include <io.h>
 #include <fcntl.h>
 #include <windows.h>
-
-void openConsole() {
-	AllocConsole();
-
-	HANDLE handle_out = GetStdHandle(STD_OUTPUT_HANDLE);
-	int hCrt = _open_osfhandle((long)handle_out, 0x4000);
-	FILE* hf_out = _fdopen(hCrt, "w");
-	setvbuf(hf_out, NULL, _IONBF, 1);
-	*stdout = *hf_out;
-
-	HANDLE handle_in = GetStdHandle(STD_INPUT_HANDLE);
-	hCrt = _open_osfhandle((long)handle_in, 0x4000);
-	FILE* hf_in = _fdopen(hCrt, "r");
-	setvbuf(hf_in, NULL, _IONBF, 128);
-	*stdin = *hf_in;
-}
+#include "sani/core/logging/system_console_logger.hpp"
+#include "sani/platform/console.hpp"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	openConsole();
+	sani::SystemConsoleLogger logger;
+	logger.logError("main", "is this red?");
+	logger.logWarning("main", "is this yellow?");
+	logger.logInfo("main", "is this green?");
+	sani::console::writeLine("is this default?");
+
 
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;
