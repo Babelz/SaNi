@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\src\core\io\memory_stream.cpp" />
     <ClCompile Include="..\..\src\core\logging\console_logger.cpp" />
     <ClCompile Include="..\..\src\core\logging\logging_helpers.cpp" />
+    <ClCompile Include="..\..\src\core\logging\log_batch.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />

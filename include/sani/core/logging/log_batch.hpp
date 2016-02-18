@@ -1,39 +1,34 @@
 #pragma once
 
 #include "sani/types.hpp"
-#include <vector>
+#include <list>
 
 namespace sani {
 
-	struct LogBatchResults final {
-		const String from;
-		const String name;
+	struct LogBatchData final {
+		String from;
+		String name;
 
-		const String log;
+		std::list<String> log;
 
-		LogBatchResults(const String& from, const String& name, const String& log);
+		LogBatchData(const String& from, const String& name, const String& log);
 
-		~LogBatchResults() = default;
+		~LogBatchData() = default;
 	};
 
 	class LogBatch final {
 	private:
-		String from;
-		String name;
-		
-		String log;
+		LogBatchData data;
 	public:
 		LogBatch() = default;
 
-		void beginLog(String& from, String& name);
+		void beginLog(const String& from, const String& name);
 
-		void logError(String& message);
-		void logWarning(String& message);
-		void logInfo(String& message);
+		void logError(const String& message);
+		void logWarning(const String& message);
+		void logInfo(const String& message);
 
-		void endLog(String& endMessage);
-		
-		void results(LogBatchResults& results);
+		const LogBatchData& endLog();
 
 		~LogBatch() = default;
 	};
