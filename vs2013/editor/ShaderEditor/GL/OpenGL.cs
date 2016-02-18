@@ -68,7 +68,7 @@ namespace ShaderEditor.GL
 
             pfd.Size = (ushort)Marshal.SizeOf(typeof(PixelFormatDescriptor));
             pfd.Version = 1;
-            pfd.Flags = PFDFlags.DrawToWindow | PFDFlags.SupportOpenGL | PFDFlags.DoubleBuffered;
+            pfd.Flags = PFDFlags.DrawToWindow | PFDFlags.SupportOpenGL | PFDFlags.DoubleBuffer;
             pfd.PixelType = PFDPixelTypes.TypeRGBA;
             pfd.ColorBits = 32;
             pfd.RedBits = 0;

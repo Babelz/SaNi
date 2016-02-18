@@ -179,6 +179,7 @@
     <ClCompile Include="..\..\src\core\cvar\link_record.cpp" />
     <ClCompile Include="..\..\src\core\interfaces\error_logger.cpp" />
     <ClCompile Include="..\..\src\core\io\memory_stream.cpp" />
+    <ClCompile Include="..\..\src\core\logging\console_logger.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
@@ -280,6 +281,9 @@
     <ClInclude Include="..\..\include\sani\core\inl\events.inl" />
     <ClInclude Include="..\..\include\sani\core\interfaces\error_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\io\memory_stream.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\file_logger.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\impl\logger.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\system_console_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\transform.hpp" />

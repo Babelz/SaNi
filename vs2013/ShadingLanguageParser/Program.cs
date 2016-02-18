@@ -11,6 +11,7 @@ namespace ShadingLanguageParser
     {
         // GLSL 4.5 spec at:
         // https://www.opengl.org/registry/doc/GLSLangSpec.4.50.diff.pdf
+        // Desktop GLSL refers to GLSL 4.5 spec.
 
         #region Static fields
         private static readonly string GLSLDesktopKeywords =
@@ -81,13 +82,13 @@ namespace ShadingLanguageParser
         private static readonly string ResourceDictionaryFormat =
             "<ResourceDictionary xmlns=\"{0}\"\r\n" +
                     "xmlns:x=\"{1}\"\r\n" +
-                    "xmlns:syncfusion=\"{2}\">\r\n" +
+                    "xmlns:syncfusion=\"{2}\">\r\n\r\n" +
                 "<syncfusion:FormatsCollection x:Key=\"{3}\">\r\n" +
                         "{4}" +
-                "</syncfusion:FormatsCollection>\r\n" +
+                "</syncfusion:FormatsCollection>\r\n\r\n" +
                 "<syncfusion:LexemCollection x:Key=\"{5}\">\r\n" +
-                        "{6}\r\n" +
-                "</syncfusion:LexemCollection>\r\n" +
+                        "{6}" +
+                "</syncfusion:LexemCollection>\r\n\r\n" +
             "</ResourceDictionary>";
         #endregion
 
@@ -97,7 +98,7 @@ namespace ShadingLanguageParser
             // to match the XML format required.
             var result = BuildGLSLForDesktop();
             
-            File.WriteAllText(@"C:\Users\NikoSal\Source\Repos\SaNi-Mastah\vs2013\editor\ShaderEditor\out_paska.txt", result);
+            File.WriteAllText(@"glsdesktop_out.xml", result);
         }
 
         private static string[] SplitAndPreprocess(string str)
@@ -119,7 +120,7 @@ namespace ShadingLanguageParser
         }
         private static void CollapseTo(string[] from, ref string to)
         {
-            foreach (var str in from) to += str + "\r\n";
+            foreach (var str in from) to += str;
         }
         private static string FormatLexem(string token, string strBoolContainsEnd, string strBoolIsMultiline, string lexemType, string formatName)
         {
@@ -156,11 +157,10 @@ namespace ShadingLanguageParser
         {
             return new[]
             {
-                    "<syncfusion:EditFormats Foreground=\"Green\" FormatName=\"CommentFormat\"/>\r\n",
-                    "<syncfusion:EditFormats Foreground=\"Green\" FormatName=\"MultilineCommentFormat\"/>\r\n",
+                    "<syncfusion:EditFormats Foreground=\"Green\" FormatName=\"CommentFormat\"/>",
                     "<syncfusion:EditFormats Foreground=\"Blue\" FormatName=\"KeywordFormat\"/>\r\n",
                     "<syncfusion:EditFormats Foreground=\"Orange\" FormatName=\"TypeFormat\"/>\r\n",
-                    "<syncfusion:EditFormats Foreground=\"Red\" FormatName=\"StorageQualifierFormat\"/>\r\n"
+                    "<syncfusion:EditFormats Foreground=\"Red\" FormatName=\"StorageQualifierFormat\"/>"
             };
         }
         private static string[] CreateDesktopGLSLTypes()
@@ -183,8 +183,8 @@ namespace ShadingLanguageParser
         {
             return new[]
             {
-                "<syncfusion:Lexem StartText=\"//\" EndText=\"\\r\\n\" IsMultiline=\"False\" ContainsEndText=\"True\" LexemType=\"Comment\" FormatName=\"CommentFormat\"/>",
-                "<syncfusion:Lexem StartText=\"/*\" EndText=\"*/\" IsMultiline=\"True\" ContainsEndText=\"True\" LexemType=\"Comment\" FormatName=\"CommentFormat\"/>"
+                "<syncfusion:Lexem StartText=\"//\" EndText=\"\\r\\n\" IsMultiline=\"False\" ContainsEndText=\"True\" LexemType=\"Comment\" FormatName=\"CommentFormat\"/>\r\n",
+                "<syncfusion:Lexem StartText=\"/*\" EndText=\"*/\" IsMultiline=\"True\" ContainsEndText=\"True\" LexemType=\"Comment\" FormatName=\"CommentFormat\"/>\r\n"
             };
         }
         private static string[] CreateGLSLDesktopStorageQualifiers()
@@ -200,9 +200,9 @@ namespace ShadingLanguageParser
         {
             for (var i = 0; i < lines.Length; i++)
             {
-                string line = lines[i];
+                var line = lines[i];
 
-                line = FormatLexem(line, "False", "False", lexemType, formatName) + "\r\n";
+                line = FormatLexem(line, "False", "False", lexemType, formatName) + "\r\n"; 
 
                 lines[i] = line;
             }

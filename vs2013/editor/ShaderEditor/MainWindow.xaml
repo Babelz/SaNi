@@ -35,8 +35,8 @@
 
         <!-- Editor area -->
         <syncfusion:EditControl Grid.Row="1" Grid.Column="2" Name="editControl"
-                                Background="Black" Text="NEGER" Foreground="Pink" 
-                                Cursor="IBeam" FontSize="24" CaretBrush="Pink"
+                                Background="#130606" Foreground="White" 
+                                Cursor="IBeam" FontSize="24" CaretBrush="Yellow"
                                 FontWeight="Bold"/>
         
         <GridSplitter Grid.Row="1" Width="25"/>

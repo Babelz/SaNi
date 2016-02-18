@@ -14,11 +14,17 @@ namespace ShaderEditor.Languages
         public GLSLDesktopLanguage(EditControl control)
             : base(control)
         {
-            Name                    = "GLSL Desktop";
-            FileExtension           = "glsl";
-            ApplyColoring           = true;
-            SupportsOutlining       = false;
-            SupportsIntellisense    = true;
+            Name                        = "GLSL Desktop";
+            FileExtension               = "glsl";
+            ApplyColoring               = true;
+            SupportsOutlining           = false;
+            SupportsIntellisense        = false;
+            CaseSensitive               = true;
+
+            IsSplitTextToWords          = true;
+            BlockStart                  = "{";
+            BlockEnd                    = "}";
+            control.IndentingOptions    = IndentingOptions.Block;
         }
     }
 }
