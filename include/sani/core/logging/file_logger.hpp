@@ -20,8 +20,7 @@ namespace sani {
 	public:
 		FileLogger();
 
-		void setPath(const String& path);
-		const String& getPath() const;
+		void initialize(const String& path);
 
 		void logError(const String& from, const String& message);
 		void logWarning(const String& from, const String& message);

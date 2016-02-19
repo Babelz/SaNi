@@ -44,7 +44,7 @@ namespace sani {
 		void scopeEnd();
 
 		template<class T>
-		void endLog(T& logger);
+		void log(T& logger);
 
 		~LogBatcher() = default;
 	};

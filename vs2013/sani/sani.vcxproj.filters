@@ -510,6 +510,9 @@
     <ClCompile Include="..\..\src\core\logging\file_logger.cpp">
       <Filter>src\core\logging</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\logging\log.cpp">
+      <Filter>src\core\logging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1054,6 +1057,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\logging\impl\log_batcher.hpp">
       <Filter>include\core\logging\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\logging\log.hpp">
+      <Filter>include\core\logging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
