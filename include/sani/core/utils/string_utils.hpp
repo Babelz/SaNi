@@ -82,7 +82,7 @@ namespace sani {
 
 		/// Returns the index nth occurrence in the string.
 		/// Returns string npos if nothing is matched.
-		inline int32 strpos(const String& str, const String& pattern, const uint32 nth)
+		inline int32 position(const String& str, const String& pattern, const uint32 nth)
 		{
 			const char* haystack = str.c_str();
 			const char* needle = pattern.c_str();
@@ -98,6 +98,18 @@ namespace sani {
 			}
 			
 			return res - haystack;
+		}
+
+		inline String& repeat(String& out, const String& what, const uint32 count) {
+			for (uint32 i = 0; i < count; i++) out += what;
+
+			return out;
+		}
+
+		inline String repeat(String& what, const uint32 count) {
+			String out;
+
+			return repeat(out, what, count);
 		}
 	}
 }

@@ -10,7 +10,7 @@ namespace sani {
 																		cvar(cvar) {
 		// No need to check if volatile, the compiler should do this check.
 		const String line = token.getLine();
-		const int32 spos = utils::strpos(line, " ", 2);
+		const int32 spos = utils::position(line, " ", 2);
 
 		if (spos != line.npos) {
 			originalValue = line.substr(spos + 1, line.size() - spos);

@@ -89,10 +89,24 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	sani::console::writeLine("is this default?");
 
 	sani::LogBatcher b;
+	
 	b.beginLog("WinMain", "LOG MAIN");
+
+	b.scopeStart();
 	b.logInfo("Ebin info1");
 	b.logInfo("Ebin info2");
 	b.logInfo("Ebin info3");
+
+	b.scopeStart();
+	b.logInfo("Some sub call");
+	b.logInfo("sub prod 1");
+	b.logInfo("sub prod 2");
+	b.logInfo("sub prod 3");
+	b.logInfo("sub prod 4");
+	b.scopeEnd();
+	
+	b.scopeEnd();
+
 	b.endLog(logger);
 
 	SaNiEngine engine(hInstance);

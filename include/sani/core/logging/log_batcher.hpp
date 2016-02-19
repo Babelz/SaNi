@@ -13,31 +13,26 @@ namespace sani {
 		LogLevel level;
 		uint32 scope;
 
+		LogBatchEntry(const String& line, const LogLevel level, const uint32 scope);
 		LogBatchEntry(const String& line, const LogLevel level);
 		LogBatchEntry();
 
 		~LogBatchEntry() = default;
 	};
 
-	struct LogBatch final {
-		String from;
-		String name;
-
-		std::list<LogBatchEntry> log;
-
-		LogBatch(const String& from, const String& name, const String& log);
-		LogBatch();
-
-		~LogBatch() = default;
-	};
-
 	class LogBatcher final {
 	private:
-		LogBatch data;
-
+		String ident;
+		String from;
+		String name;
 		uint32 scope;
+
+		std::list<LogBatchEntry> log;
 	public:
-		LogBatcher() = default;
+		LogBatcher();
+
+		const String& getIdent() const;
+		void setIdent(const String& ident);
 
 		void beginLog(const String& from, const String& name);
 
@@ -45,8 +40,8 @@ namespace sani {
 		void logWarning(const String& message);
 		void logInfo(const String& message);
 
-		void incrementScope();
-		void decrementScope();
+		void scopeStart();
+		void scopeEnd();
 
 		template<class T>
 		void endLog(T& logger);

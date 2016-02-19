@@ -1,25 +1,32 @@
 #pragma once
 
+#include "sani/core/utils/string_utils.hpp"
+
 namespace sani {
+	
+	using namespace utils;
 
 	template<class T>
 	void LogBatcher::endLog(T& logger) {
-		for (auto logEntry : data.log) {
+		for (auto logEntry : log) {
+			const String entryIdent	= repeat(ident, logEntry.scope);
+			const String line		= entryIdent + logEntry.line;
+
 			switch (logEntry.level) {
 			case LogLevel::Error:
-				logger.logError(data.from, logEntry.line);
+				logger.logError(from, line);
 				break;
 			case LogLevel::Warning:
-				logger.logWarning(data.from, logEntry.line);
+				logger.logWarning(from, line);
 				break;
 			case LogLevel::Info:
-				logger.logInfo(data.from, logEntry.line);
+				logger.logInfo(from, line);
 				break;
 			default:
 				break;
 			}
 		}
 
-		logger.logInfo(data.from, data.name + " - END");
+		logger.logInfo(from, name + " - END");
 	}
 }

@@ -9,60 +9,58 @@ namespace sani {
 		BatchEntry members.
 	*/
 
-	LogBatchEntry::LogBatchEntry(const String& line, const LogLevel level) : line(line), level(level) {
+	LogBatchEntry::LogBatchEntry(const String& line, const LogLevel level, const uint32 scope) 
+		: line(line), level(level), scope(scope) {
+	}
+	LogBatchEntry::LogBatchEntry(const String& line, const LogLevel level) 
+		: LogBatchEntry(line, level, 0 ) {
 	}
 	LogBatchEntry::LogBatchEntry() {
-	}
-
-	/*
-		LogBatchResults members.
-	*/
-
-	LogBatch::LogBatch(const String& from, const String& name, const String& log)
-		: from(from), name(name) {
-	}
-	LogBatch::LogBatch() {
 	}
 
 	/*
 		LogBatch members.
 	*/
 
+	LogBatcher::LogBatcher() : scope(0),
+							   ident("\t") {
+	}
+
+	const String& LogBatcher::getIdent() const {
+		return ident;
+	}
+	void LogBatcher::setIdent(const String& ident) {
+		this->ident = ident;
+	}
+
 	void LogBatcher::beginLog(const String& from, const String& name) {
 		SANI_ASSERT(!from.empty());
 
-		data.from = from;
-		data.name = name;
+		this->from	= from;
+		this->name	= name;
+		scope		= 0;
 
-		data.log.clear();
+		log.clear();
 
-		data.log.push_back(LogBatchEntry(name + " - BATCH BEG ->", LogLevel::Info));
+		log.push_back(LogBatchEntry(name + " - BATCH BEG ->", LogLevel::Info));
 	}
 
 	void LogBatcher::logError(const String& message) {
-		String formatted = message;
-
-		formatError(data.from, formatted);
-
-		data.log.push_back(LogBatchEntry(formatted, LogLevel::Error));
+		log.push_back(LogBatchEntry(message, LogLevel::Error, scope));
 	}
 	void LogBatcher::logWarning(const String& message) {
-		String formatted = message;
-
-		formatWarning(data.from, formatted);
-
-		data.log.push_back(LogBatchEntry(formatted, LogLevel::Warning));
+		log.push_back(LogBatchEntry(message, LogLevel::Warning, scope));
 	}
 	void LogBatcher::logInfo(const String& message) {
-		String formatted = message;
-
-		formatInfo(data.from, formatted);
-
-		data.log.push_back(LogBatchEntry(formatted, LogLevel::Info));
+		log.push_back(LogBatchEntry(message, LogLevel::Info, scope));
 	}
 
-	void LogBatcher::incrementScope() {
+	void LogBatcher::scopeStart() {
+		scope++;
 	}
-	void LogBatcher::decrementScope() {
+	void LogBatcher::scopeEnd() {
+		if (scope == 0) return;
+		
+		scope--;
 	}
 }
