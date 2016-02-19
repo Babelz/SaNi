@@ -6,6 +6,10 @@
 
 namespace sani {
 
+	/*
+		TODO: write support for Linux.
+	*/
+
 	namespace console {
 
 		/// Primitive structure containing console size
@@ -43,7 +47,6 @@ namespace sani {
 		// Generate error if platform not valid. Console should only be used while 
 		// debugging.
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
-
 		/// Opens the system console with given size and moves it to the given location.
 		void create(const uint32 width, const uint32 height, const int32 x, const int32 y);
 		/// Opens the system console with given width and height.
@@ -52,7 +55,9 @@ namespace sani {
 		/// Moves the console to given location.
 		void move(const int32 x, const int32 y);
 
-		void resize(const uint32 width, const uint32 height);
+		/// Resize the window.
+		void resizeWindow(const uint32 width, const uint32 height);
+		/// Resize the text buffer.
 		void resizeBuffer(const uint32 columns, const uint32 rows);
 
 		/// Hides the system console.
@@ -60,18 +65,27 @@ namespace sani {
 		/// Hides and disposes the system console.
 		void close();
 		
+		/// Returns true if this process contains an console.
 		bool created();
+		/// Returns boolean representing the visibility of the console.
 		bool visible();
 
+		/// Shows the console.
 		void show();
 
+		/// Writes given string to the console.
 		void write(const String& str);
+		/// Writes new line to the console.
 		void writeLine(const String& str);
 
+		/// Clears the console.
 		void clear();
 
+		/// Gets the console window bounds.
 		void windowBounds(ConsoleRect& rect);
+		/// Gets the window text buffer bounds.
 		void bufferBounds(uint32& columns, uint32 rows);
+		/// Returns the max size of the console text buffer.
 		void largestBufferSize(uint32& columns, uint32& rows);
 
 		void resetColor();

@@ -101,8 +101,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	b.logInfo("Some sub call");
 	b.logInfo("sub prod 1");
 	b.logInfo("sub prod 2");
+	b.logError("dere was en error");
 	b.logInfo("sub prod 3");
 	b.logInfo("sub prod 4");
+	b.logWarning("dere was en waanin");
 	b.scopeEnd();
 	
 	b.scopeEnd();

@@ -14,8 +14,6 @@ namespace sani {
 	template<class T>
 	class Logger {
 	private:
-		bool inProcedure;
-
 		const String name;
 	protected:
 		Logger(const String& name);

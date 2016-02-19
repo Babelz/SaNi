@@ -128,7 +128,7 @@ namespace sani {
 			MoveWindow(GetConsoleWindow(), x, y, static_cast<int32>(rect.w), static_cast<int32>(rect.h), true);
 		}
 
-		void resize(const uint32 width, const uint32 height) {
+		void resizeWindow(const uint32 width, const uint32 height) {
 			SANI_ASSERT(consoleAllocated);
 
 			ConsoleRect rect;

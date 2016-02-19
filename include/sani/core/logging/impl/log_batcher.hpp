@@ -27,6 +27,6 @@ namespace sani {
 			}
 		}
 
-		logger.logInfo(from, name + " - END");
+		logger.logInfo(from, name + " - BATCH END");
 	}
 }
