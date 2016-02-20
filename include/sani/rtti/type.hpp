@@ -6,6 +6,7 @@ namespace sani {
 	namespace rtti {
 		/// Class that represents type in RTTI
 		class Type {
+		public:
 			using List = std::vector<Type>;
 			static const TypeID Invalid = 0;
 			/// Constructs new invalid type

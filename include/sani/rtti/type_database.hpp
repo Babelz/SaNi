@@ -22,7 +22,7 @@ namespace sani {
 			TypeID registerType(const String& name);
 
 			/// Gets instance
-			static TypeDatabase& getInstace();
+			static TypeDatabase& getInstance();
 		private:
 			// which id will be assigned to next type
 			TypeID idCounter;

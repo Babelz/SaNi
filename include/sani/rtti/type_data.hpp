@@ -14,7 +14,6 @@ namespace sani {
 			TypeData();
 			/// Constructs valid type data object
 			TypeData(const String& name);
-			~TypeData();
 
 			/// Is this pointer type?
 			bool isPointer : 1;
