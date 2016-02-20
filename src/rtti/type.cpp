@@ -18,7 +18,7 @@ namespace sani {
 
 		}
 
-		TypeID Type::getId() const {
+		TypeID Type::getID() const {
 			return id;
 		}
 

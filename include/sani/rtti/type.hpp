@@ -17,7 +17,7 @@ namespace sani {
 			Type(TypeID id);
 
 			/// Gets the internal id of the type which can be used to query data from database
-			TypeID getId() const;
+			TypeID getID() const;
 
 			/// Checks if the type is valid
 			bool isValid() const;
