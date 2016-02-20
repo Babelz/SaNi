@@ -6,7 +6,7 @@
 {                                                                  \
 	auto& db = sani::rtti::TypeDatabase::getInstance();            \
 	auto id = db.registerType(#type);                              \
-	rtti::TypeInfo<type>::registerType(id, db.types[id], true);    \
+	sani::rtti::TypeInfo<type>::registerType(id, db.types[id], true);    \
 }                                                                  \
 
 #define RTTI_REGISTER_TYPE(type)                                   \
