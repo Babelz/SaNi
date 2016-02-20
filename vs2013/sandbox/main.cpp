@@ -2,6 +2,7 @@
 #include <locale>
 #include <string>
 #include <codecvt>
+#include "sani/rtti/type_database.hpp"
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
 
@@ -82,6 +83,9 @@ sani::hid::RawInputListener inputListener;
 #include "sani/core/logging/log_batcher.hpp"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+
+	auto& db = sani::rtti::TypeDatabase::getInstance();
+	
 	sani::SystemConsoleLogger logger;
 	logger.logError("main", "is this red?");
 	logger.logWarning("main", "is this yellow?");

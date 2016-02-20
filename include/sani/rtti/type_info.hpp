@@ -17,3 +17,4 @@ namespace sani {
 	}
 }
 
+#include "inl/type_info.inl"

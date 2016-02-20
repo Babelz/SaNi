@@ -430,6 +430,7 @@
     <ClInclude Include="..\..\include\sani\platform\time\impl\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\time.hpp" />
+    <ClInclude Include="..\..\include\sani\preprocessor\rtti_runtime.hpp" />
     <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect_content.hpp" />
@@ -486,6 +487,7 @@
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
     <None Include="..\..\include\sani\resource\inl\bitmap_content.inl" />
     <None Include="..\..\include\sani\resource\reader\inl\resource_reader.hpp" />
+    <None Include="..\..\include\sani\rtti\inl\type_info.inl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt" />

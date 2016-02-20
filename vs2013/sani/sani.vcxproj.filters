@@ -217,6 +217,12 @@
     <Filter Include="src\rtti">
       <UniqueIdentifier>{d3488275-4173-49b4-a3ce-0a0062f3e972}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\rtti\inl">
+      <UniqueIdentifier>{d89e4cf5-c936-4e67-af14-d914d3506eb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\preprocessor">
+      <UniqueIdentifier>{b4a0b3af-ebb5-45cd-aed7-fee213535bd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -525,7 +531,9 @@
     <ClCompile Include="..\..\src\rtti\type_database.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\rtti\type.cpp" />
+    <ClCompile Include="..\..\src\rtti\type.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1092,6 +1100,9 @@
     <ClInclude Include="..\..\include\sani\rtti\type_info.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\preprocessor\rtti_runtime.hpp">
+      <Filter>include\preprocessor</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1171,6 +1182,9 @@
     </None>
     <None Include="..\..\include\sani\resource\inl\bitmap_content.inl">
       <Filter>include\resource\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\rtti\inl\type_info.inl">
+      <Filter>include\rtti\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
