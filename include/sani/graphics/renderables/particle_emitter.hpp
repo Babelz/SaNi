@@ -15,7 +15,7 @@ namespace sani {
 
 	namespace graphics {
 
-		struct ParticleEmitter;
+		class ParticleEmitter;
 
 		using VelocityFunction = std::function<void(Particle&, const ParticleEmitter&, const float32)>;
 

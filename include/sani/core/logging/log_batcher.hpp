@@ -27,7 +27,7 @@ namespace sani {
 		String name;
 		uint32 scope;
 
-		std::list<LogBatchEntry> log;
+		std::list<LogBatchEntry> _log;
 	public:
 		LogBatcher();
 

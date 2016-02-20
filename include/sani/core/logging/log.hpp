@@ -3,7 +3,7 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
-SANI_FORWARD_DECLARE_STRUCT_1(sani, LogBatcher);
+SANI_FORWARD_DECLARE_1(sani, LogBatcher);
 
 namespace sani {
 

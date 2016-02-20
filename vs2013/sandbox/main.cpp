@@ -109,7 +109,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	
 	b.scopeEnd();
 
-	b.endLog(logger);
+//	b.endLog(logger);
 
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;

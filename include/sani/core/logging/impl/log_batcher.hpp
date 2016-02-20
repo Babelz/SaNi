@@ -8,7 +8,7 @@ namespace sani {
 
 	template<class T>
 	void LogBatcher::log(T& logger) {
-		for (auto logEntry : log) {
+		for (auto logEntry : _log) {
 			const String entryIdent	= repeat(ident, logEntry.scope);
 			const String line		= entryIdent + logEntry.line;
 

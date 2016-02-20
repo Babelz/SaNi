@@ -40,19 +40,19 @@ namespace sani {
 		this->name	= name;
 		scope		= 0;
 
-		log.clear();
+		_log.clear();
 
-		log.push_back(LogBatchEntry(name + " - BATCH BEG ->", LogLevel::Info));
+		_log.push_back(LogBatchEntry(name + " - BATCH BEG ->", LogLevel::Info));
 	}
 
 	void LogBatcher::logError(const String& message) {
-		log.push_back(LogBatchEntry(message, LogLevel::Error, scope));
+		_log.push_back(LogBatchEntry(message, LogLevel::Error, scope));
 	}
 	void LogBatcher::logWarning(const String& message) {
-		log.push_back(LogBatchEntry(message, LogLevel::Warning, scope));
+		_log.push_back(LogBatchEntry(message, LogLevel::Warning, scope));
 	}
 	void LogBatcher::logInfo(const String& message) {
-		log.push_back(LogBatchEntry(message, LogLevel::Info, scope));
+		_log.push_back(LogBatchEntry(message, LogLevel::Info, scope));
 	}
 
 	void LogBatcher::scopeStart() {
