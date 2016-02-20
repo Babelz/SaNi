@@ -1,5 +1,8 @@
 #pragma once
 
+#include "sani/rtti/object_base.hpp"
+#include "sani/rtti/object_container.hpp"
+#include "sani/rtti/type_config.hpp"
 namespace sani {
 	namespace rtti {
 		/// Class that represents every type there is
@@ -24,7 +27,11 @@ namespace sani {
 			Object& operator=(T&& rhs);
 			Object& operator=(Object&& rhs);
 			Object& operator=(Object& rhs);
-
+		private:
+			ObjectBase* _base;
+			bool _isConst;
 		};
 	}
 }
+
+#include "inl/object.inl"

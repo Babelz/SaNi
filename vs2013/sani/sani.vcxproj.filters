@@ -534,6 +534,9 @@
     <ClCompile Include="..\..\src\rtti\type.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\rtti\object.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1103,6 +1106,12 @@
     <ClInclude Include="..\..\include\sani\preprocessor\rtti_runtime.hpp">
       <Filter>include\preprocessor</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\object_base.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\object_container.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1184,6 +1193,12 @@
       <Filter>include\resource\inl</Filter>
     </None>
     <None Include="..\..\include\sani\rtti\inl\type_info.inl">
+      <Filter>include\rtti\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\rtti\inl\object.inl">
+      <Filter>include\rtti\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\rtti\inl\object_container.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
   </ItemGroup>
