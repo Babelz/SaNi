@@ -12,15 +12,14 @@ namespace sani {
 	private:
 		// Private file system instance and stream pointer
 		// to the current file stream.
+		const String path;
+
 		io::FileSystem fileSystem;
 		io::FileStream* stream;
-		String path;
-
+		
 		void internalLog(const String& from, const String& message, const LogLevel level);
 	public:
-		FileLogger();
-
-		void initialize(const String& path);
+		FileLogger(const String& path);
 
 		void logError(const String& from, const String& message);
 		void logWarning(const String& from, const String& message);

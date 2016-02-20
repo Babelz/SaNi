@@ -100,16 +100,12 @@ namespace sani {
 			return res - haystack;
 		}
 
-		inline String& repeat(String& out, const String& what, const uint32 count) {
+		inline String repeat(const String& what, const uint32 count) {
+			String out;
+
 			for (uint32 i = 0; i < count; i++) out += what;
 
 			return out;
-		}
-
-		inline String repeat(String& what, const uint32 count) {
-			String out;
-
-			return repeat(out, what, count);
 		}
 	}
 }

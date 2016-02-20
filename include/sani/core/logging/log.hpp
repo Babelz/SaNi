@@ -14,10 +14,12 @@ namespace sani {
 		struct Impl;
 
 		namespace {
+			const uint16 OutStreamsCount = 2;
+			const uint16 OutFlagsNull = 0;
+
 			Impl* impl;
 		}
 
-		const uint16 OutStreamsCount = 2;
 		const uint16 OutFlagsConsole = 1;
 		const uint16 OutFlagsFile    = 2;
 		const uint16 OutFlagsAll	 = OutFlagsConsole & OutFlagsFile;

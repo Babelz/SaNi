@@ -63,4 +63,8 @@ namespace sani {
 		
 		scope--;
 	}
+
+	void LogBatcher::endLog() {
+		entries.push_back(LogBatchEntry(name + " - BATCH END", LogLevel::Info));
+	}
 }

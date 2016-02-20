@@ -5,6 +5,8 @@
 namespace sani {
 
 	SystemConsoleLogger::SystemConsoleLogger() : Logger<SystemConsoleLogger>("system console logger") {
+		// Open and show console if it has 
+		// not been created yet.
 		if (!console::created()) {
 			console::create(800, 600);
 			console::show();

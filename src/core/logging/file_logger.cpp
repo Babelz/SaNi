@@ -5,8 +5,12 @@
 
 namespace sani {
 
-	FileLogger::FileLogger() : Logger<FileLogger>("file logger"),
-							   stream(nullptr) {
+	FileLogger::FileLogger(const String& path) : Logger<FileLogger>("file logger"),
+												 stream(nullptr),
+												 path(path) {
+		SANI_ASSERT(!path.empty());
+
+		if (!fileSystem.openFile(path, io::Filemode::Truncate, &stream)) throw std::runtime_error("could not open stream");
 	}
 
 	void FileLogger::internalLog(const String& from, const String& message, const LogLevel level) {
@@ -19,20 +23,6 @@ namespace sani {
 		const unsigned char* ucstr	= reinterpret_cast<const unsigned char*>(cstr);
 		
 		stream->write(ucstr, out.size());
-	}
-
-	void FileLogger::initialize(const String& path) {
-		this->path = path;
-
-		if (stream != nullptr) {
-			stream->flush();
-
-			stream = nullptr;
-		}
-		
-		fileSystem.closeFile(path);
-
-		if (!fileSystem.openFile(path, io::Filemode::Truncate, &stream)) throw std::runtime_error("could not open stream");
 	}
 
 	void FileLogger::logError(const String& from, const String& message) {

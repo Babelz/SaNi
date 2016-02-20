@@ -82,41 +82,17 @@ sani::hid::RawInputListener inputListener;
 #include "sani/platform/console.hpp"
 
 #include "sani/core/logging/log_batcher.hpp"
+#include "sani/core/logging/log.hpp"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	sani::rtti::Object aobj(5);
 	sani::rtti::Object bobj(aobj);
-	sani::SystemConsoleLogger logger;
-	
-	logger.logError("main", "is this red?");
-	logger.logWarning("main", "is this yellow?");
-	logger.logInfo("main", "is this green?");
-	sani::console::writeLine("is this default?");
 
-	sani::LogBatcher b;
-	
-	b.beginLog("WinMain", "LOG MAIN");
+	sani::log::initialize();
 
-	b.scopeStart();
-	b.logInfo("Ebin info1");
-	b.logInfo("Ebin info2");
-	b.logInfo("Ebin info3");
-
-	b.scopeStart();
-	b.logInfo("Some sub call");
-	b.logInfo("sub prod 1");
-	b.logInfo("sub prod 2");
-	b.logError("dere was en error");
-	b.logInfo("sub prod 3");
-	b.logInfo("sub prod 4");
-	b.logWarning("dere was en waanin");
-	b.scopeEnd();
-	
-	b.scopeEnd();
-
-//	b.endLog(logger);
+	sani::log::info(sani::log::OutFlagsConsole, "WinMain", "Starting...");
 
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;

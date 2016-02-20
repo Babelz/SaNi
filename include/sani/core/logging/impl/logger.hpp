@@ -30,6 +30,10 @@ namespace sani {
 		}
 	}
 	
+	/*
+		Calls to child class.
+	*/
+
 	template<class T>
 	void Logger<T>::logError(const String& from, const String& message) {
 		static_cast<T*>(this)->logError(from, message);

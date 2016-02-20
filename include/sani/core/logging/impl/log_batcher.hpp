@@ -7,26 +7,24 @@ namespace sani {
 	using namespace utils;
 
 	template<class T>
-	void LogBatcher::log(T& logger) {
+	void LogBatcher::log(T& logger) const {
 		for (auto logEntry : entries) {
-			const String entryIdent	= repeat(ident, logEntry.scope);
-			const String line		= entryIdent + logEntry.line;
+			const String logIdent = repeat(ident, logEntry.scope);
+			const String logLine  = logIdent + logEntry.line;
 
 			switch (logEntry.level) {
 			case LogLevel::Error:
-				logger.logError(from, line);
+				logger.logError(from, logLine);
 				break;
 			case LogLevel::Warning:
-				logger.logWarning(from, line);
+				logger.logWarning(from, logLine);
 				break;
 			case LogLevel::Info:
-				logger.logInfo(from, line);
+				logger.logInfo(from, logLine);
 				break;
 			default:
 				break;
 			}
 		}
-
-		logger.logInfo(from, name + " - BATCH END");
 	}
 }
