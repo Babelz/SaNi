@@ -82,12 +82,21 @@ sani::hid::RawInputListener inputListener;
 #include "sani/platform/console.hpp"
 
 #include "sani/core/logging/log_batcher.hpp"
-
+#include "sani/rtti/type_info.hpp"
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	auto& db = sani::rtti::TypeDatabase::getInstance();
+	
+	sani::rtti::TypeID id = sani::rtti::TypeInfo<int>::id;
 	sani::rtti::Object aobj(5);
 	sani::rtti::Object bobj(aobj);
+	sani::rtti::Constructor intCtor(
+		sani::rtti::Type{ id },
+		sani::rtti::Signature{},
+		[](void){return int(5); },
+		false
+		);
+	sani::rtti::Object obj = intCtor.invoke();
 	sani::SystemConsoleLogger logger;
 	
 	logger.logError("main", "is this red?");

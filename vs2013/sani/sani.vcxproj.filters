@@ -540,7 +540,9 @@
     <ClCompile Include="..\..\src\rtti\invokable.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\rtti\constructor.cpp" />
+    <ClCompile Include="..\..\src\rtti\constructor.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
