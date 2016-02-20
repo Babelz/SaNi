@@ -86,17 +86,18 @@ sani::hid::RawInputListener inputListener;
 #include "sani/rtti/type_info.hpp"
 #include "sani/preprocessor/rtti_runtime.hpp"
 class AATest : public sani::rtti::Serializable {
-
+	DECLARE_SERIALIZABLE;
 };
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-
+	
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
-	sani::rtti::TypeID id = sani::rtti::TypeInfo<int>::id;
+	sani::rtti::TypeID id = sani::rtti::TypeInfo<AATest>::id;
 	sani::rtti::Object aobj(5);
 	sani::rtti::Type type = aobj.getType();
-	assert(type.getID() == id);
+	auto aaid = AATest().getType().getID();
+	assert(aaid == id);
 	sani::rtti::Object bobj(aobj);
 	sani::rtti::Constructor intCtor(
 		sani::rtti::Type{ id },
