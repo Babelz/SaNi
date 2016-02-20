@@ -23,6 +23,10 @@ namespace sani {
 			delete _base;
 		}
 
+		Type Object::getType() const {
+			return _base->getType();
+		}
+
 	}
 }
 

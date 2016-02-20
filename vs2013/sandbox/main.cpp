@@ -89,6 +89,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	
 	sani::rtti::TypeID id = sani::rtti::TypeInfo<int>::id;
 	sani::rtti::Object aobj(5);
+	sani::rtti::Type type = aobj.getType();
+	assert(type.getID() == id);
 	sani::rtti::Object bobj(aobj);
 	sani::rtti::Constructor intCtor(
 		sani::rtti::Type{ id },

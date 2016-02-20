@@ -27,6 +27,9 @@ namespace sani {
 			Object& operator=(T&& rhs);
 			Object& operator=(Object&& rhs);
 			Object& operator=(Object& rhs);
+
+			/// Gets the underlaying type
+			Type getType() const;
 		private:
 			ObjectBase* _base;
 			bool _isConst;

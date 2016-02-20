@@ -1124,6 +1124,12 @@
     <ClInclude Include="..\..\include\sani\rtti\constructor.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\serializable.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

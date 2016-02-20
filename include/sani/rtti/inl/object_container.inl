@@ -1,3 +1,5 @@
+#include "sani/rtti/type_info.hpp"
+
 namespace sani {
 	namespace rtti {
 
@@ -16,6 +18,11 @@ namespace sani {
 		template <class T>
 		ObjectBase* ObjectContainer<T>::clone() const {
 			return new ObjectContainer<T>(value);
+		}
+
+		template <class T>
+		Type ObjectContainer<T>::getType() const {
+			return Type(TypeInfo<PureType<T> >::id);
 		}
 	}
 }
