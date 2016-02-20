@@ -211,6 +211,9 @@
     <Filter Include="include\core\logging\impl">
       <UniqueIdentifier>{4c99765a-6667-47e0-913f-329497fea8c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\rtti">
+      <UniqueIdentifier>{13e1900b-53b8-45bd-af40-946141816a93}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1061,6 +1064,22 @@
     <ClInclude Include="..\..\include\sani\core\logging\log.hpp">
       <Filter>include\core\logging</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\object.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\type.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\type_config.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\type_database.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\type_data.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\type_info.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
