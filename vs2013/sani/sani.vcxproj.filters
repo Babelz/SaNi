@@ -223,6 +223,9 @@
     <Filter Include="include\preprocessor">
       <UniqueIdentifier>{b4a0b3af-ebb5-45cd-aed7-fee213535bd1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\profiling">
+      <UniqueIdentifier>{bb252b1a-dad1-47ff-99a8-9c4077e5643f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -543,8 +546,18 @@
     <ClCompile Include="..\..\src\rtti\constructor.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\rtti\pointer_container.cpp" />
-    <ClCompile Include="..\..\src\rtti\argument.cpp" />
+    <ClCompile Include="..\..\src\rtti\argument.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\rtti\pointer_container.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\logging\impl\log_impl.cpp">
+      <Filter>src\core\logging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\logging\out_flags.cpp">
+      <Filter>src\core\logging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1132,7 +1145,27 @@
     <ClInclude Include="..\..\include\sani\rtti\serializable.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\rtti\argument.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\argument.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry.hpp">
+      <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry_container.hpp">
+      <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_sample.hpp">
+      <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_target.hpp">
+      <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\logging\impl\log_impl.hpp">
+      <Filter>include\core\logging\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\logging\out_flags.hpp">
+      <Filter>include\core\logging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1228,7 +1261,9 @@
     <None Include="..\..\include\sani\rtti\inl\type_data.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
-    <None Include="..\..\include\sani\rtti\inl\argument.inl" />
+    <None Include="..\..\include\sani\rtti\inl\argument.inl">
+      <Filter>include\rtti\inl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt">

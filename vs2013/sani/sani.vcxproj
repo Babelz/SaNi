@@ -181,9 +181,11 @@
     <ClCompile Include="..\..\src\core\io\memory_stream.cpp" />
     <ClCompile Include="..\..\src\core\logging\console_logger.cpp" />
     <ClCompile Include="..\..\src\core\logging\file_logger.cpp" />
+    <ClCompile Include="..\..\src\core\logging\impl\log_impl.cpp" />
     <ClCompile Include="..\..\src\core\logging\log.cpp" />
     <ClCompile Include="..\..\src\core\logging\logging_helpers.cpp" />
     <ClCompile Include="..\..\src\core\logging\log_batcher.cpp" />
+    <ClCompile Include="..\..\src\core\logging\out_flags.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
@@ -294,12 +296,14 @@
     <ClInclude Include="..\..\include\sani\core\interfaces\error_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\io\memory_stream.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\impl\log_batcher.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\impl\log_impl.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\log.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\log_batcher.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\file_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\impl\logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\logging_helpers.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\log_level.hpp" />
+    <ClInclude Include="..\..\include\sani\core\logging\out_flags.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\system_console_logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\logger.hpp" />
     <ClInclude Include="..\..\include\sani\core\math\func\geometric_func.hpp" />
@@ -341,6 +345,10 @@
     <ClInclude Include="..\..\include\sani\core\memory\preallocated_array.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_target.hpp" />
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry.hpp" />
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_sample.hpp" />
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\convert.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />

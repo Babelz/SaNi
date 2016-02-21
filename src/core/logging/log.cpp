@@ -8,65 +8,42 @@ namespace sani {
 
 	namespace log {
 
-		struct Impl {
-			// Add one to keep first ass nullptr.
-			const uint32 LoggersCount = OutStreamsCount + 1;
-			void* loggers[3];
-
-			Impl() {
-				const String logFilePath	= "log.txt";
-
-				loggers[OutFlagsNull]		= nullptr;
-				loggers[OutFlagsConsole]	= new SystemConsoleLogger();
-				loggers[OutFlagsFile]		= new FileLogger(logFilePath);
-			}
-
-			~Impl() = default;
-		};
-
-		void initialize() {
-			impl = new Impl();
-		}
-		void deinitialize() {
-			delete impl;
-		}
-
 		template<class T>
-		static void tryToLog(const uint16 id, const String& from, const String& message, const LogLevel level) {
-			if (id == OutFlagsNull) return;
+		static void logTo(const uint16 id, const String& from, const String& message, const LogLevel level) {
+			if (id == NullLogger) return;
 			
-			static_cast<T*>(impl->loggers[id])->log(from, level, message);
+			static_cast<T*>(impl.loggers[id])->log(from, level, message);
 		}
 		template<class T>
 		static void internalBatch(const uint16 id, LogBatcher& batcher) {
-			if (id == OutFlagsNull) return;
+			if (id == NullLogger) return;
 
-			void* logger = impl->loggers[id];
-
-			batcher.log<T>(*static_cast<T*>(logger));
+			batcher.log<T>(*static_cast<T*>(impl.loggers[id]));
 		}
 
-		static void internalLog(const uint16 outFlags, const String& from, const String& message, const LogLevel level) {
-			uint16 isConsoleOut = (outFlags >> 0) & 1 * 1;
-			uint16 isFileOut	= (outFlags >> 1) & 1 * 2;
+		static void internalLog(const OutFlags outFlags, const String& from, const String& message, const LogLevel level) {
+			const uint16 isConsoleOut = (static_cast<uint32>(outFlags) >> 0) & 1 * 1;
+			const uint16 isFileOut = (static_cast<uint32>(outFlags) >> 1) & 1 * 2;
 
-			tryToLog<SystemConsoleLogger>(isConsoleOut, from, message, level);
-			tryToLog<FileLogger>(isFileOut, from, message, level);
+			logTo<SystemConsoleLogger>(isConsoleOut, from, message, level);
+			logTo<FileLogger>(isFileOut, from, message, level);
 		}
 
-		void error(const uint16 outFlags, const String& from, const String& message) {
+		void error(const OutFlags outFlags, const String& from, const String& message) {
 			internalLog(outFlags, from, message, LogLevel::Error);
 		}
-		void warning(const uint16 outFlags, const String& from, const String& message) {
+		void warning(const OutFlags outFlags, const String& from, const String& message) {
 			internalLog(outFlags, from, message, LogLevel::Warning);
 		}
-		void info(const uint16 outFlags, const String& from, const String& message) {
+		void info(const OutFlags outFlags, const String& from, const String& message) {
 			internalLog(outFlags, from, message, LogLevel::Info);
 		}
 
-		void batch(const uint16 outFlags, LogBatcher& batcher) {
-			uint16 isConsoleOut = (outFlags >> 0) & 1 * 1;
-			uint16 isFileOut	= (outFlags >> 1) & 1 * 2;
+		void batch(const OutFlags outFlags, LogBatcher& batcher) {
+			const uint32 outFlagsi = static_cast<uint32>(outFlags);
+
+			uint16 isConsoleOut = (outFlagsi >> 0) & 1 * 1;
+			uint16 isFileOut	= (outFlagsi >> 1) & 1 * 2;
 
 			internalBatch<SystemConsoleLogger>(isConsoleOut, batcher);
 			internalBatch<FileLogger>(isFileOut, batcher);

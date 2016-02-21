@@ -172,8 +172,8 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			engine->routeMessage(createRectangleMessage);
 
 			auto& rect = glyph.source;
-			const uint32 w = rect.w;
-			const uint32 h = rect.h;
+			const float32 w = (float32)rect.w;
+			const float32 h = (float32)rect.h;
 
 			const float32 x = offx + glyph.xOffset;
 			const float32 y = offy - glyph.yOffset + spacing; //+ font->texture->getHeight();
@@ -345,8 +345,8 @@ namespace sandbox {
 		inputListener.update();
 		c->transform.rotation += 0.001f;
 		c->renderData.renderElements[0].renderMode = RenderMode::TriangleFan;
-		c->textureSource.x = std::cos(time.getTotalTime()) * 32.0f;
-		c->textureSource.y = std::sin(time.getTotalTime()) * 32.0f;
+		c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
+		c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
 
 		recomputeVertices(*c);
 		updateRenderData(*c);
