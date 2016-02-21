@@ -6,26 +6,43 @@ namespace sani {
 
 	namespace profiler {
 
-		void startProfiler(const String& module, const String& function) {
-			impl.root.beginProfiling(function);
-		}
-		void stopProfiler(const String& module, const String& function) {
-			impl.root.beginProfiling(function);
+		namespace __privns__ {
+
+			void startProfiler(const String& module, const String& function) {
+				SANI_ASSERT(impl.rootModule == module);
+				SANI_ASSERT(impl.rootFunction == function);
+
+				impl.root.beginMeasure();
+			}
+			void stopProfiler(const String& module, const String& function) {
+				impl.root.endMeasure();
+			}
+
+			void startProfiling(const String& module, const String& function) {
+				impl.modules[module].beginProfiling(function);
+			}
+			void endProfiling(const String& module, const String& function) {
+				impl.modules[module].endProfiling(function);
+			}
+
+			void makeRoot(const String& module, const String& function) {
+				impl.rootModule = module;
+				impl.rootFunction = function;
+			}
 		}
 
-		void startProfiling(const String& module, const String& function) {
-			SANI_ASSERT(impl.rootModule == module);
-			SANI_ASSERT(impl.rootFunction == module);
-
-			impl.modules[module].beginProfiling(function);
+		float32 rootElapsedMicroseconds() {
+			return impl.root.averageMicroSeconds();
 		}
-		void endProfiling(const String& module, const String& function) {
-			impl.modules[module].endProfiling(function);
+		const String& rootFunction() {
+			return impl.rootFunction;
+		}
+		const String& rootModule() {
+			return impl.rootModule;
 		}
 
-		void createRoot(const String& module, const String& function) {
-			impl.rootModule		= module;
-			impl.rootFunction	= function;
+		const Modules& modules() {
+			return impl.modules;
 		}
 	}
 }

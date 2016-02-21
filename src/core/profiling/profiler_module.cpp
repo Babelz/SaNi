@@ -19,10 +19,10 @@ namespace sani {
 		entries[function].endMeasure();
 	}
 
-	ProfilerEntriesIterator ProfilerModule::begin() const {
+	ProfilerEntriesIterator ProfilerModule::begin() {
 		return entries.begin();
 	}
-	ProfilerEntriesIterator ProfilerModule::end() const {
+	ProfilerEntriesIterator ProfilerModule::end() {
 		return entries.end();
 	}
 }
