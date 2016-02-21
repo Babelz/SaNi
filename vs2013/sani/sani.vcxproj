@@ -189,6 +189,7 @@
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
+    <ClCompile Include="..\..\src\core\profiling\profiler_sample.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp" />
@@ -343,10 +344,10 @@
     <ClInclude Include="..\..\include\sani\core\memory\preallocated_array.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
-    <ClInclude Include="..\..\include\sani\core\profiling\profiler_target.hpp" />
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler.hpp" />
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_module.hpp" />
     <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry.hpp" />
     <ClInclude Include="..\..\include\sani\core\profiling\profiler_sample.hpp" />
-    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\convert.hpp" />
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />

@@ -105,10 +105,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		[](void){return int(5); },
 		false
 		);
-	sani::rtti::Object obj = intCtor.invoke();
-	sani::SystemConsoleLogger logger;
-	
-	sani::log::info(sani::log::OutFlags::SystemConsole, "WinMain", "Sandbox WinMain init engine");
+	//sani::rtti::Object obj = intCtor.invoke();
+	//sani::SystemConsoleLogger logger;
 
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;

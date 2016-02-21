@@ -5,17 +5,24 @@
 
 namespace sani {
 
+	/// @class ProfilerSample profiler_sample.hpp "sani/core/profiling/profiler_sample.hpp"
+	/// @author voidbab
+	/// 
+	/// One time measurement of some given procedure.
 	class ProfilerSample final {
 	private:
-		Time start;
+		Time begin;
 		Time end;
 	public:
 		ProfilerSample();
 
+		/// Returns the elapsed time.
 		Time getElapsedTime() const;
 
-		void start();
-		void end();
+		/// Starts measuring procedure time.
+		void beginMeasuring();
+		/// Ends measuring the procedure time.
+		void endMeasuring();
 
 		~ProfilerSample() = default;
 	};
