@@ -85,6 +85,7 @@ sani::hid::RawInputListener inputListener;
 #include "sani/core/logging/log_batcher.hpp"
 #include "sani/rtti/type_info.hpp"
 #include "sani/preprocessor/rtti_runtime.hpp"
+#include "sani/rtti/argument.hpp"
 class AATest : public sani::rtti::Serializable {
 	DECLARE_SERIALIZABLE;
 public:
@@ -97,7 +98,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	RTTI_REGISTER_TYPE(AATest);
 	sani::rtti::Type intType({ sani::rtti::TypeInfo<int*>::id });
 	sani::rtti::Object obj = intType.createDynamic();
-
+	sani::rtti::Argument intArg(5);
+	assert(intArg.getValue<int>() == 5);
 	sani::SystemConsoleLogger logger;
 	
 	logger.logError("main", "is this red?");

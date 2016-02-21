@@ -266,6 +266,7 @@
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d_content.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\render_service_contract.cpp" />
+    <ClCompile Include="..\..\src\rtti\argument.cpp" />
     <ClCompile Include="..\..\src\rtti\constructor.cpp" />
     <ClCompile Include="..\..\src\rtti\invokable.cpp" />
     <ClCompile Include="..\..\src\rtti\object.cpp" />
@@ -455,6 +456,7 @@
     <ClInclude Include="..\..\include\sani\resource\sprite_font.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\argument.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\constructor.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\invokable.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object.hpp" />
@@ -497,6 +499,7 @@
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
     <None Include="..\..\include\sani\resource\inl\bitmap_content.inl" />
     <None Include="..\..\include\sani\resource\reader\inl\resource_reader.hpp" />
+    <None Include="..\..\include\sani\rtti\inl\argument.inl" />
     <None Include="..\..\include\sani\rtti\inl\invokable.inl" />
     <None Include="..\..\include\sani\rtti\inl\object.inl" />
     <None Include="..\..\include\sani\rtti\inl\object_container.inl" />

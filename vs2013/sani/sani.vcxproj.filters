@@ -544,6 +544,7 @@
       <Filter>src\rtti</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\rtti\pointer_container.cpp" />
+    <ClCompile Include="..\..\src\rtti\argument.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1131,6 +1132,7 @@
     <ClInclude Include="..\..\include\sani\rtti\serializable.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\argument.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1226,6 +1228,7 @@
     <None Include="..\..\include\sani\rtti\inl\type_data.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
+    <None Include="..\..\include\sani\rtti\inl\argument.inl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt">
