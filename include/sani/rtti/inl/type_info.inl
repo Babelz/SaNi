@@ -40,8 +40,8 @@ namespace sani {
 			std::is_trivially_default_constructible<U>::value
 			>::type*
 			) {
-			data.addConstructor<T>([]() { return T(); }, false);
-			data.addConstructor<T>([]() { return new T(); }, true);
+			data.addConstructor<T>([](Arguments&) { return T(); }, false);
+			data.addConstructor<T>([](Arguments&) { return new T(); }, true);
 		}
 
 	}

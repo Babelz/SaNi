@@ -1196,6 +1196,7 @@
     <ClInclude Include="..\..\include\sani\rtti\argument.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

@@ -1,8 +1,7 @@
 #pragma once
-#include <vector>
+#include "sani/rtti/argument_config.hpp"
 #include "sani/rtti/type_config.hpp"
 #include "sani/forward_declare.hpp"
-
 SANI_FORWARD_DECLARE_2(sani, rtti, Object);
 
 namespace sani {
@@ -36,10 +35,11 @@ namespace sani {
 
 			Type& operator=(const Type& rhs);
 
-			// TODO this is for debug
-			Object create() const;
+			/// Invokes constructor with specified arguments
+			Object create(Arguments& args) const;
 
-			Object createDynamic() const;
+			/// Invokes dynamic constructor with specified args
+			Object createDynamic(Arguments& args) const;
 
 			// these are needed for algorithms to work
 			bool operator<(const Type& rhs) const;

@@ -97,7 +97,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
 	sani::rtti::Type intType({ sani::rtti::TypeInfo<int*>::id });
-	sani::rtti::Object obj = intType.createDynamic();
+	sani::rtti::Arguments args;
+	sani::rtti::Object obj = intType.createDynamic(args);
 	sani::rtti::Argument intArg(5);
 	assert(intArg.getValue<int>() == 5);
 	sani::SystemConsoleLogger logger;

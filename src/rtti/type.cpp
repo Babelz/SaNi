@@ -1,5 +1,6 @@
 #include "sani/rtti/type.hpp"
 #include "sani/rtti/type_database.hpp"
+#include "sani/rtti/argument.hpp"
 
 namespace sani {
 	namespace rtti {
@@ -38,16 +39,20 @@ namespace sani {
 			return id != Type::Invalid;
 		}
 
-		Object Type::create() const {
+		Object Type::create(Arguments& args) const {
 			Signature sig;
+			for (auto& arg : args)
+				sig.emplace_back(arg.getType());
 			auto& ctor = db.types[id].getConstructor(sig);
-			return ctor.invoke();
+			return ctor.invoke(args);
 		}
 
-		Object Type::createDynamic() const {
+		Object Type::createDynamic(Arguments& args) const {
 			Signature sig;
+			for (auto& arg : args)
+				sig.emplace_back(arg.getType());
 			auto& ctor = db.types[id].getDynamicConstructor(sig);
-			return ctor.invoke();
+			return ctor.invoke(args);
 		}
 
 		bool Type::operator<(const Type& rhs) const {

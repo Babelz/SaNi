@@ -1,5 +1,5 @@
 #pragma once
-
+#include <vector>
 #include "sani/rtti/type.hpp"
 #include "sani/forward_declare.hpp"
 SANI_FORWARD_DECLARE_2(sani, rtti, Object);
