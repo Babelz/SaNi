@@ -17,6 +17,9 @@ namespace sani {
 			const String8 getName() const;
 			/// Gets the signature of invokable
 			const Signature& getSignature() const;
+
+			template <typename ...Args>
+			static Signature createSignature();
 		protected:
 			String8 name;
 			Signature signature;
