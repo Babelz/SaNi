@@ -12,6 +12,8 @@ namespace sani {
 			ObjectContainer(const T&& value);
 			virtual ObjectBase* clone() const override;
 
+			virtual Type getType() const override;
+
 			ObjectContainer& operator=(const ObjectContainer&) = delete;
 		private:
 			T value;

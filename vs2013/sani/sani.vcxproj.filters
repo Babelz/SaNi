@@ -1143,6 +1143,12 @@
     <ClInclude Include="..\..\include\sani\core\logging\out_flags.hpp">
       <Filter>include\core\logging</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\serializable.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1233,6 +1239,9 @@
       <Filter>include\rtti\inl</Filter>
     </None>
     <None Include="..\..\include\sani\rtti\inl\invokable.inl">
+      <Filter>include\rtti\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\rtti\inl\type_data.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
   </ItemGroup>

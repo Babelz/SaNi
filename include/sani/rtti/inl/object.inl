@@ -16,7 +16,7 @@ namespace sani {
 		Object::Object(T* data) 
 			: _isConst(std::is_const<T>::value)  {
 			// TODO wrapper for holding pointers
-			static_assert(0);
+			//static_assert(0);
 		}
 	}
 }

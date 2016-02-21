@@ -54,6 +54,7 @@
 #include "sani/resource/spritefont_content.hpp"
 #include <xlocbuf>
 #include "sani/hid/raw_input_listener.hpp"
+#include "sani/rtti/serializable.hpp"
 using namespace sani::resource;
 using namespace sani::engine;
 using namespace sani::graphics;
@@ -83,11 +84,17 @@ sani::hid::RawInputListener inputListener;
 
 #include "sani/core/logging/log_batcher.hpp"
 #include "sani/rtti/type_info.hpp"
-#include "sani/core/logging/log.hpp"
+#include "sani/preprocessor/rtti_runtime.hpp"
+class AATest : public sani::rtti::Serializable {
+	DECLARE_SERIALIZABLE;
+};
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	auto& db = sani::rtti::TypeDatabase::getInstance();
+	RTTI_REGISTER_TYPE(AATest);
+	sani::rtti::Type intType({ sani::rtti::TypeInfo<int>::id });
+	sani::rtti::Object obj = intType.create();
 	
 	sani::rtti::TypeID id = sani::rtti::TypeInfo<int>::id;
 	sani::rtti::Object aobj(5);
@@ -99,7 +106,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		false
 		);
 	sani::rtti::Object obj = intCtor.invoke();
-
+	sani::SystemConsoleLogger logger;
+	
 	sani::log::info(sani::log::OutFlags::SystemConsole, "WinMain", "Sandbox WinMain init engine");
 
 	SaNiEngine engine(hInstance);

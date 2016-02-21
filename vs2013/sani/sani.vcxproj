@@ -467,6 +467,8 @@
     <ClInclude Include="..\..\include\sani\rtti\object.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_base.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_container.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\serializable.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_config.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_data.hpp" />
@@ -505,6 +507,7 @@
     <None Include="..\..\include\sani\rtti\inl\invokable.inl" />
     <None Include="..\..\include\sani\rtti\inl\object.inl" />
     <None Include="..\..\include\sani\rtti\inl\object_container.inl" />
+    <None Include="..\..\include\sani\rtti\inl\type_data.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_info.inl" />
   </ItemGroup>
   <ItemGroup>
