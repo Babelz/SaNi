@@ -30,6 +30,12 @@ namespace sani {
 			/// @param signature The signature to search for
 			const Constructor& getDynamicConstructor(const Signature& signature);
 
+			/// Adds constructor for type 
+			/// @param func Function containing the initialization
+			/// @param isDynamic Is this dynamic constructor
+			template <class Class>
+			void addConstructor(Constructor::CreateInstance func, bool isDynamic);
+
 			/// Is this pointer type?
 			bool isPointer : 1;
 			/// Is this class type?
@@ -41,3 +47,4 @@ namespace sani {
 	}
 }
 
+#include "inl/type_data.inl"

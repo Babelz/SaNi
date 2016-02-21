@@ -6,9 +6,10 @@
 namespace sani {
 	namespace rtti {
 		class Constructor : public Invokable {
+		public:
 			// TODO args
 			using CreateInstance = std::function<Object(void)>;
-		public:
+
 			/// Creates invalid constructor
 			Constructor();
 			/// Creates valid invokable constructor

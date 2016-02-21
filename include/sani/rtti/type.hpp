@@ -1,6 +1,9 @@
 #pragma once
 #include <vector>
 #include "sani/rtti/type_config.hpp"
+#include "sani/forward_declare.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, rtti, Object);
 
 namespace sani {
 	namespace rtti {
@@ -32,6 +35,9 @@ namespace sani {
 			operator bool() const;
 
 			Type& operator=(const Type& rhs);
+
+			// TODO this is for debug
+			Object create() const;
 
 			// these are needed for algorithms to work
 			bool operator<(const Type& rhs) const;

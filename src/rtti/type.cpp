@@ -38,6 +38,12 @@ namespace sani {
 			return id != Type::Invalid;
 		}
 
+		Object Type::create() const {
+			Signature sig;
+			auto& ctor = db.types[id].getConstructor(sig);
+			return ctor.invoke();
+		}
+
 		bool Type::operator<(const Type& rhs) const {
 			return id < rhs.id;
 		}

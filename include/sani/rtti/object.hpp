@@ -3,6 +3,7 @@
 #include "sani/rtti/object_base.hpp"
 #include "sani/rtti/object_container.hpp"
 #include "sani/rtti/type_config.hpp"
+#include <type_traits>
 namespace sani {
 	namespace rtti {
 		/// Class that represents every type there is

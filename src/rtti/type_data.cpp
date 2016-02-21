@@ -13,5 +13,11 @@ namespace sani {
 
 		}
 
+		const Constructor& TypeData::getConstructor(const Signature& signature) {
+			auto s = constructors.find(signature);
+			if (s == constructors.end()) return Constructor::invalid();
+			return s->second;
+		}
+
 	}
 }

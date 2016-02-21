@@ -93,19 +93,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
-	sani::rtti::TypeID id = sani::rtti::TypeInfo<AATest>::id;
-	sani::rtti::Object aobj(5);
-	sani::rtti::Type type = aobj.getType();
-	auto aaid = AATest().getType().getID();
-	assert(aaid == id);
-	sani::rtti::Object bobj(aobj);
-	sani::rtti::Constructor intCtor(
-		sani::rtti::Type{ id },
-		sani::rtti::Signature{},
-		[](void){return int(5); },
-		false
-		);
-	sani::rtti::Object obj = intCtor.invoke();
+	sani::rtti::Type intType({ sani::rtti::TypeInfo<int>::id });
+	sani::rtti::Object obj = intType.create();
+
 	sani::SystemConsoleLogger logger;
 	
 	logger.logError("main", "is this red?");
