@@ -7,8 +7,10 @@ namespace sani {
 	enum class LogLevel {
 		/// Handles the incoming log message as an error.
 		Error,
+
 		/// Handles the incoming log message as an warning.
 		Warning,
+
 		/// Handles the incoming log message as general
 		/// information.
 		Info

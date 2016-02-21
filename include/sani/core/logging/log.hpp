@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani/core/logging/out_flags.hpp"
+#include "sani/core/logging/impl/log_impl.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
@@ -11,26 +13,15 @@ namespace sani {
 	class Logger;
 
 	namespace log {
-		struct Impl;
 
 		namespace {
-			const uint16 OutStreamsCount = 2;
-			const uint16 OutFlagsNull = 0;
-
-			Impl* impl;
+			LogImpl impl;
 		}
 
-		const uint16 OutFlagsConsole = 1;
-		const uint16 OutFlagsFile    = 2;
-		const uint16 OutFlagsAll	 = OutFlagsConsole & OutFlagsFile;
+		void error(const OutFlags outFlags, const String& from, const String& message);
+		void warning(const OutFlags outFlags, const String& from, const String& message);
+		void info(const OutFlags outFlags, const String& from, const String& message);
 		
-		void initialize();
-		void deinitialize();
-
-		void error(const uint16 outFlags, const String& from, const String& message);
-		void warning(const uint16 outFlags, const String& from, const String& message);
-		void info(const uint16 outFlags, const String& from, const String& message);
-		
-		void batch(const uint16 outFlags, LogBatcher& batcher);
+		void batch(const OutFlags outFlags, LogBatcher& batcher);
 	}
 }
