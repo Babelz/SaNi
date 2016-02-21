@@ -1,0 +1,1 @@
+﻿Replace shitfusion with AvalonEdit.

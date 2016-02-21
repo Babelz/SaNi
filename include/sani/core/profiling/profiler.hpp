@@ -2,7 +2,6 @@
 
 #include "sani/core/profiling/impl/profiler_impl.hpp"
 #include "sani/core/profiling/profiler_module.hpp"
-#include "sani/core/utils/string_utils.hpp"
 
 #include <list>
 
