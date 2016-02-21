@@ -561,6 +561,12 @@
     <ClCompile Include="..\..\src\core\profiling\profiler_sample.cpp">
       <Filter>src\core\profiling</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\core\profiling\profiler_entry.cpp">
+      <Filter>src\core\profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\profiling\profiler_module.cpp">
+      <Filter>src\core\profiling</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

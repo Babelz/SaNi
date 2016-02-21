@@ -10,10 +10,10 @@ namespace sani {
 		return Time(end - begin);
 	}
 
-	void ProfilerSample::beginMeasuring() {
+	void ProfilerSample::beginMeasure() {
 		begin = Clock::now();
 	}
-	void ProfilerSample::endMeasuring() {
+	void ProfilerSample::endMeasure() {
 		end = Clock::now();
 	}
 }

@@ -20,9 +20,9 @@ namespace sani {
 		Time getElapsedTime() const;
 
 		/// Starts measuring procedure time.
-		void beginMeasuring();
+		void beginMeasure();
 		/// Ends measuring the procedure time.
-		void endMeasuring();
+		void endMeasure();
 
 		~ProfilerSample() = default;
 	};

@@ -189,6 +189,8 @@
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
+    <ClCompile Include="..\..\src\core\profiling\profiler_entry.cpp" />
+    <ClCompile Include="..\..\src\core\profiling\profiler_module.cpp" />
     <ClCompile Include="..\..\src\core\profiling\profiler_sample.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />

@@ -3,10 +3,6 @@
 #include "sani/core/profiling/profiler_sample.hpp"
 #include "sani/types.hpp"
 
-#include "sani/forward_declare.hpp"
-
-SANI_FORWARD_DECLARE_1(sani, ProfilerModule);
-
 namespace sani {
 
 	const uint32 MaxSamples = 64;
@@ -25,7 +21,14 @@ namespace sani {
 	public:
 		ProfilerEntry();
 
+		/// Returns the average time from 
+		/// measured samples.
 		Time getAverageTime() const;
+
+		/// Begins measuring new sample.
+		void beginMeasure();
+		/// Ends measuring.
+		void endMeasure();
 
 		~ProfilerEntry() = default;
 	};
