@@ -39,6 +39,8 @@ namespace sani {
 			// TODO this is for debug
 			Object create() const;
 
+			Object createDynamic() const;
+
 			// these are needed for algorithms to work
 			bool operator<(const Type& rhs) const;
 			bool operator>(const Type& rhs) const;

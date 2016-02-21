@@ -2,6 +2,7 @@
 
 #include "sani/rtti/object_base.hpp"
 #include "sani/rtti/object_container.hpp"
+#include "sani/rtti/pointer_container.hpp"
 #include "sani/rtti/type_config.hpp"
 #include <type_traits>
 namespace sani {
@@ -14,11 +15,15 @@ namespace sani {
 			template<class T>
 			Object(T& data);
 
+			// only derived classes of Serializable are allowed
 			template<class T>
-			Object(T* data);
+			Object(T* data, typename std::enable_if<std::is_base_of<Serializable, T>::value>::type*);
 
+			// restrict objects
 			template <class T>
-			Object(T&& data);
+			Object(T&& data,
+				typename std::enable_if <!std::is_same<Object&, T>::value>::type* = nullptr,
+				typename std::enable_if<!std::is_const<T>::value>::type* =  nullptr);
 
 			Object(const Object& rhs);
 			Object(Object&& rhs);

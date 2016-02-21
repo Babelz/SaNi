@@ -85,28 +85,50 @@ sani::hid::RawInputListener inputListener;
 #include "sani/core/logging/log_batcher.hpp"
 #include "sani/rtti/type_info.hpp"
 #include "sani/preprocessor/rtti_runtime.hpp"
+#include "sani/rtti/argument.hpp"
 class AATest : public sani::rtti::Serializable {
 	DECLARE_SERIALIZABLE;
+public:
+	AATest() {}
 };
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-
+	
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
-	sani::rtti::Type intType({ sani::rtti::TypeInfo<int>::id });
-	sani::rtti::Object obj = intType.create();
+	sani::rtti::Type intType({ sani::rtti::TypeInfo<int*>::id });
+	sani::rtti::Object obj = intType.createDynamic();
+	sani::rtti::Argument intArg(5);
+	assert(intArg.getValue<int>() == 5);
+	sani::SystemConsoleLogger logger;
 	
-	sani::rtti::TypeID id = sani::rtti::TypeInfo<int>::id;
-	sani::rtti::Object aobj(5);
-	sani::rtti::Object bobj(aobj);
-	sani::rtti::Constructor intCtor(
-		sani::rtti::Type{ id },
-		sani::rtti::Signature{},
-		[](void){return int(5); },
-		false
-		);
-	//sani::rtti::Object obj = intCtor.invoke();
-	//sani::SystemConsoleLogger logger;
+	logger.logError("main", "is this red?");
+	logger.logWarning("main", "is this yellow?");
+	logger.logInfo("main", "is this green?");
+	sani::console::writeLine("is this default?");
+
+	sani::LogBatcher b;
+	
+	b.beginLog("WinMain", "LOG MAIN");
+
+	b.scopeStart();
+	b.logInfo("Ebin info1");
+	b.logInfo("Ebin info2");
+	b.logInfo("Ebin info3");
+
+	b.scopeStart();
+	b.logInfo("Some sub call");
+	b.logInfo("sub prod 1");
+	b.logInfo("sub prod 2");
+	b.logError("dere was en error");
+	b.logInfo("sub prod 3");
+	b.logInfo("sub prod 4");
+	b.logWarning("dere was en waanin");
+	b.scopeEnd();
+	
+	b.scopeEnd();
+
+//	b.endLog(logger);
 
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;
@@ -150,8 +172,8 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			engine->routeMessage(createRectangleMessage);
 
 			auto& rect = glyph.source;
-			const uint32 w = rect.w;
-			const uint32 h = rect.h;
+			const float32 w = (float32)rect.w;
+			const float32 h = (float32)rect.h;
 
 			const float32 x = offx + glyph.xOffset;
 			const float32 y = offy - glyph.yOffset + spacing; //+ font->texture->getHeight();
@@ -323,8 +345,8 @@ namespace sandbox {
 		inputListener.update();
 		c->transform.rotation += 0.001f;
 		c->renderData.renderElements[0].renderMode = RenderMode::TriangleFan;
-		c->textureSource.x = std::cos(time.getTotalTime()) * 32.0f;
-		c->textureSource.y = std::sin(time.getTotalTime()) * 32.0f;
+		c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
+		c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
 
 		recomputeVertices(*c);
 		updateRenderData(*c);
