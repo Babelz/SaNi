@@ -471,6 +471,7 @@
     <ClInclude Include="..\..\include\sani\resource\texture2d.hpp" />
     <ClInclude Include="..\..\include\sani\resource\texture2d_content.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\argument.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\constructor.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\invokable.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object.hpp" />

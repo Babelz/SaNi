@@ -24,8 +24,8 @@ namespace sani {
 			return type;
 		}
 
-		Object Constructor::invoke() const {
-			return createInstance();
+		Object Constructor::invoke(Arguments& args) const {
+			return createInstance(args);
 		}
 
 		const Constructor& Constructor::invalid(void) {

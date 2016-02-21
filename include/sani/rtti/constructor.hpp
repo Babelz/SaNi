@@ -2,13 +2,14 @@
 
 #include "sani/rtti/invokable.hpp"
 #include "sani/rtti/object.hpp"
+#include "sani/rtti/argument_config.hpp"
 #include <functional>
 namespace sani {
 	namespace rtti {
 		class Constructor : public Invokable {
 		public:
 			// TODO args
-			using CreateInstance = std::function<Object(void)>;
+			using CreateInstance = std::function<Object(Arguments&)>;
 
 			/// Creates invalid constructor
 			Constructor();
@@ -29,8 +30,7 @@ namespace sani {
 			Type getType() const;
 
 			/// Invokes the constructor
-			/// TODO arguments
-			Object invoke() const;
+			Object invoke(Arguments& args) const;
 
 			/// Returns invalid constructor
 			static const Constructor& invalid(void);
