@@ -226,6 +226,9 @@
     <Filter Include="src\core\logging\impl">
       <UniqueIdentifier>{5695ad1d-b6ff-4638-aaf3-47c050edba23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\profiling">
+      <UniqueIdentifier>{5397f328-807c-4f88-913b-cd7d9b3ffe57}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1133,15 +1136,23 @@
     <ClInclude Include="..\..\include\sani\rtti\constructor.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\profiling\profiler_target.hpp" />
-    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry.hpp" />
-    <ClInclude Include="..\..\include\sani\core\profiling\profiler_sample.hpp" />
-    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry_container.hpp" />
     <ClInclude Include="..\..\include\sani\core\logging\impl\log_impl.hpp">
       <Filter>include\core\logging\impl</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\logging\out_flags.hpp">
       <Filter>include\core\logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_target.hpp">
+      <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry.hpp">
+      <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry_container.hpp">
+      <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\profiler_sample.hpp">
+      <Filter>include\core\profiling</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp">
       <Filter>include\rtti</Filter>
