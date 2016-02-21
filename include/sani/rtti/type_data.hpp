@@ -33,7 +33,7 @@ namespace sani {
 			/// Adds constructor for type 
 			/// @param func Function containing the initialization
 			/// @param isDynamic Is this dynamic constructor
-			template <class Class>
+			template <class Class, typename ...Args>
 			void addConstructor(Constructor::CreateInstance func, bool isDynamic);
 
 			/// Is this pointer type?
