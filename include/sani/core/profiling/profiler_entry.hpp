@@ -23,7 +23,7 @@ namespace sani {
 
 		/// Returns the average time from 
 		/// measured samples.
-		Time getAverageTime() const;
+		float32 averageMicroSeconds() const;
 
 		/// Begins measuring new sample.
 		void beginMeasure();

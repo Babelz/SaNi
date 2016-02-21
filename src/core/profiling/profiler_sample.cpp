@@ -6,8 +6,8 @@ namespace sani {
 									   end(Clock::now()) {
 	}
 
-	Time ProfilerSample::getElapsedTime() const {
-		return Time(end - begin);
+	float32 ProfilerSample::elapsedMicroSeconds() const {
+		return toMicroSeconds(Time(end - begin));
 	}
 
 	void ProfilerSample::beginMeasure() {

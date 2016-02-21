@@ -17,7 +17,7 @@ namespace sani {
 		ProfilerSample();
 
 		/// Returns the elapsed time.
-		Time getElapsedTime() const;
+		float32 elapsedMicroSeconds() const;
 
 		/// Starts measuring procedure time.
 		void beginMeasure();

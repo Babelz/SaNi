@@ -5,12 +5,12 @@ namespace sani {
 	ProfilerEntry::ProfilerEntry() : samplesCount(0) {
 	}
 	
-	Time ProfilerEntry::getAverageTime() const {
-		Duration duration;
+	float32 ProfilerEntry::averageMicroSeconds() const {
+		float32 microSeconds = 0.0f;
 
-		for (auto sample : samples) duration += sample.getElapsedTime().time_since_epoch();
-		
-		return Time(duration / MaxSamples);
+		for (uint32 i = 0; i < MaxSamples; i++) microSeconds += samples[i].elapsedMicroSeconds();
+
+		return microSeconds / MaxSamples;
 	}
 
 	void ProfilerEntry::beginMeasure() {

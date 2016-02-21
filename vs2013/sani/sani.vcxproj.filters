@@ -232,6 +232,12 @@
     <Filter Include="src\core\profiling">
       <UniqueIdentifier>{18e206df-07b6-4d01-bb35-8d0bdbda56b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\core\profiling\impl">
+      <UniqueIdentifier>{8f3520f6-45ca-4b25-a149-0ec70ed1564b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\core\profiling\impl">
+      <UniqueIdentifier>{37d6bf10-51c3-4621-afa5-7880f0c8580a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -565,6 +571,12 @@
       <Filter>src\core\profiling</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\profiling\profiler_module.cpp">
+      <Filter>src\core\profiling</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\profiling\impl\profiling_impl.cpp">
+      <Filter>src\core\profiling\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\profiling\profiler.cpp">
       <Filter>src\core\profiling</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1171,6 +1183,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\profiling\profiler_module.hpp">
       <Filter>include\core\profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\profiling\impl\profiler_impl.hpp">
+      <Filter>include\core\profiling\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

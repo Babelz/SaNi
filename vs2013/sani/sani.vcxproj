@@ -189,6 +189,8 @@
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
+    <ClCompile Include="..\..\src\core\profiling\impl\profiling_impl.cpp" />
+    <ClCompile Include="..\..\src\core\profiling\profiler.cpp" />
     <ClCompile Include="..\..\src\core\profiling\profiler_entry.cpp" />
     <ClCompile Include="..\..\src\core\profiling\profiler_module.cpp" />
     <ClCompile Include="..\..\src\core\profiling\profiler_sample.cpp" />
@@ -346,6 +348,7 @@
     <ClInclude Include="..\..\include\sani\core\memory\preallocated_array.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
+    <ClInclude Include="..\..\include\sani\core\profiling\impl\profiler_impl.hpp" />
     <ClInclude Include="..\..\include\sani\core\profiling\profiler.hpp" />
     <ClInclude Include="..\..\include\sani\core\profiling\profiler_module.hpp" />
     <ClInclude Include="..\..\include\sani\core\profiling\profiler_entry.hpp" />
