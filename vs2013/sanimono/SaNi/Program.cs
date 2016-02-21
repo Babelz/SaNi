@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SaNiSharp
+namespace SaNi
 {
-    public class Class1
+    internal sealed class Program
     {
+        private static void Main(string[] args)
+        {
+        }
     }
 }
