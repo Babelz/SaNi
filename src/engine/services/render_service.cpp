@@ -9,6 +9,7 @@
 #include "sani/platform/graphics/window.hpp"
 #include "sani/engine/sani_engine.hpp"
 #include "sani/graphics/layer.hpp"
+#include "sani/core/profiling/profiler.hpp"
 
 namespace sani {
 
@@ -235,6 +236,8 @@ namespace sani {
 				}
 			}
 			void RenderService::update(const EngineTime& time) {
+				BEGIN_PROFILING;
+
 				window->listen();
 
 				// No need to render if there are no cameras.
@@ -249,6 +252,8 @@ namespace sani {
 				}
 
 				graphicsDevice->present();
+				
+				END_PROFILING;
 			}
 
 			RenderService::~RenderService() {

@@ -19,7 +19,7 @@ namespace sani {
 	/// in that file.
 	class ProfilerModule final {
 	private:
-		std::unordered_map<String, ProfilerEntry> entries;
+		ProfilerEntries entries;
 	public:
 		ProfilerModule() = default;
 		
@@ -31,8 +31,8 @@ namespace sani {
 		/// End profiling given function.
 		void endProfiling(const String& function);
 		
-		ProfilerEntriesIterator begin() const;
-		ProfilerEntriesIterator end() const;
+		ProfilerEntriesIterator begin();
+		ProfilerEntriesIterator end();
 
 		~ProfilerModule() = default;
 	};

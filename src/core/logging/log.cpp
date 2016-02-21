@@ -29,15 +29,19 @@ namespace sani {
 			logTo<FileLogger>(isFileOut, from, message, level);
 		}
 
-		void error(const OutFlags outFlags, const String& from, const String& message) {
-			internalLog(outFlags, from, message, LogLevel::Error);
+		namespace __privns__ {
+			
+			void error(const OutFlags outFlags, const String& from, const String& message) {
+				internalLog(outFlags, from, message, LogLevel::Error);
+			}
+			void warning(const OutFlags outFlags, const String& from, const String& message) {
+				internalLog(outFlags, from, message, LogLevel::Warning);
+			}
+			void info(const OutFlags outFlags, const String& from, const String& message) {
+				internalLog(outFlags, from, message, LogLevel::Info);
+			}
 		}
-		void warning(const OutFlags outFlags, const String& from, const String& message) {
-			internalLog(outFlags, from, message, LogLevel::Warning);
-		}
-		void info(const OutFlags outFlags, const String& from, const String& message) {
-			internalLog(outFlags, from, message, LogLevel::Info);
-		}
+
 
 		void batch(const OutFlags outFlags, LogBatcher& batcher) {
 			const uint32 outFlagsi = static_cast<uint32>(outFlags);

@@ -1,4 +1,4 @@
-#pragma endregion
+#pragma once
 
 #include "sani/platform/time/time.hpp"
 #include "sani/types.hpp"

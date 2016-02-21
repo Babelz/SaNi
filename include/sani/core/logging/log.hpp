@@ -12,18 +12,18 @@ SANI_FORWARD_DECLARE_1(sani, LogBatcher);
 	to the current function name.
 */
 
-#define FNCLOG_ERR(outFlags, message) sani::log::error(outFlags, __FUNCTION___, message)
-#define FNCLOG_WRN(outFlags, message) sani::log::warning(outFlags, __FUNCTION___, message)
-#define FNCLOG_INF(outFlags, message) sani::log::info(outFlags, __FUNCTION___, message)
+#define FNCLOG_ERR(outFlags, message) sani::log::__privns__::error(outFlags, __FUNCTION___, message)
+#define FNCLOG_WRN(outFlags, message) sani::log::__privns__::warning(outFlags, __FUNCTION___, message)
+#define FNCLOG_INF(outFlags, message) sani::log::__privns__::info(outFlags, __FUNCTION___, message)
 
 /*
 	Helper macros that do the same but replace the from argument with
 	"[filename]@[function]".
 */
 
-#define FLOG_ERR(outFlags, message) sani::log::error(outFlags, __FILE__ + "@" + __FUNCTION__, message)
-#define FLOG_WRN(outFlags, message) sani::log::warning(outFlags, __FILE__ + "@" + __FUNCTION__, message)
-#define FLOG_INF(outFlags, message) sani::log::info(outFlags, __FILE__ + "@" + __FUNCTION__, message)
+#define FLOG_ERR(outFlags, message) sani::log::__privns__::error(outFlags, __FILE__ + "@" + __FUNCTION__, message)
+#define FLOG_WRN(outFlags, message) sani::log::__privns__::warning(outFlags, __FILE__ + "@" + __FUNCTION__, message)
+#define FLOG_INF(outFlags, message) sani::log::__privns__::info(outFlags, __FILE__ + "@" + __FUNCTION__, message)
 
 namespace sani {
 
@@ -33,13 +33,21 @@ namespace sani {
 	namespace log {
 
 		namespace {
+
 			LogImpl impl;
 		}
 
-		void error(const OutFlags outFlags, const String& from, const String& message);
-		void warning(const OutFlags outFlags, const String& from, const String& message);
-		void info(const OutFlags outFlags, const String& from, const String& message);
-		
+		/*
+			TODO: should these be "hidden" or not?..
+		*/
+
+		namespace __privns__ {
+
+			void error(const OutFlags outFlags, const String& from, const String& message);
+			void warning(const OutFlags outFlags, const String& from, const String& message);
+			void info(const OutFlags outFlags, const String& from, const String& message);
+		}
+
 		void batch(const OutFlags outFlags, LogBatcher& batcher);
 	}
 }

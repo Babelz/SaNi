@@ -1,4 +1,4 @@
-#pragma endregion
+#pragma once
 
 #include "sani/core/profiling/profiler_sample.hpp"
 #include "sani/types.hpp"

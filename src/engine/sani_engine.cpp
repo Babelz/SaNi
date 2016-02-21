@@ -29,6 +29,9 @@
 
 #include "sani/graphics/layer.hpp"
 
+#include "sani/core/profiling/profiler.hpp"
+#include "sani/platform/console.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -195,24 +198,11 @@ namespace sani {
 			sani::Time last = sani::Clock::now();
 			sani::Time start = sani::Clock::now();
 
-			// TODO: testing if the cvars get synced.
-			auto* getCVars = createEmptyMessage<messages::DocumentMessage>();
-			const uint32 command = static_cast<uint32>(2);
-
-			getCVars->getRecipients().addRecipient("cvar service");
-			getCVars->setCommand(command);
-
-			routeMessage(getCVars);
-
-			auto* vars = reinterpret_cast<std::vector<CVar* const>*>(getCVars->getData());
-			
-			CVar* const window_height = vars->operator[](0);
-			CVar* const window_width = vars->operator[](1);
-			
-			window_width->write(800);
-			window_height->write(600);
+			PROFILER_MAKE_ROOT;
 
 			while (running) {
+				START_PROFILER;
+
 				sani::Time current = sani::Clock::now();
 
 				auto delta = current - last;
@@ -230,6 +220,8 @@ namespace sani {
 				SANI_TRIGGER_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&), 
 								   this, time);
 #endif
+				
+				STOP_PROFILER;
 			}
 
 			services.terminate();
