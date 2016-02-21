@@ -25,6 +25,7 @@ namespace sani {
 
 		/*
 			TODO: should these be "hidden" or not?..
+			TODO: add models when we can present them to the user.
 		*/
 
 		namespace __privns__ {
