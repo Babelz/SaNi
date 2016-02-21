@@ -269,6 +269,7 @@
     <ClCompile Include="..\..\src\rtti\constructor.cpp" />
     <ClCompile Include="..\..\src\rtti\invokable.cpp" />
     <ClCompile Include="..\..\src\rtti\object.cpp" />
+    <ClCompile Include="..\..\src\rtti\pointer_container.cpp" />
     <ClCompile Include="..\..\src\rtti\type.cpp" />
     <ClCompile Include="..\..\src\rtti\type_data.cpp" />
     <ClCompile Include="..\..\src\rtti\type_database.cpp" />

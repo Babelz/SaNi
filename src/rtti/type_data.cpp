@@ -19,5 +19,11 @@ namespace sani {
 			return s->second;
 		}
 
+		const Constructor& TypeData::getDynamicConstructor(const Signature& signature) {
+			auto s = dynamicConstructors.find(signature);
+			if (s == dynamicConstructors.end()) return Constructor::invalid();
+			return s->second;
+		}
+
 	}
 }

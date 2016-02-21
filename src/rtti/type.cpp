@@ -44,6 +44,12 @@ namespace sani {
 			return ctor.invoke();
 		}
 
+		Object Type::createDynamic() const {
+			Signature sig;
+			auto& ctor = db.types[id].getDynamicConstructor(sig);
+			return ctor.invoke();
+		}
+
 		bool Type::operator<(const Type& rhs) const {
 			return id < rhs.id;
 		}
