@@ -10,6 +10,8 @@ namespace SaNi
     {
         private static void Main(string[] args)
         {
+            Console.WriteLine("Hello from Mono!");
+            Console.ReadKey();
         }
     }
 }
