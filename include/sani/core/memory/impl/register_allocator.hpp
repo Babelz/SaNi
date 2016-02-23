@@ -23,12 +23,17 @@ namespace sani {
 
 	template<class T>
 	void RegisterAllocator<T>::allocate(T* outValue, uint32& outLocation) {
-		outLocation = 0;
+		if (!released.empty()) {
+			outLocation = released.pop();
+			
+			outValue = allocator.allocate();
+			elements[outLocation] = outValue;
+		} else {
+			outLocation = elements.size();
 
-		if (!released.empty()) outLocation = released.pop();
-		else				   outLocation = elements.size();
-
-		outValue = allocator.allocate();
+			outValue = allocator.allocate();
+			elements.emplace_back(outValue);
+		}
 	}
 
 	template<class T>
