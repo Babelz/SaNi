@@ -27,6 +27,18 @@ namespace sani {
 			return _base->getType();
 		}
 
+		bool Object::isValid() const {
+			return _base != nullptr;
+		}
+
+		bool Object::isConst() const {
+			return _isConst;
+		}
+
+		void* Object::getPointer() const {
+			return _base->getPointer();
+		}
+
 	}
 }
 

@@ -16,6 +16,10 @@ namespace sani {
 			return instance->getType();
 		}
 
+		void* PointerContainer::getPointer() const {
+			return instance;
+		}
+
 	}
 }
 

@@ -36,6 +36,15 @@ namespace sani {
 
 			/// Gets the underlaying type
 			Type getType() const;
+
+			/// Checks if the object is valid
+			bool isValid() const;
+
+			/// Checks if the object is const
+			bool isConst() const;
+
+			/// Returns the pointer to data
+			void* getPointer() const;
 		private:
 			ObjectBase* _base;
 			bool _isConst;

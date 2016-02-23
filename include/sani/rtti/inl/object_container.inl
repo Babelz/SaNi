@@ -24,6 +24,15 @@ namespace sani {
 		Type ObjectContainer<T>::getType() const {
 			return Type(TypeInfo<PureType<T> >::id);
 		}
+
+		template <class T>
+		void* ObjectContainer<T>::getPointer() const {
+			return const_cast<void*>(
+				reinterpret_cast<const void*>(
+					std::addressof(value)
+				)
+			);
+		}
 	}
 }
 

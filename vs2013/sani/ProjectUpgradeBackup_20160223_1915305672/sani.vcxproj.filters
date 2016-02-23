@@ -588,9 +588,6 @@
     <ClCompile Include="..\..\src\rtti\pointer_container.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\rtti\object_container.cpp">
-      <Filter>src\rtti</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1202,29 +1199,12 @@
     <ClInclude Include="..\..\include\sani\rtti\argument.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp" />
     <ClInclude Include="..\..\include\sani\ecs\entity.hpp">
       <Filter>include\ecs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\ecs\component.hpp">
       <Filter>include\ecs</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\rtti\object_container_standard_types.hpp">
-      <Filter>include\rtti</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp">
-      <Filter>include\rtti</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\component_manager.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\memory\register_allocator.hpp">
-      <Filter>include\core\memory</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\core\memory\impl\register_allocator.hpp">
-      <Filter>include\core\memory\inl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
