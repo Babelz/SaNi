@@ -76,7 +76,7 @@ namespace sani {
 				void receive(messages::Message* const message) final override;
 				void update(const EngineTime& time) final override;
 
-				~RenderService() final override;
+				~RenderService();
 			};
 		}
 	}

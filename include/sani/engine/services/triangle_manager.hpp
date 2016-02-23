@@ -12,6 +12,8 @@ namespace sani {
 			class TriangleManager : public RenderableManager<graphics::Triangle> {
 			public:
 				TriangleManager(SaNiEngine* const engine);
+
+				~TriangleManager() = default;
 			};
 		}
 	}

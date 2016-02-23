@@ -107,8 +107,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}, true);
 	sani::rtti::Arguments args;
 	//args.emplace_back(5);
-	sani::rtti::Object obj = aaType.createDynamic(args);
-	auto* kek = obj.getPointer();
+	sani::rtti::Object obj = aaType.create(args);
+	auto* kek = static_cast<AATest*>(obj.getPointer());
 	sani::rtti::Argument intArg(5);
 	//assert(intArg.getValue<int>() == 5 && kek->kek == 55);
 	sani::SystemConsoleLogger logger;

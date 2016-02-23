@@ -43,7 +43,7 @@ namespace sani {
 			/// Service providing access to cvars.
 			class CVarService final : public EngineService {
 			private:
-				const String Config = String("config");
+				const String Config		= String("config");
 				const String ConfigRoot = String(Config + "\\");
 
 				CVarConfiguration configuration;
@@ -84,6 +84,8 @@ namespace sani {
 				CVarService(SaNiEngine* const engine);
 
 				void receive(messages::Message* const message) final override;
+
+				~CVarService() = default;
 			};
 		}
 	}

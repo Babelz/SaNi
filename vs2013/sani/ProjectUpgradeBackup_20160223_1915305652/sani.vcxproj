@@ -277,7 +277,6 @@
     <ClCompile Include="..\..\src\rtti\constructor.cpp" />
     <ClCompile Include="..\..\src\rtti\invokable.cpp" />
     <ClCompile Include="..\..\src\rtti\object.cpp" />
-    <ClCompile Include="..\..\src\rtti\object_container.cpp" />
     <ClCompile Include="..\..\src\rtti\pointer_container.cpp" />
     <ClCompile Include="..\..\src\rtti\type.cpp" />
     <ClCompile Include="..\..\src\rtti\type_data.cpp" />
@@ -345,12 +344,10 @@
     <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\impl\preallocated_array.hpp" />
-    <ClInclude Include="..\..\include\sani\core\memory\impl\register_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\preallocated_array.hpp" />
-    <ClInclude Include="..\..\include\sani\core\memory\register_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
     <ClInclude Include="..\..\include\sani\core\profiling\impl\profiler_impl.hpp" />
@@ -382,14 +379,12 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\component_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp" />
@@ -484,7 +479,6 @@
     <ClInclude Include="..\..\include\sani\rtti\object.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_base.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_container.hpp" />
-    <ClInclude Include="..\..\include\sani\rtti\object_container_standard_types.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\serializable.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type.hpp" />
