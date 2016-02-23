@@ -1209,6 +1209,15 @@
     <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\component_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\register_allocator.hpp">
+      <Filter>include\core\memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\core\memory\impl\register_allocator.hpp">
+      <Filter>include\core\memory\impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

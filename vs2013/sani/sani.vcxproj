@@ -344,10 +344,12 @@
     <ClInclude Include="..\..\include\sani\core\memory\impl\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\impl\preallocated_array.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\impl\register_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\memory.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\page_pool_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\pool_page.hpp" />
     <ClInclude Include="..\..\include\sani\core\memory\preallocated_array.hpp" />
+    <ClInclude Include="..\..\include\sani\core\memory\register_allocator.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_parser.hpp" />
     <ClInclude Include="..\..\include\sani\core\parser\xml_util.hpp" />
     <ClInclude Include="..\..\include\sani\core\profiling\impl\profiler_impl.hpp" />
@@ -379,6 +381,7 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\component_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
