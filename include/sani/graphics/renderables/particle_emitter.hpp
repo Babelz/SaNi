@@ -32,15 +32,6 @@ namespace sani {
 			Once
 		};
 
-		/// How particles should disappear.
-		enum class ParticleDecayFunction {
-			/// Particles fade before they get decayed.
-			Fade,
-
-			/// Particles get hidden/reseted when they decay.
-			Disappear
-		};
-
 		struct ParticleRenderAttributeList final {
 			math::Rect32f source;
 		};
@@ -106,8 +97,6 @@ namespace sani {
 		class ParticleEmitter final : public Renderable {
 		public:
 			const uint32 maxParticles;
-
-			ParticleDecayFunction particleDecayFunction;
 			EmitFunction emitFunction;
 
 			uint32 decayedParticles;

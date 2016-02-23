@@ -40,8 +40,11 @@ namespace sani {
 			Vec2f scaleAcceleration;
 			Vec2f scaleVelocity;
 
-			uint32 framesToFade;
-			Color fadeDelta;
+			uint32 frames;
+			
+			// Alpha fade delta.
+			uint32 framesBeforeFade;
+			float32 fadeDelta;
 
 			Particle(resource::Texture2D* const texture);
 

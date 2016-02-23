@@ -70,11 +70,26 @@ namespace sani {
 		void update(ParticleEmitter& emitter, const EngineTime& time) {
 			const float32 delta = static_cast<float32>(time.getFrameTime());
 
+			emitter.visible = (emitter.decayedParticles < emitter.maxParticles);
+
+			if (!emitter.visible) return;
+
 			for (Particle& particle : emitter.particles) {
+				particle.frames++;
+
+				if (particle.frames >= particle.framesBeforeFade) particle.sprite.color.a -= particle.fadeDelta;
+				
 				// Particle is "dead", reset it.
 				if (particle.elapsedTime > particle.decayTime) {
-					if (emitter.emitting)  resetParticle(emitter, particle);
-					else                   particle.sprite.color = color::transparent;
+					if (emitter.emitting)  { 
+						resetParticle(emitter, particle);  
+						
+						if (emitter.decayedParticles != 0) emitter.decayedParticles--;
+					} else { 
+						particle.sprite.color = color::transparent; 
+						
+						emitter.decayedParticles++; 
+					}
 					
 					continue;
 				}
@@ -90,15 +105,6 @@ namespace sani {
 				applyAngularVelocity(particle, delta);
 
 				if (emitter.generator.useScaleVelocity) applyScaleVelocity(particle, delta);
-
-				/*float percent = (static_cast<float>(j) / static_cast<float>(emitter.maxParticles));
-				float rad = percent * 2.0f  * 3.14;
-				j++;
-
-				sprite.transform.rotation += particle.angularVelocity * frameTime;
-				sprite.transform.position.x += particle.velocity.x * cos(rad) * 3.14;
-				sprite.transform.position.y += particle.velocity.y * sin(rad) * 3.14;
-				*/
 			}
 		}
 
@@ -184,6 +190,7 @@ namespace sani {
 			particle.decayTime = generator.varyingDecayTime ?  rand::nextFloat32(generator.baseDecayTime, generator.baseDecayTime + generator.decayTimeVariance) :
 															   generator.baseDecayTime;
 			
+			// Apply new color.
 			sprite.color = generator.varyingColor ? randomColor(generator.color, generator.colorVariance) :
 												    generator.color;
 
@@ -194,6 +201,22 @@ namespace sani {
 			const ParticleRenderAttributeList& attributeList = generator.attributeLists[attributeListIndex];
 
 			sprite.textureSource = attributeList.source;
+
+			// Apply frames to fade modifier.
+			particle.framesBeforeFade = 0;
+			particle.frames = 0;
+
+			if (generator.framesToFade != 0) {
+				const uint32 framesToFade = generator.framesToFadeVariance > 0 ? rand::nextUint32(generator.framesToFade, generator.framesToFade + generator.framesToFadeVariance) :
+																			     generator.framesToFade;
+				
+				const uint32 framesBeforeDecay = static_cast<uint32>(particle.decayTime / 16.0f);
+				
+				particle.framesBeforeFade = framesToFade > framesBeforeDecay ? 0 : framesBeforeDecay;
+
+				// Compute fader color.
+				particle.fadeDelta = particle.sprite.color.a / static_cast<float32>(framesToFade > framesBeforeDecay ? framesBeforeDecay : framesToFade);
+			}
 
 			// Reset position.
 			Vec2f positionOffset;

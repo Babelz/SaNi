@@ -13,7 +13,7 @@ namespace sani {
 
 		ParticleEmitter::ParticleEmitter(Texture2D* const texture, const uint32 maxParticles) 
 			: maxParticles(maxParticles), Renderable(maxParticles * ParticleVerticesCount, maxParticles * ParticleVertexElementsCount, 1, texture),
-			  emitFunction(EmitFunction::Continuous), particleDecayFunction(ParticleDecayFunction::Disappear), decayedParticles(0), emitting(true) {
+			  emitFunction(EmitFunction::Continuous), decayedParticles(0), emitting(true) {
 		
 			SANI_ASSERT(texture != nullptr);
 

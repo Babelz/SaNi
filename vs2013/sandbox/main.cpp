@@ -332,6 +332,9 @@ void initialize(SaNiEngine* const engine) {
 	gen.scaleVelocityVariance = { 0.005f, 0.005f };
 	gen.useScaleVelocity = true;
 
+	gen.framesToFade = 16;
+	gen.framesToFadeVariance = 4;
+
 	initializeParticles(*em);
 
 	layer->add(em);
@@ -352,6 +355,7 @@ namespace sandbox {
 		c->renderData.renderElements[0].renderMode = RenderMode::TriangleFan;
 		c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
 		c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
+		c->fill.a = 0.5f;
 
 		recomputeVertices(*c);
 		updateRenderData(*c);
