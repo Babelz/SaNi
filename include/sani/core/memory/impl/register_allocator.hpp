@@ -32,7 +32,7 @@ namespace sani {
 			outLocation = elements.size();
 
 			outValue = allocator.allocate();
-			elements.emplace_back(outValue);
+			elements.push_back(outValue);
 		}
 	}
 
