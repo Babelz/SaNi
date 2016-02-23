@@ -58,7 +58,7 @@ namespace sani {
 
 				void update(const EngineTime& time) override;
 
-				~RenderableManager() = default;
+				virtual ~RenderableManager() = default;
 			};
 		}
 	}

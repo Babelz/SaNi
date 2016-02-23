@@ -13,7 +13,7 @@ namespace sani {
 			public:
 				RectangleManager(SaNiEngine* const engine);
 
-				~RectangleManager();
+				~RectangleManager() = default;
 			};
 		}
 	}
