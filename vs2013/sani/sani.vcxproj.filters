@@ -238,6 +238,9 @@
     <Filter Include="src\core\profiling\impl">
       <UniqueIdentifier>{37d6bf10-51c3-4621-afa5-7880f0c8580a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\ecs">
+      <UniqueIdentifier>{1767f939-b689-449e-87d1-738ff69e8ed4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1197,6 +1200,12 @@
       <Filter>include\rtti</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp" />
+    <ClInclude Include="..\..\include\sani\ecs\entity.hpp">
+      <Filter>include\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\ecs\component.hpp">
+      <Filter>include\ecs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
