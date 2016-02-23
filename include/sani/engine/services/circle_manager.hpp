@@ -12,6 +12,8 @@ namespace sani {
 			class CircleManager : public RenderableManager<graphics::Circle> {
 			public:
 				CircleManager(SaNiEngine* const engine);
+
+				~CircleManager() = default;
 			};
 		}
 	}

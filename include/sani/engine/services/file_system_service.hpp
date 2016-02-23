@@ -35,6 +35,8 @@ namespace sani {
 				FileSystemService(SaNiEngine* const engine);
 
 				void receive(messages::Message* const message) final override;
+
+				~FileSystemService();
 			};
 		}
 	}

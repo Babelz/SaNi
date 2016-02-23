@@ -1206,6 +1206,9 @@
     <ClInclude Include="..\..\include\sani\ecs\component.hpp">
       <Filter>include\ecs</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

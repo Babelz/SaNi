@@ -12,6 +12,8 @@ namespace sani {
 			class RectangleManager : public RenderableManager<graphics::Rectangle> {
 			public:
 				RectangleManager(SaNiEngine* const engine);
+
+				~RectangleManager();
 			};
 		}
 	}

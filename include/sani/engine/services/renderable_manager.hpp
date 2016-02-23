@@ -57,6 +57,8 @@ namespace sani {
 				void receive(messages::Message* const message) final override;
 
 				void update(const EngineTime& time) override;
+
+				~RenderableManager() = default;
 			};
 		}
 	}

@@ -12,6 +12,8 @@ namespace sani {
 			class SpriteManager : public RenderableManager<graphics::Sprite> {
 			public:
 				SpriteManager(SaNiEngine* const engine);
+				
+				~SpriteManager() = default;
 			};
 		}
 	}

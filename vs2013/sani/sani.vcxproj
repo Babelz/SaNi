@@ -385,6 +385,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp" />
