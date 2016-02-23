@@ -12,6 +12,7 @@ namespace sani {
 			PointerContainer(Serializable* instance);
 			virtual ObjectBase* clone() const override;
 			Type getType() const override;
+			virtual void* getPointer() const override;
 		private:
 			Serializable* instance;
 		};

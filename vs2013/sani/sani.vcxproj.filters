@@ -588,6 +588,9 @@
     <ClCompile Include="..\..\src\rtti\pointer_container.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\rtti\object_container.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1199,12 +1202,17 @@
     <ClInclude Include="..\..\include\sani\rtti\argument.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp" />
     <ClInclude Include="..\..\include\sani\ecs\entity.hpp">
       <Filter>include\ecs</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\ecs\component.hpp">
       <Filter>include\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\object_container_standard_types.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp">
+      <Filter>include\rtti</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

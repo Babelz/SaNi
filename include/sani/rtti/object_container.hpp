@@ -14,6 +14,8 @@ namespace sani {
 
 			virtual Type getType() const override;
 
+			virtual void* getPointer() const override;
+
 			ObjectContainer& operator=(const ObjectContainer&) = delete;
 		private:
 			T value;
@@ -22,4 +24,3 @@ namespace sani {
 }
 
 #include "inl/object_container.inl"
-

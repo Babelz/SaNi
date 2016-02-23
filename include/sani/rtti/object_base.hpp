@@ -10,6 +10,8 @@ namespace sani {
 			virtual ObjectBase* clone() const = 0;
 			/// Gets the type of underlaying type
 			virtual Type getType() const = 0;
+			/// Returns the pointer to data
+			virtual void* getPointer() const = 0;
 		};
 	}
 }

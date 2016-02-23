@@ -277,6 +277,7 @@
     <ClCompile Include="..\..\src\rtti\constructor.cpp" />
     <ClCompile Include="..\..\src\rtti\invokable.cpp" />
     <ClCompile Include="..\..\src\rtti\object.cpp" />
+    <ClCompile Include="..\..\src\rtti\object_container.cpp" />
     <ClCompile Include="..\..\src\rtti\pointer_container.cpp" />
     <ClCompile Include="..\..\src\rtti\type.cpp" />
     <ClCompile Include="..\..\src\rtti\type_data.cpp" />
@@ -479,6 +480,7 @@
     <ClInclude Include="..\..\include\sani\rtti\object.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_base.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_container.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\object_container_standard_types.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\serializable.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type.hpp" />
