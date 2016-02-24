@@ -1,16 +1,8 @@
 ﻿<Window x:Class="ShaderEditor.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:syncfusion="http://schemas.syncfusion.com/wpf"
         Title="MainWindow" Height="350" Width="525" Background="Black">
     
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Languages/Configuration/GLSLDesktop.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Window.Resources>
     <!-- Root -->
     <Grid>
         <!-- Column and row definitions -->
@@ -34,10 +26,6 @@
         <WindowsFormsHost Name="glHost" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0, 0, 25, 0"/>
 
         <!-- Editor area -->
-        <syncfusion:EditControl Grid.Row="1" Grid.Column="2" Name="editControl"
-                                Background="#130606" Foreground="White" 
-                                Cursor="IBeam" FontSize="24" CaretBrush="Yellow"
-                                FontWeight="Bold"/>
         
         <GridSplitter Grid.Row="1" Width="25"/>
         
