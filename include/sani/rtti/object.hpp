@@ -45,6 +45,9 @@ namespace sani {
 
 			/// Returns the pointer to data
 			void* getPointer() const;
+
+			template <typename T>
+			T& getValue() const;
 		private:
 			ObjectBase* _base;
 			bool _isConst;

@@ -18,6 +18,10 @@ namespace sani {
 			FileSystemService::FileSystemService(SaNiEngine* const engine) : EngineService("file system service", engine) {
 			}
 
+			FileSystemService::~FileSystemService() {
+
+			}
+
 			void FileSystemService::handleQueryMessage(messages::QueryMessage* const message) {
 				const FilesystemServiceCommands command = static_cast<FilesystemServiceCommands>(message->getCommand());
 

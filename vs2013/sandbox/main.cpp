@@ -90,7 +90,7 @@ class AATest : public sani::rtti::Serializable {
 	DECLARE_SERIALIZABLE;
 public:
 	int kek;
-	AATest() : kek(55) {}
+	AATest(int g) : kek(g) {}
 };
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -98,19 +98,23 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
 	sani::rtti::Type aaType({ sani::rtti::TypeInfo<AATest>::id });
-	db.types[aaType.getID()].addConstructor<AATest>([](sani::rtti::Arguments& args) {
-		return AATest();
+	db.types[aaType.getID()].addConstructor<AATest, int>([](sani::rtti::Arguments& args) {
+		return AATest(args[0].getValue<int>());
 
 	}, false);
-	db.types[aaType.getID()].addConstructor<AATest>([](sani::rtti::Arguments& args) {
-		return new AATest();
+	db.types[aaType.getID()].addConstructor<AATest, int>([](sani::rtti::Arguments& args) {
+		return new AATest(args[0].getValue<int>());
 	}, true);
 	sani::rtti::Arguments args;
-	//args.emplace_back(5);
-	sani::rtti::Object obj = aaType.create(args);
-	auto* kek = static_cast<AATest*>(obj.getPointer());
-	sani::rtti::Argument intArg(5);
-	//assert(intArg.getValue<int>() == 5 && kek->kek == 55);
+	int arg = 1337;
+	AATest test(0);
+	args.emplace_back(arg);
+	{
+		sani::rtti::Object obj = aaType.create(args);
+		test = obj.getValue<AATest>();
+	}
+	
+	
 	sani::SystemConsoleLogger logger;
 	
 	logger.logError("main", "is this red?");
