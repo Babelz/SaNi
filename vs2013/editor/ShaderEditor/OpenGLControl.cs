@@ -89,7 +89,7 @@ namespace ShaderEditor
             if (OpenGLRender != null) OpenGLRender(this, RenderingEventArgs.Empty);
 
             // Draw.
-            IntPtr handleDeviceContext = graphics.GetHdc();
+            var handleDeviceContext = graphics.GetHdc();
 
             OpenGL.SwapBuffers((uint)handleDeviceContext);
 
@@ -100,7 +100,7 @@ namespace ShaderEditor
 
         private void SetupRenderingTimer()
         {
-            int interval = (int)(1000.0 / (double)PreferedFPS);
+            var interval = (int)(1000.0 / (double)PreferedFPS);
             interval = interval == 0 ? 1 : interval;
 
             renderTimer.Interval = interval;
@@ -133,7 +133,7 @@ namespace ShaderEditor
 
         public void InitializeOpenGL()
         {
-            IntPtr handle = this.Handle;
+            var handle = this.Handle;
 
             OpenGL.CreateContext(handle);
             OpenGL.GLEnable(GLEnums.Blend);

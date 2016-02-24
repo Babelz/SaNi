@@ -26,6 +26,10 @@
         <WindowsFormsHost Name="glHost" Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0, 0, 25, 0"/>
 
         <!-- Editor area -->
+        <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="textEditor"
+                               FontFamily="Consolas" FontSize="20pt" Grid.Row="1" Grid.Column="1"
+                               Background="Black" Foreground="Yellow" Cursor="IBeam">
+        </avalonEdit:TextEditor>
         
         <GridSplitter Grid.Row="1" Width="25"/>
         

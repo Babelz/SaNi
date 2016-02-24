@@ -47,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "editor", "editor", "{11D7AF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderEditor", "editor\ShaderEditor\ShaderEditor.csproj", "{9F55067F-C7C6-4A64-8946-F043E9D529CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadingLanguageParser", "editor\ShadingLanguageParser\ShadingLanguageParser.csproj", "{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntaxDefinitionBuilder", "editor\SyntaxDefinitionBuilder\SyntaxDefinitionBuilder.csproj", "{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

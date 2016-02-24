@@ -7,8 +7,8 @@
     <ProjectGuid>{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShadingLanguageParser</RootNamespace>
-    <AssemblyName>ShadingLanguageParser</AssemblyName>
+    <RootNamespace>SyntaxDefinitionBuilder</RootNamespace>
+    <AssemblyName>SyntaxDefinitionBuilder</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Avalon\AvalonCommon.cs" />
+    <Compile Include="GLSL\GLSLLanguage.cs" />
+    <Compile Include="GLSL\GLSLDesktopBuilder.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

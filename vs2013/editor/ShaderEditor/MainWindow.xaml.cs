@@ -1,4 +1,8 @@
-﻿using ShaderEditor.GL;
+﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Editing;
+using ICSharpCode.AvalonEdit.Highlighting;
+using ICSharpCode.AvalonEdit.Highlighting.Xshd;
+using ShaderEditor.GL;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -23,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
 
 namespace ShaderEditor
 {
@@ -39,7 +44,9 @@ namespace ShaderEditor
         {
             InitializeComponent();
 
-            OpenGLControl glControl = new OpenGLControl();
+            textEditor.TextArea.Caret.CaretBrush = new SolidColorBrush(Colors.Yellow);
+
+            var glControl = new OpenGLControl();
             glControl.OpenGLInitialized += glControl_OpenGLInitialized;
             glControl.OpenGLRender += glControl_OpenGLRender;
             glHost.Child = glControl;
@@ -48,9 +55,10 @@ namespace ShaderEditor
             glControl.StartRendering();
         }
 
+        #region GLControl events
         private void glControl_OpenGLRender(object sender, EventArgs e)
         {
-            OpenGLControl glControl = sender as OpenGLControl;
+            var glControl = sender as OpenGLControl;
 
             OpenGL.GLClearColor(0.0f, 1.0f, 0.0f, 0.25f);
             
@@ -59,6 +67,11 @@ namespace ShaderEditor
 
         private void glControl_OpenGLInitialized(object sender, EventArgs e)
         {
+            using (var reader = new XmlTextReader("languages\\" + GLSLDesktop + ".xshd"))
+            {
+                textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
+            }
         }
+        #endregion
     }
 }
