@@ -1,6 +1,4 @@
 ﻿using ShaderEditor.GL;
-using ShaderEditor.Languages;
-using Syncfusion.Windows.Edit;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -48,14 +46,6 @@ namespace ShaderEditor
 
             glControl.InitializeOpenGL();
             glControl.StartRendering();
-
-            editControl.DocumentLanguage = Syncfusion.Windows.Edit.Languages.Custom;
-
-            GLSLDesktopLanguage language = new GLSLDesktopLanguage(editControl);
-            language.Lexem = Resources["GLSLDesktopLexems"] as LexemCollection;
-            language.Formats = Resources["GLSLDesktopFormats"] as FormatsCollection;
-
-            editControl.CustomLanguage = language;
         }
 
         private void glControl_OpenGLRender(object sender, EventArgs e)
