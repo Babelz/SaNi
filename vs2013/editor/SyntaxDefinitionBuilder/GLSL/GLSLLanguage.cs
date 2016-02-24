@@ -15,16 +15,14 @@ namespace SyntaxDefinitionBuilder.GLSL
         #region GLSL Strings
 
         public static readonly string DesktopKeywords =
-            @"attribute const uniform varying buffer shared
-              coherent volatile restrict readonly writeonly
+            @"const coherent volatile restrict readonly writeonly
               layout
               flat smooth noperspective
-              patch sample
               break continue do for while switch case default
               if else
               subroutine
               invariant precise
-              discard return
+              discard return layout
               lowp mediump highp precision
               true false
               struct";
@@ -32,6 +30,7 @@ namespace SyntaxDefinitionBuilder.GLSL
         public static readonly string DesktopStorageQualifiers =
             @"const in out attribute uniform varying
               buffer shared centroid sample patch
+              location
               inout";
 
         public static readonly string DesktopTypes =

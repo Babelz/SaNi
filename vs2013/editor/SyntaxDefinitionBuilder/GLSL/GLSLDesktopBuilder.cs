@@ -46,7 +46,7 @@ namespace SyntaxDefinitionBuilder.GLSL
         }
         private void GenerateLanguageKeywords(List<string> lines)
         {
-            GenerateKeywords(lines, "bold", "MintCream", GLSLLanguage.DesktopTypes);
+            GenerateKeywords(lines, "bold", "MintCream", GLSLLanguage.DesktopKeywords);
         }
 
         private void GenerateKeywords(List<string> lines)
