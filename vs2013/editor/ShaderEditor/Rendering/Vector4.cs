@@ -17,5 +17,13 @@ namespace ShaderEditor.Rendering
         public float Z;
         public float W;
         #endregion
+
+        public Vector4(float x, float y, float z, float w)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            W = w;
+        }
     }
 }

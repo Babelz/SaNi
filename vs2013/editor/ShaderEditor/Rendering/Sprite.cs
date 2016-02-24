@@ -97,15 +97,15 @@ namespace ShaderEditor.Rendering
             var dy = -Origin.Y * Scale.Y;
             
             // Update vertex positions and rotation.
-            var localTopLeft = new Vector3();
+            Vector3 localTopLeft;
 
-            var localTopRight = new Vector3();
+            Vector3 localTopRight;
             localTopRight.X = Bounds.X * Scale.X;
 
-            var localBottomLeft = new Vector3();
+            Vector3 localBottomLeft;
             localBottomLeft.Y = Bounds.Y * Scale.Y;
 
-            var localBottomRight = new Vector2();
+            Vector3 localBottomRight;
             localBottomRight.X = Bounds.X * Scale.X;
             localBottomRight.Y = Bounds.Y * Scale.Y;
         }

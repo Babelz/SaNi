@@ -96,6 +96,8 @@ namespace ShaderEditor
             graphics.ReleaseHdc(handleDeviceContext);
 
             renderTimeMeasurer.Stop();
+
+            frameTime = renderTimeMeasurer.Elapsed.TotalMilliseconds;
         }
 
         private void SetupRenderingTimer()
@@ -116,7 +118,7 @@ namespace ShaderEditor
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            this.Render(e.Graphics);
+            Render(e.Graphics);
         }
         protected override void OnPaintBackground(PaintEventArgs e)
         {
