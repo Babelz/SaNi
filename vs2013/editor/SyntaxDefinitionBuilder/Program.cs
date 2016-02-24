@@ -16,7 +16,7 @@ namespace SyntaxDefinitionBuilder
             
             var glslDesktopSyntaxDefinition = builder.BuildSyntaxDefinition();
 
-            File.WriteAllLines("GLSL Desktop.xml", glslDesktopSyntaxDefinition);
+            File.WriteAllLines("GLSL Desktop.xshd", glslDesktopSyntaxDefinition);
         }
     }
 }
