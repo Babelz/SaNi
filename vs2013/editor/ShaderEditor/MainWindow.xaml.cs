@@ -73,5 +73,44 @@ namespace ShaderEditor
             }
         }
         #endregion
+
+        #region Shader menu event handlers
+        private void shaderMenuNew_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: new "project".
+        }
+        private void shaderMenuLoad_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: load existing shader source.
+        }
+        private void shaderMenuSave_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: save existing shader source.
+        }
+        private void shaderMenuSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: save existing shader source as.
+        }
+        private void shaderMenuExitEditor_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: exit the program.
+        }
+        #endregion
+
+        #region Settings menu event handlers
+        private void settingsMenuTextEditor_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        private void settingsMenuPreview_Click(object sender, RoutedEventArgs e)
+        {
+        }
+        #endregion
+
+        #region About menu event handlers
+        private void menuAbout_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        #endregion
     }
 }

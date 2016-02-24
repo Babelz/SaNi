@@ -65,7 +65,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Editor\Project.cs" />
     <Compile Include="GL\PFDFlags.cs" />
+    <Compile Include="Rendering\Rectf.cs" />
+    <Compile Include="Rendering\RenderData.cs" />
+    <Compile Include="Rendering\Sprite.cs" />
+    <Compile Include="Rendering\Vector2.cs" />
+    <Compile Include="Rendering\Vector3.cs" />
+    <Compile Include="Rendering\Vector4.cs" />
+    <Compile Include="Rendering\VertexPositionColorTexture.cs" />
     <Compile Include="Shaders\Shader.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
