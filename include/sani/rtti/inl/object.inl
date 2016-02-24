@@ -23,8 +23,10 @@ namespace sani {
 
 		}
 
-		// TODO wrapper for holding pointers
-		//static_assert(0);
+		template <class T>
+		T& Object::getValue() const {
+			return *static_cast<T*>(_base->getPointer());
+		}
 	
 	}
 }

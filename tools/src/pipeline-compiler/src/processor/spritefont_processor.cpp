@@ -129,8 +129,8 @@ namespace sani {
 			}
 
 			static void renderSpansToBitmap(const std::vector<Span>& spans, const Rect& imgRect, PixelBitmapContent<sani::math::Vector4<unsigned char>>* to) {
-				const int32 imgWidth = imgRect.width();
-				const int32 imgHeight = imgRect.height();
+				const int32 imgWidth = static_cast<int32>( imgRect.width());
+				const int32 imgHeight = static_cast<int32>(imgRect.height());
 				for (const Span& s : spans) {
 					for (int w = 0; w < s.width; ++w) {
 						int32 index = (int)((imgHeight - 1 - (s.y - imgRect.ymin)) * imgWidth + s.x - imgRect.xmin + w);
