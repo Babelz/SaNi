@@ -17,6 +17,18 @@ namespace sani {
 			else
 				dynamicConstructors.emplace(signature, ctor);
 		}
+
+		template <class ClassType, class FieldType>
+		void TypeData::addField(const String8& name, Field::Getter getter, Field::Setter setter) {
+			Field field(
+				name,
+				Type(TypeInfo<PureType<FieldType>>::id),
+				Type(TypeInfo<PureType<ClassType>>::id),
+				getter,
+				setter
+				);
+			fields.emplace(name, field);
+		}
 	}
 }
 
