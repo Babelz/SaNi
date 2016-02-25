@@ -88,9 +88,14 @@ sani::hid::RawInputListener inputListener;
 #include "sani/rtti/argument.hpp"
 class AATest : public sani::rtti::Serializable {
 	DECLARE_SERIALIZABLE;
-public:
+private:
 	int kek;
-	AATest(int g) : kek(g) {}
+	float topKek;
+public:
+	void setKek(int v) { kek = v; }
+	int getKek() const { return kek; }
+	float getTopKek() const { return topKek;  }
+	AATest(int g) : kek(g), topKek(1337) {}
 };
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -98,13 +103,14 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
 	sani::rtti::Type aaType({ sani::rtti::TypeInfo<AATest>::id });
-	db.types[aaType.getID()].addField<AATest, int>("kek", [](const sani::rtti::Object& instance) {
-		return instance.getValue<AATest>().kek;
+	/*db.types[aaType.getID()].addField<AATest, int>("kek", [](const sani::rtti::Object& instance) {
+		return instance.getValue<AATest>().getKek();
 	},
 	[](sani::rtti::Object& instance, const sani::rtti::Object& newValue) {
-		instance.getValue<AATest>().kek = newValue.getValue<int>();
-	});
-
+		instance.getValue<AATest>().setKek(newValue.getValue<int>());
+	});*/
+	RTTI_PROPERTY(AATest, kek, int, getKek, setKek);
+	RTTI_READONLY_PROPERTY(AATest, topKek, float, getTopKek);
 	db.types[aaType.getID()].addConstructor<AATest, int>([](sani::rtti::Arguments& args) {
 		return AATest(args[0].getValue<int>());
 
@@ -123,8 +129,11 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		sani::rtti::Object obj = aaType.create(args);
 		field.setValue(obj, 715517);
 		test = obj.getValue<AATest>();
+		auto topkek = aaType.getField("topKek");
+		assert(topkek.isValid() && topkek.isReadOnly());
 	}
-	assert(test.kek == 715517);
+	
+	assert(test.getKek() == 715517);
 	
 	sani::SystemConsoleLogger logger;
 	
@@ -333,8 +342,8 @@ void initialize(SaNiEngine* const engine) {
 	gen.velocityVariance = { 1.0f, 0.25f };
 	gen.varyingVelocity = true;
 
-	gen.baseDecayTime = 250.0f;
-	gen.decayTimeVariance = 300.0f;
+	gen.baseDecayTime = 2500.0f;
+	gen.decayTimeVariance = 3000.0f;
 	gen.varyingDecayTime = true;
 
 	gen.spawnLocationMinOffset = { -32.0f, 0.0f };
