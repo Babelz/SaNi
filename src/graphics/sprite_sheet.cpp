@@ -7,15 +7,12 @@ namespace sani {
 	namespace graphics {
 
 		SpriteSheet::SpriteSheet(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight)
-			: texture(texture), sourceWidth(sourceWidth), sourceHeight(sourceHeight) {
-
-			SANI_ASSERT(texture != nullptr);
+			: texture(texture), sourceWidth(sourceWidth), sourceHeight(sourceHeight), 
+			  rows(texture->getHeight() / sourceHeight + (texture->getHeight() % sourceHeight)),
+			  columns(texture->getWidth() / sourceWidth + (texture->getWidth() % sourceWidth)) {
 
 			const uint32 sourcesAreaHeight = texture->getHeight();
 			const uint32 sourcesAreaWidth = texture->getWidth();
-
-			rows = sourcesAreaHeight / sourceHeight + (sourcesAreaHeight % sourceHeight);
-			columns = sourcesAreaWidth / sourceWidth + (sourcesAreaWidth % sourceWidth);
 
 			sources.reserve(rows * columns);
 
@@ -24,24 +21,6 @@ namespace sani {
 					sources.push_back(math::Rectu32i(j * sourceWidth, i * sourceHeight, sourceWidth, sourceHeight));
 				}
 			}
-		}
-
-		uint32 SpriteSheet::getSourceWidth() const {
-			return sourceWidth;
-		}
-		uint32 SpriteSheet::getSourceHeigt() const {
-			return sourceHeight;
-		}
-
-		uint32 SpriteSheet::getRowsCount() const {
-			return rows;
-		}
-		uint32 SpriteSheet::getColumnsCount() const {
-			return columns;
-		}
-
-		const resource::Texture2D* SpriteSheet::getTexture() const {
-			return texture;
 		}
 
 		const math::Rectu32i& SpriteSheet::sourceAt(const uint32 row, const uint32 column) const {

@@ -597,6 +597,9 @@
     <ClCompile Include="..\..\src\graphics\sprite_sheet.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\sprite_animation.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1244,7 +1247,7 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite_animator.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\sprite_animatio.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\sprite_animation.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1344,6 +1347,9 @@
     </None>
     <None Include="..\..\include\sani\rtti\inl\argument.inl">
       <Filter>include\rtti\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\sprite_animation.inl">
+      <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

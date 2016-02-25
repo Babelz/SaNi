@@ -13,12 +13,6 @@ namespace sani {
 			TODO: load from content?
 		*/
 
-		class SpriteAnimationFrameGroup;
-		class SpriteAnimationFrame;
-
-		using FrameGroupIterator	= std::vector<SpriteAnimationFrameGroup>::const_iterator;
-		using FrameIterator			= std::vector<SpriteAnimationFrame>::const_iterator;
-
 		/// @class SpriteAnimationFrame sprite_animation.hpp "sani/graphics/sprite_animation.hpp"
 		/// @author voidbab
 		/// 
@@ -34,7 +28,7 @@ namespace sani {
 			// before moving to the next frame.
 			float32 holdTime;
 
-			SpriteAnimationFrame(const uint32 row, const uint32 column, const float32 holdTime);
+			SpriteAnimationFrame(const uint32 row, const uint32 column);
 
 			~SpriteAnimationFrame() = default;
 		};
@@ -53,6 +47,9 @@ namespace sani {
 			~SpriteAnimationFrameGroup() = default;
 		};
 
+		using FrameGroupIterator	= std::vector<SpriteAnimationFrameGroup>::iterator;
+		using FrameIterator			= std::vector<SpriteAnimationFrame>::iterator;
+
 		/// @class SpriteAnimation sprite_animation.hpp "sani/graphics/sprite_animation.hpp"
 		/// @author voidbab
 		/// 
@@ -62,7 +59,7 @@ namespace sani {
 		class SpriteAnimation final {
 		public:
 			std::vector<SpriteAnimationFrameGroup> frameGroups;
-			FrameGroupIterator currentFrameGroup;			// Frame group that is being executed.
+			FrameGroupIterator currentFrameGroup;				// Frame group that is being executed.
 			FrameIterator currentFrame;						// Current frame of the current frame group.
 
 			/// Current frames time.
@@ -70,11 +67,17 @@ namespace sani {
 			// Name of this animation.
 			const String name;
 
-			SpriteAnimation();
+			SpriteAnimation(const String& name);
 
 			~SpriteAnimation() = default;
 		};
 
+		/// Initializes the animation, should be called once all
+		/// frame groups have been created.
+		inline void initialize(SpriteAnimation& animation);
+
 		inline void update(SpriteAnimation& animation, const sani::EngineTime& time);
 	}
 }
+
+#include "sani/graphics/inl/sprite_animation.inl"
