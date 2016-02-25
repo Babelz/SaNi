@@ -1,7 +1,8 @@
 #include "sani/rtti/type.hpp"
 #include "sani/rtti/type_database.hpp"
+#include "sani/rtti/field.hpp"
 #include "sani/rtti/argument.hpp"
-
+#include <unordered_map>
 namespace sani {
 	namespace rtti {
 		namespace { auto &db = TypeDatabase::getInstance(); }
@@ -65,6 +66,18 @@ namespace sani {
 
 		bool Type::operator>=(const Type& rhs) const {
 			return id >= rhs.id;
+		}
+
+		const std::vector<Field> Type::getFields() const {
+			std::vector<Field> ret;
+			auto& fields = db.types[id].fields;
+			for (auto& field : fields)
+				ret.emplace_back(field.second);
+			return ret;
+		}
+
+		const Field& Type::getField(const String8& name) const {
+			return db.types[id].fields[name];
 		}
 
 		bool Type::operator!=(const Type& rhs) const {

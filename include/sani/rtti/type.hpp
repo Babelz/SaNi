@@ -1,9 +1,10 @@
 #pragma once
 #include "sani/rtti/argument_config.hpp"
 #include "sani/rtti/type_config.hpp"
+#include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 SANI_FORWARD_DECLARE_2(sani, rtti, Object);
-
+SANI_FORWARD_DECLARE_2(sani, rtti, Field);
 namespace sani {
 	namespace rtti {
 		/// Class that represents type in RTTI
@@ -48,6 +49,13 @@ namespace sani {
 			bool operator>=(const Type& rhs) const;
 			bool operator==(const Type& rhs) const;
 			bool operator!=(const Type& rhs) const;
+
+			/// Gets the fields for this type
+			const std::vector<Field> getFields() const;
+
+			/// Gets the field with specified name
+			/// @param name the name of the field
+			const Field& getField(const String8& name) const;
 
 		private:
 			TypeID id;

@@ -98,6 +98,13 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
 	sani::rtti::Type aaType({ sani::rtti::TypeInfo<AATest>::id });
+	db.types[aaType.getID()].addField<AATest, int>("kek", [](const sani::rtti::Object& instance) {
+		return instance.getValue<AATest>().kek;
+	},
+	[](sani::rtti::Object& instance, const sani::rtti::Object& newValue) {
+		instance.getValue<AATest>().kek = newValue.getValue<int>();
+	});
+
 	db.types[aaType.getID()].addConstructor<AATest, int>([](sani::rtti::Arguments& args) {
 		return AATest(args[0].getValue<int>());
 
@@ -105,15 +112,19 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	db.types[aaType.getID()].addConstructor<AATest, int>([](sani::rtti::Arguments& args) {
 		return new AATest(args[0].getValue<int>());
 	}, true);
+
+	auto field = aaType.getField("kek");
+
 	sani::rtti::Arguments args;
 	int arg = 1337;
 	AATest test(0);
 	args.emplace_back(arg);
 	{
 		sani::rtti::Object obj = aaType.create(args);
+		field.setValue(obj, 715517);
 		test = obj.getValue<AATest>();
 	}
-	
+	assert(test.kek == 715517);
 	
 	sani::SystemConsoleLogger logger;
 	

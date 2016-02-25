@@ -588,7 +588,9 @@
     <ClCompile Include="..\..\src\rtti\object_container.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\rtti\field.cpp" />
+    <ClCompile Include="..\..\src\rtti\field.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1224,7 +1226,9 @@
     <ClInclude Include="..\..\include\sani\core\memory\impl\register_allocator.hpp">
       <Filter>include\core\memory\inl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\rtti\field.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\field.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
