@@ -199,7 +199,6 @@
     <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\command_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp" />
-    <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\query_channel.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channel_manager.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp" />

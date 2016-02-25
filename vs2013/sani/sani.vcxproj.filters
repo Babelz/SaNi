@@ -429,9 +429,6 @@
     <ClCompile Include="..\..\src\engine\messaging\channels\document_channel.cpp">
       <Filter>src\engine\messaging\channels</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\messaging\channels\peer_to_peer_channel.cpp">
-      <Filter>src\engine\messaging\channels</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\engine\messaging\messages\command_message.cpp">
       <Filter>src\engine\messaging\messages</Filter>
     </ClCompile>
