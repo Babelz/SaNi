@@ -594,6 +594,9 @@
     <ClCompile Include="..\..\src\rtti\field.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\sprite_sheet.cpp">
+      <Filter>src\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1228,6 +1231,18 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\impl\register_allocator.hpp">
       <Filter>include\core\memory\inl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite_animation.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\sprite_sheet.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\particle_generator_flags.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\field.hpp">
+      <Filter>include\rtti</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

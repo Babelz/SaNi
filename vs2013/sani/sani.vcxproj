@@ -236,6 +236,7 @@
     <ClCompile Include="..\..\src\graphics\setups\render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\polygon_render_setup.cpp" />
     <ClCompile Include="..\..\src\graphics\setups\textured_polygon_render_setup.cpp" />
+    <ClCompile Include="..\..\src\graphics\sprite_sheet.cpp" />
     <ClCompile Include="..\..\src\graphics\transformable.cpp" />
     <ClCompile Include="..\..\src\graphics\render_data.cpp" />
     <ClCompile Include="..\..\src\hid\raw_input_listener_win32.cpp" />
