@@ -40,7 +40,7 @@ namespace sani {
 			return columns;
 		}
 
-		resource::Texture2D* const SpriteSheet::getTexture() {
+		const resource::Texture2D* SpriteSheet::getTexture() const {
 			return texture;
 		}
 

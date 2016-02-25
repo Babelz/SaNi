@@ -45,7 +45,7 @@ namespace sani {
 			uint32 getRowsCount() const;
 			uint32 getColumnsCount() const;
 
-			resource::Texture2D* const getTexture();
+			const resource::Texture2D* getTexture() const;
 			
 			const math::Rectu32i& sourceAt(const uint32 row, const uint32 column) const;
 
