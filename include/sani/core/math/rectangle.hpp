@@ -58,7 +58,6 @@ namespace sani {
 			inline bool operator !=(const Rectangle& r) const;
 			inline Rectangle& operator =(const Rectangle& r);
 		};
-		/* Type definitions */
 
 		using Rectu32i	= Rectangle<uint32>;
 		using Rectu16i	= Rectangle<uint16>;

@@ -13,10 +13,10 @@ namespace sani {
 	namespace graphics {
 
 		/*
-			TODO: loading from content.
+			TODO: should be loaded from content?
 		*/
 
-		using SourceContainer = std::vector<math::Rectu32i>();
+		using SourceContainer = std::vector<math::Rectu32i>;
 
 		/// @class SpriteSheet sprite_sheet.hpp "sani/graphics/sprite_sheet.hpp"
 		/// @author voidbab
@@ -39,15 +39,15 @@ namespace sani {
 			/// @param[in] sourceHeight single sources height
 			SpriteSheet(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight);
 
-			float32 getSourceWidth() const;
-			float32 getSourceHeigt() const;
+			uint32 getSourceWidth() const;
+			uint32 getSourceHeigt() const;
 
 			uint32 getRowsCount() const;
 			uint32 getColumnsCount() const;
 
 			resource::Texture2D* const getTexture();
 			
-			const math::Rect32f& sourceAt(const uint32 row, const uint32 column) const;
+			const math::Rectu32i& sourceAt(const uint32 row, const uint32 column) const;
 
 			~SpriteSheet() = default;
 		};
