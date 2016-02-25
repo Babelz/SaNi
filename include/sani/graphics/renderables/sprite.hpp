@@ -12,7 +12,7 @@ namespace sani {
 		/// @author voidbab
 		///
 		/// Basic sprite class defined by transform, texture, effect and source.
-		class Sprite final : public Renderable {
+		class Sprite : public Renderable {
 		public:
 			Color color;
 
@@ -22,7 +22,7 @@ namespace sani {
 			Sprite(resource::Texture2D* const texture, const math::Vec2f& size);
 			Sprite(resource::Texture2D* const texture);
 			
-			~Sprite() = default;
+			virtual ~Sprite() = default;
 		};
 
 		inline void recomputeVertices(Sprite& sprite);

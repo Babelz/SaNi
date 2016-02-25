@@ -1232,9 +1232,6 @@
     <ClInclude Include="..\..\include\sani\core\memory\impl\register_allocator.hpp">
       <Filter>include\core\memory\inl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite_animation.hpp">
-      <Filter>include\graphics\renderables</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\sprite_sheet.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -1243,6 +1240,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\rtti\field.hpp">
       <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite_animator.hpp">
+      <Filter>include\graphics\renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\sprite_animatio.hpp">
+      <Filter>include\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -407,6 +407,7 @@
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\particle_generator_flags.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\sprite_animatio.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\sprite_sheet.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\inl\particle_emitter.inl" />
@@ -419,7 +420,7 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderables.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite_animation.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite_animator.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp" />
