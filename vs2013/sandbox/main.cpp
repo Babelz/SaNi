@@ -318,29 +318,39 @@ void initialize(SaNiEngine* const engine) {
 	
 	ParticleGenerator& gen = em->generator;
 
+	//gen.flags =
+	//	GeneratorFlags::VaryingVelocity |
+	//	GeneratorFlags::VaryingDecayTime |
+	//	GeneratorFlags::VaryingSpawnLocation |
+	//	GeneratorFlags::VaryingAngularVelocity |
+	//	GeneratorFlags::VaryingScale |
+	//	GeneratorFlags::UseScaleVelocity;
+
+	
+	gen.flags |= GeneratorFlags::VaryingVelocity;
+	gen.flags |= GeneratorFlags::VaryingDecayTime;
+	gen.flags |= GeneratorFlags::VaryingSpawnLocation;
+	gen.flags |= GeneratorFlags::VaryingAngularVelocity;
+	gen.flags |= GeneratorFlags::VaryingScale;
+	gen.flags |= GeneratorFlags::UseScaleVelocity;
+
 	gen.startVelocity = { -0.5f, -0.5f };
 	gen.velocityVariance = { 1.0f, 0.25f };
-	gen.varyingVelocity = true;
 
 	gen.baseDecayTime = 250.0f;
 	gen.decayTimeVariance = 300.0f;
-	gen.varyingDecayTime = true;
 
 	gen.spawnLocationMinOffset = { -32.0f, 0.0f };
 	gen.spawnLocationMaxOffset = { 32.0f, 0.0f };
-	gen.varyingSpawnLocation = true;
 
 	gen.baseAngularVelocity = 0.001f;
 	gen.angularVelocityVariance = 0.01f;
-	gen.varyingAngularVelocity = true;
 
 	gen.baseScale = { 1.0f, 1.0f };
 	gen.scaleVariance = { 0.5f, 0.5f };
-	gen.varyingScale = true;
 
 	gen.baseScaleVelocity = { 0.001f, 0.001f };
 	gen.scaleVelocityVariance = { 0.005f, 0.005f };
-	gen.useScaleVelocity = true;
 
 	gen.framesToFade = 16;
 	gen.framesToFadeVariance = 4;

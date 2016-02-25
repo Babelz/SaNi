@@ -99,12 +99,12 @@ namespace sani {
 				updateVelocity(particle, delta);
 				updateAngularVelocity(particle, delta);
 				
-				if (emitter.generator.useScaleAcceleration) updateScaleVelocity(particle, delta);
+				if (isGeneratorFlagOn(emitter.generator.flags, GeneratorFlags::UseScaleAcceleration)) updateScaleVelocity(particle, delta);
 				
 				applyVelocity(particle, emitter, delta);
 				applyAngularVelocity(particle, delta);
 
-				if (emitter.generator.useScaleVelocity) applyScaleVelocity(particle, delta);
+				if (isGeneratorFlagOn(emitter.generator.flags, GeneratorFlags::UseScaleVelocity)) applyScaleVelocity(particle, delta);
 			}
 		}
 
@@ -137,12 +137,14 @@ namespace sani {
 			Transform& transform = sprite.transform;
 			
 			// Apply new velocity.
-			particle.velocity = generator.varyingVelocity ? randomVec2(generator.startVelocity, generator.startVelocity + generator.velocityVariance) :
-														   generator.startVelocity;
+			particle.velocity = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingVelocity) ? 
+				randomVec2(generator.startVelocity, generator.startVelocity + generator.velocityVariance) :
+				generator.startVelocity;
 
 			// Apply new acceleration.
-			particle.acceleration = generator.varyingAcceleration ? randomVec2(generator.baseAcceleration, generator.baseAcceleration + generator.accelerationVariance) :
-																	generator.baseAcceleration;
+			particle.acceleration = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingAcceleration) ? 
+				randomVec2(generator.baseAcceleration, generator.baseAcceleration + generator.accelerationVariance) : 
+				generator.baseAcceleration;
 
 			// Apply new size.
 			sprite.localBounds.w = generator.startSize.x;
@@ -152,8 +154,9 @@ namespace sani {
 			transform.origin.y = sprite.localBounds.h / 2.0f;
 
 			// Apply new scale.
-			const Vec2f scale = generator.varyingScale ? randomVec2(generator.baseScale, generator.baseScale + generator.scaleVariance) :
-													     generator.baseScale;
+			const Vec2f scale = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingScale) ? 
+				randomVec2(generator.baseScale, generator.baseScale + generator.scaleVariance) :
+				generator.baseScale;
 
 			transform.scale.x = scale.x;
 			transform.scale.y = scale.y;
@@ -161,9 +164,10 @@ namespace sani {
 			// Apply scale acceleration.
 			Vec2f scaleAcceleration;
 
-			if (generator.useScaleAcceleration) {
-				scaleAcceleration = generator.varyingScaleAcceleration ? randomVec2(generator.baseScaleAcceleration, generator.baseScaleAcceleration + generator.scaleAccelerationVariance) :
-																		 generator.baseScaleAcceleration;
+			if (isGeneratorFlagOn(generator.flags, GeneratorFlags::UseScaleAcceleration)) {
+				scaleAcceleration = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingScaleAcceleration) ? 
+					randomVec2(generator.baseScaleAcceleration, generator.baseScaleAcceleration + generator.scaleAccelerationVariance) :
+					generator.baseScaleAcceleration;
 			}
 
 			particle.scaleAcceleration = scaleAcceleration;
@@ -171,32 +175,38 @@ namespace sani {
 			// Apply scale velocity.
 			Vec2f scaleVelocity;
 
-			if (generator.useScaleVelocity) {
-				scaleVelocity = generator.varyingScaleVelocity ? randomVec2(generator.baseScaleVelocity, generator.baseScaleVelocity + generator.scaleVelocityVariance) :
-																 generator.baseScaleVelocity;
+			if (isGeneratorFlagOn(generator.flags, GeneratorFlags::UseScaleVelocity)) {
+				scaleVelocity = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingScaleVelocity) ? 
+					randomVec2(generator.baseScaleVelocity, generator.baseScaleVelocity + generator.scaleVelocityVariance) :
+					generator.baseScaleVelocity;
 			}
 
 			particle.scaleVelocity = scaleVelocity;
 
 			// Apply new angular velocity.
-			particle.angularVelocity = generator.varyingAngularVelocity ? rand::nextFloat32(generator.baseAngularVelocity, generator.baseAngularVelocity + generator.angularVelocityVariance) :
-																		 generator.baseAngularVelocity;
+			particle.angularVelocity = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingAngularVelocity) ? 
+				rand::nextFloat32(generator.baseAngularVelocity, generator.baseAngularVelocity + generator.angularVelocityVariance) :
+				generator.baseAngularVelocity;
 
 			// Apply new angular acceleration.
-			particle.angularAcceleration = generator.varyingAngularAcceleration ? rand::nextFloat32(generator.baseAngularAcceleration, generator.baseAngularAcceleration + generator.angularAccelerationVariance) :
-																				  generator.baseAngularAcceleration;
+			particle.angularAcceleration = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingAngularAcceleration) ? 
+				rand::nextFloat32(generator.baseAngularAcceleration, generator.baseAngularAcceleration + generator.angularAccelerationVariance) :
+				generator.baseAngularAcceleration;
 
 			// Apply new time and reset elapsed.
-			particle.decayTime = generator.varyingDecayTime ?  rand::nextFloat32(generator.baseDecayTime, generator.baseDecayTime + generator.decayTimeVariance) :
-															   generator.baseDecayTime;
+			particle.decayTime = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingDecayTime) ? 
+				rand::nextFloat32(generator.baseDecayTime, generator.baseDecayTime + generator.decayTimeVariance) :
+				generator.baseDecayTime;
 			
 			// Apply new color.
-			sprite.color = generator.varyingColor ? randomColor(generator.color, generator.colorVariance) :
-												    generator.color;
+			sprite.color = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingColor) ? 
+				randomColor(generator.color, generator.colorVariance) :
+				generator.color;
 
 			// Apply new setup.
-			uint32 attributeListIndex = generator.varyingAttributes ? rand::nextInt32(generator.firstAttributeListIndex, generator.lastAttributeListIndex) :
-																	  generator.firstAttributeListIndex;
+			uint32 attributeListIndex = isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingAttributes) ? 
+				rand::nextInt32(generator.firstAttributeListIndex, generator.lastAttributeListIndex) :
+				generator.firstAttributeListIndex;
 
 			const ParticleRenderAttributeList& attributeList = generator.attributeLists[attributeListIndex];
 
@@ -221,7 +231,7 @@ namespace sani {
 			// Reset position.
 			Vec2f positionOffset;
 
-			if (generator.varyingSpawnLocation) {
+			if (isGeneratorFlagOn(generator.flags, GeneratorFlags::VaryingSpawnLocation)) {
 				positionOffset = randomVec2(generator.spawnLocationMinOffset, generator.spawnLocationMaxOffset);
 			}
 

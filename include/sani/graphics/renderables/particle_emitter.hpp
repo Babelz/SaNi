@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/graphics/particle_generator_flags.hpp"
 #include "sani/graphics/renderables/renderable.hpp"
 #include "sani/graphics/renderables/particle.hpp"
 #include "sani/platform/time/engine_time.hpp"
@@ -64,19 +65,7 @@ namespace sani {
 			Color color								{ color::white };
 			Color colorVariance						{ color::white };
 
-			bool varyingSpawnLocation				{ false };
-			bool varyingVelocity					{ false };
-			bool varyingAcceleration				{ false };
-			bool varyingScale						{ false };
-			bool varyingScaleAcceleration			{ false };
-			bool useScaleAcceleration				{ false };
-			bool varyingScaleVelocity				{ false };
-			bool useScaleVelocity					{ false };
-			bool varyingAngularVelocity				{ false };
-			bool varyingAngularAcceleration			{ false };
-			bool varyingDecayTime					{ false };
-			bool varyingColor						{ false };
-			bool varyingAttributes					{ false };
+			GeneratorFlags flags;
 
 			float32 baseAngularVelocity				{ 0.0f };
 			float32 angularVelocityVariance			{ 0.0f };

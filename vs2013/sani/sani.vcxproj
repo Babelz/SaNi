@@ -222,6 +222,7 @@
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\graphics_effect.cpp" />
     <ClCompile Include="..\..\src\graphics\layer.cpp" />
+    <ClCompile Include="..\..\src\graphics\particle_generator_flags.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\circle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\particle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\particle_emitter.cpp" />
@@ -404,6 +405,8 @@
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\particle_generator_flags.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\sprite_sheet.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\inl\particle_emitter.inl" />
     <ClInclude Include="..\..\include\sani\graphics\layer.hpp" />
@@ -415,6 +418,7 @@
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderable.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\renderables.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\sprite.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\sprite_animation.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\triangle.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderer.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\render_batch.hpp" />

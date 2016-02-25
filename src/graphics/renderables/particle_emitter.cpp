@@ -17,6 +17,8 @@ namespace sani {
 		
 			SANI_ASSERT(texture != nullptr);
 
+			generator.flags = GeneratorFlags::None;
+
 			// Create default setup.
 			ParticleRenderAttributeList defaultSetup;
 			defaultSetup.source = Rect32f(0.0f, 0.0f,  static_cast<float32>(texture->getWidth()),  static_cast<float32>(texture->getHeight()));
