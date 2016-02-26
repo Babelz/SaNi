@@ -50,6 +50,7 @@ namespace sani {
 		using FrameGroupIterator	= std::vector<SpriteAnimationFrameGroup>::iterator;
 		using FrameIterator			= std::vector<SpriteAnimationFrame>::iterator;
 
+
 		/// @class SpriteAnimation sprite_animation.hpp "sani/graphics/sprite_animation.hpp"
 		/// @author voidbab
 		/// 
@@ -68,6 +69,7 @@ namespace sani {
 			const String name;
 
 			SpriteAnimation(const String& name);
+			SpriteAnimation();
 
 			~SpriteAnimation() = default;
 		};

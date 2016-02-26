@@ -1351,6 +1351,9 @@
     <None Include="..\..\include\sani\graphics\inl\sprite_animation.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
+    <None Include="..\..\include\sani\graphics\inl\sprite_animator.inl">
+      <Filter>include\graphics\inl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt">

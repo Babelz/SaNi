@@ -38,6 +38,7 @@ namespace sani {
 			/// @param[in] sourceWidth single sources width
 			/// @param[in] sourceHeight single sources height
 			SpriteSheet(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteSheet();
 
 			const math::Rectu32i& sourceAt(const uint32 row, const uint32 column) const;
 

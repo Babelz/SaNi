@@ -21,6 +21,8 @@ namespace sani {
 
 		void update(SpriteAnimation& animation, const sani::EngineTime& time) {
 			if (animation.currentFrameTime > animation.currentFrame->holdTime) {
+				animation.currentFrameTime = 0.0f;
+
 				animation.currentFrame++;
 
 				// End of group, change group.

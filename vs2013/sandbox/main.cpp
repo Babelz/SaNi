@@ -332,7 +332,7 @@ void initialize(SaNiEngine* const engine) {
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(erkki, 1024);
+	em = new ParticleEmitter(resources->load<Texture2D>("fire particle"), 1024);
 	em->transform.position.x = 1280 / 2.0f;
 	em->transform.position.y = 600;
 	
@@ -354,11 +354,11 @@ void initialize(SaNiEngine* const engine) {
 	gen.flags |= GeneratorFlags::VaryingScale;
 	gen.flags |= GeneratorFlags::UseScaleVelocity;
 
-	gen.startVelocity = { -0.5f, -0.5f };
-	gen.velocityVariance = { 1.0f, 0.25f };
+	gen.startVelocity = { -0.025f, -0.25f };
+	gen.velocityVariance = { 0.025f, 0.25f };
 
-	gen.baseDecayTime = 250.0f;
-	gen.decayTimeVariance = 300.0f;
+	gen.baseDecayTime = 350.0f;
+	gen.decayTimeVariance = 350.0f;
 
 	gen.spawnLocationMinOffset = { -32.0f, 0.0f };
 	gen.spawnLocationMaxOffset = { 32.0f, 0.0f };

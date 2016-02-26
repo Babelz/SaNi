@@ -4,31 +4,37 @@ namespace sani {
 
 	namespace graphics {
 
-#define __CAST_GENERATOR_FLAGS_ARGS__ const int16 iflags = static_cast<int16>(flags); \
-									  const int16 iwhat = static_cast<int16>(what) \
-
-		void toggleGeneratorFlag(GeneratorFlags& flags, const GeneratorFlags what) {
-			__CAST_GENERATOR_FLAGS_ARGS__;
-
-			flags = static_cast<GeneratorFlags>(iflags | (1 << iwhat));
-		}
-		void clearGeneratorFlag(GeneratorFlags& flags, const GeneratorFlags what) {
-			__CAST_GENERATOR_FLAGS_ARGS__;
-
-			flags = static_cast<GeneratorFlags>(iflags & ~(1 << iwhat));
+		bool isGeneratorFlagOn(const GeneratorFlags flags, const GeneratorFlags& what) {
+			return (flags & what) == what;
 		}
 
-		bool isGeneratorFlagOn(const GeneratorFlags flags, const GeneratorFlags what) {
-			__CAST_GENERATOR_FLAGS_ARGS__;
+		GeneratorFlags operator &(GeneratorFlags lhs, const GeneratorFlags rhs) {
+			lhs &= rhs;
 
-			return static_cast<bool>((iflags >> iwhat) & 1);
+			return lhs;
 		}
-
-		void operator |=(GeneratorFlags& lhs, const GeneratorFlags rhs) {
+		GeneratorFlags& operator &=(GeneratorFlags& lhs, const GeneratorFlags rhs) {
 			const int16 ilhs = static_cast<int16>(lhs);
 			const int16 irhs = static_cast<int16>(rhs);
 
-			lhs = static_cast<GeneratorFlags>(ilhs | (irhs == 0 ? 0 : (1 << irhs)));
+			lhs = static_cast<GeneratorFlags>(ilhs & irhs);
+
+			return lhs;
+		}
+
+		GeneratorFlags operator|(GeneratorFlags lhs, const GeneratorFlags rhs) {
+			lhs |= rhs;
+
+			return lhs;
+		}
+
+		GeneratorFlags& operator |=(GeneratorFlags& lhs, const GeneratorFlags rhs) {
+			const int16 ilhs = static_cast<int16>(lhs);
+			const int16 irhs = static_cast<int16>(rhs);
+
+			lhs = static_cast<GeneratorFlags>(ilhs | irhs);
+			
+			return lhs;
 		}
 	}
 }

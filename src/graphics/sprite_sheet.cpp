@@ -22,6 +22,12 @@ namespace sani {
 				}
 			}
 		}
+		SpriteSheet::SpriteSheet() : texture(nullptr),
+									 sourceWidth(0),
+									 sourceHeight(0),
+									 rows(0),
+									 columns(0) {
+		}
 
 		const math::Rectu32i& SpriteSheet::sourceAt(const uint32 row, const uint32 column) const {
 			SANI_ASSERT(row < rows);
