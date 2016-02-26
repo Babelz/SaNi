@@ -356,20 +356,27 @@ void initialize(SaNiEngine* const engine) {
 	initializeParticles(*em);
 
 	a = new SpriteAnimator(
-		resources->load<Texture2D>("anim test"),
+		resources->load<Texture2D>("antry pirtu"),
 		300.0f,
 		300.0f,
 		128.0f,
 		128.0f,
-		32,
-		32);
+		183,
+		168);
 
 	SpriteAnimation anim;
-	
-	SpriteAnimationFrameGroup g1(0, 28, 0);
-	for (auto& frame : g1.frames) frame.holdTime = 25.0f;
+
+	SpriteAnimationFrameGroup g1(0, 5, 0);
+	SpriteAnimationFrameGroup g2(0, 5, 1);
+	SpriteAnimationFrameGroup g3(0, 4, 2);
+
+	for (auto& frame : g1.frames) frame.holdTime = 500.0f;
+	for (auto& frame : g2.frames) frame.holdTime = 500.0f;
+	for (auto& frame : g3.frames) frame.holdTime = 500.0f;
 
 	anim.frameGroups.push_back(g1);
+	anim.frameGroups.push_back(g2);
+	anim.frameGroups.push_back(g3);
 
 	a->animations["a1"] = anim;
 
