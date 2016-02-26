@@ -16,6 +16,10 @@ namespace sani {
 
 			sources.reserve(rows * columns);
 
+
+			// TODO: could the origin be fixed please? Do this once text renderer has been implemented.
+			// Start from topmost row and make it "bottom" since
+			// OpenGL origin starts from bottom left.
 			for (int32 i = rows; i > 0; i--) {
 				for (int32 j = 0; j < columns; j++) {
 					sources.push_back(math::Rect32f(static_cast<float32>(j * sourceWidth), 
