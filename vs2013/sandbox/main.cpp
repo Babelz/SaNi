@@ -258,13 +258,10 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto erkki = resources->load<Texture2D>("antrypirtu");
-	auto tuksu = erkki;//resources->load<Texture2D>("tuksu");
-	auto font = resources->load<SpriteFont>("font");
 
 	for (uint32 i = 1; i < 8; i++) {
-		const float32 w = 100.0f;
-		const float32 h = 100.0f;
+		const float32 w = 256.0f;
+		const float32 h = 256.0f;
 
 		const float32 x = i * 64.0f + w;
 		const float32 y = i * 64.0f + h;
@@ -277,7 +274,12 @@ void initialize(SaNiEngine* const engine) {
 		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
 		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
-		rectangle->texture = tuksu;
+		rectangle->texture = resources->load<Texture2D>("tuksu");
+		rectangle->textureSource.x = 0.0f;
+		rectangle->textureSource.y = 0.0f;
+		rectangle->textureSource.w = rectangle->texture->getWidth() / 4.0f;
+		rectangle->textureSource.h = rectangle->texture->getHeight() / 4.0f;
+
 		rectangle->fill = color::white;
 		
 		recomputeVertices(*rectangle);
@@ -296,8 +298,8 @@ void initialize(SaNiEngine* const engine) {
 	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
 	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
-	circle->texture = erkki;
-	circle->fill = color::red;
+	circle->texture = resources->load<Texture2D>("mguy");
+	circle->fill = color::white;
 	circle->radius = 200;
 
 	recomputeVertices(*circle);
@@ -314,12 +316,10 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	layer->add(circle);
-
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(erkki, 1024);
+	em = new ParticleEmitter(resources->load<Texture2D>("part"), 1024);
 	em->transform.position.x = 1280 / 2.0f;
 	em->transform.position.y = 600;
 	
@@ -356,18 +356,18 @@ void initialize(SaNiEngine* const engine) {
 	initializeParticles(*em);
 
 	a = new SpriteAnimator(
-		tuksu,
-		500.0f,
-		500.0f,
+		resources->load<Texture2D>("anim test"),
+		300.0f,
+		300.0f,
 		128.0f,
 		128.0f,
-		183,
-		183);
+		32,
+		32);
 
 	SpriteAnimation anim;
 	
-	SpriteAnimationFrameGroup g1(0, 3, 0);
-	for (auto& frame : g1.frames) frame.holdTime = 0.25f;
+	SpriteAnimationFrameGroup g1(0, 28, 0);
+	for (auto& frame : g1.frames) frame.holdTime = 25.0f;
 
 	anim.frameGroups.push_back(g1);
 
@@ -381,10 +381,10 @@ void initialize(SaNiEngine* const engine) {
 
 	StringConverter conv;
 	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
-	createText(font, gg, graphicsDevice, engine, rects);
+	createText(resources->load<SpriteFont>("font"), gg, graphicsDevice, engine, rects);
 
+	layer->add(circle);
 	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
-
 	layer->add(em);
 	layer->add(a);
 
@@ -401,8 +401,6 @@ namespace sandbox {
 	void update(SaNiEngine* const engine, const sani::EngineTime& time) {
 		inputListener.update();
 		c->transform.rotation += 0.001f;
-		//c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
-		//c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
 		c->fill.a = 0.5f;
 
 		recomputeVertices(*c);
@@ -411,12 +409,12 @@ namespace sandbox {
 		recomputeVertices(*em);
 		updateRenderData(*em);
 		recomputeBounds(*em);
-/*
+
 		recomputeVertices(*a);
 		recomputeBounds(*a);
-*/
+
 		sani::graphics::update(*em, time);
-		//sani::graphics::update(*a, time);
+		sani::graphics::update(*a, time);
 	}
 }
 

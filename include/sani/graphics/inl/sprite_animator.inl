@@ -33,13 +33,22 @@ namespace sani {
 			if (!animator.animating) return;
 
 			const SpriteAnimationFrame& current = *animator.animation->currentFrame;
-			const math::Rect32f& source = animator.sheet.sourceAt(current.row, current.column);
+
+			update(*animator.animation, time);
+
+			const SpriteAnimationFrame& next = *animator.animation->currentFrame;
+			
+			if (next == current) return;
+
+			math::Rect32f source = animator.sheet.sourceAt(current.row, current.column);
+			source.x += current.xOffset;
+			source.y += current.yOffset;
+			source.w += current.widthOffset;
+			source.h += current.heightOffset;
 
 			animator.textureSource = source;
 
 			updateRenderData(animator);
-
-			update(*animator.animation, time);
 		}
 
 		void recomputeVertices(SpriteAnimator& animator) {

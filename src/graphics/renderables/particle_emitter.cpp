@@ -40,15 +40,15 @@ namespace sani {
 				renderData.vertexIndices[vertexIndexPointer++] = i + 1;
 				renderData.vertexIndices[vertexIndexPointer++] = i + 2;
 				
-				renderData.vertexIndices[vertexIndexPointer++] = i + 2;
 				renderData.vertexIndices[vertexIndexPointer++] = i + 1;
 				renderData.vertexIndices[vertexIndexPointer++] = i + 3;
+				renderData.vertexIndices[vertexIndexPointer++] = i + 2;
 			}
 
 			// Setup render element data.
 			RenderElementData& particleRenderData = renderData.renderElements[0];
 			particleRenderData.first = 0;
-			particleRenderData.last = (maxParticles * ParticleVerticesCount) - ParticleVertexElementsCount;
+			particleRenderData.last = (maxParticles * ParticleVerticesCount);
 			particleRenderData.vertexElements = 9;
 			particleRenderData.offset = 0;
 			particleRenderData.indices = indicesCount;

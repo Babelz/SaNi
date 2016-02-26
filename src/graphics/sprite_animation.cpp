@@ -9,7 +9,17 @@ namespace sani {
 		*/
 		SpriteAnimationFrame::SpriteAnimationFrame(const uint32 row, const uint32 column) : row(row),
 																						    column(column),
-																							holdTime(0.0f) {
+																							holdTime(0.0f),
+																							xOffset(0.0f),
+																							yOffset(0.0f),
+																							widthOffset(0.0f),
+																							heightOffset(0.0f) {
+		}
+
+
+		bool SpriteAnimationFrame::operator ==(const SpriteAnimationFrame& rhs) const {
+			return rhs.row == row &&
+				   rhs.column == column;
 		}
 
 		/*
