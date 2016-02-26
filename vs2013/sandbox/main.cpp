@@ -267,7 +267,7 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto erkki = resources->load<Texture2D>("antrypirtu");
+	auto erkki = resources->load<Texture2D>("tuksu");
 	auto tuksu = erkki;//resources->load<Texture2D>("tuksu");
 	auto font = resources->load<SpriteFont>("font");
 
@@ -309,10 +309,6 @@ void initialize(SaNiEngine* const engine) {
 	using StringConverter =
 		std::wstring_convert<std::codecvt_utf8_utf16<char16>, char16, std::allocator<char16>, std::allocator<char8>>;
 	
-
-	StringConverter conv;
-	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
-	createText(font, gg, graphicsDevice, engine, rects);
 
 	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();
 	createElement(createCircleMessage, ElementType::Circle);
@@ -389,26 +385,6 @@ void initialize(SaNiEngine* const engine) {
 	gen.framesToFadeVariance = 4;
 
 	initializeParticles(*em);
-
-	a = new SpriteAnimator(
-		tuksu,
-		500.0f,
-		500.0f,
-		128.0f,
-		128.0f,
-		183,
-		183);
-
-	SpriteAnimation anim;
-	
-	SpriteAnimationFrameGroup g1(0, 3, 0);
-	for (auto& frame : g1.frames) frame.holdTime = 0.25f;
-
-	anim.frameGroups.push_back(g1);
-
-	a->animations["a1"] = anim;
-
-	startAnimating(*a);
 
 	using StringConverter =
 		std::wstring_convert<std::codecvt_utf8_utf16<char16>, char16, std::allocator<char16>, std::allocator<char8>>;

@@ -21,7 +21,7 @@ namespace sani {
 			// Start from topmost row and make it "bottom" since
 			// OpenGL origin starts from bottom left.
 			for (int32 i = rows; i > 0; i--) {
-				for (int32 j = 0; j < columns; j++) {
+				for (int32 j = 0; j < static_cast<int32>(columns); j++) {
 					sources.push_back(math::Rect32f(static_cast<float32>(j * sourceWidth), 
 													static_cast<float32>((i - 1) * sourceHeight), 
 													static_cast<float32>(sourceWidth),
