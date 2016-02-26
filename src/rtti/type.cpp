@@ -80,6 +80,10 @@ namespace sani {
 			return db.types[id].fields[name];
 		}
 
+		const Method& Type::getMethod(const String8& name) const {
+			return db.types[id].getMethod(name);
+		}
+
 		bool Type::operator!=(const Type& rhs) const {
 			return id != rhs.id;
 		}

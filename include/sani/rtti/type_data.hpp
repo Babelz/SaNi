@@ -3,12 +3,14 @@
 #include "sani/types.hpp"
 #include "sani/rtti/constructor.hpp"
 #include "sani/rtti/field.hpp"
+#include "sani/rtti/method.hpp"
 #include <unordered_map>
 namespace sani {
 	namespace rtti {
 
 		using Constructors = std::unordered_map<Signature, Constructor>;
 		using Fields = std::unordered_map<String8, Field>;
+		using Methods = std::unordered_map<String8, std::unordered_multimap<Signature, Method> >;
 		/// Structure which represents all the data contained within type
 		/// constructors, fields, methods
 		struct TypeData {
@@ -23,6 +25,7 @@ namespace sani {
 			Constructors constructors;
 			Constructors dynamicConstructors;
 			Fields fields;
+			Methods methods;
 			/// Gets constructor which matches the signature
 			/// @param signature The signature to search for
 			const Constructor& getConstructor(const Signature& signature);
@@ -30,6 +33,15 @@ namespace sani {
 			/// Gets dynamic constructor which matches the signature
 			/// @param signature The signature to search for
 			const Constructor& getDynamicConstructor(const Signature& signature);
+
+			/// Gets the first method by specified name
+			/// @param name The name of the method
+			const Method& getMethod(const String8& name) const;
+
+			/// Gets method by specified name  and signature
+			/// @param name The name of the method
+			/// @param signature The signature of the method
+			const Method& getMethod(const String8& name, const Signature& signature) const;
 
 			/// Adds constructor for type 
 			/// @param func Function containing the initialization
@@ -39,6 +51,9 @@ namespace sani {
 
 			template <class Class, class FieldType>
 			void addField(const String8& name, Field::Getter getter, Field::Setter setter);
+
+			template <class MethodType, class MethodInvoker>
+			void addMethod(const String8& name, MethodType type, MethodInvoker invoker);
 
 			/// Is this pointer type?
 			bool isPointer : 1;

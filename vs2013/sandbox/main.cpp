@@ -96,6 +96,8 @@ public:
 	int getKek() const { return kek; }
 	float getTopKek() const { return topKek;  }
 	AATest(int g) : kek(g), topKek(1337) {}
+	void foo() const { std::cout << "AATest::foo()" << std::endl; }
+	int square(int x) const { return x*x; }
 };
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
@@ -111,6 +113,12 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	});*/
 	RTTI_PROPERTY(AATest, kek, int, getKek, setKek);
 	RTTI_READONLY_PROPERTY(AATest, topKek, float, getTopKek);
+	db.types[aaType.getID()].addMethod("foo", static_cast<void(AATest::*)(void) const>(&AATest::foo), [](sani::rtti::Object& obj, sani::rtti::Arguments& args) {
+		return sani::rtti::Object();
+	});
+	db.types[aaType.getID()].addMethod("square", static_cast<int(AATest::*)(int) const>(&AATest::square), [](sani::rtti::Object& obj, sani::rtti::Arguments& args) {
+		return sani::rtti::Object(obj.getValue<AATest>().square(args[0].getValue<int>()));
+	});
 	db.types[aaType.getID()].addConstructor<AATest, int>([](sani::rtti::Arguments& args) {
 		return AATest(args[0].getValue<int>());
 
@@ -122,11 +130,14 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	auto field = aaType.getField("kek");
 
 	sani::rtti::Arguments args;
-	int arg = 1337;
+	int arg = 5;
 	AATest test(0);
 	args.emplace_back(arg);
 	{
 		sani::rtti::Object obj = aaType.create(args);
+		const sani::rtti::Method& square = aaType.getMethod("square");
+		sani::rtti::Object ret = square.invoke(obj, args);
+		assert(ret.getValue<int>() == 25);
 		field.setValue(obj, 715517);
 		test = obj.getValue<AATest>();
 		auto topkek = aaType.getField("topKek");
@@ -256,12 +267,12 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto tuksu = resources->load<Texture2D>("tuksu");
+	auto tuksu = resources->load<Texture2D>("mguy");
 	auto font = resources->load<SpriteFont>("font");
 
 	for (uint32 i = 1; i < 8; i++) {
-		const float32 w = 100.0f;
-		const float32 h = 100.0f;
+		const float32 w = tuksu->getWidth();
+		const float32 h = tuksu->getHeight();
 
 		const float32 x = i * 64.0f + w;
 		const float32 y = i * 64.0f + h;
@@ -276,10 +287,10 @@ void initialize(SaNiEngine* const engine) {
 
 		rectangle->texture = tuksu;
 		rectangle->fill = color::white;
-		rectangle->textureSource.x = 100.0f;
-		rectangle->textureSource.y = -100.0f;	// TODO: why this needs to be negative?
-		rectangle->textureSource.w = 300.0f;
-		rectangle->textureSource.h = 404.0f;
+		/*rectangle->textureSource.x = 0.f;
+		rectangle->textureSource.y = 0.f;	// TODO: why this needs to be negative?
+		rectangle->textureSource.w = tuksu->getWidth();
+		rectangle->textureSource.h = tuksu->getHeight();*/
 
 		recomputeVertices(*rectangle);
 		updateRenderData(*rectangle);
