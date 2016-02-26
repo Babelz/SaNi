@@ -1,22 +1,12 @@
 <assets>
 	<asset filename="font.spritefont"
 		importer="sani::resource::pipeline::SpriteFontDescriptionImporter" /> 
-	<asset filename="siqu.png" 
-		importer="sani::resource::pipeline::Texture2DImporter" />
-	<asset filename="tuksu.png" 
+	<asset filename="mguy.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
 		writer="sani::resource::compiler::Texture2DWriter" />
-	<asset filename="fire particle.png" 
+	<asset filename="antrypirtu.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
 		writer="sani::resource::compiler::Texture2DWriter" />
-	<asset filename="polygon.vert" 
-		importer="sani::resource::pipeline::EffectImporter" 
-		processor="sani::resource::processor::EffectProcessor"
-		writer="sani::resource::compiler::EffectImporter" />
-	<asset filename="texture.vert" 
-		importer="sani::resource::pipeline::EffectImporter" 
-		processor="sani::resource::processor::EffectProcessor"
-		writer="sani::resource::compiler::EffectImporter" />
 </assets>

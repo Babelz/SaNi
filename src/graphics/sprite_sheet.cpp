@@ -18,7 +18,10 @@ namespace sani {
 
 			for (uint32 i = 0; i < rows; i++) {
 				for (uint32 j = 0; j < columns; j++) {
-					sources.push_back(math::Rectu32i(j * sourceWidth, i * sourceHeight, sourceWidth, sourceHeight));
+					sources.push_back(math::Rect32f(static_cast<float32>(j * sourceWidth), 
+													static_cast<float32>(i * sourceHeight), 
+													static_cast<float32>(sourceWidth),
+													static_cast<float32>(sourceHeight)));
 				}
 			}
 		}
@@ -29,7 +32,7 @@ namespace sani {
 									 columns(0) {
 		}
 
-		const math::Rectu32i& SpriteSheet::sourceAt(const uint32 row, const uint32 column) const {
+		const math::Rect32f& SpriteSheet::sourceAt(const uint32 row, const uint32 column) const {
 			SANI_ASSERT(row < rows);
 			SANI_ASSERT(column < columns);
 

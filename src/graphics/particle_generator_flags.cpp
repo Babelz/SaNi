@@ -14,8 +14,8 @@ namespace sani {
 			return lhs;
 		}
 		GeneratorFlags& operator &=(GeneratorFlags& lhs, const GeneratorFlags rhs) {
-			const int16 ilhs = static_cast<int16>(lhs);
-			const int16 irhs = static_cast<int16>(rhs);
+			const auto ilhs = static_cast<std::underlying_type<GeneratorFlags>::type>(rhs);
+			const auto irhs = static_cast<std::underlying_type<GeneratorFlags>::type>(lhs);
 
 			lhs = static_cast<GeneratorFlags>(ilhs & irhs);
 
@@ -29,8 +29,8 @@ namespace sani {
 		}
 
 		GeneratorFlags& operator |=(GeneratorFlags& lhs, const GeneratorFlags rhs) {
-			const int16 ilhs = static_cast<int16>(lhs);
-			const int16 irhs = static_cast<int16>(rhs);
+			const auto ilhs = static_cast<std::underlying_type<GeneratorFlags>::type>(rhs);
+			const auto irhs = static_cast<std::underlying_type<GeneratorFlags>::type>(lhs);
 
 			lhs = static_cast<GeneratorFlags>(ilhs | irhs);
 			

@@ -22,10 +22,7 @@ namespace sani {
 		/*
 			Sprite animation impl.
 		*/
-		SpriteAnimation::SpriteAnimation(const String& name) : name(name),
-															   currentFrameTime(currentFrameTime) {
-		}
-		SpriteAnimation::SpriteAnimation() : SpriteAnimation(String()) {
+		SpriteAnimation::SpriteAnimation() : currentFrameTime(0.0f) {
 		}
 	}
 }

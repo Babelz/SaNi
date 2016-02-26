@@ -7,7 +7,7 @@ namespace sani {
 	namespace log {
 
 		/// Where the log message should me written.
-		enum class OutFlags {
+		enum class OutFlags : int8 {
 			/// Message will be written to the system
 			/// console.
 			SystemConsole	= 1,

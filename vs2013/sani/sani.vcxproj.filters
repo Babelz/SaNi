@@ -600,6 +600,9 @@
     <ClCompile Include="..\..\src\graphics\sprite_animation.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\graphics\renderables\sprite_animator.cpp">
+      <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

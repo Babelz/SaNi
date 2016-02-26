@@ -228,6 +228,7 @@
     <ClCompile Include="..\..\src\graphics\renderables\rectangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\sprite_animator.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\graphics\render_batch.cpp" />

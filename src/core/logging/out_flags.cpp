@@ -5,10 +5,10 @@ namespace sani {
 	namespace log {
 
 		OutFlags operator &(const OutFlags lhs, const OutFlags rhs) {
-			const uint32 a = static_cast<uint32>(lhs); 
-			const uint32 b = static_cast<uint32>(rhs);
+			const auto ilhs = static_cast<std::underlying_type<OutFlags>::type>(rhs);
+			const auto irhs = static_cast<std::underlying_type<OutFlags>::type>(lhs);
 
-			return static_cast<OutFlags>(a & b);
+			return static_cast<OutFlags>(ilhs & irhs);
 		}
 	}
 }
