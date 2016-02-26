@@ -29,6 +29,12 @@ namespace sani {
 				);
 			fields.emplace(name, field);
 		}
+
+		template <class MethodType, class MethodInvoker>
+		void TypeData::addMethod(const String8& name, MethodType type, MethodInvoker invoker) {
+			Method method(name, type, invoker);
+			methods[name].emplace(method.getSignature(), method);
+		}
 	}
 }
 

@@ -600,8 +600,14 @@
     <ClCompile Include="..\..\src\graphics\sprite_animation.cpp">
       <Filter>src\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\rtti\method.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\graphics\renderables\sprite_animator.cpp">
       <Filter>src\graphics\renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\hid\keyboard.cpp">
+      <Filter>src\hid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1253,6 +1259,9 @@
     <ClInclude Include="..\..\include\sani\graphics\sprite_animation.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\method.hpp">
+      <Filter>include\rtti</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1356,6 +1365,9 @@
     </None>
     <None Include="..\..\include\sani\graphics\inl\sprite_animator.inl">
       <Filter>include\graphics\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\rtti\inl\method.inl">
+      <Filter>include\rtti\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

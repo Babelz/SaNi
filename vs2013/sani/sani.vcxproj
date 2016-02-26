@@ -241,6 +241,7 @@
     <ClCompile Include="..\..\src\graphics\sprite_sheet.cpp" />
     <ClCompile Include="..\..\src\graphics\transformable.cpp" />
     <ClCompile Include="..\..\src\graphics\render_data.cpp" />
+    <ClCompile Include="..\..\src\hid\keyboard.cpp" />
     <ClCompile Include="..\..\src\hid\raw_input_listener_win32.cpp" />
     <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
@@ -280,6 +281,7 @@
     <ClCompile Include="..\..\src\rtti\constructor.cpp" />
     <ClCompile Include="..\..\src\rtti\field.cpp" />
     <ClCompile Include="..\..\src\rtti\invokable.cpp" />
+    <ClCompile Include="..\..\src\rtti\method.cpp" />
     <ClCompile Include="..\..\src\rtti\object.cpp" />
     <ClCompile Include="..\..\src\rtti\object_container.cpp" />
     <ClCompile Include="..\..\src\rtti\pointer_container.cpp" />
@@ -490,6 +492,7 @@
     <ClInclude Include="..\..\include\sani\rtti\constructor.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\field.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\invokable.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\method.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_base.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_container.hpp" />
@@ -535,6 +538,7 @@
     <None Include="..\..\include\sani\resource\reader\inl\resource_reader.hpp" />
     <None Include="..\..\include\sani\rtti\inl\argument.inl" />
     <None Include="..\..\include\sani\rtti\inl\invokable.inl" />
+    <None Include="..\..\include\sani\rtti\inl\method.inl" />
     <None Include="..\..\include\sani\rtti\inl\object.inl" />
     <None Include="..\..\include\sani\rtti\inl\object_container.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_data.inl" />

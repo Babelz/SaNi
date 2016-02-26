@@ -2,6 +2,13 @@
 
 namespace sani {
 	namespace hid {
+		enum class Key;
+
+		class Keyboard {
+		public:
+			static const char* keyToName(const Key key);
+		};
+
 		enum class Key {
 			Void = -1,	  ///< Unknown key
 			A = 0,        ///< The A key
@@ -85,6 +92,8 @@ namespace sani {
 			RSystem,      ///< The right OS specific key
 			Menu,         ///< The Menu key
 			// TODO add more keys
+			Count
 		};
+
 	}
 }

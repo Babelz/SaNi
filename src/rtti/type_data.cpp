@@ -25,5 +25,25 @@ namespace sani {
 			return s->second;
 		}
 
+		const Method& TypeData::getMethod(const String8& name) const {
+			auto& base = methods.at(name);
+
+			if (!base.size())
+				return Method::invalid();
+
+			return base.begin()->second;
+		}
+
+		const Method& TypeData::getMethod(const String8& name, const Signature& signature) const {
+			auto &base = methods.at(name);
+
+			auto search = base.find(signature);
+
+			if (search == base.end())
+				return Method::invalid();
+
+			return search->second;
+		}
+
 	}
 }

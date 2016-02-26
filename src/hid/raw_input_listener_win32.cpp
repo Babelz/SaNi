@@ -62,6 +62,43 @@ namespace sani {
 			case 0x59: return Key::Y;
 
 			case 0x5A: return Key::Z;
+
+			case VK_NUMPAD0: return Key::Numpad0;
+			case VK_NUMPAD1: return Key::Numpad1;
+			case VK_NUMPAD2: return Key::Numpad2;
+			case VK_NUMPAD3: return Key::Numpad3;
+			case VK_NUMPAD4: return Key::Numpad4;
+			case VK_NUMPAD5: return Key::Numpad5;
+			case VK_NUMPAD6: return Key::Numpad6;
+			case VK_NUMPAD7: return Key::Numpad7;
+			case VK_NUMPAD8: return Key::Numpad8;
+			case VK_NUMPAD9: return Key::Numpad9;
+
+			case VK_F1: return Key::F1;
+			case VK_F2: return Key::F2;
+			case VK_F3: return Key::F3;
+			case VK_F4: return Key::F4;
+			case VK_F5: return Key::F5;
+			case VK_F6: return Key::F6;
+			case VK_F7: return Key::F7;
+			case VK_F8: return Key::F8;
+			case VK_F9: return Key::F9;
+			case VK_F10: return Key::F10;
+			case VK_F11: return Key::F11;
+			case VK_F12: return Key::F12;
+			case VK_F13: return Key::F13;
+			case VK_F14: return Key::F14;
+			case VK_F15: return Key::F15;
+			case VK_F16: return Key::F16;
+			case VK_F17: return Key::F17;
+			case VK_F18: return Key::F18;
+			case VK_F19: return Key::F19;
+			case VK_F20: return Key::F20;
+			case VK_F21: return Key::F21;
+			case VK_F22: return Key::F22;
+			case VK_F23: return Key::F23;
+			case VK_F24: return Key::F24;
+
 				// TODO add more keys
 			default: return Key::Void;
 			}

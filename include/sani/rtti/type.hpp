@@ -1,10 +1,12 @@
 #pragma once
 #include "sani/rtti/argument_config.hpp"
 #include "sani/rtti/type_config.hpp"
+
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 SANI_FORWARD_DECLARE_2(sani, rtti, Object);
 SANI_FORWARD_DECLARE_2(sani, rtti, Field);
+SANI_FORWARD_DECLARE_2(sani, rtti, Method);
 namespace sani {
 	namespace rtti {
 		/// Class that represents type in RTTI
@@ -56,6 +58,8 @@ namespace sani {
 			/// Gets the field with specified name
 			/// @param name the name of the field
 			const Field& getField(const String8& name) const;
+
+			const Method& getMethod(const String8& name) const;
 
 		private:
 			TypeID id;
