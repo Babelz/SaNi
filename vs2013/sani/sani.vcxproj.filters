@@ -606,6 +606,9 @@
     <ClCompile Include="..\..\src\graphics\renderables\sprite_animator.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\hid\keyboard.cpp">
+      <Filter>src\hid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

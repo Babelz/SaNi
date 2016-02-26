@@ -179,7 +179,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	SaNiEngine engine(hInstance);
 	engine.onInitialize += initialize;
 	engine.onUpdate += sandbox::update;
-
+	std::cout << sani::hid::Keyboard::keyToName(sani::hid::Key::LShift) << std::endl;
 	engine.start();
 	
 	return 0;
