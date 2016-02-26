@@ -180,6 +180,7 @@ namespace sani {
 
 			// Enable GL settings.
 			glEnable(GL_BLEND);
+			glEnable(GL_TEXTURE_2D);
 
 			IF_ERRORS_RETURN false;
 
@@ -482,7 +483,7 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setTextureParameter(const TextureTarget target, const TextureParameterName field, int value) {
-			glTexParameteri(static_cast<GLuint>(target), static_cast<GLuint>(field), value);
+			glTexParameteri(static_cast<GLenum>(target), static_cast<GLenum>(field), static_cast<GLuint>(value));
 		}
 
 		void GraphicsDevice::setTextureData(const TextureTarget target, const int level, const SurfaceFormat internalFormat,

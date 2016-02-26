@@ -39,22 +39,22 @@ namespace sani {
 
 		void computeTopLeftTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.left() / textureWidth;
-			vertex->textureCoordinates.y = (textureSource.bottom()) / textureHeight;
+			vertex->textureCoordinates.y = -(textureSource.y - textureSource.h) / textureHeight;
 		}
 
 		void computeTopRightTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.right() / textureWidth;
-			vertex->textureCoordinates.y = (textureSource.bottom()) / textureHeight;
+			vertex->textureCoordinates.y = -(textureSource.y - textureSource.h) / textureHeight;
 		}
 
 		void computeBottomLeftTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.left() / textureWidth;
-			vertex->textureCoordinates.y = (textureSource.top()) / textureHeight;
+			vertex->textureCoordinates.y = -textureSource.top() / textureHeight;
 		}
 
 		void computeBottomRightTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.right() / textureWidth;
-			vertex->textureCoordinates.y = (textureSource.top()) / textureHeight;
+			vertex->textureCoordinates.y = -textureSource.top() / textureHeight;
 		}
 
 		void computeRectangleTextureCoordinates(VertexPositionColorTexture** const vertices, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {

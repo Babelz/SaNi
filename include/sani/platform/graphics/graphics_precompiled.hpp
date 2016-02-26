@@ -114,7 +114,7 @@ namespace sani {
 			ColorRGBA
 		};
 
-		enum class TextureTarget : uint32 {
+		enum class TextureTarget {
 			Texture2D = GL_TEXTURE_2D,
 
 #if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
@@ -122,11 +122,13 @@ namespace sani {
 #endif
 		};
 
-		enum class TextureParameterName : uint32 {
+		enum class TextureParameterName {
 			TextureMagFilter = GL_TEXTURE_MAG_FILTER,
 			TextureMinFilter = GL_TEXTURE_MIN_FILTER,
 			TextureWrapS	 = GL_TEXTURE_WRAP_S,
-			TextureWrapT	 = GL_TEXTURE_WRAP_T
+			TextureWrapT	 = GL_TEXTURE_WRAP_T,
+			MaxLevel		 = GL_TEXTURE_MAX_LEVEL,
+			BaseLevel		 = GL_TEXTURE_BASE_LEVEL
 		};
 
 		enum class TextureWrapMode {

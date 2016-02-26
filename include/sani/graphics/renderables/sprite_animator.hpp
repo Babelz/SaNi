@@ -20,18 +20,18 @@ namespace sani {
 
 			bool animating;
 
-			SpriteAnimator(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h);
-			SpriteAnimator(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size);
-			SpriteAnimator(resource::Texture2D* const texture, const math::Rect32f& bounds);
-			SpriteAnimator(resource::Texture2D* const texture, const math::Vec2f& size);
-			SpriteAnimator(resource::Texture2D* const texture);
+			SpriteAnimator(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(resource::Texture2D* const texture, const math::Rect32f& bounds, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(resource::Texture2D* const texture, const math::Vec2f& size, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight);
 
 			~SpriteAnimator() = default;
 		};
 
-		inline void initialize(SpriteAnimator& animator);
+		inline void startAnimating(SpriteAnimator& animator);
 
-		inline void changeAnimation(SpriteAnimator& animator, const String& name);
+		inline bool changeAnimation(SpriteAnimator& animator, const String& name);
 
 		inline void update(SpriteAnimator& animator, const sani::EngineTime& time);
 		

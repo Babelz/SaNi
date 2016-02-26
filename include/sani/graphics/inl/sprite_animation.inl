@@ -7,7 +7,7 @@ namespace sani {
 
 	namespace graphics {
 
-		void initialize(SpriteAnimation& animation) {
+		void startAnimating(SpriteAnimation& animation) {
 			// Check that we have some frame groups.
 			SANI_ASSERT(!animation.frameGroups.empty());
 			
@@ -29,7 +29,7 @@ namespace sani {
 				if (animation.currentFrame == animation.currentFrameGroup->frames.end()) {
 					
 					// Reset or change group.
-					if (animation.currentFrameGroup == animation.frameGroups.end()) {
+					if (animation.currentFrameGroup + 1 == animation.frameGroups.end()) {
 						// Reset back to start.
 						animation.currentFrameGroup = animation.frameGroups.begin();
 					} else {
