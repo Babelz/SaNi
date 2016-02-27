@@ -53,6 +53,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{14E9
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_texture_drawing", "..\samples\01_texture_drawing\01_texture_drawing.vcxproj", "{E4684017-503C-4F54-B42F-9ACCEAFB20DD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "02_shape_drawing", "..\samples\02_shape_drawing\02_shape_drawing.vcxproj", "{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -228,6 +230,20 @@ Global
 		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Tegra-Android.ActiveCfg = Release|Win32
 		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Win32.ActiveCfg = Release|Win32
 		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Win32.Build.0 = Release|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Debug|ARM.ActiveCfg = Debug|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Debug|Tegra-Android.ActiveCfg = Debug|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Debug|Win32.Build.0 = Debug|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Release|Any CPU.ActiveCfg = Release|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Release|ARM.ActiveCfg = Release|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Release|Tegra-Android.ActiveCfg = Release|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Release|Win32.ActiveCfg = Release|Win32
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -240,5 +256,6 @@ Global
 		{9F55067F-C7C6-4A64-8946-F043E9D529CB} = {11D7AF4C-35E3-4501-9E62-A88223B7B38F}
 		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8} = {11D7AF4C-35E3-4501-9E62-A88223B7B38F}
 		{E4684017-503C-4F54-B42F-9ACCEAFB20DD} = {14E9EFB0-79EF-42FE-A176-C985EB5D5F84}
+		{E87A5F89-15CB-4B06-9E8D-FB3DE34DFB4F} = {14E9EFB0-79EF-42FE-A176-C985EB5D5F84}
 	EndGlobalSection
 EndGlobal
