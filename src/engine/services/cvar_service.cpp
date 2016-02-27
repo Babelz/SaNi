@@ -115,9 +115,14 @@ namespace sani {
 						engine->releaseMessage(openFile);
 						
 						currentFilename = record.getFilename();
-						file = *std::find_if(cvarFiles.begin(), cvarFiles.end(), [&currentFilename](const CVarFile& cvarFile) {
+						auto search = std::find_if(cvarFiles.begin(), cvarFiles.end(), [&currentFilename](const CVarFile& cvarFile) {
 							return currentFilename == cvarFile.getFilename();
 						});
+						if (search == cvarFiles.end()) {
+							// TODO voidbab file not found?
+							throw std::logic_error("This is going to crash the engine");
+						}
+						file = *search;
 					}
 
 					if (record.shouldSync()) {
