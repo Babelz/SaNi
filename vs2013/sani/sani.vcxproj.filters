@@ -609,6 +609,9 @@
     <ClCompile Include="..\..\src\hid\keyboard.cpp">
       <Filter>src\hid</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\scene.cpp">
+      <Filter>src\resource</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1261,6 +1264,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\rtti\method.hpp">
       <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\resource\scene.hpp">
+      <Filter>include\resource</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

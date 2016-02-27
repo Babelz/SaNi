@@ -272,6 +272,7 @@
     <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
+    <ClCompile Include="..\..\src\resource\scene.cpp" />
     <ClCompile Include="..\..\src\resource\spritefont_content.cpp" />
     <ClCompile Include="..\..\src\resource\sprite_font.cpp" />
     <ClCompile Include="..\..\src\resource\texture2d.cpp" />
@@ -482,6 +483,7 @@
     <ClInclude Include="..\..\include\sani\resource\resources.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_item.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\scene.hpp" />
     <ClInclude Include="..\..\include\sani\resource\serialization.hpp" />
     <ClInclude Include="..\..\include\sani\resource\spritefont_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\sprite_font.hpp" />

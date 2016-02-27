@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.40418.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests", "tests\tests.vcxproj", "{8B733D44-4781-4D09-AD4C-D7DAB05D165E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -48,6 +48,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShaderEditor", "editor\ShaderEditor\ShaderEditor.csproj", "{9F55067F-C7C6-4A64-8946-F043E9D529CB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyntaxDefinitionBuilder", "editor\SyntaxDefinitionBuilder\SyntaxDefinitionBuilder.csproj", "{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{14E9EFB0-79EF-42FE-A176-C985EB5D5F84}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "01_texture_drawing", "..\samples\01_texture_drawing\01_texture_drawing.vcxproj", "{E4684017-503C-4F54-B42F-9ACCEAFB20DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -210,16 +214,31 @@ Global
 		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Tegra-Android.ActiveCfg = Release|Any CPU
 		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8}.Release|Win32.ActiveCfg = Release|Any CPU
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Debug|ARM.ActiveCfg = Debug|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Debug|Tegra-Android.ActiveCfg = Debug|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Debug|Win32.Build.0 = Debug|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Any CPU.ActiveCfg = Release|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|ARM.ActiveCfg = Release|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Tegra-Android.ActiveCfg = Release|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Win32.ActiveCfg = Release|Win32
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0CC569E3-804D-4356-85D5-CD008E7FC49B} = {B43DA7C0-2198-4FB0-B043-B7463A3AFFC1}
-		{7605BE66-B0F6-4D28-AB76-F71A23F9E0C3} = {213CCA72-C32F-4039-A6C9-8BA18FA985F3}
 		{7A31A12B-DC37-41FF-A605-BC089E1E5705} = {213CCA72-C32F-4039-A6C9-8BA18FA985F3}
+		{7605BE66-B0F6-4D28-AB76-F71A23F9E0C3} = {213CCA72-C32F-4039-A6C9-8BA18FA985F3}
 		{507F05B5-E87D-4295-BF27-2406A336C899} = {FB72433A-6143-408C-BCCC-897225EE0A7E}
 		{9F55067F-C7C6-4A64-8946-F043E9D529CB} = {11D7AF4C-35E3-4501-9E62-A88223B7B38F}
 		{D2C7D55A-6512-447B-B840-67EF2FC5BAA8} = {11D7AF4C-35E3-4501-9E62-A88223B7B38F}
+		{E4684017-503C-4F54-B42F-9ACCEAFB20DD} = {14E9EFB0-79EF-42FE-A176-C985EB5D5F84}
 	EndGlobalSection
 EndGlobal
