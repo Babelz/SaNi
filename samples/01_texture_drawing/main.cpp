@@ -84,10 +84,10 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	auto layer = getDefaultLayer(engine);
-	auto tuksu = resources->load<Texture2D>("tuksu");
+	auto siqu = resources->load<Texture2D>("siqu");
 
-	auto drawableTuksu = createDrawableRectangle(engine, 500.f, 300.f, tuksu);
-	layer->add(drawableTuksu);
+	auto drawableSiqu = createDrawableRectangle(engine, 500.f, 300.f, siqu);
+	layer->add(drawableSiqu);
 	
 }
 
