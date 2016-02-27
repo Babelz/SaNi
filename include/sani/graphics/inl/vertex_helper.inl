@@ -37,24 +37,28 @@ namespace sani {
 			applyRotationToBottomRightVertex(&globalPositions[3], &vertexPositions[3], dx, dy, sin, cos);
 		}
 
+		/*
+			TODO: for text just flip bottom and top + remove tx height from computation.
+		*/
+
 		void computeTopLeftTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.left() / textureWidth;
-			vertex->textureCoordinates.y = -(textureSource.y - textureSource.h) / textureHeight;
+			vertex->textureCoordinates.y = (textureSource.bottom()) / textureHeight;
 		}
 
 		void computeTopRightTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.right() / textureWidth;
-			vertex->textureCoordinates.y = -(textureSource.y - textureSource.h) / textureHeight;
+			vertex->textureCoordinates.y = (textureSource.bottom()) / textureHeight;
 		}
 
 		void computeBottomLeftTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.left() / textureWidth;
-			vertex->textureCoordinates.y = -textureSource.top() / textureHeight;
+			vertex->textureCoordinates.y = (textureSource.top()) / textureHeight;
 		}
 
 		void computeBottomRightTextureCoordinate(VertexPositionColorTexture* const vertex, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
 			vertex->textureCoordinates.x = textureSource.right() / textureWidth;
-			vertex->textureCoordinates.y = -textureSource.top() / textureHeight;
+			vertex->textureCoordinates.y = (textureSource.top()) / textureHeight;
 		}
 
 		void computeRectangleTextureCoordinates(VertexPositionColorTexture** const vertices, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {
@@ -69,15 +73,6 @@ namespace sani {
 
 			VertexPositionColorTexture* const bottomRight = vertices[3];
 			computeBottomRightTextureCoordinate(bottomRight, textureSource, textureWidth, textureHeight);
-
-			//// top left x
-			//float s0 = rect.x / (float)font->texture->getWidth();
-			//// top left y
-			//float t0 = rect.y / (float)font->texture->getHeight();
-			//// bottom right x
-			//float s1 = (rect.x + rect.w) / (float)font->texture->getWidth();
-			//// bottom right y
-			//float t1 = (rect.y + rect.h) / (float)font->texture->getHeight();
 		}
 
 		void computeTriangleTextureCoordinates(VertexPositionColorTexture** const vertices, const math::Rect32f& textureSource, const float32 textureWidth, const float32 textureHeight) {

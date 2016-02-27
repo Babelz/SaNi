@@ -30,6 +30,7 @@ namespace sani {
 			transform.origin.x = localBounds.w / 2.0f;
 			transform.origin.y = localBounds.h / 2.0f;
 
+
 			RenderElementData& spriteRenderData = renderData.renderElements[0];
 			spriteRenderData.first = 0;
 			spriteRenderData.last = 3;
@@ -37,13 +38,15 @@ namespace sani {
 			spriteRenderData.offset = 0;
 			spriteRenderData.indices = 6;
 
+			renderData.renderElementsCount = 1;
+
 			renderData.vertexIndices[0] = 0;
 			renderData.vertexIndices[1] = 1;
 			renderData.vertexIndices[2] = 2;
 
-			renderData.vertexIndices[3] = 2;
-			renderData.vertexIndices[4] = 1;
-			renderData.vertexIndices[5] = 3;
+			renderData.vertexIndices[3] = 1;
+			renderData.vertexIndices[4] = 3;
+			renderData.vertexIndices[5] = 2;
 
 			recomputeBounds(*this);
 			recomputeVertices(*this);

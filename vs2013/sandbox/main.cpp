@@ -267,12 +267,13 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto tuksu = resources->load<Texture2D>("mguy");
+	auto erkki = resources->load<Texture2D>("tuksu");
+	auto tuksu = erkki;//resources->load<Texture2D>("tuksu");
 	auto font = resources->load<SpriteFont>("font");
 
 	for (uint32 i = 1; i < 8; i++) {
-		const float32 w = tuksu->getWidth();
-		const float32 h = tuksu->getHeight();
+		const float32 w = 100.0f;
+		const float32 h = 100.0f;
 
 		const float32 x = i * 64.0f + w;
 		const float32 y = i * 64.0f + h;
@@ -285,13 +286,18 @@ void initialize(SaNiEngine* const engine) {
 		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
 		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
-		rectangle->texture = tuksu;
+		rectangle->texture = resources->load<Texture2D>("tuksu");
+		rectangle->textureSource.x = 0.0f;
+		rectangle->textureSource.y = 0.0f;
+		rectangle->textureSource.w = rectangle->texture->getWidth() / 4.0f;
+		rectangle->textureSource.h = rectangle->texture->getHeight() / 4.0f;
+
 		rectangle->fill = color::white;
 		/*rectangle->textureSource.x = 0.f;
 		rectangle->textureSource.y = 0.f;	// TODO: why this needs to be negative?
 		rectangle->textureSource.w = tuksu->getWidth();
 		rectangle->textureSource.h = tuksu->getHeight();*/
-
+		
 		recomputeVertices(*rectangle);
 		updateRenderData(*rectangle);
 
@@ -304,10 +310,6 @@ void initialize(SaNiEngine* const engine) {
 		std::wstring_convert<std::codecvt_utf8_utf16<char16>, char16, std::allocator<char16>, std::allocator<char8>>;
 	
 
-	StringConverter conv;
-	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
-	createText(font, gg, graphicsDevice, engine, rects);
-
 	auto createCircleMessage = engine->createEmptyMessage<DocumentMessage>();
 	createElement(createCircleMessage, ElementType::Circle);
 
@@ -316,11 +318,8 @@ void initialize(SaNiEngine* const engine) {
 	auto circle = static_cast<sani::graphics::Circle*>(createCircleMessage->getData());
 	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
-	auto erkki = tuksu;//resources->load<Texture2D>("part");
-	circle->texture = tuksu;
-	circle->fill = color::white;
-	circle->textureSource.w = static_cast<float32>(tuksu->getWidth());
-	circle->textureSource.h = static_cast<float32>(tuksu->getHeight());
+	circle->texture = erkki;
+	circle->fill = color::red;
 	circle->radius = 200;
 
 	recomputeVertices(*circle);
@@ -337,13 +336,12 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
 	layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
 
-	em = new ParticleEmitter(resources->load<Texture2D>("fire particle"), 1024);
+	em = new ParticleEmitter(erkki, 1024);
 	em->transform.position.x = 1280 / 2.0f;
 	em->transform.position.y = 600;
 	
@@ -388,6 +386,16 @@ void initialize(SaNiEngine* const engine) {
 
 	initializeParticles(*em);
 
+	using StringConverter =
+		std::wstring_convert<std::codecvt_utf8_utf16<char16>, char16, std::allocator<char16>, std::allocator<char8>>;
+
+
+	StringConverter conv;
+	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
+	createText(font, gg, graphicsDevice, engine, rects);
+
+	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+
 	layer->add(em);
 
 	inputListener.init();
@@ -403,9 +411,8 @@ namespace sandbox {
 	void update(SaNiEngine* const engine, const sani::EngineTime& time) {
 		inputListener.update();
 		c->transform.rotation += 0.001f;
-		c->renderData.renderElements[0].renderMode = RenderMode::TriangleFan;
-		c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
-		c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
+		//c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
+		//c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
 		c->fill.a = 0.5f;
 
 		recomputeVertices(*c);
@@ -414,8 +421,12 @@ namespace sandbox {
 		recomputeVertices(*em);
 		updateRenderData(*em);
 		recomputeBounds(*em);
-
+/*
+		recomputeVertices(*a);
+		recomputeBounds(*a);
+*/
 		sani::graphics::update(*em, time);
+		//sani::graphics::update(*a, time);
 	}
 }
 

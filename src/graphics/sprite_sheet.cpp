@@ -8,18 +8,22 @@ namespace sani {
 
 		SpriteSheet::SpriteSheet(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight)
 			: texture(texture), sourceWidth(sourceWidth), sourceHeight(sourceHeight), 
-			  rows(texture->getHeight() / sourceHeight + (texture->getHeight() % sourceHeight)),
-			  columns(texture->getWidth() / sourceWidth + (texture->getWidth() % sourceWidth)) {
+			  rows(texture->getHeight() / sourceHeight),
+			  columns(texture->getWidth() / sourceWidth) {
 
-			const uint32 sourcesAreaHeight = texture->getHeight();
-			const uint32 sourcesAreaWidth = texture->getWidth();
+			const int32 sourcesAreaHeight = static_cast<int32>(texture->getHeight());
+			const int32 sourcesAreaWidth = static_cast<int32>(texture->getWidth());
 
 			sources.reserve(rows * columns);
 
-			for (uint32 i = 0; i < rows; i++) {
-				for (uint32 j = 0; j < columns; j++) {
+
+			// TODO: could the origin be fixed please? Do this once text renderer has been implemented.
+			// Start from topmost row and make it "bottom" since
+			// OpenGL origin starts from bottom left.
+			for (int32 i = rows; i > 0; i--) {
+				for (int32 j = 0; j < static_cast<int32>(columns); j++) {
 					sources.push_back(math::Rect32f(static_cast<float32>(j * sourceWidth), 
-													static_cast<float32>(i * sourceHeight), 
+													static_cast<float32>((i - 1) * sourceHeight), 
 													static_cast<float32>(sourceWidth),
 													static_cast<float32>(sourceHeight)));
 				}

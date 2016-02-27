@@ -21,6 +21,11 @@ namespace sani {
 		/// hold time.
 		class SpriteAnimationFrame final {
 		public:
+			float32 xOffset;
+			float32 yOffset;
+			float32 widthOffset;
+			float32 heightOffset;
+
 			uint32 row;
 			uint32 column;
 
@@ -31,6 +36,8 @@ namespace sani {
 			SpriteAnimationFrame(const uint32 row, const uint32 column);
 
 			~SpriteAnimationFrame() = default;
+
+			bool operator ==(const SpriteAnimationFrame& rhs) const;
 		};
 
 		/// @class SpriteAnimationFrameGroup sprite_animation.hpp "sani/graphics/sprite_animation.hpp"

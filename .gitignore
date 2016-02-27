@@ -219,3 +219,6 @@ FakesAssemblies/
 #Doxygen
 doc/html
 doc/latex
+/assets/andy.png
+/assets/anim test.png
+*.png

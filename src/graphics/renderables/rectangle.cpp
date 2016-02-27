@@ -55,9 +55,9 @@ namespace sani {
 			renderData.vertexIndices[1] = 1;
 			renderData.vertexIndices[2] = 2;
 
-			renderData.vertexIndices[3] = 2;
-			renderData.vertexIndices[4] = 1;
-			renderData.vertexIndices[5] = 3;
+			renderData.vertexIndices[3] = 1;
+			renderData.vertexIndices[4] = 3;
+			renderData.vertexIndices[5] = 2;
 
 			recomputeBounds(*this);
 			recomputeVertices(*this);

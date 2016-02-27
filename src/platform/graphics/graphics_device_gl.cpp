@@ -180,7 +180,6 @@ namespace sani {
 
 			// Enable GL settings.
 			glEnable(GL_BLEND);
-			glEnable(GL_TEXTURE_2D);
 
 			IF_ERRORS_RETURN false;
 
