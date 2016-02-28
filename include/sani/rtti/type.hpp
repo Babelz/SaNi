@@ -52,6 +52,17 @@ namespace sani {
 			bool operator==(const Type& rhs) const;
 			bool operator!=(const Type& rhs) const;
 
+			/// Checks if the type is derived from other class
+			/// @param other The possible base class
+			/// @returns true if it's this types base class, false otherwise
+			bool isDerivedFrom(const Type other) const;
+			
+			/// Checks if the type is derived from other class
+			/// @tparam other The possible base class
+			/// @returns true if it's this types base class, false otherwise
+			template <class T>
+			bool isDerivedFrom() const;
+
 			/// Gets the fields for this type
 			const std::vector<Field> getFields() const;
 
@@ -61,9 +72,15 @@ namespace sani {
 
 			const Method& getMethod(const String8& name) const;
 
+			/// Helper function to get types
+			template <class T>
+			static Type get(T&& v);
+
+			
 		private:
 			TypeID id;
 		};
 	}
 }
 
+#include "inl/type.inl"

@@ -116,6 +116,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	db.types[aaType.getID()].addMethod("foo", static_cast<void(AATest::*)(void) const>(&AATest::foo), [](sani::rtti::Object& obj, sani::rtti::Arguments& args) {
 		return sani::rtti::Object();
 	});
+	RTTI_DECLARE_BASECLASSES(AATest, typeof(int), typeof(float));
 	db.types[aaType.getID()].addMethod("square", static_cast<int(AATest::*)(int) const>(&AATest::square), [](sani::rtti::Object& obj, sani::rtti::Arguments& args) {
 		return sani::rtti::Object(obj.getValue<AATest>().square(args[0].getValue<int>()));
 	});
@@ -126,7 +127,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	db.types[aaType.getID()].addConstructor<AATest, int>([](sani::rtti::Arguments& args) {
 		return new AATest(args[0].getValue<int>());
 	}, true);
-
+	
 	auto field = aaType.getField("kek");
 
 	sani::rtti::Arguments args;

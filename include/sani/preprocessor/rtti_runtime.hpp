@@ -2,9 +2,6 @@
 #include "sani/rtti/type_database.hpp"
 #include "sani/rtti/type_info.hpp"
 
-#define typeof(p_type)                                             \
-	sani::rtti::Type(sani::rtti::TypeInfo<sani::rtti::PureType<p_type> >::id)  \
-
 #define RTTI_REGISTER_TYPE_VARIANT(type)                           \
 {                                                                  \
 	auto& db = sani::rtti::TypeDatabase::getInstance();            \
@@ -45,3 +42,7 @@ db.types[typeof(p_class).getID()].addField<p_class, p_type>(#p_name,            
 	    return instance.getValue<##p_class>().##p_getter();                          \
 	},                                                                               \
 	nullptr);              
+
+#define RTTI_DECLARE_BASECLASSES(p_class, ...)                                       \
+	db.types[typeof(p_class).getID()].loadBaseClasses(db, typeof(p_class).getID(),   \
+	{ ##__VA_ARGS__ });

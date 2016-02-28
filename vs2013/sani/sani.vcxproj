@@ -545,6 +545,7 @@
     <None Include="..\..\include\sani\rtti\inl\method.inl" />
     <None Include="..\..\include\sani\rtti\inl\object.inl" />
     <None Include="..\..\include\sani\rtti\inl\object_container.inl" />
+    <None Include="..\..\include\sani\rtti\inl\type.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_data.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_info.inl" />
   </ItemGroup>

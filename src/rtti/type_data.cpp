@@ -45,5 +45,18 @@ namespace sani {
 			return search->second;
 		}
 
+		void TypeData::loadBaseClasses(TypeDatabase& db, TypeID thisType, const std::initializer_list<Type>& classes) {
+			for (auto &base : classes) {
+				// skip invalid types
+				if (base.getID() == Type::Invalid)
+					continue;
+
+				baseClasses.insert(base);
+
+				// add this type to the base type's derived classes
+				db.types[base.getID()].derivedClasses.insert(thisType);
+			}
+		}
+
 	}
 }
