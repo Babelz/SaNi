@@ -12,6 +12,7 @@
 #include "sani/core/parser/xml_parser.hpp"
 #include <iostream>
 #include "sani/resource/font_description.hpp"
+#include "sani/resource/pipeline/scene_description_importer.hpp"
 
 namespace sani {
 
@@ -42,6 +43,7 @@ namespace sani {
 				importers.push_back(new pipeline::Texture2DImporter);
 				importers.push_back(new pipeline::EffectImporter);
 				importers.push_back(new pipeline::SpriteFontDescriptionImporter);
+				importers.push_back(new pipeline::SceneDescriptionImporter);
 
 				mapProcessor<Texture2DContent, processor::Texture2DProcessor>();
 				mapProcessor<EffectContent, processor::EffectProcessor>();

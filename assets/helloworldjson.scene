@@ -1,8 +1,26 @@
 {
 	"scene": {
-	"name": "Test scene",
-	"folder": {
-
-	}
+		"name": "Test scene",
+		"folders": [
+			{
+				"id": 0,
+				"assets": [
+				{
+				 	"id": 0,
+				 	"name": "tuksu"
+				},
+				{
+					"id": 1,
+					"name": "font"
+				},
+				{
+					"id": 2,
+					"name": "fire particle"
+				}
+				]
+			}
+		],
+		"entities": [
+		]
 	}
 }
