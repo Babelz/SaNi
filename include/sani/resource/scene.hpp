@@ -5,6 +5,7 @@
 #include "resource_item.hpp"
 #include <map>
 #include <vector>
+#include "sani/resource/serialization.hpp"
 
 namespace sani {
 	namespace resource {
@@ -42,4 +43,6 @@ namespace sani {
 		};
 	}
 }
+
+SANI_DESERIALIZABLE_WITH(sani::resource::Scene, sani::resource::reader::SceneReader);
 

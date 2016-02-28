@@ -13,6 +13,9 @@
 #include <iostream>
 #include "sani/resource/font_description.hpp"
 #include "sani/resource/pipeline/scene_description_importer.hpp"
+#include "sani/resource/scene.hpp"
+#include "sani/resource/processor/scene_description_processor.hpp"
+#include "sani/resource/compiler/scene_description_writer.hpp"
 
 namespace sani {
 
@@ -37,7 +40,7 @@ namespace sani {
 				mapWriter<EffectContent, EffectWriter>();
 				mapWriter<SpriteFontContent, SpriteFontWriter>();
 				mapWriter<BitmapContent, BitmapContentWriter>();
-
+				mapWriter<SceneDescription, SceneDescriptionWriter>();
 				//map<Effect, EffectWriter>();
 				importers.reserve(32u);
 				importers.push_back(new pipeline::Texture2DImporter);
@@ -48,6 +51,7 @@ namespace sani {
 				mapProcessor<Texture2DContent, processor::Texture2DProcessor>();
 				mapProcessor<EffectContent, processor::EffectProcessor>();
 				mapProcessor<FontDescription, processor::SpriteFontProcessor>();
+				mapProcessor<SceneDescription, processor::SceneDescriptionProcessor>();
 			}
 
 			void ResourceCompiler::readBuildFile(const String& root, const String& buildFile) {

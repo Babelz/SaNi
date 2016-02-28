@@ -50,7 +50,7 @@ void initialize(SaNiEngine* const engine) {
 
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
-	auto scene = resources->load<Scene>("helloworld");
+	auto scene = resources->load<Scene>("helloworldjson");
 	
 }
 

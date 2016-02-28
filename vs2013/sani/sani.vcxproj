@@ -269,6 +269,7 @@
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
+    <ClCompile Include="..\..\src\resource\reader\scene_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
@@ -477,6 +478,7 @@
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\reader\scene_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\texture2d_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource.hpp" />
