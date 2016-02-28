@@ -54,7 +54,7 @@
 #include "sani/resource/spritefont_content.hpp"
 #include <xlocbuf>
 #include "sani/hid/raw_input_listener.hpp"
-#include "sani/rtti/serializable.hpp"
+#include "sani/rtti/Reflectable.hpp"
 using namespace sani::resource;
 using namespace sani::engine;
 using namespace sani::graphics;
@@ -86,8 +86,8 @@ sani::hid::RawInputListener inputListener;
 #include "sani/rtti/type_info.hpp"
 #include "sani/preprocessor/rtti_runtime.hpp"
 #include "sani/rtti/argument.hpp"
-class AATest : public sani::rtti::Serializable {
-	DECLARE_SERIALIZABLE;
+class AATest : public sani::rtti::Reflectable {
+	DECLARE_REFLECTABLE;
 private:
 	int kek;
 	float topKek;

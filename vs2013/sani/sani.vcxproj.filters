@@ -1211,9 +1211,6 @@
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\rtti\serializable.hpp">
-      <Filter>include\rtti</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\profiling\profiler.hpp">
       <Filter>include\core\profiling</Filter>
     </ClInclude>
@@ -1273,6 +1270,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\scene_reader.hpp">
       <Filter>include\resource\reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\reflectable.hpp">
+      <Filter>include\rtti</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1381,7 +1381,9 @@
     <None Include="..\..\include\sani\rtti\inl\method.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
-    <None Include="..\..\include\sani\rtti\inl\type.inl" />
+    <None Include="..\..\include\sani\rtti\inl\type.inl">
+      <Filter>include\rtti\inl</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt">

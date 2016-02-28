@@ -502,7 +502,7 @@
     <ClInclude Include="..\..\include\sani\rtti\object_container.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_container_standard_types.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp" />
-    <ClInclude Include="..\..\include\sani\rtti\serializable.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\reflectable.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_config.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_data.hpp" />

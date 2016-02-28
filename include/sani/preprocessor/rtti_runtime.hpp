@@ -15,14 +15,14 @@
 	RTTI_REGISTER_TYPE_VARIANT(const type*)                        
 
 
-#define DECLARE_SERIALIZABLE									   \
+#define DECLARE_REFLECTABLE						   			       \
 	public:                                                        \
 	sani::rtti::Type getType() const override {                    \
 	    return sani::rtti::Type(                                   \
                sani::rtti::TypeInfo<                               \
                       sani::rtti::PureType<decltype(*this)> >::id);         \
 	}                                                              \
-	sani::rtti::Serializable* clone() const override {             \
+	sani::rtti::Reflectable* clone() const override {             \
 	       throw std::logic_error("not impl");                     \
     }                                                              \
 	private:

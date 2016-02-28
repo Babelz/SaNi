@@ -1,10 +1,10 @@
 #include "sani/rtti/pointer_container.hpp"
-#include "sani/rtti/serializable.hpp"
+#include "sani/rtti/Reflectable.hpp"
 
 namespace sani {
 	namespace rtti {
 
-		PointerContainer::PointerContainer(Serializable* instance) 
+		PointerContainer::PointerContainer(Reflectable* instance) 
 			: instance(instance) {
 		}
 

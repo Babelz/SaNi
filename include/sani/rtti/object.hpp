@@ -17,7 +17,7 @@ namespace sani {
 
 			// only derived classes of Serializable are allowed
 			template<class T>
-			Object(T* data, typename std::enable_if<std::is_base_of<Serializable, T>::value>::type*);
+			Object(T* data, typename std::enable_if<std::is_base_of<Reflectable, T>::value>::type*);
 
 			// restrict objects
 			template <class T>

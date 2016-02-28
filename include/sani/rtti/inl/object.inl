@@ -15,10 +15,10 @@ namespace sani {
 			_base(new ObjectContainer<PureType<T>>(static_cast<T&&>(data))) {}
 
 		template <class T>
-		Object::Object(T* data, typename std::enable_if<std::is_base_of<Serializable, T>::value>::type*)
+		Object::Object(T* data, typename std::enable_if<std::is_base_of<Reflectable, T>::value>::type*)
 			: _isConst(std::is_const<T>::value),
 			_base(new PointerContainer(
-			static_cast<Serializable*>(const_cast<typename std::remove_const<T>::type*>(data))))
+			static_cast<Reflectable*>(const_cast<typename std::remove_const<T>::type*>(data))))
 		{
 
 		}

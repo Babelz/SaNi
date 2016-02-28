@@ -1,6 +1,8 @@
 #pragma once
 
 #include "sani/resource/reader/resource_type_reader.hpp"
+#include "sani/rtti/Reflectable.hpp"
+#include "sani/preprocessor/rtti_runtime.hpp"
 
 namespace sani {
 
@@ -8,7 +10,8 @@ namespace sani {
 
 		namespace reader {
 
-			class SceneReader : public ResourceTypeReader {
+			class SceneReader : public ResourceTypeReader, public sani::rtti::Reflectable {
+				DECLARE_REFLECTABLE;
 			public:
 				~SceneReader();
 
