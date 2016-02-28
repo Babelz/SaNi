@@ -6,15 +6,15 @@ namespace sani {
 
 			namespace {
 				auto &db = sani::rtti::TypeDatabase::getInstance();
+
+				struct ReflectionInjector {
+					ReflectionInjector() {
+						RTTI_REGISTER_TYPE(ResourceTypeReader);
+					}
+				};
+
+				static ReflectionInjector ignoreme;
 			}
-			struct ReflectionInjector {
-				ReflectionInjector() {
-					RTTI_REGISTER_TYPE(ResourceTypeReader);
-				}
-			};
-
-			static ReflectionInjector ignoreme;
-
 		}
 	}
 }
