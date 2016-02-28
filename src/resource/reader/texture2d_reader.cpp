@@ -9,6 +9,21 @@ namespace sani {
 
 		namespace reader {
 
+			namespace {
+				auto &db = sani::rtti::TypeDatabase::getInstance();
+
+				struct ReflectionInjector {
+					ReflectionInjector() {
+						RTTI_REGISTER_TYPE(ResourceTypeReader);
+						RTTI_REGISTER_TYPE(Texture2DReader);
+						RTTI_DECLARE_BASECLASSES(Texture2DReader, typeof(ResourceTypeReader));
+						RTTI_DEFAULT_DYNAMIC_CTOR(Texture2DReader);
+					}
+				};
+
+				static ReflectionInjector ignoreme;
+			}
+
 			Texture2DReader::~Texture2DReader() {
 			}
 

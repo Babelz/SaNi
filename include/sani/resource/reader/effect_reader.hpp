@@ -12,6 +12,7 @@ namespace sani {
 			///
 			/// @author siquel
 			class EffectReader : public ResourceTypeReader {
+				DECLARE_REFLECTABLE;
 			public:
 				~EffectReader();
 

@@ -9,11 +9,8 @@
 	sani::rtti::TypeInfo<type>::registerType(id, db.types[id], true);    \
 }                                                                  \
 
-#define RTTI_REGISTER_TYPE(type)                                   \
+#define RTTI_REGISTER_TYPE(type)                          \
 	RTTI_REGISTER_TYPE_VARIANT(type)                               \
-	RTTI_REGISTER_TYPE_VARIANT(type*)                              \
-	RTTI_REGISTER_TYPE_VARIANT(const type*)                        
-
 
 #define DECLARE_REFLECTABLE						   			       \
 	public:                                                        \
@@ -46,3 +43,15 @@ db.types[typeof(p_class).getID()].addField<p_class, p_type>(#p_name,            
 #define RTTI_DECLARE_BASECLASSES(p_class, ...)                                       \
 	db.types[typeof(p_class).getID()].loadBaseClasses(db, typeof(p_class).getID(),   \
 	{ ##__VA_ARGS__ });
+
+
+#define RTTI_DEFAULT_CTOR(p_class)                                                    \
+	db.types[typeof(p_class).getID()].addConstructor<##p_class>([](sani::rtti::Arguments&){ \
+              return p_class();                                                             \
+	}, false);
+
+#define RTTI_DEFAULT_DYNAMIC_CTOR(p_class)                                                    \
+	db.types[typeof(p_class).getID()].addConstructor<p_class>([](sani::rtti::Arguments&){ \
+              return new p_class();                                                           \
+	}, true);
+

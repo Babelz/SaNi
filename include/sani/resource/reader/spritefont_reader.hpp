@@ -9,6 +9,7 @@ namespace sani {
 		namespace reader {
 
 			class SpriteFontReader : public ResourceTypeReader {
+				DECLARE_REFLECTABLE;
 			public:
 				SpriteFontReader();
 				~SpriteFontReader();

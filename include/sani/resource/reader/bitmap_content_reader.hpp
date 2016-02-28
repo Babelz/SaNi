@@ -10,6 +10,7 @@ namespace sani {
 		namespace reader {
 
 			class BitmapContentReader : public ResourceTypeReader {
+				DECLARE_REFLECTABLE;
 			public:
 				~BitmapContentReader();
 

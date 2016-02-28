@@ -10,6 +10,23 @@ namespace sani {
 
 		namespace reader {
 
+			namespace {
+				auto &db = sani::rtti::TypeDatabase::getInstance();
+
+				struct ReflectionInjector {
+					ReflectionInjector() {
+						RTTI_REGISTER_TYPE(ResourceTypeReader);
+						RTTI_REGISTER_TYPE(SpriteFontReader);
+						RTTI_DECLARE_BASECLASSES(SpriteFontReader, typeof(ResourceTypeReader));
+						RTTI_DEFAULT_DYNAMIC_CTOR(SpriteFontReader);
+					}
+				};
+
+				static ReflectionInjector ignoreme;
+			}
+
+
+
 			SpriteFontReader::SpriteFontReader() {
 			}
 

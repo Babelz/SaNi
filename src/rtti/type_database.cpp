@@ -8,7 +8,7 @@ namespace sani {
 		TypeID TypeDatabase::registerType(const String& name) {
 			// its defined already, return invalid
 			if (ids.find(name) != ids.end()) return Type::Invalid;
-			
+
 			types.emplace_back(name);
 			// create new id and assign it to name
 			auto id = idCounter++;
@@ -20,18 +20,22 @@ namespace sani {
 			static TypeDatabase instance;
 			return instance;
 		}
+#define REGISTER_TYPE_VARIANTS(type)\
+	RTTI_REGISTER_TYPE_VARIANT(type)\
+	RTTI_REGISTER_TYPE_VARIANT(type*)\
+	RTTI_REGISTER_TYPE_VARIANT(const type*)
 
 		TypeDatabase::TypeDatabase() 
 			: types(1), idCounter(1) {
 			types[Type::Invalid].name = "INVALID";
-			RTTI_REGISTER_TYPE(int32);
-			RTTI_REGISTER_TYPE(float32);
-			RTTI_REGISTER_TYPE(double);
-			RTTI_REGISTER_TYPE(void);
-			RTTI_REGISTER_TYPE(bool);
-			RTTI_REGISTER_TYPE(String8);
+			REGISTER_TYPE_VARIANTS(int32);
+			REGISTER_TYPE_VARIANTS(float32);
+			REGISTER_TYPE_VARIANTS(double);
+			REGISTER_TYPE_VARIANTS(void);
+			REGISTER_TYPE_VARIANTS(bool);
+			REGISTER_TYPE_VARIANTS(String8);
 		}
-
+#undef REGISTER_TYPE_VARIANTS
 		TypeDatabase::~TypeDatabase() { }
 
 	}

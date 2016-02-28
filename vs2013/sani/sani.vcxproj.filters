@@ -615,6 +615,9 @@
     <ClCompile Include="..\..\src\resource\reader\scene_reader.cpp">
       <Filter>src\resource\reader</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\resource\reader\resource_type_reader.cpp">
+      <Filter>src\resource\reader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

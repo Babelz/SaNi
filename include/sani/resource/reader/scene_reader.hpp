@@ -10,7 +10,7 @@ namespace sani {
 
 		namespace reader {
 
-			class SceneReader : public ResourceTypeReader, public sani::rtti::Reflectable {
+			class SceneReader : public ResourceTypeReader {
 				DECLARE_REFLECTABLE;
 			public:
 				~SceneReader();

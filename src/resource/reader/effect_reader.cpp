@@ -9,6 +9,21 @@ namespace sani {
 
 		namespace reader {
 
+			namespace {
+				auto &db = sani::rtti::TypeDatabase::getInstance();
+
+				struct ReflectionInjector {
+					ReflectionInjector() {
+						RTTI_REGISTER_TYPE(ResourceTypeReader);
+						RTTI_REGISTER_TYPE(EffectReader);
+						RTTI_DECLARE_BASECLASSES(EffectReader, typeof(ResourceTypeReader));
+						RTTI_DEFAULT_DYNAMIC_CTOR(EffectReader);
+					}
+				};
+
+				static ReflectionInjector ignoreme;
+			}
+
 			EffectReader::~EffectReader() {
 			}
 
