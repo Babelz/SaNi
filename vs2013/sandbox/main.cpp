@@ -292,7 +292,7 @@ void initialize(SaNiEngine* const engine) {
 		rectangle->textureSource.w = rectangle->texture->getWidth() / 4.0f;
 		rectangle->textureSource.h = rectangle->texture->getHeight() / 4.0f;
 
-		rectangle->fill = color::white;
+		rectangle->fill = color::red;
 		/*rectangle->textureSource.x = 0.f;
 		rectangle->textureSource.y = 0.f;	// TODO: why this needs to be negative?
 		rectangle->textureSource.w = tuksu->getWidth();
