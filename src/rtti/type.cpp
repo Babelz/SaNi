@@ -89,6 +89,14 @@ namespace sani {
 			return db.types[id].getMethod(name);
 		}
 
+		const std::set<Type>& Type::getBaseClasses() const {
+			return db.types[id].baseClasses;
+		}
+
+		const std::set<Type>& Type::getDerivedClasses() const {
+			return db.types[id].derivedClasses;
+		}
+
 		bool Type::operator!=(const Type& rhs) const {
 			return id != rhs.id;
 		}

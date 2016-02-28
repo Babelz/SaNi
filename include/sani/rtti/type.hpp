@@ -4,6 +4,7 @@
 
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
+#include <set>
 SANI_FORWARD_DECLARE_2(sani, rtti, Object);
 SANI_FORWARD_DECLARE_2(sani, rtti, Field);
 SANI_FORWARD_DECLARE_2(sani, rtti, Method);
@@ -71,6 +72,12 @@ namespace sani {
 			const Field& getField(const String8& name) const;
 
 			const Method& getMethod(const String8& name) const;
+
+			/// Gets all base classes from this class type
+			const std::set<Type>& getBaseClasses() const;
+
+			/// Gets all classes that derive from this class type
+			const std::set<Type>& getDerivedClasses() const;
 
 			/// Helper function to get types
 			template <class T>
