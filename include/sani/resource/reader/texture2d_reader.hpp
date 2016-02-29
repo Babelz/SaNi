@@ -12,6 +12,7 @@ namespace sani {
 			/// 
 			/// @author siquel
 			class Texture2DReader : public ResourceTypeReader {
+				DECLARE_REFLECTABLE;
 			public:
 				~Texture2DReader();
 				String getReaderName() const { return "sani::resource::reader::Texture2DReader"; }

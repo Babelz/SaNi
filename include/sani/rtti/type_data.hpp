@@ -5,6 +5,11 @@
 #include "sani/rtti/field.hpp"
 #include "sani/rtti/method.hpp"
 #include <unordered_map>
+#include <set>
+#include "sani/forward_declare.hpp"
+
+SANI_FORWARD_DECLARE_2(sani, rtti, TypeDatabase);
+
 namespace sani {
 	namespace rtti {
 
@@ -16,7 +21,8 @@ namespace sani {
 		struct TypeData {
 			/// The name of the type
 			String8 name;
-
+			std::set<Type> baseClasses;
+			std::set<Type> derivedClasses;
 			/// Constructs invalid type data object
 			TypeData();
 			/// Constructs valid type data object
@@ -42,6 +48,9 @@ namespace sani {
 			/// @param name The name of the method
 			/// @param signature The signature of the method
 			const Method& getMethod(const String8& name, const Signature& signature) const;
+
+
+			void loadBaseClasses(TypeDatabase& db, TypeID thisType, const std::initializer_list<Type>& classes);
 
 			/// Adds constructor for type 
 			/// @param func Function containing the initialization

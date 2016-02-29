@@ -612,9 +612,6 @@
     <ClCompile Include="..\..\src\resource\scene.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\renderables\static_text.cpp">
-      <Filter>src\graphics\renderables</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1211,9 +1208,6 @@
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\rtti\serializable.hpp">
-      <Filter>include\rtti</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\profiling\profiler.hpp">
       <Filter>include\core\profiling</Filter>
     </ClInclude>
@@ -1270,9 +1264,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\scene.hpp">
       <Filter>include\resource</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderables\static_text.hpp">
-      <Filter>include\graphics\renderables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1377,9 +1368,6 @@
     </None>
     <None Include="..\..\include\sani\rtti\inl\method.inl">
       <Filter>include\rtti\inl</Filter>
-    </None>
-    <None Include="static_text.inl">
-      <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

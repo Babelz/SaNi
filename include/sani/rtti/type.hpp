@@ -4,6 +4,7 @@
 
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
+#include <set>
 SANI_FORWARD_DECLARE_2(sani, rtti, Object);
 SANI_FORWARD_DECLARE_2(sani, rtti, Field);
 SANI_FORWARD_DECLARE_2(sani, rtti, Method);
@@ -52,6 +53,17 @@ namespace sani {
 			bool operator==(const Type& rhs) const;
 			bool operator!=(const Type& rhs) const;
 
+			/// Checks if the type is derived from other class
+			/// @param other The possible base class
+			/// @returns true if it's this types base class, false otherwise
+			bool isDerivedFrom(const Type other) const;
+			
+			/// Checks if the type is derived from other class
+			/// @tparam other The possible base class
+			/// @returns true if it's this types base class, false otherwise
+			template <class T>
+			bool isDerivedFrom() const;
+
 			/// Gets the fields for this type
 			const std::vector<Field> getFields() const;
 
@@ -61,9 +73,21 @@ namespace sani {
 
 			const Method& getMethod(const String8& name) const;
 
+			/// Gets all base classes from this class type
+			const std::set<Type>& getBaseClasses() const;
+
+			/// Gets all classes that derive from this class type
+			const std::set<Type>& getDerivedClasses() const;
+
+			/// Helper function to get types
+			template <class T>
+			static Type get(T&& v);
+
+			
 		private:
 			TypeID id;
 		};
 	}
 }
 
+#include "inl/type.inl"

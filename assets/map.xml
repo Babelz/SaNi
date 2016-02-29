@@ -17,4 +17,6 @@
 		importer="sani::resource::pipeline::Texture2DImporter" 
 		processor="sani::resource::processor::Texture2DProcessor"
 		writer="sani::resource::compiler::Texture2DWriter" />
+	<asset filename="helloworldjson.scene" 
+		importer="sani::resource::pipeline::SceneDescriptionImporter" />
 </assets>

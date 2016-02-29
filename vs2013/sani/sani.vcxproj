@@ -87,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;$(SolutionDir)..\thirdparty\rapidjson\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <IntrinsicFunctions>false</IntrinsicFunctions>
@@ -269,7 +269,9 @@
     <ClCompile Include="..\..\src\resource\reader\bitmap_content_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\effect_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_reader.cpp" />
+    <ClCompile Include="..\..\src\resource\reader\resource_type_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader_manager.cpp" />
+    <ClCompile Include="..\..\src\resource\reader\scene_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\spritefont_reader.cpp" />
     <ClCompile Include="..\..\src\resource\reader\texture2d_reader.cpp" />
     <ClCompile Include="..\..\src\resource\resource_manager.cpp" />
@@ -479,6 +481,7 @@
     <ClInclude Include="..\..\include\sani\resource\reader\resource_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\resource_type_reader_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\resource\reader\scene_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\spritefont_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\reader\texture2d_reader.hpp" />
     <ClInclude Include="..\..\include\sani\resource\resource.hpp" />
@@ -502,7 +505,7 @@
     <ClInclude Include="..\..\include\sani\rtti\object_container.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\object_container_standard_types.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp" />
-    <ClInclude Include="..\..\include\sani\rtti\serializable.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\reflectable.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_config.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_data.hpp" />
@@ -544,6 +547,7 @@
     <None Include="..\..\include\sani\rtti\inl\method.inl" />
     <None Include="..\..\include\sani\rtti\inl\object.inl" />
     <None Include="..\..\include\sani\rtti\inl\object_container.inl" />
+    <None Include="..\..\include\sani\rtti\inl\type.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_data.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_info.inl" />
     <None Include="static_text.inl" />

@@ -5,6 +5,7 @@
 #include <algorithm>
 #include "sani/resource/reader/bitmap_content_reader.hpp"
 #include "sani/resource/reader/spritefont_reader.hpp"
+#include "sani/resource/reader/scene_reader.hpp"
 
 namespace sani {
 
@@ -24,6 +25,7 @@ namespace sani {
 				registerTypeReader<EffectReader>();
 				registerTypeReader<BitmapContentReader>();
 				registerTypeReader<SpriteFontReader>();
+				registerTypeReader<SceneReader>();
 			}
 
 			ResourceTypeReader* ResoureTypeReaderManager::getReaderByName(const String& name) const {

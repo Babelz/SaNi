@@ -68,6 +68,11 @@ namespace sani {
 			return id >= rhs.id;
 		}
 
+		bool Type::isDerivedFrom(const Type other) const {
+			auto& base = db.types[id].baseClasses;
+			return base.find(other) != base.end();
+		}
+
 		const std::vector<Field> Type::getFields() const {
 			std::vector<Field> ret;
 			auto& fields = db.types[id].fields;
@@ -82,6 +87,14 @@ namespace sani {
 
 		const Method& Type::getMethod(const String8& name) const {
 			return db.types[id].getMethod(name);
+		}
+
+		const std::set<Type>& Type::getBaseClasses() const {
+			return db.types[id].baseClasses;
+		}
+
+		const std::set<Type>& Type::getDerivedClasses() const {
+			return db.types[id].derivedClasses;
 		}
 
 		bool Type::operator!=(const Type& rhs) const {

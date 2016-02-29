@@ -6,11 +6,11 @@ SANI_FORWARD_DECLARE_2(sani, rtti, Type);
 namespace sani {
 	namespace rtti {
 		/// Every serializable object should derive this
-		class Serializable {
+		class Reflectable {
 		public:
-			virtual ~Serializable() = default;
+			virtual ~Reflectable() = default;
 			virtual Type getType() const = 0;
-			virtual Serializable* clone() const = 0;
+			virtual Reflectable* clone() const = 0;
 		};
 	}
 }

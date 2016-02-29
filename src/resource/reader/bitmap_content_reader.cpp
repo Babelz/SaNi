@@ -9,6 +9,21 @@ namespace sani {
 
 		namespace reader {
 
+			namespace {
+				auto &db = sani::rtti::TypeDatabase::getInstance();
+
+				struct ReflectionInjector {
+					ReflectionInjector() {
+						RTTI_REGISTER_TYPE(ResourceTypeReader);
+						RTTI_REGISTER_TYPE(BitmapContentReader);
+						RTTI_DECLARE_BASECLASSES(BitmapContentReader, typeof(ResourceTypeReader));
+						RTTI_DEFAULT_DYNAMIC_CTOR(BitmapContentReader);
+					}
+				};
+
+				static ReflectionInjector ignoreme;
+			}
+
 			BitmapContentReader::~BitmapContentReader() {
 			}
 
