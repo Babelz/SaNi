@@ -10,11 +10,10 @@ namespace sani {
 																							height(height),
 																							renderTexture(0) {
 		}
-
-		Texture::~Texture() {
-			if (renderTexture != 0) {
-				getDevice()->deleteTexture(renderTexture);
-			}
+		Texture::Texture() : device(nullptr),
+							 width(0),
+							 height(0),
+							 renderTexture(0) {
 		}
 
 		GraphicsDevice* const Texture::getDevice() {

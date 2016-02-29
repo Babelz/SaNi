@@ -10,7 +10,6 @@
 #include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/graphics/layer.hpp"
 
-
 using namespace sani;
 using namespace sani::engine;
 using namespace sani::graphics;
@@ -49,7 +48,7 @@ sg::Rectangle* createDrawableRectangle(SaNiEngine* const engine, const float x, 
 	const float w = static_cast<float32>(texture->getWidth());
 	const float h = static_cast<float32>(texture->getHeight());
 	NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
-	rectangle->fill = color::white;
+	rectangle->fill = color::White;
 	rectangle->texture = texture; 
 	recomputeVertices(*rectangle);
 	updateRenderData(*rectangle);

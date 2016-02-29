@@ -25,7 +25,7 @@ namespace sani {
 				  graphicsDevice(graphicsDevice),
 				  window(window),
 				  renderer(graphicsDevice),
-				  clearColor(color::black) {
+				  clearColor(color::Black) {
 			}
 
 			void RenderService::windowClosed(SaNiEngine* const engine) {

@@ -21,7 +21,10 @@ namespace sani {
 			/// Creates new instance of the render target class, generates 
 			/// all required buffers for it and initializes it.
 			RenderTarget2D(GraphicsDevice* device, const uint32 width, const uint32 height);
-			
+			RenderTarget2D();
+
+			bool empty() const;
+
 			uint32 getFramebuffer() const;
 			
 			~RenderTarget2D();

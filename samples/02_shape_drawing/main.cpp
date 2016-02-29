@@ -50,7 +50,7 @@ sg::Rectangle* createDrawableRectangle(SaNiEngine* const engine, const float x, 
 	const float w = static_cast<float32>(texture->getWidth());
 	const float h = static_cast<float32>(texture->getHeight());
 	NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
-	rectangle->fill = color::white;
+	rectangle->fill = color::White;
 	rectangle->texture = texture; 
 	recomputeVertices(*rectangle);
 	updateRenderData(*rectangle);
@@ -70,7 +70,7 @@ sg::Circle* createDrawableCircle(SaNiEngine* const engine, const float x, const 
 	NEW_DYNAMIC(sani::graphics::Circle, circle, x, y, 200, 128);
 
 	circle->texture = texture;
-	circle->fill = color::white;
+	circle->fill = color::White;
 	
 	recomputeVertices(*circle);
 	updateRenderData(*circle);
@@ -89,7 +89,7 @@ sg::Triangle* createDrawableTriangle(SaNiEngine* const engine, const float x, co
 	auto triangle = static_cast<sg::Triangle*>(createTriangleMessage->getData());
 	NEW_DYNAMIC(sg::Triangle, triangle, x, y, 200, 200);
 	triangle->texture = texture;
-	triangle->fill = color::white;
+	triangle->fill = color::White;
 	recomputeVertices(*triangle);
 	updateRenderData(*triangle);
 

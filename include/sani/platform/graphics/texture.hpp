@@ -19,6 +19,7 @@ namespace sani {
 		private:
 			const uint32 width;
 			const uint32 height;
+			
 			GraphicsDevice* const device;
 		protected:
 			// Identifier of the texture, required at least by the OpenGL.
@@ -27,13 +28,14 @@ namespace sani {
 			GraphicsDevice* const getDevice();
 		public:
 			Texture(GraphicsDevice* device, const uint32 width, const uint32 height);
-			
+			Texture();
+
 			uint32 getWidth() const;
 			uint32 getHeight() const;
 
 			uint32 getID() const;
 			
-			virtual ~Texture();
+			virtual ~Texture() = default;
 
 			bool operator ==(const Texture& lhs) const;
 			bool operator !=(const Texture& lhs) const;

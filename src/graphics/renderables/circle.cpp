@@ -9,9 +9,9 @@ namespace sani {
 			this->radius = radius;
 
 			borderThickness = 0.0f;
-			borderFill = color::green;
+			borderFill = color::Green;
 
-			fill = color::red;
+			fill = color::Red;
 
 			transform.position.x = x;
 			transform.position.y = y;

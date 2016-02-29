@@ -21,7 +21,7 @@ namespace sani {
 
 			// Create default setup.
 			ParticleRenderAttributeList defaultSetup;
-			defaultSetup.source = Rect32f(0.0f, 0.0f,  static_cast<float32>(texture->getWidth()),  static_cast<float32>(texture->getHeight()));
+			defaultSetup.source = Rect32f(0.0f, 0.0f, static_cast<float32>(texture->getWidth()), static_cast<float32>(texture->getHeight()));
 			
 			generator.attributeLists.push_back(defaultSetup);
 			generator.velocityFunction = defaultVelocityFunction;

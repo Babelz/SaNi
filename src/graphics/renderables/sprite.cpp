@@ -10,7 +10,7 @@ namespace sani {
 		Sprite::Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(4, 6, 1, texture) {
 			SANI_ASSERT(texture != nullptr);
 
-			color = color::white;
+			color = color::White;
 
 			localBounds.w = w;
 			localBounds.h = h;
@@ -29,7 +29,6 @@ namespace sani {
 
 			transform.origin.x = localBounds.w / 2.0f;
 			transform.origin.y = localBounds.h / 2.0f;
-
 
 			RenderElementData& spriteRenderData = renderData.renderElements[0];
 			spriteRenderData.first = 0;

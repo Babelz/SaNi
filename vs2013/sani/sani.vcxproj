@@ -229,6 +229,7 @@
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite_animator.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\static_text.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\graphics\render_batch.cpp" />
@@ -412,6 +413,7 @@
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\particle_generator_flags.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\static_text.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\sprite_animation.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\sprite_sheet.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
@@ -532,7 +534,6 @@
     <None Include="..\..\include\sani\graphics\inl\sprite.inl" />
     <None Include="..\..\include\sani\graphics\inl\sprite_animation.inl" />
     <None Include="..\..\include\sani\graphics\inl\sprite_animator.inl" />
-    <None Include="..\..\include\sani\graphics\inl\text.inl" />
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
@@ -545,6 +546,7 @@
     <None Include="..\..\include\sani\rtti\inl\object_container.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_data.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_info.inl" />
+    <None Include="static_text.inl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt" />

@@ -21,8 +21,8 @@ namespace sani {
 		*/
 
 		Triangle::Triangle(const float32 tx, const float32 ty, const float32 lx, const float32 ly, const float32 rx, const float32 ry) : Renderable(6, 2),
-																																		 fill(color::red),
-																																		 borderFill(color::green),
+																																		 fill(color::Red),
+																																		 borderFill(color::Green),
 																																		 borderThickness(0.0f) {
 			topPoint.x = tx;
 			topPoint.y = ty;

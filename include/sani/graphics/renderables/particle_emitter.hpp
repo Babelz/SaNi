@@ -62,8 +62,8 @@ namespace sani {
 			math::Vec2f baseScaleVelocity;
 			math::Vec2f scaleVelocityVariance;
 			
-			Color color								{ color::white };
-			Color colorVariance						{ color::white };
+			Color color								{ color::White };
+			Color colorVariance						{ color::White };
 
 			GeneratorFlags flags;
 

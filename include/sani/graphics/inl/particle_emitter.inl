@@ -86,7 +86,7 @@ namespace sani {
 						
 						if (emitter.decayedParticles != 0) emitter.decayedParticles--;
 					} else { 
-						particle.sprite.color = color::transparent; 
+						particle.sprite.color = color::Transparent; 
 						
 						emitter.decayedParticles++; 
 					}

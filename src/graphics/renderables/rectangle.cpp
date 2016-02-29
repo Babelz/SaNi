@@ -15,8 +15,8 @@ namespace sani {
 		*/
 
 		Rectangle::Rectangle(const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(8, 6, 2) {
-			fill = color::red;
-			borderFill = color::green;
+			fill = color::Red;
+			borderFill = color::Green;
 
 			borderThickness = 0.0f;
 

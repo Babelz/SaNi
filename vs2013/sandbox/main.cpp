@@ -228,7 +228,7 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
 			rectangle->texture = font->texture;
-			rectangle->fill = color::red;
+			rectangle->fill = color::Red;
 			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
 			recomputeVertices(*rectangle);
 			setupShapeForRendering(rectangle, rectangle->borderThickness);
@@ -292,7 +292,7 @@ void initialize(SaNiEngine* const engine) {
 		rectangle->textureSource.w = rectangle->texture->getWidth() / 4.0f;
 		rectangle->textureSource.h = rectangle->texture->getHeight() / 4.0f;
 
-		rectangle->fill = color::red;
+		rectangle->fill = color::Red;
 		/*rectangle->textureSource.x = 0.f;
 		rectangle->textureSource.y = 0.f;	// TODO: why this needs to be negative?
 		rectangle->textureSource.w = tuksu->getWidth();
@@ -319,7 +319,7 @@ void initialize(SaNiEngine* const engine) {
 	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
 	circle->texture = erkki;
-	circle->fill = color::red;
+	circle->fill = color::Red;
 	circle->radius = 200;
 
 	recomputeVertices(*circle);
