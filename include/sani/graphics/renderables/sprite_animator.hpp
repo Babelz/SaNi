@@ -20,11 +20,11 @@ namespace sani {
 
 			bool animating;
 
-			SpriteAnimator(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h, const uint32 sourceWidth, const uint32 sourceHeight);
-			SpriteAnimator(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size, const uint32 sourceWidth, const uint32 sourceHeight);
-			SpriteAnimator(resource::Texture2D* const texture, const math::Rect32f& bounds, const uint32 sourceWidth, const uint32 sourceHeight);
-			SpriteAnimator(resource::Texture2D* const texture, const math::Vec2f& size, const uint32 sourceWidth, const uint32 sourceHeight);
-			SpriteAnimator(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(Texture* const texture, const float32 x, const float32 y, const float32 w, const float32 h, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(Texture* const texture, const math::Vec2f& position, const math::Vec2f& size, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(Texture* const texture, const math::Rect32f& bounds, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(Texture* const texture, const math::Vec2f& size, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteAnimator(Texture* const texture, const uint32 sourceWidth, const uint32 sourceHeight);
 
 			~SpriteAnimator() = default;
 		};

@@ -126,6 +126,8 @@ namespace sani {
 			/// @param[in] height of the render target
 			void generateRenderTarget2D(uint32& texture, uint32& frameBuffer, const uint32 width, const uint32 height);
 
+			void deleteFramebuffer(const uint32 buffer);
+
 			void resizeBackbuffer(const uint32 width, const uint32 height);
 
 			/*

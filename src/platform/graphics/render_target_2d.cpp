@@ -7,27 +7,23 @@ namespace sani {
 
 		RenderTarget2D::RenderTarget2D(GraphicsDevice* device, const uint32 width, const uint32 height) : Texture(device, width, height),
 																										  framebuffer(0) {
-			device->generateRenderTarget2D(renderTexture, framebuffer, width, height);
+			uint32 id = 0;
+			device->generateRenderTarget2D(id, framebuffer, width, height);
+			
+			setID(id);
 		}
 
-		RenderTarget2D::RenderTarget2D() : Texture(),
-										   framebuffer(0) {
+		bool RenderTarget2D::onDispose() {
+			GraphicsDevice* const device = getDevice();
+
+			device->deleteTexture(getID());
+			device->deleteFramebuffer(framebuffer);
+
+			return device->hasErrors();
 		}
 
 		uint32 RenderTarget2D::getFramebuffer() const {
 			return framebuffer;
-		}
-
-		bool RenderTarget2D::empty() const {
-			return framebuffer == 0 && renderTexture == 0;
-		}
-
-		RenderTarget2D::~RenderTarget2D() {
-			if (framebuffer != 0) {
-				getDevice()->deleteBuffer(framebuffer);
-				
-				getDevice()->deleteTexture(getID());
-			}
 		}
 	}
 }

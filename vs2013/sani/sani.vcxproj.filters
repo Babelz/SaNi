@@ -624,6 +624,9 @@
     <ClCompile Include="..\..\src\platform\graphics\graphics_device_state.cpp">
       <Filter>src\platform\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\graphics\graphics_resource.cpp">
+      <Filter>src\platform\graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1287,6 +1290,15 @@
       <Filter>include\resource\reader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device_state.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\graphics\default_shader_sources.hpp">
+      <Filter>include\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\screen_shader_source.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_resource.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
   </ItemGroup>

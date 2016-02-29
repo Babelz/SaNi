@@ -1,3 +1,4 @@
+#include "sani/platform/graphics/screen_shader_source.hpp"
 #include "sani/platform/graphics/graphics_device_state.hpp"
 #include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
@@ -42,7 +43,6 @@ namespace sani {
 					  currentRenderTarget(nullptr),
 					  defaultRenderTarget(nullptr),
 					  screenBuffer(0) {
-
 				vertexDescription.location = 0;
 				vertexDescription.count = 2;
 				vertexDescription.type = PrimitiveType::Float;
@@ -243,42 +243,14 @@ namespace sani {
 			return true;
 		}
 		void GraphicsDevice::createScreenShader() {
-			// Not sure if this does work with GLES, fix this or just dump Android...
-
-			const char* screenShaderVertexSource =
-				"#version 330 core\n"
-				"layout(location = 0) in vec2 position;"
-				"layout(location = 1) in vec2 texCoords;\n"
-				""
-				"out vec2 TexCoords;"
-
-				"void main()"
-				"{"
-				"	gl_Position = vec4(position.x, position.y, 0.0f, 1.0f);"
-				"	TexCoords = texCoords;"
-				"}";
-
-			const char* screenShaderFragmentSource =
-				"#version 330 core\n"
-				"in vec2 TexCoords;"
-				"out vec4 color;"
-				""
-				"uniform sampler2D screenTexture;"
-				""
-				"void main()"
-				"{"
-				"	gl_FragColor = texture2D(screenTexture, TexCoords);"
-				"   //gl_FragColor = vec4(1, 0, 0, 1);\n"
-				"}";
-
 			uint32 vertex = 0;
 			uint32 fragment = 0;
 			uint32 effect = 0;
 
-			compileShader(vertex, screenShaderVertexSource, ShaderType::Vertex);
+			compileShader(vertex, ScreenShaderVertexSource, ShaderType::Vertex);
 			IF_ERRORS_RETURN;
 
-			compileShader(fragment, screenShaderFragmentSource, ShaderType::Fragment);
+			compileShader(fragment, ScreenShaderFragmentSource, ShaderType::Fragment);
 			IF_ERRORS_RETURN;
 
 			createProgram(impl->screenShader);
@@ -552,6 +524,13 @@ namespace sani {
 			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 
+		void GraphicsDevice::deleteFramebuffer(const uint32 buffer) {
+			if (impl->cImpl.currentState->renderTarget != nullptr)
+				if (impl->cImpl.currentState->renderTarget->getFramebuffer() == buffer) impl->cImpl.currentState->renderTarget = nullptr;
+
+			glDeleteFramebuffers(1, &buffer);
+		}
+
 		void GraphicsDevice::resizeBackbuffer(const uint32 width, const uint32 height) {
 			const uint32 oldWidth = impl->cImpl.defaultRenderTarget->getWidth();
 			const uint32 oldHeight = impl->cImpl.defaultRenderTarget->getHeight();
@@ -727,22 +706,17 @@ namespace sani {
 		}
 		void GraphicsDevice::deleteBuffer(const uint32 buffer) {
 			// Check render target.
-			if (impl->cImpl.currentState->renderTarget != nullptr) {
-				if (impl->cImpl.currentState->renderTarget->getFramebuffer() == buffer) impl->cImpl.currentState->renderTarget = nullptr;
-			} else {
-				// Check other buffers.
-				auto& buffs = impl->cImpl.currentState->bindedBuffers;
-				auto it = buffs.begin();
-				
-				while (it != buffs.end()) {
-					if (it->second == buffer) {
-						buffs.erase(it);
+			auto& buffs = impl->cImpl.currentState->bindedBuffers;
+			auto it = buffs.begin();
 
-						break;
-					}
+			while (it != buffs.end()) {
+				if (it->second == buffer) {
+					buffs.erase(it);
 
-					it++;
+					break;
 				}
+
+				it++;
 			}
 
 			glDeleteBuffers(1, &buffer);
@@ -815,14 +789,14 @@ namespace sani {
 			impl->cImpl.states.pop();
 
 			// Get last and apply it's state to device.
-			GraphicsDeviceState* newState = &impl->cImpl.states.top();
+			GraphicsDeviceState* resumingState = &impl->cImpl.states.top();
 			
-			setRenderTarget(newState->renderTarget);
+			setRenderTarget(resumingState->renderTarget);
 
 			// Use raw gl to avoid some state checks.
-			for (auto buffer : newState->bindedBuffers) glBindBuffer(static_cast<GLenum>(buffer.first), buffer.second);
+			for (auto buffer : resumingState->bindedBuffers) glBindBuffer(static_cast<GLenum>(buffer.first), buffer.second);
 			
-			for (auto vp : newState->vertexPointers) {
+			for (auto vp : resumingState->vertexPointers) {
 				glEnableVertexAttribArray(vp.first);
 
 				glVertexAttribPointer(vp.second.location,
@@ -833,8 +807,11 @@ namespace sani {
 									  (void*)vp.second.offset);
 			}
 			
-			glBindTexture(GL_TEXTURE_2D, newState->texture);
-			glUseProgram(newState->shader);
+			glBindTexture(GL_TEXTURE_2D, resumingState->texture);
+			glUseProgram(resumingState->shader);
+
+			// Swap.
+			impl->cImpl.currentState = resumingState;
 		}
 
 		uint32 GraphicsDevice::currentState() const {

@@ -1,13 +1,13 @@
 #include "sani/graphics/renderables/sprite.hpp"
 #include "sani/graphics/vertex_helper.hpp"
-#include "sani/resource/texture2d.hpp"
+#include "sani/platform/graphics/texture.hpp"
 #include "sani/debug.hpp"
 
 namespace sani {
 
 	namespace graphics {
 
-		Sprite::Sprite(resource::Texture2D* const texture, const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(4, 6, 1, texture) {
+		Sprite::Sprite(Texture* const texture, const float32 x, const float32 y, const float32 w, const float32 h) : Renderable(4, 6, 1, texture) {
 			SANI_ASSERT(texture != nullptr);
 
 			color = color::White;
@@ -51,16 +51,16 @@ namespace sani {
 			recomputeVertices(*this);
 			updateRenderData(*this);
 		}
-		Sprite::Sprite(resource::Texture2D* const texture, const math::Vec2f& position, const math::Vec2f& size)
+		Sprite::Sprite(Texture* const texture, const math::Vec2f& position, const math::Vec2f& size)
 			: Sprite(texture, position.x, position.y, size.y, size.x) {
 		}
-		Sprite::Sprite(resource::Texture2D* const texture, const math::Rect32f& bounds)
+		Sprite::Sprite(Texture* const texture, const math::Rect32f& bounds)
 			: Sprite(texture, bounds.x, bounds.y, bounds.h, bounds.w) {
 		}
-		Sprite::Sprite(resource::Texture2D* const texture, const math::Vec2f& size)
+		Sprite::Sprite(Texture* const texture, const math::Vec2f& size)
 			: Sprite(texture, 0.0f, 0.0f, size.y, size.x) {
 		}
-		Sprite::Sprite(resource::Texture2D* const texture)
+		Sprite::Sprite(Texture* const texture)
 			: Sprite(texture, 0.0f, 0.0f, static_cast<float32>(texture->getHeight()), static_cast<float32>(texture->getWidth())) {
 		}
 	}

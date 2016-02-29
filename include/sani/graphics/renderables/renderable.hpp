@@ -6,7 +6,7 @@
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
-SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
+SANI_FORWARD_DECLARE_2(sani, graphics, Texture);
 
 namespace sani {
 
@@ -28,11 +28,11 @@ namespace sani {
 			math::Rect32f localBounds;
 
 			math::Rect32f textureSource;
-			resource::Texture2D* texture;
+			Texture* texture;
 
 			bool visible;
 
-			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements, resource::Texture2D* const texture);
+			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements, Texture* const);
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);
 			Renderable(const uint32 vertices, const uint32 renderElements);
 

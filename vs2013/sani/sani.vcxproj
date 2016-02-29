@@ -254,6 +254,7 @@
     <ClCompile Include="..\..\src\platform\graphics\graphics_device_gl.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_device_state.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_error.cpp" />
+    <ClCompile Include="..\..\src\platform\graphics\graphics_resource.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\render_target_2d.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\texture.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\viewport.cpp" />
@@ -414,6 +415,7 @@
     <ClInclude Include="..\..\include\sani\graphics\buffer_sizing.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\camera2d.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\color.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\default_shader_sources.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\particle_generator_flags.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\renderables\static_text.hpp" />
@@ -463,7 +465,9 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_resource.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\screen_shader_source.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\texture.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />

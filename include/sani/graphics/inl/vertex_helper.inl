@@ -1,3 +1,4 @@
+#include "sani/core/math/trigonometric.hpp"
 #include "sani/graphics/vertex_helper.hpp"
 
 namespace sani {

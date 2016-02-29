@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/platform/graphics/graphics_resource.hpp"
 #include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
@@ -15,36 +16,20 @@ namespace sani {
 		/// Represents an abstract texture that contains
 		/// basic information such as size and id of the
 		/// texture.
-		class Texture {
+		class Texture : public GraphicsResource {
 		private:
-			const uint32 width;
-			const uint32 height;
-			
-			GraphicsDevice* const device;
+			uint32 width;
+			uint32 height;
 		protected:
-			// Identifier of the texture, required at least by the OpenGL.
-			uint32 renderTexture;
-
-			GraphicsDevice* const getDevice();
+			virtual bool onDispose() override;
 		public:
+			Texture(GraphicsDevice* device, const uint32 id, const uint32 width, const uint32 height);
 			Texture(GraphicsDevice* device, const uint32 width, const uint32 height);
-			Texture();
-
+			
 			uint32 getWidth() const;
 			uint32 getHeight() const;
-
-			uint32 getID() const;
 			
 			virtual ~Texture() = default;
-
-			bool operator ==(const Texture& lhs) const;
-			bool operator !=(const Texture& lhs) const;
-
-			Texture(Texture& other) = delete;
-			Texture(Texture&& other) = delete;
-
-			Texture& operator =(Texture& other) = delete;
-			Texture& operator =(Texture&& other) = delete;
 		};
 	}
 }

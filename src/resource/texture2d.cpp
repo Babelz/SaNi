@@ -28,6 +28,7 @@ namespace sani {
 		}
 
 		Texture2D::~Texture2D() {
+			// TODO: deleting.
 		}
 
 		void Texture2D::generateTexture(graphics::GraphicsDevice* device, const uint32 width, const uint32 height, const bool mipmap, SurfaceFormat format) {
@@ -37,8 +38,10 @@ namespace sani {
 			desc.format = format;
 			desc.levels = levelCount;
 
-			device->generateTexture(renderTexture, desc);
-			
+			uint32 id = 0;
+			device->generateTexture(id, desc);
+			setID(id);
+
 			TextureWrapMode wrap = TextureWrapMode::Repeat;
 			// For best compatibility only set ClampToEdge if either
 			// dimension is not a power of two.
@@ -47,7 +50,7 @@ namespace sani {
 				wrap = TextureWrapMode::ClampToEdge;
 			}
 
-			device->bindTexture(renderTexture);
+			device->bindTexture(getID());
 
 			device->setTextureParameter(
 				TextureTarget::Texture2D,
@@ -100,7 +103,7 @@ namespace sani {
 			w = std::max(getWidth() >> level, 1u);
 			h = std::max(getHeight() >> level, 1u);
 
-			device->bindTexture(renderTexture);
+			device->bindTexture(getID());
 			device->setTextureData(
 				TextureTarget::Texture2D,
 				level,
@@ -119,7 +122,7 @@ namespace sani {
 				throw std::logic_error("Not implemented");
 			}
 
-			device->bindTexture(renderTexture);
+			device->bindTexture(getID());
 			data.reserve(getWidth() * getHeight() * 4);
 
 			device->getTextureData(

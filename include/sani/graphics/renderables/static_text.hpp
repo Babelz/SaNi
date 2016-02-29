@@ -1,12 +1,12 @@
 #pragma once
 
-#include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/graphics/renderables/renderable.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
-SANI_FORWARD_DECLARE_2(sani, resource, SpriteFont);
 SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsDevice);
+SANI_FORWARD_DECLARE_2(sani, graphics, RenderTarget2D);
+SANI_FORWARD_DECLARE_2(sani, resource, SpriteFont);
 
 namespace sani {
 
@@ -18,22 +18,23 @@ namespace sani {
 
 		class StaticText final : public Renderable {
 		public:
-			GraphicsDevice* const device;
+			GraphicsDevice* const graphicsDevice;
 
-			RenderTarget2D renderTarget;
+			// TODO: make this automatic.
+			RenderTarget2D* renderTarget;
 			resource::SpriteFont* font;
 			
 			String16 text;
 			Color color;
 
-			StaticText(GraphicsDevice* const device, resource::SpriteFont* const font, const float32 x, const float32 y, const float32 w, const float32 h);
-			StaticText(GraphicsDevice* const device, resource::SpriteFont* const font, const math::Vec2f& position, const math::Vec2f& size);
-			StaticText(GraphicsDevice* const device, resource::SpriteFont* const font, const math::Rect32f& bounds);
+			StaticText(GraphicsDevice* const graphicsDevice, resource::SpriteFont* const font, const float32 x, const float32 y, const float32 w, const float32 h);
+			StaticText(GraphicsDevice* const graphicsDevice, resource::SpriteFont* const font, const math::Vec2f& position, const math::Vec2f& size);
+			StaticText(GraphicsDevice* const graphicsDevice, resource::SpriteFont* const font, const math::Rect32f& bounds);
 
 			~StaticText();
 		};
 
-		inline void setText(StaticText& staticText, const String16& text);
+		inline void setText(StaticText& staticText, const String16& text, const Color& color);
 
 		inline void recomputeVertices(StaticText& staticText);
 		inline void recomputeBounds(StaticText& staticText);
@@ -42,4 +43,4 @@ namespace sani {
 	}
 }
 
-#include "sani/graphics/renderables/static_text.hpp"
+#include "sani/graphics/inl/static_text.inl"

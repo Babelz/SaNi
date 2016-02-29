@@ -7,12 +7,10 @@ namespace sani {
 
 	namespace graphics {
 
+		StaticText::StaticText(GraphicsDevice* const graphicsDevice, resource::SpriteFont* const font, const float32 x, const float32 y, const float32 w, const float32 h)
+			: font(font), Renderable(4, 6, 1), graphicsDevice(graphicsDevice), renderTarget(nullptr) {
 
-
-		StaticText::StaticText(GraphicsDevice* const device, resource::SpriteFont* const font, const float32 x, const float32 y, const float32 w, const float32 h)
-			: font(font), Renderable(text.size() * TokenVertices, text.size() * TokenElements, 1), device(device) {
-			
-			SANI_ASSERT(device != nullptr);
+			SANI_ASSERT(graphicsDevice != nullptr);
 			SANI_ASSERT(font != nullptr);
 
 			color = color::Red;
@@ -42,10 +40,6 @@ namespace sani {
 			renderData.vertexIndices[3] = 1;
 			renderData.vertexIndices[4] = 3;
 			renderData.vertexIndices[5] = 2;
-
-			recomputeBounds(*this);
-			recomputeVertices(*this);
-			updateRenderData(*this);
 		}
 		StaticText::StaticText(GraphicsDevice* const device, resource::SpriteFont* const font, const math::Vec2f& position, const math::Vec2f& size) 
 			: StaticText(device, font, position.x, position.y, size.x, size.y) {
@@ -55,7 +49,13 @@ namespace sani {
 		}
 
 		StaticText::~StaticText() {
-			if (!renderTarget.empty()) device->deleteTexture(renderTarget.getID());
+			if (renderTarget != nullptr) {
+				// Assume it gets disposed...
+				// TODO: add some exception checks.
+				renderTarget->dispose();
+
+				renderTarget = nullptr;
+			}
 		}
 	}
 }

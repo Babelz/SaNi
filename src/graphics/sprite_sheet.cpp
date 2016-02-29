@@ -1,4 +1,4 @@
-#include "sani/resource/texture2d.hpp"
+#include "sani/platform/graphics/texture.hpp"
 #include "sani/graphics/sprite_sheet.hpp"
 #include "sani/debug.hpp"
 
@@ -6,7 +6,7 @@ namespace sani {
 
 	namespace graphics {
 
-		SpriteSheet::SpriteSheet(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight)
+		SpriteSheet::SpriteSheet(Texture* const texture, const uint32 sourceWidth, const uint32 sourceHeight)
 			: texture(texture), sourceWidth(sourceWidth), sourceHeight(sourceHeight), 
 			  rows(texture->getHeight() / sourceHeight),
 			  columns(texture->getWidth() / sourceWidth) {

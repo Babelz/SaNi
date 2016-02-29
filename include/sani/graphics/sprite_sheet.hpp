@@ -6,7 +6,7 @@
 
 #include <vector>
 
-SANI_FORWARD_DECLARE_2(sani, resource, Texture2D);
+SANI_FORWARD_DECLARE_2(sani, graphics, Texture);
 
 namespace sani {
 
@@ -24,7 +24,7 @@ namespace sani {
 		/// Sheet that uses index based lookup for the sources.
 		class SpriteSheet {
 		public:
-			resource::Texture2D* const texture;
+			Texture* const texture;
 			SourceContainer sources;
 
 			const uint32 sourceWidth;
@@ -37,7 +37,7 @@ namespace sani {
 			/// @param[in] texture texture that the sheet will be using
 			/// @param[in] sourceWidth single sources width	
 			/// @param[in] sourceHeight single sources height
-			SpriteSheet(resource::Texture2D* const texture, const uint32 sourceWidth, const uint32 sourceHeight);
+			SpriteSheet(Texture* const texture, const uint32 sourceWidth, const uint32 sourceHeight);
 			SpriteSheet();
 
 			const math::Rect32f& sourceAt(const uint32 row, const uint32 column) const;
