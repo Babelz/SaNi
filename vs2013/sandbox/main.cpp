@@ -288,12 +288,8 @@ void initialize(SaNiEngine* const engine) {
 		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
 		rectangle->texture = resources->load<Texture2D>("tuksu");
-		rectangle->textureSource.x = 0.0f;
-		rectangle->textureSource.y = 0.0f;
-		rectangle->textureSource.w = rectangle->texture->getWidth() / 4.0f;
-		rectangle->textureSource.h = rectangle->texture->getHeight() / 4.0f;
 
-		rectangle->fill = color::Red;
+		rectangle->fill = color::White;
 		/*rectangle->textureSource.x = 0.f;
 		rectangle->textureSource.y = 0.f;	// TODO: why this needs to be negative?
 		rectangle->textureSource.w = tuksu->getWidth();

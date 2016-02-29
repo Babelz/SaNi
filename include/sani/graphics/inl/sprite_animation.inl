@@ -40,7 +40,7 @@ namespace sani {
 					animation.currentFrame = animation.currentFrameGroup->frames.begin();
 				}
 			} else {
-				animation.currentFrameTime += time.getFrameTime();
+				animation.currentFrameTime += static_cast<float32>(time.getFrameTime());
 			}
 		}
 	}

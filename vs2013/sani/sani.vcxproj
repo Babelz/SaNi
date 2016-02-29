@@ -252,6 +252,7 @@
     <ClCompile Include="..\..\src\platform\file\file_system.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\color.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_device_gl.cpp" />
+    <ClCompile Include="..\..\src\platform\graphics\graphics_device_state.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_error.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\render_target_2d.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\texture.cpp" />
@@ -458,6 +459,7 @@
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_system.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device_state.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp" />

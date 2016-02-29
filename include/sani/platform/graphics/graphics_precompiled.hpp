@@ -89,25 +89,18 @@ namespace sani {
 		};
 
 		struct VertexAttributePointerDescription  {
-			uint32 location;
-			uint32 count;
+			uint32 location		{ 0 };
+			uint32 count		{ 0 };
 
-			PrimitiveType type;
-			bool normalized;
+			PrimitiveType type	{ PrimitiveType::UByte };
+			bool normalized		{ false };
 
-			uint32 stride;
-			uint32 offset;
+			uint32 stride		{ 0 };
+			uint32 offset		{ 0 };
 
-			VertexAttributePointerDescription() : location(0),
-				count(0),
-				type(PrimitiveType::UByte),
-				normalized(false),
-				stride(0),
-				offset(0) {
-			}
+			VertexAttributePointerDescription() = default;
 
-			~VertexAttributePointerDescription() {
-			}
+			~VertexAttributePointerDescription() = default;
 		};
 
 		enum class SurfaceFormat {
@@ -156,17 +149,14 @@ namespace sani {
 		};
 
 		struct TextureDescription {
-			uint32 width;
-			uint32 height;
-			uint32 levels;
-			SurfaceFormat format;
+			uint32 width			{ 0 };
+			uint32 height			{ 0 };
+			uint32 levels			{ 0 };
+			SurfaceFormat format	{ SurfaceFormat::ColorRGBA };
 
-			TextureDescription()
-				: width(0), height(0), levels(1), format(SurfaceFormat::ColorRGBA) {
-			}
+			TextureDescription() = default;
 
-			~TextureDescription() {
-			}
+			~TextureDescription() = default;
 		};
 	}
 }

@@ -1,9 +1,12 @@
+#include "sani/platform/graphics/graphics_device_state.hpp"
 #include "sani/platform/graphics/render_target_2d.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/debug.hpp"
+
 #include <sstream>
 #include <stdexcept>
+#include <stack>
 
 // Contains WindowsGL and LinuxGL implementations of the graphics device.
 
@@ -14,18 +17,23 @@ namespace sani {
 
 	namespace graphics {
 
+		using StateStack = std::stack<GraphicsDeviceState>;
+
 		class GraphicsDevice::Cimpl {
 		public:
-			uint32 backBufferWidth;
-			uint32 backBufferHeight;
-
-			Viewport viewport;
-
-			RenderTarget2D* currentRenderTarget;
-			RenderTarget2D* defaultRenderTarget;
+			StateStack states;
+			GraphicsDeviceState* currentState;
 
 			VertexAttributePointerDescription vertexDescription;
 			VertexAttributePointerDescription textureDescription;
+
+			RenderTarget2D* defaultRenderTarget;
+			RenderTarget2D* currentRenderTarget;
+
+			Viewport viewport;
+
+			uint32 backBufferWidth;
+			uint32 backBufferHeight;
 
 			uint32 screenBuffer;
 
@@ -48,6 +56,9 @@ namespace sani {
 				textureDescription.normalized = false;
 				textureDescription.stride = sizeof(float32)* 4;
 				textureDescription.offset = sizeof(float32)* 2;
+
+				states.push(GraphicsDeviceState());
+				currentState = &states.top();
 			}
 
 			~Cimpl() {
@@ -400,6 +411,7 @@ namespace sani {
 		void GraphicsDevice::setViewport(const Viewport& viewport) {
 			const Viewport oldViewport = impl->cImpl.viewport;
 
+			impl->cImpl.currentState->viewport = viewport;
 			impl->cImpl.viewport = viewport;
 
 			glViewport(impl->cImpl.viewport.x, impl->cImpl.viewport.y,
@@ -416,11 +428,15 @@ namespace sani {
 		}
 
 		void GraphicsDevice::bindTexture(const uint32 texture) {
+			impl->cImpl.currentState->texture = texture;
+
 			glBindTexture(GL_TEXTURE_2D, texture);
 
 			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::unbindTexture() {
+			impl->cImpl.currentState->texture = 0;
+
 			glBindTexture(GL_TEXTURE_2D, 0);
 			
 			CHECK_FOR_ERRORS;
@@ -428,27 +444,14 @@ namespace sani {
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* renderTarget) {
 			impl->cImpl.currentRenderTarget = renderTarget == nullptr ? impl->cImpl.defaultRenderTarget : renderTarget;
+			
+			// Don't store default render target.
+			if (renderTarget != nullptr) impl->cImpl.currentState->renderTarget = impl->cImpl.currentRenderTarget;
 
 			glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getFramebuffer());
 
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			
-			/*
-
-				http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-14-render-to-texture/
-
-				The fragment shader just needs a minor adaptation:
-
-				Inside the fragment shader
-				layout(location = 0) out vec3 color;
-
-				This means that when writing in the variable “color”,
-				we will actually write in the Render Target 0,
-				which happens to be our texture because DrawBuffers[0] is GL_COLOR_ATTACHMENTi,
-				which is, in our case, renderedTexture.
-
-			*/
 
 			CHECK_FOR_ERRORS;
 		}
@@ -515,6 +518,12 @@ namespace sani {
 
 		}
 		void GraphicsDevice::deleteTexture(const uint32 texture) {
+			// Check texture.
+			if (impl->cImpl.currentState->texture == texture) impl->cImpl.currentState->texture = 0;
+				
+			// No need to check for the render target, it's state should be 
+			// updated in render target specific functions.
+
 			glDeleteTextures(1, &texture);
 		}
 
@@ -616,6 +625,8 @@ namespace sani {
 		}
 
 		void GraphicsDevice::useProgram(const uint32 program) {
+			impl->cImpl.currentState->shader = program;
+
 			glUseProgram(program);
 
 			CHECK_FOR_ERRORS;
@@ -691,11 +702,15 @@ namespace sani {
 			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::bindBuffer(uint32& buffer, const BufferType type) {
+			impl->cImpl.currentState->bindedBuffers[type] = buffer;
+
 			glBindBuffer(static_cast<GLenum>(type), buffer);
 
 			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::unbindBuffer(const BufferType type) {
+			impl->cImpl.currentState->bindedBuffers.erase(type);
+
 			glBindBuffer(static_cast<GLenum>(type), 0);
 
 			CHECK_FOR_ERRORS;
@@ -711,6 +726,25 @@ namespace sani {
 			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::deleteBuffer(const uint32 buffer) {
+			// Check render target.
+			if (impl->cImpl.currentState->renderTarget != nullptr) {
+				if (impl->cImpl.currentState->renderTarget->getFramebuffer() == buffer) impl->cImpl.currentState->renderTarget = nullptr;
+			} else {
+				// Check other buffers.
+				auto& buffs = impl->cImpl.currentState->bindedBuffers;
+				auto it = buffs.begin();
+				
+				while (it != buffs.end()) {
+					if (it->second == buffer) {
+						buffs.erase(it);
+
+						break;
+					}
+
+					it++;
+				}
+			}
+
 			glDeleteBuffers(1, &buffer);
 		}
 
@@ -726,6 +760,8 @@ namespace sani {
 		}
 
 		void GraphicsDevice::createVertexAttributePointer(const VertexAttributePointerDescription& description) {
+			impl->cImpl.currentState->vertexPointers[description.location] = description;
+
 			glEnableVertexAttribArray(description.location);
 
 			glVertexAttribPointer(description.location,
@@ -738,6 +774,8 @@ namespace sani {
 			CHECK_FOR_ERRORS;
 		}
 		void GraphicsDevice::disableVertexAttributePointer(const uint32 location) {
+			impl->cImpl.currentState->vertexPointers.erase(location);
+
 			glDisableVertexAttribArray(location);
 			
 			CHECK_FOR_ERRORS;
@@ -745,6 +783,62 @@ namespace sani {
 
 		void GraphicsDevice::bindAttributeLocation(const uint32 shader, const uint32 index, const String& name) {
 			glBindAttribLocation(shader, index, name.c_str());
+		}
+
+		void GraphicsDevice::saveState() {
+			impl->cImpl.states.push(GraphicsDeviceState());
+			
+			// Copy viewport information.
+			GraphicsDeviceState* newState = &impl->cImpl.states.top();
+			newState->viewport = impl->cImpl.viewport;
+
+			// Unbind all state stuff.
+			setRenderTarget(nullptr);
+
+			// Use raw gl to avoid some state checks.
+			for (auto buffer : impl->cImpl.currentState->bindedBuffers) glBindBuffer(static_cast<GLenum>(buffer.first), 0);
+			for (auto vp : impl->cImpl.currentState->vertexPointers)	glDisableVertexAttribArray(vp.first);
+			glBindTexture(GL_TEXTURE_2D, 0);
+			glUseProgram(0);
+
+			// Swap state.
+			impl->cImpl.currentState = newState;
+		}
+
+		void GraphicsDevice::resumeState() {
+			// At primary state.
+			if (impl->cImpl.states.size() == 1) return;
+			
+			// Swap state.
+			
+			// Pop current.
+			impl->cImpl.states.pop();
+
+			// Get last and apply it's state to device.
+			GraphicsDeviceState* newState = &impl->cImpl.states.top();
+			
+			setRenderTarget(newState->renderTarget);
+
+			// Use raw gl to avoid some state checks.
+			for (auto buffer : newState->bindedBuffers) glBindBuffer(static_cast<GLenum>(buffer.first), buffer.second);
+			
+			for (auto vp : newState->vertexPointers) {
+				glEnableVertexAttribArray(vp.first);
+
+				glVertexAttribPointer(vp.second.location,
+									  vp.second.count,
+									  static_cast<GLenum>(vp.second.type),
+									  vp.second.normalized,
+									  vp.second.stride,
+									  (void*)vp.second.offset);
+			}
+			
+			glBindTexture(GL_TEXTURE_2D, newState->texture);
+			glUseProgram(newState->shader);
+		}
+
+		uint32 GraphicsDevice::currentState() const {
+			return impl->cImpl.states.size();
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

@@ -257,9 +257,6 @@ namespace sani {
 			else										graphicsDevice->drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin);
 
 			renderSetup->clear();
-
-			graphicsDevice->bindTexture(0);
-			graphicsDevice->useProgram(0);
 		}
 
 		void Renderer::checkBatchEffects() {

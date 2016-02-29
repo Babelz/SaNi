@@ -208,6 +208,28 @@ namespace sani {
 
 			void bindAttributeLocation(const uint32 shader, const uint32 index, const String& name);
 
+			/*
+				State operations.
+			*/
+
+			/// Saves the current state of the device.
+			/// State data that will be stored for later use contains:
+			/// - viewport
+			/// - texture
+			/// - render target
+			/// - shader
+			/// - binded buffers
+			/// - vertex attributes
+			void saveState();
+
+			/// Resumes the last state of the device.
+			void resumeState();
+
+			/// Returns the current states ID to the caller. 
+			/// If this functions returns 1 the device
+			/// is in it's primary state.
+			uint32 currentState() const;
+
 			~GraphicsDevice();
 		};
 	}
