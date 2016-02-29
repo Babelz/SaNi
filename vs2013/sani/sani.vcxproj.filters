@@ -1295,10 +1295,10 @@
     <ClInclude Include="..\..\include\sani\graphics\default_shader_sources.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\screen_shader_source.hpp">
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_resource.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_resource.hpp">
+    <ClInclude Include="..\..\include\sani\platform\graphics\screen_shader_source.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1405,11 +1405,11 @@
     <None Include="..\..\include\sani\rtti\inl\method.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
-    <None Include="static_text.inl">
-      <Filter>include\graphics\inl</Filter>
-    </None>
     <None Include="..\..\include\sani\rtti\inl\type.inl">
       <Filter>include\rtti\inl</Filter>
+    </None>
+    <None Include="..\..\include\sani\graphics\inl\static_text.inl">
+      <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

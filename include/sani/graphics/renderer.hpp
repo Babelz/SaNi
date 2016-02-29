@@ -65,7 +65,6 @@ namespace sani {
 			std::vector<uint32> indexTransformBuffer;
 
 			math::Mat4f transform;
-			uint32 texture;
 			
 			void generateDefaultShaders();
 			void generateRenderSetups();

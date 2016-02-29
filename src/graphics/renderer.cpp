@@ -25,7 +25,6 @@ namespace sani {
 																   indicesSize(InitialBufferSize),
 																   vertexBuffer(0),
 																   indexBuffer(0),
-																   texture(0),
 																   renderBatchesCount(0),
 																   renderBatcher(defaultEffects, RenderStatesCount) {
 			renderBatches.resize(InitialRenderBatchesCount);

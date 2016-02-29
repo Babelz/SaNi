@@ -41,6 +41,11 @@ namespace sani {
 			ArrayBuffer		   = GL_ARRAY_BUFFER
 		};
 
+		enum class ColorAttachment {
+			Attachment0 = GL_COLOR_ATTACHMENT0,
+			Attachment1 = GL_COLOR_ATTACHMENT1
+		};
+
 		enum class PrimitiveType {
 			Byte    = GL_BYTE,
 			UByte   = GL_UNSIGNED_BYTE,

@@ -254,6 +254,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 sani::graphics::ParticleEmitter* em;
 
 sani::graphics::Circle* c;
+StaticText* tex;
 
 #include "sani/core/memory/memory.hpp"
 
@@ -334,7 +335,7 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	//layer->add(circle);
+	layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
@@ -392,12 +393,13 @@ void initialize(SaNiEngine* const engine) {
 	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
 	//createText(font, gg, graphicsDevice, engine, rects);
 
-	StaticText* tex = new StaticText(graphicsDevice, font, 300, 300, 300, 300);
+	tex = new StaticText(graphicsDevice, font, 300, 300, 300, 300);
 	setText(*tex, gg, color::Red);
+	tex->color = color::White;
 
-	//for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
 
-	//layer->add(em);
+	layer->add(em);
 	layer->add(tex);
 
 	inputListener.init();
@@ -429,6 +431,10 @@ namespace sandbox {
 */
 		sani::graphics::update(*em, time);
 		//sani::graphics::update(*a, time);
+	
+		recomputeBounds(*tex);
+		recomputeVertices(*tex);
+		updateRenderData(*tex);
 	}
 }
 

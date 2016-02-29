@@ -22,7 +22,7 @@ namespace sani {
 		const char* const ScreenShaderFragmentSource =
 			"#version 330 core\n"
 			"in vec2 TexCoords;"
-			"out vec4 color;"
+			"out vec4 color;\n"
 			""
 			"uniform sampler2D screenTexture;"
 			""

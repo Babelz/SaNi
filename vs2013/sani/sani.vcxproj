@@ -543,6 +543,7 @@
     <None Include="..\..\include\sani\graphics\inl\sprite.inl" />
     <None Include="..\..\include\sani\graphics\inl\sprite_animation.inl" />
     <None Include="..\..\include\sani\graphics\inl\sprite_animator.inl" />
+    <None Include="..\..\include\sani\graphics\inl\static_text.inl" />
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />
@@ -556,7 +557,6 @@
     <None Include="..\..\include\sani\rtti\inl\type.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_data.inl" />
     <None Include="..\..\include\sani\rtti\inl\type_info.inl" />
-    <None Include="static_text.inl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\include\sani\core\cvar\TODO.txt" />
