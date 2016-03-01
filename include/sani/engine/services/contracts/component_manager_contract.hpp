@@ -14,6 +14,10 @@ namespace sani {
 			
 			namespace componentmanager {
 
+				/*
+					TODO: gen contracts with macros?
+				*/
+
 				enum class ComponentManagerCommands : uint32 {
 					CreateComponent  = 0,
 

@@ -1334,6 +1334,9 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\component_manager_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\impl\component_manager.hpp">
+      <Filter>include\engine\services\impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

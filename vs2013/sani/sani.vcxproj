@@ -410,6 +410,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\impl\component_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\updating_renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\particle_emitter_manager.hpp" />
