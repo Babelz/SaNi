@@ -1,13 +1,10 @@
 #pragma once
 
-#include "sani/core/memory/page_pool_allocator.hpp"
+#include "sani/core/memory/register_allocator.hpp"
 #include "sani/engine/services/engine_service.hpp"
 #include "sani/forward_declare.hpp"
 
-#include <vector>
-#include <stack>
-
-SANI_FORWARD_DECLARE_1(sani, Entity);
+SANI_FORWARD_DECLARE_1(sani, Component);
 SANI_FORWARD_DECLARE_3(sani, engine, messages, DocumentMessage);
 
 namespace sani {
@@ -17,12 +14,22 @@ namespace sani {
 		namespace services {
 			
 			template<class T>
-			class ComponentManager final : public EngineService {
+			class ComponentManager : public EngineService {
 			private:
-				PagePoolAllocator<T> allocator;
-				std::stack<uint32> released;
+				RegisterAllocator<Component> allocator;
 
+				void handleDocumentMessage(messages::DocumentMessage* const message);
+
+				void createComponent(messages::DocumentMessage* const message);
+				void destroyComponent(messages::DocumentMessage* const message);
+
+				void listComponents(messages::DocumentMessage* const message);
 			public:
+				ComponentManager(SaNiEngine* const engine);
+
+				virtual void receive(messages::Message* const message) final override;
+
+				virtual ~ComponentManager() = default;
 			};
 		}
 	}

@@ -4,6 +4,7 @@
 #include "sani/types.hpp"
 
 SANI_FORWARD_DECLARE_3(sani, engine, messages, DocumentMessage);
+SANI_FORWARD_DECLARE_3(sani, engine, messages, QueryMessage);
 
 namespace sani {
 
@@ -23,7 +24,7 @@ namespace sani {
 
 				void createEntity(messages::DocumentMessage* const message);
 
-				void destroyEntity(messages::DocumentMessage* const message, const uint32 id);
+				void destroyEntity(messages::QueryMessage* const message, const uint32 id);
 
 				void listEntities(messages::DocumentMessage* const message);
 			}
