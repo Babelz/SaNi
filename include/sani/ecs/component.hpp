@@ -10,7 +10,7 @@ namespace sani {
 	/// Base class for all components.
 	class Component {
 	public:
-		uint32 ID { 0 };
+		uint32 id { 0 };
 
 		Component()				= default;
 

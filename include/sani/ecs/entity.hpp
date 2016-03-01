@@ -19,7 +19,7 @@ namespace sani {
 	public:
 		ComponentList components;
 
-		uint32 ID { 0 };
+		uint32 id { 0 };
 
 		Entity()	= default;
 

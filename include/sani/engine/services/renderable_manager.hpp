@@ -41,14 +41,6 @@ namespace sani {
 				/// Message response that returns all the elements this manager contains.
 				void getElements(messages::DocumentMessage* const message);
 			protected:
-				/*
-					Keeping constructor as private since we don't
-					want to allow anyone to make instance of this class.
-
-					This class is intended to work as a base class for
-					other managers.
-				*/
-
 				RenderableManager(const String& name, const renderablemanager::ElementType type, engine::SaNiEngine* const engine);
 				
 				const RegisterAllocator<T>& getAllocator() const;
