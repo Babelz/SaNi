@@ -627,6 +627,9 @@
     <ClCompile Include="..\..\src\platform\graphics\graphics_resource.cpp">
       <Filter>src\platform\graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\particle_emitter_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

@@ -50,6 +50,8 @@ namespace sani {
 				*/
 
 				RenderableManager(const String& name, const renderablemanager::ElementType type, engine::SaNiEngine* const engine);
+				
+				const RegisterAllocator<T>& getAllocator() const;
 			public:
 				void receive(messages::Message* const message) final override;
 

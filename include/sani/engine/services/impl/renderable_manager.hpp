@@ -21,6 +21,11 @@ namespace sani {
 			}
 
 			template <class T>
+			const RegisterAllocator<T>& RenderableManager<T>::getAllocator() const {
+				return allocator;
+			}
+
+			template <class T>
 			void RenderableManager<T>::handleDocumentMessage(messages::DocumentMessage* const message) {
 				const RenderableManagerCommands command = static_cast<RenderableManagerCommands>(message->getCommand());
 
