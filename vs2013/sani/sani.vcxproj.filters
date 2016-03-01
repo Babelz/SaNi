@@ -636,6 +636,9 @@
     <ClCompile Include="..\..\src\engine\services\contracts\entity_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\entity_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

@@ -28,9 +28,9 @@ namespace sani {
 
 				void listEntities(messages::DocumentMessage* const message);
 			public:
-				EntityManager();
+				EntityManager(SaNiEngine* const engine);
 
-				void receive(messages::Message* const message) final override;
+				virtual void receive(messages::Message* const message) final override;
 
 				~EntityManager() = default;
 			};
