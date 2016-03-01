@@ -293,6 +293,7 @@
     <ClCompile Include="..\..\src\rtti\object.cpp" />
     <ClCompile Include="..\..\src\rtti\object_container.cpp" />
     <ClCompile Include="..\..\src\rtti\pointer_container.cpp" />
+    <ClCompile Include="..\..\src\rtti\reflection_database.cpp" />
     <ClCompile Include="..\..\src\rtti\type.cpp" />
     <ClCompile Include="..\..\src\rtti\type_data.cpp" />
     <ClCompile Include="..\..\src\rtti\type_database.cpp" />
@@ -518,6 +519,7 @@
     <ClInclude Include="..\..\include\sani\rtti\object_container_standard_types.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\pointer_container.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\reflectable.hpp" />
+    <ClInclude Include="..\..\include\sani\rtti\reflection_database.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_config.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_data.hpp" />

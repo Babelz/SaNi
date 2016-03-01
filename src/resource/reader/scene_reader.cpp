@@ -7,18 +7,15 @@ namespace sani {
 			
 			namespace {
 				auto &db = sani::rtti::TypeDatabase::getInstance();
-
-				struct ReflectionInjector {
-					ReflectionInjector() {
-						RTTI_REGISTER_TYPE(ResourceTypeReader);
-						RTTI_REGISTER_TYPE(SceneReader);
-						RTTI_DECLARE_BASECLASSES(SceneReader, typeof(ResourceTypeReader));
-						RTTI_DEFAULT_DYNAMIC_CTOR(SceneReader);
-					}
-				};
-
-				static ReflectionInjector ignoreme;
 			}
+
+			void SceneReader::RTTI_Init() {
+				RTTI_REGISTER_TYPE(sani::resource::reader::ResourceTypeReader);
+				RTTI_REGISTER_TYPE(sani::resource::reader::SceneReader);
+				RTTI_DECLARE_BASECLASSES(sani::resource::reader::SceneReader, typeof(sani::resource::reader::ResourceTypeReader));
+				RTTI_DEFAULT_DYNAMIC_CTOR(sani::resource::reader::SceneReader);
+			}
+
 			SceneReader::~SceneReader() {
 
 			}

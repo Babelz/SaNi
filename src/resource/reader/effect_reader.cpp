@@ -11,17 +11,13 @@ namespace sani {
 
 			namespace {
 				auto &db = sani::rtti::TypeDatabase::getInstance();
+			}
 
-				struct ReflectionInjector {
-					ReflectionInjector() {
-						RTTI_REGISTER_TYPE(ResourceTypeReader);
-						RTTI_REGISTER_TYPE(EffectReader);
-						RTTI_DECLARE_BASECLASSES(EffectReader, typeof(ResourceTypeReader));
-						RTTI_DEFAULT_DYNAMIC_CTOR(EffectReader);
-					}
-				};
-
-				static ReflectionInjector ignoreme;
+			void EffectReader::RTTI_Init() {
+				RTTI_REGISTER_TYPE(sani::resource::reader::ResourceTypeReader);
+				RTTI_REGISTER_TYPE(sani::resource::reader::EffectReader);
+				RTTI_DECLARE_BASECLASSES(sani::resource::reader::EffectReader, typeof(sani::resource::reader::ResourceTypeReader));
+				RTTI_DEFAULT_DYNAMIC_CTOR(sani::resource::reader::EffectReader);
 			}
 
 			EffectReader::~EffectReader() {

@@ -6,6 +6,8 @@
 #include "sani/resource/reader/bitmap_content_reader.hpp"
 #include "sani/resource/reader/spritefont_reader.hpp"
 #include "sani/resource/reader/scene_reader.hpp"
+#include "sani/rtti/type_database.hpp"
+#include "sani/rtti/argument.hpp"
 
 namespace sani {
 
@@ -21,11 +23,16 @@ namespace sani {
 
 			void ResoureTypeReaderManager::registerStandardTypes() {
 				using namespace sani::resource::reader;
-				registerTypeReader<Texture2DReader>();
+				/*registerTypeReader<Texture2DReader>();
 				registerTypeReader<EffectReader>();
 				registerTypeReader<BitmapContentReader>();
 				registerTypeReader<SpriteFontReader>();
-				registerTypeReader<SceneReader>();
+				registerTypeReader<SceneReader>();*/
+				/*auto& derivedClasses = typeof(ResourceTypeReader).getDerivedClasses();
+				sani::rtti::Arguments args;
+				for (auto& type : derivedClasses) {
+					typeReaders.push_back(type.createDynamic(args).getValue<ResourceTypeReader*>());
+				}*/
 			}
 
 			ResourceTypeReader* ResoureTypeReaderManager::getReaderByName(const String& name) const {

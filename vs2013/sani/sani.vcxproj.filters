@@ -633,6 +633,9 @@
     <ClCompile Include="..\..\src\engine\services\sprite_animation_manager.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\rtti\reflection_database.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1318,6 +1321,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\sprite_animation_manager.hpp">
       <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\rtti\reflection_database.hpp">
+      <Filter>include\rtti</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
