@@ -12,8 +12,6 @@
 #include <iostream>
 #include <stdlib.h>
 
-#define _WIN32_WINNT 0x0500
-
 /*
 	Win32 impl of the console functions.
 */

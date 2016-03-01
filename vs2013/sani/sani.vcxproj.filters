@@ -630,6 +630,9 @@
     <ClCompile Include="..\..\src\engine\services\particle_emitter_manager.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\sprite_animation_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1305,6 +1308,15 @@
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\particle_emitter_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\updating_renderable_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\impl\updating_renderable_manager.hpp">
+      <Filter>include\engine\services\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\sprite_animation_manager.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>

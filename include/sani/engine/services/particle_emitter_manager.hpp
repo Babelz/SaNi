@@ -1,7 +1,7 @@
 #pragma once
 
+#include "sani/engine/services/updating_renderable_manager.hpp"
 #include "sani/graphics/renderables/particle_emitter.hpp"
-#include "sani/engine/services/renderable_manager.hpp"
 
 namespace sani {
 
@@ -9,11 +9,9 @@ namespace sani {
 
 		namespace services {
 
-			class ParticleEmitterManager final : public RenderableManager<graphics::ParticleEmitter> {
+			class ParticleEmitterManager final : public UpdatingRenderableManager<graphics::ParticleEmitter> {
 			public:
-				ParticleEmitterManager(SaNiEngine* const engine);
-
-				virtual void update(const EngineTime& time) override;
+				ParticleEmitterManager(SaNiEngine* const engine); 
 
 				~ParticleEmitterManager() = default;
 			};

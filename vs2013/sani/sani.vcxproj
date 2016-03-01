@@ -217,6 +217,7 @@
     <ClCompile Include="..\..\src\engine\services\particle_emitter_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
+    <ClCompile Include="..\..\src\engine\services\sprite_animation_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\triangle_manager.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
@@ -405,12 +406,15 @@
     <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\impl\updating_renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\particle_emitter_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\sprite_animation_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\updating_renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
