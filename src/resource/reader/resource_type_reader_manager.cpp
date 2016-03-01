@@ -28,11 +28,11 @@ namespace sani {
 				registerTypeReader<BitmapContentReader>();
 				registerTypeReader<SpriteFontReader>();
 				registerTypeReader<SceneReader>();*/
-				/*auto& derivedClasses = typeof(ResourceTypeReader).getDerivedClasses();
+				auto& derivedClasses = typeof(ResourceTypeReader).getDerivedClasses();
 				sani::rtti::Arguments args;
 				for (auto& type : derivedClasses) {
 					typeReaders.push_back(type.createDynamic(args).getValue<ResourceTypeReader*>());
-				}*/
+				}
 			}
 
 			ResourceTypeReader* ResoureTypeReaderManager::getReaderByName(const String& name) const {
