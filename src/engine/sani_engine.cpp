@@ -19,6 +19,8 @@
 #include "sani/engine/services/sprite_manager.hpp"
 #include "sani/engine/services/circle_manager.hpp"
 #include "sani/engine/services/triangle_manager.hpp"
+#include "sani/engine/services/particle_emitter_manager.hpp"
+#include "sani/engine/services/sprite_animation_manager.hpp"
 
 #include "sani/engine/services/file_system_service.hpp"
 #include "sani/graphics/renderables/renderables.hpp"
@@ -107,25 +109,33 @@ namespace sani {
 			return !renderService->hasErrors();
 		}
 		bool SaNiEngine::initializeRenderableManagers() {
-			SpriteManager* spriteManager		= new services::SpriteManager(this);
-			CircleManager* circleManager		= new services::CircleManager(this);
-			TriangleManager* triangleManager	= new services::TriangleManager(this);
-			RectangleManager* rectangleManager	= new services::RectangleManager(this);
+			SpriteManager* spriteManager					= new services::SpriteManager(this);
+			CircleManager* circleManager					= new services::CircleManager(this);
+			TriangleManager* triangleManager				= new services::TriangleManager(this);
+			RectangleManager* rectangleManager				= new services::RectangleManager(this);
+			SpriteAnimationManager* spriteAnimationManager	= new SpriteAnimationManager(this);
+			ParticleEmitterManager* particleEmitterManager	= new ParticleEmitterManager(this);
 
 			services.registerService(spriteManager);
 			services.registerService(circleManager);
 			services.registerService(triangleManager);
 			services.registerService(rectangleManager);
+			services.registerService(spriteAnimationManager);
+			services.registerService(particleEmitterManager);
 
 			spriteManager->start();
 			circleManager->start();
 			triangleManager->start();
 			rectangleManager->start();
+			spriteAnimationManager->start();
+			particleEmitterManager->start();
 
-			if (spriteManager->hasErrors())		return false;
-			if (circleManager->hasErrors())		return false;
-			if (triangleManager->hasErrors())	return false;
-			if (rectangleManager->hasErrors())	return false;
+			if (spriteManager->hasErrors())				return false;
+			if (circleManager->hasErrors())				return false;
+			if (triangleManager->hasErrors())			return false;
+			if (rectangleManager->hasErrors())			return false;
+			if (spriteAnimationManager->hasErrors())	return false;
+			if (particleEmitterManager->hasErrors())	return false;
 
 			return true;
 		}

@@ -9,7 +9,7 @@ namespace sani {
 		
 		namespace services {
 
-			class SpriteAnimationManager final : public UpdatingRenderableManager<graphics::SpriteAnimation> {
+			class SpriteAnimationManager final : public UpdatingRenderableManager<graphics::SpriteAnimator> {
 			public:
 				SpriteAnimationManager(SaNiEngine* const engine);
 
