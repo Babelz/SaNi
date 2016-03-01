@@ -22,10 +22,11 @@ namespace sani {
 	}
 
 	template<class T>
-	void RegisterAllocator<T>::allocate(T* outValue, uint32& outLocation) {
+	void RegisterAllocator<T>::allocate(T*& outValue, uint32& outLocation) {
 		if (!released.empty()) {
-			outLocation = released.pop();
-			
+			outLocation = released.top();
+			released.pop();
+
 			outValue = allocator.allocate();
 			elements[outLocation] = outValue;
 		} else {
@@ -44,5 +45,10 @@ namespace sani {
 		elements[location] = nullptr;
 
 		allocator.deallocate(element);
+	}
+
+	template<class T>
+	const std::vector<T*>* RegisterAllocator<T>::allocatedElements() const {
+		return &elements;
 	}
 }

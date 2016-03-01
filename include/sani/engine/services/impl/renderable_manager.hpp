@@ -4,6 +4,8 @@
 #include "sani/graphics/renderables/renderables.hpp"
 #include "sani/engine/sani_engine.hpp"
 
+#include <vector>
+
 namespace sani {
 
 	namespace engine {
@@ -15,7 +17,7 @@ namespace sani {
 			template <class T>
 			RenderableManager<T>::RenderableManager(const String& name, const ElementType type, engine::SaNiEngine* const engine) : EngineService(name, engine),
 																																	type(type),
-																																	allocator(PagePoolAllocator<T>(256)) {
+																																	allocator(256, 1) {
 			}
 
 			template <class T>
@@ -42,9 +44,12 @@ namespace sani {
 			
 			template <class T>
 			void RenderableManager<T>::createElement(messages::DocumentMessage* const message) {
-				T* element = allocator.allocate();
-				
-				elements.push_back(element);
+				T* element	= nullptr;
+				uint32 id	= 0;
+
+				allocator.allocate(element, id);
+
+				element->id = id;
 
 				message->setData(element);
 				message->markHandled();
@@ -53,7 +58,7 @@ namespace sani {
 			void RenderableManager<T>::deleteElement(messages::DocumentMessage* const message) {
 				T* element = static_cast<T*>(message->getData());
 
-				allocator.deallocate(element);
+				allocator.deallocate(element->id);
 
 				elementsToUpdate.remove(element);
 
@@ -70,12 +75,9 @@ namespace sani {
 
 			template <class T>
 			void RenderableManager<T>::getElements(messages::DocumentMessage* const message) {
-				std::list<T* const>* results = getEngine()->allocateShared<std::list<T* const>>();
-				NEW_DYNAMIC_DEFAULT(std::list<T* const>, results);
+				const std::vector<T*>* results = allocator.allocatedElements();
 
-				for (T* const element : elements) results->push_back(element);
-
-				message->setData(results);
+				message->setData((void*)results);
 				message->markHandled();
 			}
 

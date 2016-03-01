@@ -11,10 +11,12 @@ namespace sani {
 
 				// Used to translate element type to recipent.
 				static const String recipients[] = {
-					"rectangle manager",		// Rectangle.
-					"triangle manager",			// Triangle.
-					"sprite manager",			// Sprite.
-					"circle manager"			// Circle.
+					"rectangle manager",				// Rectangle.
+					"triangle manager",					// Triangle.
+					"sprite manager",					// Sprite.
+					"circle manager",					// Circle.
+					"particle emitter manager",			// Particle emitters.
+					"sprite animation manager"			// Sprite animations.
 				};
 
 				static void decorateMessage(messages::DocumentMessage* const message, const RenderableManagerCommands renderableManagerCommand, const ElementType type) {

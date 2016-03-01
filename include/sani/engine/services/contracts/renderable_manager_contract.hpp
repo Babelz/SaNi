@@ -16,20 +16,19 @@ namespace sani {
 			namespace renderablemanager {
 
 				/*
-				Renderable manager contract definition
+					Renderable manager contract definition
 
-				Purpose of the service: Handle memory of the given types of
-				renderables and handle their
-				render and geometry updates.
+					Purpose of the service: Handle memory of the given types of
+					renderables and handle their
+					render and geometry updates.
 
-				User can create, delete and
-				queue elements for updates.
+					User can create, delete and
+					queue elements for updates.
 
-				Updating an element causes it's
-				geo/render data to be updated
-				and it might get relocated in
-				the layer it is contained in.
-
+					Updating an element causes it's
+					geo/render data to be updated
+					and it might get relocated in
+					the layer it is contained in.
 				*/
 
 				/// List of all known commands for the renderable services.
@@ -50,11 +49,15 @@ namespace sani {
 				enum class ElementType : uint32 {
 					Rectangle = 0,
 
-					Triangle = 1,
+					Triangle,
 
-					Sprite = 2,
+					Sprite,
 
-					Circle = 3
+					Circle,
+
+					SpriteAnimation,
+
+					ParticleEmitter
 				};
 
 				void createElement(messages::DocumentMessage* const message, const ElementType type);

@@ -13,6 +13,7 @@ namespace sani {
 		uint32 ID { 0 };
 
 		Component()				= default;
+
 		virtual ~Component()	= default;
 	};
 }

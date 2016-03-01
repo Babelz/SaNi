@@ -404,6 +404,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\particle_emitter_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />

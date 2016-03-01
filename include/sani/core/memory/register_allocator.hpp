@@ -35,11 +35,13 @@ namespace sani {
 		/// Allocates new element.
 		/// @param[in] outValue element that was allocated
 		/// @param[in] outLocation elements location
-		void allocate(T* outValue, uint32& outLocation);
+		void allocate(T*& outValue, uint32& outLocation);
 
 		/// Deallocates element at the given location.
 		/// @param[in] location location of the element that we want to deallocate
 		void deallocate(const uint32 location);
+
+		const std::vector<T*>* allocatedElements() const;
 
 		~RegisterAllocator() = default;
 

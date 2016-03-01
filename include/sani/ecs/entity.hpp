@@ -8,6 +8,8 @@ SANI_FORWARD_DECLARE_1(sani, Component);
 
 namespace sani {
 
+	using ComponentList = std::vector<Component*>;
+
 	/// @class Entity entity.hpp "sani/ecs/entity.hpp"
 	/// @author voidbab
 	///
@@ -15,11 +17,12 @@ namespace sani {
 	/// game objects games use.
 	class Entity {
 	public:
-		std::vector<Component*> component;
+		ComponentList components;
 
 		uint32 ID { 0 };
 
 		Entity()	= default;
+
 		~Entity()	= default;
 	};
 }

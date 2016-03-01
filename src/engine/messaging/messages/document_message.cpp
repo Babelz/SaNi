@@ -19,7 +19,7 @@ namespace sani {
 				return command;
 			}
 
-			void DocumentMessage::setData(void* const data) {
+			void DocumentMessage::setData(void* data) {
 				this->data = data;
 			}
 			void* DocumentMessage::getData() {

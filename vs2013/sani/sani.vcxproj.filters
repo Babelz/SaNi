@@ -1301,6 +1301,9 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\screen_shader_source.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\particle_emitter_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

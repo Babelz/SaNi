@@ -1,10 +1,10 @@
 #pragma once
 
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
-#include "sani/core/memory/page_pool_allocator.hpp"
+#include "sani/core/memory/register_allocator.hpp"
 #include "sani/engine/services/engine_service.hpp"
 
-#include <vector>
+#include <list>
 
 namespace sani {
 
@@ -23,13 +23,10 @@ namespace sani {
 				// Type of the elements.
 				const renderablemanager::ElementType type;
 
-				// Allocator to contain the elements.
-				PagePoolAllocator<T> allocator;
-				
+				RegisterAllocator<T> allocator;
+
 				// Elements that require geo/render data updates.
 				std::list<T*> elementsToUpdate;
-				// All elements allocated by the allocator.
-				std::list<T*> elements;
 
 				/// Method that handles all incoming document messages.
 				void handleDocumentMessage(messages::DocumentMessage* const message);

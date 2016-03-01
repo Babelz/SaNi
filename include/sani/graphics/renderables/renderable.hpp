@@ -29,14 +29,15 @@ namespace sani {
 
 			math::Rect32f textureSource;
 			Texture* texture;
-
+			
+			uint32 id;
 			bool visible;
 
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements, Texture* const);
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements);
 			Renderable(const uint32 vertices, const uint32 renderElements);
 
-			virtual ~Renderable();
+			virtual ~Renderable() = default;
 
 			/*
 				Common interface operations between renderables:

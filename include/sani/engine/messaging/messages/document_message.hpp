@@ -19,7 +19,7 @@ namespace sani {
 				void setCommand(const uint32 command);
 				uint32 getCommand() const;
 
-				void setData(void* const data);
+				void setData(void* data);
 				void* getData();
 			};
 		}
