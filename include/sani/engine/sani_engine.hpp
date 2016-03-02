@@ -53,6 +53,7 @@ namespace sani {
 			bool initializeGraphics();
 			bool initializeRenderService(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 			bool initializeRenderableManagers();
+			bool initializeEntityComponentSystem();
 
 			/// Initializes the engine.
 			bool initialize();

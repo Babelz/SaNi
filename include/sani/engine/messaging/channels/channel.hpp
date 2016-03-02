@@ -49,7 +49,7 @@ namespace sani {
 				virtual void releaseMessage(messages::Message* const message) = 0;
 
 				/// Routes the given message to all the
-				/// recipents who should know about it.
+				/// recipients who should know about it.
 				void route(messages::Message* const message);
 
 				virtual ~Channel();

@@ -1,6 +1,9 @@
 #pragma once
 
+#include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
+
+SANI_FORWARD_DECLARE_1(sani, Entity);
 
 namespace sani {
 
@@ -10,10 +13,15 @@ namespace sani {
 	/// Base class for all components.
 	class Component {
 	public:
-		uint32 id { 0 };
+		// The entity this component is being attached to.
+		// If owner is null, the component has not yet 
+		// been inserted to any entity or it is being
+		// destroyed.
+		Entity* owner			{ nullptr };
+		uint32 id				{ 0 };
 
-		Component()				= default;
+		Component()	= default;
 
-		virtual ~Component()	= default;
+		virtual ~Component() = default;
 	};
 }

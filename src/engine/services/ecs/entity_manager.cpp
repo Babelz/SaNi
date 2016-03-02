@@ -1,5 +1,5 @@
 #include "sani/engine/services/contracts/entity_manager_contract.hpp"
-#include "sani/engine/services/entity_manager.hpp"
+#include "sani/engine/services/ecs/entity_manager.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
 #include "sani/engine/messaging/messages/message.hpp"
 #include "sani/ecs/entity.hpp"

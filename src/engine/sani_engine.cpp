@@ -21,6 +21,7 @@
 #include "sani/engine/services/triangle_manager.hpp"
 #include "sani/engine/services/particle_emitter_manager.hpp"
 #include "sani/engine/services/sprite_animation_manager.hpp"
+#include "sani/engine/services/ecs/entity_manager.hpp"
 
 #include "sani/engine/services/file_system_service.hpp"
 #include "sani/graphics/renderables/renderables.hpp"
@@ -139,6 +140,17 @@ namespace sani {
 
 			return true;
 		}
+		bool SaNiEngine::initializeEntityComponentSystem() {
+			EntityManager* entityManager = new EntityManager(this);
+
+			services.registerService(entityManager);
+
+			entityManager->start();
+
+			if (entityManager->hasErrors()) return false;
+
+			return true;
+		}
 
 		bool SaNiEngine::initialize() {
 			// Create file system service
@@ -156,6 +168,7 @@ namespace sani {
 			if (!initializeCVarSystem())			return false;
 			if (!initializeGraphics())				return false;
 			if (!initializeRenderableManagers())	return false;
+			if (!initializeEntityComponentSystem()) return false;
 
 #if 1 //_DEBUG
 			SANI_TRIGGER_EVENT(onInitialize, void(SaNiEngine* const), 

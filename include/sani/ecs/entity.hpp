@@ -15,14 +15,14 @@ namespace sani {
 	///
 	/// Entities group together components to form the
 	/// game objects games use.
-	class Entity {
+	class Entity final {
 	public:
 		ComponentList components;
 
 		uint32 id { 0 };
 
-		Entity()	= default;
+		Entity() = default;
 
-		~Entity()	= default;
+		~Entity() = default;
 	};
 }
