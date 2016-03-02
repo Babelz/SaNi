@@ -43,6 +43,7 @@ namespace sani {
 					  currentRenderTarget(nullptr),
 					  defaultRenderTarget(nullptr),
 					  screenBuffer(0) {
+
 				vertexDescription.location = 0;
 				vertexDescription.count = 2;
 				vertexDescription.type = PrimitiveType::Float;
@@ -638,6 +639,9 @@ namespace sani {
 				break;
 			case UniformType::Mat3F:
 				glUniformMatrix3fv(uniformLocation, 1, GL_FALSE, static_cast<GLfloat*>(data));
+				break;
+			case UniformType::Float32:
+				glUniform1f(uniformLocation, *static_cast<GLfloat*>(data));
 				break;
 			default:
 				throw std::logic_error("Invalid or unsupported uniform type");

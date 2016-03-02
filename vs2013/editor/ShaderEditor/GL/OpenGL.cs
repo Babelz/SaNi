@@ -13,6 +13,13 @@ namespace ShaderEditor.GL
 {
     internal static class OpenGL
     {
+        /*
+            GLuint      = 32u
+            GLenum      = 32
+            GLsizei     = 32
+            GLbitfield  = 32
+        */
+
         private const string USER32_DLL     = "user32.dll";
         private const string GDI_DLL        = "gdi32.dll";
         private const string GL_DLL         = "opengl32.dll";
@@ -58,7 +65,7 @@ namespace ShaderEditor.GL
         public static extern void GLBlendFunc(uint sfactor, uint dfactor);
 
         [DllImport(GL_DLL, EntryPoint = "glGenTextures")]
-        public static extern void GLGenTextures(uint count, ref uint textures);
+        public static extern void GLGenTextures(int count, ref int textures);
 
         [DllImport(GL_DLL, EntryPoint = "glBindTexture")]
         public static extern void GLBindTexture(uint target, uint texture);
@@ -68,8 +75,71 @@ namespace ShaderEditor.GL
                                                uint format, uint type, IntPtr data);
 
         [DllImport(GL_DLL, EntryPoint = "glTexParametri")]
-        public static extern void GLBindTexture(uint target, uint field, uint value);
+        public static extern void GLTexParametri(uint target, uint field, int value);
+        
+        [DllImport(GL_DLL, EntryPoint="glGenBuffers")]
+        public static extern void GLGenBuffers(int count, ref int buffers);
 
+        [DllImport(GL_DLL, EntryPoint="glBufferData")]
+        public static extern void GLBufferData(uint target, uint offset, uint bytes, IntPtr data);
+
+        [DllImport(GL_DLL, EntryPoint="glBufferSubData")]
+        public static extern void GLBufferSubData(uint target, uint offset, uint bytes, IntPtr data);
+
+        [DllImport(GL_DLL, EntryPoint = "glDeleteBuffers")]
+        public static extern void GLDeleteBuffers(int count, ref int buffers);
+        
+        [DllImport(GL_DLL, EntryPoint = "glDrawElements")]
+        public static extern void GLDrawElements(uint mode, int count, uint type, int indices);
+
+        [DllImport(GL_DLL, EntryPoint = "glEnableVertexAttribArray")]
+        public static extern void GLEnableVertexAttribArray(uint location);
+        
+        [DllImport(GL_DLL, EntryPoint = "glDisableVertexAttribArray")]
+        public static extern void GLDisableVertexAttribArray(uint location);
+
+        [DllImport(GL_DLL, EntryPoint = "glVertexAttribPointer")]
+        public static extern void GLVertexAttribPointer(uint location, int size, uint type, bool normalized, int stride, IntPtr pointer);
+
+        [DllImport(GL_DLL, EntryPoint = "glUseProgram")]
+        public static extern void GLUseProgram(uint program);
+
+        [DllImport(GL_DLL, EntryPoint = "glGetUniformLocation")]
+        public static extern uint GLGetUniformLocation(uint program, char[] name);
+
+        [DllImport(GL_DLL, EntryPoint = "glUniformMatrix3fv")]
+        public static extern void GLUniformMatrix3fv(uint location, IntPtr data);
+
+        [DllImport(GL_DLL, EntryPoint = "glUniform1f")]
+        public static extern void GLUniformMatrix3fv(uint location, float data);
+
+        [DllImport(GL_DLL, EntryPoint = "glCreateShader")]
+        public static extern uint GLCreateShader(uint type);
+
+        [DllImport(GL_DLL, EntryPoint = "glShaderSource")]
+        public static extern void GLShaderSource(uint shader, int count, ref char[] source, ref int length);
+
+        [DllImport(GL_DLL, EntryPoint = "glCompileShader")]
+        public static extern void GLCompileShader(uint shader);
+
+        [DllImport(GL_DLL, EntryPoint = "glGetShaderiv")]
+        public static extern void GLGetShaderiv(uint shader, uint pname, ref int param);
+
+        [DllImport(GL_DLL, EntryPoint = "glGetShaderInfoLog")]
+        public static extern void GLGetShaderInfoLog(uint shader, int maxLength, ref int length, char[] infoLog);
+
+        [DllImport(GL_DLL, EntryPoint = "glDeleteShader")]
+        public static extern void GLDeleteShader(uint shader);
+
+        [DllImport(GL_DLL, EntryPoint = "glCreateProgram")]
+        public static extern uint GLCreateProgram();
+        
+        [DllImport(GL_DLL, EntryPoint = "glAttachShader")]
+        public static extern void GLAttachShader(uint program, uint shader);
+
+        [DllImport(GL_DLL, EntryPoint = "glGetProgramiv")]
+        public static extern void GLGetProgramiv(uint program, uint pname, ref int param);
+        
         // kernel32.dll.
         [DllImport(KERNEL_DLL)]
         public static extern uint GetLastError();

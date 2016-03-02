@@ -67,7 +67,8 @@
     </ApplicationDefinition>
     <Compile Include="Editor\Project.cs" />
     <Compile Include="GL\PFDFlags.cs" />
-    <Compile Include="Rendering\RenderingPipeline.cs" />
+    <Compile Include="GL\Renderer.cs" />
+    <Compile Include="Rendering\EditorRenderer.cs" />
     <Compile Include="Rendering\Rectf.cs" />
     <Compile Include="Rendering\RenderData.cs" />
     <Compile Include="Rendering\Sprite.cs" />
