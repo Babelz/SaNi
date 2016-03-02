@@ -5,6 +5,7 @@
 #include "sani/resource/reader/bitmap_content_reader.hpp"
 #include "sani/resource/reader/effect_reader.hpp"
 #include "sani/core/math/math.hpp"
+#include "sani/ecs/components/transform_component.hpp"
 
 namespace sani {
 	namespace rtti {
@@ -28,6 +29,9 @@ namespace sani {
 			//registerReflection<sani::math::Vec4u>();
 			registerReflection<sani::math::Vec4i>();
 
+
+			// ecs
+			registerReflection<sani::Transform>();
 		}
 
 	}

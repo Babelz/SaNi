@@ -23,7 +23,7 @@
 		"entities": [
 		{ 
 				"components": [ {
-					"name": "transform",
+					"name": "sani::Transform",
 					"fields": [
 						{ "name": "position", 
 						  "fields": [
