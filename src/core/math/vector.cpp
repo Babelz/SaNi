@@ -1,12 +1,19 @@
 #include "sani/core/math/vector2.hpp"
 #include "sani/core/math/vector3.hpp"
 #include "sani/core/math/vector4.hpp"
+#include "sani/rtti/argument.hpp"
 
 #define RTTI_DEFINE_VECTOR2(type, name)                   \
 		template <>                                       \
 		void Vector2<type>::RTTI_Init() {                 \
 			RTTI_REGISTER_TYPE(sani::math::name);         \
 			RTTI_DEFAULT_CTOR(sani::math::name);          \
+			RTTI_CONSTRUCTOR_BODY(sani::math::name, type, type)\
+				return sani::math::name(                  \
+				   args[0].getValue<type>(),              \
+                   args[1].getValue<type>()               \
+				   );                                     \
+			RTTI_CONSTRUCTOR_END;                         \
 			RTTI_PUBLIC_FIELD(sani::math::name, x, type)  \
 			RTTI_PUBLIC_FIELD(sani::math::name, y, type)  \
 		}                    
@@ -16,6 +23,13 @@
 		void Vector3<type>::RTTI_Init() {                 \
 			RTTI_REGISTER_TYPE(sani::math::name);         \
 			RTTI_DEFAULT_CTOR(sani::math::name);          \
+			RTTI_CONSTRUCTOR_BODY(sani::math::name, type, type, type)\
+				return sani::math::name(                  \
+				   args[0].getValue<type>(),              \
+                   args[1].getValue<type>(),              \
+				   args[2].getValue<type>()               \
+				   );                                     \
+			RTTI_CONSTRUCTOR_END;                         \
 			RTTI_PUBLIC_FIELD(sani::math::name, x, type)  \
 			RTTI_PUBLIC_FIELD(sani::math::name, y, type)  \
 			RTTI_PUBLIC_FIELD(sani::math::name, z, type)  \
@@ -26,6 +40,14 @@
 		void Vector4<type>::RTTI_Init() {                 \
 			RTTI_REGISTER_TYPE(sani::math::name);         \
 			RTTI_DEFAULT_CTOR(sani::math::name);          \
+			RTTI_CONSTRUCTOR_BODY(sani::math::name, type, type, type, type)\
+				return sani::math::name(                  \
+				   args[0].getValue<type>(),              \
+                   args[1].getValue<type>(),              \
+				   args[2].getValue<type>(),              \
+				   args[3].getValue<type>()               \
+				   );                                     \
+			RTTI_CONSTRUCTOR_END;                         \
 			RTTI_PUBLIC_FIELD(sani::math::name, x, type)  \
 			RTTI_PUBLIC_FIELD(sani::math::name, y, type)  \
 			RTTI_PUBLIC_FIELD(sani::math::name, z, type)  \

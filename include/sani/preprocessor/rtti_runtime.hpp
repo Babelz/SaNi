@@ -41,6 +41,12 @@ db.types[typeof(p_class).getID()].addField<p_class, p_type>(#p_name,            
 	db.types[typeof(p_class).getID()].loadBaseClasses(db, typeof(p_class).getID(),   \
 	{ ##__VA_ARGS__ });
 
+#define RTTI_CONSTRUCTOR_BODY(p_class, ...)                                                 \
+	db.types[typeof(p_class).getID()].addConstructor<##p_class, ##__VA_ARGS__>([](sani::rtti::Arguments& args){
+
+#define RTTI_CONSTRUCTOR_END }, false);
+
+#define RTTI_DYNAMIC_CONSTRUCTOR_END }, true);
 
 #define RTTI_DEFAULT_CTOR(p_class)                                                    \
 	db.types[typeof(p_class).getID()].addConstructor<##p_class>([](sani::rtti::Arguments&){ \
