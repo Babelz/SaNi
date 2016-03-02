@@ -59,6 +59,32 @@ namespace sani {
 					}
 				}
 
+				std::cout << "Scene has member entities: " << std::boolalpha << scene.HasMember("entities") << std::endl;
+				auto& entities = scene["entities"];
+				std::cout << "Entities is array: " << std::boolalpha << entities.IsArray() << std::endl;
+
+				for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
+					auto& entity = it->GetObjectW();
+					std::cout << "Entity has componens?" << std::boolalpha << entity.HasMember("components") << std::endl;
+					auto& components = entity["components"];
+					std::cout << "components is array: " << std::boolalpha << components.IsArray() << std::endl;
+
+					for (Value::ConstValueIterator componentIt = components.Begin(); 
+						componentIt != components.End();
+						++componentIt) {
+						auto& component = componentIt->GetObjectW();
+						std::cout << "component.name = " << component["name"].GetString() << std::endl;
+						
+						auto& fields = component["fields"];
+						for (Value::ConstValueIterator fieldIt = fields.Begin();
+							fieldIt != fields.End();
+							++fieldIt) {
+							auto& field = fieldIt->GetObjectW();
+							std::cout << field["name"].GetString() << " = " << field["value"].GetString() << std::endl;
+						}
+					}
+				}
+
 				return descriptor;
 			}
 		}
