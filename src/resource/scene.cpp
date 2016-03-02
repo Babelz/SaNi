@@ -15,8 +15,8 @@ namespace sani {
 			assets[folder.id].push_back(file);
 		}
 
-		Scene::Scene(const String8& name)
-			: name(name) {
+		Scene::Scene(const String8& name, const Assets& toLoad)
+			: name(name), toLoad(toLoad) {
 
 		}
 
@@ -28,6 +28,9 @@ namespace sani {
 			return name;
 		}
 
+		void Scene::initialize() {
+
+		}
 	}
 }
 

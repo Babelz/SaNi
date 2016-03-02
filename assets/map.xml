@@ -7,8 +7,6 @@
 		writer="sani::resource::compiler::Texture2DWriter" />
 	<asset filename="siqu.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" />
-	<asset filename="ourcore.png" 
-		importer="sani::resource::pipeline::Texture2DImporter" />
 	<asset filename="andy.png" 
 		importer="sani::resource::pipeline::Texture2DImporter" />
 	<asset filename="part.png" 

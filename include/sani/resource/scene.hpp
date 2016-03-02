@@ -20,8 +20,7 @@ namespace sani {
 			const String8 name;
 		};
 
-		class SceneDescription : public ResourceItem {
-		private:
+		struct SceneDescription : public ResourceItem {
 			String8 name;
 			std::vector<AssetFolder> assetFolders;
 			std::map<uint32, std::vector<AssetFile>> assets;
@@ -32,14 +31,18 @@ namespace sani {
 		};
 
 		class Scene : public Resource {
+		public:
+			using Assets = std::vector < String8 >;
 		private:
 			String8 name;
+			Assets toLoad;
+			bool initialized{ false };
 		public:
-			Scene(const String8& name);
+			Scene(const String8& name, const Assets& toLoad);
 			~Scene();
 
 			const String8& getName() const;
-			
+			void initialize();
 		};
 	}
 }
