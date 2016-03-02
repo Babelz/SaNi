@@ -17,5 +17,36 @@ namespace ShaderEditor.Rendering
         public float Width;
         public float Height;
         #endregion
+
+        #region Properties
+        public float Left
+        {
+            get
+            {
+                return X;
+            }
+        }
+        public float Right
+        {
+            get
+            {
+                return X + Width;
+            }
+        }
+        public float Top
+        {
+            get
+            {
+                return Y;
+            }
+        }
+        public float Bottom
+        {
+            get
+            {
+                return Y + Bottom;
+            }
+        }
+        #endregion
     }
 }

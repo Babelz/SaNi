@@ -660,6 +660,9 @@
     <ClCompile Include="..\..\src\rtti\reflection_database.cpp">
       <Filter>src\rtti</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\ecs\transform_manager.cpp">
+      <Filter>src\engine\services\ecs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

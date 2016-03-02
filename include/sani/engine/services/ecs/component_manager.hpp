@@ -39,4 +39,4 @@ namespace sani {
 	}
 }
 
-#include "sani/engine/services/esc/impl/component_manager.hpp"
+#include "sani/engine/services/ecs/impl/component_manager.hpp"

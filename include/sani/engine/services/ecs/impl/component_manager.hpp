@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani/engine/messaging/messages/document_message.hpp"
+#include "sani/engine/messaging/messages/query_message.hpp"
 #include "sani/engine/services/contracts/component_manager_contract.hpp"
 #include "sani/engine/services/ecs/component_manager.hpp"
 #include "sani/core/utils/convert.hpp"
@@ -16,7 +18,7 @@ namespace sani {
 
 			template <class T>
 			ComponentManager<T>::ComponentManager(const String& name, engine::SaNiEngine* const engine)
-				: EngineService(name, engine) {
+				: EngineService(name, engine), allocator(256, 1) {
 			}
 
 			template <class T>
@@ -79,20 +81,20 @@ namespace sani {
 			void ComponentManager<T>::listComponents(messages::DocumentMessage* const message) {
 				const std::vector<T*>* elements = allocator.allocatedElements();
 
-				message->setData(elements);
+				message->setData((void*)elements);
 				message->markHandled();
 			}
 
 			template <class T>
 			void ComponentManager<T>::receive(messages::Message* const message) {
-				const MessageType type = message->getType();
+				const MessageType type = static_cast<MessageType>(message->getType());
 
 				switch (type) {
 				case MessageType::Document:
 					handleDocumentMessage(static_cast<messages::DocumentMessage*>(message));
 					break;
 				case MessageType::Query:
-					handleDocumentMessage(static_cast<messages::QueryMessage*>(message));
+					handleQueryMessage(static_cast<messages::QueryMessage*>(message));
 					break;
 				default:
 					// TODO: dead letter.
