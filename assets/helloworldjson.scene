@@ -21,6 +21,16 @@
 			}
 		],
 		"entities": [
+		{ 
+				"components": [ {
+					"name": "transform",
+					"fields": [
+						{ "name": "position", "value": "0.f, 0.f, 0.f" }, 
+						{ "name": "rotation", "value": "0.f" },
+						{ "name": "scale", "value": "1.f, 1.f" }
+					]
+				}]
+			}
 		]
 	}
 }
