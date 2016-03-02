@@ -10,7 +10,7 @@
 #include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/graphics/layer.hpp"
 #include "sani/resource/scene.hpp"
-
+#include "sani/rtti/reflection_database.hpp"
 
 using namespace sani;
 using namespace sani::engine;
@@ -41,6 +41,7 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 };
 
 void initialize(SaNiEngine* const engine) {
+	auto& db = sani::rtti::ReflectionDatabase::getInstance();
 	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
 	renderservice::getGraphicsDevice(getGraphicsDevice);
 	engine->routeMessage(getGraphicsDevice);
@@ -51,7 +52,7 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	auto scene = resources->load<Scene>("helloworldjson");
-	
+	scene->initialize();
 }
 
 void update(SaNiEngine* const engine, const EngineTime& time) {

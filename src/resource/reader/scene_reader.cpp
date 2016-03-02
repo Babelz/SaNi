@@ -1,5 +1,7 @@
 #include "sani/resource/reader/scene_reader.hpp"
 #include "sani/rtti/type_database.hpp"
+#include "sani/resource/scene.hpp"
+#include "sani/resource/reader/resource_reader.hpp"
 
 namespace sani {
 	namespace resource {
@@ -21,9 +23,25 @@ namespace sani {
 			}
 
 			void* SceneReader::read(ResourceReader* reader) {
-				return nullptr;
-			}
+				Scene* scene = nullptr;
 
+				String8 sceneName(reader->readString());
+				
+				Scene::Assets filesToLoad;
+				uint32 folderCount = static_cast<uint32>(reader->read7BitEncodedInt());
+				filesToLoad.reserve(folderCount);
+
+				for (auto i = 0u; i < folderCount; ++i) {
+					String8 root(reader->readString());
+					auto fileCount = reader->read7BitEncodedInt();
+					for (auto fileId = 0u; fileId < fileCount; ++fileId) {
+						filesToLoad.emplace_back(root + reader->readString());
+					}
+				}
+				scene = new Scene(sceneName, filesToLoad);
+				return scene;
+			}
+			
 		}
 	}
 }
