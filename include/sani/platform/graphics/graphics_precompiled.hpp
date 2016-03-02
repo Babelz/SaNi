@@ -63,12 +63,12 @@ namespace sani {
 
 		enum class UniformType {
 			// Data type expected: float 4 * 4.
-			Mat4F = GL_FLOAT_MAT4,
+			Mat4F		= GL_FLOAT_MAT4,
 
 			// Data type excepted: float 3 * 3.
-			Mat3F = GL_FLOAT_MAT3,
+			Mat3F		= GL_FLOAT_MAT3,
 
-			Float32 = GL_FLOAT
+			Float32		= GL_FLOAT
 		};
 
 		enum class RenderMode {
@@ -109,7 +109,7 @@ namespace sani {
 		};
 
 		enum class SurfaceFormat {
-			ColorRGBA
+			ColorRGBA = GL_RGBA
 		};
 
 		enum class TextureTarget {
