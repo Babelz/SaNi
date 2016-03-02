@@ -215,7 +215,7 @@
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\cvar_service.cpp" />
-    <ClCompile Include="..\..\src\engine\services\entity_manager.cpp" />
+    <ClCompile Include="..\..\src\engine\services\ecs\entity_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\file_system_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\particle_emitter_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp" />
@@ -379,6 +379,8 @@
     <ClInclude Include="..\..\include\sani\core\utils\string_utils.hpp" />
     <ClInclude Include="..\..\include\sani\debug.hpp" />
     <ClInclude Include="..\..\include\sani\ecs\component.hpp" />
+    <ClInclude Include="..\..\include\sani\ecs\components\sprite_component.hpp" />
+    <ClInclude Include="..\..\include\sani\ecs\components\transform_component.hpp" />
     <ClInclude Include="..\..\include\sani\ecs\entity.hpp" />
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\channel.hpp" />
@@ -399,7 +401,6 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\component_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\component_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\entity_manager_contract.hpp" />
@@ -407,10 +408,12 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\component_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\entity_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\impl\component_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\transform_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\engine_service.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\file_system_service.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\services\impl\component_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\impl\updating_renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\particle_emitter_manager.hpp" />

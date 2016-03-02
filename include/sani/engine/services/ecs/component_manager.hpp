@@ -23,7 +23,7 @@ namespace sani {
 				void handleQueryMessage(messages::QueryMessage* const message);
 
 				void createComponent(messages::DocumentMessage* const message);
-				void destroyComponent(messages::DocumentMessage* const message);
+				void destroyComponent(messages::QueryMessage* const message);
 
 				void listComponents(messages::DocumentMessage* const message);
 			protected:
@@ -39,4 +39,4 @@ namespace sani {
 	}
 }
 
-#include "sani/engine/services/impl/component_manager.hpp"
+#include "sani/engine/services/esc/impl/component_manager.hpp"

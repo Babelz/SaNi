@@ -241,6 +241,21 @@
     <Filter Include="include\ecs">
       <UniqueIdentifier>{1767f939-b689-449e-87d1-738ff69e8ed4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\messaging\channels\impl">
+      <UniqueIdentifier>{212e6c4d-a621-40af-ab8d-bd5c804d4e4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\ecs\components">
+      <UniqueIdentifier>{72b68a84-30cb-4af5-a92f-7796c5bfcad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\services\ecs">
+      <UniqueIdentifier>{7208f9b1-b5d0-4a7a-a664-3a1f1267b937}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\services\ecs">
+      <UniqueIdentifier>{4cac2396-ebf6-477a-83d0-53836113d386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\services\ecs\impl">
+      <UniqueIdentifier>{a5037f67-22fc-4eeb-a12d-8eb0e0c26119}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -636,11 +651,11 @@
     <ClCompile Include="..\..\src\engine\services\contracts\entity_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\services\entity_manager.cpp">
-      <Filter>src\engine\services</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\engine\services\contracts\component_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\ecs\entity_manager.cpp">
+      <Filter>src\engine\services\ecs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1004,9 +1019,6 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\document_channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp">
-      <Filter>include\engine\messaging\channels</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\peer_to_peer_channel.hpp">
       <Filter>include\engine\messaging\channels</Filter>
     </ClInclude>
@@ -1066,9 +1078,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\impl\pool_page.hpp">
       <Filter>include\core\memory\impl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp">
-      <Filter>include\engine\services</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp">
       <Filter>include\engine\services</Filter>
@@ -1262,12 +1271,6 @@
     <ClInclude Include="..\..\include\sani\rtti\argument_config.hpp">
       <Filter>include\rtti</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\component_manager.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\entity_manager.hpp">
-      <Filter>include\engine\services</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\memory\register_allocator.hpp">
       <Filter>include\core\memory</Filter>
     </ClInclude>
@@ -1334,8 +1337,29 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\component_manager_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\impl\component_manager.hpp">
-      <Filter>include\engine\services\impl</Filter>
+    <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp">
+      <Filter>include\engine\messaging\channels\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\ecs\components\transform_component.hpp">
+      <Filter>include\ecs\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\ecs\components\sprite_component.hpp">
+      <Filter>include\ecs\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\entity_manager.hpp">
+      <Filter>include\engine\services\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\component_manager.hpp">
+      <Filter>include\engine\services\ecs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\impl\component_manager.hpp">
+      <Filter>include\engine\services\ecs\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\ecs\transform_manager.hpp">
+      <Filter>include\engine\services\ecs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
