@@ -2,6 +2,9 @@
 #include "rapidjson/document.h"
 #include <iostream>
 #include "sani/resource/scene.hpp"
+#include <vector>
+#include <unordered_map>
+
 
 namespace sani {
 	namespace resource {
@@ -14,6 +17,17 @@ namespace sani {
 			SceneDescriptionImporter::~SceneDescriptionImporter() {
 
 			}
+
+			struct Field {
+				String8 name;
+				std::unordered_map<String8, String8> keyValues;
+			};
+
+			struct Component {
+				String8 name;
+				std::vector<Field> fields;
+			};
+
 
 			ResourceItem* SceneDescriptionImporter::import(const String& filename, io::FileSystem* fileSystem) const {
 				using namespace sani::io;
@@ -63,26 +77,38 @@ namespace sani {
 				auto& entities = scene["entities"];
 				std::cout << "Entities is array: " << std::boolalpha << entities.IsArray() << std::endl;
 
+				
+				std::vector<Component> comps;
+
 				for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
 					auto& entity = it->GetObjectW();
-					std::cout << "Entity has componens?" << std::boolalpha << entity.HasMember("components") << std::endl;
+					std::cout << "Entity has components?" << std::boolalpha << entity.HasMember("components") << std::endl;
 					auto& components = entity["components"];
 					std::cout << "components is array: " << std::boolalpha << components.IsArray() << std::endl;
 
-					for (Value::ConstValueIterator componentIt = components.Begin(); 
-						componentIt != components.End();
-						++componentIt) {
+					for (Value::ConstValueIterator componentIt = components.Begin(); componentIt != components.End(); ++componentIt) {
 						auto& component = componentIt->GetObjectW();
-						std::cout << "component.name = " << component["name"].GetString() << std::endl;
 						
+						Component c;
+						c.name = component["name"].GetString();
 						auto& fields = component["fields"];
-						for (Value::ConstValueIterator fieldIt = fields.Begin();
-							fieldIt != fields.End();
-							++fieldIt) {
+						for (Value::ConstValueIterator fieldIt = fields.Begin(); fieldIt != fields.End(); ++fieldIt) {
 							auto& field = fieldIt->GetObjectW();
-							std::cout << field["name"].GetString() << " = " << field["value"].GetString() << std::endl;
+							Field f;
+							f.name = field["name"].GetString();
+
+							auto& inner = field["fields"];
+
+							for (auto g = inner.Begin(); g != inner.End(); ++g) {
+								for (auto itr = g->MemberBegin(); itr != g->MemberEnd(); ++itr) {
+									f.keyValues.emplace(itr->name.GetString(), itr->value.GetString());
+								}
+							}
+							c.fields.emplace_back(f);
 						}
+						comps.push_back(c);
 					}
+
 				}
 
 				return descriptor;

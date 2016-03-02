@@ -107,16 +107,10 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	auto& refDb = sani::rtti::ReflectionDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
-	sani::rtti::Arguments gg;
-	/*auto vec = typeof(sani::math::Vec3f).create(gg);
-	auto type = vec.getType();*/
+	sani::rtti::Arguments gg{ 71.f, 55.f, 17.f };
+	auto vec = typeof(sani::math::Vec3f).create(gg);
+	
 	sani::rtti::Type aaType({ sani::rtti::TypeInfo<AATest>::id });
-	/*db.types[aaType.getID()].addField<AATest, int>("kek", [](const sani::rtti::Object& instance) {
-		return instance.getValue<AATest>().getKek();
-	},
-	[](sani::rtti::Object& instance, const sani::rtti::Object& newValue) {
-		instance.getValue<AATest>().setKek(newValue.getValue<int>());
-	});*/
 	RTTI_PROPERTY(AATest, kek, int, getKek, setKek);
 	RTTI_READONLY_PROPERTY(AATest, topKek, float, getTopKek);
 	db.types[aaType.getID()].addMethod("foo", static_cast<void(AATest::*)(void) const>(&AATest::foo), [](sani::rtti::Object& obj, sani::rtti::Arguments& args) {
