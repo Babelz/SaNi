@@ -86,8 +86,9 @@ sani::hid::RawInputListener inputListener;
 #include "sani/core/logging/log_batcher.hpp"
 #include "sani/rtti/type_info.hpp"
 #include "sani/preprocessor/rtti_runtime.hpp"
+#include "sani/preprocessor/rtti.hpp"
 #include "sani/rtti/argument.hpp"
-class AATest : public sani::rtti::Reflectable {
+class AATest  {
 	DECLARE_REFLECTABLE;
 private:
 	int kek;
@@ -106,6 +107,9 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	auto& refDb = sani::rtti::ReflectionDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
+	sani::rtti::Arguments gg;
+	/*auto vec = typeof(sani::math::Vec3f).create(gg);
+	auto type = vec.getType();*/
 	sani::rtti::Type aaType({ sani::rtti::TypeInfo<AATest>::id });
 	/*db.types[aaType.getID()].addField<AATest, int>("kek", [](const sani::rtti::Object& instance) {
 		return instance.getValue<AATest>().getKek();

@@ -256,6 +256,9 @@
     <Filter Include="include\engine\services\ecs\impl">
       <UniqueIdentifier>{a5037f67-22fc-4eeb-a12d-8eb0e0c26119}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\core\math">
+      <UniqueIdentifier>{9fa612b0-ed87-4c25-b800-b6617211d513}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -662,6 +665,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\services\ecs\transform_manager.cpp">
       <Filter>src\engine\services\ecs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\core\math\vector.cpp">
+      <Filter>src\core\math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1369,6 +1375,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\rtti\reflection_database.hpp">
       <Filter>include\rtti</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\preprocessor\rtti.hpp">
+      <Filter>include\preprocessor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

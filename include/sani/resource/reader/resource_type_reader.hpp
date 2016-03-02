@@ -3,6 +3,7 @@
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/rtti/reflectable.hpp"
+#include "sani/preprocessor/rtti.hpp"
 #include "sani/preprocessor/rtti_runtime.hpp"
 
 SANI_FORWARD_DECLARE_3(sani, resource, reader, ResourceReader);
@@ -17,7 +18,7 @@ namespace sani {
 			/// Reads specified resource
 			///
 			/// @author siquel
-			class ResourceTypeReader : public sani::rtti::Reflectable {
+			class ResourceTypeReader {
 				DECLARE_REFLECTABLE;
 			public:
 				/// Default constructor

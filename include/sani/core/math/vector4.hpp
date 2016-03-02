@@ -9,6 +9,7 @@ namespace sani {
 		/// Represents a 4 component vector
 		template <typename T>
 		class Vector4 {
+			DECLARE_REFLECTABLE;
 		public:
 			/// X component
 			T x;
