@@ -6,6 +6,7 @@
 #include <map>
 #include <vector>
 #include "sani/resource/serialization.hpp"
+#include <unordered_map>
 
 namespace sani {
 	namespace resource {
@@ -21,10 +22,23 @@ namespace sani {
 		};
 
 		struct SceneDescription : public ResourceItem {
+			struct Field {
+				String8 name;
+				std::unordered_map<String8, String8> keyValues;
+			};
+
+			struct Component {
+				String8 name;
+				std::vector<Field> fields;
+			};
+			using ComponentDataCollection = std::vector<Component>;
+
 			String8 name;
 			std::vector<AssetFolder> assetFolders;
 			std::map<uint32, std::vector<AssetFile>> assets;
-		public:
+			ComponentDataCollection components;
+
+
 			SceneDescription(const String8& name);
 			void addFolder(const AssetFolder& folder);
 			void addAssetTo(const AssetFolder& folder, const AssetFile& file);

@@ -2,8 +2,6 @@
 #include "rapidjson/document.h"
 #include <iostream>
 #include "sani/resource/scene.hpp"
-#include <vector>
-#include <unordered_map>
 
 
 namespace sani {
@@ -17,16 +15,6 @@ namespace sani {
 			SceneDescriptionImporter::~SceneDescriptionImporter() {
 
 			}
-
-			struct Field {
-				String8 name;
-				std::unordered_map<String8, String8> keyValues;
-			};
-
-			struct Component {
-				String8 name;
-				std::vector<Field> fields;
-			};
 
 
 			ResourceItem* SceneDescriptionImporter::import(const String& filename, io::FileSystem* fileSystem) const {
@@ -78,7 +66,7 @@ namespace sani {
 				std::cout << "Entities is array: " << std::boolalpha << entities.IsArray() << std::endl;
 
 				
-				std::vector<Component> comps;
+				SceneDescription::ComponentDataCollection comps;
 
 				for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
 					auto& entity = it->GetObjectW();
@@ -89,12 +77,12 @@ namespace sani {
 					for (Value::ConstValueIterator componentIt = components.Begin(); componentIt != components.End(); ++componentIt) {
 						auto& component = componentIt->GetObjectW();
 						
-						Component c;
+						SceneDescription::Component c;
 						c.name = component["name"].GetString();
 						auto& fields = component["fields"];
 						for (Value::ConstValueIterator fieldIt = fields.Begin(); fieldIt != fields.End(); ++fieldIt) {
 							auto& field = fieldIt->GetObjectW();
-							Field f;
+							SceneDescription::Field f;
 							f.name = field["name"].GetString();
 
 							auto& inner = field["fields"];
@@ -110,7 +98,7 @@ namespace sani {
 					}
 
 				}
-
+				descriptor->components = comps;
 				return descriptor;
 			}
 		}
