@@ -648,8 +648,14 @@
     <ClCompile Include="..\..\src\engine\services\sprite_animation_manager.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\services\contracts\entity_manager_contract.cpp">
+    <ClCompile Include="..\..\src\rtti\reflection_database.cpp">
+      <Filter>src\rtti</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\component_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\entity_manager.cpp">
+      <Filter>src\engine\services</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\engine\services\contracts\component_manager_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
@@ -1331,10 +1337,13 @@
     <ClInclude Include="..\..\include\sani\engine\services\sprite_animation_manager.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\services\contracts\entity_manager_contract.hpp">
-      <Filter>include\engine\services\contracts</Filter>
+    <ClInclude Include="..\..\include\sani\rtti\reflection_database.hpp">
+      <Filter>include\rtti</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\contracts\component_manager_contract.hpp">
+      <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\entity_manager_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\channels\impl\peer_to_peer_channel.hpp">

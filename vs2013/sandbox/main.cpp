@@ -55,6 +55,7 @@
 #include <xlocbuf>
 #include "sani/hid/raw_input_listener.hpp"
 #include "sani/rtti/Reflectable.hpp"
+#include "sani/rtti/reflection_database.hpp"
 using namespace sani::resource;
 using namespace sani::engine;
 using namespace sani::graphics;
@@ -103,6 +104,7 @@ public:
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	
 	auto& db = sani::rtti::TypeDatabase::getInstance();
+	auto& refDb = sani::rtti::ReflectionDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
 	sani::rtti::Type aaType({ sani::rtti::TypeInfo<AATest>::id });
 	/*db.types[aaType.getID()].addField<AATest, int>("kek", [](const sani::rtti::Object& instance) {

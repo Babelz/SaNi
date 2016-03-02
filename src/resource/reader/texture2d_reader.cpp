@@ -11,17 +11,13 @@ namespace sani {
 
 			namespace {
 				auto &db = sani::rtti::TypeDatabase::getInstance();
+			}
 
-				struct ReflectionInjector {
-					ReflectionInjector() {
-						RTTI_REGISTER_TYPE(ResourceTypeReader);
-						RTTI_REGISTER_TYPE(Texture2DReader);
-						RTTI_DECLARE_BASECLASSES(Texture2DReader, typeof(ResourceTypeReader));
-						RTTI_DEFAULT_DYNAMIC_CTOR(Texture2DReader);
-					}
-				};
-
-				static ReflectionInjector ignoreme;
+			void Texture2DReader::RTTI_Init() {
+				RTTI_REGISTER_TYPE(sani::resource::reader::ResourceTypeReader);
+				RTTI_REGISTER_TYPE(sani::resource::reader::Texture2DReader);
+				RTTI_DECLARE_BASECLASSES(sani::resource::reader::Texture2DReader, typeof(sani::resource::reader::ResourceTypeReader));
+				RTTI_DEFAULT_DYNAMIC_CTOR(sani::resource::reader::Texture2DReader);
 			}
 
 			Texture2DReader::~Texture2DReader() {

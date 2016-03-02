@@ -22,6 +22,7 @@
 	sani::rtti::Reflectable* clone() const override {             \
 	       throw std::logic_error("not impl");                     \
     }                                                              \
+	static void RTTI_Init(); \
 	private:
 
 #define RTTI_PROPERTY(p_class, p_name, p_type, p_getter, p_setter)                   \

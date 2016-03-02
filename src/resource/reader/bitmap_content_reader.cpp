@@ -11,17 +11,13 @@ namespace sani {
 
 			namespace {
 				auto &db = sani::rtti::TypeDatabase::getInstance();
+			}
 
-				struct ReflectionInjector {
-					ReflectionInjector() {
-						RTTI_REGISTER_TYPE(ResourceTypeReader);
-						RTTI_REGISTER_TYPE(BitmapContentReader);
-						RTTI_DECLARE_BASECLASSES(BitmapContentReader, typeof(ResourceTypeReader));
-						RTTI_DEFAULT_DYNAMIC_CTOR(BitmapContentReader);
-					}
-				};
-
-				static ReflectionInjector ignoreme;
+			void BitmapContentReader::RTTI_Init() {
+				RTTI_REGISTER_TYPE(sani::resource::reader::ResourceTypeReader);
+				RTTI_REGISTER_TYPE(sani::resource::reader::BitmapContentReader);
+				RTTI_DECLARE_BASECLASSES(sani::resource::reader::BitmapContentReader, typeof(sani::resource::reader::ResourceTypeReader));
+				RTTI_DEFAULT_DYNAMIC_CTOR(sani::resource::reader::BitmapContentReader);
 			}
 
 			BitmapContentReader::~BitmapContentReader() {
