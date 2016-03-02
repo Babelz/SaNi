@@ -10,21 +10,21 @@ namespace sani {
 
 			namespace componentmanager {
 
-				void createComponent(messages::DocumentMessage* const message) {
-					message->getRecipients().addRecipient("component manager");
+				void createComponent(const String& recipient, messages::DocumentMessage* const message) {
+					message->getRecipients().addRecipient(recipient);
 
 					message->setCommand(static_cast<uint32>(ComponentManagerCommands::CreateComponent));
 				}
 
-				void destroyComponent(messages::QueryMessage* const message, const uint32 id) {
-					message->getRecipients().addRecipient("component manager");
+				void destroyComponent(const String& recipient, messages::QueryMessage* const message, const uint32 id) {
+					message->getRecipients().addRecipient(recipient);
 
 					message->setCommand(static_cast<uint32>(ComponentManagerCommands::DestroyComponent));
 					message->setContents(std::to_string(id));
 				}
 
-				void listComponents(messages::DocumentMessage* const message) {
-					message->getRecipients().addRecipient("component manager");
+				void listComponents(const String& recipient, messages::DocumentMessage* const message) {
+					message->getRecipients().addRecipient(recipient);
 
 					message->setCommand(static_cast<uint32>(ComponentManagerCommands::ListComponents));
 				}

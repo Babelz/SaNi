@@ -14,5 +14,8 @@ namespace ShaderEditor.GL
         public const uint SrcAlpha             = 0x0302;
         public const uint OneMinusSrcAlpha     = 0x0303;
         public const uint Alpha                = 0x1906;
+
+        public const uint Texture1D            = 0x0DE0;
+        public const uint Texture2D            = 0x0DE1;
     }
 }

@@ -10,6 +10,10 @@ namespace sani {
 		namespace services {
 
 			class TransformManager final : public ComponentManager<Transform> {
+			public:
+				TransformManager(engine::SaNiEngine* const engine);
+
+				~TransformManager() = default;
 			};
 		}
 	}

@@ -24,7 +24,7 @@ namespace ShaderEditor.Rendering
             private set;
         }
 
-        public int Texture
+        public uint Texture
         {
             get;
             private set;

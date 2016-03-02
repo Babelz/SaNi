@@ -57,6 +57,19 @@ namespace ShaderEditor.GL
         [DllImport(GL_DLL, EntryPoint = "glBlendFunc")]
         public static extern void GLBlendFunc(uint sfactor, uint dfactor);
 
+        [DllImport(GL_DLL, EntryPoint = "glGenTextures")]
+        public static extern void GLGenTextures(uint count, ref uint textures);
+
+        [DllImport(GL_DLL, EntryPoint = "glBindTexture")]
+        public static extern void GLBindTexture(uint target, uint texture);
+
+        [DllImport(GL_DLL, EntryPoint = "glTexImage2D")]
+        public static extern void GLTexImage2D(uint target, int level, int internalFormat, int width, int height, int border,
+                                               uint format, uint type, IntPtr data);
+
+        [DllImport(GL_DLL, EntryPoint = "glTexParametri")]
+        public static extern void GLBindTexture(uint target, uint field, uint value);
+
         // kernel32.dll.
         [DllImport(KERNEL_DLL)]
         public static extern uint GetLastError();

@@ -26,11 +26,11 @@ namespace sani {
 					ListComponents	 = 2
 				};
 
-				void createComponent(messages::DocumentMessage* const message);
+				void createComponent(const String& recipient, messages::DocumentMessage* const message);
 
-				void destroyComponent(messages::QueryMessage* const message, const uint32 id);
+				void destroyComponent(const String& recipient, messages::QueryMessage* const message, const uint32 id);
 
-				void listComponents(messages::DocumentMessage* const message);
+				void listComponents(const String& recipient, messages::DocumentMessage* const message);
 			}
 		}
 	}
