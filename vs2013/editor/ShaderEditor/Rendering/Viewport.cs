@@ -6,31 +6,37 @@ using System.Threading.Tasks;
 
 namespace ShaderEditor.Rendering
 {
-    internal sealed class Texture2D
+    internal sealed class Viewport
     {
         #region Properties
+        public int X
+        {
+            get;
+            set;
+        }
+        public int Y
+        {
+            get;
+            set;
+        }
         public int Width
         {
             get;
-            private set;
+            set;
         }
         public int Height
         {
             get;
-            private set;
-        }
-        public int ID
-        {
-            get;
-            private set;
+            set;
         }
         #endregion
-        
-        public Texture2D(int width, int height, int id)
+
+        public Viewport(int x, int y, int width, int height)
         {
+            X       = x;
+            Y       = y;
             Width   = width;
             Height  = height;
-            ID      = id;
         }
     }
 }

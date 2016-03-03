@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenTK;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,21 +42,25 @@ namespace ShaderEditor.Rendering
             get;
             set;
         }
-        public Rectf TextureSource
+        public Vector2 TextureSourcePosition
         {
             get;
             set;
         }
-
-        public RenderData RenderData
+        public Vector2 TextureSourceSize
         {
             get;
-            private set;
+            set;
         }
         public Texture2D Texture
         {
             get;
             set;
+        }
+        public RenderData RenderData
+        {
+            get;
+            private set;
         }
 
         public float Rotation
@@ -68,29 +73,12 @@ namespace ShaderEditor.Rendering
         public Sprite()
         {
             RenderData = new RenderData(VerticesCount, IndicesCount);
-
-            InitializeIndices();
-            DefaultTextureSource();
         }
 
-        private void InitializeIndices()
+        public void ResetTextureSource()
         {
-            RenderData.Indices[0] = 0;
-            RenderData.Indices[1] = 1;
-            RenderData.Indices[2] = 2;
-
-            RenderData.Indices[3] = 2;
-            RenderData.Indices[4] = 3;
-            RenderData.Indices[5] = 1;
-        }
-
-        public void DefaultTextureSource()
-        {
-            TextureSource.X = 0;
-            TextureSource.Y = 0;
-
-            TextureSource.Width = Scale.X * Bounds.X;
-            TextureSource.Height = Scale.Y * Bounds.Y; 
+            TextureSourcePosition   = new Vector2(0.0f, 0.0f);
+            TextureSourceSize       = new Vector2((float)Texture.Width, (float)Texture.Height);
         }
 
         public void Update(float delta)
@@ -133,21 +121,26 @@ namespace ShaderEditor.Rendering
             globalBottomRight.Y = globalBottomRight.Y + (dx + localBottomLeft.X) * sin + (dy + localBottomRight.Y) * cos;
 
             // Compute coordinates.
+            var sourceLeft = TextureSourcePosition.X;
+            var sourceRight = TextureSourcePosition.X + TextureSourceSize.X;
+            var sourceTop = TextureSourcePosition.Y;
+            var sourceBottom = TextureSourcePosition.Y + TextureSourceSize.Y;
+
             var topLeftUV = new Vector3();
-            topLeftUV.X = TextureSource.Left / Texture.Width;
-            topLeftUV.Y = TextureSource.Bottom / Texture.Height;
+            topLeftUV.X = sourceLeft / Texture.Width;
+            topLeftUV.Y = sourceBottom / Texture.Height;
 
             var topRightUV = new Vector3();
-            topLeftUV.X = TextureSource.Right / Texture.Width;
-            topLeftUV.Y = TextureSource.Bottom / Texture.Height;
+            topLeftUV.X = sourceRight / Texture.Width;
+            topLeftUV.Y = sourceBottom / Texture.Height;
 
             var bottomLeftUV = new Vector3();
-            bottomLeftUV.X = TextureSource.Left / Texture.Width;
-            bottomLeftUV.Y = TextureSource.Top / Texture.Height;
+            bottomLeftUV.X = sourceLeft / Texture.Width;
+            bottomLeftUV.Y = sourceTop / Texture.Height;
 
             var bottomRightUV = new Vector3();
-            bottomRightUV.X = TextureSource.Right / Texture.Width;
-            bottomRightUV.Y = TextureSource.Top / Texture.Height;
+            bottomRightUV.X = sourceRight / Texture.Width;
+            bottomRightUV.Y = sourceTop / Texture.Height;
 
             // Apply position, uv and color.
             var vertexPositions = new[]

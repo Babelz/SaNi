@@ -69,15 +69,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Editor\Project.cs" />
-    <Compile Include="Rendering\EditorRenderer.cs" />
-    <Compile Include="Rendering\Rectf.cs" />
+    <Compile Include="Rendering\Camera2D.cs" />
+    <Compile Include="Rendering\SpriteBatch.cs" />
     <Compile Include="Rendering\RenderData.cs" />
     <Compile Include="Rendering\Sprite.cs" />
     <Compile Include="Rendering\Texture2D.cs" />
-    <Compile Include="Rendering\Vector2.cs" />
-    <Compile Include="Rendering\Vector3.cs" />
-    <Compile Include="Rendering\Vector4.cs" />
     <Compile Include="Rendering\VertexPositionColorTexture.cs" />
+    <Compile Include="Rendering\Viewport.cs" />
     <Compile Include="Shaders\DefaultShaderSources.cs" />
     <Compile Include="Shaders\Effect.cs" />
     <Page Include="MainWindow.xaml">

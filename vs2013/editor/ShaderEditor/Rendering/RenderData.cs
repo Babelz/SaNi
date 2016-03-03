@@ -17,25 +17,11 @@ namespace ShaderEditor.Rendering
             get;
             private set;
         }
-
-        public uint[] Indices
-        {
-            get;
-            private set;
-        }
-
-        public uint Texture
-        {
-            get;
-            private set;
-        }
         #endregion
 
         public RenderData(int verticesCount, int indicesCount)
         {
             VertexData  = new VertexPositionColorTexture[verticesCount];
-            Indices     = new uint[indicesCount];
-            Texture     = 0;
         }
     }
 }

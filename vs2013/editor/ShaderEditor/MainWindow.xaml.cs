@@ -3,6 +3,7 @@ using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using OpenTK.Graphics.OpenGL4;
+using ShaderEditor.Rendering;
 using ShaderEditor.Shaders;
 using System;
 using System.Collections;
@@ -43,7 +44,9 @@ namespace ShaderEditor
 
         #region Fields
         private readonly OpenTK.GLControl glControl;
+        private readonly Viewport viewport;
 
+        private Camera2D camera;
         private Effect effect;
         #endregion
 
@@ -59,6 +62,9 @@ namespace ShaderEditor
             glControl.Paint     += glControl_Paint;
 
             glHost.Child = glControl;
+
+            viewport = new Viewport(0, 0, glControl.Width, glControl.Height);
+            camera = new Camera2D(viewport);
         }
 
         #region GLControl event handlers
@@ -72,6 +78,10 @@ namespace ShaderEditor
         }
         private void glControl_Resize(object sender, EventArgs e)
         {
+            viewport.Width = glControl.Width;
+            viewport.Height = glControl.Height;
+
+            GL.Viewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
         }
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
