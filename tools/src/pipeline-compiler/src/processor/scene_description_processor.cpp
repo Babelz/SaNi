@@ -22,6 +22,17 @@ namespace sani {
 					// do we even have the type
 					SANI_ASSERT(db.ids.count(componentData.name));
 
+					TypeID id = db.ids[componentData.name];
+					Type componentType{ id };
+					
+					for (auto& fieldData : componentData.fields) {
+						auto& field = componentType.getField(fieldData.name);
+						// do we even have that field?
+						SANI_ASSERT(field.isValid());
+						Type fieldType = field.getType();
+						// now we need to figure out the inner types of the field if there's any
+						auto& innerType = db.types[fieldType];
+					}
 					// TODO type id to another type id conversion
 				}
 
