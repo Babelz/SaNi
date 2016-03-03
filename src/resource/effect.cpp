@@ -9,7 +9,7 @@ namespace sani {
 			uint32 vertex, fragment;
 
 			device->compileShader(vertex, vcode.c_str(), graphics::ShaderType::Vertex);
-			device->compileShader(fragment, fcode.c_str(), graphics::ShaderType::Vertex);
+			device->compileShader(fragment, fcode.c_str(), graphics::ShaderType::Fragment);
 
 			device->createProgram(id);
 			device->linkToProgram(id, vertex, true);

@@ -1,0 +1,13 @@
+﻿#version 330
+
+in vec2 position;
+in vec4 color;
+in vec2 uv;
+
+uniform float time;
+
+uniform sampler2D sampler;
+
+void main() {
+	gl_FragColor = texture2D(sampler, uv) * color;
+}
