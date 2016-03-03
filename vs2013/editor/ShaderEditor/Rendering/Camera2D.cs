@@ -44,10 +44,10 @@ namespace ShaderEditor.Rendering
 
         public OpenTK.Matrix4 Transform()
         {
-            return OpenTK.Matrix4.CreateOrthographic((float)viewport.Width, (float)viewport.Height, 0.1f, 100.0f) *
-                   OpenTK.Matrix4.CreateTranslation(0.0f, 0.0f, 0.0f) *
-                   OpenTK.Matrix4.CreateRotationZ(rotation) *
-                   OpenTK.Matrix4.CreateScale(zoom);
+            var transform = OpenTK.Matrix4.CreateOrthographic((float)viewport.Width, (float)viewport.Height, 1.0f, 100.0f);
+            transform = OpenTK.Matrix4.CreateTranslation(-0.0f, -0.0f, 0.0f) * transform;
+
+            return transform;
         }
     }
 }

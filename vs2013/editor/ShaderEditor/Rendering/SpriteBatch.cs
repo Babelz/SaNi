@@ -32,8 +32,6 @@ namespace ShaderEditor.Rendering
 
         private int vertexBufferPointer;
         private int spritePointer;
-        
-        private Effect effect;
         #endregion
 
         public SpriteBatch()
@@ -56,6 +54,7 @@ namespace ShaderEditor.Rendering
         private void CreateVertexBuffer()
         {
             vertexBuffer = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
 
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(MaxSpritesCount * sizeof(float)), IntPtr.Zero, BufferUsageHint.DynamicDraw);
         }
@@ -63,10 +62,10 @@ namespace ShaderEditor.Rendering
         {
             var indicesCount = MaxSpritesCount * IndicesPerSprite;
 
-            var indices = new int[MaxSpritesCount * VertexElementsCount];
+            var indices = new uint[MaxSpritesCount * VertexElementsCount];
             var indexPointer = 0;
 
-            for (int i = 0; i < indicesCount; i += VerticesPerSprite)
+            for (uint i = 0; i < indicesCount; i += VerticesPerSprite)
             {
                 indices[indexPointer++] = i;
                 indices[indexPointer++] = i + 1;
@@ -78,12 +77,17 @@ namespace ShaderEditor.Rendering
             }
 
             indexBuffer = GL.GenBuffer();
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexBuffer);
 
-            var indexDataPointer = Marshal.AllocHGlobal(sizeof(int) * indices.Length);
+            // Convert uints to bytes.
+            var data = new byte[sizeof(uint) * indices.Length];
+            Buffer.BlockCopy(indices, 0, data, 0, data.Length);
 
-            Marshal.Copy(indices, 0, indexDataPointer, indices.Length);
+            var indexDataPointer = Marshal.AllocHGlobal(data.Length);
 
-            GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(MaxSpritesCount * sizeof(int)), indexDataPointer, BufferUsageHint.DynamicDraw);
+            Marshal.Copy(data, 0, indexDataPointer, data.Length);
+
+            GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(data.Length), indexDataPointer, BufferUsageHint.StaticDraw);
 
             Marshal.FreeHGlobal(indexDataPointer);
         }
@@ -97,8 +101,20 @@ namespace ShaderEditor.Rendering
             GL.VertexAttribPointer(ColorLocation, 4, VertexAttribPointerType.Float, false, sizeof(float) * 9, sizeof(float) * 3);
             GL.VertexAttribPointer(UVLocation, 2, VertexAttribPointerType.Float, false, sizeof(float) * 9, sizeof(float) * 7);
         }
+        private void FlushBatch(int from, int to, int texture)
+        {
+            GL.BindTexture(TextureTarget.Texture2D, texture);
+
+            GL.DrawElements(PrimitiveType.Triangles, IndicesPerSprite * (to - from), DrawElementsType.UnsignedInt, new IntPtr(to * IndicesPerSprite * sizeof(uint)));
+            
+            GL.BindTexture(TextureTarget.Texture2D, 0);
+        }
+        
         public void Initialize()
         {
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+
             CreateVertexBuffer();
             CreateIndexBuffer();
             CreatePipeline();
@@ -113,27 +129,44 @@ namespace ShaderEditor.Rendering
             GL.DeleteBuffer(indexBuffer);
         }
 
-        public void Begin(Effect effect)
+        public void Begin()
         {
-            Debug.Assert(effect != null);
-
-            this.effect = effect;
-
             vertexBufferPointer = 0;
             spritePointer = 0;
         }
 
         public void Draw(Sprite sprite)
         {
+            Debug.Assert(spritePointer < MaxSpritesCount);
+            Debug.Assert(sprite.Texture != null);
+
             sprites[spritePointer++] = sprite.Texture.ID;
 
-            Debug.Assert(spritePointer < MaxSpritesCount);
-
-            foreach (var vpct in sprite.RenderData.VertexData) vpct.CopyData(vertexBufferData, ref vertexBufferPointer);
+            foreach (var vpct in sprite.VertexData) vpct.CopyData(vertexBufferData, ref vertexBufferPointer);
         }
 
         public void End()
         {
+            GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexBuffer);
+
+            UpdateVertexBufferData();
+
+            var tail = 0;
+            var head = 1;
+
+            while (head < spritePointer)
+            {
+                if (sprites[tail] != sprites[head]) {
+                    FlushBatch(tail, head, sprites[tail]);
+
+                    tail = head;
+                }
+
+                head++;
+            }
+
+            FlushBatch(tail, head, sprites[tail]);
         }
     }
 }

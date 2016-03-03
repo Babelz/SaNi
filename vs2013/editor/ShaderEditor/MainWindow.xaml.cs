@@ -4,6 +4,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using OpenTK.Graphics.OpenGL4;
 using ShaderEditor.Rendering;
+using ShaderEditor.Scenes;
 using ShaderEditor.Shaders;
 using System;
 using System.Collections;
@@ -44,8 +45,11 @@ namespace ShaderEditor
 
         #region Fields
         private readonly OpenTK.GLControl glControl;
+
+        private readonly SpriteBatch spriteBatch;
         private readonly Viewport viewport;
 
+        private IScene[] scenes;
         private Camera2D camera;
         private Effect effect;
         #endregion
@@ -65,6 +69,13 @@ namespace ShaderEditor
 
             viewport = new Viewport(0, 0, glControl.Width, glControl.Height);
             camera = new Camera2D(viewport);
+
+            spriteBatch = new SpriteBatch();
+        }
+
+        void Application_Idle(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #region GLControl event handlers
@@ -75,6 +86,15 @@ namespace ShaderEditor
             {
                 textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
+
+            // Generate scenes.
+            scenes = new IScene[] 
+            {
+                new SpriteScene(),
+                null
+            };
+
+            spriteBatch.Initialize();
         }
         private void glControl_Resize(object sender, EventArgs e)
         {
@@ -85,9 +105,11 @@ namespace ShaderEditor
         }
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
-            GL.ClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.Clear(ClearBufferMask.ColorBufferBit);
+
+            DrawScene();
 
             glControl.SwapBuffers();
         }
@@ -142,9 +164,28 @@ namespace ShaderEditor
 
             if (!effect.Compile())
             {
-                // Push to "console"
+                if (!string.IsNullOrEmpty(effect.LastFragmentError)) System.Windows.MessageBox.Show(effect.LastFragmentError);
+                if (!string.IsNullOrEmpty(effect.LastVertexError)) System.Windows.MessageBox.Show(effect.LastVertexError);
             }
         }
         #endregion
+
+        private void DrawScene()
+        {
+            var transform = camera.Transform();
+
+            effect.Bind();
+
+            effect.SetUniformValue("time", 0.0f, typeof(float));
+            effect.SetUniformValue("transform", transform, typeof(OpenTK.Matrix4));
+
+            spriteBatch.Begin();
+
+            scenes[0].Draw(spriteBatch, 0.0f);
+
+            spriteBatch.End();
+
+            effect.Unbind();
+        }
     }
 }

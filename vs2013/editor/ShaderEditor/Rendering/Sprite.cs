@@ -17,6 +17,11 @@ namespace ShaderEditor.Rendering
         internal const int IndicesCount     = 6;
 
         #region Properties
+        public VertexPositionColorTexture[] VertexData
+        {
+            get;
+            private set;
+        }
         public Vector3 Position
         {
             get;
@@ -57,12 +62,6 @@ namespace ShaderEditor.Rendering
             get;
             set;
         }
-        public RenderData RenderData
-        {
-            get;
-            private set;
-        }
-
         public float Rotation
         {
             get;
@@ -72,7 +71,15 @@ namespace ShaderEditor.Rendering
 
         public Sprite()
         {
-            RenderData = new RenderData(VerticesCount, IndicesCount);
+            VertexData = new VertexPositionColorTexture[]
+            {
+                new VertexPositionColorTexture(),
+                new VertexPositionColorTexture(),
+                new VertexPositionColorTexture(),
+                new VertexPositionColorTexture()
+            };
+
+            Scale = new Vector2(1.0f, 1.0f);
         }
 
         public void ResetTextureSource()
@@ -81,10 +88,10 @@ namespace ShaderEditor.Rendering
             TextureSourceSize       = new Vector2((float)Texture.Width, (float)Texture.Height);
         }
 
-        public void Update(float delta)
+        public void Update()
         {
             var sin = (float)Math.Sin(Rotation);
-            var cos = (float)Math.Sin(Rotation);
+            var cos = (float)Math.Cos(Rotation);
 
             var dx = -Origin.X * Scale.X;
             var dy = -Origin.Y * Scale.Y;
@@ -102,7 +109,7 @@ namespace ShaderEditor.Rendering
             localBottomRight.X = Bounds.X * Scale.X;
             localBottomRight.Y = Bounds.Y * Scale.Y;
 
-            // Apply rotation.
+            // Apply rotation and position.
             var globalTopLeft = Position;
             var globalTopRight = Position;
             var globalBottomLeft = Position;
@@ -117,8 +124,8 @@ namespace ShaderEditor.Rendering
             globalBottomLeft.X = globalBottomLeft.X + dx * cos - (dy + localBottomLeft.Y) * sin;
             globalBottomLeft.Y = globalBottomLeft.Y + dx * sin + (dy + localBottomLeft.Y) * cos;
 
-            globalBottomRight.X = globalBottomRight.X + (dx + localBottomLeft.X) * cos - (dy + localBottomRight.Y) * sin;
-            globalBottomRight.Y = globalBottomRight.Y + (dx + localBottomLeft.X) * sin + (dy + localBottomRight.Y) * cos;
+            globalBottomRight.X = globalBottomRight.X + (dx + localBottomRight.X) * cos - (dy + localBottomRight.Y) * sin;
+            globalBottomRight.Y = globalBottomRight.Y + (dx + localBottomRight.X) * sin + (dy + localBottomRight.Y) * cos;
 
             // Compute coordinates.
             var sourceLeft = TextureSourcePosition.X;
@@ -158,12 +165,16 @@ namespace ShaderEditor.Rendering
                 bottomRightUV
             };
 
+            var vertexDataPointer = 0;
+
             for (int i = 0; i < vertexPositions.Length; i += 2)
             {
-                RenderData.VertexData[i].Position               = vertexPositions[i];
-                RenderData.VertexData[i].TextureCoordinates.X   = vertexPositions[i + 1].X;
-                RenderData.VertexData[i].TextureCoordinates.Y   = vertexPositions[i + 1].Y;
-                RenderData.VertexData[i].Color                  = Color;
+                VertexData[vertexDataPointer].Position             = vertexPositions[i];
+                VertexData[vertexDataPointer].TextureCoordinates.X = vertexPositions[i + 1].X;
+                VertexData[vertexDataPointer].TextureCoordinates.Y = vertexPositions[i + 1].Y;
+                VertexData[vertexDataPointer].Color                = Color;
+
+                vertexDataPointer++;
             }
         }
     }
