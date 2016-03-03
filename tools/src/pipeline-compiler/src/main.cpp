@@ -11,7 +11,7 @@
 #include "sani/platform/graphics/window.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/resource/compiler/resource_compiler.hpp"
-
+#include "sani/rtti/reflection_database.hpp"
 static void usage() {
 	std::cout << "Insert some help here" << std::endl;
 }
@@ -20,12 +20,14 @@ int main(int argc, char** argv) {
 	using namespace sani::resource;
 	using namespace sani::io;
 	using namespace sani::resource::compiler;
+
 	if (argc <= 2) {
 		std::cout << argv[1] << std::endl;
 		usage();
 		return 1;
 	}
-
+	sani::rtti::ReflectionDatabase::getInstance();
+	auto& db = sani::rtti::TypeDatabase::getInstance();
 	
 	String root(argv[1]);
 	String xmlPath(argv[2]);

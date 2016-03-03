@@ -1,5 +1,7 @@
 #pragma once
 #include "vector2.hpp"
+#include "sani/preprocessor/rtti.hpp"
+#include "sani/preprocessor/rtti_runtime.hpp"
 namespace sani {
 	namespace math {
 		/// @class Vector3 vector3.hpp "sani/core/math/vector3.hpp"
@@ -8,6 +10,7 @@ namespace sani {
 		/// Represents a 3 component vector
 		template <typename T>
 		class Vector3 {
+			DECLARE_REFLECTABLE;
 		public:
 			/// X component
 			T x;

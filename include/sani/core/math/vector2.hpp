@@ -1,4 +1,5 @@
 #pragma once
+#include "sani/preprocessor/rtti.hpp"
 
 namespace sani {
 	namespace math {
@@ -8,6 +9,7 @@ namespace sani {
 		/// Represents a 2 component vector
 		template <typename T>
 		class Vector2 {
+			DECLARE_REFLECTABLE;
 		public:
 			/// X component
 			T x;
@@ -138,7 +140,7 @@ namespace sani {
 		using Vec2f = Vector2<float>;
 		using Vec2d = Vector2<double>;
 		using Vec2i = Vector2<int>;
-		using Vec2ui = Vector2<unsigned int>;
+		using Vec2u = Vector2<unsigned int>;
 	}
 	
 }

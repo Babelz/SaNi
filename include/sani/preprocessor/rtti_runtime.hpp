@@ -12,19 +12,6 @@
 #define RTTI_REGISTER_TYPE(type)                          \
 	RTTI_REGISTER_TYPE_VARIANT(type)                               \
 
-#define DECLARE_REFLECTABLE						   			       \
-	public:                                                        \
-	sani::rtti::Type getType() const override {                    \
-	    return sani::rtti::Type(                                   \
-               sani::rtti::TypeInfo<                               \
-                      sani::rtti::PureType<decltype(*this)> >::id);         \
-	}                                                              \
-	sani::rtti::Reflectable* clone() const override {             \
-	       throw std::logic_error("not impl");                     \
-    }                                                              \
-	static void RTTI_Init(); \
-	private:
-
 #define RTTI_PROPERTY(p_class, p_name, p_type, p_getter, p_setter)                   \
 db.types[typeof(p_class).getID()].addField<p_class, p_type>(#p_name,                 \
 	[](const sani::rtti::Object& instance) {                                         \
@@ -41,10 +28,25 @@ db.types[typeof(p_class).getID()].addField<p_class, p_type>(#p_name,            
 	},                                                                               \
 	nullptr);              
 
+#define RTTI_PUBLIC_FIELD(p_class, p_name, p_type)                                   \
+	db.types[typeof(p_class).getID()].addField<p_class, p_type>(#p_name,             \
+	[](const sani::rtti::Object& instance) {                                         \
+	    return instance.getValue<##p_class>().p_name;                                \
+	},                                                                               \
+	[](sani::rtti::Object& instance, const sani::rtti::Object& v) {                  \
+	    instance.getValue<##p_class>().p_name = v.getValue<p_type>();                \
+    });               
+
 #define RTTI_DECLARE_BASECLASSES(p_class, ...)                                       \
 	db.types[typeof(p_class).getID()].loadBaseClasses(db, typeof(p_class).getID(),   \
 	{ ##__VA_ARGS__ });
 
+#define RTTI_CONSTRUCTOR_BODY(p_class, ...)                                                 \
+	db.types[typeof(p_class).getID()].addConstructor<##p_class, ##__VA_ARGS__>([](sani::rtti::Arguments& args){
+
+#define RTTI_CONSTRUCTOR_END }, false);
+
+#define RTTI_DYNAMIC_CONSTRUCTOR_END }, true);
 
 #define RTTI_DEFAULT_CTOR(p_class)                                                    \
 	db.types[typeof(p_class).getID()].addConstructor<##p_class>([](sani::rtti::Arguments&){ \

@@ -3,6 +3,7 @@
 #include <iostream>
 #include "sani/resource/scene.hpp"
 
+
 namespace sani {
 	namespace resource {
 		namespace pipeline {
@@ -14,6 +15,7 @@ namespace sani {
 			SceneDescriptionImporter::~SceneDescriptionImporter() {
 
 			}
+
 
 			ResourceItem* SceneDescriptionImporter::import(const String& filename, io::FileSystem* fileSystem) const {
 				using namespace sani::io;
@@ -63,28 +65,40 @@ namespace sani {
 				auto& entities = scene["entities"];
 				std::cout << "Entities is array: " << std::boolalpha << entities.IsArray() << std::endl;
 
+				
+				SceneDescription::ComponentDataCollection comps;
+
 				for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
 					auto& entity = it->GetObjectW();
-					std::cout << "Entity has componens?" << std::boolalpha << entity.HasMember("components") << std::endl;
+					std::cout << "Entity has components?" << std::boolalpha << entity.HasMember("components") << std::endl;
 					auto& components = entity["components"];
 					std::cout << "components is array: " << std::boolalpha << components.IsArray() << std::endl;
 
-					for (Value::ConstValueIterator componentIt = components.Begin(); 
-						componentIt != components.End();
-						++componentIt) {
+					for (Value::ConstValueIterator componentIt = components.Begin(); componentIt != components.End(); ++componentIt) {
 						auto& component = componentIt->GetObjectW();
-						std::cout << "component.name = " << component["name"].GetString() << std::endl;
 						
+						SceneDescription::Component c;
+						c.name = component["name"].GetString();
 						auto& fields = component["fields"];
-						for (Value::ConstValueIterator fieldIt = fields.Begin();
-							fieldIt != fields.End();
-							++fieldIt) {
+						for (Value::ConstValueIterator fieldIt = fields.Begin(); fieldIt != fields.End(); ++fieldIt) {
 							auto& field = fieldIt->GetObjectW();
-							std::cout << field["name"].GetString() << " = " << field["value"].GetString() << std::endl;
-						}
-					}
-				}
+							SceneDescription::Field f;
+							f.name = field["name"].GetString();
 
+							auto& inner = field["fields"];
+
+							for (auto g = inner.Begin(); g != inner.End(); ++g) {
+								for (auto itr = g->MemberBegin(); itr != g->MemberEnd(); ++itr) {
+									f.keyValues.emplace(itr->name.GetString(), itr->value.GetString());
+								}
+							}
+							c.fields.emplace_back(f);
+						}
+						comps.push_back(c);
+					}
+
+				}
+				descriptor->components = comps;
 				return descriptor;
 			}
 		}

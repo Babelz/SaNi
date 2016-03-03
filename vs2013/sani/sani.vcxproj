@@ -186,6 +186,7 @@
     <ClCompile Include="..\..\src\core\logging\logging_helpers.cpp" />
     <ClCompile Include="..\..\src\core\logging\log_batcher.cpp" />
     <ClCompile Include="..\..\src\core\logging\out_flags.cpp" />
+    <ClCompile Include="..\..\src\core\math\vector.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_allocator.cpp" />
     <ClCompile Include="..\..\src\core\memory\heap_page.cpp" />
     <ClCompile Include="..\..\src\core\parser\xml_parser.cpp" />
@@ -494,6 +495,7 @@
     <ClInclude Include="..\..\include\sani\platform\time\impl\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\time.hpp" />
+    <ClInclude Include="..\..\include\sani\preprocessor\rtti.hpp" />
     <ClInclude Include="..\..\include\sani\preprocessor\rtti_runtime.hpp" />
     <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect.hpp" />

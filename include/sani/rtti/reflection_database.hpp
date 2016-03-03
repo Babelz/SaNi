@@ -11,7 +11,10 @@ namespace sani {
 			ReflectionDatabase();
 			~ReflectionDatabase() = default;
 		public:
-			
+			ReflectionDatabase& operator=(const ReflectionDatabase&) = delete;
+			ReflectionDatabase& operator=(ReflectionDatabase&&) = delete;
+			ReflectionDatabase(ReflectionDatabase&&) = delete;
+
 			static ReflectionDatabase& getInstance() {
 				static ReflectionDatabase instance;
 				return instance;
