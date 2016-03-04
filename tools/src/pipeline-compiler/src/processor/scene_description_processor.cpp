@@ -6,6 +6,8 @@
 #include "sani/rtti/type_database.hpp"
 #include "sani/rtti/type.hpp"
 #include "sani/debug.hpp"
+#include <algorithm>
+#include <iostream>
 
 namespace sani {
 	namespace resource {
@@ -31,7 +33,20 @@ namespace sani {
 						SANI_ASSERT(field.isValid());
 						Type fieldType = field.getType();
 						// now we need to figure out the inner types of the field if there's any
-						auto& innerType = db.types[fieldType];
+						auto& fields = fieldType.getFields();
+
+						auto& fieldsToSearch = fieldData.keyValues;
+						for (auto& candidate : fieldsToSearch) {
+							String8 fieldName(candidate.first);
+							auto search = std::find_if(std::begin(fields), std::end(fields), [&fieldName](const Field& field) {
+								return field.getName() == fieldName;
+							});
+							SANI_ASSERT(search != std::end(fields));
+							// get the parameter type
+							Type paramType = search->getType();
+							// TODO: transform string to that type
+							std::cout << fieldName << " type is " << paramType.getID() << " which is type of " << db.types[paramType.getID()].name << std::endl;
+						}
 					}
 					// TODO type id to another type id conversion
 				}
