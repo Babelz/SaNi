@@ -328,7 +328,7 @@ namespace sani {
 
 			SANI_TRIGGER_VOID_EVENT(closed, void());
 		}
-
+		
 		bool Window::initialize() {
 			SANI_ASSERT(!impl->cImpl.initialized);
 

@@ -16,7 +16,7 @@
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -38,11 +38,34 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.1.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AvalonEdit.5.0.2\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="OpenTK.Compatibility, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
+    <Reference Include="OpenTK.GLControl, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -66,19 +89,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Editor\Project.cs" />
-    <Compile Include="GL\PFDFlags.cs" />
-    <Compile Include="GL\Renderer.cs" />
-    <Compile Include="Rendering\EditorRenderer.cs" />
-    <Compile Include="Rendering\Rectf.cs" />
-    <Compile Include="Rendering\RenderData.cs" />
+    <Compile Include="Scenes\IScene.cs" />
+    <Compile Include="Scenes\SpriteScene.cs" />
+    <Compile Include="Rendering\Camera2D.cs" />
+    <Compile Include="Scenes\Scenes.cs" />
+    <Compile Include="Rendering\SpriteBatch.cs" />
     <Compile Include="Rendering\Sprite.cs" />
     <Compile Include="Rendering\Texture2D.cs" />
-    <Compile Include="Rendering\Vector2.cs" />
-    <Compile Include="Rendering\Vector3.cs" />
-    <Compile Include="Rendering\Vector4.cs" />
     <Compile Include="Rendering\VertexPositionColorTexture.cs" />
+    <Compile Include="Rendering\Viewport.cs" />
     <Compile Include="Shaders\DefaultShaderSources.cs" />
-    <Compile Include="Shaders\Shader.cs" />
+    <Compile Include="Shaders\Effect.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -89,14 +110,6 @@
     </Compile>
     <Compile Include="Delegates.cs" />
     <Compile Include="EventArgs.cs" />
-    <Compile Include="GL\GLEnums.cs" />
-    <Compile Include="GL\OpenGL.cs" />
-    <Compile Include="OpenGLControl.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="GL\PFDLayerType.cs" />
-    <Compile Include="GL\PFDPixelTypes.cs" />
-    <Compile Include="GL\PixelFormatDescriptor.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -111,6 +124,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Default shaders\default fragment.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Default shaders\default vertex.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Languages\GLSL Desktop.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -126,6 +145,11 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="TODO.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\sani.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
