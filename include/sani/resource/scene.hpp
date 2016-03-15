@@ -22,17 +22,25 @@ namespace sani {
 		};
 
 		struct SceneDescription : public ResourceItem {
-			struct Field {
-				String8 name;
-				std::unordered_map<String8, String8> keyValues;
+			struct PrimitiveField {
+                String8 name;
+                String8 value;
+                PrimitiveField(const String8& name, const String8& value)
+                    : name(name), value(value) {}
 			};
 
+            struct ObjectField {
+                String8 name;
+                std::vector<PrimitiveField> fields;
+            };
+            
 			struct Component {
 				String8 name;
-				std::vector<Field> fields;
+                std::vector<PrimitiveField> primitiveFields;
+                std::vector<ObjectField> objectFields;
 			};
 			using ComponentDataCollection = std::vector<Component>;
-
+            
 			String8 name;
 			std::vector<AssetFolder> assetFolders;
 			std::map<uint32, std::vector<AssetFile>> assets;

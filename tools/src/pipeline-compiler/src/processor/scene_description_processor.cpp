@@ -27,17 +27,17 @@ namespace sani {
 					TypeID id = db.ids[componentData.name];
 					Type componentType{ id };
 					
-					for (auto& fieldData : componentData.fields) {
-						auto& field = componentType.getField(fieldData.name);
+					for (auto& objectFieldData : componentData.objectFields) {
+                        auto& field = componentType.getField(objectFieldData.name);
 						// do we even have that field?
 						SANI_ASSERT(field.isValid());
 						Type fieldType = field.getType();
 						// now we need to figure out the inner types of the field if there's any
 						auto& fields = fieldType.getFields();
 
-						auto& fieldsToSearch = fieldData.keyValues;
+                        auto& fieldsToSearch = objectFieldData.fields;
 						for (auto& candidate : fieldsToSearch) {
-							String8 fieldName(candidate.first);
+							String8 fieldName(candidate.name);
 							auto search = std::find_if(std::begin(fields), std::end(fields), [&fieldName](const Field& field) {
 								return field.getName() == fieldName;
 							});
@@ -50,7 +50,7 @@ namespace sani {
 					}
 					// TODO type id to another type id conversion
 				}
-
+                
 				return input;
 			}
 
