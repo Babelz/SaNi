@@ -22,22 +22,13 @@
 		],
 		"entities": [
 		{ 
-				"components": [ {
+				"id": 1,
+				"components": [ 
+				{
 					"name": "sani::Transform",
-					"fields": [
-						{ "name": "position", 
-						  "fields": [
-						  {"x": "5"}, {"y": "5"},{"z": "0"}
-						  ]},
-						  {"name": "scale",
-						  "fields": [
-						  {"x":"1"},{"y":"1"}
-						  ]},
-						  {"name":"rotation",
-						  "fields":[
-						  {"rotation": "0"}
-						  ]}
-					]
+					"position": { "x": "1", "y": "2", "z": "3" },
+					"scale": { "x": "4", "y": "5" },
+					"rotation": "6"
 				}]
 			}
 		]

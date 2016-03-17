@@ -66,7 +66,7 @@ namespace sani {
 				std::cout << "Entities is array: " << std::boolalpha << entities.IsArray() << std::endl;
 
 				
-				SceneDescription::ComponentDataCollection comps;
+				
 
 				for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
 					auto& entity = it->GetObjectW();
@@ -75,30 +75,36 @@ namespace sani {
 					std::cout << "components is array: " << std::boolalpha << components.IsArray() << std::endl;
 
 					for (Value::ConstValueIterator componentIt = components.Begin(); componentIt != components.End(); ++componentIt) {
-						auto& component = componentIt->GetObjectW();
+						auto& componentObject = componentIt->GetObjectW();
 						
-						SceneDescription::Component c;
-						c.name = component["name"].GetString();
-						auto& fields = component["fields"];
-						for (Value::ConstValueIterator fieldIt = fields.Begin(); fieldIt != fields.End(); ++fieldIt) {
-							auto& field = fieldIt->GetObjectW();
-							SceneDescription::Field f;
-							f.name = field["name"].GetString();
+                        auto memberIt = componentObject.MemberBegin();
 
-							auto& inner = field["fields"];
-
-							for (auto g = inner.Begin(); g != inner.End(); ++g) {
-								for (auto itr = g->MemberBegin(); itr != g->MemberEnd(); ++itr) {
-									f.keyValues.emplace(itr->name.GetString(), itr->value.GetString());
-								}
-							}
-							c.fields.emplace_back(f);
-						}
-						comps.push_back(c);
+						SceneDescription::Component component;
+                        component.name = memberIt->value.GetString();
+                        ++memberIt;
+                   
+                        for (; memberIt != componentObject.MemberEnd(); ++memberIt) {
+                            // it's object
+                            if (memberIt->value.IsObject()) {
+                                String8 fieldName(memberIt->name.GetString());
+                                SceneDescription::ObjectField objField{ fieldName };
+                                objField.fields.reserve(memberIt->value.MemberCount());
+                                // TODO recursion?
+                                for (auto it = memberIt->value.MemberBegin(); it != memberIt->value.MemberEnd(); ++it) {
+                                    objField.fields.emplace_back(it->name.GetString(), it->value.GetString());
+                                }
+                                component.objectFields.emplace_back(objField);
+                            }
+                            // it's primitive
+                            else {
+                                component.primitiveFields.emplace_back(memberIt->name.GetString(), memberIt->value.GetString());
+                            }
+                        }
+                        descriptor->components.emplace_back(component);
 					}
 
 				}
-				descriptor->components = comps;
+				
 				return descriptor;
 			}
 		}

@@ -8,7 +8,7 @@ TEST_CASE("Vector2 test cases", "[vector]") {
 		REQUIRE(Vec2f() == Vec2f(0, 0));
 		REQUIRE(Vec2f(0, 0) == Vec2f(Vec2i(0, 0)));
 		REQUIRE(Vec2f() == Vec2f(0));
-		REQUIRE(Vec2f() == Vec2ui(0));
+		REQUIRE(Vec2f() == Vec2u(0));
 		REQUIRE(Vec2f(5, 6).x == Vec2f(5, 6)[0]);
 	}
 
