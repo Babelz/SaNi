@@ -2,7 +2,7 @@
 
 #include "sani/platform/platform_config.hpp"
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include "sani/resource/processor/resource_processor.hpp"
 #include "sani/resource/texture2d.hpp"

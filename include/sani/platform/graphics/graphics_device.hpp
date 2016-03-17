@@ -7,7 +7,7 @@
 
 #include <stack>
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include <Windows.h>
 
@@ -67,7 +67,7 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			GraphicsDevice();
 			// Public Win32 members.
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			
 			SANI_DECLARE_EVENT(backbufferSizeChanged, void(const uint32, const uint32, const uint32, const uint32));
 			SANI_DECLARE_EVENT(viewportSizeChanged,	void(const Viewport&, const Viewport&));

@@ -24,7 +24,7 @@ namespace sani {
 		*/
 
 		const char* const DefaultPolygonVertexSource =
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			"#version 330\n"
 			""
 			"layout(location = 0) in vec3 vertex_position;"
@@ -47,7 +47,7 @@ namespace sani {
 			"}";
 
 		const char* const DefaultPolygonFragmentSource =
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			"#version 330\n"
 			""
 			"in vec4 out_vertex_color;"
@@ -61,7 +61,7 @@ namespace sani {
 			"}";
 
 		const char* const DefaultTexturedPolygonVertexSource =
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			"#version 330\n"
 			""
 			"layout(location = 0) in vec3 vertex_position;"
@@ -91,7 +91,7 @@ namespace sani {
 			"}";
 
 		const char* const DefaultTexturedPolygonFragmentSource =
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX || SANI_PLATFORM_WINDOWS
 			"#version 330\n"
 			""
 			"in vec2 out_texture_coordinates;"

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include "sani/resource/pipeline/content_importer.hpp"
 #include <vector>

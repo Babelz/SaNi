@@ -1,6 +1,6 @@
 #pragma once
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 #include <windows.h>
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS || SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
 #include <CoreFoundation/CoreFoundation.h>

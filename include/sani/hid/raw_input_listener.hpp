@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 #include <Windows.h>
 #endif
 
@@ -13,7 +13,7 @@ namespace sani {
 		class RawInputListener {
 		private:
 		public:
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			sani::hid::Key rawKeyToKeyCode(const UINT param);
 			void handleRawInput(const MSG& msg);
 #endif

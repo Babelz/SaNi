@@ -68,7 +68,7 @@ namespace sani {
 	}
 }
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include "GL/wglew.h"
 #include "GL/glew.h"

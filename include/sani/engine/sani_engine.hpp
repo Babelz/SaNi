@@ -7,7 +7,7 @@
 #include "sani/forward_declare.hpp"
 #include "sani/core/events.hpp"
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include <Windows.h>
 
@@ -28,7 +28,7 @@ namespace sani {
 		/// The core of the engine. 
 		class SaNiEngine {
 		private:
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			const HINSTANCE hInstance;
 #endif
 
@@ -59,7 +59,7 @@ namespace sani {
 			bool initialize();
 		public:
 			// Win32 ctor.
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			SaNiEngine(const HINSTANCE hInstance);
 #endif
 

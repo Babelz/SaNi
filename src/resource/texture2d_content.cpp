@@ -1,7 +1,7 @@
 #include "sani/platform/platform_config.hpp"
 #include "sani/resource/texture2d_content.hpp"
 #include <stdexcept>
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 #include <Magick++.h>
 #endif
 
@@ -14,7 +14,7 @@ namespace sani {
 		}
 
 		void Texture2DContent::generateMipmaps(bool overwrite) {
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			if (!overwrite && faces.size() > 1) return;
 			if (overwrite) throw std::logic_error("not implemented");
 			uint32 w = width;

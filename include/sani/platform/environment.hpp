@@ -6,7 +6,7 @@ namespace sani {
 
 	namespace env {
 
-#if SANI_PLATFORM_WIN32
+#if SANI_PLATFORM_WINDOWS
 		const char* NewLine = "\r\n";
 #else
 		const char* NewLine = "\n";
