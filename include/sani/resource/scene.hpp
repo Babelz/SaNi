@@ -7,6 +7,7 @@
 #include <vector>
 #include "sani/resource/serialization.hpp"
 #include <unordered_map>
+#include "sani/rtti/type.hpp"
 
 namespace sani {
 	namespace resource {
@@ -25,8 +26,9 @@ namespace sani {
 			struct PrimitiveField {
                 String8 name;
                 String8 value;
+				rtti::TypeID type;
                 PrimitiveField(const String8& name, const String8& value)
-                    : name(name), value(value) {}
+                    : name(name), value(value), type(rtti::Type::Invalid) {}
 			};
 
             struct ObjectField {

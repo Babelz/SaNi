@@ -46,9 +46,16 @@ namespace sani {
 							Type paramType = search->getType();
 							// TODO: transform string to that type
 							std::cout << fieldName << " type is " << paramType.getID() << " which is type of " << db.types[paramType.getID()].name << std::endl;
+							candidate.type = paramType.getID();
 						}
 					}
-					// TODO type id to another type id conversion
+
+					for (auto& primitiveFieldData : componentData.primitiveFields) {
+						auto& field = componentType.getField(primitiveFieldData.name);
+						// do we even have that field?
+						SANI_ASSERT(field.isValid());
+						primitiveFieldData.type = field.getType();
+					}
 				}
                 
 				return input;
