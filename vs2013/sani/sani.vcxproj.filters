@@ -34,9 +34,6 @@
     <Filter Include="src\platform\wp8">
       <UniqueIdentifier>{e287d895-ef32-4a20-876a-c9b587e4e265}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\platform\android">
-      <UniqueIdentifier>{fc336762-ccee-4efb-abff-2987195a2034}</UniqueIdentifier>
-    </Filter>
     <Filter Include="include\core\math\func">
       <UniqueIdentifier>{097ae06c-dde3-4d45-8c8c-802c13d68558}</UniqueIdentifier>
     </Filter>
@@ -272,9 +269,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp">
       <Filter>src\platform\wp8</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\android\file_system_android.cpp">
-      <Filter>src\platform\android</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp">
       <Filter>src\core\cvar</Filter>

@@ -251,7 +251,6 @@
     <ClCompile Include="..\..\src\graphics\render_data.cpp" />
     <ClCompile Include="..\..\src\hid\keyboard.cpp" />
     <ClCompile Include="..\..\src\hid\raw_input_listener_win32.cpp" />
-    <ClCompile Include="..\..\src\platform\android\file_system_android.cpp" />
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_reader.cpp" />
     <ClCompile Include="..\..\src\platform\file\binary_writer.cpp" />
