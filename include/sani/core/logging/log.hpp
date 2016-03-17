@@ -12,9 +12,9 @@ SANI_FORWARD_DECLARE_1(sani, LogBatcher);
 	to the current function name.
 */
 
-#define FNCLOG_ERR(outFlags, message) sani::log::__privns__::error(outFlags, __FUNCTION___, message)
-#define FNCLOG_WRN(outFlags, message) sani::log::__privns__::warning(outFlags, __FUNCTION___, message)
-#define FNCLOG_INF(outFlags, message) sani::log::__privns__::info(outFlags, __FUNCTION___, message)
+#define FNCLOG_ERR(outFlags, message) sani::log::__privns__::error(outFlags, __FUNCTION__, message)
+#define FNCLOG_WRN(outFlags, message) sani::log::__privns__::warning(outFlags, __FUNCTION__, message)
+#define FNCLOG_INF(outFlags, message) sani::log::__privns__::info(outFlags, __FUNCTION__, message)
 
 /*
 	Helper macros that do the same but replace the from argument with
@@ -36,10 +36,6 @@ namespace sani {
 
 			LogImpl impl;
 		}
-
-		/*
-			TODO: should these be "hidden" or not?..
-		*/
 
 		namespace __privns__ {
 

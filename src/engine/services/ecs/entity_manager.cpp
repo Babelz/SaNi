@@ -1,3 +1,4 @@
+#include "sani/engine/services/service_logging.hpp"
 #include "sani/engine/services/contracts/entity_manager_contract.hpp"
 #include "sani/engine/services/ecs/entity_manager.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
@@ -30,6 +31,7 @@ namespace sani {
 					listEntities(message);
 					break;
 				default:
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}
@@ -66,7 +68,7 @@ namespace sani {
 					handleDocumentMessage(static_cast<messages::DocumentMessage*>(message));
 					break;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}

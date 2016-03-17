@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/engine/services/service_logging.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
 #include "sani/engine/messaging/messages/query_message.hpp"
 #include "sani/engine/services/contracts/component_manager_contract.hpp"
@@ -38,7 +39,7 @@ namespace sani {
 					listComponents(message);
 					break;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}
@@ -51,7 +52,7 @@ namespace sani {
 					destroyComponent(message);
 					break;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}
@@ -97,7 +98,7 @@ namespace sani {
 					handleQueryMessage(static_cast<messages::QueryMessage*>(message));
 					break;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}

@@ -1,3 +1,4 @@
+#include "sani/engine/services/service_logging.hpp"
 #include "sani/engine/services/contracts/file_system_service_contract.hpp"
 #include "sani/engine/messaging/messages/command_message.hpp"
 #include "sani/engine/messaging/messages/query_message.hpp"
@@ -45,7 +46,7 @@ namespace sani {
 					listFiles(message);
 					return;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					return;
 				}
 			}
@@ -57,7 +58,7 @@ namespace sani {
 					closeFile(message);
 					return;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					return;
 				}
 			}
@@ -175,6 +176,7 @@ namespace sani {
 					handleCommandMessage(static_cast<messages::CommandMessage*>(message));
 					break;
 				default:
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}

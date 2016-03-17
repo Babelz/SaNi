@@ -83,6 +83,10 @@ namespace sani {
 		return cvar.isSynced() && cvar.hasChanged();
 	}
 
+	const String& CVarRecord::getCVarName() const {
+		return cvar.getName();
+	}
+
 	CVarRecord::~CVarRecord() {
 	}
 }

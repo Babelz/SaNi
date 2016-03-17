@@ -18,7 +18,7 @@ namespace sani {
 	namespace profiler {
 
 		namespace {
-			
+
 			ProfilerImpl impl;
 		}
 

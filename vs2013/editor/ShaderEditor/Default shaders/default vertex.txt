@@ -1,4 +1,4 @@
-﻿#version 330
+﻿#version 330 core
 
 layout (location = 0) in vec3 in_position;
 layout (location = 1) in vec4 in_color;
@@ -7,7 +7,6 @@ layout (location = 2) in vec2 in_uv;
 out vec3 position;
 out vec4 color;
 out vec2 uv;
-out float dt;
 
 uniform mat4 transform;
 

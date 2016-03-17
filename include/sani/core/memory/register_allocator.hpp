@@ -7,10 +7,6 @@
 
 namespace sani {
 
-	/*
-		TODO: this name?..
-	*/
-
 	/// @class RegisterAllocator register_allocator.hpp "sani/core/memory/register_allocator.hpp
 	/// @author voidbab
 	/// 

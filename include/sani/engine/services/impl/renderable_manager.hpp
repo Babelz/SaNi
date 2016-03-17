@@ -3,6 +3,7 @@
 #include "sani/engine/services/renderable_manager.hpp"
 #include "sani/graphics/renderables/renderables.hpp"
 #include "sani/engine/sani_engine.hpp"
+#include "sani/engine/services/service_logging.hpp"
 
 #include <vector>
 
@@ -90,6 +91,8 @@ namespace sani {
 			void RenderableManager<T>::receive(messages::Message* const message) {
 				if (message->getType() == MessageType::Document) {
 					handleDocumentMessage(static_cast<messages::DocumentMessage* const>(message));
+				} else {
+					LOG_DEAD_LETTER(message);
 				}
 			}
 			template <class T>

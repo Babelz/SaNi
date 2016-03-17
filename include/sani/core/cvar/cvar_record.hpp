@@ -29,6 +29,8 @@ namespace sani {
 		/// to the file where the cvar was loaded from.
 		bool shouldSync() const;
 
+		const String& getCVarName() const;
+
 		~CVarRecord();
 	};
 }

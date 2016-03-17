@@ -1,14 +1,11 @@
-﻿#version 330
+﻿#version 330 core
 
 in vec3 position;
 in vec4 color;
 in vec2 uv;
 
-uniform float time;
 uniform sampler2D sampler;
 
 void main() {
-	gl_FragColor = color;
-
-	//gl_FragColor = texture2D(sampler, uv) * color;
+	gl_FragColor = texture2D(sampler, uv) * color;
 }

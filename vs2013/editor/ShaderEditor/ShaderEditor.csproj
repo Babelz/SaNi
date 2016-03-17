@@ -88,16 +88,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Assert.cs" />
     <Compile Include="Editor\Project.cs" />
-    <Compile Include="Scenes\IScene.cs" />
+    <Compile Include="Scenes\Scene.cs" />
     <Compile Include="Scenes\SpriteScene.cs" />
-    <Compile Include="Rendering\Camera2D.cs" />
     <Compile Include="Scenes\Scenes.cs" />
-    <Compile Include="Rendering\SpriteBatch.cs" />
-    <Compile Include="Rendering\Sprite.cs" />
-    <Compile Include="Rendering\Texture2D.cs" />
-    <Compile Include="Rendering\VertexPositionColorTexture.cs" />
-    <Compile Include="Rendering\Viewport.cs" />
     <Compile Include="Shaders\DefaultShaderSources.cs" />
     <Compile Include="Shaders\Effect.cs" />
     <Page Include="MainWindow.xaml">

@@ -11,6 +11,10 @@
 #include "sani/core/cvar/cvar_linker.hpp"
 #include "sani/core/cvar/link_record.hpp"
 #include "sani/platform/environment.hpp"
+#include "sani/engine/services/service_logging.hpp"
+#include "sani/core/logging/log.hpp"
+
+#include <sstream>
 
 namespace sani {
 
@@ -53,7 +57,7 @@ namespace sani {
 					containsCVar(message);
 					return;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					return;
 				}
 			}
@@ -102,8 +106,11 @@ namespace sani {
 					// Swap or open file for the first time.
 					if (record.getFilename() != currentFilename) {
 						auto openFile = engine->createEmptyMessage<messages::QueryMessage>();
+						
 						filesystemservice::openFile(openFile, ConfigRoot + record.getFilename(), io::Filemode::Truncate);
+						
 						engine->routeMessage(openFile);
+						
 						SANI_ASSERT(openFile->wasHandled());
 
 						if (stream != nullptr) {
@@ -115,13 +122,21 @@ namespace sani {
 						engine->releaseMessage(openFile);
 						
 						currentFilename = record.getFilename();
+
 						auto search = std::find_if(cvarFiles.begin(), cvarFiles.end(), [&currentFilename](const CVarFile& cvarFile) {
 							return currentFilename == cvarFile.getFilename();
 						});
+
 						if (search == cvarFiles.end()) {
-							// TODO voidbab file not found?
-							throw std::logic_error("This is going to crash the engine");
+							std::stringstream ss;
+
+							ss << "could not sync cvar " << "\"" << record.getCVarName() << "\"" << ", file not found";
+
+							FNCLOG_ERR(sani::log::OutFlags::All, ss.str());
+							
+							continue;
 						}
+
 						file = *search;
 					}
 
@@ -289,6 +304,7 @@ namespace sani {
 					handleDocumentMessage(static_cast<messages::DocumentMessage*>(message));
 					break;
 				default:
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}

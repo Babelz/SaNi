@@ -10,6 +10,7 @@
 #include "sani/engine/sani_engine.hpp"
 #include "sani/graphics/layer.hpp"
 #include "sani/core/profiling/profiler.hpp"
+#include "sani/engine/services/service_logging.hpp"
 
 namespace sani {
 
@@ -62,7 +63,7 @@ namespace sani {
 					getWindow(message);
 					return;
 				default:
-					// TODO: dead letter.
+					LOG_DEAD_LETTER(message);
 					return;
 				}
 			}
@@ -86,7 +87,7 @@ namespace sani {
 					setClearColor(message);
 					return;
 				default:
-					// TODO: dead letter?
+					LOG_DEAD_LETTER(message);
 					return;
 				}
 			}
@@ -232,6 +233,7 @@ namespace sani {
 					handleDocumentMessage(static_cast<messages::DocumentMessage*>(message));
 					break;
 				default:
+					LOG_DEAD_LETTER(message);
 					break;
 				}
 			}

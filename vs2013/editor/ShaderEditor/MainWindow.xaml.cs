@@ -2,8 +2,7 @@
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using OpenTK.Graphics.OpenGL4;
-using ShaderEditor.Rendering;
+using OpenTK.Graphics.OpenGL;
 using ShaderEditor.Scenes;
 using ShaderEditor.Shaders;
 using System;
@@ -44,13 +43,10 @@ namespace ShaderEditor
         #endregion
 
         #region Fields
+        private readonly Stopwatch renderTimeMeasurer;
         private readonly OpenTK.GLControl glControl;
 
-        private readonly SpriteBatch spriteBatch;
-        private readonly Viewport viewport;
-
-        private IScene[] scenes;
-        private Camera2D camera;
+        private Scene[] scenes;
         private Effect effect;
         #endregion
 
@@ -60,22 +56,14 @@ namespace ShaderEditor
 
             textEditor.TextArea.Caret.CaretBrush = new SolidColorBrush(Colors.Yellow);
 
-            glControl = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(32, 24, 8, 4), 3, 0, OpenTK.Graphics.GraphicsContextFlags.Default);
+            glControl = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(32, 24, 8, 4));
             glControl.Resize    += glControl_Resize;
             glControl.Load      += glControl_Load;
             glControl.Paint     += glControl_Paint;
 
             glHost.Child = glControl;
 
-            viewport = new Viewport(0, 0, glControl.Width, glControl.Height);
-            camera = new Camera2D(viewport);
-
-            spriteBatch = new SpriteBatch();
-        }
-
-        void Application_Idle(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
+            renderTimeMeasurer = Stopwatch.StartNew();
         }
 
         #region GLControl event handlers
@@ -88,30 +76,25 @@ namespace ShaderEditor
             }
 
             // Generate scenes.
-            scenes = new IScene[] 
+            scenes = new Scene[] 
             {
                 new SpriteScene(),
                 null
             };
-
-            spriteBatch.Initialize();
         }
         private void glControl_Resize(object sender, EventArgs e)
         {
-            viewport.Width = glControl.Width;
-            viewport.Height = glControl.Height;
-
-            GL.Viewport(viewport.X, viewport.Y, viewport.Width, viewport.Height);
+            scenes[0].Resize(glControl.Width, glControl.Height);
         }
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
-            GL.ClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-            
-            GL.Clear(ClearBufferMask.ColorBufferBit);
+            var delta = (float)renderTimeMeasurer.ElapsedMilliseconds;
 
-            DrawScene();
+            scenes[0].Draw(delta);
 
-            glControl.SwapBuffers();
+            renderTimeMeasurer.Restart();
+
+            glControl.Invalidate();
         }
         #endregion
 
@@ -169,23 +152,5 @@ namespace ShaderEditor
             }
         }
         #endregion
-
-        private void DrawScene()
-        {
-            var transform = camera.Transform();
-
-            effect.Bind();
-
-            effect.SetUniformValue("time", 0.0f, typeof(float));
-            effect.SetUniformValue("transform", transform, typeof(OpenTK.Matrix4));
-
-            spriteBatch.Begin();
-
-            scenes[0].Draw(spriteBatch, 0.0f);
-
-            spriteBatch.End();
-
-            effect.Unbind();
-        }
     }
 }
