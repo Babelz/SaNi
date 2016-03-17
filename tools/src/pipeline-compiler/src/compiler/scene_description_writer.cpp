@@ -44,6 +44,10 @@ namespace sani {
 							type2type(writer, field);
 						}
 					}
+					for (auto& primField : componentData.primitiveFields) {
+						writer->write(primField.name);
+						type2type(writer, primField);
+					}
 				}
 			}
 
