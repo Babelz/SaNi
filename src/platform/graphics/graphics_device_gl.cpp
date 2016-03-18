@@ -819,7 +819,7 @@ namespace sani {
 		}
 
 		uint32 GraphicsDevice::currentState() const {
-			return impl->cImpl.states.size();
+			return static_cast<uint32>(impl->cImpl.states.size());
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

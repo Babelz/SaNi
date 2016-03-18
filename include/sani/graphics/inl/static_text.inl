@@ -72,7 +72,7 @@ namespace sani {
 
 					if (it == font->characters.end()) throw std::runtime_error("character not present in sprite font");
 
-					const uint32 index = std::distance(font->characters.begin(), it);
+					const uint32 index = static_cast<uint32>(std::distance(font->characters.begin(), it));
 					const resource::GlyphContent& glyph = font->glyphs[index];
 
 					const float32 x = xOffset + glyph.xOffset;
@@ -207,7 +207,7 @@ namespace sani {
 			EffectUniform* f = shader.findUniform("transform");
 			f->setData(&t);
 
-			graphicsDevice->drawElements(RenderMode::Triangles, PrimitiveType::UInt, indices.size(), 0);
+			graphicsDevice->drawElements(RenderMode::Triangles, PrimitiveType::UInt, static_cast<uint32>(indices.size()), 0);
 
 			renderSetup.clear();
 			shader.unbind();
