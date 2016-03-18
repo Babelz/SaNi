@@ -100,11 +100,11 @@ namespace sani {
 				SetLastError(0);
 
 				// Try to set the window long ptr.
-				if (!SetWindowLongPtr(hWnd, GWL_USERDATA, reinterpret_cast<LONG_PTR>(window))) {
+				if (!SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(window))) {
 					if (GetLastError() != 0) return FALSE;
 				}
 			} else {
-				window = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWL_USERDATA));
+                window = reinterpret_cast<Window*>(GetWindowLongPtr(hWnd, GWLP_USERDATA));
 			}
 
 			switch (message) {
