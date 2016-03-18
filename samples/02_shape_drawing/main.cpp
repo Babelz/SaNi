@@ -11,6 +11,7 @@
 #include "sani/graphics/layer.hpp"
 #include "sani/graphics/renderables/circle.hpp"
 #include "sani/graphics/renderables/triangle.hpp"
+#include "sani/rtti/reflection_database.hpp"
 
 using namespace sani;
 using namespace sani::engine;
@@ -112,6 +113,7 @@ sg::Layer* getDefaultLayer(SaNiEngine* const engine) {
 }
 
 void initialize(SaNiEngine* const engine) {
+    auto& refdb = sani::rtti::ReflectionDatabase::getInstance();
 	auto getGraphicsDevice = engine->createEmptyMessage<messages::DocumentMessage>();
 	renderservice::getGraphicsDevice(getGraphicsDevice);
 	engine->routeMessage(getGraphicsDevice);
