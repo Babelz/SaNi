@@ -4,9 +4,9 @@
 #include <functional>
 
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS && SANI_DESKTOP
 #include "GL/glew.h"
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID && SANI_MOBILE
 #include <GLES2/gl2.h>
 #endif
 

@@ -50,7 +50,15 @@ namespace sani {
 
 				Texture2D* out = new Texture2D(device, width, height, faceCount > 1, SurfaceFormat::ColorRGBA);
 
-				for (uint64 level = 0u; level < faceCount; ++level) out->setData(device, level, nullptr, faces[level], 0, faces.size());
+                for (auto level = 0u; level < faceCount; ++level) {
+                    out->setData(device, 
+                        static_cast<int32>(level), 
+                        nullptr, 
+                        faces[level], 
+                        static_cast<uint32>(0u), 
+                        static_cast<uint32>(faces.size())
+                    );
+                }
 				
 				return out;
 			}
