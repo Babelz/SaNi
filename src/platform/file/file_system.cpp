@@ -16,7 +16,7 @@ namespace sani {
 		FileSystem::~FileSystem() {
 
 		}
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
+
 		bool FileSystem::isFileOpen(const String& path) const {
 			return handles.find(path) != handles.end();
 		}
@@ -64,7 +64,7 @@ namespace sani {
 			handle = nullptr;
 			handles.erase(path);
 		}
-#endif
+
 		String FileSystem::getFileDataString(const String& path) const  {
 			uint32 size = 0;
 			unsigned char* buffer = getFileData(path, size, true);
@@ -73,7 +73,7 @@ namespace sani {
 			}
 			return String((const char*)buffer);
 		}
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
+
 		unsigned char* FileSystem::getFileData(const String& path, uint32& fileSize, bool nullTerminate /*= false*/) const {
 			assert(isFileOpen(path));
 
@@ -88,13 +88,7 @@ namespace sani {
 				buffer = (unsigned char*)malloc(fsize);
 			}
 			uint32 readBytes = 0;
-			try {
-				readBytes = handle->read(buffer, fsize);
-			}
-			catch (std::exception& ex) {
-				(void)ex;
-				throw;
-			}
+			readBytes = handle->read(buffer, fsize);
 
 			// Failed
 			if (readBytes != fsize) {
@@ -125,7 +119,6 @@ namespace sani {
 			}
 			return statbuf.st_size;
 		}
-#endif
 	}
 }
 

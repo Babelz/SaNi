@@ -21,9 +21,9 @@ SANI_FORWARD_DECLARE_1(sani, LogBatcher);
 	"[filename]@[function]".
 */
 
-#define FLOG_ERR(outFlags, message) sani::log::__privns__::error(outFlags, __FILE__ + "@" + __FUNCTION__, message)
-#define FLOG_WRN(outFlags, message) sani::log::__privns__::warning(outFlags, __FILE__ + "@" + __FUNCTION__, message)
-#define FLOG_INF(outFlags, message) sani::log::__privns__::info(outFlags, __FILE__ + "@" + __FUNCTION__, message)
+#define FLOG_ERR(outFlags, message) sani::log::__privns__::error(outFlags, __FILE__  "@" __FUNCTION__, message)
+#define FLOG_WRN(outFlags, message) sani::log::__privns__::warning(outFlags, __FILE__  "@"  __FUNCTION__, message)
+#define FLOG_INF(outFlags, message) sani::log::__privns__::info(outFlags, __FILE__  "@"  __FUNCTION__, message)
 
 namespace sani {
 

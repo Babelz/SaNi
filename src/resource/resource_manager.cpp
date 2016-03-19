@@ -31,26 +31,16 @@ namespace sani {
 			if (!fileSystem->openFile(assetPath, Filemode::Read, &stream)) {
 				throw std::runtime_error("File not found!");
 			}
-			
-			try {
-				ResourceReader reader(stream, *this, graphicsDevice);
-				
-				void* resource = reader.readAsset(typeReaders);
 
-				fileSystem->closeFile(asset);
+            ResourceReader reader(stream, *this, graphicsDevice);
 
-				resources[asset] = static_cast<Resource*>(resource);
+            void* resource = reader.readAsset(typeReaders);
 
-				return resource;
-			}
-			catch (const std::exception& ex) {
-				(void)ex;
-				throw;
-			}
+            fileSystem->closeFile(asset);
 
-			fileSystem->closeFile(asset);
+            resources[asset] = static_cast<Resource*>(resource);
 
-			return nullptr;
+            return resource;
 		}
 
 		void ResourceManager::unload() {
