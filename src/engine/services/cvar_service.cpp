@@ -165,7 +165,7 @@ namespace sani {
 
 					const unsigned char* cstr = reinterpret_cast<const unsigned char*>(line.c_str());
 					
-					stream->write(cstr, line.size());
+					stream->write(cstr, static_cast<uint32>(line.size()));
 				}
 
 				auto closeFile = engine->createEmptyMessage<messages::CommandMessage>();

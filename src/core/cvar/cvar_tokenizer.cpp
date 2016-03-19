@@ -19,7 +19,7 @@ namespace sani {
 		// Go trough each file...
 		for (const CVarFile* file : files) {
 			// Go trough each line...
-			for (size_t i = 0; i < file->getLinesCount(); i++) {
+			for (uint32 i = 0; i < file->getLinesCount(); i++) {
 				const String& line = file->lineAtIndex(i);
 
 				cvarlang::TokenType type = cvarlang::TokenType::Invalid;

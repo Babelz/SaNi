@@ -104,7 +104,7 @@ namespace sani {
 											  circle.textureSource,
 											  static_cast<float32>(circle.texture->getWidth()),
 											  static_cast<float32>(circle.texture->getHeight()),
-											  circle.renderData.vertices.size());
+											  static_cast<uint32>(circle.renderData.vertices.size()));
 
 				// Set center vertex coordinates.
 				circle.renderData.vertices[0].textureCoordinates.x = (circle.textureSource.right() / circle.texture->getWidth()) * 0.5f; //0.5f;

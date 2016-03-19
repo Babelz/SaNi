@@ -175,13 +175,13 @@ namespace sani {
 			graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
 
 			graphicsDevice->setBufferData(BufferType::ArrayBuffer,
-										  vertices.size() * sizeof(float32) * sizeof(VertexPositionColorTexture),
+										  static_cast<uint32>(vertices.size() * sizeof(float32) * sizeof(VertexPositionColorTexture)),
 										  vertices.data(),
 										  BufferUsage::Static);
 
 
 			graphicsDevice->setBufferData(BufferType::ElementArrayBuffer,
-										  indices.size() * sizeof(uint32),
+										  static_cast<uint32>(indices.size() * sizeof(uint32)),
 										  indices.data(),
 										  BufferUsage::Static);
 
