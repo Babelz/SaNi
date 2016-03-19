@@ -210,6 +210,7 @@
     <ClCompile Include="..\..\src\core\profiling\profiler_entry.cpp" />
     <ClCompile Include="..\..\src\core\profiling\profiler_module.cpp" />
     <ClCompile Include="..\..\src\core\profiling\profiler_sample.cpp" />
+    <ClCompile Include="..\..\src\ecs\components\transform_component.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service.cpp" />
     <ClCompile Include="..\..\src\engine\engine_service_provider.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\channels\channel.cpp" />
@@ -316,6 +317,7 @@
     <ClCompile Include="..\..\src\rtti\type.cpp" />
     <ClCompile Include="..\..\src\rtti\type_data.cpp" />
     <ClCompile Include="..\..\src\rtti\type_database.cpp" />
+    <ClCompile Include="..\..\src\types.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\core\cvar\cvar.hpp" />

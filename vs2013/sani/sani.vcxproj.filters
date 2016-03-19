@@ -256,6 +256,12 @@
     <Filter Include="src\core\math">
       <UniqueIdentifier>{9fa612b0-ed87-4c25-b800-b6617211d513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\ecs">
+      <UniqueIdentifier>{32d23088-d3ee-4d7d-a7ca-dada4e37c043}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\ecs\components">
+      <UniqueIdentifier>{a2a510b7-3a65-4327-aa89-047865dde705}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -662,6 +668,10 @@
     </ClCompile>
     <ClCompile Include="..\..\src\core\math\vector.cpp">
       <Filter>src\core\math</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\types.cpp" />
+    <ClCompile Include="..\..\src\ecs\components\transform_component.cpp">
+      <Filter>src\ecs\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
