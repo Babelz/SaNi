@@ -23,6 +23,6 @@ static_assert(sizeof(char16) == 2, "sizeof(char16) != 2");
 static_assert(sizeof(SizeType) == sizeof(uint64), "SizeType is invalid");
 static_assert(sizeof(SignedSizeType) == sizeof(int64), "SignedSizeType is invalid");
 #else
-static_assert(sizeof(SizeType) == sizeof(uint64), "SizeType is invalid");
-static_assert(sizeof(SignedSizeType) == sizeof(int64), "SignedSizeType is invalid");
+static_assert(sizeof(SizeType) == sizeof(uint32), "SizeType is invalid");
+static_assert(sizeof(SignedSizeType) == sizeof(int32), "SignedSizeType is invalid");
 #endif
