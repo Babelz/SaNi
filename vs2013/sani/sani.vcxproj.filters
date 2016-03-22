@@ -265,6 +265,9 @@
     <Filter Include="src\esc\components">
       <UniqueIdentifier>{c68addfe-ae9e-48b2-bba4-e98daa7827bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\impl">
+      <UniqueIdentifier>{e55250a1-a76d-42e7-970b-e1e05b6125eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1020,9 +1023,6 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\message_releasing_strategy.hpp">
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp">
       <Filter>include\engine\messaging</Filter>
     </ClInclude>
@@ -1397,6 +1397,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\console.hpp">
       <Filter>include\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
+      <Filter>include\engine\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
