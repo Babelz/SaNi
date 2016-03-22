@@ -25,6 +25,14 @@ SANI_FORWARD_DECLARE_1(sani, LogBatcher);
 #define FLOG_WRN(outFlags, message) sani::log::__privns__::warning(outFlags, __FILE__ + "@" + __FUNCTION__, message)
 #define FLOG_INF(outFlags, message) sani::log::__privns__::info(outFlags, __FILE__ + "@" + __FUNCTION__, message)
 
+/*
+	Raw logging macros.
+*/
+
+#define RLOG_ERR(outFlags, from, message) sani::log::__privns__::error(outFlags, from, message)
+#define RLOG_WRN(outFlags, from, message) sani::log::__privns__::warning(outFlags, from, message)
+#define RLOG_INF(outFlags, from, message) sani::log::__privns__::info(outFlags, from, message)
+
 namespace sani {
 
 	template<class T>

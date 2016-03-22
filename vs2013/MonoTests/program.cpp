@@ -21,6 +21,7 @@ int main() {
 	/*
 		TODO: using abs paths just to test this shit.
 	*/
+
 	// Set path where managed assemblies live.
 	mono_set_assemblies_path("C:\\Users\\Niko\\Source\\Repos\\SaNi\\vs2013\\sanimono\\SaNi\\bin\\Debug");
 	// Set Mono library and configuration paths.
@@ -30,7 +31,6 @@ int main() {
 	// the code we are going to run.
 	domain = mono_jit_init_version("SaNi", "v4.0.30319");
 	
-
 	// Our domain in which the code will be 
 	// executed.
 	MonoAssembly* assembly = mono_domain_assembly_open(domain, "C:\\Users\\Niko\\Source\\Repos\\SaNi\\vs2013\\sanimono\\SaNi\\bin\\Debug\\SaNi.exe");

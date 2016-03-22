@@ -669,6 +669,9 @@
     <ClCompile Include="..\..\src\core\math\vector.cpp">
       <Filter>src\core\math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono_runtime.cpp">
+      <Filter>src\engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1381,6 +1384,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\service_logging.hpp">
       <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono_provider.hpp">
+      <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono_runtime.hpp">
+      <Filter>include\engine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
