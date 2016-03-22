@@ -2,6 +2,8 @@
 #include "sani/rtti/type_database.hpp"
 #include "sani/resource/scene.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
+#include "sani/ecs/components/transform_component.hpp"
+#include "sani/rtti/argument.hpp"
 
 namespace sani {
 	namespace resource {
@@ -38,6 +40,41 @@ namespace sani {
 						filesToLoad.emplace_back(root + reader->readString());
 					}
 				}
+
+                uint64 componentCount = reader->read7BitEncodedInt();
+
+                auto& db = sani::rtti::TypeDatabase::getInstance();
+
+                
+                sani::rtti::Type ourType = typeof(sani::Transform);
+                sani::rtti::Object tx = ourType.create(sani::rtti::Arguments{});
+                
+                for (uint64 i = 0u; i < componentCount; ++i) {
+                    uint64 objFieldCount = reader->read7BitEncodedInt();
+                    for (uint64 fieldIndex = 0u; fieldIndex < objFieldCount; ++fieldIndex) {
+                        String8 fieldName(reader->readString());
+                        const sani::rtti::Field& objField = ourType.getField(fieldName);
+                        const sani::rtti::Type objFieldType = objField.getType();
+                        sani::rtti::Object instance = objFieldType.create(sani::rtti::Arguments{});
+                        uint64 something = reader->read7BitEncodedInt();
+                        for (uint64 gg = 0u; gg < something; ++gg) {
+                            String8 name(reader->readString());
+                            const sani::rtti::Field& valueField = objFieldType.getField(name);
+                            uint32 type = reader->readInt32();
+                            if (type == typeof(float32).getID()) {
+                                // hax
+                                float32 data = reader->readSingle();
+                                valueField.setValue(instance, data);
+                            }
+                            else {
+                                throw std::runtime_error("not impl");
+                            }
+                            
+                        }
+                        SANI_ASSERT(objField.setValue(tx, instance));
+                    }
+                }
+
 				scene = new Scene(sceneName, filesToLoad);
 				return scene;
 			}

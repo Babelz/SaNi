@@ -33,6 +33,7 @@ namespace sani {
 					}
 				}
 
+                writer->write7BitEncodedInt(content->components.size());
 				// TODO only one for now fix this
 				for (auto& componentData : content->components) {
 					writer->write7BitEncodedInt(componentData.objectFields.size());

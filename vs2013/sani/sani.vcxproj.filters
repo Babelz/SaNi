@@ -669,9 +669,11 @@
     <ClCompile Include="..\..\src\core\math\vector.cpp">
       <Filter>src\core\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\types.cpp" />
     <ClCompile Include="..\..\src\ecs\components\transform_component.cpp">
       <Filter>src\ecs\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\types.cpp">
+      <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
