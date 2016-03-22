@@ -29,7 +29,7 @@ namespace sani {
 
 			void Channel::route(messages::Message* const message) {
 				if (message->getType() != channelType) {
-					FLOG_ERR(log::OutFlags::All, "invalid message type for the given channel");
+					FNCLOG_ERR(log::OutFlags::All, "invalid message type for the given channel");
 					
 					std::abort();
 				}

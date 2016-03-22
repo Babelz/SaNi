@@ -8,6 +8,8 @@ namespace sani {
 
 	namespace log {
 
+		static LogImpl impl;
+
 		template<class T>
 		static void logTo(const uint16 id, const String& from, const String& message, const LogLevel level) {
 			if (id == NullLogger) return;
@@ -22,11 +24,12 @@ namespace sani {
 		}
 
 		static void internalLog(const OutFlags outFlags, const String& from, const String& message, const LogLevel level) {
-			const uint16 isConsoleOut = (static_cast<uint32>(outFlags) >> 0) & 1 * 1;
-			const uint16 isFileOut = (static_cast<uint32>(outFlags) >> 1) & 1 * 2;
+			const uint16 isConsoleOut = (static_cast<uint32>(outFlags) >> 0) & 1;
+			const uint16 isFileOut = (static_cast<uint32>(outFlags) >> 1) & 1;
 
-			logTo<SystemConsoleLogger>(isConsoleOut, from, message, level);
-			logTo<FileLogger>(isFileOut, from, message, level);
+			// Mul by index to translate to id.
+			logTo<SystemConsoleLogger>(isConsoleOut * 1, from, message, level);
+			logTo<FileLogger>(isFileOut * 2, from, message, level);
 		}
 
 		namespace __privns__ {
@@ -42,15 +45,15 @@ namespace sani {
 			}
 		}
 
-
 		void batch(const OutFlags outFlags, LogBatcher& batcher) {
 			const uint32 outFlagsi = static_cast<uint32>(outFlags);
 
-			uint16 isConsoleOut = (outFlagsi >> 0) & 1 * 1;
-			uint16 isFileOut	= (outFlagsi >> 1) & 1 * 2;
+			uint16 isConsoleOut = (outFlagsi >> 0) & 1;
+			uint16 isFileOut	= (outFlagsi >> 1) & 1;
 
-			internalBatch<SystemConsoleLogger>(isConsoleOut, batcher);
-			internalBatch<FileLogger>(isFileOut, batcher);
+			// Mul by index to translate to id.
+			internalBatch<SystemConsoleLogger>(isConsoleOut * 1, batcher);
+			internalBatch<FileLogger>(isFileOut * 2, batcher);
 		}
 	}
 }

@@ -56,12 +56,6 @@ namespace sani {
 			}
 		}
 
-		bool ServiceRegistry::hasErrors() const {
-			for (EngineService* const service : services) if (service->hasErrors()) return true;
-
-			return false;
-		}
-
 		void ServiceRegistry::terminate() {
 			for (EngineService* const service : services) service->terminate();
 		}

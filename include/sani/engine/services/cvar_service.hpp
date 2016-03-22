@@ -56,7 +56,7 @@ namespace sani {
 				void handleQueryMessage(messages::QueryMessage* const message);
 
 				/// Initialize the service.
-				void initialize();
+				bool initialize();
 				/// Sync all cvars to a file.
 				void syncCVars();
 
@@ -79,7 +79,8 @@ namespace sani {
 				/// List all services.
 				void listCVars(messages::DocumentMessage* const message);
 			protected:
-				void handleStateMessage(StateMessage* const message) final override;
+				virtual bool onStart() final override;
+				virtual void onTerminate() final override;
 			public:
 				CVarService(SaNiEngine* const engine);
 

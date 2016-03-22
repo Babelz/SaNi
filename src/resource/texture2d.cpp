@@ -95,7 +95,7 @@ namespace sani {
 			const unsigned char* ptr = data.data() + startIndex;
 
 			if (rect != nullptr) {
-				FLOG_ERR(log::OutFlags::All, "not implemented");
+				FNCLOG_ERR(log::OutFlags::All, "not implemented");
 
 				std::abort();
 			}
@@ -121,7 +121,7 @@ namespace sani {
 
 		void Texture2D::getData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount) {
 			if (rect != nullptr) {
-				FLOG_ERR(log::OutFlags::All, "not implemented");
+				FNCLOG_ERR(log::OutFlags::All, "not implemented");
 
 				std::abort();
 			}

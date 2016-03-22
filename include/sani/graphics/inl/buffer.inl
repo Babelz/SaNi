@@ -9,7 +9,7 @@ namespace sani {
 		void Buffer<T>::checkSize(const uint32 offset) {
 			if (bufferSizing == BufferSizing::Static) {
 				if (bufferPointer + offset > size) {
-					FLOG_ERR(log::OutFlags::All, "buffer overflow!");
+					FNCLOG_ERR(log::OutFlags::All, "buffer overflow!");
 
 					std::abort();
 				}

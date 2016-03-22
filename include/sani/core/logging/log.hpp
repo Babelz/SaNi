@@ -35,15 +35,7 @@ SANI_FORWARD_DECLARE_1(sani, LogBatcher);
 
 namespace sani {
 
-	template<class T>
-	class Logger;
-
 	namespace log {
-
-		namespace {
-
-			LogImpl impl;
-		}
 
 		namespace __privns__ {
 

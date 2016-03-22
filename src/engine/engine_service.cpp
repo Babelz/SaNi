@@ -2,6 +2,8 @@
 #include "sani/engine/services/engine_service.hpp"
 #include "sani/core/logging/log.hpp"
 
+#include <sstream>
+
 namespace sani {
 
 	namespace engine {
@@ -21,66 +23,77 @@ namespace sani {
 																						 state(ServiceState::Uninitialized) {
 			}
 
-			void EngineService::sendStateMessage(StateMessage* const message, const String& errorMessage) {
-				handleStateMessage(message);
-
+			void EngineService::checkIfTerminated(const char* caller) {
 				if (state == ServiceState::Terminated) {
-					// Unsuccessful terminate messages are handled
-					// as fatal errors.
-					if (!message->handled) {
-						FLOG_ERR(log::OutFlags::All, errorMessage);
+					std::stringstream ss;
+					ss << "invalid function call ";
+					ss << "\"";
+					ss << caller;
+					ss << "\"";
+					ss << ", service has been terminated";
 
-						std::abort();
-					}
+					FNCLOG_ERR(log::OutFlags::All, ss.str());
 
-					return;
+					std::abort();
 				}
-
-				// If message was not handled, terminate the service.
-				if (!message->handled) {
-					errors.push(errorMessage);
-
-					StateMessage terminateMessage(ServiceState::Terminated, state);
-
-					sendStateMessage(&terminateMessage, terminateErrorMessage);
-
-					state = ServiceState::Terminated;
-
-					return;
-				}
-
-				state = message->newState;
-			}
-
-			void EngineService::handleStateMessage(StateMessage* const stateMessage) {
-				// Default handling, messages are always "handled".
-				stateMessage->handled = true;
 			}
 
 			SaNiEngine* const EngineService::getEngine() {
 				return engine;
 			}
 
-			void EngineService::pushError(const String& error) {
-				errors.push(error);
+			bool EngineService::onStart() {
+				return true;
+			}
+			bool EngineService::onResume() {
+				return true;
+			}
+			void EngineService::onSuspend() {
+			}
+			void EngineService::onTerminate() {
 			}
 
-			void EngineService::start() {
-				StateMessage stateMessage(ServiceState::Running, state);
+			bool EngineService::start() {
+				checkIfTerminated(__FUNCTION__);
 
-				const String errorMessage = state == ServiceState::Uninitialized ? initializationErrorMessage : resumeErrorMessage;
+				bool results = false;
 
-				sendStateMessage(&stateMessage, errorMessage);
+				if		(state == ServiceState::Uninitialized)	results = onStart();
+				else if (state == ServiceState::Suspended)		results = onResume();
+				else											FNCLOG_WRN(log::OutFlags::All, "call to start invalid at this time");
+
+				if (results) state = ServiceState::Running;
+
+				return results;
 			}
 			void EngineService::suspend() {
-				StateMessage stateMessage(ServiceState::Suspended, state);
+				checkIfTerminated(__FUNCTION__);
 
-				sendStateMessage(&stateMessage, suspendErrorMessage);
+				if (state != ServiceState::Running) {
+					FNCLOG_WRN(log::OutFlags::All, "call to suspend invalid at this time");
+					
+					return;
+				}
+
+				onSuspend();
+				
+				state = ServiceState::Suspended;
 			}
 			void EngineService::terminate() {
-				StateMessage stateMessage(ServiceState::Terminated, state);
+				checkIfTerminated(__FUNCTION__);
 
-				sendStateMessage(&stateMessage, terminateErrorMessage);
+				std::stringstream ss;
+				ss << "service ";
+				ss << "\"";
+				ss << getName();
+				ss << "\" ";
+				ss << "terminated";
+
+				FNCLOG_INF(log::OutFlags::All, ss.str());
+
+				onTerminate();
+
+				state = ServiceState::Terminated;
 			}
 
 			void EngineService::receive(messages::Message* const message) {
@@ -97,10 +110,6 @@ namespace sani {
 			}
 			uint32 EngineService::getID() const {
 				return id;
-			}
-
-			bool EngineService::hasErrors() const {
-				return !errors.empty();
 			}
 
 			EngineService::~EngineService()  {

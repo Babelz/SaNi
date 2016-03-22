@@ -7,6 +7,7 @@
 #include "sani/forward_declare.hpp"
 #include "sani/core/events.hpp"
 
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include <Windows.h>
@@ -54,6 +55,10 @@ namespace sani {
 			bool initializeRenderService(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 			bool initializeRenderableManagers();
 			bool initializeEntityComponentSystem();
+			bool initializeMono();
+			
+			bool loadUserServices();
+			bool loadScene();
 
 			/// Initializes the engine.
 			bool initialize();

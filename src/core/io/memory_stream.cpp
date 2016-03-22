@@ -21,7 +21,7 @@ namespace sani {
 		}
 
 		uint32 MemoryStream::read(unsigned char* buffer, const int32 offset, const uint32 size)  {
-			FLOG_ERR(log::OutFlags::All, "not implemented");
+			FNCLOG_ERR(log::OutFlags::All, "not implemented");
 
 			std::abort();
 		}
@@ -54,7 +54,7 @@ namespace sani {
 		}
 
 		void MemoryStream::flush() {
-			FLOG_ERR(log::OutFlags::All, "not implemented");
+			FNCLOG_ERR(log::OutFlags::All, "not implemented");
 
 			std::abort();
 		}

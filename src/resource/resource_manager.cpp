@@ -40,7 +40,7 @@ namespace sani {
 				ss << "\" ";
 				ss << "not found";
 
-				FLOG_ERR(log::OutFlags::All, ss.str());
+				FNCLOG_ERR(log::OutFlags::All, ss.str());
 
 				std::abort();
 			}

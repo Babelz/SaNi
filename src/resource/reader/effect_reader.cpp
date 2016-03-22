@@ -35,7 +35,7 @@ namespace sani {
 					//String binary = reader->readString();
 
 					// glProgramnBinaryETC shit..
-					FLOG_ERR(log::OutFlags::All, "not implemented");
+					FNCLOG_ERR(log::OutFlags::All, "not implemented");
 
 					std::abort();
 				}

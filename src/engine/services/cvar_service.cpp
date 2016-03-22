@@ -10,7 +10,6 @@
 #include "sani/core/cvar/cvar_compiler.hpp"
 #include "sani/core/cvar/cvar_linker.hpp"
 #include "sani/core/cvar/link_record.hpp"
-#include "sani/platform/environment.hpp"
 #include "sani/engine/services/service_logging.hpp"
 #include "sani/core/logging/log.hpp"
 
@@ -27,11 +26,11 @@ namespace sani {
 			CVarService::CVarService(SaNiEngine* const engine) : EngineService("cvar service", engine) {
 			}
 
-			void CVarService::handleStateMessage(StateMessage* const message) {
-				if (message->oldState == ServiceState::Uninitialized)		initialize();
-				else if (message->newState == ServiceState::Terminated)		syncCVars();
-
-				EngineService::handleStateMessage(message);
+			bool CVarService::onStart() {
+				return initialize();
+			}
+			void CVarService::onTerminate() {
+				syncCVars();
 			}
 
 			void CVarService::handleDocumentMessage(messages::DocumentMessage* const message) {
@@ -62,7 +61,7 @@ namespace sani {
 				}
 			}
 
-			void CVarService::initialize() {
+			bool CVarService::initialize() {
 				SaNiEngine* const engine = getEngine();
 				
 				// Attempt to open the configuration file.
@@ -82,14 +81,22 @@ namespace sani {
 					engine->releaseMessage(closeFile);
 
 					configuration.isDefault = false;
+
+					FNCLOG_INF(log::OutFlags::All, "user defined cvar configuration loaded");
 				} else {
 					// No config file was defined, generate a default config.
 					generateDefaultConfig();
 
 					configuration.isDefault = true;
+					
+					FNCLOG_WRN(log::OutFlags::All, "default cvar configuration in use");
 				}
 				
 				engine->releaseMessage(openFile);
+				
+				// Initialization should never fail, either the user defined file gets loaded 
+				// or the default config.
+				return true;
 			}
 			void CVarService::syncCVars() {
 				if (!configuration.canSync) return;
@@ -161,7 +168,7 @@ namespace sani {
 				SaNiEngine* engine = getEngine();
 
 				for (uint32 i = 0; i < file.getLinesCount(); i++) {
-					const String line = file.lineAtIndex(i) + sani::env::NewLine;
+					const String line = file.lineAtIndex(i) + '\n';
 
 					const unsigned char* cstr = reinterpret_cast<const unsigned char*>(line.c_str());
 					

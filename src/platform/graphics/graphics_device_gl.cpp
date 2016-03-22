@@ -214,7 +214,7 @@ namespace sani {
 
 			if (hasErrors()) {
 				// Clean up before returning.
-				cleanUp();
+				cleanup();
 
 				return false;
 			}
@@ -261,7 +261,7 @@ namespace sani {
 			IF_ERRORS_RETURN;
 		}
 
-		bool GraphicsDevice::cleanUp() {
+		bool GraphicsDevice::cleanup() {
 			IF_ERRORS_RETURN false;
 
 			// Swap context and delete it.

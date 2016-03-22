@@ -16,7 +16,7 @@ namespace sani {
 
 		void Layer::typeInitialize() {
 			if (type == LayerType::Static) {
-				FLOG_ERR(log::OutFlags::All, "unsupported layer type static");
+				FNCLOG_ERR(log::OutFlags::All, "unsupported layer type static");
 				
 				std::abort();
 			}

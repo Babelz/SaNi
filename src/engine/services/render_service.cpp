@@ -33,16 +33,6 @@ namespace sani {
 				engine->quit();
 			}
 
-			void RenderService::handleStateMessage(StateMessage* const message) {
-				if (message->oldState == ServiceState::Uninitialized) {
-					// Initialize.
-					renderer.initialize();
-					initialize();
-				}
-
-				EngineService::handleStateMessage(message);
-			}
-
 			void RenderService::handleDocumentMessage(messages::DocumentMessage* const message) {
 				const RenderServiceCommands command = static_cast<RenderServiceCommands>(message->getCommand());
 
@@ -92,7 +82,7 @@ namespace sani {
 				}
 			}
 
-			void RenderService::initialize() {
+			bool RenderService::onStart() {
 				// Initialize default viewport.
 				Viewport viewport = Viewport(0, 0, window->getClientWidth(), window->getClientHeight());
 				graphicsDevice->setViewport(viewport);
@@ -105,6 +95,14 @@ namespace sani {
 				// Listen for window exit events so we can close the engine after
 				// the window has been closed.
 				window->closed += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowClosed, getEngine()));
+
+				if (renderer.initialize()) return false;
+
+				/// Should never fail.
+				return true;
+			}
+			void RenderService::onTerminate() {
+				graphicsDevice->cleanup();
 			}
 
 			void RenderService::createLayer(messages::CommandMessage* const message) {
@@ -259,8 +257,6 @@ namespace sani {
 			}
 
 			RenderService::~RenderService() {
-				graphicsDevice->cleanUp();
-				
 				delete graphicsDevice;
 				delete window;
 			}

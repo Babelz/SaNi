@@ -93,7 +93,7 @@ namespace sani {
 			/// Initializes the device.
 			bool initialize();
 			/// Cleans the device.
-			bool cleanUp();
+			bool cleanup();
 
 			/// Clears the device. Swaps the back
 			/// and front buffer.

@@ -20,7 +20,7 @@ namespace sani {
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 			if (!overwrite && faces.size() > 1) return;
 			if (overwrite) {
-				FLOG_ERR(log::OutFlags::All, "not implemented");
+				FNCLOG_ERR(log::OutFlags::All, "not implemented");
 
 				std::abort();
 			}
@@ -47,7 +47,7 @@ namespace sani {
 				img.write(0, 0, w, h, "RGBA", Magick::CharPixel, faces.back().data());
 			}
 #else
-			FLOG_ERR(log::OutFlags::All, "not implemented");
+			FNCLOG_ERR(log::OutFlags::All, "not implemented");
 			
 			std::abort();
 #endif

@@ -35,8 +35,6 @@ namespace sani {
 			private:
 				static uint32 idGenerator;
 
-				std::stack<String> errors;
-
 				engine::SaNiEngine* const engine;
 				ServiceState state;
 
@@ -44,25 +42,32 @@ namespace sani {
 				const String name;
 				// Unique identifier of the service.
 				const uint32 id;
-
-				void sendStateMessage(StateMessage* const message, const String& errorMessage);
+			
+				void checkIfTerminated(const char* caller);
 			protected:
-				virtual void handleStateMessage(StateMessage* const stateMessage);
-
 				engine::SaNiEngine* const getEngine();
 
-				void pushError(const String& error);
-
 				EngineService(const String& name, engine::SaNiEngine* const engine);
+
+				/// Internal event called when the service is being started.
+				virtual bool onStart();
+				/// Internal event called when the service is being resumed.
+				virtual bool onResume();
+				/// Internal event called when the service is being suspended.
+				virtual void onSuspend();
+				/// Internal event called when the service is being terminated.
+				virtual void onTerminate();
 			public:
 				/// Starts the service. First call 
 				/// allows for service specific initialization.
-				void start();
+				bool start();
 				/// Suspends the service. While suspended, the service can't
 				/// process or send any messages.
 				void suspend();
 				/// Terminates the service. Services that are
 				/// terminated should not be used anymore.
+				/// Clears service state and disposes of memory
+				/// the service is using.
 				void terminate();
 
 				/// Process all incoming messages.
@@ -74,8 +79,6 @@ namespace sani {
 
 				const String& getName() const;
 				uint32 getID() const;
-
-				bool hasErrors() const;
 
 				virtual ~EngineService();
 

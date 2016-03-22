@@ -16,7 +16,7 @@ namespace sani {
 			File			= 2,
 
 			/// All loggers will receive this message.
-			All				= SystemConsole & File
+			All				= 3
 		};
 
 		OutFlags operator &(const OutFlags lhs, const OutFlags rhs);

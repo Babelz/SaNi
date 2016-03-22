@@ -70,7 +70,7 @@ namespace sani {
                                 valueField.setValue(instance, data);
                             }
                             else {
-								FLOG_ERR(log::OutFlags::All, "not implemented");
+								FNCLOG_ERR(log::OutFlags::All, "not implemented");
 
 								std::abort();
                             }

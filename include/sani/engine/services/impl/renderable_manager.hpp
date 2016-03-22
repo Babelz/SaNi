@@ -4,6 +4,7 @@
 #include "sani/graphics/renderables/renderables.hpp"
 #include "sani/engine/sani_engine.hpp"
 #include "sani/engine/services/service_logging.hpp"
+#include "sani/core/logging/log.hpp"
 
 #include <vector>
 
@@ -59,6 +60,8 @@ namespace sani {
 
 				message->setData(element);
 				message->markHandled();
+
+				FNCLOG_INF(log::OutFlags::All, "created renderable element");
 			}
 			template <class T>
 			void RenderableManager<T>::deleteElement(messages::DocumentMessage* const message) {
@@ -69,6 +72,8 @@ namespace sani {
 				elementsToUpdate.remove(element);
 
 				message->markHandled();
+
+				FNCLOG_INF(log::OutFlags::All, "deleted renderable element");
 			}
 			template <class T>
 			void RenderableManager<T>::queueForUpdates(messages::DocumentMessage* const message) {

@@ -79,7 +79,7 @@ namespace sani {
 						ss << "\" ";
 						ss << "not present in the sprite font";
 
-						FLOG_ERR(log::OutFlags::All, ss.str());
+						FNCLOG_ERR(log::OutFlags::All, ss.str());
 
 						std::abort();
 					}
@@ -164,7 +164,7 @@ namespace sani {
 					staticText.renderTarget->dispose();
 
 					if (!staticText.renderTarget->disposed()) {
-						FLOG_ERR(log::OutFlags::All, "could not dispose render target");
+						FNCLOG_ERR(log::OutFlags::All, "could not dispose render target");
 
 						std::abort();
 					}

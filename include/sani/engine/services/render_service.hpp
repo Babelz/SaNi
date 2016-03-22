@@ -47,7 +47,7 @@ namespace sani {
 				void handleDocumentMessage(messages::DocumentMessage* const message);
 				void handleCommandMessage(messages::CommandMessage* const message);
 				
-				void initialize();
+				bool initialize();
 
 				/*
 					Command functions.				
@@ -69,7 +69,8 @@ namespace sani {
 
 				void renderToCamera(const graphics::Camera2D& camera);
 			protected:
-				void handleStateMessage(StateMessage* const message) final override;
+				virtual bool onStart() final override;
+				virtual void onTerminate() final override;
 			public:
 				RenderService(SaNiEngine* const engine, graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 

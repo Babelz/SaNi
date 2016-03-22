@@ -17,12 +17,16 @@ namespace sani {
 		SANI_ASSERT(stream != nullptr);
 
 		String out;
-		formatOut(out, from, message, level);
 
-		const char* cstr			= out.c_str();
+		formatOut(out, from, message, level);
+		
+		out += '\n';
+
+		const char* cstr = out.c_str();
 		const unsigned char* ucstr	= reinterpret_cast<const unsigned char*>(cstr);
 		
 		stream->write(ucstr, static_cast<uint32>(out.size()));
+		stream->flush();
 	}
 
 	void FileLogger::logError(const String& from, const String& message) {

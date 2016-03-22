@@ -34,7 +34,7 @@ namespace sani {
 				magic[2] = readByte();
 				
 				if (strcmp(magic, "SNB") != 0) {
-					FLOG_ERR(log::OutFlags::All, "not SNB file");
+					FNCLOG_ERR(log::OutFlags::All, "not SNB file");
 
 					std::abort();
 				}
@@ -62,7 +62,7 @@ namespace sani {
 						ss << typeReaderName;
 						ss << "\"";
 
-						FLOG_ERR(log::OutFlags::All, ss.str());
+						FNCLOG_ERR(log::OutFlags::All, ss.str());
 
 						std::abort();
 					}

@@ -104,6 +104,9 @@ public:
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 	
+	sani::console::create(720, 600);
+	sani::console::show();
+
 	auto& db = sani::rtti::TypeDatabase::getInstance();
 	auto& refDb = sani::rtti::ReflectionDatabase::getInstance();
 	RTTI_REGISTER_TYPE(AATest);
@@ -146,41 +149,13 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	}
 	
 	assert(test.getKek() == 715517);
-	
-	sani::SystemConsoleLogger logger;
-	
-	logger.logError("main", "is this red?");
-	logger.logWarning("main", "is this yellow?");
-	logger.logInfo("main", "is this green?");
-	sani::console::writeLine("is this default?");
 
-	sani::LogBatcher b;
-	
-	b.beginLog("WinMain", "LOG MAIN");
-
-	b.scopeStart();
-	b.logInfo("Ebin info1");
-	b.logInfo("Ebin info2");
-	b.logInfo("Ebin info3");
-
-	b.scopeStart();
-	b.logInfo("Some sub call");
-	b.logInfo("sub prod 1");
-	b.logInfo("sub prod 2");
-	b.logError("dere was en error");
-	b.logInfo("sub prod 3");
-	b.logInfo("sub prod 4");
-	b.logWarning("dere was en waanin");
-	b.scopeEnd();
-	
-	b.scopeEnd();
-
-//	b.endLog(logger);
 
 	SaNiEngine engine(hInstance);
+
 	engine.onInitialize += initialize;
 	engine.onUpdate += sandbox::update;
-	std::cout << sani::hid::Keyboard::keyToName(sani::hid::Key::LShift) << std::endl;
+
 	engine.start();
 	
 	return 0;

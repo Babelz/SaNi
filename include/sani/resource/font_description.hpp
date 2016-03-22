@@ -45,7 +45,7 @@ namespace sani {
 			inline float getSize() const { return size; }
 			inline void setSize(float newSize) { 
 				if (newSize <= 0.0f) {
-					FLOG_ERR(log::OutFlags::All, "size must be greater than zero");
+					FNCLOG_ERR(log::OutFlags::All, "size must be greater than zero");
 
 					std::abort();
 				}
@@ -56,7 +56,7 @@ namespace sani {
 			inline const String& getFontName() const { return fontName; }
 			inline void setFontName(const String& newName) {
 				if (newName.empty()) {
-					FLOG_ERR(log::OutFlags::All, "font name can't be empty");
+					FNCLOG_ERR(log::OutFlags::All, "font name can't be empty");
 
 					std::abort();
 				}
@@ -102,7 +102,7 @@ namespace sani {
 					unsigned short end = std::get<1>(region);
 
 					if (start >= end)  {
-						FLOG_ERR(log::OutFlags::All, "start needs to be less than end!");
+						FNCLOG_ERR(log::OutFlags::All, "start needs to be less than end!");
 
 						std::abort();
 					}

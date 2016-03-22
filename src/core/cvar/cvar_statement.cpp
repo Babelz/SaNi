@@ -69,7 +69,7 @@ namespace sani {
 
 				i++;
 			} else {
-				FLOG_ERR(log::OutFlags::All, "invalid or unsupported cvarlang::Operator");
+				FNCLOG_ERR(log::OutFlags::All, "invalid or unsupported cvarlang::Operator");
 
 				std::abort();
 			}

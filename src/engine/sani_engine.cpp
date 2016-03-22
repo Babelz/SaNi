@@ -35,6 +35,11 @@
 #include "sani/core/profiling/profiler.hpp"
 #include "sani/platform/console.hpp"
 
+#include "sani/core/logging/log_batcher.hpp"
+
+#include <sstream>
+#include <vector>
+
 namespace sani {
 
 	namespace engine {
@@ -68,22 +73,40 @@ namespace sani {
 		bool SaNiEngine::initializeFilesystem() {
 			FileSystemService* fileSystemService = new FileSystemService(this);
 			services.registerService(fileSystemService);
-			fileSystemService->start();
+			
+			if (fileSystemService->start()) {
+				FNCLOG_INF(log::OutFlags::All, "file system service started...");
 
-			return !fileSystemService->hasErrors();
+				return true;
+			}
+
+			FNCLOG_ERR(log::OutFlags::All, "failed to start file system service!");
+
+			return false;
 		}
 		bool SaNiEngine::initializeCVarSystem() {
 			CVarService* cvarService = new CVarService(this);
 			services.registerService(cvarService);
-			cvarService->start();
+			
+			if (cvarService->start()) {
+				FNCLOG_INF(log::OutFlags::All, "cvar service started...");
 
-			return !cvarService->hasErrors();
+				return true;
+			}
+
+			FNCLOG_ERR(log::OutFlags::All, "failed to start cvar service!");
+
+			return false;
 		}
 		bool SaNiEngine::initializeGraphics() {
 			// Window init.
 			graphics::Window* const window = new graphics::Window(hInstance, 1280, 720);
 
-			if (!window->initialize()) return false;
+			if (!window->initialize()) {
+				FNCLOG_ERR(log::OutFlags::All, "could not create window");
+
+				return false;
+			}
 
 			window->setTitle("SaNi Engine");
 			window->show();
@@ -94,61 +117,108 @@ namespace sani {
 																						  1280,
 																						  720);
 
-			if (!graphicsDevice->initialize()) return false;
+			if (!graphicsDevice->initialize()) {
+				FNCLOG_ERR(log::OutFlags::All, "graphics device initialization failed");
+
+				return false;
+			}
 
 			window->sizeChanged += SANI_EVENT_HANDLER(void(), std::bind(&SaNiEngine::windowSizeChanged, graphicsDevice, window));
 
 			if (!initializeRenderService(graphicsDevice, window)) return false;
 
+			// All ok.
 			return true;
 		}
 		bool SaNiEngine::initializeRenderService(sani::graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window) {
 			services::RenderService* renderService = new services::RenderService(this, graphicsDevice, window);
 			services.registerService(renderService);
-			renderService->start();
 
-			return !renderService->hasErrors();
+			// All ok.
+			if (renderService->start()) {
+				FNCLOG_INF(log::OutFlags::All, "render service started...");
+				
+				return true;
+			}
+
+			FNCLOG_ERR(log::OutFlags::All, "failed to start render service");
+
+			// Failed to init. Shit is hitting the fan.
+			return false;
 		}
 		bool SaNiEngine::initializeRenderableManagers() {
-			SpriteManager* spriteManager					= new services::SpriteManager(this);
-			CircleManager* circleManager					= new services::CircleManager(this);
-			TriangleManager* triangleManager				= new services::TriangleManager(this);
-			RectangleManager* rectangleManager				= new services::RectangleManager(this);
-			SpriteAnimationManager* spriteAnimationManager	= new SpriteAnimationManager(this);
-			ParticleEmitterManager* particleEmitterManager	= new ParticleEmitterManager(this);
+			services::EngineService* services[] = {
+				new services::SpriteManager(this),
+				new services::CircleManager(this),
+				new services::TriangleManager(this),
+				new services::RectangleManager(this),
+				new SpriteAnimationManager(this),
+				new ParticleEmitterManager(this)
+			};
 
-			services.registerService(spriteManager);
-			services.registerService(circleManager);
-			services.registerService(triangleManager);
-			services.registerService(rectangleManager);
-			services.registerService(spriteAnimationManager);
-			services.registerService(particleEmitterManager);
+			std::vector<String> errors;
 
-			spriteManager->start();
-			circleManager->start();
-			triangleManager->start();
-			rectangleManager->start();
-			spriteAnimationManager->start();
-			particleEmitterManager->start();
+			// Register.
+			for (auto* service : services) registerService(service);
 
-			if (spriteManager->hasErrors())				return false;
-			if (circleManager->hasErrors())				return false;
-			if (triangleManager->hasErrors())			return false;
-			if (rectangleManager->hasErrors())			return false;
-			if (spriteAnimationManager->hasErrors())	return false;
-			if (particleEmitterManager->hasErrors())	return false;
+			// Start.
+			for (auto* service : services) {
+				if (!service->start()) {
+					std::stringstream ss;
+					ss << "failed to start renderable manager \"";
+					ss << service->getName();
+					ss << "\"";
 
-			return true;
+					errors.push_back(ss.str());
+				} else {
+					std::stringstream ss;
+					ss << "started renderable manager \"";
+					ss << service->getName();
+					ss << "\"";
+
+					FNCLOG_INF(log::OutFlags::All, ss.str());
+				}
+			}
+
+			// All ok.
+			if (errors.empty()) {
+				return true;
+			}
+
+			for (auto& str : errors) FNCLOG_ERR(log::OutFlags::All, str);
+
+			// Shit is hitting the fan.
+			return false;
 		}
 		bool SaNiEngine::initializeEntityComponentSystem() {
 			EntityManager* entityManager = new EntityManager(this);
 
 			services.registerService(entityManager);
 
-			entityManager->start();
+			// All ok.
+			if (entityManager->start()) {
+				FNCLOG_INF(log::OutFlags::All, "entity manager started...");
 
-			if (entityManager->hasErrors()) return false;
+				return true;
+			}
 
+			FNCLOG_ERR(log::OutFlags::All, "failed to start entity manager!");
+
+			// Shitting in the fan.
+			return false;
+		}
+
+		bool SaNiEngine::initializeMono() {
+			// TODO: initialize mono.
+			return true;
+		}
+
+		bool SaNiEngine::loadUserServices() {
+			// TODO: load user services from managed dll.
+			return true;
+		}
+		bool SaNiEngine::loadScene() {
+			// TODO: load the first scene.
 			return true;
 		}
 
@@ -164,11 +234,15 @@ namespace sani {
 				TODO: add error messages.
 			*/
 
+			FNCLOG_INF(log::OutFlags::All, "engine init start...");
+
 			if (!initializeFilesystem())			return false;
 			if (!initializeCVarSystem())			return false;
 			if (!initializeGraphics())				return false;
 			if (!initializeRenderableManagers())	return false;
 			if (!initializeEntityComponentSystem()) return false;
+
+			FNCLOG_INF(log::OutFlags::All, "engine init ok!");
 
 #if 1 //_DEBUG
 			SANI_TRIGGER_EVENT(onInitialize, void(SaNiEngine* const), 
@@ -214,7 +288,11 @@ namespace sani {
 		}
 
 		void SaNiEngine::start() {
-			if (!initialize()) return;
+			if (!initialize()) {
+				FNCLOG_ERR(log::OutFlags::All, "engine init failed, exiting...");
+
+				return;
+			}
 
 			running = true;
 

@@ -49,8 +49,6 @@ namespace sani {
 
 			/// Updates all services.
 			void update(const EngineTime& time);
-			
-			bool hasErrors() const;
 
 			/// Terminates and unregisteres all services.
 			void terminate();

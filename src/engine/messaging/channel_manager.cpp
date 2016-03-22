@@ -35,7 +35,7 @@ namespace sani {
 			channels::Channel* const channel = channels[index];
 			
 			if (channel == nullptr) {
-				FLOG_ERR(log::OutFlags::All, "channel not found");
+				FNCLOG_ERR(log::OutFlags::All, "channel not found");
 				
 				std::abort();
 			}
