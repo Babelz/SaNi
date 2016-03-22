@@ -1,8 +1,8 @@
 #include "sani/resource/texture2d.hpp"
+#include "sani/core/logging/log.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/platform.hpp"
 #include <algorithm>
-#include <stdexcept>
 
 namespace sani {
 
@@ -95,7 +95,9 @@ namespace sani {
 			const unsigned char* ptr = data.data() + startIndex;
 
 			if (rect != nullptr) {
-				throw std::logic_error("not implemented");
+				FLOG_ERR(log::OutFlags::All, "not implemented");
+
+				std::abort();
 			}
 
 			int x, y, w, h;
@@ -119,7 +121,9 @@ namespace sani {
 
 		void Texture2D::getData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount) {
 			if (rect != nullptr) {
-				throw std::logic_error("Not implemented");
+				FLOG_ERR(log::OutFlags::All, "not implemented");
+
+				std::abort();
 			}
 
 			device->bindTexture(getID());

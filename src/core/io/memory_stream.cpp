@@ -1,3 +1,4 @@
+#include "sani/core/logging/log.hpp"
 #include "sani/core/io/memory_stream.hpp"
 #include "sani/debug.hpp"
 
@@ -20,7 +21,9 @@ namespace sani {
 		}
 
 		uint32 MemoryStream::read(unsigned char* buffer, const int32 offset, const uint32 size)  {
-			throw std::logic_error("not implemented");
+			FLOG_ERR(log::OutFlags::All, "not implemented");
+
+			std::abort();
 		}
 
 		uint32 MemoryStream::write(const unsigned char* data, const uint32 size)  {
@@ -51,8 +54,9 @@ namespace sani {
 		}
 
 		void MemoryStream::flush() {
-			throw std::logic_error("not implemented");
-		}
+			FLOG_ERR(log::OutFlags::All, "not implemented");
 
+			std::abort();
+		}
 	}
 }

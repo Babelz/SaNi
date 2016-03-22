@@ -2,6 +2,7 @@
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/resource/effect.hpp"
+#include "sani/core/logging/log.hpp"
 
 namespace sani {
 
@@ -31,9 +32,12 @@ namespace sani {
 				// 1) we need to be sure to have extension supported
 				// 2) we just need to read the compiled data
 				if (compiled) {
-					String binary = reader->readString();
+					//String binary = reader->readString();
+
 					// glProgramnBinaryETC shit..
-					throw std::logic_error("Not implemented");
+					FLOG_ERR(log::OutFlags::All, "not implemented");
+
+					std::abort();
 				}
 				// fallback scheme
 				// we dont have the extension OR the effect isnt compiled

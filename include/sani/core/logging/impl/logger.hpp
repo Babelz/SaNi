@@ -26,7 +26,7 @@ namespace sani {
 			logInfo(from, message);
 			break;
 		default:
-			throw std::runtime_error("unsupported or invalid LogLevel type");
+			std::abort();
 		}
 	}
 	

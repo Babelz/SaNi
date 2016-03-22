@@ -1,6 +1,7 @@
 #include "sani/graphics/renderables/renderable.hpp"
 #include "sani/graphics/renderer.hpp"
 #include "sani/graphics/layer.hpp"
+#include "sani/core/logging/log.hpp"
 
 namespace sani {
 
@@ -14,7 +15,11 @@ namespace sani {
 		}
 
 		void Layer::typeInitialize() {
-			if (type == LayerType::Static) throw std::runtime_error("unsupported layer type static");
+			if (type == LayerType::Static) {
+				FLOG_ERR(log::OutFlags::All, "unsupported layer type static");
+				
+				std::abort();
+			}
 		}
 
 		void Layer::renderBottom(sani::graphics::Renderer* const renderer) {

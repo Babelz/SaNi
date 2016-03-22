@@ -1,7 +1,9 @@
 #include "sani/platform/file/binary_reader.hpp"
 #include "sani/platform/file/file_stream.hpp"
 #include <stdexcept>
+
 namespace sani {
+	
 	namespace io {
 
 		BinaryReader::BinaryReader(FileStream* stream) 
@@ -82,14 +84,15 @@ namespace sani {
 
 		uint64 BinaryReader::read7BitEncodedInt() {
 			uint64 buffer = 0;
-			int index = 0;
+			int32 index = 0;
 			uint8 current = 0;
 			
 			do {
-				if (index++ == 8)
-					throw std::runtime_error("Could not read variable-length quantity from provided stream");
+				if (index++ == 8) throw std::runtime_error("could not read variable-length quantity from provided stream");
+
 				buffer <<= 7;
 				current = readByte();
+				
 				buffer |= (current & 0x7Fu);
 			} while ((current & 0x80) != 0);
 

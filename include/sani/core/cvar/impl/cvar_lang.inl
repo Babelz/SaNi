@@ -116,9 +116,9 @@ namespace sani {
 				if (token.first(str)) return token.second;
 			}
 
-			// Just throw since the execution of this function
+			// Just abort since the execution of this function
 			// should never fall here.
-			throw std::logic_error("could not find a pair");
+			std::abort();
 		}
 
 		ValueType resolveType(const String& str) {

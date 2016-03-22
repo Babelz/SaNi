@@ -1,4 +1,5 @@
 #include "sani/graphics/buffer.hpp"
+#include "sani/core/logging/log.hpp"
 
 namespace sani {
 
@@ -7,7 +8,11 @@ namespace sani {
 		template<typename T>
 		void Buffer<T>::checkSize(const uint32 offset) {
 			if (bufferSizing == BufferSizing::Static) {
-				if (bufferPointer + offset > size) throw std::runtime_error("Buffer overflow");
+				if (bufferPointer + offset > size) {
+					FLOG_ERR(log::OutFlags::All, "buffer overflow!");
+
+					std::abort();
+				}
 			} else if (bufferSizing == BufferSizing::Dynamic) {
 				if (bufferPointer + offset > size) {
 					const uint32 requiredSize = bufferPointer + offset;

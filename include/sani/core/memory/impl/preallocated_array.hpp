@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/core/logging/log.hpp"
 #include "sani/core/memory/preallocated_array.hpp"
 #include "sani/core/memory/heap_allocator.hpp"
 #include "sani/core/memory/page_pool_allocator.hpp"
@@ -11,7 +12,11 @@ namespace sani {
 																													              allocator(allocator) {
 		if		(typeid(AllocatorType) == typeid(HeapAllocator))					elements = heapAllocate();
 		else if (typeid(AllocatorType) == typeid(PagePoolAllocator<ElementType>))	elements = poolAllocate();
-		else																		throw std::runtime_error("unsupported allocator type");
+		else {
+			FLOG_ERR(log::OutFlags::All, "invalid allocator type");
+
+			std::abort();
+		}
 	}
 
 	template<typename ElementType, class AllocatorType>

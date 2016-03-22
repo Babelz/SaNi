@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/core/logging/log.hpp"
 #include "resource_item.hpp"
 #include "sani/types.hpp"
 #include <vector>
@@ -43,13 +44,23 @@ namespace sani {
 
 			inline float getSize() const { return size; }
 			inline void setSize(float newSize) { 
-				if (newSize <= 0.0f) throw std::logic_error("Size must be greater than zero");
+				if (newSize <= 0.0f) {
+					FLOG_ERR(log::OutFlags::All, "size must be greater than zero");
+
+					std::abort();
+				}
+
 				size = newSize; 
 			}
 
 			inline const String& getFontName() const { return fontName; }
 			inline void setFontName(const String& newName) {
-				if (newName.empty()) throw std::logic_error("FontName cant be empty");
+				if (newName.empty()) {
+					FLOG_ERR(log::OutFlags::All, "font name can't be empty");
+
+					std::abort();
+				}
+
 				fontName = newName;
 			}
 
@@ -89,7 +100,13 @@ namespace sani {
 					CharacterRegion& region = regions[i];
 					unsigned short start = std::get<0>(region);
 					unsigned short end = std::get<1>(region);
-					if (start >= end) throw std::logic_error("Start needs to be less than end!");
+
+					if (start >= end)  {
+						FLOG_ERR(log::OutFlags::All, "start needs to be less than end!");
+
+						std::abort();
+					}
+
 					characters.reserve(end - start);
 					for (; start <= end; ++start) {
 						characters.push_back(static_cast<unsigned short>(start));

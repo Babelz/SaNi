@@ -1,3 +1,4 @@
+#include "sani/core/logging/log.hpp"
 #include "sani/engine/messaging/messages/message.hpp"
 #include "sani/engine/messaging/channels/channel.hpp"
 #include "sani/engine/service_registry.hpp"
@@ -27,7 +28,11 @@ namespace sani {
 			}
 
 			void Channel::route(messages::Message* const message) {
-				if (message->getType() != channelType) throw std::runtime_error("invalid message type for the given channel");
+				if (message->getType() != channelType) {
+					FLOG_ERR(log::OutFlags::All, "invalid message type for the given channel");
+					
+					std::abort();
+				}
 
 				routeMessage(message);
 			}

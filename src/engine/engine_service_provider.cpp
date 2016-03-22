@@ -34,7 +34,7 @@ namespace sani {
 		}
 
 		void ServiceRegistry::registerService(EngineService* const service) {
-			if (contains(service)) throw std::runtime_error("service already registered");
+			if (contains(service)) return;
 
 			services.push_back(service);
 

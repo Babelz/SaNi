@@ -10,7 +10,7 @@ namespace sani {
 												 path(path) {
 		SANI_ASSERT(!path.empty());
 
-		if (!fileSystem.openFile(path, io::Filemode::Truncate, &stream)) throw std::runtime_error("could not open stream");
+		if (!fileSystem.openFile(path, io::Filemode::Truncate, &stream)) std::abort();
 	}
 
 	void FileLogger::internalLog(const String& from, const String& message, const LogLevel level) {

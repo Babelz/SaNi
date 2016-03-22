@@ -15,7 +15,7 @@ namespace sani {
 			formatInfo(out, from, message);
 			break;
 		default:
-			throw std::runtime_error("invalid or unsupported level");
+			std::abort();
 		}
 	}
 

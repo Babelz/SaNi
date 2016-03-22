@@ -1,6 +1,8 @@
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/platform/file/file_stream.hpp"
 #include "sani/resource/reader/resource_type_reader.hpp"
+#include "sani/core/logging/log.hpp"
+#include <sstream>
 
 namespace sani {
 
@@ -30,8 +32,11 @@ namespace sani {
 				magic[0] = readByte();
 				magic[1] = readByte();
 				magic[2] = readByte();
+				
 				if (strcmp(magic, "SNB") != 0) {
-					throw std::runtime_error("Not SNB file!");
+					FLOG_ERR(log::OutFlags::All, "not SNB file");
+
+					std::abort();
 				}
 
 				// read platform
@@ -52,7 +57,14 @@ namespace sani {
 					ResourceTypeReader* reader = typeReaders.getReaderByName(typeReaderName);
 
 					if (reader == nullptr) {
-						throw std::runtime_error(String("No reader for ") + typeReaderName);
+						std::stringstream ss;
+						ss << "no reader for \"";
+						ss << typeReaderName;
+						ss << "\"";
+
+						FLOG_ERR(log::OutFlags::All, ss.str());
+
+						std::abort();
 					}
 
 					readers.push_back(reader);

@@ -3,6 +3,9 @@
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/resource/resource.hpp"
+#include "sani/core/logging/log.hpp"
+#include <sstream>
+
 namespace sani {
 
 	namespace resource {
@@ -28,8 +31,18 @@ namespace sani {
 			using namespace reader;
 
 			FileStream* stream;
+
 			if (!fileSystem->openFile(assetPath, Filemode::Read, &stream)) {
-				throw std::runtime_error("File not found!");
+				std::stringstream ss;
+				ss << "file ";
+				ss << "\"";
+				ss << assetPath;
+				ss << "\" ";
+				ss << "not found";
+
+				FLOG_ERR(log::OutFlags::All, ss.str());
+
+				std::abort();
 			}
 
             ResourceReader reader(stream, *this, graphicsDevice);

@@ -31,14 +31,10 @@ namespace sani {
 	}
 	template<typename T>
 	void Stopwatch<T>::start() {
-		if (running) throw std::runtime_error("watch is already measuring");
-
 		running = true;
 	}
 	template<typename T>
 	void Stopwatch<T>::stop() {
-		if (!running) throw std::runtime_error("watch is not measuring");
-		
 		running = false;
 
 		endTime = sani::Clock::now();

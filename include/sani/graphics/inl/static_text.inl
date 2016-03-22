@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/core/logging/log.hpp"
 #include "sani/graphics/camera2d.hpp"
 #include "sani/graphics/setups/textured_polygon_render_setup.hpp"
 #include "sani/platform/graphics/render_target_2d.hpp"
@@ -12,6 +13,7 @@
 #include "sani/graphics/vertex_helper.hpp"
 
 #include <algorithm>
+#include <sstream>
 
 namespace sani {
 
@@ -70,7 +72,17 @@ namespace sani {
 						return ch == rhs;
 					});
 
-					if (it == font->characters.end()) throw std::runtime_error("character not present in sprite font");
+					if (it == font->characters.end()) {
+						std::stringstream ss;
+						ss << "character \"";
+						ss << ch;
+						ss << "\" ";
+						ss << "not present in the sprite font";
+
+						FLOG_ERR(log::OutFlags::All, ss.str());
+
+						std::abort();
+					}
 
 					const uint32 index = static_cast<uint32>(std::distance(font->characters.begin(), it));
 					const resource::GlyphContent& glyph = font->glyphs[index];
@@ -151,7 +163,11 @@ namespace sani {
 				if (staticText.renderTarget->getWidth() != uwidth || staticText.renderTarget->getHeight() != uheight) {
 					staticText.renderTarget->dispose();
 
-					if (!staticText.renderTarget->disposed()) throw std::runtime_error("could not dispose render target");
+					if (!staticText.renderTarget->disposed()) {
+						FLOG_ERR(log::OutFlags::All, "could not dispose render target");
+
+						std::abort();
+					}
 
 					delete staticText.renderTarget;
 					

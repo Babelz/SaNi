@@ -1194,9 +1194,6 @@
     <ClInclude Include="..\..\include\sani\platform\platform_functions.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\console.hpp">
-      <Filter>include</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\logging\system_console_logger.hpp">
       <Filter>include\core\logging</Filter>
     </ClInclude>
@@ -1397,6 +1394,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono_runtime.hpp">
       <Filter>include\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\console.hpp">
+      <Filter>include\platform</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

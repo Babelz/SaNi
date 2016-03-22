@@ -4,9 +4,12 @@
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/ecs/components/transform_component.hpp"
 #include "sani/rtti/argument.hpp"
+#include "sani/core/logging/log.hpp"
 
 namespace sani {
+
 	namespace resource {
+
 		namespace reader {
 			
 			namespace {
@@ -67,7 +70,9 @@ namespace sani {
                                 valueField.setValue(instance, data);
                             }
                             else {
-                                throw std::runtime_error("not impl");
+								FLOG_ERR(log::OutFlags::All, "not implemented");
+
+								std::abort();
                             }
                             
                         }

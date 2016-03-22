@@ -1,5 +1,6 @@
 #include "sani/engine/messaging/state_message.hpp"
 #include "sani/engine/services/engine_service.hpp"
+#include "sani/core/logging/log.hpp"
 
 namespace sani {
 
@@ -24,9 +25,13 @@ namespace sani {
 				handleStateMessage(message);
 
 				if (state == ServiceState::Terminated) {
-					// Unsuccesfull terminate messages are handled
+					// Unsuccessful terminate messages are handled
 					// as fatal errors.
-					if (!message->handled) throw std::runtime_error(errorMessage);
+					if (!message->handled) {
+						FLOG_ERR(log::OutFlags::All, errorMessage);
+
+						std::abort();
+					}
 
 					return;
 				}

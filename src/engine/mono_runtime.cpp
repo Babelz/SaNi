@@ -16,7 +16,7 @@ namespace sani {
 		const String MonoConfigPath		= "C:\\Program Files (x86)\\Mono\\etc";
 		const String MonoVersion		= "v4.0.30319";
 		const String MonoRootDomainName = "SaNi";
-		const String MonoAssemblyName	= "\\mono\\sani.exe";
+		const String MonoAssemblyName	= "\\mono\\sani managed.dll";
 
 		MonoRuntime::MonoRuntime() : monoProvider(nullptr),
 									 monoAssembly(nullptr),
@@ -24,10 +24,6 @@ namespace sani {
 		}
 
 		MonoRuntime::~MonoRuntime() {
-			mono_jit_cleanup(monoDomain);
-			mono_assembly_close(monoAssembly);
-
-			delete monoProvider;
 		}
 
 
@@ -36,7 +32,7 @@ namespace sani {
 			
 			struct stat info;
 
-			if (stat(cstr, &info) != 0)			return false;
+			if		(stat(cstr, &info) != 0)	return false;
 			else if (info.st_mode & S_IFDIR)	return true;
 			else								return false;
 		}
@@ -60,7 +56,7 @@ namespace sani {
 			monoAssembly = mono_domain_assembly_open(monoDomain, MonoAssemblyName.c_str());
 
 			if (monoAssembly == nullptr) {
-				RLOG_ERR(log::OutFlags::All, "MonoRuntime", "could not load sani.exe");
+				RLOG_ERR(log::OutFlags::All, "MonoRuntime", "could not load sani managed.dll");
 
 				return false;
 			}
@@ -87,6 +83,10 @@ namespace sani {
 		}
 
 		void MonoRuntime::shutdown() {
+			mono_jit_cleanup(monoDomain);
+			mono_assembly_close(monoAssembly);
+
+			delete monoProvider;
 		}
 	}
 }

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SaNi")]
+[assembly: AssemblyTitle("SaNi.Mono")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SaNi")]
+[assembly: AssemblyProduct("SaNi.Mono")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("ba9e2c7f-35e2-4f88-b5db-7404dcbc90bc")]
+[assembly: Guid("7b474d76-468b-4789-914b-8c2d01ec4365")]
 
 // Version information for an assembly consists of the following four values:
 //

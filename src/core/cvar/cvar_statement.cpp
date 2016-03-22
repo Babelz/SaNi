@@ -1,4 +1,5 @@
 #include "sani/core/cvar/cvar_statement.hpp"
+#include "sani/core/logging/log.hpp"
 
 namespace sani {
 
@@ -68,7 +69,9 @@ namespace sani {
 
 				i++;
 			} else {
-				throw std::logic_error("Invalid or unsupported cvarlang::Operator");
+				FLOG_ERR(log::OutFlags::All, "invalid or unsupported cvarlang::Operator");
+
+				std::abort();
 			}
 		}
 

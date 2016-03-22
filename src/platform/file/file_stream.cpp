@@ -1,18 +1,23 @@
 #include "sani/platform/file/file_stream.hpp"
 #include "sani/debug.hpp"
+
 #include <stdexcept>
 
 namespace sani {
+
 	namespace io {
 
-		FileStream::FileStream(const String& filePath, const Filemode mode)
-			: filePath(filePath), mode(mode) {}
-		FileStream::~FileStream() {}
+		FileStream::FileStream(const String& filePath, const Filemode mode) : filePath(filePath), 
+																			  mode(mode) {
+		}
+
+		FileStream::~FileStream() {
+		}
 
 		namespace priv {
-			FileStreamImpl::FileStreamImpl(const String& filePath, const Filemode mode, FILE* handle)
-				: FileStream(filePath, mode), handle(handle) {
 
+			FileStreamImpl::FileStreamImpl(const String& filePath, const Filemode mode, FILE* handle) : FileStream(filePath, mode), 
+																										handle(handle) {
 			}
 
 			uint32 FileStreamImpl::read(unsigned char* buffer, const uint32 size) {

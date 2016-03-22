@@ -8,6 +8,8 @@
 
 #include "sani/engine/messaging/channels/query_channel.hpp"
 
+#include "sani/core/logging/log.hpp"
+
 #include <algorithm>
 
 namespace sani {
@@ -32,7 +34,11 @@ namespace sani {
 
 			channels::Channel* const channel = channels[index];
 			
-			if (channel == nullptr) throw std::runtime_error("channel not found");
+			if (channel == nullptr) {
+				FLOG_ERR(log::OutFlags::All, "channel not found");
+				
+				std::abort();
+			}
 
 			return channel;
 		}
