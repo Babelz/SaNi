@@ -5,7 +5,7 @@
 #include "sani/core/events.hpp"
 
 // Windows includes.
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include <Windows.h>
 
@@ -28,7 +28,7 @@ namespace sani {
 			Impl* impl;
 
 			// Private Win32 members.
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 			static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 #endif
@@ -38,7 +38,7 @@ namespace sani {
 			SANI_DECLARE_EVENT(closed, void());
 
 			// Public Win32 members.
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 			Window(const HINSTANCE hInstance, const uint32 width, const uint32 height);
 

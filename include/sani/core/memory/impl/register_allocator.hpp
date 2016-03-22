@@ -30,7 +30,7 @@ namespace sani {
 			outValue = allocator.allocate();
 			elements[outLocation] = outValue;
 		} else {
-			outLocation = elements.size();
+			outLocation = static_cast<uint32>(elements.size());
 
 			outValue = allocator.allocate();
 			elements.push_back(outValue);

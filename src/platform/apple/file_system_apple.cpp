@@ -1,5 +1,5 @@
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC || SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
 #include "sani/platform/file/file_system.hpp"
 
 namespace sani {

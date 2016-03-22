@@ -17,14 +17,14 @@ namespace sani {
 
 			uint32 FileStreamImpl::read(unsigned char* buffer, const uint32 size) {
 				SANI_ASSERT((static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Read)) == static_cast<uint32>(Filemode::Read));
-				uint32 readBytes = fread(buffer, sizeof(unsigned char), size, handle);
+				uint32 readBytes = static_cast<uint32>(fread(buffer, sizeof(unsigned char), size, handle));
 				return readBytes;
 			}
 
 			uint32 FileStreamImpl::write(const unsigned char* data, const uint32 size) {
 				SANI_ASSERT((static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Write)) == static_cast<uint32>(Filemode::Write) || (static_cast<uint32>(mode)& static_cast<uint32>(Filemode::Truncate)) == static_cast<uint32>(Filemode::Truncate));
 				SANI_ASSERT(data != nullptr);
-				uint32 wroteBytes = fwrite(data, sizeof(unsigned char), size, handle);
+				uint32 wroteBytes = static_cast<uint32>(fwrite(data, sizeof(unsigned char), size, handle));
 				return wroteBytes;
 			}
 

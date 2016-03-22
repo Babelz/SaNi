@@ -82,7 +82,7 @@ namespace sani {
 
 		/// Returns the index nth occurrence in the string.
 		/// Returns string npos if nothing is matched.
-		inline int32 position(const String& str, const String& pattern, const uint32 nth)
+		inline SizeType position(const String& str, const String& pattern, const uint32 nth)
 		{
 			const char* haystack = str.c_str();
 			const char* needle = pattern.c_str();

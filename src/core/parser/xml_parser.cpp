@@ -2,6 +2,15 @@
 #include "sani/platform/file/file_stream.hpp"
 #include <vector>
 #include <iostream>
+
+
+namespace rapidxml {
+    void parse_error_handler(const char *what, void *where) {
+        
+        std::abort();
+    }
+}
+
 namespace sani {
 	namespace parser {
 		XmlDocument::XmlDocument() {}
@@ -13,12 +22,7 @@ namespace sani {
 			sourceText = (std::vector<unsigned char>((size + 1u), '\0'));
 			stream->read(sourceText.data(), size);
 			
-			try {
-				document.parse<0>((char*)sourceText.data());
-			}
-			catch (rapidxml::parse_error& error) {
-				throw sani::parser::XmlException(error.what());
-			}
+			document.parse<0>((char*)sourceText.data());
 		}
 
 		bool XmlDocument::firstNode(const char* name, XmlNode& to) const {

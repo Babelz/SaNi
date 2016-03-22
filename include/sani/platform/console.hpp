@@ -46,7 +46,7 @@ namespace sani {
 
 		// Generate error if platform not valid. Console should only be used while 
 		// debugging.
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS || SANI_TARGET_PLATFORM == SANI_PLATFORM_LINUX
 		/// Opens the system console with given size and moves it to the given location.
 		void create(const uint32 width, const uint32 height, const int32 x, const int32 y);
 		/// Opens the system console with given width and height.

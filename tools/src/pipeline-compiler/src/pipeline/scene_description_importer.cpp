@@ -23,7 +23,7 @@ namespace sani {
 				FileStream* stream = nullptr;
 				fileSystem->openFile(filename, Filemode::Read, &stream);
 
-				int64 length = 0;
+				uint32 length = 0;
 				char* json = (char*)fileSystem->getFileData(filename, length, true);
 
 				fileSystem->closeFile(filename);

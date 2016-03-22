@@ -4,9 +4,9 @@
 #include <functional>
 
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS && SANI_DESKTOP
 #include "GL/glew.h"
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID && SANI_MOBILE
 #include <GLES2/gl2.h>
 #endif
 
@@ -28,7 +28,7 @@ namespace sani {
 
 	namespace graphics {
 
-		enum class BufferUsage {
+		enum class BufferUsage : uint32 {
 			// Buffers data will be modified once and used many times.
 			Static	= GL_STATIC_DRAW,
 
@@ -36,12 +36,12 @@ namespace sani {
 			Dynamic = GL_DYNAMIC_DRAW
 		};
 
-		enum class BufferType {
+        enum class BufferType : uint32{
 			ElementArrayBuffer = GL_ELEMENT_ARRAY_BUFFER,
 			ArrayBuffer		   = GL_ARRAY_BUFFER
 		};
 
-		enum class ColorAttachment {
+        enum class ColorAttachment : uint32{
 			Attachment0 = GL_COLOR_ATTACHMENT0,
 			Attachment1 = GL_COLOR_ATTACHMENT1
 		};

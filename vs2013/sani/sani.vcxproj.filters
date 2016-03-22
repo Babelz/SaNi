@@ -259,6 +259,12 @@
     <Filter Include="src\core\math">
       <UniqueIdentifier>{9fa612b0-ed87-4c25-b800-b6617211d513}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\esc">
+      <UniqueIdentifier>{9f6a4ce3-c39e-41e9-8db9-376300a90c9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\esc\components">
+      <UniqueIdentifier>{c68addfe-ae9e-48b2-bba4-e98daa7827bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -272,9 +278,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp">
       <Filter>src\platform\wp8</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\android\file_system_android.cpp">
-      <Filter>src\platform\android</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\core\cvar\cvar_file.cpp">
       <Filter>src\core\cvar</Filter>
@@ -671,6 +674,10 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\mono_runtime.cpp">
       <Filter>src\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\types.cpp" />
+    <ClCompile Include="..\..\src\ecs\components\transform_component.cpp">
+      <Filter>src\esc\components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

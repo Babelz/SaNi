@@ -128,7 +128,7 @@ namespace sani {
 				}
 
 				FileStream* stream = nullptr;
-				int64 size = 0;
+				uint32 size = 0;
 
 				fileSystem.openFile(path, Filemode::Read, &stream);
 				unsigned char* data = fileSystem.getFileData(path, size);

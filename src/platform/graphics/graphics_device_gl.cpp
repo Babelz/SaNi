@@ -68,7 +68,7 @@ namespace sani {
 	}
 }
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 
 #include "GL/wglew.h"
 #include "GL/glew.h"
@@ -819,7 +819,7 @@ namespace sani {
 		}
 
 		uint32 GraphicsDevice::currentState() const {
-			return impl->cImpl.states.size();
+			return static_cast<uint32>(impl->cImpl.states.size());
 		}
 
 		GraphicsDevice::~GraphicsDevice() {

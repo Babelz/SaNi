@@ -22,7 +22,7 @@ namespace sani {
 		const char* cstr			= out.c_str();
 		const unsigned char* ucstr	= reinterpret_cast<const unsigned char*>(cstr);
 		
-		stream->write(ucstr, out.size());
+		stream->write(ucstr, static_cast<uint32>(out.size()));
 	}
 
 	void FileLogger::logError(const String& from, const String& message) {

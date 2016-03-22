@@ -27,7 +27,7 @@ namespace sani {
 		}
 
 		uint32 RecipientList::recipentsCount() const {
-			return recipients.size();
+			return static_cast<uint32>(recipients.size());
 		}
 
 		std::vector<const String>::const_iterator RecipientList::begin() const {

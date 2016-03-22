@@ -16,7 +16,7 @@ namespace sani {
 		FileSystem::~FileSystem() {
 
 		}
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
+
 		bool FileSystem::isFileOpen(const String& path) const {
 			return handles.find(path) != handles.end();
 		}
@@ -64,21 +64,21 @@ namespace sani {
 			handle = nullptr;
 			handles.erase(path);
 		}
-#endif
+
 		String FileSystem::getFileDataString(const String& path) const  {
-			int64 size = 0;
+			uint32 size = 0;
 			unsigned char* buffer = getFileData(path, size, true);
 			if (size == 0) {
 				return "";
 			}
 			return String((const char*)buffer);
 		}
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
-		unsigned char* FileSystem::getFileData(const String& path, int64& fileSize, bool nullTerminate /*= false*/) const {
+
+		unsigned char* FileSystem::getFileData(const String& path, uint32& fileSize, bool nullTerminate /*= false*/) const {
 			assert(isFileOpen(path));
 
 			FileStream* handle = handles.at(path);
-			size_t fsize = getFileSize(path);
+			uint32 fsize = getFileSize(path);
 			unsigned char* buffer = nullptr;
 			if (nullTerminate) {
 				buffer = (unsigned char*)malloc(fsize + 1);
@@ -87,14 +87,8 @@ namespace sani {
 			else {
 				buffer = (unsigned char*)malloc(fsize);
 			}
-			int64 readBytes = 0;
-			try {
-				readBytes = handle->read(buffer, fsize);
-			}
-			catch (std::exception& ex) {
-				(void)ex;
-				throw;
-			}
+			uint32 readBytes = 0;
+			readBytes = handle->read(buffer, fsize);
 
 			// Failed
 			if (readBytes != fsize) {
@@ -117,7 +111,7 @@ namespace sani {
 		}
 
 
-		size_t FileSystem::getFileSize(const String& path) const {
+		uint32 FileSystem::getFileSize(const String& path) const {
 			struct stat statbuf;
 			if (stat(path.c_str(), &statbuf) == -1) {
 				// error
@@ -125,7 +119,6 @@ namespace sani {
 			}
 			return statbuf.st_size;
 		}
-#endif
 	}
 }
 

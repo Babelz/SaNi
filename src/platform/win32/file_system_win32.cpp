@@ -1,5 +1,5 @@
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
 #include <windows.h>
 #include "sani/platform/file/file_system.hpp"
 #include "sani/platform/file/file.hpp"

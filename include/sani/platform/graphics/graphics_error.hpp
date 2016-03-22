@@ -29,7 +29,7 @@ namespace sani {
 			void translate(const int32 apiErrorCode);
 		public:
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS || SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			GraphicsError(const GLuint apiErrorCode, const String& function, const int32 lineNumber);
 			/// Creates new instance of the GraphicsError object with a custom error message.
 			GraphicsError(const String& message, const String& function, const int32 lineNumber);

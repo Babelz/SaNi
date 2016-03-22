@@ -52,7 +52,7 @@ namespace sani {
 
 		void BinaryWriter::write(const String& value) {
 			write7BitEncodedInt(value.size());
-			stream->write((unsigned char*)value.c_str(), sizeof(char) * value.size());
+			stream->write((unsigned char*)value.c_str(), static_cast<uint32>(sizeof(char) * value.size()));
 		}
 
 		void BinaryWriter::write7BitEncodedInt(uint64 value) {

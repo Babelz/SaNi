@@ -1,6 +1,6 @@
 #pragma once
 #include "sani/platform/platform_config.hpp"
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WIN32 || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 #include <windows.h>
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS || SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
 #include <CoreFoundation/CoreFoundation.h>
@@ -64,13 +64,13 @@ namespace sani {
 
 			/// Gets the size of the file in bytes
 			/// @param[in] path File path
-			size_t getFileSize(const String& path) const;
+			uint32 getFileSize(const String& path) const;
 
 			/// Reads the file into buffer
 			/// @param[in] path The file path to the file
 			/// @param[out] fileSize How many bytes were read
 			/// @param[in] nullTerminate Should the buffer be null terminated
-			unsigned char* getFileData(const String& path, int64& fileSize, bool nullTerminate = false) const;
+			unsigned char* getFileData(const String& path, uint32& fileSize, bool nullTerminate = false) const;
 
 			/// Reads the file into string
 			/// @param[in] path File path to the file

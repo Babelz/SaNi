@@ -2,6 +2,7 @@
 
 #include <string>
 #include <stdint.h>
+#include "sani/platform/platform_config.hpp"
 
 // int8-64 definitions.
 using int8		= int8_t;
@@ -26,21 +27,10 @@ using String8 = std::basic_string < char8, std::char_traits<char8>, std::allocat
 using String16 = std::basic_string < char16, std::char_traits<char16>, std::allocator<char16> >;
 using String = String8;
 
-// int8-64 assertions.
-static_assert(sizeof(int8) == 1, "sizeof(int8) != 1");
-static_assert(sizeof(int16) == 2, "sizeof(int16) != 2");
-static_assert(sizeof(int32) == 4, "sizeof(int32) != 4");
-static_assert(sizeof(int64) == 8, "sizeof(int64) != 8");
-
-// uint8-64 assertions.
-static_assert(sizeof(uint8) == 1, "sizeof(uint8) != 1");
-static_assert(sizeof(uint16) == 2, "sizeof(uint16) != 2");
-static_assert(sizeof(uint32) == 4, "sizeof(uint32) != 4");
-static_assert(sizeof(uint64) == 8, "sizeof(uint64) != 8");
-
-// float32-64 assertions.
-static_assert(sizeof(float32) == 4, "sizeof(float32) != 4");
-static_assert(sizeof(float64) == 8, "sizeof(float64) != 8");
-
-static_assert(sizeof(char8) == 1, "sizeof(char8) != 1");
-static_assert(sizeof(char16) == 2, "sizeof(char16) != 2");
+#if SANI_TARGET_ARCH == SANI_ARCH_X64
+using SizeType = uint64;
+using SignedSizeType = int64;
+#else
+using SizeType = uint32;
+using SignedSizeType = int32;
+#endif
