@@ -54,7 +54,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_CONSOLE;_VISUALC_;NeedFunctionPrototypes;_DLL;_MAGICKMOD_;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_CONSOLE;_VISUALC_;NeedFunctionPrototypes;_DLL;_MAGICKMOD_;_CRT_SECURE_NO_WARNINGS;RAPIDJSON_HAS_STDSTRING=1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\tools\src\pipeline-compiler\include;$(SolutionDir)..\thirdparty\glew\include\;$(SolutionDir)..\thirdparty\freetype\include\;$(SolutionDir)..\thirdparty\rapidjson\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>

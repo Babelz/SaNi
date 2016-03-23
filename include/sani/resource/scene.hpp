@@ -23,35 +23,10 @@ namespace sani {
 		};
 
 		struct SceneDescription : public ResourceItem {
-			struct PrimitiveField {
-                String8 name;
-                String8 value;
-				rtti::TypeID type;
-                PrimitiveField(const String8& name, const String8& value)
-                    : name(name), value(value), type(rtti::Type::Invalid) {}
-			};
-
-            struct ObjectField {
-                String8 name;
-                std::vector<PrimitiveField> fields;
-            };
-            
-			struct Component {
-				String8 name;
-                std::vector<PrimitiveField> primitiveFields;
-                std::vector<ObjectField> objectFields;
-			};
-			using ComponentDataCollection = std::vector<Component>;
-            
 			String8 name;
-			std::vector<AssetFolder> assetFolders;
-			std::map<uint32, std::vector<AssetFile>> assets;
-			ComponentDataCollection components;
+			String8 json;
 
-
-			SceneDescription(const String8& name);
-			void addFolder(const AssetFolder& folder);
-			void addAssetTo(const AssetFolder& folder, const AssetFile& file);
+			SceneDescription(const String8& name, const String8& json);
 		};
 
 		class Scene : public Resource {

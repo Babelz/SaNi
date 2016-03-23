@@ -5,13 +5,16 @@
 #include "sani/ecs/components/transform_component.hpp"
 #include "sani/rtti/argument.hpp"
 #include "sani/core/logging/log.hpp"
-
+#include <rapidjson/document.h>
+#include <iostream>
 namespace sani {
 
 	namespace resource {
 
 		namespace reader {
 			
+            namespace r = rapidjson;
+
 			namespace {
 				auto &db = sani::rtti::TypeDatabase::getInstance();
 			}
@@ -27,60 +30,61 @@ namespace sani {
 
 			}
 
+            void parseComponent(r::Value::ConstMemberIterator it, r::Value::ConstMemberIterator end) {
+                for (it; it != end; ++it) {
+                    if (it->value.IsObject()) {
+                        //parseComponent(it)
+                    }
+                    else {
+                        std::cout << it->name.GetString() << " = " << it->value.GetString() << std::endl;
+                    }
+                }
+            }
+
+            void parseComponent(r::Value::ConstValueIterator componentItr) {
+                auto m = componentItr->MemberBegin();
+                // the first one should be name
+                String8 componentTypename(m->value.GetString());
+                // advance
+                ++m;
+
+
+            }
+
+            void parseComponents(const r::Value& componentObjects) {
+                for (r::Value::ConstValueIterator componentIt = componentObjects.Begin();
+                    componentIt != componentObjects.End(); ++componentIt) {
+
+                    parseComponent(componentIt);
+
+                }
+            }
+
+            void parseEntities(const r::Value& entitesObject) {
+                for (r::Value::ConstValueIterator entityIt = entitesObject.Begin(); 
+                    entityIt != entitesObject.End(); ++entityIt) {
+                    parseComponents(entityIt->GetObject()["components"]);
+                }
+            }
+
+            void parseJson(const r::Document& document) {
+                const r::Value& rootObject = document["scene"];
+                const r::Value& entitiesObject = rootObject["entities"];
+                parseEntities(entitiesObject);
+            }
+
 			void* SceneReader::read(ResourceReader* reader) {
+                
 				Scene* scene = nullptr;
 
 				String8 sceneName(reader->readString());
-				
-				Scene::Assets filesToLoad;
-				uint32 folderCount = static_cast<uint32>(reader->read7BitEncodedInt());
-				filesToLoad.reserve(folderCount);
+                String8 json(reader->readString());
+			
+                r::Document document;
+                document.Parse<0>(json);
 
-				for (auto i = 0u; i < folderCount; ++i) {
-					String8 root(reader->readString());
-					auto fileCount = reader->read7BitEncodedInt();
-					for (auto fileId = 0u; fileId < fileCount; ++fileId) {
-						filesToLoad.emplace_back(root + reader->readString());
-					}
-				}
-
-                uint64 componentCount = reader->read7BitEncodedInt();
-
-                auto& db = sani::rtti::TypeDatabase::getInstance();
-
-                
-                sani::rtti::Type ourType = typeof(sani::Transform);
-                sani::rtti::Object tx = ourType.create(sani::rtti::Arguments{});
-                
-                for (uint64 i = 0u; i < componentCount; ++i) {
-                    uint64 objFieldCount = reader->read7BitEncodedInt();
-                    for (uint64 fieldIndex = 0u; fieldIndex < objFieldCount; ++fieldIndex) {
-                        String8 fieldName(reader->readString());
-                        const sani::rtti::Field& objField = ourType.getField(fieldName);
-                        const sani::rtti::Type objFieldType = objField.getType();
-                        sani::rtti::Object instance = objFieldType.create(sani::rtti::Arguments{});
-                        uint64 something = reader->read7BitEncodedInt();
-                        for (uint64 gg = 0u; gg < something; ++gg) {
-                            String8 name(reader->readString());
-                            const sani::rtti::Field& valueField = objFieldType.getField(name);
-                            uint32 type = reader->readInt32();
-                            if (type == typeof(float32).getID()) {
-                                // hax
-                                float32 data = reader->readSingle();
-                                valueField.setValue(instance, data);
-                            }
-                            else {
-								FNCLOG_ERR(log::OutFlags::All, "not implemented");
-
-								std::abort();
-                            }
-                            
-                        }
-                        SANI_ASSERT(objField.setValue(tx, instance));
-                    }
-                }
-
-				scene = new Scene(sceneName, filesToLoad);
+                parseJson(document);
+				//scene = new Scene(sceneName, filesToLoad);
 				return scene;
 			}
 			

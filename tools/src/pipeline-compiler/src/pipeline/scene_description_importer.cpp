@@ -2,7 +2,8 @@
 #include "rapidjson/document.h"
 #include <iostream>
 #include "sani/resource/scene.hpp"
-
+#include "sani/core/logging/log.hpp"
+#include <memory>
 
 namespace sani {
 	namespace resource {
@@ -23,52 +24,37 @@ namespace sani {
 				FileStream* stream = nullptr;
 				fileSystem->openFile(filename, Filemode::Read, &stream);
 
-				uint32 length = 0;
-				char* json = (char*)fileSystem->getFileData(filename, length, true);
+                String8 json(fileSystem->getFileDataString(filename));
 
 				fileSystem->closeFile(filename);
 
 				Document document;
-				if (document.ParseInsitu(json).HasParseError()) {
-					throw std::runtime_error("Scene file is invalid!");
+				if (document.Parse<0>(json).HasParseError()) {
+                    FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is not valid JSON!"));
+                    std::abort();
 				}
 
-				std::cout << "Has member scene: " << std::boolalpha << document.HasMember("scene") << std::endl;
+				bool isValid = 1
+					&& document.HasMember("scene");
+
+				if (!isValid) {
+					FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is missing scene object!"));
+					std::abort();
+				}
 				Value& scene = document["scene"];
+				isValid = scene.HasMember("name"); 
 				
-				std::cout << "Has member name: " << std::boolalpha << scene.HasMember("name") << std::endl;
-				SceneDescription* descriptor = new SceneDescription(scene["name"].GetString());
-
-				std::cout << "Has member folders: " << std::boolalpha << scene.HasMember("folders") << std::endl;
-
-				if (scene.HasMember("folders")) {
-					Value& folders = scene["folders"];
-					std::cout << "folders is array?: " << std::boolalpha << folders.IsArray() << std::endl;
-
-					for (Value::ConstValueIterator it = folders.Begin(); it != folders.End(); ++it) {
-						auto& folder = it->GetObjectW();
-						uint32 id = folder["id"].GetUint();
-						String8 folderName(folder.HasMember("name") ? folder["name"].GetString() : "");
-						AssetFolder f{ id, folderName };
-
-						descriptor->addFolder(f);
-						auto& assets = folder["assets"];
-						for (Value::ConstValueIterator assetIt = assets.Begin(); assetIt != assets.End(); ++assetIt) {
-							auto& asset = assetIt->GetObjectW();
-							// TODO move semantics?
-							descriptor->addAssetTo(f, AssetFile{ asset["id"].GetUint(), asset["name"].GetString()});
-						}
-					}
+				if (!isValid) {
+					FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is missing scene attribute name!"));
+					std::abort();
 				}
 
-				std::cout << "Scene has member entities: " << std::boolalpha << scene.HasMember("entities") << std::endl;
-				auto& entities = scene["entities"];
-				std::cout << "Entities is array: " << std::boolalpha << entities.IsArray() << std::endl;
+				isValid = scene.HasMember("entities") // todo what if it's empty?
+					   && scene["entities"].IsArray();
 
-				
-				
+				SceneDescription* descriptor = new SceneDescription(scene["name"].GetString(), json);
 
-				for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
+			/*	for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
 					auto& entity = it->GetObjectW();
 					std::cout << "Entity has components?" << std::boolalpha << entity.HasMember("components") << std::endl;
 					auto& components = entity["components"];
@@ -103,7 +89,7 @@ namespace sani {
                         descriptor->components.emplace_back(component);
 					}
 
-				}
+				}*/
 				
 				return descriptor;
 			}

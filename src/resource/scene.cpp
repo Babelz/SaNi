@@ -3,16 +3,8 @@
 namespace sani {
 	namespace resource {
 
-		SceneDescription::SceneDescription(const String8& name) 
-			: name(name) {
-		}
-
-		void SceneDescription::addFolder(const AssetFolder& folder) {
-			assetFolders.push_back(folder);
-		}
-
-		void SceneDescription::addAssetTo(const AssetFolder& folder, const AssetFile& file) {
-			assets[folder.id].push_back(file);
+		SceneDescription::SceneDescription(const String8& name, const String8& json) 
+			: name(name), json(json) {
 		}
 
 		Scene::Scene(const String8& name, const Assets& toLoad)

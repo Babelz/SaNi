@@ -1,25 +1,6 @@
 {
 	"scene": {
 		"name": "Test scene",
-		"folders": [
-			{
-				"id": 0,
-				"assets": [
-				{
-				 	"id": 0,
-				 	"name": "tuksu"
-				},
-				{
-					"id": 1,
-					"name": "font"
-				},
-				{
-					"id": 2,
-					"name": "fire particle"
-				}
-				]
-			}
-		],
 		"entities": [
 		{ 
 				"id": 1,
@@ -29,6 +10,16 @@
 					"position": { "x": "1", "y": "2", "z": "3" },
 					"scale": { "x": "4", "y": "5" },
 					"rotation": "6"
+				}]
+			},
+			{
+				"id": 2,
+				"components": [
+				{
+					"name": "sani::Transform",
+					"position": { "x": "1337", "y": "1337", "z": "1337" },
+					"scale": { "x": "715517", "y": "715517" },
+					"rotation": "80085"
 				}]
 			}
 		]
