@@ -30,12 +30,23 @@ namespace sani {
 
 			}
 
-            void parseComponent(r::Value::ConstMemberIterator it, r::Value::ConstMemberIterator end) {
+            void parseComponent(const sani::rtti::Type rootType, sani::rtti::Object& instance, 
+                r::Value::ConstMemberIterator it, r::Value::ConstMemberIterator end) {
                 for (it; it != end; ++it) {
                     if (it->value.IsObject()) {
+                        auto& db = sani::rtti::TypeDatabase::getInstance();
+                        String8 fieldName(it->name.GetString());
+                        const sani::rtti::Field& field = rootType.getField(fieldName);
+                        SANI_ASSERT(field.isValid());
+                        sani::rtti::Type fieldType = field.getType();
+                        sani::rtti::Object fieldInstance = fieldType.create(sani::rtti::Arguments{});
+
                         //parseComponent(it)
+                        auto& obj = it->value.GetObject();
+                        parseComponent(fieldType, fieldInstance, obj.MemberBegin(), obj.MemberEnd());
                     }
                     else {
+                        const sani::rtti::Field& field = rootType.getField(it->name.GetString());
                         std::cout << it->name.GetString() << " = " << it->value.GetString() << std::endl;
                     }
                 }
@@ -44,10 +55,17 @@ namespace sani {
             void parseComponent(r::Value::ConstValueIterator componentItr) {
                 auto m = componentItr->MemberBegin();
                 // the first one should be name
-                String8 componentTypename(m->value.GetString());
+                String componentTypename(m->value.GetString());
+
+                auto& db = sani::rtti::TypeDatabase::getInstance();
+#if _DEBUG
+                SANI_ASSERT(db.ids.count(componentTypename));
+#endif
+                sani::rtti::Type componentType = db.ids[componentTypename];
+                sani::rtti::Object componentInstance = componentType.create(sani::rtti::Arguments{});
                 // advance
                 ++m;
-
+                parseComponent(componentType, componentInstance, m, componentItr->MemberEnd());
 
             }
 

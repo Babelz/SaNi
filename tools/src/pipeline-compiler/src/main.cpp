@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
 	using namespace sani::resource::compiler;
 
 	if (argc <= 2) {
-		std::cout << argv[1] << std::endl;
+		std::cout << argv[0] << std::endl;
 		usage();
 		return 1;
 	}
