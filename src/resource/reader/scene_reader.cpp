@@ -21,9 +21,11 @@ namespace sani {
 			
             namespace r = rapidjson;
             namespace su = sani::utils;
-			namespace {
-				auto &db = sani::rtti::TypeDatabase::getInstance();
+
 #define MAKE_PAIR(type, f) { typeof(type).getID(), [](const String8& s) { return sani::rtti::Object(f(s)); }}
+
+            namespace {
+                auto &db = sani::rtti::TypeDatabase::getInstance();
 
                 static std::unordered_map<sani::rtti::TypeID, std::function<sani::rtti::Object(const String8&)>> Convertors{
                     MAKE_PAIR(float32, su::toFloat32),
@@ -31,8 +33,9 @@ namespace sani {
                     MAKE_PAIR(float64, su::toFloat64),
                     // todo add more ?
                 };
+            }
+
 #undef MAKE_PAIR
-			}
 
 			void SceneReader::RTTI_Init() {
 				RTTI_REGISTER_TYPE(sani::resource::reader::ResourceTypeReader);
@@ -128,19 +131,20 @@ namespace sani {
                 parseEntities(entitiesObject, engine);
             }
 
-			void* SceneReader::read(ResourceReader* reader) {
-                
-				Scene* scene = nullptr;
+            void* SceneReader::read(ResourceReader* reader) {
 
-				String8 sceneName(reader->readString());
+                Scene* scene = nullptr;
+
+                String8 sceneName(reader->readString());
                 String8 json(reader->readString());
-			
+
                 auto engine = reader->getResourceManager().getEngine();
 
                 auto createComponentMsg = engine->createEmptyMessage<messages::DocumentMessage>();
                 componentmanager::createComponent("transform manager", createComponentMsg);
                 engine->routeMessage(createComponentMsg);
-                Transform* tx = static_cast<Transform*>(createComponentMsg->getData());
+                sani::rtti::Object asd(static_cast<Transform*>(createComponentMsg->getData()));
+                auto type = asd.getType();
                 engine->releaseMessage(createComponentMsg);
 
                 r::Document document;
@@ -148,10 +152,10 @@ namespace sani {
 
                 parseJson(document, engine);
 
-                
-				//scene = new Scene(sceneName, filesToLoad);
-				return scene;
-			}
+
+                //scene = new Scene(sceneName, filesToLoad);
+                return scene;
+            }
 			
 		}
 	}

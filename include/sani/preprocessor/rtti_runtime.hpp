@@ -35,7 +35,16 @@ db.types[typeof(p_class).getID()].addField<p_class, p_type>(#p_name,            
 	},                                                                               \
 	[](sani::rtti::Object& instance, const sani::rtti::Object& v) {                  \
 	    instance.getValue<##p_class>().p_name = v.getValue<p_type>();                \
-    });               
+    });       
+
+#define RTTI_PUBLIC_FIELD_PTR(p_class, p_name, p_type)                               \
+	db.types[typeof(p_class*).getID()].addField<p_class*, p_type>(#p_name,           \
+	[](const sani::rtti::Object& instance) {                                         \
+	    return instance.getValue<##p_class*>()->p_name;                              \
+    },                                                                               \
+	[](sani::rtti::Object& instance, const sani::rtti::Object& v) {                  \
+	    instance.getValue<##p_class*>()->p_name = v.getValue<p_type>();              \
+    });      
 
 #define RTTI_DECLARE_BASECLASSES(p_class, ...)                                       \
 	db.types[typeof(p_class).getID()].loadBaseClasses(db, typeof(p_class).getID(),   \

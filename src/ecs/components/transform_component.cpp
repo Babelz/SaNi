@@ -6,12 +6,18 @@ namespace sani {
 		auto& db = sani::rtti::TypeDatabase::getInstance();
 
         RTTI_REGISTER_TYPE(sani::Transform);
+        RTTI_REGISTER_TYPE(sani::Transform*);
 
         RTTI_DEFAULT_CTOR(sani::Transform);
         
 		RTTI_PUBLIC_FIELD(sani::Transform, position, sani::math::Vec3f);
         RTTI_PUBLIC_FIELD(sani::Transform, scale, sani::math::Vec2f);
         RTTI_PUBLIC_FIELD(sani::Transform, rotation, float32);
+
+
+        RTTI_PUBLIC_FIELD_PTR(sani::Transform, position, sani::math::Vec3f);
+        RTTI_PUBLIC_FIELD_PTR(sani::Transform, scale, sani::math::Vec2f);
+        RTTI_PUBLIC_FIELD_PTR(sani::Transform, rotation, float32);
     }
 }
 
