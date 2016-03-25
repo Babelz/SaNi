@@ -6,6 +6,7 @@
 #include <sys\stat.h>
 
 #include "sani\core\logging\log.hpp"
+#include "sani/engine/mono_provider.hpp"
 
 namespace sani {
 

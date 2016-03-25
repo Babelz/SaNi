@@ -7,6 +7,8 @@
 #include "sani/core/logging/log.hpp"
 #include <rapidjson/document.h>
 #include <iostream>
+#include "sani/core/utils/convert.hpp"
+
 namespace sani {
 
 	namespace resource {
@@ -14,9 +16,18 @@ namespace sani {
 		namespace reader {
 			
             namespace r = rapidjson;
-
+            namespace su = sani::utils;
 			namespace {
 				auto &db = sani::rtti::TypeDatabase::getInstance();
+#define MAKE_PAIR(type, f) { typeof(type).getID(), [](const String8& s) { return sani::rtti::Object(f(s)); }}
+
+                static std::unordered_map<sani::rtti::TypeID, std::function<sani::rtti::Object(const String8&)>> Convertors{
+                    MAKE_PAIR(float32, su::toFloat32),
+                    MAKE_PAIR(int32, su::toInt32),
+                    MAKE_PAIR(float64, su::toFloat64),
+                    // todo add more ?
+                };
+#undef MAKE_PAIR
 			}
 
 			void SceneReader::RTTI_Init() {
@@ -44,9 +55,18 @@ namespace sani {
                         //parseComponent(it)
                         auto& obj = it->value.GetObject();
                         parseComponent(fieldType, fieldInstance, obj.MemberBegin(), obj.MemberEnd());
+                        field.setValue(instance, fieldInstance);
                     }
                     else {
                         const sani::rtti::Field& field = rootType.getField(it->name.GetString());
+                        const sani::rtti::Type fieldType = field.getType();
+                        sani::rtti::TypeID fieldId = fieldType.getID();
+#if _DEBUG
+                        SANI_ASSERT(Convertors.count(fieldId));
+#endif
+                        auto convertor = Convertors.at(fieldId);
+                        
+                        field.setValue(instance, convertor(it->value.GetString()));
                         std::cout << it->name.GetString() << " = " << it->value.GetString() << std::endl;
                     }
                 }
@@ -66,7 +86,7 @@ namespace sani {
                 // advance
                 ++m;
                 parseComponent(componentType, componentInstance, m, componentItr->MemberEnd());
-
+                
             }
 
             void parseComponents(const r::Value& componentObjects) {
