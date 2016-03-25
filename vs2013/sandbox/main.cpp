@@ -242,7 +242,7 @@ void initialize(SaNiEngine* const engine) {
 	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
 	engine->releaseMessage(getGraphicsDevice);
 
-	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
+	resources = new ResourceManager(&fileSystem, graphicsDevice, engine, String8("../../assets/"));
 	
 	std::vector<sani::graphics::Rectangle*> rects;
 	auto erkki = resources->load<Texture2D>("tuksu");

@@ -4,6 +4,7 @@
 #include "sani/resource/reader/resource_reader.hpp"
 #include "sani/resource/resource.hpp"
 #include "sani/core/logging/log.hpp"
+#include "sani/engine/sani_engine.hpp"
 #include <sstream>
 
 namespace sani {
@@ -11,9 +12,10 @@ namespace sani {
 	namespace resource {
 
 		ResourceManager::ResourceManager(FileSystem* fileSystem, GraphicsDevice* gdevice, 
-															  const String8& root) : fileSystem(fileSystem), 
+										 engine::SaNiEngine* const engine, String8& root) : fileSystem(fileSystem), 
 																					 graphicsDevice(gdevice),
-																					 contentRoot(root) {
+																					 contentRoot(root),
+                                                                                     engine(engine) {
 			// get rid of path separator
 			std::size_t index = contentRoot.rfind("/", contentRoot.length() - 1);
 			if (index != std::string::npos) {
@@ -56,7 +58,11 @@ namespace sani {
             return resource;
 		}
 
-		void ResourceManager::unload() {
+        engine::SaNiEngine* const ResourceManager::getEngine() const {
+            return engine;
+        }
+
+        void ResourceManager::unload() {
 			// TODO ref counting?
 			for (auto& kvp : resources) {
 				delete kvp.second;

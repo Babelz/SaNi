@@ -31,13 +31,11 @@ namespace sani {
 
 		class Scene : public Resource {
 		public:
-			using Assets = std::vector < String8 >;
 		private:
 			String8 name;
-			Assets toLoad;
 			bool initialized{ false };
 		public:
-			Scene(const String8& name, const Assets& toLoad);
+			Scene(const String8& name);
 			~Scene();
 
 			const String8& getName() const;

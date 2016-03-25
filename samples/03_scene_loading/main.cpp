@@ -49,7 +49,7 @@ void initialize(SaNiEngine* const engine) {
 	GraphicsDevice* graphicsDevice = static_cast<GraphicsDevice*>(getGraphicsDevice->getData());
 	engine->releaseMessage(getGraphicsDevice);
 
-	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
+	resources = new ResourceManager(&fileSystem, graphicsDevice, engine, String8("../../assets/"));
 	
 	auto scene = resources->load<Scene>("helloworldjson");
 	scene->initialize();

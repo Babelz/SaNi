@@ -122,6 +122,8 @@ namespace sani {
                 document.Parse<0>(json);
 
                 parseJson(document);
+
+                
 				//scene = new Scene(sceneName, filesToLoad);
 				return scene;
 			}
