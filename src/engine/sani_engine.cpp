@@ -34,7 +34,7 @@
 
 #include "sani/core/profiling/profiler.hpp"
 #include "sani/platform/console.hpp"
-
+#include "sani/engine/services/ecs/transform_manager.hpp"
 #include "sani/core/logging/log_batcher.hpp"
 
 #include <sstream>
@@ -192,13 +192,25 @@ namespace sani {
 		}
 		bool SaNiEngine::initializeEntityComponentSystem() {
 			EntityManager* entityManager = new EntityManager(this);
-
-			services.registerService(entityManager);
+            services::EngineService* servicesToStart[] = {
+                new services::TransformManager(this)
+            };
+            
+			registerService(entityManager);
+            for (auto* service : servicesToStart) registerService(service);
 
 			// All ok.
 			if (entityManager->start()) {
 				FNCLOG_INF(log::OutFlags::All, "entity manager started...");
-
+                for (auto* service : servicesToStart) {
+                    if (service->start()) {
+                        FNCLOG_INF(log::OutFlags::All, String8("Started service ") + service->getName());
+                    }
+                    else {
+                        std::abort();
+                    }
+                    
+                }
 				return true;
 			}
 

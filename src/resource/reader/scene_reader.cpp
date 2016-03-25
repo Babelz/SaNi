@@ -11,6 +11,7 @@
 #include "sani/core/utils/convert.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
 #include "sani/engine/services/contracts/entity_manager_contract.hpp"
+#include "sani/engine/services/contracts/component_manager_contract.hpp"
 
 namespace sani {
 
@@ -44,9 +45,9 @@ namespace sani {
 
 			}
 
-            void parseComponent(const sani::rtti::Type rootType, sani::rtti::Object& instance, 
+            void setFieldData(const sani::rtti::Type rootType, sani::rtti::Object& instance,
                 r::Value::ConstMemberIterator it, r::Value::ConstMemberIterator end) {
-                for (it; it != end; ++it) {
+                for (; it != end; ++it) {
                     if (it->value.IsObject()) {
                         auto& db = sani::rtti::TypeDatabase::getInstance();
                         String8 fieldName(it->name.GetString());
@@ -57,7 +58,7 @@ namespace sani {
 
                         //parseComponent(it)
                         auto& obj = it->value.GetObject();
-                        parseComponent(fieldType, fieldInstance, obj.MemberBegin(), obj.MemberEnd());
+                        setFieldData(fieldType, fieldInstance, obj.MemberBegin(), obj.MemberEnd());
                         field.setValue(instance, fieldInstance);
                     }
                     else {
@@ -87,11 +88,12 @@ namespace sani {
 #if _DEBUG
                 SANI_ASSERT(db.ids.count(componentTypename));
 #endif
+                
                 sani::rtti::Type componentType = db.ids[componentTypename];
                 sani::rtti::Object componentInstance = componentType.create(sani::rtti::Arguments{});
                 // advance
                 ++m;
-                parseComponent(componentType, componentInstance, m, componentItr->MemberEnd());
+                setFieldData(componentType, componentInstance, m, componentItr->MemberEnd());
                 
             }
 
@@ -134,6 +136,12 @@ namespace sani {
                 String8 json(reader->readString());
 			
                 auto engine = reader->getResourceManager().getEngine();
+
+                auto createComponentMsg = engine->createEmptyMessage<messages::DocumentMessage>();
+                componentmanager::createComponent("transform manager", createComponentMsg);
+                engine->routeMessage(createComponentMsg);
+                Transform* tx = static_cast<Transform*>(createComponentMsg->getData());
+                engine->releaseMessage(createComponentMsg);
 
                 r::Document document;
                 document.Parse<0>(json);
