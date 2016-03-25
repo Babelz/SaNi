@@ -1,3 +1,4 @@
+#include "sani/engine/sani_engine.hpp"
 #include "sani/resource/reader/scene_reader.hpp"
 #include "sani/rtti/type_database.hpp"
 #include "sani/resource/scene.hpp"
@@ -8,6 +9,8 @@
 #include <rapidjson/document.h>
 #include <iostream>
 #include "sani/core/utils/convert.hpp"
+#include "sani/engine/messaging/messages/document_message.hpp"
+#include "sani/engine/services/contracts/entity_manager_contract.hpp"
 
 namespace sani {
 
@@ -76,6 +79,9 @@ namespace sani {
                 auto m = componentItr->MemberBegin();
                 // the first one should be name
                 String componentTypename(m->value.GetString());
+                // get "transform" from "sani::Transform"
+                String8 componentManagerName(componentTypename.substr(componentTypename.rfind(":") + 1) + " manager");
+                std::transform(componentManagerName.begin(), componentManagerName.begin() + 1, componentManagerName.begin(), ::tolower);
 
                 auto& db = sani::rtti::TypeDatabase::getInstance();
 #if _DEBUG
@@ -98,17 +104,26 @@ namespace sani {
                 }
             }
 
-            void parseEntities(const r::Value& entitesObject) {
+            void parseEntities(const r::Value& entitesObject, engine::SaNiEngine* const engine) {
                 for (r::Value::ConstValueIterator entityIt = entitesObject.Begin(); 
                     entityIt != entitesObject.End(); ++entityIt) {
+
+                    auto createEntityMsg = engine->createEmptyMessage<messages::DocumentMessage>();
+                    entitymanager::createEntity(createEntityMsg);
+                    engine->routeMessage(createEntityMsg);
+
+                    Entity* entity = static_cast<Entity*>(createEntityMsg->getData());
+
+                    engine->releaseMessage(createEntityMsg);
+
                     parseComponents(entityIt->GetObject()["components"]);
                 }
             }
 
-            void parseJson(const r::Document& document) {
+            void parseJson(const r::Document& document, engine::SaNiEngine* const engine) {
                 const r::Value& rootObject = document["scene"];
                 const r::Value& entitiesObject = rootObject["entities"];
-                parseEntities(entitiesObject);
+                parseEntities(entitiesObject, engine);
             }
 
 			void* SceneReader::read(ResourceReader* reader) {
@@ -118,10 +133,12 @@ namespace sani {
 				String8 sceneName(reader->readString());
                 String8 json(reader->readString());
 			
+                auto engine = reader->getResourceManager().getEngine();
+
                 r::Document document;
                 document.Parse<0>(json);
 
-                parseJson(document);
+                parseJson(document, engine);
 
                 
 				//scene = new Scene(sceneName, filesToLoad);
