@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani/platform/graphics/screen_shader_source.hpp"
+#include "sani/core/math/matrix4.hpp"
 #include "sani/core/logging/log.hpp"
 #include "sani/graphics/camera2d.hpp"
 #include "sani/graphics/setups/textured_polygon_render_setup.hpp"
@@ -10,6 +12,7 @@
 #include "sani/graphics/renderables/static_text.hpp"
 #include "sani/resource/spritefont_content.hpp"
 #include "sani/resource/sprite_font.hpp"
+#include "sani/graphics/renderables/rectangle.hpp"
 #include "sani/graphics/vertex_helper.hpp"
 
 #include <algorithm>
@@ -26,6 +29,8 @@ namespace sani {
 		void setText(StaticText& staticText, const String16& text, const Color& color) {
 			if (text.empty()) return;
 
+			staticText.color = color;
+
 			// Generate text vertices.
 			// We will render the generated vertices once to the text
 			// render target and dispose them.
@@ -33,12 +38,13 @@ namespace sani {
 			// until this function gets called again.
 			const uint32 TokenVerticesCount = 4;
 			const uint32 TokenIndicesCount = 6;
+			const uint32 TokenVertexElementsCount = 9;
 
 			std::vector<VertexPositionColorTexture> vertices;
 			std::vector<uint32> indices;
 
 			vertices.resize(text.size() * TokenVerticesCount);
-			indices.resize(text.size() * TokenIndicesCount);
+			indices.resize(text.size() * TokenVertexElementsCount);
 
 			resource::SpriteFont* const font = staticText.font;
 
@@ -47,14 +53,21 @@ namespace sani {
 			float32 yOffset = 0.0f;
 			
 			// Used to create the render target.
-			float32 targetAreaWidth = 800.f;
-			float32 targetAreaHeight = 600.f;
+			float32 targetAreaWidth = 0.0f;
+			float32 targetAreaHeight = 0.0f;
 			
-			// Vertex pointer, index pointer and 
-			// index counter.
-			uint32 vp = 0;
-			uint32 ip = 0;
-			uint32 ic = 0;
+			// Generate indices.
+			const uint32 indicesCount = text.size() * TokenIndicesCount;
+			int32 vertexIndexPointer = 0;
+			for (uint32 i = 0; i < indicesCount; i += TokenVerticesCount) {
+				indices[vertexIndexPointer++] = i;
+				indices[vertexIndexPointer++] = i + 1;
+				indices[vertexIndexPointer++] = i + 2;
+
+				indices[vertexIndexPointer++] = i + 1;
+				indices[vertexIndexPointer++] = i + 3;
+				indices[vertexIndexPointer++] = i + 2;
+			}
 
 			for (uint32 i = 0; i < text.size(); i++) {
 				const uint32 ch = static_cast<uint32>(text[i]);
@@ -91,75 +104,49 @@ namespace sani {
 					const float32 y = yOffset - glyph.yOffset + spacing;
 					const float32 w = static_cast<float32>(glyph.source.w);
 					const float32 h = static_cast<float32>(glyph.source.h);
-					const math::Rect32f source = math::Rect32f((float32)glyph.source.x, (float32)glyph.source.y, (float32)glyph.source.w, (float32)glyph.source.h);
+					const math::Rect32f source = math::Rect32f(static_cast<float32>(glyph.source.x),
+															   static_cast<float32>(glyph.source.y),
+															   static_cast<float32>(glyph.source.w),
+															   static_cast<float32>(glyph.source.h));
 
-					// Update area variables.
-					//targetAreaWidth += x + w;
-					//targetAreaHeight = targetAreaHeight < y ? y : targetAreaHeight;
+					graphics::Rectangle rectangle(x, y, w, h);
+					rectangle.texture = font->texture;
+					rectangle.fill = color::Red;
+					rectangle.borderFill = color::Green;
+					rectangle.transform.origin.x = 0.0f;
+					rectangle.transform.origin.y = 0.0f;
+					rectangle.borderThickness = 10.0f;
+					rectangle.textureSource = source;
+					
+					recomputeVertices(rectangle);
+					recomputeBounds(rectangle);
+					updateRenderData(rectangle);
 
-					// Create vertices.
-					// Top-left.
-					vertices[vp].vertexPositionColor.position.x	= x;
-					vertices[vp].vertexPositionColor.position.y	= y;
-					vertices[vp].vertexPositionColor.color		= color;
-					vp++;
+					targetAreaWidth = targetAreaWidth < rectangle.globalBounds.right() ? rectangle.globalBounds.right() : targetAreaWidth;
+					targetAreaHeight = targetAreaHeight < rectangle.globalBounds.bottom() ? rectangle.globalBounds.bottom() : targetAreaHeight;
 
-					// Top-right.
-					vertices[vp].vertexPositionColor.position.x	= x + w;
-					vertices[vp].vertexPositionColor.position.y	= y;
-					vertices[vp].vertexPositionColor.color		= color;
-					vp++;
-
-					// Bottom-left.
-					vertices[vp].vertexPositionColor.position.x	= x;
-					vertices[vp].vertexPositionColor.position.y	= y + h;
-					vertices[vp].vertexPositionColor.color		= color;
-					vp++;
-
-					// Bottom-right.
-					vertices[vp].vertexPositionColor.position.x	= x + w;
-					vertices[vp].vertexPositionColor.position.y	= y + h;
-					vertices[vp].vertexPositionColor.color		= color;
-					vp++;
-
-					// Create indices.
-					indices[ip++] = ic;
-					indices[ip++] = ic + 1;
-					indices[ip++] = ic + 2; 
-
-					indices[ip++] = ic + 1;
-					indices[ip++] = ic + 3;
-					indices[ip++] = ic + 2;
-
-					ic += TokenVerticesCount;
-
-					// Compute texture coordinates.
-					VertexPositionColorTexture* tokenVertices[] {
-						&vertices[vp - 3],	// Top-left.
-						&vertices[vp - 2],	// Top-right.
-						&vertices[vp - 1],	// Bottom-left.
-						&vertices[vp],		// Bottom-right.
-					};
-
-					computeRectangleTextureCoordinates(tokenVertices,
-													   source, 
-													   static_cast<float32>(font->texture->getWidth()), 
-													   static_cast<float32>(font->texture->getHeight()));
-
+					for (auto& vpct : rectangle.renderData.vertices) vertices.push_back(vpct);
+					
 					xOffset += glyph.xAdvance;
 					break;
 				}
 			}
 
+			targetAreaWidth = 1280;
+			targetAreaHeight = 720;
+
+			staticText.localBounds.w = targetAreaWidth;
+			staticText.localBounds.h = targetAreaHeight;
+
+
 			GraphicsDevice* const graphicsDevice = staticText.graphicsDevice;
 
 			// Do render target checks.
 			// TODO: automatic?...
-			const uint32 uwidth = static_cast<uint32>(targetAreaWidth);
-			const uint32 uheight = static_cast<uint32>(targetAreaHeight);
+			const uint32 uwidth = static_cast<uint32>(staticText.globalBounds.w);
+			const uint32 uheight = static_cast<uint32>(staticText.globalBounds.h);
 
 			if (staticText.renderTarget != nullptr) {
-				// TODO: resize on smaller on neq?
 				if (staticText.renderTarget->getWidth() != uwidth || staticText.renderTarget->getHeight() != uheight) {
 					staticText.renderTarget->dispose();
 
@@ -178,68 +165,73 @@ namespace sani {
 			if (staticText.renderTarget == nullptr) 
 				staticText.renderTarget = new RenderTarget2D(graphicsDevice, static_cast<uint32>(targetAreaWidth), static_cast<uint32>(targetAreaHeight));
 
-			// Save device state.
-			//graphicsDevice->saveState();
+			staticText.renderTarget->setClearColor(101.f / 255, 156.f / 255, 239.f / 255, 1.0f);
 
-			// Create buffers.
+			recomputeBounds(staticText);
+
+			const math::Vec3f npos(-0.0f, 0.0f, 0.0f);
+			const Viewport viewport(0, 0, staticText.globalBounds.w, staticText.globalBounds.h);
+/*
+			transform = math::ortho<float32>(0.0f, static_cast<float32>(viewport.width), static_cast<float32>(viewport.height), 0.0f, zNear, zFar);
+			transform = math::translate(transform, npos) * transform;
+			transform = math::rotate(transform, rotation, math::Vec3f(0.0f, 0.0f, 1.0f));
+			transform = math::scale(transform, zoom);
+			transform = math::translate(transform, origin) * transform;*/
+
+			auto ortho = math::ortho<float32>(0.0f, static_cast<float32>(viewport.width), static_cast<float32>(viewport.height), 0.0f, 0.1f, 100.0f);
+			ortho = math::translate(ortho, npos) * ortho;
+
+			GraphicsEffect effect = GraphicsEffect::compile(graphicsDevice, DefaultTexturedPolygonVertexSource, DefaultTexturedPolygonFragmentSource);
+			EffectUniform* transform = effect.findUniform("transform");
+			transform->setData(&ortho);
+
+			TexturedPolygonRenderSetup rendersetup(graphicsDevice);
+			rendersetup.setVertexElementsCount(9);
+
+			graphicsDevice->saveState();
+			graphicsDevice->setViewport(viewport);
+			graphicsDevice->setRenderTarget(staticText.renderTarget);
+			graphicsDevice->bindTexture(font->texture->getID());
+			SANI_ASSERT(!graphicsDevice->hasErrors());
+
+			rendersetup.use();
+			effect.bind();
+
 			uint32 vertexBuffer = 0;
 			uint32 indexBuffer = 0;
+			uint32 vertexArray = 0;
+			
+			glGenVertexArrays(1, &vertexArray);
+			glBindVertexArray(vertexArray);
 
 			graphicsDevice->generateBuffer(vertexBuffer);
-			graphicsDevice->generateBuffer(indexBuffer);
 			graphicsDevice->bindBuffer(vertexBuffer, BufferType::ArrayBuffer);
+			graphicsDevice->setBufferData(BufferType::ArrayBuffer, sizeof(float32) * vertices.size(), vertices.data(), BufferUsage::Static);
+			SANI_ASSERT(!graphicsDevice->hasErrors());
+			
+			graphicsDevice->generateBuffer(indexBuffer);
 			graphicsDevice->bindBuffer(indexBuffer, BufferType::ElementArrayBuffer);
+			graphicsDevice->setBufferData(BufferType::ElementArrayBuffer, sizeof(uint32) * indices.size(), indices.data(), BufferUsage::Static);
+			SANI_ASSERT(!graphicsDevice->hasErrors());
 
-			graphicsDevice->setBufferData(BufferType::ArrayBuffer,
-										  static_cast<uint32>(vertices.size() * sizeof(float32) * sizeof(VertexPositionColorTexture)),
-										  vertices.data(),
-										  BufferUsage::Static);
+			graphicsDevice->drawElements(RenderMode::Triangles, PrimitiveType::UInt, indices.size(), 0);
+			SANI_ASSERT(!graphicsDevice->hasErrors());
 
-
-			graphicsDevice->setBufferData(BufferType::ElementArrayBuffer,
-										  static_cast<uint32>(indices.size() * sizeof(uint32)),
-										  indices.data(),
-										  BufferUsage::Static);
-
-			// Use default effect while rendering to render target.
-			GraphicsEffect shader = GraphicsEffect::compile(graphicsDevice, DefaultTexturedPolygonVertexSource, DefaultTexturedPolygonFragmentSource);
-
-			TexturedPolygonRenderSetup renderSetup(graphicsDevice);
-
-			graphicsDevice->setRenderTarget(staticText.renderTarget);
-
-			// Render to render target.
-			graphicsDevice->bindTexture(staticText.font->texture->getID());
-
-			renderSetup.setVertexElementsCount(9);
-
-			renderSetup.use();
-			shader.bind();
-
-			Camera2D c(graphicsDevice->getViewport());
-			c.computeTransformation();
-			auto t = c.transformation();
-
-			EffectUniform* f = shader.findUniform("transform");
-			f->setData(&t);
-
-			graphicsDevice->drawElements(RenderMode::Triangles, PrimitiveType::UInt, static_cast<uint32>(indices.size()), 0);
-
-			renderSetup.clear();
-			shader.unbind();
-
-			// Delete buffers.
-			graphicsDevice->unbindBuffer(BufferType::ArrayBuffer);
-			graphicsDevice->unbindBuffer(BufferType::ElementArrayBuffer);
-			graphicsDevice->deleteBuffer(vertexBuffer);
-			graphicsDevice->deleteBuffer(indexBuffer);
+			rendersetup.clear();
+			effect.unbind();
 
 			// Resume last device state.
-			//graphicsDevice->resumeState();
+			graphicsDevice->resumeState();
 
 			// Set texture.
 			staticText.texture = staticText.renderTarget;
- 		}
+			
+			//staticText.renderData.renderElements[0].texture = font->texture->getID();
+	
+			recomputeVertices(staticText);
+			recomputeBounds(staticText);
+			updateRenderData(staticText);
+		}
 
 		void recomputeVertices(StaticText& staticText) {
 			const math::Vec3f& position = staticText.transform.position;
@@ -263,9 +255,9 @@ namespace sani {
 
 			math::Vec3f shapeGlobalPositions[] {
 				position,
-					position,
-					position,
-					position
+				position,
+				position,
+				position
 			};
 
 			math::Vec3f shapeVertexPositions[] {

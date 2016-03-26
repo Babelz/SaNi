@@ -192,7 +192,7 @@ namespace sani {
 
 			// Enable GL settings.
 			glEnable(GL_BLEND);
-
+			
 			IF_ERRORS_RETURN false;
 
 			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -423,7 +423,12 @@ namespace sani {
 
 			glBindFramebuffer(GL_FRAMEBUFFER, impl->cImpl.currentRenderTarget->getFramebuffer());
 
-			glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+			const float32 r = impl->cImpl.currentRenderTarget->getClearRed();
+			const float32 g = impl->cImpl.currentRenderTarget->getClearGreen();
+			const float32 b = impl->cImpl.currentRenderTarget->getClearBlue();
+			const float32 a = impl->cImpl.currentRenderTarget->getClearAlpha();
+
+			glClearColor(r, g, b, a);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			CHECK_FOR_ERRORS;
@@ -768,14 +773,14 @@ namespace sani {
 			
 			// Copy viewport information.
 			GraphicsDeviceState* newState = &impl->cImpl.states.top();
+			GraphicsDeviceState* currentState = impl->cImpl.currentState;
+
 			newState->viewport = impl->cImpl.viewport;
 
-			// Unbind all state stuff.
-			setRenderTarget(nullptr);
-
 			// Use raw gl to avoid some state checks.
-			for (auto buffer : impl->cImpl.currentState->bindedBuffers) glBindBuffer(static_cast<GLenum>(buffer.first), 0);
-			for (auto vp : impl->cImpl.currentState->vertexPointers)	glDisableVertexAttribArray(vp.first);
+			for (auto buffer : currentState->bindedBuffers) glBindBuffer(static_cast<GLenum>(buffer.first), 0);
+			for (auto vp : currentState->vertexPointers)	glDisableVertexAttribArray(vp.first);
+
 			glBindTexture(GL_TEXTURE_2D, 0);
 			glUseProgram(0);
 
@@ -795,7 +800,7 @@ namespace sani {
 			// Get last and apply it's state to device.
 			GraphicsDeviceState* resumingState = &impl->cImpl.states.top();
 			
-			setRenderTarget(resumingState->renderTarget);
+			//setRenderTarget(resumingState->renderTarget);
 
 			// Use raw gl to avoid some state checks.
 			for (auto buffer : resumingState->bindedBuffers) glBindBuffer(static_cast<GLenum>(buffer.first), buffer.second);
@@ -813,6 +818,8 @@ namespace sani {
 			
 			glBindTexture(GL_TEXTURE_2D, resumingState->texture);
 			glUseProgram(resumingState->shader);
+
+			setViewport(resumingState->viewport);
 
 			// Swap.
 			impl->cImpl.currentState = resumingState;

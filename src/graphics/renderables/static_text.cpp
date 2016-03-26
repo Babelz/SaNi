@@ -50,8 +50,6 @@ namespace sani {
 
 		StaticText::~StaticText() {
 			if (renderTarget != nullptr) {
-				// Assume it gets disposed...
-				// TODO: add some exception checks.
 				renderTarget->dispose();
 
 				renderTarget = nullptr;

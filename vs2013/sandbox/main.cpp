@@ -161,68 +161,68 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	return 0;
 }
 
-//void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
-//	float start = 400;
-//	float offx = start;
-//	float offy = 0;
-//	float spacing = font->lineSpacing;
-//	for (uint32 i = 0; i < text.size(); ++i) {
-//		uint32 c = static_cast<uint32>((text[i]));
-//
-//		switch (c) {
-//		case '\r':
-//			continue;
-//		case '\n':
-//			offx = start;
-//			offy += spacing;
-//			continue;
-//		default:
-//
-//			auto it = std::find_if(font->characters.begin(), font->characters.end(), [c](uint32 a) {
-//				return c == a;
-//			});
-//
-//
-//			if (it == font->characters.end()) throw std::runtime_error("asd");
-//
-//			uint32 index = std::distance(font->characters.begin(), it) - 0;
-//			GlyphContent& glyph = font->glyphs[index];
-//
-//			auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
-//			createElement(createRectangleMessage, ElementType::Rectangle);
-//
-//			engine->routeMessage(createRectangleMessage);
-//
-//			auto& rect = glyph.source;
-//			const float32 w = (float32)rect.w;
-//			const float32 h = (float32)rect.h;
-//
-//			const float32 x = offx + glyph.xOffset;
-//			const float32 y = offy - glyph.yOffset + spacing; //+ font->texture->getHeight();
-//
-//			sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
-//			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
-//
-//			rectangle->texture = font->texture;
-//			rectangle->fill = color::Red;
-//			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
-//			recomputeVertices(*rectangle);
-//			setupShapeForRendering(rectangle, rectangle->borderThickness);
-//
-//			rectangle->transform.origin.x = 0.0f;
-//			rectangle->transform.origin.y = 0.0f;
-//
-//			recomputeVertices(*rectangle);
-//			updateRenderData(*rectangle);
-//			useTexturing(rectangle);
-//
-//			engine->releaseMessage(createRectangleMessage);
-//
-//			rects.push_back(rectangle);
-//			offx += glyph.xAdvance;
-//		}
-//	}
-//}
+void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNiEngine* const engine, std::vector<sani::graphics::Rectangle*>& rects) {
+	float start = 400;
+	float offx = start;
+	float offy = 0;
+	float spacing = font->lineSpacing;
+	for (uint32 i = 0; i < text.size(); ++i) {
+		uint32 c = static_cast<uint32>((text[i]));
+
+		switch (c) {
+		case '\r':
+			continue;
+		case '\n':
+			offx = start;
+			offy += spacing;
+			continue;
+		default:
+
+			auto it = std::find_if(font->characters.begin(), font->characters.end(), [c](uint32 a) {
+				return c == a;
+			});
+
+
+			if (it == font->characters.end()) throw std::runtime_error("asd");
+
+			uint32 index = std::distance(font->characters.begin(), it) - 0;
+			GlyphContent& glyph = font->glyphs[index];
+
+			auto createRectangleMessage = engine->createEmptyMessage<DocumentMessage>();
+			createElement(createRectangleMessage, ElementType::Rectangle);
+
+			engine->routeMessage(createRectangleMessage);
+
+			auto& rect = glyph.source;
+			const float32 w = (float32)rect.w;
+			const float32 h = (float32)rect.h;
+
+			const float32 x = offx + glyph.xOffset;
+			const float32 y = offy - glyph.yOffset + spacing; //+ font->texture->getHeight();
+
+			sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
+			NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
+
+			rectangle->texture = font->texture;
+			rectangle->fill = color::Green;
+			rectangle->textureSource = sani::math::Rect32f(rect.x, rect.y, rect.w, rect.h);
+			recomputeVertices(*rectangle);
+			setupShapeForRendering(rectangle, rectangle->borderThickness);
+
+			rectangle->transform.origin.x = 0.0f;
+			rectangle->transform.origin.y = 0.0f;
+
+			recomputeVertices(*rectangle);
+			updateRenderData(*rectangle);
+			useTexturing(rectangle);
+
+			engine->releaseMessage(createRectangleMessage);
+
+			rects.push_back(rectangle);
+			offx += glyph.xAdvance;
+		}
+	}
+}
 
 #include "sani/graphics/renderables/static_text.hpp"
 #include "sani/graphics/renderables/particle_emitter.hpp"
@@ -232,6 +232,8 @@ sani::graphics::Circle* c;
 StaticText* tex;
 
 #include "sani/core/memory/memory.hpp"
+
+String16 gg;
 
 void initialize(SaNiEngine* const engine) {
 
@@ -293,7 +295,7 @@ void initialize(SaNiEngine* const engine) {
 	NEW_DYNAMIC(sani::graphics::Circle, circle, 400, 400, 200, 128);
 	
 	circle->texture = erkki;
-	circle->fill = color::Red;
+	circle->fill = color::White;
 	circle->radius = 200;
 
 	recomputeVertices(*circle);
@@ -310,7 +312,7 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	layer->add(circle);
+	//layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
@@ -365,16 +367,19 @@ void initialize(SaNiEngine* const engine) {
 
 
 	StringConverter conv;
-	String16 gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
+	gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
 	//createText(font, gg, graphicsDevice, engine, rects);
 
-	tex = new StaticText(graphicsDevice, font, 300, 300, 300, 300);
-	setText(*tex, gg, color::Red);
-	tex->color = color::White;
+	tex = new StaticText(graphicsDevice, font, 0, 0, 1280, 720);
+	
+	tex->transform.origin.x = 0;
+	tex->transform.origin.y = 0;
 
-	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+	setText(*tex, gg, color::White);
+	
+	//for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
 
-	layer->add(em);
+	//layer->add(em);
 	layer->add(tex);
 
 	inputListener.init();
@@ -390,8 +395,8 @@ namespace sandbox {
 	void update(SaNiEngine* const engine, const sani::EngineTime& time) {
 		inputListener.update();
 		c->transform.rotation += 0.001f;
-		//c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
-		//c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
+		c->textureSource.x = (float32)sani::math::cos(time.getTotalTime()) * 32.0f;
+		c->textureSource.y = (float32)sani::math::sin(time.getTotalTime()) * 32.0f;
 		c->fill.a = 0.5f;
 
 		recomputeVertices(*c);
@@ -404,9 +409,10 @@ namespace sandbox {
 		recomputeVertices(*a);
 		recomputeBounds(*a);
 */
+
 		sani::graphics::update(*em, time);
 		//sani::graphics::update(*a, time);
-	
+
 		recomputeBounds(*tex);
 		recomputeVertices(*tex);
 		updateRenderData(*tex);

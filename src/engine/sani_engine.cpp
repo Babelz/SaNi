@@ -152,8 +152,8 @@ namespace sani {
 				new services::CircleManager(this),
 				new services::TriangleManager(this),
 				new services::RectangleManager(this),
-				new SpriteAnimationManager(this),
-				new ParticleEmitterManager(this)
+				new services::SpriteAnimationManager(this),
+				new services::ParticleEmitterManager(this)
 			};
 
 			std::vector<String> errors;
@@ -229,10 +229,6 @@ namespace sani {
 			// Initialize rest of the services
 			// Load game data
 			// RUN!
-
-			/*
-				TODO: add error messages.
-			*/
 
 			FNCLOG_INF(log::OutFlags::All, "engine init start...");
 
