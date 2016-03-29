@@ -96,13 +96,13 @@ namespace sani {
 				// the window has been closed.
 				window->closed += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowClosed, getEngine()));
 
-				if (renderer.initialize()) return false;
+				if (!renderer.initialize()) return false;
 
 				/// Should never fail.
 				return true;
 			}
 			void RenderService::onTerminate() {
-				graphicsDevice->cleanup();
+				graphicsDevice->dispose();
 			}
 
 			void RenderService::createLayer(messages::CommandMessage* const message) {
@@ -158,8 +158,10 @@ namespace sani {
 			}
 			void RenderService::createCamera(messages::CommandMessage* const message) {
 				const String name = message->getData();
+				
+				auto viewport = graphicsDevice->getViewport();
 
-				cameras.push_back(Camera2D(graphicsDevice->getViewport()));
+				cameras.push_back(Camera2D(viewport));
 				
 				if (name.size() != 0) cameras.back().setName(name);
 			}
@@ -251,7 +253,7 @@ namespace sani {
 					renderToCamera(camera);
 				}
 
-				graphicsDevice->present();
+				graphicsDevice->present(NULL);
 				
 				END_PROFILING;
 			}

@@ -1,4 +1,4 @@
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/graphics/render_element_data.hpp"
 #include "sani/graphics/render_batcher.hpp"
 #include "sani/graphics/render_batch.hpp"

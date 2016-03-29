@@ -4,17 +4,13 @@
 #include <functional>
 
 #include "sani/platform/platform_config.hpp"
+
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS && SANI_DESKTOP
 #include "GL/glew.h"
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID && SANI_MOBILE
-#include <GLES2/gl2.h>
 #endif
 
-// Static assertions.
-static_assert(sizeof(GLuint) == sizeof(uint32), "sizeof(GLuint) != sizeof(uint32)");
-
 /*
-	TODOF: when implementing DirectX begins, 
+	TODO: when implementing DirectX begins, 
 		  create two headers that contain 
 		  mappings for OpenGL and DirectX.
 	      
@@ -36,14 +32,9 @@ namespace sani {
 			Dynamic = GL_DYNAMIC_DRAW
 		};
 
-        enum class BufferType : uint32{
+        enum class BufferType : uint32 {
 			ElementArrayBuffer = GL_ELEMENT_ARRAY_BUFFER,
 			ArrayBuffer		   = GL_ARRAY_BUFFER
-		};
-
-        enum class ColorAttachment : uint32{
-			Attachment0 = GL_COLOR_ATTACHMENT0,
-			Attachment1 = GL_COLOR_ATTACHMENT1
 		};
 
 		enum class PrimitiveType {
@@ -72,40 +63,18 @@ namespace sani {
 		};
 
 		enum class RenderMode {
-			Points    = GL_LINES,
-			LineStrip = GL_LINE_STRIP,
-			LineLoop  = GL_LINE_LOOP,
-			Lines     = GL_LINES,
-
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
-			LineStripAdjacency = GL_LINE_STRIP_ADJACENCY,
-			LinesAdjacency     = GL_LINES_ADJACENCY,
-#endif
-
-			TriangleStrip = GL_TRIANGLE_STRIP,
-			TriangleFan   = GL_TRIANGLE_FAN,
-			Triangles     = GL_TRIANGLES,
-
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
-			TriangleStripAdjacency = GL_TRIANGLE_STRIP_ADJACENCY,
-			TrianglesAdjancency    = GL_TRIANGLES_ADJACENCY,
-			Patches			       = GL_PATCHES
-#endif
-		};
-
-		struct VertexAttributePointerDescription  {
-			uint32 location		{ 0 };
-			uint32 count		{ 0 };
-
-			PrimitiveType type	{ PrimitiveType::UByte };
-			bool normalized		{ false };
-
-			uint32 stride		{ 0 };
-			uint32 offset		{ 0 };
-
-			VertexAttributePointerDescription() = default;
-
-			~VertexAttributePointerDescription() = default;
+			Points					= GL_LINES,
+			LineStrip				= GL_LINE_STRIP,
+			LineLoop				= GL_LINE_LOOP,
+			Lines					= GL_LINES,
+			LineStripAdjacency		= GL_LINE_STRIP_ADJACENCY,
+			LinesAdjacency			= GL_LINES_ADJACENCY,
+			TriangleStrip			= GL_TRIANGLE_STRIP,
+			TriangleFan				= GL_TRIANGLE_FAN,
+			Triangles				= GL_TRIANGLES,
+			TriangleStripAdjacency	= GL_TRIANGLE_STRIP_ADJACENCY,
+			TrianglesAdjancency		= GL_TRIANGLES_ADJACENCY,
+			Patches					= GL_PATCHES
 		};
 
 		enum class SurfaceFormat {
@@ -114,10 +83,7 @@ namespace sani {
 
 		enum class TextureTarget {
 			Texture2D = GL_TEXTURE_2D,
-
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			Texture3D = GL_TEXTURE_3D
-#endif
 		};
 
 		enum class TextureParameterName {
@@ -133,10 +99,7 @@ namespace sani {
 			Repeat		   = GL_REPEAT,
 			MirroredRepeat = GL_MIRRORED_REPEAT,
 			ClampToEdge    = GL_CLAMP_TO_EDGE,
-
-#if SANI_TARGET_PLATFORM != SANI_PLATFORM_ANDROID
 			ClampToBorder  = GL_CLAMP_TO_BORDER
-#endif
 		};
 
 		enum class TextureMagFilter {
@@ -151,17 +114,6 @@ namespace sani {
 			LinearMipmapNearest  = GL_LINEAR_MIPMAP_NEAREST,
 			NearestMipmapLinear  = GL_NEAREST_MIPMAP_LINEAR,
 			LinearMipmapLinear   = GL_LINEAR_MIPMAP_LINEAR
-		};
-
-		struct TextureDescription {
-			uint32 width			{ 0 };
-			uint32 height			{ 0 };
-			uint32 levels			{ 0 };
-			SurfaceFormat format	{ SurfaceFormat::ColorRGBA };
-
-			TextureDescription() = default;
-
-			~TextureDescription() = default;
 		};
 	}
 }

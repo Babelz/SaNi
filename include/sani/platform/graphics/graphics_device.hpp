@@ -1,7 +1,8 @@
 #pragma once
 
+#include "sani/forward_declare.hpp"
 #include "sani/platform/graphics/graphics_error.hpp"
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/platform/platform_config.hpp"
 #include "sani/core/events.hpp"
 
@@ -13,8 +14,13 @@
 
 #endif
 
-#define IF_ERRORS_RETURN checkForErrors(__FUNCTION__, __LINE__); if (hasErrors()) return
-#define CHECK_FOR_ERRORS checkForErrors(__FUNCTION__, __LINE__)
+SANI_FORWARD_DECLARE_2(sani, graphics, RenderTarget2D);
+SANI_FORWARD_DECLARE_2(sani, graphics, Texture);
+
+SANI_FORWARD_DECLARE_STRUCT_2(sani, graphics, Viewport);
+SANI_FORWARD_DECLARE_STRUCT_2(sani, graphics, TextureDescription);
+SANI_FORWARD_DECLARE_STRUCT_2(sani, graphics, VertexAttributePointerDescription);
+SANI_FORWARD_DECLARE_STRUCT_2(sani, graphics, BufferDescription);
 
 namespace sani {
 	
@@ -38,199 +44,109 @@ namespace sani {
 				- size of the windows client area 
 		*/
 		
-		// Forward declarations.
-		struct Viewport;
-		struct TextureDescription;
-		class RenderTarget2D;
-
 		using ErrorBuffer = std::stack<GraphicsError>;
-		
+
+		struct Impl;
+
 		/// @class GraphicsDevice graphics_device.hpp "sani/platform/graphics_device.hpp"
 		/// @author voidbab
 		/// 
 		/// A virtual representation of the physical graphics adapter of this machine.
-		/// DX contains WinDX and GL contains Linux and WinGL implementations.
 		class GraphicsDevice {
 		private:
-			class Cimpl;
-			class Impl;
-
+			ErrorBuffer errorBuffer;
+			
 			Impl* impl;
 
-			ErrorBuffer errorBuffer;
+			bool createContext();
+			bool initializeGlew();
+			bool initializeDevice(const int32 backBufferWidth, const int32 backBufferHeight);
+			void setupScreenShader();
 
-			void checkForErrors(const char* func, const int32 line);
+			void pushError(const String& message, const char* const fnc, const uint32 ln);
+			void checkForAPIErrors(const char* const fnc, const uint32 ln);
 
-			static int32 surfaceFormatToOpenGL(const SurfaceFormat fmt);
-			void createScreenShader();
+			uint32 compileShader(const char* const src, const ShaderType type, String& error);
 		public:
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
-			GraphicsDevice();
-			// Public Win32 members.
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
-			
 			SANI_DECLARE_EVENT(backbufferSizeChanged, void(const uint32, const uint32, const uint32, const uint32));
-			SANI_DECLARE_EVENT(viewportSizeChanged,	void(const Viewport&, const Viewport&));
+			SANI_DECLARE_EVENT(viewportSizeChanged, void(const Viewport&, const Viewport&));
 
-			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance, const int32 backBufferWidth, const int32 backBufferHeight);
+			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance);
+			
+			void initialize(const int32 backBufferWidth, const int32 backBufferHeight);
+			void dispose();
 
+			GraphicsError nextError();
+			bool hasErrors();
+
+			// Display related.
 			bool isFullscreen() const;
-			void setFullscreen();
-			void setWindowed();
-#endif
+			void fullscreen();
+			void windowed();
 
-			/// Returns true if the error buffer contains errors.
-			bool hasErrors() const;
-			/// Returns the next error from the error buffer.
-			GraphicsError getError();
+			// Backbuffer/rt related.
+			void setBackbufferSize(const uint32 width, const uint32 height);
+			uint32 getBackbufferWidth() const;
+			uint32 getBackbufferHeight() const;
 
-			/// Sets the viewport of the device.
-			/// @param[in] viewport viewport to use
+			void setRenderTarget(RenderTarget2D* const renderTarger);
+
+			// Viewport related.
 			void setViewport(const Viewport& viewport);
-			/// Returns the current viewport to the user.
-			Viewport getViewport() const;
+			const Viewport& getViewport() const;
 
-			/// Initializes the device.
-			bool initialize();
-			/// Cleans the device.
-			bool cleanup();
-
-			/// Clears the device. Swaps the back
-			/// and front buffer.
-			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
-			void present();
+			// Buffer related.
+			uint32 createBuffer(const BufferDescription* const desc);
+			void deleteBuffer(const uint32 id);
+			void bindBuffer(const BufferType target, const uint32 id);
+			void setBufferData(const BufferType target, const void* const data, const uint32 bytes, const uint32 offset = 0);
 			
-			/*
-				Texture and render target operations.
-			*/
+			// Texture related.
+			void bindTexture(const TextureTarget target, const uint32 id);
+			uint32 createTexture(const TextureDescription* const desc);
 
-			/// Binds given texture.
-			/// @param[in] texture texture to bind
-			void bindTexture(const uint32 texture);
-			/// Unbinds current texture.
-			void unbindTexture();
-			
-			/// Sets the current render target for the device.
-			/// If the value is null, default render target
-			/// will be used.
-			void setRenderTarget(RenderTarget2D* renderTarget);
+			void createRendertarget(uint32& txid, uint32& fbid, const uint32 width, const uint32 height);
+			void deleteRenderTarget(const uint32 fbid);
 
-			/// Creates an empty texture or rendertarget
-			void generateTexture(uint32& texture, const TextureDescription& desc);
-			/// Generates new render target.
-			/// @param[in] renderTexture texture to be used with the target, call generateTexture before passing it
-			/// @param[in] colorBuffer color buffer to be generated for the target
-			/// @param[in] frameBuffer frame buffer to be generated for the target
-			/// @param[in] depthBuffer depth buffer to be generated for the target
-			/// @param[in] width width of the render target
-			/// @param[in] height of the render target
-			void generateRenderTarget2D(uint32& texture, uint32& frameBuffer, const uint32 width, const uint32 height);
-
-			void deleteFramebuffer(const uint32 buffer);
-
-			void resizeBackbuffer(const uint32 width, const uint32 height);
-
-			/*
-				Texture operations.
-			*/
-
-			/// Sets texture parameter to texture
-			/// This function assumes the texture is binded already 
-			void setTextureParameter(const TextureTarget target, const TextureParameterName field, int value);
-
+			void setTextureParameter(const TextureTarget target, const TextureParameterName field, const int32 value);
+			void getTextureData(const TextureTarget target, const int32 level, const SurfaceFormat format, unsigned char* data);
 			void setTextureData(const TextureTarget target,
-								const int level,
+								const int32 level,
 								const SurfaceFormat internalFormat,
-								const int width,
-								const int height,
+								const int32 width,
+								const int32 height,
 								const SurfaceFormat format,
 								const unsigned char* data);
 
-			void getTextureData(const TextureTarget target, const int level, const SurfaceFormat format, unsigned char* data);
-			void deleteTexture(const uint32 texture);
+			void deleteTexture(const uint32 texid);
 
-			/*
-				Shader operations.
-			*/
+			// Effect related.
+			void bindEffect(const uint32 id);
 
-			/// Attempts to compile given shader source
-			/// @param[in] shader result shader
-			/// @param[in] source source code of the shader
-			void compileShader(uint32& shader, const char* source, const ShaderType type);
-
-			/// Deletes the given shader.
-			void deleteShader(const uint32 shader);
-
-			/// Creates new shader program.
-			void createProgram(uint32& program);
-			/// Links given shader to given program.
-			/// @param[in] program program where the shader is linked to
-			/// @param[in] shader shader to be linked with the program
-			/// @param[in] dispose should the shader be deleted after it has been linked with the program
-			void linkToProgram(const uint32 program, const uint32 shader, const bool dispose);
-			/// Links the given program.
-			void linkProgram(const uint32 program);
-
-			/// Uses the given program. Passing 0 to this function
-			/// means the current program will be unbinded.
-			void useProgram(const uint32 program);
+			int32 getUniformsCount();
+			int32 getUniformLocation(const String& name);
 			
-			/// Sets the given shader uniform.
-			/// @param[in] shader program that contains the uniform to set
-			/// @param[in] name name of the uniform
-			/// @param[in] data data to be inserted in the uniform location
-			void setShaderUniform(const uint32 shader, const char* name, void* data, const UniformType type);
+			void getUniformInformation(const uint32 index, uint32& location, String& name, uint32& type, int32& valuesCount);
+			void setUniformValue(const String& name, const void* const data, const UniformType type);
 
-			int32 getUniformsCount(const uint32 shader) const;
+			uint32 compileEffect(const char* const vscr, const char* const fscr, String& errors);
+			uint32 compileEffect(const char* const vscr, const char* const fscr);
+			void deleteEffect(const uint32 id);
 
-			int32 getUniformLocation(const uint32 shader, const String& name) const;
+			// Vertex pointer related.
+			void createVertexPointer(const VertexAttributePointerDescription* const desc);
+			void disableVertexPointer(const uint32 location);
 
-			void getUniformInformation(const uint32 shader, const int32 index, int32& location, String& name, uint32& type, int32& valuesCount) const;
-
-			/*
-				Buffer operations.
-			*/
-
-			/// Generates a buffer.
-			void generateBuffer(uint32& buffer);
-			/// Binds given buffer.
-			void bindBuffer(uint32& buffer, const BufferType type);
-			/// Unbinds given type buffer.
-			void unbindBuffer(const BufferType type);
-			/// Sets given buffers data.
-			void setBufferData(const BufferType type, const uint32 bytes, void* data, const BufferUsage usage);
-			void setBufferSubData(const BufferType type, const uint32 offset, const uint32 bytes, void* data);
-			void deleteBuffer(const uint32 buffer);
-
+			// Drawing related.
+			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
+			void present(const uint32 effect);
 			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
-			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices);
-
-			void createVertexAttributePointer(const VertexAttributePointerDescription& description);
-			void disableVertexAttributePointer(const uint32 location);
-
-			void bindAttributeLocation(const uint32 shader, const uint32 index, const String& name);
-
-			/*
-				State operations.
-			*/
-
-			/// Saves the current state of the device.
-			/// State data that will be stored for later use contains:
-			/// - viewport
-			/// - texture
-			/// - render target
-			/// - shader
-			/// - binded buffers
-			/// - vertex attributes
-			void saveState();
-
-			/// Resumes the last state of the device.
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last, const uint32 offset);
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
+			
+			// State functions.
 			void resumeState();
-
-			/// Returns the current states ID to the caller. 
-			/// If this functions returns 1 the device
-			/// is in it's primary state.
-			uint32 currentState() const;
+			void saveState();
 
 			~GraphicsDevice();
 		};

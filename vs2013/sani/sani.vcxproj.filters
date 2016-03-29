@@ -645,9 +645,6 @@
     <ClCompile Include="..\..\src\resource\reader\scene_reader.cpp">
       <Filter>src\resource\reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\platform\graphics\graphics_device_state.cpp">
-      <Filter>src\platform\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\platform\graphics\graphics_resource.cpp">
       <Filter>src\platform\graphics</Filter>
     </ClCompile>
@@ -871,9 +868,6 @@
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp">
@@ -1323,9 +1317,6 @@
     <ClInclude Include="..\..\include\sani\resource\reader\scene_reader.hpp">
       <Filter>include\resource\reader</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device_state.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\default_shader_sources.hpp">
       <Filter>include\graphics</Filter>
     </ClInclude>
@@ -1397,6 +1388,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
       <Filter>include\engine\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\descriptions.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_enums.hpp">
+      <Filter>include\platform\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

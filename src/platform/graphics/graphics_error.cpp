@@ -1,12 +1,14 @@
 #include "sani/platform/graphics/graphics_error.hpp"
 
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
+
+#include "GL/glew.h"
+
 namespace sani {
 
 	namespace graphics {
 
-		// WinGL/Android implementations of the graphics error.
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS || SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
-		GraphicsError::GraphicsError(const GLuint apiErrorCode, const String& function, const int32 lineNumber) : function(function),
+		GraphicsError::GraphicsError(const uint32 apiErrorCode, const String& function, const int32 lineNumber) : function(function),
 																												  lineNumber(lineNumber) {
 			this->apiErrorCode = static_cast<int32>(apiErrorCode);
 
@@ -66,6 +68,7 @@ namespace sani {
 				break;
 			}
 		}
-#endif
 	}
 }
+
+#endif

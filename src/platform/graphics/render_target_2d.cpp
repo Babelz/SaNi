@@ -11,17 +11,18 @@ namespace sani {
 																										  g(0.0f),
 																										  b(0.0f),
 																										  a(0.0f) {
-			uint32 id = 0;
-			device->generateRenderTarget2D(id, framebuffer, width, height);
+			uint32 txid = 0;
 			
-			setID(id);
+			device->createRendertarget(txid, framebuffer, width, height);
+
+			setID(txid);
 		}
 
 		bool RenderTarget2D::onDispose() {
 			GraphicsDevice* const device = getDevice();
 
 			device->deleteTexture(getID());
-			device->deleteFramebuffer(framebuffer);
+			device->deleteRenderTarget(framebuffer);
 
 			return device->hasErrors();
 		}

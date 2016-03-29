@@ -2,7 +2,7 @@
 
 #include "sani/resource/resource_item.hpp"
 #include "sani/types.hpp"
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/core/math/rectangle.hpp"
 #include "sani/resource/serialization.hpp"
 #include "sani/forward_declare.hpp"

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/graphics/setups/render_setup.hpp"
 #include "sani/types.hpp"
 

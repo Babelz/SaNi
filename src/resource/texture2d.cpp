@@ -1,6 +1,7 @@
 #include "sani/resource/texture2d.hpp"
 #include "sani/core/logging/log.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
+#include "sani/platform/graphics/descriptions.hpp"
 #include "sani/platform.hpp"
 #include <algorithm>
 
@@ -38,8 +39,8 @@ namespace sani {
 			desc.format = format;
 			desc.levels = levelCount;
 
-			uint32 id = 0;
-			device->generateTexture(id, desc);
+			const uint32 id = device->createTexture(&desc);
+
 			setID(id);
 
 			TextureWrapMode wrap = TextureWrapMode::Repeat;
@@ -50,7 +51,7 @@ namespace sani {
 				wrap = TextureWrapMode::ClampToEdge;
 			}
 
-			device->bindTexture(getID());
+			device->bindTexture(TextureTarget::Texture2D, getID());
 
 			device->setTextureParameter(
 				TextureTarget::Texture2D,
@@ -86,7 +87,7 @@ namespace sani {
 				TextureParameterName::MaxLevel,
 				static_cast<int>(levelCount));
 
-			device->unbindTexture();
+			device->bindTexture(TextureTarget::Texture2D, NULL);
 		}
 
 		void Texture2D::setData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, const PixelData& data, const uint32 startIndex, const uint32 elementCount) {
@@ -105,7 +106,8 @@ namespace sani {
 			w = std::max(getWidth() >> level, 1u);
 			h = std::max(getHeight() >> level, 1u);
 
-			device->bindTexture(getID());
+			device->bindTexture(TextureTarget::Texture2D, getID());
+
 			device->setTextureData(
 				TextureTarget::Texture2D,
 				level,
@@ -116,7 +118,7 @@ namespace sani {
 				data.data()
 				);
 
-			device->unbindTexture();
+			device->bindTexture(TextureTarget::Texture2D, NULL);
 		}
 
 		void Texture2D::getData(graphics::GraphicsDevice* device, const int level, const math::Rect32i* rect, PixelData& data, const uint32 startIndex, const uint32 elementCount) {
@@ -126,7 +128,7 @@ namespace sani {
 				std::abort();
 			}
 
-			device->bindTexture(getID());
+			device->bindTexture(TextureTarget::Texture2D, getID());
 			data.reserve(getWidth() * getHeight() * 4);
 
 			device->getTextureData(

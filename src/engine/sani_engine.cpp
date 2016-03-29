@@ -99,8 +99,11 @@ namespace sani {
 			return false;
 		}
 		bool SaNiEngine::initializeGraphics() {
+			const auto DefaultWindowWidth = 1280;
+			const auto DefaultWindowHeight = 720;
+
 			// Window init.
-			graphics::Window* const window = new graphics::Window(hInstance, 1280, 720);
+			graphics::Window* const window = new graphics::Window(hInstance, DefaultWindowWidth, DefaultWindowHeight);
 
 			if (!window->initialize()) {
 				FNCLOG_ERR(log::OutFlags::All, "could not create window");
@@ -112,13 +115,21 @@ namespace sani {
 			window->show();
 
 			// Device init.
-			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
-																						  hInstance,
-																						  1280,
-																						  720);
+			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(), hInstance);
+			graphicsDevice->initialize(DefaultWindowWidth, DefaultWindowHeight);
 
-			if (!graphicsDevice->initialize()) {
+			if (graphicsDevice->hasErrors()) {
 				FNCLOG_ERR(log::OutFlags::All, "graphics device initialization failed");
+
+				while (graphicsDevice->hasErrors()) {
+					const auto deviceError = graphicsDevice->nextError();
+
+					std::stringstream ss;
+					ss << "DEV ERR: ";
+					ss << deviceError.getMessage();
+
+					FNCLOG_ERR(log::OutFlags::All, ss.str());
+				}
 
 				return false;
 			}

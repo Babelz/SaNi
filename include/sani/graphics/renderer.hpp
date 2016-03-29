@@ -2,7 +2,7 @@
 
 #include "sani/graphics/render_batcher.hpp"
 #include "sani/graphics/render_batch.hpp"
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/graphics/render_state.hpp"
 #include "sani/graphics/vertex_mode.hpp"
 #include "sani/core/math/matrix4.hpp"
