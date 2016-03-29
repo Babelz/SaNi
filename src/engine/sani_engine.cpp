@@ -116,7 +116,7 @@ namespace sani {
 
 			// Device init.
 			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(), hInstance);
-			graphicsDevice->initialize(DefaultWindowWidth, DefaultWindowHeight);
+			graphicsDevice->initialize(DefaultWindowWidth, DefaultWindowHeight, 8);
 
 			if (graphicsDevice->hasErrors()) {
 				FNCLOG_ERR(log::OutFlags::All, "graphics device initialization failed");

@@ -269,6 +269,7 @@ void initialize(SaNiEngine* const engine) {
 		rectangle->texture = resources->load<Texture2D>("tuksu");
 
 		rectangle->fill = color::White;
+		rectangle->transform.rotation = 5.0f;
 		/*rectangle->textureSource.x = 0.f;
 		rectangle->textureSource.y = 0.f;	
 		rectangle->textureSource.w = tuksu->getWidth();
@@ -368,7 +369,7 @@ void initialize(SaNiEngine* const engine) {
 
 	StringConverter conv;
 	gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
-	//createText(font, gg, graphicsDevice, engine, rects);
+	createText(font, gg, graphicsDevice, engine, rects);
 
 	tex = new StaticText(graphicsDevice, font, 0, 0, 1280, 720);
 	
@@ -377,9 +378,9 @@ void initialize(SaNiEngine* const engine) {
 
 	setText(*tex, gg, color::White);
 	
-	//for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
+	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
 
-	//layer->add(em);
+	layer->add(em);
 	layer->add(tex);
 
 	inputListener.init();

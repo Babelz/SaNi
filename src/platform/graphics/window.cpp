@@ -157,6 +157,8 @@ namespace sani {
 					GetWindowRect(window->impl->hWnd, &wndRect);
 
 					window->setSize(wndRect.right - wndRect.left, wndRect.bottom - wndRect.top);
+			
+					RedrawWindow(hWnd, NULL, NULL, RDW_ERASE | RDW_INVALIDATE);
 
 					return 0;
 				case WM_MOVE:
@@ -342,7 +344,7 @@ namespace sani {
 
 			// Fill the struct.
 			windowClass.cbSize = wndSize;
-			windowClass.style = CS_HREDRAW | CS_VREDRAW;
+			windowClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 			windowClass.lpfnWndProc = WndProc;
 			windowClass.hInstance = impl->hInstance;
 			windowClass.hCursor = LoadCursor(NULL, IDC_ARROW);
@@ -350,10 +352,6 @@ namespace sani {
 
 			RegisterClassEx(&windowClass);
 			WIN32_ASSERT();
-
-			// Set style to WS_OVERLAPPEDWINDOW for WinDX and 
-			// CS_OWNDC for OpenGL. Do this once the rendering API detection 
-			// has been implemented.
 
 			// Set position to center of the screen.
 			const int32 left = GetSystemMetrics(SM_CXSCREEN);

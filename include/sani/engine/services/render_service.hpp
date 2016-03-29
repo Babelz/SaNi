@@ -39,6 +39,7 @@ namespace sani {
 				*/
 
 				static void windowClosed(SaNiEngine* const engine);
+				static void windowSizeChanged(graphics::GraphicsDevice* const device, graphics::Window* const window, graphics::Camera2D* const camera);
 
 				/*
 					Message handling.

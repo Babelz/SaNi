@@ -5,15 +5,15 @@ namespace sani {
 
 	namespace graphics {
 
-		RenderTarget2D::RenderTarget2D(GraphicsDevice* device, const uint32 width, const uint32 height) : Texture(device, width, height),
-																										  framebuffer(0),
-																										  r(0.0f),
-																										  g(0.0f),
-																										  b(0.0f),
-																										  a(0.0f) {
+		RenderTarget2D::RenderTarget2D(GraphicsDevice* device, const uint32 width, const uint32 height, const uint32 samples) : Texture(device, width, height),
+																																framebuffer(0),
+																																r(0.0f),
+																																g(0.0f),
+																																b(0.0f),
+																																a(0.0f) {
 			uint32 txid = 0;
 			
-			device->createRendertarget(txid, framebuffer, width, height);
+			device->createRendertarget(txid, framebuffer, width, height, samples);
 
 			setID(txid);
 		}

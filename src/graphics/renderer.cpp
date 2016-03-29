@@ -156,7 +156,7 @@ namespace sani {
 			for (uint32 i = 0; i < renderBatchesCount; i++) {
 				RenderBatch& renderBatch = renderBatches[i];
 				
-				renderBatch.effect = renderBatch.effect <= 2 ? defaultEffects[renderBatch.effect].getEffect() : renderBatch.effect;
+				//renderBatch.effect = renderBatch.effect <= 2 ? defaultEffects[renderBatch.effect].getEffect() : renderBatch.effect;
 			}
 		}
 		void Renderer::updateBufferDatas() {
@@ -191,8 +191,8 @@ namespace sani {
 
 		void Renderer::beginRendering(const math::Mat4f& transform) {
 			// Set default effects transform uniform values.
-			defaultEffects[1].findUniform("transform")->setData((void*)&transform);
-			defaultEffects[2].findUniform("transform")->setData((void*)&transform);
+			defaultEffects[static_cast<uint32>(RenderState::Polygons)].findUniform("transform")->setData((void*)&transform);
+			defaultEffects[static_cast<uint32>(RenderState::TexturedPolygons)].findUniform("transform")->setData((void*)&transform);
 
 			prepareRendering();
 		}
@@ -221,7 +221,13 @@ namespace sani {
 			checkBatchEffects();
 			updateBufferDatas();
 
+			graphicsDevice->bindBuffer(BufferType::ArrayBuffer, vertexBuffer);
+			graphicsDevice->bindBuffer(BufferType::ElementArrayBuffer, indexBuffer);
+
 			for (uint32 i = 0; i < renderBatchesCount; i++) flushRenderBatch(&renderBatches[i]);
+		
+			graphicsDevice->bindBuffer(BufferType::ArrayBuffer, NULL);
+			graphicsDevice->bindBuffer(BufferType::ElementArrayBuffer, NULL);
 		}
 
 		Renderer::~Renderer() {

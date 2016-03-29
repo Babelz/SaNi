@@ -60,7 +60,8 @@ namespace sani {
 
 			bool createContext();
 			bool initializeGlew();
-			bool initializeDevice(const int32 backBufferWidth, const int32 backBufferHeight);
+			bool initializeDevice();
+			
 			void setupScreenShader();
 
 			void pushError(const String& message, const char* const fnc, const uint32 ln);
@@ -73,7 +74,7 @@ namespace sani {
 
 			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance);
 			
-			void initialize(const int32 backBufferWidth, const int32 backBufferHeight);
+			void initialize(const int32 backBufferWidth, const int32 backBufferHeight, const uint32 samples);
 			void dispose();
 
 			GraphicsError nextError();
@@ -88,6 +89,11 @@ namespace sani {
 			void setBackbufferSize(const uint32 width, const uint32 height);
 			uint32 getBackbufferWidth() const;
 			uint32 getBackbufferHeight() const;
+
+			void setSamplesCount(const uint32 samples);
+			uint32 getSamplesCount() const;
+
+			void applyBackbufferChanges();
 
 			void setRenderTarget(RenderTarget2D* const renderTarger);
 
@@ -105,7 +111,7 @@ namespace sani {
 			void bindTexture(const TextureTarget target, const uint32 id);
 			uint32 createTexture(const TextureDescription* const desc);
 
-			void createRendertarget(uint32& txid, uint32& fbid, const uint32 width, const uint32 height);
+			void createRendertarget(uint32& txid, uint32& fbid, const uint32 width, const uint32 height, const uint32 samples = 0);
 			void deleteRenderTarget(const uint32 fbid);
 
 			void setTextureParameter(const TextureTarget target, const TextureParameterName field, const int32 value);
@@ -141,8 +147,7 @@ namespace sani {
 			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
 			void present(const uint32 effect);
 			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
-			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last, const uint32 offset);
-			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices);
 			
 			// State functions.
 			void resumeState();

@@ -32,6 +32,14 @@ namespace sani {
 			void RenderService::windowClosed(SaNiEngine* const engine) {
 				engine->quit();
 			}
+			void RenderService::windowSizeChanged(GraphicsDevice* const device, Window* const window, Camera2D* const camera) {
+				device->setBackbufferSize(window->getClientWidth(), window->getClientHeight());
+				device->applyBackbufferChanges();
+
+				const Viewport viewport(0, 0, window->getClientWidth(), window->getClientHeight());
+				device->setViewport(viewport);
+				camera->setViewport(viewport);
+			}
 
 			void RenderService::handleDocumentMessage(messages::DocumentMessage* const message) {
 				const RenderServiceCommands command = static_cast<RenderServiceCommands>(message->getCommand());
@@ -95,10 +103,12 @@ namespace sani {
 				// Listen for window exit events so we can close the engine after
 				// the window has been closed.
 				window->closed += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowClosed, getEngine()));
+				// TODO: just for testing.
+				window->sizeChanged += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowSizeChanged, graphicsDevice, window, &cameras.back()));
 
 				if (!renderer.initialize()) return false;
 
-				/// Should never fail.
+				// Should never fail.
 				return true;
 			}
 			void RenderService::onTerminate() {

@@ -25,10 +25,9 @@
 
 #define PUSH_ERROR(message)			pushError(message, __FUNCTION__, __LINE__)
 #define CHECK_FOR_API_ERRORS		checkForAPIErrors(__FUNCTION__, __LINE__)
-#define IF_ERRORS_RETURN			if (hasErrors()) return
 
 #if _DEBUG
-#define CHECKED_API_CALL(fnc)		fnc; CHECK_FOR_API_ERRORS; IF_ERRORS_RETURN
+#define CHECKED_API_CALL(fnc)		fnc; CHECK_FOR_API_ERRORS; if (hasErrors()) return
 #else
 #define CHECKED_API_CALL(fnc)		fnc
 #endif
@@ -60,12 +59,14 @@ namespace sani {
 			uint32 windowedLocationY	{ 0 };
 
 			uint32 buffers[2];
-			uint32 effect		{ 0 };
-			uint32 texture		{ 0 };
+			uint32 effect				{ 0 };
+			uint32 texture				{ 0 };
 
 			RenderTarget2D* renderTarget	{ nullptr };
 
 			DeviceState() {
+				vertexPointers.resize(4);
+
 				buffers[0] = NULL;
 				buffers[1] = NULL;
 			}
@@ -77,8 +78,10 @@ namespace sani {
 			void invalidateEffect(const uint32 id) {
 				if (effect == id) effect = NULL;
 			}
-			void invalidateRenderTarget(const uint32 id) {
-				if (renderTarget->getID() == id) renderTarget = nullptr;
+			void invalidateRenderTarget(const uint32 fbid) {
+				if (renderTarget == nullptr) return;
+
+				if (renderTarget->getFramebuffer() == fbid) renderTarget = nullptr;
 			}
 			void invalidateTexture(const uint32 id) {
 				if (texture == id) texture = NULL;
@@ -88,11 +91,16 @@ namespace sani {
 		};
 
 		struct Impl final {
-			RenderTarget2D* backbuffer	{ nullptr };
+			uint32 backbufferWidth				{ 0 };
+			uint32 backbufferHeight				{ 0 };
+			uint32 samples						{ 0 };
+
+			RenderTarget2D* backbuffer			{ nullptr };
+			RenderTarget2D* msaBackbuffer		{ nullptr };
 			uint32 backbufferEffect;
 
 			std::vector<DeviceState> states;
-			DeviceState* currentState	{ nullptr };
+			DeviceState* currentState			{ nullptr };
 
 			HGLRC renderingContext;
 			HDC deviceContext;
@@ -100,14 +108,14 @@ namespace sani {
 			HWND hwnd;
 			HINSTANCE hInstance;
 
-			uint32 screenBuffer			{ 0 };
+			uint32 screenBuffer					{ 0 };
 
-			bool fullscreen				{ false };
+			bool fullscreen						{ false };
 
 			Impl() = default;
 
 			~Impl() {
-				delete backbuffer;
+				delete msaBackbuffer;
 			}
 		};
 
@@ -163,6 +171,7 @@ namespace sani {
 		}
 
 		bool GraphicsDevice::createContext() {
+			// Create context.
 			const auto context = wglCreateContext(impl->deviceContext);
 
 			if (context == NULL) {
@@ -188,7 +197,7 @@ namespace sani {
 
 			return true;
 		}
-		bool GraphicsDevice::initializeDevice(const int32 backBufferWidth, const int32 backBufferHeight) {
+		bool GraphicsDevice::initializeDevice() {
 			RECT clntRect;
 			GetClientRect(impl->hwnd, &clntRect);
 
@@ -199,11 +208,14 @@ namespace sani {
 
 			glViewport(0, 0, viewport.width, viewport.height);
 
-			impl->backbuffer = new RenderTarget2D(this, backBufferWidth, backBufferHeight);
+			impl->msaBackbuffer = impl->samples == NULL ? nullptr : new RenderTarget2D(this, impl->backbufferWidth, impl->backbufferHeight, impl->samples);
+			impl->backbuffer = new RenderTarget2D(this, impl->backbufferWidth, impl->backbufferHeight);
+
 			impl->currentState->viewport = viewport;
 
 			return !hasErrors();
 		}
+
 		void GraphicsDevice::setupScreenShader() {
 			const GLfloat quadVertices[] = {
 				// Positions   // TexCoords
@@ -223,24 +235,28 @@ namespace sani {
 			desc.data = (void*)quadVertices;
 
 			const auto buffer = createBuffer(&desc);
-			IF_ERRORS_RETURN;
+			if (hasErrors()) return;
 
 			const auto effect = compileEffect(ScreenShaderVertexSource, ScreenShaderFragmentSource);
-			IF_ERRORS_RETURN;			
+			if (hasErrors()) return;
 
 			impl->screenBuffer = buffer;
 			impl->backbufferEffect = effect;
 		}
 
-		void GraphicsDevice::initialize(const int32 backBufferWidth, const int32 backBufferHeight) {
+		void GraphicsDevice::initialize(const int32 backBufferWidth, const int32 backBufferHeight, const uint32 samples) {
 			SANI_ASSERT(backBufferWidth != 0);
 			SANI_ASSERT(backBufferHeight != 0);
+
+			impl->samples = samples;
+			impl->backbufferWidth = backBufferWidth;
+			impl->backbufferHeight = backBufferHeight;
 
 			if (!createContext()) return;
 
 			if (!initializeGlew()) return;
 
-			if (!initializeDevice(backBufferWidth, backBufferHeight)) return;
+			if (!initializeDevice()) return;
 
 			setupScreenShader();
 		}
@@ -300,31 +316,62 @@ namespace sani {
 		}
 
 		void GraphicsDevice::setBackbufferSize(const uint32 width, const uint32 height) {
-			SANI_ASSERT(width != 0);
-			SANI_ASSERT(height != 0);
+			impl->backbufferWidth = width;
+			impl->backbufferHeight = height;
+		}
+		uint32 GraphicsDevice::getBackbufferWidth() const {
+			return impl->backbufferWidth;
+		}
+		uint32 GraphicsDevice::getBackbufferHeight() const {
+			return impl->backbufferHeight;
+		}
 
+		void GraphicsDevice::setSamplesCount(const uint32 samples) {
+			impl->samples = samples;
+		}
+		uint32 GraphicsDevice::getSamplesCount() const {
+			return impl->samples;
+		}
+
+		void GraphicsDevice::applyBackbufferChanges() {
 			const auto oldWidth = getBackbufferWidth();
 			const auto oldHeight = getBackbufferHeight();
 
-			delete impl->backbuffer;
+			auto* oldMsaBackbuffer = impl->msaBackbuffer;
+			auto* oldBackbuffer = impl->backbuffer;
 
-			impl->backbuffer = new RenderTarget2D(this, width, height);
+			// Delete last msa buffer.
+			if (oldMsaBackbuffer != nullptr) {
+				oldMsaBackbuffer->dispose();
+				
+				delete oldMsaBackbuffer;
+				
+				oldMsaBackbuffer = nullptr;
+			}
+
+			oldBackbuffer->dispose();
+
+			delete oldBackbuffer;
+			
+			const auto newWidth = impl->backbufferWidth;
+			const auto newHeight = impl->backbufferHeight;
+
+			impl->msaBackbuffer = impl->samples == NULL ? nullptr : new RenderTarget2D(this, newWidth, newHeight, impl->samples);
+			impl->backbuffer = new RenderTarget2D(this, newWidth, newHeight);
 
 			SANI_TRIGGER_EVENT(backbufferSizeChanged,
 							   void(const uint32, const uint32, const uint32, const uint32),
-							   oldWidth, oldHeight, width, height);
-		}
-		uint32 GraphicsDevice::getBackbufferWidth() const {
-			return impl->backbuffer->getWidth();
-		}
-		uint32 GraphicsDevice::getBackbufferHeight() const {
-			return impl->backbuffer->getHeight();
+							   oldWidth, oldHeight, newHeight, newWidth);
+
+			if (impl->currentState->renderTarget == nullptr) setRenderTarget(impl->msaBackbuffer);
 		}
 
 		void GraphicsDevice::setRenderTarget(RenderTarget2D* const renderTarget) {
-			impl->currentState->renderTarget = renderTarget == nullptr ? impl->backbuffer : renderTarget;
+			RenderTarget2D* const defaultBackbuffer = impl->msaBackbuffer == nullptr ? impl->backbuffer : impl->msaBackbuffer;
 
-			CHECKED_API_CALL(glBindBuffer(GL_FRAMEBUFFER, impl->currentState->renderTarget->getFramebuffer()));
+			impl->currentState->renderTarget = renderTarget == nullptr ? defaultBackbuffer : renderTarget;
+
+			CHECKED_API_CALL(glBindFramebuffer(GL_FRAMEBUFFER, impl->currentState->renderTarget->getFramebuffer()));
 
 			const auto r = impl->currentState->renderTarget->getClearRed();
 			const auto g = impl->currentState->renderTarget->getClearGreen();
@@ -404,28 +451,35 @@ namespace sani {
 			return id;
 		}
 
-		void GraphicsDevice::createRendertarget(uint32& texid, uint32& fbid, const uint32 width, const uint32 height) {
+		static bool asd = false;
+
+		void GraphicsDevice::createRendertarget(uint32& texid, uint32& fbid, const uint32 width, const uint32 height, const uint32 samples) {
 			glGenFramebuffers(1, &fbid);
 			glBindFramebuffer(GL_FRAMEBUFFER, fbid);
 
-			IF_ERRORS_RETURN;
-
 			// Generate texture.
 			glGenTextures(1, &texid);
-			glBindTexture(GL_TEXTURE_2D, texid);
 
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			IF_ERRORS_RETURN;
+			GLenum target = samples == NULL ? GL_TEXTURE_2D : GL_TEXTURE_2D_MULTISAMPLE;
 
-			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texid, NULL);
-			IF_ERRORS_RETURN;
+			if (target == GL_TEXTURE_2D) {
+				glBindTexture(GL_TEXTURE_2D, texid);
 
+				CHECKED_API_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL));
+				CHECKED_API_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+				CHECKED_API_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
+			} else {
+				glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, texid);
+
+				CHECKED_API_CALL(glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, GL_RGBA, width, height, GL_TRUE));
+			}
+
+			CHECKED_API_CALL(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, target, texid, NULL));
+			
 			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) errorBuffer.push(GraphicsError("Could not create render target 2D", __FUNCTION__, __LINE__));
 
 			glBindFramebuffer(GL_FRAMEBUFFER, NULL);
-			glBindTexture(GL_TEXTURE_2D, NULL);
+			glBindTexture(target, NULL);
 		}
 		void GraphicsDevice::deleteRenderTarget(const uint32 fbid) {
 			CHECKED_API_CALL(glDeleteFramebuffers(1, &fbid));
@@ -502,10 +556,10 @@ namespace sani {
 				return;
 			}
 
-			if		(type == UniformType::Float32)		CHECKED_API_CALL(glUniform1f(location, *static_cast<const GLfloat* const>(data)));
-			else if (type == UniformType::Mat3F)		CHECKED_API_CALL(glUniformMatrix3fv(location, 1, GL_FALSE, static_cast<const GLfloat* const>(data)));
-			else if (type == UniformType::Mat4F)		CHECKED_API_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, static_cast<const GLfloat* const>(data)));
-			else										PUSH_ERROR("invalid uniform type");
+			if		(type == UniformType::Float32)		{ CHECKED_API_CALL(glUniform1f(location, *static_cast<const GLfloat* const>(data))); }
+			else if (type == UniformType::Mat3F)		{ CHECKED_API_CALL(glUniformMatrix3fv(location, 1, GL_FALSE, static_cast<const GLfloat* const>(data))); }
+			else if (type == UniformType::Mat4F)		{ CHECKED_API_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, static_cast<const GLfloat* const>(data))); }
+			else										{ PUSH_ERROR("invalid uniform type"); }
 		}
 
 		uint32 GraphicsDevice::compileEffect(const char* const vscr, const char* const fscr, String& errors) {
@@ -598,18 +652,29 @@ namespace sani {
 
 			CHECK_FOR_API_ERRORS;
 		}
-		void GraphicsDevice::present(const uint32 effect) {
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		void GraphicsDevice::present(const uint32 effect) {			
+			const auto width = impl->backbuffer->getWidth();
+			const auto height = impl->backbuffer->getHeight();
+
+			if (impl->msaBackbuffer != nullptr) {
+				// Copy from MSA backbuffer to "draw" backbuffer. Using sampling.
+				CHECKED_API_CALL(glBindFramebuffer(GL_READ_FRAMEBUFFER, impl->msaBackbuffer->getFramebuffer()));
+				CHECKED_API_CALL(glBindFramebuffer(GL_DRAW_FRAMEBUFFER, impl->backbuffer->getFramebuffer()));
+				CHECKED_API_CALL(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST));
+			}
+
+			// Go back to default back buffer.
+			glBindFramebuffer(GL_FRAMEBUFFER, NULL);
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
+			// Bind back buffer texture.
 			glBindTexture(GL_TEXTURE_2D, impl->backbuffer->getID());
 
 			const auto postproceff = effect == NULL ? impl->backbufferEffect : effect;
 
 			CHECKED_API_CALL(glUseProgram(postproceff));
-
-			CHECKED_API_CALL(glBindBuffer(GL_ARRAY_BUFFER, impl->backbuffer->getFramebuffer()));
+			CHECKED_API_CALL(glBindBuffer(GL_ARRAY_BUFFER, impl->screenBuffer));
 
 			const auto VtxDescLocation = 0;
 			const auto TexDescLocation = 1;
@@ -642,16 +707,15 @@ namespace sani {
 		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {
 			CHECKED_API_CALL(glDrawArrays(static_cast<GLenum>(mode), first, last - first));
 		}
-		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last, const uint32 offset) {
-			CHECKED_API_CALL(glDrawElements(static_cast<GLenum>(mode), first - last, static_cast<GLenum>(type), (void*)offset));
-		}
-		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last) {
-			drawElements(mode, type, first, last, 0);
+		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
+			CHECKED_API_CALL(glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), (void*)indices));
 		}
 
 		void GraphicsDevice::resumeState() {
+			// TODO: impl.
 		}
 		void GraphicsDevice::saveState() {
+			// TODO: impl.
 		}
 
 		GraphicsDevice::~GraphicsDevice() {
