@@ -224,12 +224,12 @@ void createText(SpriteFont* font, const String16& text, GraphicsDevice* gd, SaNi
 	}
 }
 
-#include "sani/graphics/renderables/static_text.hpp"
+#include "sani/graphics/renderables/text.hpp"
 #include "sani/graphics/renderables/particle_emitter.hpp"
 sani::graphics::ParticleEmitter* em;
 
 sani::graphics::Circle* c;
-StaticText* tex;
+Text* tex;
 
 #include "sani/core/memory/memory.hpp"
 
@@ -269,7 +269,6 @@ void initialize(SaNiEngine* const engine) {
 		rectangle->texture = resources->load<Texture2D>("tuksu");
 
 		rectangle->fill = color::White;
-		rectangle->transform.rotation = 5.0f;
 		/*rectangle->textureSource.x = 0.f;
 		rectangle->textureSource.y = 0.f;	
 		rectangle->textureSource.w = tuksu->getWidth();
@@ -313,7 +312,7 @@ void initialize(SaNiEngine* const engine) {
 	auto layers = static_cast<std::vector<Layer* const>*>(getLayersMessage->getData());
 	auto layer = layers->operator[](0);
 
-	//layer->add(circle);
+	layer->add(circle);
 
 	engine->releaseMessage(getLayersMessage);
 	engine->deallocateShared(layers);
@@ -369,13 +368,10 @@ void initialize(SaNiEngine* const engine) {
 
 	StringConverter conv;
 	gg = conv.from_bytes(/*"\xc3\xa4\xc3\xb6\xc3\xb5\xc3\xb4\xc3\xb0"*/"dank memes w erkki?\ncompiling gentoo\nin da club\nmah datanyms");
-	createText(font, gg, graphicsDevice, engine, rects);
+	//createText(font, gg, graphicsDevice, engine, rects);
 
-	tex = new StaticText(graphicsDevice, font, 0, 0, 1280, 720);
+	tex = new Text(font, 1920 / 2, 1080 / 2);
 	
-	tex->transform.origin.x = 0;
-	tex->transform.origin.y = 0;
-
 	setText(*tex, gg, color::White);
 	
 	for (sani::graphics::Rectangle* rectangle : rects) layer->add(rectangle);
@@ -411,6 +407,14 @@ namespace sandbox {
 		recomputeBounds(*a);
 */
 
+		//tex->transform.scale.x = 0.5f;
+		//tex->transform.scale.y = 0.5f;
+		/*tex->transform.origin.x = tex->globalBounds.w / 2.0f;
+		tex->transform.origin.y = tex->globalBounds.h / 2.0f;
+*/
+		/*tex->transform.origin.x = 0.0f;
+		tex->transform.origin.y = 0.0f;
+*/
 		sani::graphics::update(*em, time);
 		//sani::graphics::update(*a, time);
 

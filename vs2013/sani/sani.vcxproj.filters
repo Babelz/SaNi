@@ -636,7 +636,7 @@
     <ClCompile Include="..\..\src\resource\scene.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\renderables\static_text.cpp">
+    <ClCompile Include="..\..\src\graphics\renderables\text.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader.cpp">
@@ -1308,7 +1308,7 @@
     <ClInclude Include="..\..\include\sani\resource\scene.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderables\static_text.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\renderables\text.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\rtti\reflectable.hpp">
@@ -1502,7 +1502,7 @@
     <None Include="..\..\include\sani\rtti\inl\type.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
-    <None Include="..\..\include\sani\graphics\inl\static_text.inl">
+    <None Include="..\..\include\sani\graphics\inl\text.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>

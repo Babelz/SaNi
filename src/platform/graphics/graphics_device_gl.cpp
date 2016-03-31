@@ -244,7 +244,7 @@ namespace sani {
 			impl->backbufferEffect = effect;
 		}
 
-		void GraphicsDevice::initialize(const int32 backBufferWidth, const int32 backBufferHeight, const uint32 samples) {
+		void GraphicsDevice::initialize(const uint32 backBufferWidth, const uint32 backBufferHeight, const uint32 samples) {
 			SANI_ASSERT(backBufferWidth != 0);
 			SANI_ASSERT(backBufferHeight != 0);
 
@@ -656,6 +656,7 @@ namespace sani {
 			const auto width = impl->backbuffer->getWidth();
 			const auto height = impl->backbuffer->getHeight();
 
+			// Check if using sampling.
 			if (impl->msaBackbuffer != nullptr) {
 				// Copy from MSA backbuffer to "draw" backbuffer. Using sampling.
 				CHECKED_API_CALL(glBindFramebuffer(GL_READ_FRAMEBUFFER, impl->msaBackbuffer->getFramebuffer()));
@@ -663,12 +664,13 @@ namespace sani {
 				CHECKED_API_CALL(glBlitFramebuffer(0, 0, width, height, 0, 0, width, height, GL_COLOR_BUFFER_BIT, GL_NEAREST));
 			}
 
-			// Go back to default back buffer.
+			// Go back to default backbuffer.
 			glBindFramebuffer(GL_FRAMEBUFFER, NULL);
 			glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			// Bind back buffer texture.
+			// Using sampling or not. Does not matter at this point.
 			glBindTexture(GL_TEXTURE_2D, impl->backbuffer->getID());
 
 			const auto postproceff = effect == NULL ? impl->backbufferEffect : effect;

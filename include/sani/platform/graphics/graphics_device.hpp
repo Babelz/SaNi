@@ -1,10 +1,11 @@
 #pragma once
 
-#include "sani/forward_declare.hpp"
 #include "sani/platform/graphics/graphics_error.hpp"
 #include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/platform/platform_config.hpp"
 #include "sani/core/events.hpp"
+
+#include "sani/forward_declare.hpp"
 
 #include <stack>
 
@@ -15,7 +16,7 @@
 #endif
 
 SANI_FORWARD_DECLARE_2(sani, graphics, RenderTarget2D);
-SANI_FORWARD_DECLARE_2(sani, graphics, Texture);
+SANI_FORWARD_DECLARE_2(sani, graphics, GraphicsBuffer);
 
 SANI_FORWARD_DECLARE_STRUCT_2(sani, graphics, Viewport);
 SANI_FORWARD_DECLARE_STRUCT_2(sani, graphics, TextureDescription);
@@ -61,7 +62,6 @@ namespace sani {
 			bool createContext();
 			bool initializeGlew();
 			bool initializeDevice();
-			
 			void setupScreenShader();
 
 			void pushError(const String& message, const char* const fnc, const uint32 ln);
@@ -74,7 +74,7 @@ namespace sani {
 
 			GraphicsDevice(const HWND hWnd, const HINSTANCE hInstance);
 			
-			void initialize(const int32 backBufferWidth, const int32 backBufferHeight, const uint32 samples);
+			void initialize(const uint32 backBufferWidth, const uint32 backBufferHeight, const uint32 samples);
 			void dispose();
 
 			GraphicsError nextError();
@@ -93,7 +93,7 @@ namespace sani {
 			void setSamplesCount(const uint32 samples);
 			uint32 getSamplesCount() const;
 
-			void applyBackbufferChanges();
+			void GraphicsDevice::applyBackbufferChanges();
 
 			void setRenderTarget(RenderTarget2D* const renderTarger);
 
@@ -110,10 +110,8 @@ namespace sani {
 			// Texture related.
 			void bindTexture(const TextureTarget target, const uint32 id);
 			uint32 createTexture(const TextureDescription* const desc);
-
-			void createRendertarget(uint32& txid, uint32& fbid, const uint32 width, const uint32 height, const uint32 samples = 0);
-			void deleteRenderTarget(const uint32 fbid);
-
+			void createRendertarget(uint32& txid, uint32& fbid, const uint32 width, const uint32 height, const uint32 samples);
+			
 			void setTextureParameter(const TextureTarget target, const TextureParameterName field, const int32 value);
 			void getTextureData(const TextureTarget target, const int32 level, const SurfaceFormat format, unsigned char* data);
 			void setTextureData(const TextureTarget target,
@@ -125,9 +123,11 @@ namespace sani {
 								const unsigned char* data);
 
 			void deleteTexture(const uint32 texid);
+			void deleteRenderTarget(const uint32 fbid);
 
 			// Effect related.
 			void bindEffect(const uint32 id);
+			void deleteEffect(const uint32 id);
 
 			int32 getUniformsCount();
 			int32 getUniformLocation(const String& name);
@@ -137,7 +137,6 @@ namespace sani {
 
 			uint32 compileEffect(const char* const vscr, const char* const fscr, String& errors);
 			uint32 compileEffect(const char* const vscr, const char* const fscr);
-			void deleteEffect(const uint32 id);
 
 			// Vertex pointer related.
 			void createVertexPointer(const VertexAttributePointerDescription* const desc);
@@ -147,8 +146,9 @@ namespace sani {
 			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
 			void present(const uint32 effect);
 			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
-			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices);
-			
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last, const uint32 offset);
+			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
+
 			// State functions.
 			void resumeState();
 			void saveState();
