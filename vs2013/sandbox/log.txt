@@ -9,6 +9,7 @@
 [sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "rectangle manager"
 [sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "sprite animation manager"
 [sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "particle emitter manager"
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "text manager"
 [sani::engine::SaNiEngine::initializeEntityComponentSystem(INFO)]: entity manager started...
 [sani::engine::SaNiEngine::initialize(INFO)]: engine init ok!
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
@@ -19,13 +20,3 @@
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Circle>::createElement(INFO)]: created renderable element
-[sani::engine::services::EngineService::terminate(INFO)]: service "file system service" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "cvar service" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "render service" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "sprite manager" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "circle manager" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "triangle manager" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "rectangle manager" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "sprite animation manager" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "particle emitter manager" terminated
-[sani::engine::services::EngineService::terminate(INFO)]: service "entity manager" terminated

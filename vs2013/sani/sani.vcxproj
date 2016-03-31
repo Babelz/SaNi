@@ -249,6 +249,7 @@
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_animation_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
+    <ClCompile Include="..\..\src\engine\services\text_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\triangle_manager.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\graphics_effect.cpp" />
@@ -452,6 +453,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\service_logging.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\sprite_animation_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\text_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\updating_renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />

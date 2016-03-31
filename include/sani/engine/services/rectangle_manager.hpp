@@ -9,7 +9,7 @@ namespace sani {
 
 		namespace services {
 
-			class RectangleManager : public RenderableManager<graphics::Rectangle> {
+			class RectangleManager final : public RenderableManager<graphics::Rectangle> {
 			public:
 				RectangleManager(SaNiEngine* const engine);
 

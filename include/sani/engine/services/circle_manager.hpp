@@ -9,7 +9,7 @@ namespace sani {
 
 		namespace services {
 
-			class CircleManager : public RenderableManager<graphics::Circle> {
+			class CircleManager final : public RenderableManager<graphics::Circle> {
 			public:
 				CircleManager(SaNiEngine* const engine);
 

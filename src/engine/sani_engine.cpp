@@ -21,6 +21,7 @@
 #include "sani/engine/services/triangle_manager.hpp"
 #include "sani/engine/services/particle_emitter_manager.hpp"
 #include "sani/engine/services/sprite_animation_manager.hpp"
+#include "sani/engine/services/text_manager.hpp"
 #include "sani/engine/services/ecs/entity_manager.hpp"
 
 #include "sani/engine/services/file_system_service.hpp"
@@ -164,7 +165,8 @@ namespace sani {
 				new services::TriangleManager(this),
 				new services::RectangleManager(this),
 				new services::SpriteAnimationManager(this),
-				new services::ParticleEmitterManager(this)
+				new services::ParticleEmitterManager(this),
+				new services::TextManager(this)
 			};
 
 			std::vector<String> errors;

@@ -57,7 +57,9 @@ namespace sani {
 
 					SpriteAnimation,
 
-					ParticleEmitter
+					ParticleEmitter,
+					
+					Text
 				};
 
 				void createElement(messages::DocumentMessage* const message, const ElementType type);

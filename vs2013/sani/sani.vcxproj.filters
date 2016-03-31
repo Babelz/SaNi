@@ -679,6 +679,9 @@
     <ClCompile Include="..\..\src\ecs\components\transform_component.cpp">
       <Filter>src\esc\components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\text_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1394,6 +1397,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_enums.hpp">
       <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\text_manager.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

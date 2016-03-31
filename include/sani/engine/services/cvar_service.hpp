@@ -18,7 +18,7 @@ namespace sani {
 
 			/// Contains runtime information regarding the 
 			/// current cvar configuration.
-			struct CVarConfiguration {
+			struct CVarConfiguration final {
 				// We assume we can't sync stuff while running on
 				// android so we just set it to false.
 				const bool canSync;

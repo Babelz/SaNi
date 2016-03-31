@@ -9,7 +9,7 @@ namespace sani {
 		
 		namespace services {
 
-			class SpriteManager : public RenderableManager<graphics::Sprite> {
+			class SpriteManager final : public RenderableManager<graphics::Sprite> {
 			public:
 				SpriteManager(SaNiEngine* const engine);
 				
