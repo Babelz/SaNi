@@ -5,7 +5,7 @@
 namespace sani {
 
 	namespace engine {
-		
+
 		namespace services {
 
 			namespace cvarservice {
@@ -14,7 +14,7 @@ namespace sani {
 				static void decorateMessage(T* const message, const CVarServiceCommands cVarServiceCommand) {
 					const uint32 command = static_cast<uint32>(cVarServiceCommand);
 
-					message->getRecipients().add("cvar service");
+					message->getRecipients().addRecipient("cvar service");
 					message->setCommand(command);
 				}
 
@@ -23,12 +23,7 @@ namespace sani {
 					message->setContents(name);
 				}
 
-				void containsCVar(messages::QueryMessage* const message, const String& name) {
-					decorateMessage<messages::QueryMessage>(message, CVarServiceCommands::ContainsCVar);
-					message->setContents(name);
-				}
-
-				void listCVar(messages::DocumentMessage* const message) {
+				void listCVars(messages::DocumentMessage* const message) {
 					decorateMessage<messages::DocumentMessage>(message, CVarServiceCommands::ListCVars);
 				}
 			}

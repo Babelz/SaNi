@@ -52,9 +52,6 @@ namespace sani {
 				case CVarServiceCommands::GetCVar:
 					getCVar(message);
 					return;
-				case CVarServiceCommands::ContainsCVar:
-					containsCVar(message);
-					return;
 				default:
 					LOG_DEAD_LETTER(message);
 					return;
@@ -190,8 +187,12 @@ namespace sani {
 					"volatile window_width 1280\n"
 					"volatile window_height 720\n"
 					""
-					"volatile back_buffer_width 1280\n"
-					"volatile back_buffer_height 720\n"
+					"volatile backbuffer_width 1280\n"
+					"volatile backbuffer_height 720\n"
+					""
+					"volatile samples_count 8\n"
+					""
+					"volatile stretch_backbuffer 1\n"
 				);
 
 				std::list<CVarFile> cvarFiles;
@@ -273,20 +274,6 @@ namespace sani {
 
 				if (it != cvars.end()) message->setResults(&*it);
 
-				message->markHandled();
-			}
-
-			void CVarService::containsCVar(messages::QueryMessage* const message) {
-				bool* result = getEngine()->allocateShared<bool>();
-				const String& name = message->getContents();
-
-				auto it = std::find_if(cvars.begin(), cvars.end(), [&name](CVar& cvar) {
-					return cvar.getName() == name;
-				});
-
-				if (it != cvars.end()) *result = true;
-
-				message->setResults(result);
 				message->markHandled();
 			}
 

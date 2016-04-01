@@ -11,6 +11,9 @@
 #include "sani/graphics/layer.hpp"
 #include "sani/core/profiling/profiler.hpp"
 #include "sani/engine/services/service_logging.hpp"
+#include "sani/engine/services/contracts/cvar_service_contract.hpp"
+#include "sani/engine/messaging/messages/query_message.hpp"
+#include "sani/core/cvar/cvar.hpp"
 
 namespace sani {
 
@@ -103,8 +106,24 @@ namespace sani {
 				// Listen for window exit events so we can close the engine after
 				// the window has been closed.
 				window->closed += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowClosed, getEngine()));
-				// TODO: just for testing.
-				window->sizeChanged += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowSizeChanged, graphicsDevice, window, &cameras.back()));
+				
+				// Check if we need to fit backbuffer.
+				SaNiEngine* const engine = getEngine();
+
+				auto* message = engine->createEmptyMessage<messages::QueryMessage>();
+				cvarservice::getCVar(message, "stretch_backbuffer");
+				engine->routeMessage(message);
+
+				CVar* const cvar = static_cast<CVar* const>(message->getResults());
+
+				int32 stretchBackBuffer = 0;
+				VAR_OR_DEFAULT(cvar, stretchBackBuffer, 0);
+
+				if (!stretchBackBuffer) {
+					window->sizeChanged += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowSizeChanged, graphicsDevice, window, &cameras.back()));
+				}
+
+				engine->releaseMessage(message);
 
 				if (!renderer.initialize()) return false;
 

@@ -7,6 +7,7 @@
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/window.hpp"
 
+#include "sani/engine/services/contracts/cvar_service_contract.hpp"
 #include "sani/core/memory/memory.hpp"
 
 #include "sani/engine/messaging/messages/command_message.hpp"
@@ -29,7 +30,6 @@
 
 #include "sani/engine/services/cvar_service.hpp"
 #include "sani/core/cvar/cvar.hpp"
-#include "sani/engine/services/contracts/cvar_service_contract.hpp"
 
 #include "sani/graphics/layer.hpp"
 
@@ -50,12 +50,10 @@ namespace sani {
 		SaNiEngine::SaNiEngine(const HINSTANCE hInstance) : services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
 															channels(&services),
 															hInstance(hInstance),
-															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic),
+															sharedServiceMemory(Block1024Kb, 1, DefragmentationPolicy::Automatic),
 															running(false) {
-#if 1 //_DEBUG
 			SANI_INIT_EVENT(onInitialize, void(SaNiEngine* const engine));
 			SANI_INIT_EVENT(onUpdate, void(SaNiEngine* const engine, const EngineTime&));
-#endif
 		}
 #endif
 
@@ -100,11 +98,36 @@ namespace sani {
 			return false;
 		}
 		bool SaNiEngine::initializeGraphics() {
-			const auto DefaultWindowWidth = 1280;
-			const auto DefaultWindowHeight = 720;
+			// Get cvars.
+			auto* message = createEmptyMessage<messages::DocumentMessage>();
+			cvarservice::listCVars(message);
+			routeMessage(message);
+
+			auto cvars = static_cast<std::vector<CVar* const>*>(message->getData());
+
+			// Read values.
+			int32 windowWidth = 0;
+			int32 windowHeight = 0;
+			int32 backbufferWidth = 0;
+			int32 backbufferHeight = 0;
+			int32 samplesCount = 0;
+
+			FIND_VAR_OR_DEFAULT(cvars, "window_width", windowWidth, 1280);
+			FIND_VAR_OR_DEFAULT(cvars, "window_height", windowHeight, 720);
+			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_width", backbufferWidth, windowWidth);
+			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_height", backbufferHeight, windowHeight);
+			FIND_VAR_OR_DEFAULT(cvars, "samples_count", samplesCount, 8);
+
+			SANI_ASSERT(windowWidth > 0 && windowHeight > 0);
+			SANI_ASSERT(backbufferWidth > 0 && backbufferHeight > 0);
+			SANI_ASSERT(samplesCount > 0);
+
+			// Cleanup.
+			releaseMessage(message);
+			deallocateShared(cvars);
 
 			// Window init.
-			graphics::Window* const window = new graphics::Window(hInstance, DefaultWindowWidth, DefaultWindowHeight);
+			graphics::Window* const window = new graphics::Window(hInstance, static_cast<uint32>(windowWidth), static_cast<uint32>(windowHeight));
 
 			if (!window->initialize()) {
 				FNCLOG_ERR(log::OutFlags::All, "could not create window");
@@ -117,7 +140,7 @@ namespace sani {
 
 			// Device init.
 			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(), hInstance);
-			graphicsDevice->initialize(DefaultWindowWidth, DefaultWindowHeight, 8);
+			graphicsDevice->initialize(static_cast<uint32>(backbufferWidth), static_cast<uint32>(backbufferHeight), static_cast<uint32>(samplesCount));
 
 			if (graphicsDevice->hasErrors()) {
 				FNCLOG_ERR(log::OutFlags::All, "graphics device initialization failed");
@@ -131,7 +154,7 @@ namespace sani {
 
 					FNCLOG_ERR(log::OutFlags::All, ss.str());
 				}
-
+				
 				return false;
 			}
 

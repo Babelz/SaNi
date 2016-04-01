@@ -12,7 +12,7 @@ namespace sani {
 
 	namespace graphics {
 
-		const static int32 InitialBufferSize = BLOCK_1024KB / sizeof(float32);
+		const static int32 InitialBufferSize = Block1024Kb / sizeof(float32);
 		const static int32 InitialRenderBatchesCount = 32;
 		const static int32 InitialIndexTransformBufferSize = 32;
 		

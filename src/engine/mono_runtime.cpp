@@ -1,4 +1,5 @@
 #include "sani/engine/mono_runtime.hpp"
+#include "sani/engine/mono_provider.hpp"
 
 #include <mono\metadata\mono-config.h>
 
@@ -12,7 +13,7 @@ namespace sani {
 	namespace engine {
 
 		const String MonoAssembliesPath = "\\mono";
-		const String MonoLibrariesPath	= "C:\\C:\\Program Files (x86)\\Mono\\lib";
+		const String MonoLibrariesPath	= "C:\\Program Files (x86)\\Mono\\lib";
 		const String MonoConfigPath		= "C:\\Program Files (x86)\\Mono\\etc";
 		const String MonoVersion		= "v4.0.30319";
 		const String MonoRootDomainName = "SaNi";

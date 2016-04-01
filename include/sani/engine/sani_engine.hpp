@@ -33,10 +33,8 @@ namespace sani {
 			const HINSTANCE hInstance;
 #endif
 
-#if 1
 			SANI_DECLARE_EVENT(onInitialize, void(SaNiEngine* const));
 			SANI_DECLARE_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&));
-#endif
 
 			bool running;
 

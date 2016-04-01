@@ -1,8 +1,20 @@
 #pragma once
 
 #include "sani/core/cvar/cvar_statement.hpp"
+#include "sani/core/events.hpp"
 #include "sani/types.hpp"
+
 #include <list>
+
+#define VAR_OR_DEFAULT(__cvar__, val, def) if (__cvar__ == nullptr) val = def; else __cvar__->read(val) 
+
+#define FIND_VAR_OR_DEFAULT(__cvars__, name, val, def) { \
+															CVar* c = nullptr; \
+															for (auto* const cvar : *__cvars__) if (cvar->getName() == name) { c = cvar; break; } \
+													   \
+															if (c == nullptr)  val = def; \
+															else			   c->read(val); \
+													   } \
 
 namespace sani {
 
@@ -33,6 +45,8 @@ namespace sani {
 		// delegation as other ctor does not need the statement list.
 		void initialize(const String& value);
 	public:
+		SANI_DECLARE_EVENT(valueChanged, void(CVar* const));
+
 		CVar(const cvarlang::ValueType type, const String& name, const bool synced, const String& value);
 
 		CVar(const std::list<CVarRequireStatement>& statements, const cvarlang::ValueType type,

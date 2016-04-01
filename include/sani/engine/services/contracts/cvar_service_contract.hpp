@@ -17,16 +17,12 @@ namespace sani {
 				enum class CVarServiceCommands : uint32 {
 					GetCVar			= 0,
 
-					ContainsCVar	= 1,
-					
-					ListCVars		= 2
+					ListCVars		= 1
 				};
 
 				void getCVar(messages::QueryMessage* const message, const String& name);
 				
-				void containsCVar(messages::QueryMessage* const message, const String& name);
-				
-				void listCVar(messages::DocumentMessage* const message);
+				void listCVars(messages::DocumentMessage* const message);
 			}
 		}
 	}

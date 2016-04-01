@@ -682,6 +682,9 @@
     <ClCompile Include="..\..\src\engine\services\text_manager.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1130,9 +1133,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp">
-      <Filter>src\engine\services\contracts</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
       <Filter>include\engine\services</Filter>

@@ -237,6 +237,7 @@
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\engine\services\circle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\component_manager_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\entity_manager_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
@@ -566,7 +567,6 @@
     <ClInclude Include="..\..\include\sani\rtti\type_database.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_info.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
-    <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\cvar\impl\cvar_lang.inl" />

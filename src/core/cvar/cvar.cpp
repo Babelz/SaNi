@@ -2,6 +2,9 @@
 
 namespace sani {
 
+#define CVAR_WRITE(typeToCheck, fieldToWrite) if (type != typeToCheck) return; fieldToWrite = value; changed = true
+#define CVAR_READ(typeToCheck, fieldToRead) if (type != typeToCheck) return; value = fieldToRead
+
 	CVar::CVar(const cvarlang::ValueType type, const String& name, const bool synced, const String& value) : type(type),
 																										     name(name),
 																											 synced(synced),
@@ -33,6 +36,8 @@ namespace sani {
 		else if (type == cvarlang::ValueType::IntVal)		int32Val	= std::atoi(value.c_str());
 		else if (type == cvarlang::ValueType::FloatVal)		float32Val	= static_cast<float32>(std::atof(value.c_str()));
 		else if (type == cvarlang::ValueType::DoubleVal)	float64Val	= std::atof(value.c_str());
+
+		SANI_INIT_EVENT(valueChanged, void(CVar* const));
 	}
 
 	cvarlang::ValueType CVar::getType() const {
@@ -58,49 +63,37 @@ namespace sani {
 	}
 
 	void CVar::read(String& value) const {
-		if (type != cvarlang::ValueType::StringVal) return;
-
-		value = stringVal;
+		CVAR_READ(cvarlang::ValueType::StringVal, stringVal);
 	}
 	void CVar::read(int32& value) const {
-		if (type != cvarlang::ValueType::IntVal) return;
-
-		value = int32Val;
+		CVAR_READ(cvarlang::ValueType::IntVal, int32Val);
 	}
 	void CVar::read(float32& value) const {
-		if (type != cvarlang::ValueType::FloatVal) return;
-
-		value = float32Val;
+		CVAR_READ(cvarlang::ValueType::FloatVal, float32Val);
 	}
 	void CVar::read(float64& value) const {
-		if (type != cvarlang::ValueType::DoubleVal) return;
-
-		value = float64Val;
+		CVAR_READ(cvarlang::ValueType::DoubleVal, float64Val);
 	}
 
 	void CVar::write(const String& value) {
-		if (type != cvarlang::ValueType::StringVal) return;
+		CVAR_WRITE(cvarlang::ValueType::StringVal, stringVal);
 
-		stringVal = value;
-		changed = true;
+		SANI_TRIGGER_EVENT(valueChanged, void(CVar* const), this);
 	}
 	void CVar::write(const int32 value) {
-		if (type != cvarlang::ValueType::IntVal) return;
-
-		int32Val = value; 
-		changed = true;
+		CVAR_WRITE(cvarlang::ValueType::IntVal, int32Val);
+		
+		SANI_TRIGGER_EVENT(valueChanged, void(CVar* const), this);
 	}
 	void CVar::write(const float32 value) {
-		if (type != cvarlang::ValueType::FloatVal) return;
-
-		float32Val = value; 
-		changed = true;
+		CVAR_WRITE(cvarlang::ValueType::FloatVal, float32Val);
+		
+		SANI_TRIGGER_EVENT(valueChanged, void(CVar* const), this);
 	}
 	void CVar::write(const float64 value) {
-		if (type != cvarlang::ValueType::DoubleVal) return;
+		CVAR_WRITE(cvarlang::ValueType::DoubleVal, float64Val);
 
-		float64Val = value; 
-		changed = true;
+		SANI_TRIGGER_EVENT(valueChanged, void(CVar* const), this);
 	}
 
 	void CVar::getRequireStatementMessages(std::vector<String>& messages) {

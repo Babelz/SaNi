@@ -20,3 +20,14 @@
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Circle>::createElement(INFO)]: created renderable element
+[sani::engine::services::EngineService::terminate(INFO)]: service "file system service" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "cvar service" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "render service" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "sprite manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "circle manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "triangle manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "rectangle manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "sprite animation manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "particle emitter manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "text manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "entity manager" terminated

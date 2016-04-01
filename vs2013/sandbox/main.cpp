@@ -56,6 +56,7 @@
 #include "sani/hid/raw_input_listener.hpp"
 #include "sani/rtti/Reflectable.hpp"
 #include "sani/rtti/reflection_database.hpp"
+#include "sani/engine/services/contracts/cvar_service_contract.hpp"
 using namespace sani::resource;
 using namespace sani::engine;
 using namespace sani::graphics;

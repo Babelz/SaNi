@@ -73,9 +73,6 @@ namespace sani {
 				/// Returns cvar with given name.
 				void getCVar(messages::QueryMessage* const message);
 				
-				/// Queries for given cvar.
-				void containsCVar(messages::QueryMessage* const message);
-
 				/// List all services.
 				void listCVars(messages::DocumentMessage* const message);
 			protected:
