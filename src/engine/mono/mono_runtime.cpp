@@ -1,10 +1,13 @@
-#include "sani/engine/mono_runtime.hpp"
-#include "sani/engine/mono_provider.hpp"
+#include "sani/engine/mono/mono_runtime.hpp"
+#include "sani/engine/mono/mono_provider.hpp"
 
 #include <mono\metadata\mono-config.h>
 
 #include <sys\types.h>
 #include <sys\stat.h>
+#include <mono\jit\jit.h>
+#include <mono\metadata\assembly.h>
+#include <mono\metadata\appdomain.h>
 
 #include "sani\core\logging\log.hpp"
 
@@ -27,6 +30,16 @@ namespace sani {
 		MonoRuntime::~MonoRuntime() {
 		}
 
+
+		MonoRuntime& MonoRuntime::instance() {
+			static MonoRuntime runtime;
+
+			return runtime;
+		}
+		
+		MonoProvider* const MonoRuntime::provider() {
+			return monoProvider;
+		}
 
 		bool MonoRuntime::dirExists(const String& dir) const {
 			const char* cstr = dir.c_str();
@@ -61,6 +74,8 @@ namespace sani {
 
 				return false;
 			}
+
+			monoProvider = new MonoProvider(monoAssembly, monoDomain);
 
 			return true;
 		}

@@ -37,6 +37,7 @@
 #include "sani/platform/console.hpp"
 
 #include "sani/core/logging/log_batcher.hpp"
+#include "sani/engine/mono/services_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -246,6 +247,8 @@ namespace sani {
 
 		bool SaNiEngine::initializeMono() {
 			// TODO: initialize mono.
+			MONO_REGISTER_MODULE(services, this);
+
 			return true;
 		}
 

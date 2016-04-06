@@ -233,7 +233,9 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
-    <ClCompile Include="..\..\src\engine\mono_runtime.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\mono_runtime.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\services_mono.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\engine\services\circle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\component_manager_contract.cpp" />
@@ -428,9 +430,12 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\mono_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\services_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\glib_types.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_define.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_runtime.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\mono_runtime.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\component_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp" />

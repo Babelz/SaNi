@@ -43,10 +43,10 @@ namespace sani {
 			bool assembliesDirExists() const;
 		public:
 			/// Returns the runtime instance.
-			MonoRuntime& instance();	
+			static MonoRuntime& instance();	
 			/// Returns the runtime provider that contains 
 			/// all the mono functions.
-			MonoProvider* provider();
+			MonoProvider* const provider();
 
 			/// Starts the runtime.
 			/// Returns false if errors occurred
@@ -54,6 +54,12 @@ namespace sani {
 			bool start();
 			/// Shutdowns the runtime. Cleanups all mono related data.
 			void shutdown();
+
+			MonoRuntime& operator =(MonoRuntime& other) = delete;
+			MonoRuntime& operator =(MonoRuntime&& other) = delete;
+
+			MonoRuntime(MonoRuntime& other) = delete;
+			MonoRuntime(MonoRuntime&& other) = delete;
 		};
 	}
 }

@@ -268,6 +268,12 @@
     <Filter Include="include\engine\impl">
       <UniqueIdentifier>{e55250a1-a76d-42e7-970b-e1e05b6125eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\mono">
+      <UniqueIdentifier>{ca61c514-8f80-4f60-bb8c-b26b49aa9604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\mono">
+      <UniqueIdentifier>{04ddf887-fab6-4378-b785-699224609441}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -672,9 +678,6 @@
     <ClCompile Include="..\..\src\core\math\vector.cpp">
       <Filter>src\core\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\mono_runtime.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\types.cpp" />
     <ClCompile Include="..\..\src\ecs\components\transform_component.cpp">
       <Filter>src\esc\components</Filter>
@@ -684,6 +687,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\mono_runtime.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\services_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp">
+      <Filter>src\engine\mono</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1380,12 +1392,6 @@
     <ClInclude Include="..\..\include\sani\engine\services\service_logging.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono_provider.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono_runtime.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\console.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
@@ -1400,6 +1406,21 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\text_manager.hpp">
       <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_provider.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_runtime.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\glib_types.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_define.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\services_mono.hpp">
+      <Filter>include\engine\mono</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
