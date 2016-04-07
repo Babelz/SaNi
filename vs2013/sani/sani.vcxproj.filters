@@ -697,6 +697,9 @@
     <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\platform\win32\file_system_utils_win32.cpp">
+      <Filter>src\platform\win32</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1197,9 +1200,6 @@
     <ClInclude Include="..\..\include\sani\core\logging\logger.hpp">
       <Filter>include\core\logging</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\platform_functions.hpp">
-      <Filter>include\platform</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\core\logging\system_console_logger.hpp">
       <Filter>include\core\logging</Filter>
     </ClInclude>
@@ -1421,6 +1421,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\services_mono.hpp">
       <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file\file_system_utils.hpp">
+      <Filter>include\platform\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\user_service.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

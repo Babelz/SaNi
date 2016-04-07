@@ -5,6 +5,8 @@
 
 #include "sani/forward_declare.hpp"
 
+#include <vector>
+
 SANI_FORWARD_DECLARE_STRUCT(MonoClassDefinition);
 SANI_FORWARD_DECLARE_STRUCT(MonoFunctionDefinition);
 
@@ -14,10 +16,11 @@ namespace sani {
 
 		class MonoProvider final {
 		private:
-			MonoAssembly* const monoAssembly;
+			std::vector<MonoAssembly*> assemblies;
+
 			MonoDomain* const monoDomain;
 		public:
-			MonoProvider(MonoAssembly* const monoAssembly, MonoDomain* const monoDomain);
+			MonoProvider(std::vector<MonoAssembly*>& assemblies, MonoDomain* const monoDomain);
 			
 			bool classExists(const MonoClassDefinition* const classDef) const;
 			bool functionExists(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;

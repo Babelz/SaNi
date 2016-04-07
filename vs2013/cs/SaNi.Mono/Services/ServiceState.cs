@@ -9,7 +9,7 @@ namespace SaNi.Mono.Services
     public enum ServiceState
     {
         /// Service has not been initialized yet.
-        Uninitialized,
+        Uninitialized = 0,
 
         /// Service is being suspended for a given amount of time.
         Suspended,

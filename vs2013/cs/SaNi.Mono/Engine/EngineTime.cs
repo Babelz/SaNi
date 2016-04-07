@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaNi.Mono.Engine
 {
-    public sealed struct EngineTime
+    public struct EngineTime
     {
         public readonly float TotalTime;
         public readonly float FrameTime;

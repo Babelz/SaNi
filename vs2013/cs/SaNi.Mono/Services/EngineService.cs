@@ -16,40 +16,50 @@ namespace SaNi.Mono.Services
         #region Properties
         public string Name
         {
-            get;
-            private set;
+            get
+            {
+                return InternalGetName();
+            }
         }
         public int ID
         {
-            get;
-            private set;
+            get
+            {
+                return InternalGetID();
+            }
         }
         public ServiceState State
         {
-            get;
-            private set;
+            get
+            {
+                return (ServiceState)InternalGetState();
+            }
         }
         #endregion
 
         protected EngineService(string name)
         {
-            var id = 0;
-
-            InternalCreateService(name, ref id);
-
-            Name = name;
-            ID = id;
+            InternalCreateService(name);
         }
 
-        // Method hooks the service can contain are:
-        //  bool OnStart()
-        //  bool OnResume()
+        // Method hooks the service can use are:
+        //  void OnStart()
+        //  void OnResume()
         //  void OnSuspended()
         //  void OnTerminated()
         //  void OnUpdate(EngineTime time)
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern void InternalCreateService(string name, ref int id);
+        private static extern void InternalCreateService(string name);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern string InternalGetName();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern int InternalGetID();
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern int InternalGetState();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void Start();

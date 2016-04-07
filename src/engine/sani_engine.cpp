@@ -30,6 +30,7 @@
 
 #include "sani/engine/services/cvar_service.hpp"
 #include "sani/core/cvar/cvar.hpp"
+#include "sani/engine/mono/mono_runtime.hpp"
 
 #include "sani/graphics/layer.hpp"
 
@@ -246,8 +247,39 @@ namespace sani {
 		}
 
 		bool SaNiEngine::initializeMono() {
+			auto* message = createEmptyMessage<messages::DocumentMessage>();
+			cvarservice::listCVars(message);
+			routeMessage(message);
+
+			auto cvars = static_cast<std::vector<CVar* const>*>(message->getData());
+
+			String monoAssembliesPath;
+			String monoLibrariesPath;
+			String monoConfigPath;
+			String monoAssemblyName;
+			String monoDependencies;
+
+			FIND_VAR_OR_DEFAULT(cvars, "mono_assemblies_path", monoAssembliesPath, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_libraries_path", monoLibrariesPath, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_config_path", monoConfigPath, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_assembly_name", monoAssemblyName, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_dependencies", monoDependencies, "");
+
+			releaseMessage(message);
+			deallocateShared(cvars);
+			
+			if (MonoRuntime::instance().start(monoAssembliesPath, monoLibrariesPath, monoConfigPath, monoAssemblyName, monoDependencies)) {
+				FNCLOG_INF(log::OutFlags::All, "mono runtime started...");
+			} else {
+				FNCLOG_ERR(log::OutFlags::All, "failed to start mono runtime!");
+
+				return false;
+			}
+
 			// TODO: initialize mono.
-			MONO_REGISTER_MODULE(services, this);
+			MONO_REGISTER_MODULE(services);
+
+			FNCLOG_INF(log::OutFlags::All, "loaded all mono modules...");
 
 			return true;
 		}
@@ -276,6 +308,7 @@ namespace sani {
 			if (!initializeGraphics())				return false;
 			if (!initializeRenderableManagers())	return false;
 			if (!initializeEntityComponentSystem()) return false;
+			if (!initializeMono())					return false;
 
 			FNCLOG_INF(log::OutFlags::All, "engine init ok!");
 
@@ -367,6 +400,7 @@ namespace sani {
 		}
 
 		SaNiEngine::~SaNiEngine() {
+			MonoRuntime::instance().shutdown();
 		}
 	}
 }
