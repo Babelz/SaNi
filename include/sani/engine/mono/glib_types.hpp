@@ -16,7 +16,7 @@ typedef signed int		gint32;
 typedef unsigned int	guint32;
 typedef signed long		gint64;
 typedef unsigned long	guint64;
-typedef float			glofat;
+typedef float			gfloat;
 typedef double			gdouble;
 typedef unsigned long	gsize;
 typedef signed long		gssize;

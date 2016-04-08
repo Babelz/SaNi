@@ -700,6 +700,9 @@
     <ClCompile Include="..\..\src\platform\win32\file_system_utils_win32.cpp">
       <Filter>src\platform\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\user_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

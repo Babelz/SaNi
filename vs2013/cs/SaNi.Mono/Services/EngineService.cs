@@ -50,7 +50,7 @@ namespace SaNi.Mono.Services
         //  void OnUpdate(EngineTime time)
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern void InternalCreateService(string name);
+        private extern void InternalCreateService(string name);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern string InternalGetName();

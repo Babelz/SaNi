@@ -15,12 +15,26 @@
 
 #include "sani/core/utils/string_utils.hpp"
 
+#include "sani/engine/services/user_service.hpp"
+
 namespace sani {
 
 	namespace engine {
 
+		/*
+			TODO: cleanup.
+		*/
+
 		MONO_MODULE_IMPL(services)
 
+		std::vector<UserService*> services;
+
+		/*
+			Utils.
+		*/
+
+		// Find all user services listed in configuration that the user
+		// wants to use for this application.
 		static void findUserServices(std::vector<String>& userServiceTypeNames) {
 			auto* message = engine->createEmptyMessage<messages::DocumentMessage>();
 			cvarservice::listCVars(message);
@@ -41,26 +55,56 @@ namespace sani {
 			engine->deallocateShared(cvars);
 		}
 
-		static void InternalCreateService(MonoString* name) {
-		};
+		static UserService* const findUserService(MonoString* instance) {
+			for (auto* const userService : services) {
+				if (userService->getMonoInstance() == instance) return userService;
+			}
 
-		static void Start(MonoString* inst) {
-		};
-
-		static void Suspend(MonoString* inst) {
-		};
-
-		static void Terminate(MonoString* inst) {
-		};
-
-		static MonoString* InternalGetName(MonoString* inst) {
-			return mono_string_new(MONO_DOMAIN, "asd");
+			return nullptr;
 		}
-		static gint32 InternalGetID(MonoString* inst) {
-			return 0;
+
+		/*
+			CIL internal call impls.
+		*/
+
+		static void InternalCreateService(MonoString* instance, MonoString* name) {
+			UserService* service = new UserService(instance, name, engine);
+
+			services.push_back(service);
 		}
-		static gint32 InternalGetState(MonoString* inst) {
-			return 0;
+
+		static MonoBoolean Start(MonoString* instance) {	
+			UserService* const service = findUserService(instance);
+
+			return service->start();
+		}
+
+		static void Suspend(MonoString* instance) {
+			UserService* const service = findUserService(instance);
+
+			service->suspend();
+		}
+
+		static void Terminate(MonoString* instance) {
+			UserService* const service = findUserService(instance);
+
+			service->terminate();
+		}
+
+		static MonoString* InternalGetName(MonoString* instance) {
+			UserService* const service = findUserService(instance);
+
+			return MONO_PROVIDER->createString(service->getName().c_str());
+		}
+		static gint32 InternalGetID(MonoString* instance) {
+			UserService* const service = findUserService(instance);
+			
+			return service->getID();
+		}
+		static gint32 InternalGetState(MonoString* instance) {
+			UserService* const service = findUserService(instance);
+			
+			return static_cast<gint32>(service->getState());
 		}
 
 		bool initialize() {
@@ -77,19 +121,19 @@ namespace sani {
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetName, NO_ARGS, InternalGetName);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetID, NO_ARGS, InternalGetID);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetState, NO_ARGS, InternalGetState);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalCreateService, (MonoString* name), InternalCreateService);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalCreateService, (string), InternalCreateService);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Start, NO_ARGS, Start);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Suspend, NO_ARGS, Suspend);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Terminate, NO_ARGS, Terminate);
 
+			// Hook function definitions.
+			const MonoFunctionDefinition onStartDef("OnStart", "", nullptr);
+			const MonoFunctionDefinition onResumeDef("OnResume", "", nullptr);
+			const MonoFunctionDefinition onSuspendedDef("OnSuspended", "", nullptr);
+			const MonoFunctionDefinition onTerminatedDef("OnTerminated", "", nullptr);
+			const MonoFunctionDefinition onUpdateDef("OnUpdate", "EngineTime", nullptr);
+
 			for (auto& userServiceTypeName : userServiceTypeNames) {
-				//MONO_DEFINE_CLASS(SaNi.Mono.Services, EngineService); 
-
-				//MONO_REGISTER_FUNCTION(InternalCreateService, EngineService);
-				//MONO_REGISTER_FUNCTION(Start, EngineService);
-				//MONO_REGISTER_FUNCTION(Suspend, EngineService);
-				//MONO_REGISTER_FUNCTION(Terminate, EngineService);
-
 				// Mono namespace.
 				const String ns = userServiceTypeName.substr(0, userServiceTypeName.find_last_of("."));
 				// Mono class name.
@@ -98,7 +142,38 @@ namespace sani {
 				const MonoClassDefinition classDef(ns.c_str(), cn.c_str());
 
 				if (MONO_PROVIDER->classExists(&classDef)) {
-				
+					// Found class.
+					// Lookup for hooks.
+					HookFlags flags = HookFlags::None;
+
+					if (MONO_PROVIDER->functionExists(&classDef, &onStartDef))		flags |= HookFlags::OnStart;
+					if (MONO_PROVIDER->functionExists(&classDef, &onResumeDef))		flags |= HookFlags::OnResume;
+					if (MONO_PROVIDER->functionExists(&classDef, &onSuspendedDef))	flags |= HookFlags::OnSuspended;
+					if (MONO_PROVIDER->functionExists(&classDef, &onTerminatedDef)) flags |= HookFlags::OnTerminated;
+					if (MONO_PROVIDER->functionExists(&classDef, &onUpdateDef))		flags |= HookFlags::OnUpdate;
+
+					// Create impl. InternalCreateService gets called. 
+					// This services native part is located at the end of 
+					// services vector.
+					MonoObject* instance = MONO_PROVIDER->createObject(&classDef);
+
+					UserService* service = services.back();
+					service->setMonoClass(MONO_PROVIDER->classFromDefinition(&classDef));
+					service->setMonoHooks(flags);
+
+					if (!service->start()) {
+						FNCLOG_ERR(log::OutFlags::All, "could not start service, not going to add to the engine...");
+
+						services.erase(services.end() - 1);
+
+						delete service;
+					} else {
+						engine->registerService(service);
+					}
+				} else {
+					FNCLOG_ERR(log::OutFlags::All, "could not find service named " + cn);
+
+					continue;
 				}
 			}
 

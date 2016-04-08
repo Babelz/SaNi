@@ -13,11 +13,21 @@ namespace SaNi.Mono.Sandbox
         public EngineAsFramework() 
             : base("engine as framework")
         {
+            Console.WriteLine("CTRO CALLED");
+            Console.WriteLine("NAME: " + Name);
+            Console.WriteLine("ID: " + ID);
+            Console.WriteLine("STATE: " + Enum.GetName(typeof(ServiceState), State));
         }
 
         private bool OnStart()
         {
             Console.WriteLine("Start called");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("ERKKI O :D");
+            Console.ResetColor();
+
+            Suspend();
+
             return true;
         }
         private bool OnResume()
@@ -28,6 +38,8 @@ namespace SaNi.Mono.Sandbox
         private void OnSuspended()
         {
             Console.WriteLine("Suspend called");
+
+            Start();
         }
         private void OnTerminated()
         {
