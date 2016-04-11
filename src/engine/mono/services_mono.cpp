@@ -122,10 +122,10 @@ namespace sani {
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Terminate, NO_ARGS, Terminate);
 		}
 		static void createUserService(const MonoClassDefinition* const classDef, const HookFlags flags) {
-			MonoObject* instance = MONO_PROVIDER->createObject(&classDef);
+			MonoObject* instance = MONO_PROVIDER->createObject(classDef);
 
 			UserService* service = services.back();
-			service->setMonoClass(MONO_PROVIDER->classFromDefinition(&classDef));
+			service->setMonoClass(MONO_PROVIDER->classFromDefinition(classDef));
 			service->setMonoHooks(flags);
 
 			if (!service->start()) {
