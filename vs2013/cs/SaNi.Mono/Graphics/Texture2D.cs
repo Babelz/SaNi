@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SaNi.Mono.Graphics
 {
-    public sealed class Texture2D : GraphicsResource
+    public sealed class Texture2D : Texture
     {
-        public Texture2D()
+        private Texture2D()
         {
         }
     }

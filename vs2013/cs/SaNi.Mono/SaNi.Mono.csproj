@@ -45,6 +45,8 @@
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\Texture2D.cs" />
     <Compile Include="Math\Matrix3.cs" />
+    <Compile Include="Math\Rectf.cs" />
+    <Compile Include="Math\Recti.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

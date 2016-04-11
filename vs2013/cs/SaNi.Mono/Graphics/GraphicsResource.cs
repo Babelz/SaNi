@@ -14,7 +14,7 @@ namespace SaNi.Mono.Graphics
             TODO: make device impl.
          */
 
-        #region Fields
+        #region Properties
         public int ID
         {
             get
