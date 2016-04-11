@@ -40,12 +40,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\EngineTime.cs" />
+    <Compile Include="Graphics\GraphicsResource.cs" />
+    <Compile Include="Graphics\RenderTarget2D.cs" />
+    <Compile Include="Graphics\Texture.cs" />
+    <Compile Include="Graphics\Texture2D.cs" />
     <Compile Include="Math\Matrix3.cs" />
     <Compile Include="Math\Vector2.cs" />
     <Compile Include="Math\Vector3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EngineService.cs" />
     <Compile Include="Services\ServiceState.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Graphics\Renderables\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
