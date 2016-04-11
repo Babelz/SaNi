@@ -8,13 +8,13 @@ namespace SaNi.Mono.Engine
 {
     public struct EngineTime
     {
-        public readonly float TotalTime;
-        public readonly float FrameTime;
+        public readonly TimeSpan TotalTime;
+        public readonly TimeSpan FrameTime;
 
         public EngineTime(float totalTime, float frameTime)
         {
-            TotalTime = totalTime;
-            FrameTime = frameTime;
+            TotalTime = TimeSpan.FromMilliseconds(totalTime);
+            FrameTime = TimeSpan.FromMilliseconds(frameTime);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace sani {
 			: x(T()), y(T()), z(T()) { }
 
 		template <typename T>
-		inline Vector3<T>::Vector3(const T& value)
+		inline Vector3<T>::Vector3(const T& value)x3
 			: x(value), y(value), z(value) {
 
 		}

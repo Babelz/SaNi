@@ -68,6 +68,7 @@ namespace sani {
 		*/
 
 		static void InternalCreateService(MonoString* instance, MonoString* name) {
+			// Create and store.
 			UserService* service = new UserService(instance, name, engine);
 
 			services.push_back(service);
@@ -89,6 +90,10 @@ namespace sani {
 			UserService* const service = findUserService(instance);
 
 			service->terminate();
+
+			services.erase(std::remove(services.begin(), services.end(), service), services.end());
+
+			delete service;
 		}
 
 		static MonoString* InternalGetName(MonoString* instance) {
@@ -107,6 +112,34 @@ namespace sani {
 			return static_cast<gint32>(service->getState());
 		}
 
+		static void registerKnownFunctions() {
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetName, NO_ARGS, InternalGetName);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetID, NO_ARGS, InternalGetID);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetState, NO_ARGS, InternalGetState);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalCreateService, (string), InternalCreateService);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Start, NO_ARGS, Start);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Suspend, NO_ARGS, Suspend);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Terminate, NO_ARGS, Terminate);
+		}
+		static void createUserService(const MonoClassDefinition* const classDef, const HookFlags flags) {
+			MonoObject* instance = MONO_PROVIDER->createObject(&classDef);
+
+			UserService* service = services.back();
+			service->setMonoClass(MONO_PROVIDER->classFromDefinition(&classDef));
+			service->setMonoHooks(flags);
+
+			if (!service->start()) {
+				FNCLOG_ERR(log::OutFlags::All, "could not start service, not going to add to the engine...");
+
+				services.erase(services.end() - 1);
+
+				delete service;
+			}
+			else {
+				engine->registerService(service);
+			}
+		}
+
 		bool initialize() {
 			std::vector<String> userServiceTypeNames;
 			findUserServices(userServiceTypeNames);
@@ -117,14 +150,7 @@ namespace sani {
 				return true;
 			}
 
-			// Hook base class methods.
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetName, NO_ARGS, InternalGetName);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetID, NO_ARGS, InternalGetID);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetState, NO_ARGS, InternalGetState);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalCreateService, (string), InternalCreateService);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Start, NO_ARGS, Start);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Suspend, NO_ARGS, Suspend);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Terminate, NO_ARGS, Terminate);
+			registerKnownFunctions();
 
 			// Hook function definitions.
 			const MonoFunctionDefinition onStartDef("OnStart", "", nullptr);
@@ -151,25 +177,8 @@ namespace sani {
 					if (MONO_PROVIDER->functionExists(&classDef, &onSuspendedDef))	flags |= HookFlags::OnSuspended;
 					if (MONO_PROVIDER->functionExists(&classDef, &onTerminatedDef)) flags |= HookFlags::OnTerminated;
 					if (MONO_PROVIDER->functionExists(&classDef, &onUpdateDef))		flags |= HookFlags::OnUpdate;
-
-					// Create impl. InternalCreateService gets called. 
-					// This services native part is located at the end of 
-					// services vector.
-					MonoObject* instance = MONO_PROVIDER->createObject(&classDef);
-
-					UserService* service = services.back();
-					service->setMonoClass(MONO_PROVIDER->classFromDefinition(&classDef));
-					service->setMonoHooks(flags);
-
-					if (!service->start()) {
-						FNCLOG_ERR(log::OutFlags::All, "could not start service, not going to add to the engine...");
-
-						services.erase(services.end() - 1);
-
-						delete service;
-					} else {
-						engine->registerService(service);
-					}
+					
+					createUserService(&classDef, flags);
 				} else {
 					FNCLOG_ERR(log::OutFlags::All, "could not find service named " + cn);
 

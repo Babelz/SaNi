@@ -45,9 +45,8 @@ namespace SaNi.Mono.Sandbox
         {
             Console.WriteLine("Teminate called");
         }
-        private void OnUpdate(EngineTime time) 
+        private void OnUpdate(EngineTime time)
         {
-            Console.WriteLine("Update called");
         }
     }
 }
