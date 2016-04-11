@@ -2,21 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SaNi.Mono.Graphics
 {
-    public struct VertexPositionColor
+    public struct VertexPositionColorTexture
     {
         #region Properties
-        public Vector3 Position
+        public VertexPositionColor PositionColor
         {
             get;
             set;
         }
-        public Vector4 Color
+
+        public Vector2 UV
         {
             get;
             set;

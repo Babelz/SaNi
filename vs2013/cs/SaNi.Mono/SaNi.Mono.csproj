@@ -46,11 +46,13 @@
     <Compile Include="Graphics\Renderables\Rectanglecs.cs" />
     <Compile Include="Graphics\Renderables\Renderable.cs" />
     <Compile Include="Graphics\Renderables\RenderData.cs" />
+    <Compile Include="Graphics\RenderElementData.cs" />
     <Compile Include="Graphics\RenderTarget2D.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\Texture2D.cs" />
     <Compile Include="Graphics\Transform.cs" />
     <Compile Include="Graphics\VertexPositionColor.cs" />
+    <Compile Include="Graphics\VertexPositionColorTexture.cs" />
     <Compile Include="Math\Matrix3.cs" />
     <Compile Include="Math\Rectf.cs" />
     <Compile Include="Math\Recti.cs" />
