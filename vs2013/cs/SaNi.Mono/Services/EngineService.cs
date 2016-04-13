@@ -37,7 +37,7 @@ namespace SaNi.Mono.Services
         }
         #endregion
 
-        protected EngineService(string name)
+        public EngineService(string name)
         {
             InternalCreateService(name);
         }

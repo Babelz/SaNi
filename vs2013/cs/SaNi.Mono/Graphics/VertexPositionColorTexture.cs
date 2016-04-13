@@ -15,7 +15,6 @@ namespace SaNi.Mono.Graphics
             get;
             set;
         }
-
         public Vector2 UV
         {
             get;

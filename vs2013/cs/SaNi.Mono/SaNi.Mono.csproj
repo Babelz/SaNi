@@ -42,11 +42,10 @@
     <Compile Include="Content\ContentManager.cs" />
     <Compile Include="Content\Resource.cs" />
     <Compile Include="Engine\EngineTime.cs" />
+    <Compile Include="Graphics\Color.cs" />
     <Compile Include="Graphics\GraphicsResource.cs" />
-    <Compile Include="Graphics\Renderables\Rectanglecs.cs" />
+    <Compile Include="Graphics\Renderables\Rectangle.cs" />
     <Compile Include="Graphics\Renderables\Renderable.cs" />
-    <Compile Include="Graphics\Renderables\RenderData.cs" />
-    <Compile Include="Graphics\RenderElementData.cs" />
     <Compile Include="Graphics\RenderTarget2D.cs" />
     <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\Texture2D.cs" />

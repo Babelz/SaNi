@@ -11,8 +11,8 @@ namespace SaNi.Mono.Math
         #region Fields
         public float X;
         public float Y;
-        public float W;
-        public float H;
+        public float Width;
+        public float Height;
         #endregion
 
         #region Properties
@@ -27,7 +27,7 @@ namespace SaNi.Mono.Math
         {
             get
             {
-                return X + W;
+                return X + Width;
             }
         }
         public float Top
@@ -41,17 +41,17 @@ namespace SaNi.Mono.Math
         {
             get
             {
-                return Y + H;
+                return Y + Height;
             }
         }
         #endregion
 
-        public Rectf(float x, float y, float w, float h)
+        public Rectf(float x, float y, float width, float height)
         {
             X = x;
             Y = y;
-            W = w;
-            H = h;
+            Width = width;
+            Height = height;
         }
     }
 }
