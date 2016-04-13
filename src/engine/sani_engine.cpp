@@ -39,6 +39,7 @@
 
 #include "sani/core/logging/log_batcher.hpp"
 #include "sani/engine/mono/services_mono.hpp"
+#include "sani/engine/mono/graphics_resource_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -276,20 +277,12 @@ namespace sani {
 				return false;
 			}
 
-			// TODO: initialize mono.
+			//// TODO: initialize mono.
+			MONO_REGISTER_MODULE(graphicsresource);
 			MONO_REGISTER_MODULE(services);
 
 			FNCLOG_INF(log::OutFlags::All, "loaded all mono modules...");
 
-			return true;
-		}
-
-		bool SaNiEngine::loadUserServices() {
-			// TODO: load user services from managed dll.
-			return true;
-		}
-		bool SaNiEngine::loadScene() {
-			// TODO: load the first scene.
 			return true;
 		}
 

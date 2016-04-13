@@ -9,11 +9,6 @@ namespace SaNi.Mono.Graphics
 {
     public abstract class GraphicsResource
     {
-        /*
-            TODO: add internal calls.
-            TODO: make device impl.
-         */
-
         #region Properties
         public int ID
         {

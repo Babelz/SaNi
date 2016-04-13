@@ -18,17 +18,17 @@ namespace SaNi.Mono.Graphics.Renderables
             [MethodImpl(MethodImplOptions.InternalCall)]
             set;
         }
-        public Rectf LocalBounds
+        public extern Rectf LocalBounds
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
             get;
         }
-        public Rectf GlobalBounds
+        public extern Rectf GlobalBounds
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
             get;
         }
-        public Rectf TextureSource
+        public extern Rectf TextureSource
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
             get;

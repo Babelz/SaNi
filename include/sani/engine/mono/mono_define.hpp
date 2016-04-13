@@ -8,15 +8,22 @@
 								  namespace engine { \
 									  class SaNiEngine; \
 									  namespace name##monomodule {	\
-										    \
-											\
 											extern const char* const ModuleName; \
 											extern sani::engine::SaNiEngine* engine; \
-											\
 											bool initialize(); \
 									  } \
 								  } \
 							  } \
+
+#define MONO_MODULE_DEF_BEGIN(name) namespace sani { \
+										namespace engine { \
+											class SaNiEngine; \
+											namespace name##monomodule {	\
+												extern const char* const ModuleName; \
+												extern sani::engine::SaNiEngine* engine; \
+												bool initialize(); \
+
+#define MONO_MODULE_DEF_END	} } } \ 
 
 #define MONO_MODULE_IMPL(name) namespace name##monomodule { \
 									const char* const ModuleName = #name; \

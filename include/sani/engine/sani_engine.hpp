@@ -55,7 +55,6 @@ namespace sani {
 			bool initializeEntityComponentSystem();
 			bool initializeMono();
 			
-			bool loadUserServices();
 			bool loadScene();
 
 			/// Initializes the engine.
