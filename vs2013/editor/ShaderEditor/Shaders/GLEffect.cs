@@ -1,4 +1,5 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -103,11 +104,11 @@ namespace ShaderEditor.Shaders
             var location = GL.GetUniformLocation(ProgramID, name);
             Assert.GLAssert();
 
-            if (type == typeof(OpenTK.Matrix4))
+            if (type == typeof(Matrix4))
             {
-                var mat4 = (OpenTK.Matrix4)value;
+                var mat4 = (Matrix4)value;
 
-                GL.UniformMatrix4(location, false, ref mat4);
+                GL.UniformMatrix4(location, true, ref mat4);
                 Assert.GLAssert();
             }
             else if (type == typeof(float))

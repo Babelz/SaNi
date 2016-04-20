@@ -1,4 +1,4 @@
-﻿#version 330 core
+﻿#version 330core
 
 layout (location = 0) in vec3 in_position;
 layout (location = 1) in vec4 in_color;
@@ -9,10 +9,9 @@ out vec4 color;
 out vec2 uv;
 
 uniform mat4 transform;
-uniform float delta;
 
 void main() {
-	gl_Position = vec4(in_position, 1.0);//transform * vec4(in_position, 1.0);
+	gl_Position = transform * vec4(in_position, 1.0);
 	
 	position = in_position;
 	color = in_color;

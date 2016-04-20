@@ -29,6 +29,6 @@ namespace ShaderEditor.Drawables
         }
         #endregion
 
-        void Draw(float delta);
+        void Draw(float delta, float total);
     }
 }

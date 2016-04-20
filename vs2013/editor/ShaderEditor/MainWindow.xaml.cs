@@ -48,6 +48,8 @@ namespace ShaderEditor
         private readonly Stopwatch renderTimeMeasurer;
         private readonly OpenTK.GLControl glControl;
 
+        private float total;
+
         private IScene scene;
         private IEffect effect;
         #endregion
@@ -82,9 +84,10 @@ namespace ShaderEditor
         }
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
-            var delta = (float)renderTimeMeasurer.ElapsedMilliseconds;
+            var delta = (float)renderTimeMeasurer.Elapsed.TotalMilliseconds;
+            total += delta;
 
-            scene.Draw(delta);
+            scene.Draw(delta, total);
 
             renderTimeMeasurer.Restart();
 

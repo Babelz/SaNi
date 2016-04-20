@@ -1,5 +1,5 @@
 ﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using ShaderEditor.Drawables;
 using ShaderEditor.Drawing;
 using ShaderEditor.Shaders;
@@ -54,7 +54,7 @@ namespace ShaderEditor.Scenes
         {
             this.glControl = glControl;
 
-            ClearColor = Color.Black;
+            ClearColor = Color.CornflowerBlue;
 
             GL.Viewport(0, 0, glControl.Size.Width, glControl.Size.Height);
             GL.Enable(EnableCap.Blend);
@@ -62,11 +62,11 @@ namespace ShaderEditor.Scenes
             Assert.GLAssert();
         }
 
-        protected abstract void GLDraw(float delta);
+        protected abstract void GLDraw(float delta, float total);
 
-        public void Draw(float delta)
+        public void Draw(float delta, float total)
         {
-            GLDraw(delta);
+            GLDraw(delta, total);
 
             GL.ClearColor(ClearColor);
 

@@ -1,5 +1,5 @@
 ﻿using OpenTK;
-using OpenTK.Graphics.OpenGL4;
+using OpenTK.Graphics.OpenGL;
 using ShaderEditor.Drawing;
 using ShaderEditor.Shaders;
 using System;
@@ -15,12 +15,12 @@ namespace ShaderEditor.Drawables.GLDrawables
     {
         #region Static fields
         private static readonly IntPtr VertexBufferBytesCount  = new IntPtr(sizeof(float) * 9 * 4);
-        private static readonly IntPtr IndexBufferBytesCount   = new IntPtr(sizeof(byte) * 6);
+        private static readonly IntPtr IndexBufferBytesCount   = new IntPtr(sizeof(uint) * 6);
 
-        private static readonly byte[] Indices = new byte[]
+        private static readonly uint[] Indices = new uint[]
         {
             0, 1, 2,
-            1, 3, 2
+            2, 1, 3
         };
         #endregion
 
@@ -32,8 +32,6 @@ namespace ShaderEditor.Drawables.GLDrawables
         private int vertexBuffer;
         private int vertexArray;
         private int indexBuffer;
-
-        private Texture2D texture;
         #endregion
 
         #region Properties
@@ -44,19 +42,8 @@ namespace ShaderEditor.Drawables.GLDrawables
         }
         public Texture2D Texture
         {
-            get
-            {
-                return texture;
-            }
-            set
-            {
-                texture = value;
-
-                if (texture == null) return;
-
-                transform.size.X = texture.Width;
-                transform.size.Y = texture.Height;
-            }
+            get;
+            set;
         }
         public Transform Transform
         {
@@ -106,8 +93,8 @@ namespace ShaderEditor.Drawables.GLDrawables
         {
             UpdateVertices();
 
-            InitializeVertexPointers();
             BindBuffers();
+            InitializeVertexPointers();
             UpdateBuffersData();
 
             Texture.Bind();
@@ -117,29 +104,29 @@ namespace ShaderEditor.Drawables.GLDrawables
             var color = new Vector4(Color.R / 255.0f, Color.G / 255.0f, Color.B / 255.0f, Color.A / 255.0f);
 
             var topLeft = new VertexPositionColorTexture();
-            topLeft.position.X = -1.0f;//transform.position.X;
-            topLeft.position.Y = 1.0f;//transform.position.Y;
+            topLeft.position.X = transform.position.X - transform.origin.X;
+            topLeft.position.Y = -transform.position.Y - transform.origin.Y;
             topLeft.uv.X = 0.0f;
             topLeft.uv.Y = 1.0f;
             topLeft.color = color;
 
             var topRight = new VertexPositionColorTexture();
-            topRight.position.X = 1.0f;//transform.position.X + transform.size.X * transform.scale.X;
-            topRight.position.Y = 1.0f;//transform.position.Y;
+            topRight.position.X = transform.position.X + transform.size.X * transform.scale.X - transform.origin.X;
+            topRight.position.Y = -transform.position.Y - transform.origin.Y;
             topRight.uv.X = 1.0f;
             topRight.uv.Y = 1.0f;
             topRight.color = color;
 
             var bottomLeft = new VertexPositionColorTexture();
-            bottomLeft.position.X = -1.0f;//transform.position.X;
-            bottomLeft.position.Y = -1.0f;//transform.position.Y + transform.size.Y * transform.scale.Y;
+            bottomLeft.position.X = transform.position.X - transform.origin.X;
+            bottomLeft.position.Y = -transform.position.Y + transform.size.Y * transform.scale.Y - transform.origin.Y;
             bottomLeft.uv.X = 0.0f;
             bottomLeft.uv.Y = 0.0f;
             bottomLeft.color = color;
 
             var bottomRight = new VertexPositionColorTexture();
-            bottomRight.position.X = 1.0f;//transform.position.X + transform.size.X * transform.scale.X;
-            bottomRight.position.Y = -1.0f;//transform.position.Y + transform.size.Y * transform.scale.Y;
+            bottomRight.position.X = transform.position.X + transform.size.X * transform.scale.X - transform.origin.X;
+            bottomRight.position.Y = -transform.position.Y + transform.size.Y * transform.scale.Y - transform.origin.Y;
             bottomRight.uv.X = 1.0f;
             bottomRight.uv.Y = 0.0f;
             bottomRight.color = color;
@@ -151,6 +138,9 @@ namespace ShaderEditor.Drawables.GLDrawables
         }
         private void InitializeVertexPointers()
         {
+            GL.BindVertexArray(vertexArray);
+            Assert.GLAssert();
+
             GL.EnableVertexAttribArray(0);
             GL.EnableVertexAttribArray(1);
             GL.EnableVertexAttribArray(2);
@@ -163,33 +153,16 @@ namespace ShaderEditor.Drawables.GLDrawables
         }
         private void BindBuffers()
         {
+            GL.BindVertexArray(vertexArray);
+            Assert.GLAssert();
+
             GL.BindBuffer(BufferTarget.ArrayBuffer, vertexBuffer);
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, indexBuffer);
             Assert.GLAssert();
         }
         private void UpdateBuffersData()
         {
-            GL.BindVertexArray(vertexArray);
-            Assert.GLAssert();
-
-            var verticesData = new List<float>();
-
-            foreach (var vpct in vertices)
-            {
-                verticesData.Add(vpct.position.X);
-                verticesData.Add(vpct.position.Y);
-                verticesData.Add(vpct.position.Z);
-
-                verticesData.Add(vpct.color.X);
-                verticesData.Add(vpct.color.Y);
-                verticesData.Add(vpct.color.Z);
-                verticesData.Add(vpct.color.W);
-
-                verticesData.Add(vpct.uv.X);
-                verticesData.Add(vpct.uv.Y);
-            }
-
-            GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, VertexBufferBytesCount, verticesData.ToArray());
+            GL.BufferSubData(BufferTarget.ArrayBuffer, IntPtr.Zero, VertexBufferBytesCount, vertices);
             Assert.GLAssert();
         }
 
@@ -202,62 +175,31 @@ namespace ShaderEditor.Drawables.GLDrawables
         }
         private void DeinitializeVertexPointers()
         {
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
-            Assert.GLAssert();
-        
-            GL.BindVertexArray(0);
-            Assert.GLAssert();
-        }
-        private void UnbindBuffers()
-        {
             GL.DisableVertexAttribArray(0);
             GL.DisableVertexAttribArray(1);
             GL.DisableVertexAttribArray(2);
             Assert.GLAssert();
         }
+        private void UnbindBuffers()
+        {
+            GL.BindVertexArray(0);
+            Assert.GLAssert();
 
-        public void Draw(float delta)
+            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
+            Assert.GLAssert();
+        }
+
+        public void Draw(float delta, float total)
         {
             if (Texture == null) return;
 
             BeginDraw();
 
-            GL.DrawElements(BeginMode.Triangles, 6, DrawElementsType.UnsignedByte, 0);
+            GL.DrawElements(BeginMode.Triangles, 6, DrawElementsType.UnsignedInt, 0);
             Assert.GLAssert();
 
             EndDraw();
-
-            //var VertexArrayID = GL.GenVertexArray();
-            //GL.BindVertexArray(VertexArrayID);
-
-            //var g_vertex_buffer_data = new[]{
-            //   new Vector3(-1.0f, -1.0f, 0.0f),
-            //   new Vector3(1.0f, -1.0f, 0.0f),
-            //   new Vector3(0.0f,  1.0f, 0.0f),
-            //};
-
-            //// This will identify our vertex buffer
-            //var vertexbuffer = GL.GenBuffer();
-            //// The following commands will talk about our 'vertexbuffer' buffer
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
-            //// Give our vertices to OpenGL.
-            //GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(sizeof(float) * 9), g_vertex_buffer_data, BufferUsageHint.StaticDraw);
-
-            //GL.EnableVertexAttribArray(0);
-            //GL.BindBuffer(BufferTarget.ArrayBuffer, vertexbuffer);
-            //GL.VertexAttribPointer(
-            //   0,
-            //   3,                  // size
-            //   VertexAttribPointerType.Float,           // type
-            //   false,           // normalized?
-            //   sizeof(float) * 3,                  // stride
-            //   sizeof(float) * 1            // array buffer offset
-            //);
-
-            //// Draw the triangle !
-            //GL.DrawArrays(PrimitiveType.Triangles, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-            //GL.DisableVertexAttribArray(0);
         }
     }
 }
