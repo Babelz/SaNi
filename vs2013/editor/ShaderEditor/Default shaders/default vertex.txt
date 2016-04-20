@@ -9,9 +9,10 @@ out vec4 color;
 out vec2 uv;
 
 uniform mat4 transform;
+uniform float delta;
 
 void main() {
-	gl_Position = transform * vec4(in_position, 1.0);
+	gl_Position = vec4(in_position, 1.0);//transform * vec4(in_position, 1.0);
 	
 	position = in_position;
 	color = in_color;

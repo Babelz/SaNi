@@ -3,7 +3,9 @@ using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using OpenTK.Graphics.OpenGL;
+using ShaderEditor.Drawing;
 using ShaderEditor.Scenes;
+using ShaderEditor.Scenes.GLScenes;
 using ShaderEditor.Shaders;
 using System;
 using System.Collections;
@@ -46,8 +48,8 @@ namespace ShaderEditor
         private readonly Stopwatch renderTimeMeasurer;
         private readonly OpenTK.GLControl glControl;
 
-        private Scene[] scenes;
-        private Effect effect;
+        private IScene scene;
+        private IEffect effect;
         #endregion
 
         public MainWindow()
@@ -57,7 +59,6 @@ namespace ShaderEditor
             textEditor.TextArea.Caret.CaretBrush = new SolidColorBrush(Colors.Yellow);
 
             glControl = new OpenTK.GLControl(new OpenTK.Graphics.GraphicsMode(32, 24, 8, 4));
-            glControl.Resize    += glControl_Resize;
             glControl.Load      += glControl_Load;
             glControl.Paint     += glControl_Paint;
 
@@ -75,22 +76,15 @@ namespace ShaderEditor
                 textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
 
-            // Generate scenes.
-            scenes = new Scene[] 
-            {
-                new SpriteScene(),
-                null
-            };
-        }
-        private void glControl_Resize(object sender, EventArgs e)
-        {
-            scenes[0].Resize(glControl.Width, glControl.Height);
+            // TODO: just for testing.
+            scene = new GLPlaneScene(glControl);
+            scene.Texture = Texture2D.LoadFromFile("Textures\\sani.png");
         }
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
             var delta = (float)renderTimeMeasurer.ElapsedMilliseconds;
 
-            scenes[0].Draw(delta);
+            scene.Draw(delta);
 
             renderTimeMeasurer.Restart();
 
@@ -142,14 +136,16 @@ namespace ShaderEditor
         {
             // TODO: for testing.
             // Load default effect.
-            effect = new Effect(DefaultShaderSources.DefaultVertexShaderSource(),
-                                DefaultShaderSources.DefaultFragmentShaderSource());
+            effect = new GLEffect(DefaultShaderSources.DefaultVertexShaderSource(),
+                                  DefaultShaderSources.DefaultFragmentShaderSource());
 
             if (!effect.Compile())
             {
                 if (!string.IsNullOrEmpty(effect.LastFragmentError)) System.Windows.MessageBox.Show(effect.LastFragmentError);
                 if (!string.IsNullOrEmpty(effect.LastVertexError)) System.Windows.MessageBox.Show(effect.LastVertexError);
             }
+
+            scene.Effect = effect;
         }
         #endregion
     }

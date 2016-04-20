@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShaderEditor.Shaders
 {
-    internal sealed class Effect
+    internal sealed class GLEffect : IEffect
     {
         #region Properties
         string VertexSource
@@ -37,7 +37,7 @@ namespace ShaderEditor.Shaders
         }
         #endregion
 
-        public Effect(string vertexSource, string fragmentSource)
+        public GLEffect(string vertexSource, string fragmentSource)
         {
             VertexSource = vertexSource;
             FragmentSource = fragmentSource;
