@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShaderEditor.Drawables.GLDrawables
+namespace ShaderEditor.Drawables.OpenGL
 {
     public sealed class Plane : IDrawable
     {
@@ -104,29 +104,29 @@ namespace ShaderEditor.Drawables.GLDrawables
             var color = new Vector4(Color.R / 255.0f, Color.G / 255.0f, Color.B / 255.0f, Color.A / 255.0f);
 
             var topLeft = new VertexPositionColorTexture();
-            topLeft.position.X = transform.position.X - transform.origin.X;
-            topLeft.position.Y = -transform.position.Y - transform.origin.Y;
+            topLeft.position.X = transform.position.X;
+            topLeft.position.Y = transform.position.Y;
             topLeft.uv.X = 0.0f;
             topLeft.uv.Y = 1.0f;
             topLeft.color = color;
 
             var topRight = new VertexPositionColorTexture();
-            topRight.position.X = transform.position.X + transform.size.X * transform.scale.X - transform.origin.X;
-            topRight.position.Y = -transform.position.Y - transform.origin.Y;
+            topRight.position.X = transform.position.X + transform.size.X * transform.scale.X;
+            topRight.position.Y = transform.position.Y;
             topRight.uv.X = 1.0f;
             topRight.uv.Y = 1.0f;
             topRight.color = color;
 
             var bottomLeft = new VertexPositionColorTexture();
-            bottomLeft.position.X = transform.position.X - transform.origin.X;
-            bottomLeft.position.Y = -transform.position.Y + transform.size.Y * transform.scale.Y - transform.origin.Y;
+            bottomLeft.position.X = transform.position.X;
+            bottomLeft.position.Y = transform.position.Y + transform.size.Y * transform.scale.Y;
             bottomLeft.uv.X = 0.0f;
             bottomLeft.uv.Y = 0.0f;
             bottomLeft.color = color;
 
             var bottomRight = new VertexPositionColorTexture();
-            bottomRight.position.X = transform.position.X + transform.size.X * transform.scale.X - transform.origin.X;
-            bottomRight.position.Y = -transform.position.Y + transform.size.Y * transform.scale.Y - transform.origin.Y;
+            bottomRight.position.X = transform.position.X + transform.size.X * transform.scale.X;
+            bottomRight.position.Y = transform.position.Y + transform.size.Y * transform.scale.Y;
             bottomRight.uv.X = 1.0f;
             bottomRight.uv.Y = 0.0f;
             bottomRight.color = color;

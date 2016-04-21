@@ -8,24 +8,9 @@ namespace ShaderEditor.Shaders
 {
     public interface IEffect
     {
-        #region Properties
-        string LastVertexError
-        {
-            get;
-        }
-        string LastFragmentError
-        {
-            get;
-        }
-        #endregion
-
         void Bind();
         void Unbind();
 
-        bool Compile();
-
         void SetUniformValue(string name, object value, Type type);
-
-        bool HasErrors();
     }
 }

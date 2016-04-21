@@ -1,12 +1,14 @@
 ﻿using ICSharpCode.AvalonEdit;
+using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Editing;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using OpenTK.Graphics.OpenGL;
 using ShaderEditor.Drawing;
+using ShaderEditor.Models;
 using ShaderEditor.Scenes;
-using ShaderEditor.Scenes.GLScenes;
+using ShaderEditor.Scenes.OpenGL;
 using ShaderEditor.Shaders;
+using ShaderEditor.Shaders.OpenGL;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -40,6 +42,10 @@ namespace ShaderEditor
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Constants
+        private const int RecompilationDelayMillis = 1250;
+        #endregion
+
         #region GLSL versions
         private static readonly string GLSLDesktop = "GLSL Desktop";
         #endregion
@@ -50,8 +56,19 @@ namespace ShaderEditor
 
         private float total;
 
+        // Current scene.
         private IScene scene;
+        // Current effect.
         private IEffect effect;
+
+        private EffectCompilers compilers;
+
+        private SourceEditTimer sourceEditTimer;
+        private System.Threading.Timer recompileTimer;
+
+        private ShadingLanguages targetLanguage;
+
+        private ShaderEditModel shaderEditModel;
         #endregion
 
         public MainWindow()
@@ -67,6 +84,12 @@ namespace ShaderEditor
             glHost.Child = glControl;
 
             renderTimeMeasurer = Stopwatch.StartNew();
+
+            sourceEditTimer = new SourceEditTimer(RecompilationDelayMillis);
+            
+            compilers = new EffectCompilers();
+
+            targetLanguage = ShadingLanguages.GLSL;
         }
 
         #region GLControl event handlers
@@ -78,13 +101,15 @@ namespace ShaderEditor
                 textEditor.SyntaxHighlighting = HighlightingLoader.Load(reader, HighlightingManager.Instance);
             }
 
-            // TODO: just for testing.
+            // Load the default scene.
+            // TODO: start args.
             scene = new GLPlaneScene(glControl);
             scene.Texture = Texture2D.LoadFromFile("Textures\\sani.png");
         }
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
             var delta = (float)renderTimeMeasurer.Elapsed.TotalMilliseconds;
+
             total += delta;
 
             scene.Draw(delta, total);
@@ -134,22 +159,71 @@ namespace ShaderEditor
         }
         #endregion
 
+        #region Text editor event handlers
+        private void textEditor_TextChanged(object sender, EventArgs e)
+        {
+            sourceEditTimer.StartMeasuring();
+
+            if (recompileTimer == null)
+            {
+                recompileTimer = new System.Threading.Timer(CheckIfShouldRecompileShaders, null, 0, RecompilationDelayMillis);
+            }
+        }
+        #endregion
+
         #region Main window event handlers
         private void mainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // TODO: for testing.
             // Load default effect.
-            effect = new GLEffect(DefaultShaderSources.DefaultVertexShaderSource(),
-                                  DefaultShaderSources.DefaultFragmentShaderSource());
+            
+            var vertexSource = DefaultShaderSources.DefaultVertexShaderSource();
+            var fragmentSource = DefaultShaderSources.DefaultFragmentShaderSource();
 
-            if (!effect.Compile())
-            {
-                if (!string.IsNullOrEmpty(effect.LastFragmentError)) System.Windows.MessageBox.Show(effect.LastFragmentError);
-                if (!string.IsNullOrEmpty(effect.LastVertexError)) System.Windows.MessageBox.Show(effect.LastVertexError);
-            }
+            RecompileShaders(vertexSource, fragmentSource);
+
+            // Setup model.
+            shaderEditModel = new ShaderEditModel();
+            shaderEditModel.VertexSource = new TextDocument(vertexSource);
+            shaderEditModel.FragmentSource = new TextDocument(fragmentSource);
+            textEditor.DataContext = shaderEditModel;
+
+            var binding = new System.Windows.Data.Binding("FragmentSource");
+            binding.Source = shaderEditModel;
+            textEditor.SetBinding(TextEditor.DocumentProperty, binding);
 
             scene.Effect = effect;
         }
         #endregion
+
+        // Callback so we can recompile shaders when enough time has passed
+        // since last edit.
+        private void CheckIfShouldRecompileShaders(object state)
+        {
+            if (!sourceEditTimer.ShouldRecompile) return;
+
+            mainWindow.Dispatcher.Invoke(() =>
+            {
+                RecompileShaders(shaderEditModel.VertexSource.Text, shaderEditModel.FragmentSource.Text);
+
+                recompileTimer = null;
+            });
+        }
+        private void RecompileShaders(string vertexSource, string fragmentSource)
+        {
+            effect = compilers.Compile(targetLanguage, vertexSource, fragmentSource);
+
+            if (compilers.HasErrors(targetLanguage))
+            {
+                var vertexError = string.Empty;
+                var fragmentError = string.Empty;
+
+                compilers.GetLastErrors(targetLanguage, ref vertexError, ref fragmentError);
+
+                // TODO: present errors.
+            }
+
+            scene.Effect = effect;
+        }
     }
 }

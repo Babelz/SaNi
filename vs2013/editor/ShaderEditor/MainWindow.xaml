@@ -46,7 +46,7 @@
 
         <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="textEditor"
                                FontFamily="Consolas" FontSize="20pt" Grid.Row="1" Grid.Column="1"
-                               Background="Black" Foreground="Yellow" Cursor="IBeam"/>
+                               Background="Black" Foreground="Yellow" Cursor="IBeam" TextChanged="textEditor_TextChanged"/>
         
         <!-- Output area (to print info and errors) -->
         

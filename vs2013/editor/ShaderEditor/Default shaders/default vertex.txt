@@ -11,7 +11,7 @@ out vec2 uv;
 uniform mat4 transform;
 
 void main() {
-	gl_Position = transform * vec4(in_position, 1.0);
+	gl_Position = vec4(in_position, 1.0) * transform;
 	
 	position = in_position;
 	color = in_color;

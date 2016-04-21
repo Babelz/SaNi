@@ -1,14 +1,14 @@
 ﻿using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using ShaderEditor.Drawables;
-using ShaderEditor.Drawables.GLDrawables;
+using ShaderEditor.Drawables.OpenGL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShaderEditor.Scenes.GLScenes
+namespace ShaderEditor.Scenes.OpenGL
 {
     public sealed class GLPlaneScene : BaseGLSCene
     {
@@ -48,10 +48,7 @@ namespace ShaderEditor.Scenes.GLScenes
         }
         private void RecomputeOrtho(float width, float height)
         {
-            var ar = width / height;
-            
-            ortho = Matrix4.CreateOrthographic(width, height, -1.0f, 1.0f);
-            //ortho = Matrix4.CreateOrthographicOffCenter(0.0f, width, height, 0.0f, -1.0f, 1.0f);        
+            ortho = Matrix4.CreateOrthographicOffCenter(0.0f, width, height, 0.0f, -1.0f, 1.0f);
         }
         private void UpdatePlane(GLControl glControl)
         {
@@ -69,7 +66,7 @@ namespace ShaderEditor.Scenes.GLScenes
             Effect.Bind();
             Effect.SetUniformValue("transform", ortho, typeof(Matrix4));
             Effect.SetUniformValue("delta", delta, typeof(float));
-            Effect.SetUniformValue("total", delta, typeof(float));
+            Effect.SetUniformValue("total", total, typeof(float));
 
             plane.Texture = Texture;
             
