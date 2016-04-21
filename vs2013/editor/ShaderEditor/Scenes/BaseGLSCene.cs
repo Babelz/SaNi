@@ -62,11 +62,11 @@ namespace ShaderEditor.Scenes
             Assert.GLAssert();
         }
 
-        protected abstract void GLDraw(float delta, float total);
+        protected abstract void GLDraw(float delta, float time, Vector2 resolution);
 
-        public void Draw(float delta, float total)
+        public void Draw(float delta, float time)
         {
-            GLDraw(delta, total);
+            GLDraw(delta, time, new Vector2(glControl.Width, glControl.Height));
 
             GL.ClearColor(ClearColor);
 

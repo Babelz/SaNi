@@ -6,7 +6,8 @@ in vec2 uv;
 
 uniform sampler2D sampler;
 uniform float delta;
-uniform float total;
+uniform float time;
+uniform vec2 resolution;
 
 void main() {
 	gl_FragColor = texture(sampler, uv) * color;

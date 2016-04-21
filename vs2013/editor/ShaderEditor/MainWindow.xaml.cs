@@ -155,7 +155,6 @@ namespace ShaderEditor
         #region About menu event handlers
         private void menuAbout_Click(object sender, RoutedEventArgs e)
         {
-
         }
         #endregion
 
@@ -211,6 +210,9 @@ namespace ShaderEditor
         }
         private void RecompileShaders(string vertexSource, string fragmentSource)
         {
+            if (string.IsNullOrEmpty(vertexSource)) return;
+            if (string.IsNullOrEmpty(fragmentSource)) return;
+
             effect = compilers.Compile(targetLanguage, vertexSource, fragmentSource);
 
             if (compilers.HasErrors(targetLanguage))

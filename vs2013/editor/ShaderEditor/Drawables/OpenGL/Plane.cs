@@ -190,7 +190,7 @@ namespace ShaderEditor.Drawables.OpenGL
             Assert.GLAssert();
         }
 
-        public void Draw(float delta, float total)
+        public void Draw(float delta, float time)
         {
             if (Texture == null) return;
 

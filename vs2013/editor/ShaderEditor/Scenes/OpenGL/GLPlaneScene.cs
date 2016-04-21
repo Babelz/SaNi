@@ -59,18 +59,19 @@ namespace ShaderEditor.Scenes.OpenGL
             plane.Transform.origin.Y = plane.Transform.size.Y / 2.0f;
         }
 
-        protected override void GLDraw(float delta, float total)
+        protected override void GLDraw(float delta, float time, Vector2 resolution)
         {
             if (Effect == null) return;
 
             Effect.Bind();
             Effect.SetUniformValue("transform", ortho, typeof(Matrix4));
             Effect.SetUniformValue("delta", delta, typeof(float));
-            Effect.SetUniformValue("total", total, typeof(float));
+            Effect.SetUniformValue("time", time / 100.0f, typeof(float));
+            Effect.SetUniformValue("resolution", resolution, typeof(Vector2));
 
             plane.Texture = Texture;
-            
-            plane.Draw(delta, total);
+
+            plane.Draw(delta, time);
 
             Effect.Unbind();
         }

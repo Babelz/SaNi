@@ -30,6 +30,6 @@ namespace ShaderEditor.Scenes
         }
         #endregion
 
-        void Draw(float delta, float total);
+        void Draw(float delta, float time);
     }
 }

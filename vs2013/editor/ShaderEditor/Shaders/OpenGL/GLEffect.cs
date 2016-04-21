@@ -53,6 +53,11 @@ namespace ShaderEditor.Shaders.OpenGL
                 GL.Uniform1(location, (float)value);
                 Assert.GLAssert();
             }
+            else if (type == typeof(Vector2))
+            {
+                GL.Uniform2(location, (Vector2)value);
+                Assert.GLAssert();
+            }
             else
             {
                 throw new InvalidOperationException("invalid or unsupported uniform type");
