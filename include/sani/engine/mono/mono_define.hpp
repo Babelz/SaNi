@@ -23,7 +23,9 @@
 												extern sani::engine::SaNiEngine* engine; \
 												bool initialize(); \
 
-#define MONO_MODULE_DEF_END	} } } \ 
+#define MONO_MODULE_DEF_END	} \
+						} \
+					} \
 
 #define MONO_MODULE_IMPL(name) namespace name##monomodule { \
 									const char* const ModuleName = #name; \

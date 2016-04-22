@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace SaNi.Mono.Content
 {
     /// <summary>
-    /// Class that represents an asset to be used in engine.
+    /// Marker interface for classes that can be loaded using
+    /// the engines content manager.
     /// </summary>
-    public interface Resource
+    public interface IResource
     {
         // Nothing needed, works as a marker interface.
     }

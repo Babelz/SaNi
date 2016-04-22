@@ -29,6 +29,11 @@ namespace sani {
 
 			return nullptr;
 		}
+		MonoType* MonoProvider::typeFromDefinition(const MonoClassDefinition* const classDef) const {
+			MonoClass* mclass = classFromDefinition(classDef);
+
+			return mono_class_get_type(mclass);
+		}
 
 		bool MonoProvider::classExists(const MonoClassDefinition* const classDef) const {
 			return classFromDefinition(classDef) != nullptr;

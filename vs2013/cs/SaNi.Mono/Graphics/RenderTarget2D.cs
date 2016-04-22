@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaNi.Mono.Graphics
 {
-    public sealed class RenderTarget2D : Texture
+    public sealed class RenderTarget2D
     {
     }
 }

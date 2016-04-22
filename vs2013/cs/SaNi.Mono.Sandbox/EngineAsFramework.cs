@@ -47,6 +47,7 @@ namespace SaNi.Mono.Sandbox
         }
         private void OnUpdate(EngineTime time)
         {
+            Console.WriteLine("EBIN MASA MAGE");
         }
     }
 }

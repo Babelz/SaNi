@@ -703,7 +703,10 @@
     <ClCompile Include="..\..\src\engine\services\user_service.cpp">
       <Filter>src\engine\services</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\mono\graphics_resource_mono.cpp">
+    <ClCompile Include="..\..\src\engine\mono\texture2d_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\resource_manager_mono.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1437,14 +1440,17 @@
     <ClInclude Include="..\..\include\sani\engine\mono\transform_mono.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono\texture_mono.hpp">
-      <Filter>include\engine\mono</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\texture2d_mono.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono\graphics_resource_mono.hpp">
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_include.hpp">
       <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\resource_manager_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\resource_manager_handler_service.hpp">
+      <Filter>include\engine\services</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

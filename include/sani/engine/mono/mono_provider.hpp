@@ -25,6 +25,7 @@ namespace sani {
 			MonoProvider(std::vector<MonoAssembly*>& assemblies, MonoDomain* const monoDomain);
 			
 			MonoClass* classFromDefinition(const MonoClassDefinition* const classDef) const;
+			MonoType* typeFromDefinition(const MonoClassDefinition* const classDef) const;
 
 			bool classExists(const MonoClassDefinition* const classDef) const;
 			bool functionExists(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;
@@ -35,8 +36,6 @@ namespace sani {
 			MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const;
 
 			MonoString* createString(const char* const str) const;
-
-			MonoClass* findClass(const MonoClassDefinition* const classDef) const;
 
 			MonoObject* invoke(MonoString* instance, MonoClass* mclass, const char* const name, void** args, const int32 argc) const;
 			MonoObject* invoke(MonoString* instance, MonoClass* mclass, const char* const name) const;

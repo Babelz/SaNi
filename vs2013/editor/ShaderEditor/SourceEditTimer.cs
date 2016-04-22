@@ -32,7 +32,10 @@ namespace ShaderEditor
 
         public void StartMeasuring()
         {
-            if      (!timer.IsRunning)                                  timer.Start();
+            if (!timer.IsRunning)
+            {
+                timer.Start();
+            }
             else if (timer.ElapsedMilliseconds >= recompileAfterMillis)
             {
                 ShouldRecompile = true;
@@ -40,6 +43,11 @@ namespace ShaderEditor
             }
 
             timer.Restart();
+        }
+
+        public void StopMeasuring()
+        {
+            timer.Reset();
         }
     }
 }

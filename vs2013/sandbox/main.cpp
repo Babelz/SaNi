@@ -248,7 +248,7 @@ void initialize(SaNiEngine* const engine) {
 	resources = new ResourceManager(&fileSystem, graphicsDevice, "../../assets/");
 	
 	std::vector<sani::graphics::Rectangle*> rects;
-	auto erkki = resources->load<Texture2D>("tuksu");
+	auto erkki = resources->load<Texture2D>("andy");
 	auto tuksu = erkki;//resources->load<Texture2D>("tuksu");
 	auto font = resources->load<SpriteFont>("font");
 
@@ -267,7 +267,7 @@ void initialize(SaNiEngine* const engine) {
 		sani::graphics::Rectangle* rectangle = static_cast<sani::graphics::Rectangle*>(createRectangleMessage->getData());
 		NEW_DYNAMIC(sani::graphics::Rectangle, rectangle, x, y, w, h);
 
-		rectangle->texture = resources->load<Texture2D>("tuksu");
+		rectangle->texture = resources->load<Texture2D>("andy");
 
 		rectangle->fill = color::White;
 		/*rectangle->textureSource.x = 0.f;

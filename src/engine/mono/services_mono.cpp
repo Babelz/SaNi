@@ -1,13 +1,4 @@
-#include "sani/engine/mono/mono_define.hpp"
-
-#include "sani/engine/mono/mono_runtime.hpp"
-#include "sani/engine/mono/mono_provider.hpp"
-#include "sani/engine/mono/glib_types.hpp"
-#include "sani/engine/mono/services_mono.hpp"
-#include "sani/core/logging/log.hpp"
-
-#include "sani/engine/sani_engine.hpp"
-#include "mono/metadata/object.h"
+#include "sani/engine/mono/mono_include.hpp"
 
 #include "sani/engine/services/contracts/cvar_service_contract.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
@@ -55,11 +46,9 @@ namespace sani {
 			engine->deallocateShared(cvars);
 		}
 
-		static UserService* const findUserService(MonoString* instance) {
-			for (auto* const userService : services) {
-				if (userService->getMonoInstance() == instance) return userService;
-			}
-
+		static UserService* const getInstance(MonoString* instance) {
+			for (auto* const userService : services) if (userService->getMonoInstance() == instance) return userService;
+			
 			return nullptr;
 		}
 
@@ -75,19 +64,15 @@ namespace sani {
 		}
 
 		static MonoBoolean Start(MonoString* instance) {	
-			UserService* const service = findUserService(instance);
-
-			return service->start();
+			return getInstance(instance)->start();
 		}
 
 		static void Suspend(MonoString* instance) {
-			UserService* const service = findUserService(instance);
-
-			service->suspend();
+			getInstance(instance)->suspend();
 		}
 
 		static void Terminate(MonoString* instance) {
-			UserService* const service = findUserService(instance);
+			UserService* const service = getInstance(instance);
 
 			service->terminate();
 
@@ -97,19 +82,13 @@ namespace sani {
 		}
 
 		static MonoString* InternalGetName(MonoString* instance) {
-			UserService* const service = findUserService(instance);
-
-			return MONO_PROVIDER->createString(service->getName().c_str());
+			return MONO_PROVIDER->createString(getInstance(instance)->getName().c_str());
 		}
 		static gint32 InternalGetID(MonoString* instance) {
-			UserService* const service = findUserService(instance);
-			
-			return service->getID();
+			return getInstance(instance)->getID();
 		}
 		static gint32 InternalGetState(MonoString* instance) {
-			UserService* const service = findUserService(instance);
-			
-			return static_cast<gint32>(service->getState());
+			return static_cast<gint32>(getInstance(instance)->getState());
 		}
 
 		static void registerKnownFunctions() {

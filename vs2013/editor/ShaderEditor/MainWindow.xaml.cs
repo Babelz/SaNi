@@ -179,9 +179,17 @@ namespace ShaderEditor
             var vertexSource = DefaultShaderSources.DefaultVertexShaderSource();
             var fragmentSource = DefaultShaderSources.DefaultFragmentShaderSource();
 
-            RecompileShaders(vertexSource, fragmentSource);
+            CompileShaders(vertexSource, fragmentSource);
 
             // Setup model.
+            SetupTextEditorBindings(vertexSource, fragmentSource);
+            
+            scene.Effect = effect;
+        }
+        #endregion
+
+        private void SetupTextEditorBindings(string vertexSource, string fragmentSource)
+        {
             shaderEditModel = new ShaderEditModel();
             shaderEditModel.VertexSource = new TextDocument(vertexSource);
             shaderEditModel.FragmentSource = new TextDocument(fragmentSource);
@@ -190,10 +198,7 @@ namespace ShaderEditor
             var binding = new System.Windows.Data.Binding("FragmentSource");
             binding.Source = shaderEditModel;
             textEditor.SetBinding(TextEditor.DocumentProperty, binding);
-
-            scene.Effect = effect;
         }
-        #endregion
 
         // Callback so we can recompile shaders when enough time has passed
         // since last edit.
@@ -208,7 +213,7 @@ namespace ShaderEditor
                 recompileTimer = null;
             });
         }
-        private void RecompileShaders(string vertexSource, string fragmentSource)
+        private void CompileShaders(string vertexSource, string fragmentSource)
         {
             if (string.IsNullOrEmpty(vertexSource)) return;
             if (string.IsNullOrEmpty(fragmentSource)) return;
@@ -226,6 +231,12 @@ namespace ShaderEditor
             }
 
             scene.Effect = effect;
+        }
+        private void RecompileShaders(string vertexSource, string fragmentSource)
+        {
+            CompileShaders(vertexSource, fragmentSource);
+
+            sourceEditTimer.StopMeasuring();
         }
     }
 }
