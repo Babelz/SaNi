@@ -709,6 +709,12 @@
     <ClCompile Include="..\..\src\engine\mono\resource_manager_mono.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\resource_manager_handler_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\resource_manager_handler_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1451,6 +1457,9 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\resource_manager_handler_service.hpp">
       <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\resource_manager_handler_contract.hpp">
+      <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

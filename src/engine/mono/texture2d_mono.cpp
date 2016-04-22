@@ -40,18 +40,18 @@ namespace sani {
 			return static_cast<gboolean>(getInstance(instance)->nativeptr->disposed());
 		}
 
-		MonoString* createTexture2D() {
+		MonoObject* createTexture2D() {
 			const MonoClassDefinition texture2DDef("SaNi.Mono.Graphics", "Texture2D");
 
-			return static_cast<MonoString*>(mono_object_unbox(MONO_PROVIDER->createObject(&texture2DDef)));
+			return MONO_PROVIDER->createObject(&texture2DDef);
 		}
 
-		void registerTexture2D(sani::resource::Texture2D* const nativeptr, MonoString* const managedptr) {
-			instances.push_back(Texture2DMono(nativeptr, managedptr));
+		void registerTexture2D(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr) {
+			instances.push_back(Texture2DMono(nativeptr, (MonoString*)managedptr));
 		}
-		void unregisterTexture2D(sani::resource::Texture2D* const nativeptr, MonoString* const managedptr) {
+		void unregisterTexture2D(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr) {
 			auto it = std::find_if(instances.begin(), instances.end(), [&managedptr](Texture2DMono& t) {
-				return managedptr == t.managedptr;
+				return (MonoString*)managedptr == t.managedptr;
 			});
 
 			instances.erase(it);

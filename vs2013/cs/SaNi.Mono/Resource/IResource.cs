@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SaNi.Mono.Content
+namespace SaNi.Mono.Resource
 {
     /// <summary>
     /// Marker interface for classes that can be loaded using

@@ -1,4 +1,11 @@
+#include "sani/resource/resource_manager.hpp"
+#include "sani/engine/messaging/messages/document_message.hpp"
+#include "sani/engine/services/contracts/resource_manager_handler_contract.hpp"
+
 #include "sani/engine/mono/resource_manager_mono.hpp"
+
+#include "sani/engine/mono/texture2d_mono.hpp"
+#include "sani/resource/texture2d.hpp"
 
 #include "sani/engine/mono/mono_include.hpp"
 
@@ -9,42 +16,61 @@ namespace sani {
 
 	namespace engine {
 
+		using namespace sani::resource;
+
 		MONO_MODULE_IMPL(resourcemanager)
 	
 		using ContentLoader = std::function<MonoObject*(MonoString*)>;
-		using ContentLoaderMappings = std::unordered_map<MonoType*, ContentLoader>;
+		using ContentLoaderMappings = std::unordered_map<String, ContentLoader>;
 
-		ContentLoaderMappings mappings;
+		static ContentLoaderMappings mappings;
+		static ResourceManager* resources;
 
-		static MonoObject* InternalLoad(MonoType* type, MonoString* name) {
-			if (mappings.count(type)) return mappings[type](name);
+		static MonoObject* InternalLoad(MonoString* assetName, MonoString* typeName) {
+			const String cstr(mono_string_to_utf8(typeName));
+
+			if (mappings.count(cstr)) return mappings[cstr](assetName);
 
 			return nullptr;
 		}
-		static MonoObject* Load(MonoString* name) {
-		}
 		static void Unload() {
+			resources->unload();
 		}
 
 		static MonoObject* loadTexture2D(MonoString* name) {
-			return nullptr;
+			const String cstr(mono_string_to_utf8(name));
+
+			resource::Texture2D* texture = resources->load<resource::Texture2D>(cstr);
+			
+			MonoObject* textureMono = texture2dmonomodule::createTexture2D();
+			texture2dmonomodule::registerTexture2D(texture, textureMono);
+			
+			return textureMono;
 		}
 
 		static void initializeLoaders() {
-			const MonoClassDefinition texture2DDef("SaNi.Mono.Graphics", "Texture2D");
-
-			mappings = ContentLoaderMappings
-			{
-				{ MONO_PROVIDER->typeFromDefinition(&texture2DDef), loadTexture2D }
+			mappings = ContentLoaderMappings {
+				{ "Texture2D", loadTexture2D }
 			};
 		}
+		static void getResourceManager() {
+			auto* getDefaultManager = engine->createEmptyMessage<messages::DocumentMessage>();
+			resourcemanagerhandler::getDefaultResourceManager(getDefaultManager);
+			engine->routeMessage(getDefaultManager);
 
+			resources = static_cast<ResourceManager*>(getDefaultManager->getData());
 
+			engine->releaseMessage(getDefaultManager);
+		}
 
 		bool initialize() {
 			initializeLoaders();
+			getResourceManager();
 
-			return false;
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Resource, ResourceManager, InternalLoad, (string, string), InternalLoad);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Resource, ResourceManager, Unload, NO_ARGS, Unload);
+
+			return resources != nullptr;
 		}
 
 		MONO_MODULE_IMPL_END

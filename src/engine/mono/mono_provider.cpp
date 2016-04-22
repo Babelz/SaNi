@@ -63,7 +63,8 @@ namespace sani {
 			ss << funcDef->name;
 			ss << (funcDef->argsc == 0 ? "()" : funcDef->signature);
 
-			const String funcstr = ss.str();
+			String funcstr = ss.str();
+			funcstr.erase(std::remove(funcstr.begin(), funcstr.end(), ' '), funcstr.end());
 
 			mono_add_internal_call(funcstr.c_str(), funcDef->ptr);
 		}

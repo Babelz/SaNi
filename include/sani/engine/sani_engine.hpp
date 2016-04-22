@@ -48,6 +48,7 @@ namespace sani {
 			static void windowSizeChanged(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 			
 			bool initializeFilesystem();
+			bool initializeResourceManagerHandler();
 			bool initializeCVarSystem();
 			bool initializeGraphics();
 			bool initializeRenderService(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);

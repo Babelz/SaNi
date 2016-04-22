@@ -245,6 +245,7 @@
     <ClCompile Include="..\..\src\engine\services\contracts\entity_manager_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\resource_manager_handler_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\cvar_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\ecs\entity_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\ecs\transform_manager.cpp" />
@@ -252,6 +253,7 @@
     <ClCompile Include="..\..\src\engine\services\particle_emitter_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
+    <ClCompile Include="..\..\src\engine\services\resource_manager_handler_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_animation_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\text_manager.cpp" />
@@ -451,6 +453,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\resource_manager_handler_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\ecs\component_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\ecs\entity_manager.hpp" />

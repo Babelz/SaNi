@@ -81,7 +81,7 @@ namespace sani {
 			}
 			void UserService::onTerminate() {
 				if (static_cast<uint32>((flags & HookFlags::OnTerminated))) {
-					MONO_PROVIDER->invoke(instance, mclass, "OnTerminate");
+					MONO_PROVIDER->invoke(instance, mclass, "OnTerminated");
 				}
 			}
 

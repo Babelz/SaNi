@@ -1,4 +1,6 @@
-﻿using SaNi.Mono.Engine;
+﻿using SaNi.Mono.Resource;
+using SaNi.Mono.Engine;
+using SaNi.Mono.Graphics;
 using SaNi.Mono.Services;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,10 @@ namespace SaNi.Mono.Sandbox
 {
     public sealed class EngineAsFramework : EngineService
     {
+        #region Fields
+        private Texture2D andy;
+        #endregion
+
         public EngineAsFramework() 
             : base("engine as framework")
         {
@@ -26,8 +32,6 @@ namespace SaNi.Mono.Sandbox
             Console.WriteLine("ERKKI O :D");
             Console.ResetColor();
 
-            Suspend();
-
             return true;
         }
         private bool OnResume()
@@ -38,16 +42,19 @@ namespace SaNi.Mono.Sandbox
         private void OnSuspended()
         {
             Console.WriteLine("Suspend called");
-
-            Start();
         }
         private void OnTerminated()
         {
-            Console.WriteLine("Teminate called");
+            Console.WriteLine("Terminate called");
         }
         private void OnUpdate(EngineTime time)
         {
-            Console.WriteLine("EBIN MASA MAGE");
+            andy = ResourceManager.Load<Texture2D>("andy");
+
+            Console.WriteLine("\nANDY:");
+            Console.WriteLine("\tW: " + andy.Width);
+            Console.WriteLine("\tH: " + andy.Height);
+            Console.WriteLine("\tID: " + andy.ID);
         }
     }
 }

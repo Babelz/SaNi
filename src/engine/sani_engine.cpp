@@ -40,6 +40,8 @@
 #include "sani/core/logging/log_batcher.hpp"
 #include "sani/engine/mono/services_mono.hpp"
 #include "sani/engine/mono/texture2d_mono.hpp"
+#include "sani/engine/mono/resource_manager_mono.hpp"
+#include "sani/engine/services/resource_manager_handler_service.hpp"
 
 #include <sstream>
 #include <vector>
@@ -83,6 +85,20 @@ namespace sani {
 			}
 
 			FNCLOG_ERR(log::OutFlags::All, "failed to start file system service!");
+
+			return false;
+		}
+		bool SaNiEngine::initializeResourceManagerHandler() {
+			ResourceManagerHandlerService* resourceManagerHandler = new ResourceManagerHandlerService(this);
+			services.registerService(resourceManagerHandler);
+
+			if (resourceManagerHandler->start()) {
+				FNCLOG_INF(log::OutFlags::All, "resource manager handler service started...");
+
+				return true;
+			}
+
+			FNCLOG_ERR(log::OutFlags::All, "failed to start resource manager handler service!");
 
 			return false;
 		}
@@ -278,6 +294,7 @@ namespace sani {
 			}
 
 			MONO_REGISTER_MODULE(texture2d);
+			MONO_REGISTER_MODULE(resourcemanager);
 			MONO_REGISTER_MODULE(services);
 
 			FNCLOG_INF(log::OutFlags::All, "loaded all mono modules...");
@@ -295,12 +312,13 @@ namespace sani {
 
 			FNCLOG_INF(log::OutFlags::All, "engine init start...");
 
-			if (!initializeFilesystem())			return false;
-			if (!initializeCVarSystem())			return false;
-			if (!initializeGraphics())				return false;
-			if (!initializeRenderableManagers())	return false;
-			if (!initializeEntityComponentSystem()) return false;
-			if (!initializeMono())					return false;
+			if (!initializeFilesystem())				return false;
+			if (!initializeCVarSystem())				return false;
+			if (!initializeGraphics())					return false;
+			if (!initializeResourceManagerHandler())	return false;
+			if (!initializeRenderableManagers())		return false;
+			if (!initializeEntityComponentSystem())		return false;
+			if (!initializeMono())						return false;
 
 			FNCLOG_INF(log::OutFlags::All, "engine init ok!");
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/platform/file/file_system.hpp"
 #include "sani/engine/services/engine_service.hpp"
 #include "sani/forward_declare.hpp"
 
@@ -19,6 +20,7 @@ namespace sani {
 
 			class ResourceManagerHandlerService final : public EngineService {
 			private:
+				io::FileSystem fileSystem;
 				ManagerList managers;
 
 				void handleDocumentMessage(messages::DocumentMessage* const message);
@@ -31,9 +33,9 @@ namespace sani {
 			public:
 				ResourceManagerHandlerService(SaNiEngine* const engine);
 				
-				void receive(messages::Message* const message) final override;
+				virtual void receive(messages::Message* const message) final override;
 
-				~ResourceManagerHandlerService();
+				~ResourceManagerHandlerService() = default;
 			};
 		}
 	}

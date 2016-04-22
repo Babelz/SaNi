@@ -39,8 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Content\ResourceManager.cs" />
-    <Compile Include="Content\IResource.cs" />
+    <Compile Include="Resource\ResourceManager.cs" />
+    <Compile Include="Resource\IResource.cs" />
     <Compile Include="Engine\EngineTime.cs" />
     <Compile Include="Graphics\Color.cs" />
     <Compile Include="Graphics\IGraphicsResource.cs" />

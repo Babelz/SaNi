@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace SaNi.Mono.Content
+namespace SaNi.Mono.Resource
 {
     /// <summary>
     /// Static interface that can be used to work with content.
@@ -13,15 +14,7 @@ namespace SaNi.Mono.Content
     public static class ResourceManager
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern object InternalLoad(Type type, string name);
-
-        /// <summary>
-        /// Loads asset with given name.
-        /// </summary>
-        /// <param name="name">name of the asset</param>
-        /// <returns>boxed asset or null</returns>
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern object Load(string name);
+        private static extern object InternalLoad(string assetName, string typeName);
 
         /// <summary>
         /// Loads asset with given name.
@@ -29,9 +22,9 @@ namespace SaNi.Mono.Content
         /// <typeparam name="T">type of the asset</typeparam>
         /// <param name="name">name of the asset</param>
         /// <returns>asset or null</returns>
-        public static T Load<T>(string name) where T : class, IResource
+        public static T Load<T>(string assetName) where T : class, IResource
         {
-            return InternalLoad(typeof(T), name) as T;
+            return InternalLoad(assetName, typeof(T).Name) as T;
         }
 
         /// <summary>
