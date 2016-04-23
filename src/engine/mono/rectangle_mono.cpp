@@ -4,7 +4,9 @@
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
 #include "sani/core/memory/memory.hpp"
 #include "sani/engine/mono/renderable_mono.hpp"
+#include "sani/engine/mono/mono_provider.hpp"
 
+#include <iostream>
 #include <vector>
 
 namespace sani {
@@ -18,28 +20,41 @@ namespace sani {
 
 		static std::vector<Rectangle*>* elements				{ nullptr };
 
+		static Rectangle* getInstance(MonoString* instance) {
+			const MonoClassDefinition classDef("SaNi.Mono.Graphics.Renderables", "Rectangle");
+			MonoObject* value = MONO_PROVIDER->invoke(instance, MONO_PROVIDER->classFromDefinition(&classDef), "get_ID");
+
+			gint32* id = (gint32*)mono_object_unbox(value);
+
+			return elements->operator[](*id);
+		}
+
 		static MonoObject* GetTransform(MonoString* instance) {
-			// Position.
-			auto px = 0.0f;
-			auto py = 0.0f;
-			auto pz = 0.0f;
+			Rectangle* const nativeInstance = getInstance(instance);
+			Transform& transform = nativeInstance->transform;
 
-			// Scale.
-			auto sx = 0.0f;
-			auto sy = 0.0f;
-			auto sz = 0.0f;
+			const uint32 argc = 10;
+			void* args[10];
 
-			// Origin.
-			auto ox = 0.0f;
-			auto oy = 0.0f;
-			auto oz = 0.0f;
+			args[0] = &transform.position.x;
+			args[1] = &transform.position.y;
+			args[2] = &transform.position.z;
 
-			// Rotation.
-			auto r = 0.0f;
+			args[3] = &transform.scale.x;
+			args[4] = &transform.scale.y;
+			args[5] = &transform.scale.z;
 
-			
+			args[6] = &transform.origin.x;
+			args[7] = &transform.origin.y;
+			args[8] = &transform.origin.z;
 
-			return nullptr;
+			args[9] = &transform.rotation;
+
+			const MonoClassDefinition classDef("SaNi.Mono.Graphics", "Transform");
+
+			MonoObject* monoTrasnform = MONO_PROVIDER->createObject(&classDef, args, argc);
+
+			return monoTrasnform;
 		}
 		static void SetTransform(MonoString* instance, MonoObject* value) {
 			// Position.

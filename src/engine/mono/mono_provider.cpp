@@ -69,7 +69,6 @@ namespace sani {
 			MonoClass* mclass = classFromDefinition(classDef);
 
 			MonoObject* instance = mono_object_new(monoDomain, mclass);
-
 			mono_runtime_object_init(instance);
 
 			return instance;

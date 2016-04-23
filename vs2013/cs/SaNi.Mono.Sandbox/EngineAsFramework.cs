@@ -20,24 +20,19 @@ namespace SaNi.Mono.Sandbox
         public EngineAsFramework() 
             : base("engine as framework")
         {
-            Console.WriteLine("CTRO CALLED");
-            Console.WriteLine("NAME: " + Name);
-            Console.WriteLine("ID: " + ID);
-            Console.WriteLine("STATE: " + Enum.GetName(typeof(ServiceState), State));
         }
 
         private bool OnStart()
         {
-            Console.WriteLine("Start called");
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
-            Console.WriteLine("ERKKI O :D");
-            Console.ResetColor();
-
             var rects = new List<Rectangle>();
 
             for (var i = 0; i < 10; i++) rects.Add(new Rectangle(10.0f, 10.0f, 10.0f, 10.0f));
 
-                return true;
+            foreach (var r in rects) r.Destroy();
+
+            rects = null;
+
+            return true;
         }
         private bool OnResume()
         {
