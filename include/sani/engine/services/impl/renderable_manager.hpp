@@ -69,7 +69,7 @@ namespace sani {
 
 				allocator.deallocate(element->id);
 
-				elementsToUpdate.remove(element);
+				elementsToUpdate.erase(std::find(elementsToUpdate.begin(), elementsToUpdate.end(), element), elementsToUpdate.end());
 
 				message->markHandled();
 

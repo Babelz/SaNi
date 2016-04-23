@@ -67,8 +67,8 @@ namespace sani {
 			initializeLoaders();
 			getResourceManager();
 
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Resource, ResourceManager, InternalLoad, (string, string), InternalLoad);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Resource, ResourceManager, Unload, NO_ARGS, Unload);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Resource, ResourceManager, InternalLoad, InternalLoad);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Resource, ResourceManager, Unload, Unload);
 
 			return resources != nullptr;
 		}

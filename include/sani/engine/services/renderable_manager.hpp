@@ -4,7 +4,7 @@
 #include "sani/core/memory/register_allocator.hpp"
 #include "sani/engine/services/engine_service.hpp"
 
-#include <list>
+#include <vector>
 
 namespace sani {
 
@@ -26,7 +26,7 @@ namespace sani {
 				RegisterAllocator<T> allocator;
 
 				// Elements that require geo/render data updates.
-				std::list<T*> elementsToUpdate;
+				std::vector<T*> elementsToUpdate;
 
 				/// Method that handles all incoming document messages.
 				void handleDocumentMessage(messages::DocumentMessage* const message);

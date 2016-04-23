@@ -61,12 +61,8 @@ namespace sani {
 			ss << classDef->name;
 			ss << "::";
 			ss << funcDef->name;
-			ss << (funcDef->argsc == 0 ? "()" : funcDef->signature);
 
-			String funcstr = ss.str();
-			funcstr.erase(std::remove(funcstr.begin(), funcstr.end(), ' '), funcstr.end());
-
-			mono_add_internal_call(funcstr.c_str(), funcDef->ptr);
+			mono_add_internal_call(ss.str().c_str(), funcDef->ptr);
 		}
 
 		MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef) const {

@@ -8,13 +8,48 @@ using System.Threading.Tasks;
 
 namespace SaNi.Mono.Graphics.Renderables
 {
-    public sealed class Rectangle : Renderable
+    public sealed class Rectangle : IRenderable
     {
         #region Fields
+        private readonly int id;
+
         private bool destroyed;
         #endregion
 
         #region Properties
+        public Transform Transform
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+        public Rectf LocalBounds
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+        public extern Rectf GlobalBounds
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+        }
+        public Rectf TextureSource
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
+        public Texture2D Texture
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
         public float BorderThickness
         {
             [MethodImpl(MethodImplOptions.InternalCall)]
@@ -43,22 +78,33 @@ namespace SaNi.Mono.Graphics.Renderables
                 return destroyed;
             }
         }
+        public int ID
+        {
+            get
+            {
+                return id;
+            }
+        }
         #endregion
 
         public Rectangle(float x, float y, float width, float height)
         {
-            InternalCreateRectangle(x, y, width, height);
+            InternalCreateRectangle(x, y, width, height, ref id);
+
+            Console.WriteLine("REC ID: " + id);
         }
         public Rectangle(Vector2 position, Vector2 size)
         {
-            InternalCreateRectangle(position.X, position.Y, size.X, size.Y);
+            InternalCreateRectangle(position.X, position.Y, size.X, size.Y, ref id);
+
+            Console.WriteLine("REC ID: " + id);
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void InternalCreateRectangle(float x, float y, float width, float height);
+        private extern void InternalCreateRectangle(float x, float y, float width, float height, ref int id);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void InternalReleaseRectangle();
+        private extern void InternalReleaseRectangle(int id);
 
         /// <summary>
         /// Destroys the rectangle, causing it to be 
@@ -68,7 +114,7 @@ namespace SaNi.Mono.Graphics.Renderables
         {
             if (destroyed) return;
 
-            InternalReleaseRectangle();
+            InternalReleaseRectangle(id);
 
             GC.SuppressFinalize(this);
 
@@ -77,7 +123,7 @@ namespace SaNi.Mono.Graphics.Renderables
 
         ~Rectangle()
         {
-            if (!destroyed) InternalReleaseRectangle();
+            if (!destroyed) InternalReleaseRectangle(id);
         }
     }
 }

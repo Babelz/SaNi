@@ -92,13 +92,13 @@ namespace sani {
 		}
 
 		static void registerKnownFunctions() {
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetName, NO_ARGS, InternalGetName);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetID, NO_ARGS, InternalGetID);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetState, NO_ARGS, InternalGetState);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalCreateService, (string), InternalCreateService);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Start, NO_ARGS, Start);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Suspend, NO_ARGS, Suspend);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Terminate, NO_ARGS, Terminate);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetName, InternalGetName);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetID, InternalGetID);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetState, InternalGetState);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalCreateService, InternalCreateService);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Start, Start);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Suspend, Suspend);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Terminate, Terminate);
 		}
 		static void createUserService(const MonoClassDefinition* const classDef, const HookFlags flags) {
 			MonoObject* instance = MONO_PROVIDER->createObject(classDef);
@@ -132,11 +132,11 @@ namespace sani {
 			registerKnownFunctions();
 
 			// Hook function definitions.
-			const MonoFunctionDefinition onStartDef("OnStart", "", nullptr);
-			const MonoFunctionDefinition onResumeDef("OnResume", "", nullptr);
-			const MonoFunctionDefinition onSuspendedDef("OnSuspended", "", nullptr);
-			const MonoFunctionDefinition onTerminatedDef("OnTerminated", "", nullptr);
-			const MonoFunctionDefinition onUpdateDef("OnUpdate", "EngineTime", nullptr);
+			const MonoFunctionDefinition onStartDef("OnStart", nullptr);
+			const MonoFunctionDefinition onResumeDef("OnResume", nullptr);
+			const MonoFunctionDefinition onSuspendedDef("OnSuspended", nullptr);
+			const MonoFunctionDefinition onTerminatedDef("OnTerminated", nullptr);
+			const MonoFunctionDefinition onUpdateDef("OnUpdate", nullptr);
 
 			for (auto& userServiceTypeName : userServiceTypeNames) {
 				// Mono namespace.

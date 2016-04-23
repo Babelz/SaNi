@@ -42,6 +42,7 @@
 #include "sani/engine/mono/texture2d_mono.hpp"
 #include "sani/engine/mono/resource_manager_mono.hpp"
 #include "sani/engine/services/resource_manager_handler_service.hpp"
+#include "sani/engine/mono/rectangle_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -295,6 +296,7 @@ namespace sani {
 
 			MONO_REGISTER_MODULE(texture2d);
 			MONO_REGISTER_MODULE(resourcemanager);
+			MONO_REGISTER_MODULE(rectangle);
 			MONO_REGISTER_MODULE(services);
 
 			FNCLOG_INF(log::OutFlags::All, "loaded all mono modules...");

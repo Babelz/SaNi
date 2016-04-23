@@ -45,7 +45,7 @@
     <Compile Include="Graphics\Color.cs" />
     <Compile Include="Graphics\IGraphicsResource.cs" />
     <Compile Include="Graphics\Renderables\Rectangle.cs" />
-    <Compile Include="Graphics\Renderables\Renderable.cs" />
+    <Compile Include="Graphics\Renderables\IRenderable.cs" />
     <Compile Include="Graphics\RenderTarget2D.cs" />
     <Compile Include="Graphics\ITexture.cs" />
     <Compile Include="Graphics\Texture2D.cs" />

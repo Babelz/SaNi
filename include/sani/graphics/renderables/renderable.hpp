@@ -29,8 +29,12 @@ namespace sani {
 
 			math::Rect32f textureSource;
 			Texture* texture;
-			
-			uint32 id;
+
+			// Does not get initialized by the constructor, 
+			// gets value from the associated manager when
+			// the instance is being allocated.
+			// TODO: should this be fixed somehow or?
+			uint32 id		{ 0 };
 			bool visible;
 
 			Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements, Texture* const);

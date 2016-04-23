@@ -46,6 +46,17 @@ namespace sani {
 			return MONO_PROVIDER->createObject(&texture2DDef);
 		}
 
+		MonoObject* getManagedPtr(const uint32 id) {
+			for (auto& texture2DMono : instances) if (texture2DMono.nativeptr->getID() == id) return (MonoObject*)texture2DMono.managedptr;
+
+			return nullptr;
+		}
+		sani::resource::Texture2D* getNativePtr(const uint32 id) {
+			for (auto& texture2DMono : instances) if (texture2DMono.nativeptr->getID() == id) return texture2DMono.nativeptr;
+			
+			return nullptr;
+		}
+
 		void registerTexture2D(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr) {
 			instances.push_back(Texture2DMono(nativeptr, (MonoString*)managedptr));
 		}
@@ -58,10 +69,10 @@ namespace sani {
 		}
 
 		bool initialize() {
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetWidth, NO_ARGS, InternalGetWidth);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetHeight, NO_ARGS, InternalGetHeight);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetID, NO_ARGS, InternalGetID);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetDisposed, NO_ARGS, InternalGetDisposed);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetWidth, InternalGetWidth);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetHeight, InternalGetHeight);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetID, InternalGetID);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetDisposed, InternalGetDisposed);
 
 			return true;
 		}

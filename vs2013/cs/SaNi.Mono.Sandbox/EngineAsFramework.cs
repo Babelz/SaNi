@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SaNi.Mono.Graphics.Renderables;
 
 namespace SaNi.Mono.Sandbox
 {
@@ -32,7 +33,11 @@ namespace SaNi.Mono.Sandbox
             Console.WriteLine("ERKKI O :D");
             Console.ResetColor();
 
-            return true;
+            var rects = new List<Rectangle>();
+
+            for (var i = 0; i < 10; i++) rects.Add(new Rectangle(10.0f, 10.0f, 10.0f, 10.0f));
+
+                return true;
         }
         private bool OnResume()
         {
@@ -49,12 +54,6 @@ namespace SaNi.Mono.Sandbox
         }
         private void OnUpdate(EngineTime time)
         {
-            andy = ResourceManager.Load<Texture2D>("andy");
-
-            Console.WriteLine("\nANDY:");
-            Console.WriteLine("\tW: " + andy.Width);
-            Console.WriteLine("\tH: " + andy.Height);
-            Console.WriteLine("\tID: " + andy.ID);
         }
     }
 }
