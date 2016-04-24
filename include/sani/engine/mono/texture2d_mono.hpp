@@ -14,7 +14,7 @@ MONO_MODULE_DEF_BEGIN(texture2d)
 MonoObject* createTexture2D();
 
 MonoObject* getManagedPtr(const uint32 id);
-sani::resource::Texture2D* getNativePtr(const uint32 id);
+sani::resource::Texture2D* getNativePtr(MonoString* managedptr);
 
 void registerTexture2D(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr);
 void unregisterTexture2D(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr);

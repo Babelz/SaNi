@@ -51,8 +51,8 @@ namespace sani {
 
 			return nullptr;
 		}
-		sani::resource::Texture2D* getNativePtr(const uint32 id) {
-			for (auto& texture2DMono : instances) if (texture2DMono.nativeptr->getID() == id) return texture2DMono.nativeptr;
+		sani::resource::Texture2D* getNativePtr(MonoString* managedptr) {
+			for (auto& texture2DMono : instances) if (texture2DMono.managedptr == managedptr) return texture2DMono.nativeptr;
 			
 			return nullptr;
 		}

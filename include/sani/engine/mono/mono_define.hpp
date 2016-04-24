@@ -30,12 +30,11 @@ struct MonoClassDefinition final {
 struct MonoFunctionDefinition final {
 	const char* const name;
 	const void* const ptr;
+	const uint32 argc;
 
-	uint32 argsc;
-
-	MonoFunctionDefinition(const char* const name, const void* const ptr) : name(name),
-																			ptr(ptr),
-																			argsc(0) {
+	MonoFunctionDefinition(const char* const name, const void* const ptr, const uint32 argc = 0) : name(name),
+																								   ptr(ptr),
+																							       argc(argc) {
 	}
 
 	~MonoFunctionDefinition() = default;
@@ -146,7 +145,7 @@ struct MonoPropertyDefinition final {
 #define MONO_REGISTER_GETTER(__ns__, __class__, __pdef__) if (__pdef__.get) {\
 															String fname("get_"); \
 															fname = fname.append(__pdef__.name); \
-															const MonoClassDefinition _classDef(#__ns__, #__class__); \
+															const MonoClassDefinition _classDef(__ns__, __class__); \
 															const MonoFunctionDefinition _getDef(fname.c_str(), (void*)&__pdef__.get); \
 															MONO_PROVIDER->addInternalCall(&_classDef, &_getDef); \
 														} \
@@ -161,6 +160,6 @@ struct MonoPropertyDefinition final {
 																		 } \
 
 #define MONO_REGISTER_PROPERTY(__ns__, __class__, __pdef__) MONO_REGISTER_GETTER(__ns__, __class__, __pdef__) \
-																			  MONO_REGISTER_SETTER(__ns__, __class__, __pdef__) \
+															MONO_REGISTER_SETTER(__ns__, __class__, __pdef__) \
 
 #define MONO_BASE_DEF_CHECK_FOR_NULL(__pname__, __def__) if (!__def__.__pname__) { FNCLOG_ERR(log::OutFlags::All, String(#__pname__) + " can't be null!"); return false; }

@@ -41,10 +41,10 @@ namespace sani {
 			return mono_class_get_type(mclass);
 		}
 
-		void MonoProvider::readField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* outValue) {
+		MonoObject* MonoProvider::readField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef) {
 			MonoClassField* mfield = fieldFromDefinition(classDef, fieldDef);
-
-			mono_field_get_value(instance, mfield, outValue);
+			
+			return mono_field_get_value_object(monoDomain, mfield, instance);
 		}
 		void MonoProvider::writeField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* value) {
 			MonoClassField* mfield = fieldFromDefinition(classDef, fieldDef);
@@ -66,7 +66,7 @@ namespace sani {
 
 				if (mclass == nullptr) continue;
 
-				MonoMethod* method = mono_class_get_method_from_name(mclass, funcDef->name, funcDef->argsc);
+				MonoMethod* method = mono_class_get_method_from_name(mclass, funcDef->name, funcDef->argc);
 
 				if (method != nullptr) return true;
 			}
@@ -82,7 +82,9 @@ namespace sani {
 			ss << "::";
 			ss << funcDef->name;
 
-			mono_add_internal_call(ss.str().c_str(), funcDef->ptr);
+			const String funstr = ss.str();
+
+			mono_add_internal_call(funstr.c_str(), funcDef->ptr);
 		}
 
 		MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef) const {

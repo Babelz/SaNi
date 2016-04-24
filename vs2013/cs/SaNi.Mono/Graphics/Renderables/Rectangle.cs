@@ -11,8 +11,7 @@ namespace SaNi.Mono.Graphics.Renderables
     public sealed class Rectangle : IRenderable
     {
         #region Fields
-        private readonly int id;
-
+        public int num;
         private bool destroyed;
         #endregion
 
@@ -80,10 +79,8 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         public int ID
         {
-            get
-            {
-                return id;
-            }
+            get;
+            private set;
         }
         public bool Visible
         {
@@ -94,21 +91,24 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         #endregion
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        public extern void Print();
+
         public Rectangle(float x, float y, float width, float height)
         {
-            InternalCreateRectangle(x, y, width, height, ref id);
+            ID = InternalCreateRectangle(x, y, width, height);
 
-            Console.WriteLine("REC ID: " + id);
+            num = ID * 10;
+
+            Console.WriteLine("id: {0}", ID);
         }
         public Rectangle(Vector2 position, Vector2 size)
+            : this(position.x, position.y, size.x, size.y)
         {
-            InternalCreateRectangle(position.x, position.y, size.x, size.y, ref id);
-
-            Console.WriteLine("REC ID: " + id);
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void InternalCreateRectangle(float x, float y, float width, float height, ref int id);
+        private extern int InternalCreateRectangle(float x, float y, float width, float height);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void InternalReleaseRectangle(int id);
@@ -121,7 +121,9 @@ namespace SaNi.Mono.Graphics.Renderables
         {
             if (destroyed) return;
 
-            InternalReleaseRectangle(id);
+            Console.WriteLine("destr");
+
+            InternalReleaseRectangle(ID);
 
             GC.SuppressFinalize(this);
 
@@ -130,7 +132,8 @@ namespace SaNi.Mono.Graphics.Renderables
 
         ~Rectangle()
         {
-            if (!destroyed) InternalReleaseRectangle(id);
+            Console.WriteLine("dtor");
+            if (!destroyed) InternalReleaseRectangle(ID);
         }
     }
 }

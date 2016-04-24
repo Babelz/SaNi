@@ -25,7 +25,7 @@ namespace sani {
 				MONO_REGISTER_PROPERTY(def.ns.c_str(), def.name.c_str(), def.texture2D)
 				MONO_REGISTER_PROPERTY(def.ns.c_str(), def.name.c_str(), def.visible)
 
-				return false;
+				return true;
 			}
 		}
 	}

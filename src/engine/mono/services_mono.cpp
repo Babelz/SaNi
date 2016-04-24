@@ -136,7 +136,7 @@ namespace sani {
 			const MonoFunctionDefinition onResumeDef("OnResume", nullptr);
 			const MonoFunctionDefinition onSuspendedDef("OnSuspended", nullptr);
 			const MonoFunctionDefinition onTerminatedDef("OnTerminated", nullptr);
-			const MonoFunctionDefinition onUpdateDef("OnUpdate", nullptr);
+			const MonoFunctionDefinition onUpdateDef("OnUpdate", nullptr, 1);
 
 			for (auto& userServiceTypeName : userServiceTypeNames) {
 				// Mono namespace.

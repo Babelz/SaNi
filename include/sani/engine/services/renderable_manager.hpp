@@ -25,9 +25,6 @@ namespace sani {
 
 				RegisterAllocator<T> allocator;
 
-				// Elements that require geo/render data updates.
-				std::vector<T*> elementsToUpdate;
-
 				/// Method that handles all incoming document messages.
 				void handleDocumentMessage(messages::DocumentMessage* const message);
 				
@@ -35,8 +32,6 @@ namespace sani {
 				void createElement(messages::DocumentMessage* const message);
 				/// Message response that deletes the given element.
 				void deleteElement(messages::DocumentMessage* const message);
-				/// Message response that queues the given element for updates.
-				void queueForUpdates(messages::DocumentMessage* const message);
 
 				/// Message response that returns all the elements this manager contains.
 				void getElements(messages::DocumentMessage* const message);
@@ -46,8 +41,6 @@ namespace sani {
 				const RegisterAllocator<T>& getAllocator() const;
 			public:
 				void receive(messages::Message* const message) final override;
-
-				void update(const EngineTime& time) override;
 
 				virtual ~RenderableManager() = default;
 			};

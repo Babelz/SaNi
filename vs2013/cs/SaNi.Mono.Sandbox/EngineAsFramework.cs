@@ -14,7 +14,10 @@ namespace SaNi.Mono.Sandbox
     public sealed class EngineAsFramework : EngineService
     {
         #region Fields
-        private Texture2D andy;
+        private Rectangle r1;
+        private Rectangle r2;
+        private Rectangle r3;
+        private Rectangle r4;
         #endregion
 
         public EngineAsFramework() 
@@ -24,14 +27,10 @@ namespace SaNi.Mono.Sandbox
 
         private bool OnStart()
         {
-            var rects = new List<Rectangle>();
-
-            for (var i = 0; i < 10; i++) rects.Add(new Rectangle(10.0f, 10.0f, 10.0f, 10.0f));
-
-            foreach (var r in rects) r.Destroy();
-
-            rects = null;
-
+            r1 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
+            r2 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
+            r3 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
+            r4 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
             return true;
         }
         private bool OnResume()
@@ -49,6 +48,19 @@ namespace SaNi.Mono.Sandbox
         }
         private void OnUpdate(EngineTime time)
         {
+            r1.Print();
+            r2.Print();
+            r3.Print();
+            r4.Print();
+            var c = r1.LocalBounds;
+            c = r2.LocalBounds;
+            c = r3.LocalBounds;
+            c = r4.LocalBounds;
+        }
+
+        ~EngineAsFramework()
+        {
+            Console.WriteLine("easf dtor");
         }
     }
 }

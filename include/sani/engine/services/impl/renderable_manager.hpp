@@ -41,9 +41,6 @@ namespace sani {
 				case RenderableManagerCommands::GetElements:
 					getElements(message);
 					return;
-				case RenderableManagerCommands::EnqueueForUpdates:
-					queueForUpdates(message);
-					return;
 				default:
 					return;
 				}
@@ -69,19 +66,9 @@ namespace sani {
 
 				allocator.deallocate(element->id);
 
-				elementsToUpdate.erase(std::find(elementsToUpdate.begin(), elementsToUpdate.end(), element), elementsToUpdate.end());
-
 				message->markHandled();
 
 				FNCLOG_INF(log::OutFlags::All, "deleted renderable element");
-			}
-			template <class T>
-			void RenderableManager<T>::queueForUpdates(messages::DocumentMessage* const message) {
-				T* element = static_cast<T*>(message->getData());
-
-				elementsToUpdate.push_back(element);
-				
-				message->markHandled();
 			}
 
 			template <class T>
@@ -99,19 +86,6 @@ namespace sani {
 				} else {
 					LOG_DEAD_LETTER(message);
 				}
-			}
-			template <class T>
-			void RenderableManager<T>::update(const EngineTime& time) {
-				if (elementsToUpdate.empty()) return;
-
-				for (T* const element : elementsToUpdate) {
-					recomputeVertices(*element);
-					recomputeBounds(*element);
-
-					updateRenderData(*element);
-				}
-
-				elementsToUpdate.clear();
 			}
 		}
 	}

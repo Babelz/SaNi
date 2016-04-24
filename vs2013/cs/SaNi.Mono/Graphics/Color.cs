@@ -9,10 +9,10 @@ namespace SaNi.Mono.Graphics
     public struct Color
     {
         #region Fields
-        public float R;
-        public float G;
-        public float B;
-        public float A;
+        public float r;
+        public float g;
+        public float b;
+        public float a;
         #endregion
 
         #region Predefined colors
@@ -40,17 +40,17 @@ namespace SaNi.Mono.Graphics
 
         public Color(byte r, byte g, byte b, byte a)
         {
-            R = (float)(r / 255.0f);
-            G = (float)(g / 255.0f);
-            B = (float)(b / 255.0f);
-            A = (float)(a / 255.0f);
+            this.r = (float)(r / 255.0f);
+            this.g = (float)(g / 255.0f);
+            this.b = (float)(b / 255.0f);
+            this.a = (float)(a / 255.0f);
         }
         public Color(float r, float g, float b, float a)
         {
-            R = r;
-            G = g;
-            B = b;
-            A = a;
+            this.r = r;
+            this.g = g;
+            this.b = b;
+            this.a = a;
         }
         public Color(string hex)
         {
@@ -63,27 +63,27 @@ namespace SaNi.Mono.Graphics
             var b = byte.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber);
             var a = byte.Parse(hex.Substring(6, 2), System.Globalization.NumberStyles.HexNumber);
 
-            R = (float)(r / 255);
-            G = (float)(g / 255);
-            B = (float)(b / 255);
-            A = (float)(a / 255);
+            this.r = (float)(r / 255);
+            this.g = (float)(g / 255);
+            this.b = (float)(b / 255);
+            this.a = (float)(a / 255);
         }
 
         public static Color operator +(Color lhs, Color rhs)
         {
-            return new Color(lhs.R + rhs.R, lhs.G + rhs.G, lhs.B + rhs.B, lhs.A + rhs.A);
+            return new Color(lhs.r + rhs.r, lhs.g + rhs.g, lhs.b + rhs.b, lhs.a + rhs.a);
         }
         public static Color operator -(Color lhs, Color rhs)
         {
-            return new Color(lhs.R - rhs.R, lhs.G - rhs.G, lhs.B - rhs.B, lhs.A - rhs.A);
+            return new Color(lhs.r - rhs.r, lhs.g - rhs.g, lhs.b - rhs.b, lhs.a - rhs.a);
         }
         public static Color operator *(Color lhs, Color rhs)
         {
-            return new Color(lhs.R * rhs.R, lhs.G * rhs.G, lhs.B * rhs.B, lhs.A * rhs.A);
+            return new Color(lhs.r * rhs.r, lhs.g * rhs.g, lhs.b * rhs.b, lhs.a * rhs.a);
         }
         public static Color operator *(Color lhs, float rhs)
         {
-            return new Color(lhs.R * rhs, lhs.G * rhs, lhs.B * rhs, lhs.A * rhs);
+            return new Color(lhs.r * rhs, lhs.g * rhs, lhs.b * rhs, lhs.a * rhs);
         }
     }
 }

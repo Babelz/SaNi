@@ -18,29 +18,29 @@ namespace SaNi.Mono.Graphics
         public float rotation;
         #endregion
         
-        Transform(float px, float py, float pz, float sx, float sy, float sz, float ox, float oy, float oz, float r)
+        public Transform(float px, float py, float pz, float sx, float sy, float sz, float ox, float oy, float oz, float r)
         {
             position    = new Vector3(px, py, pz);
             origin      = new Vector3(ox, oy, oz);
             scale       = new Vector3(sx, sy, sz);
             rotation    = r;
         }
-        Transform(Vector3 position, Vector3 scale, Vector3 origin, float rotation)
+        public Transform(Vector3 position, Vector3 scale, Vector3 origin, float rotation)
         {
             this.position   = position;
             this.scale      = scale;
             this.origin     = origin;
             this.rotation   = rotation;
         }
-        Transform(Vector3 position, Vector3 scale, Vector3 origin)
+        public Transform(Vector3 position, Vector3 scale, Vector3 origin)
             : this(position, scale, origin, 0.0f)
         {
         }
-        Transform(Vector3 position, Vector3 scale)
+        public Transform(Vector3 position, Vector3 scale)
             : this(position, scale, Vector3.Zero, 0.0f)
         {
         }
-        Transform(Vector3 position)
+        public Transform(Vector3 position)
             : this(position, Vector3.Zero, Vector3.Zero, 0.0f)
         {
         }

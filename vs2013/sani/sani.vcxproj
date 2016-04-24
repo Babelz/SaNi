@@ -233,7 +233,9 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\color_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\rectangle_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\rectf_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\renderable_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\resource_manager_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp" />
@@ -439,6 +441,7 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\color_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\rectf_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\renderable_mono.hpp" />

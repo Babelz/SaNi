@@ -29,7 +29,7 @@ namespace sani {
 			MonoClass* classFromDefinition(const MonoClassDefinition* const classDef) const;
 			MonoType* typeFromDefinition(const MonoClassDefinition* const classDef) const;
 
-			void readField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* outValue);
+			MonoObject* readField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef);
 			void writeField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* value);
 
 			bool fieldExists(const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef);

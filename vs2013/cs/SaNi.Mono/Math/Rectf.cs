@@ -9,10 +9,10 @@ namespace SaNi.Mono.Math
     public struct Rectf
     {   
         #region Fields
-        public float X;
-        public float Y;
-        public float Width;
-        public float Height;
+        public float x;
+        public float y;
+        public float width;
+        public float height;
         #endregion
 
         #region Properties
@@ -20,38 +20,38 @@ namespace SaNi.Mono.Math
         {
             get
             {
-                return X;
+                return x;
             }
         }
         public float Right
         {
             get
             {
-                return X + Width;
+                return x + width;
             }
         }
         public float Top
         {
             get
             {
-                return Y;
+                return y;
             }
         }
         public float Bottom
         {
             get
             {
-                return Y + Height;
+                return y + height;
             }
         }
         #endregion
 
         public Rectf(float x, float y, float width, float height)
         {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
         }
     }
 }
