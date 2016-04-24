@@ -13,6 +13,7 @@
 [sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "text manager"
 [sani::engine::SaNiEngine::initializeEntityComponentSystem(INFO)]: entity manager started...
 [sani::engine::SaNiEngine::initializeMono(INFO)]: mono runtime started...
+[sani::engine::mono::registerRenderableMembers(ERR)]: visible can't be null!
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element

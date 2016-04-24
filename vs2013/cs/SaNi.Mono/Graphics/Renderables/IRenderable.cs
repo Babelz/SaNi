@@ -62,6 +62,11 @@ namespace SaNi.Mono.Graphics.Renderables
         {
             get;
         }
+        bool Visible
+        {
+            get;
+            set;
+        }
         #endregion
     }
 }

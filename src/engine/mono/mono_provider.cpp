@@ -18,6 +18,12 @@ namespace sani {
 																										   monoDomain(monoDomain) {
 		}
 
+
+		MonoClassField* MonoProvider::fieldFromDefinition(const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef) const {
+			MonoClass* mclass = classFromDefinition(classDef);
+			
+			return mono_class_get_field_from_name(mclass, fieldDef->name);
+		}
 		MonoClass* MonoProvider::classFromDefinition(const MonoClassDefinition* const classDef) const {
 			for (auto* monoAssembly : assemblies) {
 				MonoImage* image = mono_assembly_get_image(monoAssembly);
@@ -35,6 +41,20 @@ namespace sani {
 			return mono_class_get_type(mclass);
 		}
 
+		void MonoProvider::readField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* outValue) {
+			MonoClassField* mfield = fieldFromDefinition(classDef, fieldDef);
+
+			mono_field_get_value(instance, mfield, outValue);
+		}
+		void MonoProvider::writeField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* value) {
+			MonoClassField* mfield = fieldFromDefinition(classDef, fieldDef);
+
+			mono_field_set_value(instance, mfield, value);
+		}
+
+		bool MonoProvider::fieldExists(const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef) {
+			return fieldFromDefinition(classDef, fieldDef) != nullptr;
+		}
 		bool MonoProvider::classExists(const MonoClassDefinition* const classDef) const {
 			return classFromDefinition(classDef) != nullptr;
 		}

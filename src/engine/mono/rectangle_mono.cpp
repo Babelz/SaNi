@@ -6,6 +6,8 @@
 #include "sani/engine/mono/renderable_mono.hpp"
 #include "sani/engine/mono/mono_provider.hpp"
 
+#include "sani/engine/mono/transform_mono.hpp"
+
 #include <iostream>
 #include <vector>
 
@@ -20,8 +22,9 @@ namespace sani {
 
 		static std::vector<Rectangle*>* elements				{ nullptr };
 
+		const static MonoClassDefinition classDef("SaNi.Mono.Graphics.Renderables", "Rectangle");
+
 		static Rectangle* getInstance(MonoString* instance) {
-			const MonoClassDefinition classDef("SaNi.Mono.Graphics.Renderables", "Rectangle");
 			MonoObject* value = MONO_PROVIDER->invoke(instance, MONO_PROVIDER->classFromDefinition(&classDef), "get_ID");
 
 			gint32* id = (gint32*)mono_object_unbox(value);
@@ -30,50 +33,27 @@ namespace sani {
 		}
 
 		static MonoObject* GetTransform(MonoString* instance) {
-			Rectangle* const nativeInstance = getInstance(instance);
-			Transform& transform = nativeInstance->transform;
+			Rectangle* const rectangle = getInstance(instance);
 
-			const uint32 argc = 10;
-			void* args[10];
-
-			args[0] = &transform.position.x;
-			args[1] = &transform.position.y;
-			args[2] = &transform.position.z;
-
-			args[3] = &transform.scale.x;
-			args[4] = &transform.scale.y;
-			args[5] = &transform.scale.z;
-
-			args[6] = &transform.origin.x;
-			args[7] = &transform.origin.y;
-			args[8] = &transform.origin.z;
-
-			args[9] = &transform.rotation;
-
-			const MonoClassDefinition classDef("SaNi.Mono.Graphics", "Transform");
-
-			MonoObject* monoTrasnform = MONO_PROVIDER->createObject(&classDef, args, argc);
-
-			return monoTrasnform;
+			MonoObject* transform = mono::createTransform(rectangle->transform.position, 
+														  rectangle->transform.scale, 
+														  rectangle->transform.origin, 
+														  rectangle->transform.rotation);
+			
+			return transform;
 		}
 		static void SetTransform(MonoString* instance, MonoObject* value) {
-			// Position.
-			auto px = 0.0f;
-			auto py = 0.0f;
-			auto pz = 0.0f;
+			Rectangle* const rectangle = getInstance(instance);
 
-			// Scale.
-			auto sx = 0.0f;
-			auto sy = 0.0f;
-			auto sz = 0.0f;
+			auto position	= mono::getPosition(value);
+			auto scale		= mono::getScale(value);
+			auto origin		= mono::getOrigin(value);
+			auto rotation	= mono::getRotation(value);
 
-			// Origin.
-			auto ox = 0.0f;
-			auto oy = 0.0f;
-			auto oz = 0.0f;
-
-			// Rotation.
-			auto r = 0.0f;
+			rectangle->transform.position	= position;
+			rectangle->transform.scale		= scale;
+			rectangle->transform.origin		= origin;
+			rectangle->transform.rotation	= rotation;
 		}
 
 		static MonoObject* GetLocalBounds(MonoString* instance) {
@@ -97,6 +77,12 @@ namespace sani {
 			return nullptr;
 		}
 		static void SetTexture2D(MonoString* instance, MonoObject* value) {
+		}
+
+		static gboolean GetVisible(MonoString* instance) {
+			return false;
+		}
+		static void SetVisible(MonoString* instance, gboolean value) {
 		}
 
 		static void InternalCreateRectangle(MonoString* instance, gfloat x, gfloat y, gfloat width, gfloat height, gint32* id) {
@@ -149,6 +135,9 @@ namespace sani {
 
 			superDef.texture2D.get = GetTexture2D;
 			superDef.texture2D.set = SetTexture2D;
+
+			superDef.visible.get = GetVisible;
+			superDef.visible.set = SetVisible(;
 
  			mono::registerRenderableMembers(superDef);
 

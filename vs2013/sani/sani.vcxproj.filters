@@ -721,6 +721,9 @@
     <ClCompile Include="..\..\src\engine\mono\rectangle_mono.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\transform_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1471,6 +1474,9 @@
       <Filter>include\engine\mono</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\rectf_mono.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
   </ItemGroup>

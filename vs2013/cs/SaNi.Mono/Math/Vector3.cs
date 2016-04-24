@@ -12,9 +12,9 @@ namespace SaNi.Mono.Math
         #region Fields
         public const int Components = 3;
 
-        public float X;
-        public float Y;
-        public float Z;
+        public float x;
+        public float y;
+        public float z;
         #endregion
 
         #region Properties
@@ -22,7 +22,7 @@ namespace SaNi.Mono.Math
         {
             get 
             {
-                return X * X + Y * Y + Z * Z;
+                return x * x + y * y + z * z;
             }
         }
         public float Length
@@ -84,30 +84,30 @@ namespace SaNi.Mono.Math
             {
                 Debug.Assert(index < Components);
 
-                if (index == 0) return X;
-                if (index == 1) return Y;
-                else            return Z;
+                if (index == 0) return x;
+                if (index == 1) return y;
+                else            return z;
             }
         }
         #endregion
 
         public Vector3(float x, float y, float z)
         {
-            X = x;
-            Y = y;
-            Z = z;
+            this.x = x;
+            this.y = y;
+            this.z = z;
         }
         public Vector3(float x, float y)
         {
-            X = x;
-            Y = y;
-            Z = 0.0f;
+            this.x = x;
+            this.y = y;
+            z = 0.0f;
         }
         public Vector3(float value)
         {
-            X = value;
-            Y = value;
-            Z = value;
+            x = value;
+            y = value;
+            z = value;
         }
 
         /*
@@ -118,18 +118,18 @@ namespace SaNi.Mono.Math
         {
             var length = vector.Length;
 
-            return new Vector3(vector.X / length, vector.Y / length, vector.Z / length);
+            return new Vector3(vector.x / length, vector.y / length, vector.z / length);
         }
         public static float Dot(Vector3 lhs, Vector3 rhs)
         {
             Vector3 temp = lhs * rhs;
 
-            return temp.X + temp.Y + temp.Z;
+            return temp.x + temp.y + temp.z;
         }
 
         public static bool operator ==(Vector3 lhs, Vector3 rhs)
         {
-            return lhs.X == rhs.X && lhs.Y == rhs.Y && lhs.Z == rhs.Z;
+            return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z;
         }
         public static bool operator !=(Vector3 lhs, Vector3 rhs)
         {
@@ -138,51 +138,51 @@ namespace SaNi.Mono.Math
 
         public static bool operator <(Vector3 lhs, Vector3 rhs)
         {
-            return lhs.X < rhs.X && lhs.Y < rhs.Y && lhs.Z < rhs.Z;
+            return lhs.x < rhs.x && lhs.y < rhs.y && lhs.z < rhs.z;
         }
         public static bool operator >(Vector3 lhs, Vector3 rhs)
         {
-            return lhs.X > rhs.X && lhs.Y > rhs.Y && lhs.Z > rhs.Z;
+            return lhs.x > rhs.x && lhs.y > rhs.y && lhs.z > rhs.z;
         }
 
         public static bool operator <=(Vector3 lhs, Vector3 rhs)
         {
-            return lhs.X <= rhs.X && lhs.Y <= rhs.Y && lhs.Z <= rhs.Z;
+            return lhs.x <= rhs.x && lhs.y <= rhs.y && lhs.z <= rhs.z;
         }
         public static bool operator >=(Vector3 lhs, Vector3 rhs)
         {
-            return lhs.X >= rhs.X && lhs.Y >= rhs.Y && lhs.Z >= rhs.Z;
+            return lhs.x >= rhs.x && lhs.y >= rhs.y && lhs.z >= rhs.z;
         }
         
         public static Vector3 operator *(Vector3 lhs, Vector3 rhs)
         {
-            return new Vector3(lhs.X * rhs.X, lhs.Y * rhs.Y, lhs.Z * rhs.Z);
+            return new Vector3(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z);
         }
         public static Vector3 operator +(Vector3 lhs, Vector3 rhs)
         {
-            return new Vector3(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z);
+            return new Vector3(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z);
         }
         public static Vector3 operator -(Vector3 lhs, Vector3 rhs)
         {
-            return new Vector3(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z);
+            return new Vector3(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z);
         }
         public static Vector3 operator /(Vector3 lhs, Vector3 rhs)
         {
-            return new Vector3(lhs.X / rhs.X, lhs.Y / rhs.Y, lhs.Z / rhs.Z);
+            return new Vector3(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z);
         }
 
         public static Vector3 operator *(Vector3 lhs, float rhs)
         {
-            return new Vector3(lhs.X * rhs, lhs.Y * rhs, lhs.Z * rhs);
+            return new Vector3(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs);
         }
         public static Vector3 operator /(Vector3 lhs, float rhs)
         {
-            return new Vector3(lhs.X / rhs, lhs.Y / rhs, lhs.Z / rhs);
+            return new Vector3(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs);
         }
 
         public static Vector3 operator -(Vector3 vector)
         {
-            return new Vector3(-vector.X, -vector.Y, -vector.Z);
+            return new Vector3(-vector.x, -vector.y, -vector.z);
         }
 
         public override bool Equals(object obj)
@@ -200,7 +200,7 @@ namespace SaNi.Mono.Math
         }
         public override int GetHashCode()
         {
-            return X.GetHashCode() + Y.GetHashCode() + Z.GetHashCode();
+            return x.GetHashCode() + y.GetHashCode() + z.GetHashCode();
         }
     }
 }

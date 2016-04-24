@@ -12,10 +12,10 @@ namespace SaNi.Mono.Math
         #region Fields
         public const int Components = 4;
 
-        public float X;
-        public float Y;
-        public float Z;
-        public float W;
+        public float x;
+        public float y;
+        public float z;
+        public float w;
         #endregion
 
         #region Properties
@@ -23,7 +23,7 @@ namespace SaNi.Mono.Math
         {
             get 
             {
-                return X * X + Y * Y + Z * Z + W * W;
+                return x * x + y * y + z * z + w * w;
             }
         }
         public float Length
@@ -92,41 +92,41 @@ namespace SaNi.Mono.Math
             {
                 Debug.Assert(index < Components);
 
-                if (index == 0) return X;
-                if (index == 1) return Y;
-                if (index == 2) return Z;
-                else            return W;
+                if (index == 0) return x;
+                if (index == 1) return y;
+                if (index == 2) return z;
+                else            return w;
             }
         }
         #endregion
 
         public Vector4(float x, float y, float z, float w)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            W = w;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            this.w = w;
         }
         public Vector4(float x, float y, float z)
         {
-            X = x;
-            Y = y;
-            Z = z;
-            W = 0.0f;
+            this.x = x;
+            this.y = y;
+            this.z = z;
+            w = 0.0f;
         }
         public Vector4(float x, float y)
         {
-            X = x;
-            Y = y;
-            Z = 0.0f;
-            W = 0.0f;
+            this.x = x;
+            this.y = y;
+            z = 0.0f;
+            w = 0.0f;
         }
         public Vector4(float value)
         {
-            X = value;
-            Y = value;
-            Z = value;
-            W = value;
+            x = value;
+            y = value;
+            z = value;
+            w = value;
         }
 
         /*
@@ -137,18 +137,18 @@ namespace SaNi.Mono.Math
         {
             var length = vector.Length;
 
-            return new Vector4(vector.X / length, vector.Y / length, vector.Z / length, vector.W / length);
+            return new Vector4(vector.x / length, vector.y / length, vector.z / length, vector.w / length);
         }
         public static float Dot(Vector4 lhs, Vector4 rhs)
         {
             Vector4 temp = lhs * rhs;
 
-            return temp.X + temp.Y + temp.Z + temp.W;
+            return temp.x + temp.y + temp.z + temp.w;
         }
 
         public static bool operator ==(Vector4 lhs, Vector4 rhs)
         {
-            return lhs.X == rhs.X && lhs.Y == rhs.Y && lhs.Z == rhs.Z && lhs.W == rhs.W;
+            return lhs.x == rhs.x && lhs.y == rhs.y && lhs.z == rhs.z && lhs.w == rhs.w;
         }
         public static bool operator !=(Vector4 lhs, Vector4 rhs)
         {
@@ -157,51 +157,51 @@ namespace SaNi.Mono.Math
 
         public static bool operator <(Vector4 lhs, Vector4 rhs)
         {
-            return lhs.X < rhs.X && lhs.Y < rhs.Y && lhs.Z < rhs.Z && lhs.W < rhs.W;
+            return lhs.x < rhs.x && lhs.y < rhs.y && lhs.z < rhs.z && lhs.w < rhs.w;
         }
         public static bool operator >(Vector4 lhs, Vector4 rhs)
         {
-            return lhs.X > rhs.X && lhs.Y > rhs.Y && lhs.Z > rhs.Z && lhs.W > rhs.W;
+            return lhs.x > rhs.x && lhs.y > rhs.y && lhs.z > rhs.z && lhs.w > rhs.w;
         }
 
         public static bool operator <=(Vector4 lhs, Vector4 rhs)
         {
-            return lhs.X <= rhs.X && lhs.Y <= rhs.Y && lhs.Z <= rhs.Z && lhs.W <= rhs.W;
+            return lhs.x <= rhs.x && lhs.y <= rhs.y && lhs.z <= rhs.z && lhs.w <= rhs.w;
         }
         public static bool operator >=(Vector4 lhs, Vector4 rhs)
         {
-            return lhs.X >= rhs.X && lhs.Y >= rhs.Y && lhs.Z >= rhs.Z && lhs.W >= rhs.W;
+            return lhs.x >= rhs.x && lhs.y >= rhs.y && lhs.z >= rhs.z && lhs.w >= rhs.w;
         }
         
         public static Vector4 operator *(Vector4 lhs, Vector4 rhs)
         {
-            return new Vector4(lhs.X * rhs.X, lhs.Y * rhs.Y, lhs.Z * rhs.Z, lhs.W * rhs.W);
+            return new Vector4(lhs.x * rhs.x, lhs.y * rhs.y, lhs.z * rhs.z, lhs.w * rhs.w);
         }
         public static Vector4 operator +(Vector4 lhs, Vector4 rhs)
         {
-            return new Vector4(lhs.X + rhs.X, lhs.Y + rhs.Y, lhs.Z + rhs.Z, lhs.W + rhs.W);
+            return new Vector4(lhs.x + rhs.x, lhs.y + rhs.y, lhs.z + rhs.z, lhs.w + rhs.w);
         }
         public static Vector4 operator -(Vector4 lhs, Vector4 rhs)
         {
-            return new Vector4(lhs.X - rhs.X, lhs.Y - rhs.Y, lhs.Z - rhs.Z, lhs.W - rhs.W);
+            return new Vector4(lhs.x - rhs.x, lhs.y - rhs.y, lhs.z - rhs.z, lhs.w - rhs.w);
         }
         public static Vector4 operator /(Vector4 lhs, Vector4 rhs)
         {
-            return new Vector4(lhs.X / rhs.X, lhs.Y / rhs.Y, lhs.Z / rhs.Z, lhs.W / rhs.W);
+            return new Vector4(lhs.x / rhs.x, lhs.y / rhs.y, lhs.z / rhs.z, lhs.w / rhs.w);
         }
 
         public static Vector4 operator *(Vector4 lhs, float rhs)
         {
-            return new Vector4(lhs.X * rhs, lhs.Y * rhs, lhs.Z * rhs, lhs.W * rhs);
+            return new Vector4(lhs.x * rhs, lhs.y * rhs, lhs.z * rhs, lhs.w * rhs);
         }
         public static Vector4 operator /(Vector4 lhs, float rhs)
         {
-            return new Vector4(lhs.X / rhs, lhs.Y / rhs, lhs.Z / rhs, lhs.W / rhs);
+            return new Vector4(lhs.x / rhs, lhs.y / rhs, lhs.z / rhs, lhs.w / rhs);
         }
 
         public static Vector4 operator -(Vector4 vector)
         {
-            return new Vector4(-vector.X, -vector.Y, -vector.Z, -vector.W);
+            return new Vector4(-vector.x, -vector.y, -vector.z, -vector.w);
         }
 
         public override bool Equals(object obj)
@@ -219,7 +219,7 @@ namespace SaNi.Mono.Math
         }
         public override int GetHashCode()
         {
-            return X.GetHashCode() + Y.GetHashCode() + Z.GetHashCode() + W.GetHashCode();
+            return x.GetHashCode() + y.GetHashCode() + z.GetHashCode() + w.GetHashCode();
         }
     }
 }

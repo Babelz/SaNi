@@ -13,8 +13,8 @@ namespace SaNi.Mono.Math
         #region Fields
         public const int Components = 2;
 
-        public float X;
-        public float Y;
+        public float x;
+        public float y;
         #endregion
 
         #region Properties
@@ -22,7 +22,7 @@ namespace SaNi.Mono.Math
         {
             get 
             {
-                return X * X + Y * Y;
+                return x * x + y * y;
             }
         }
         public float Length
@@ -77,21 +77,21 @@ namespace SaNi.Mono.Math
             {
                 Debug.Assert(index < Components);
 
-                if (index == 0) return X;
-                else            return Y;
+                if (index == 0) return x;
+                else            return y;
             }
         }
         #endregion
 
         public Vector2(float x, float y)
         {
-            X = x;
-            Y = y;
+            this.x = x;
+            this.y = y;
         }
         public Vector2(float value)
         {
-            X = value;
-            Y = value;
+            x = value;
+            y = value;
         }
 
         /*
@@ -102,18 +102,18 @@ namespace SaNi.Mono.Math
         {
             var length = vector.Length;
 
-            return new Vector2(vector.X / length, vector.Y / length);
+            return new Vector2(vector.x / length, vector.y / length);
         }
         public static float Dot(Vector2 lhs, Vector2 rhs)
         {
             Vector2 temp = lhs * rhs;
 
-            return temp.X + temp.Y;
+            return temp.x + temp.y;
         }
 
         public static bool operator ==(Vector2 lhs, Vector2 rhs)
         {
-            return lhs.X == rhs.X && lhs.Y == rhs.Y;
+            return lhs.x == rhs.x && lhs.y == rhs.y;
         }
         public static bool operator !=(Vector2 lhs, Vector2 rhs)
         {
@@ -122,51 +122,51 @@ namespace SaNi.Mono.Math
 
         public static bool operator <(Vector2 lhs, Vector2 rhs)
         {
-            return lhs.X < rhs.X && lhs.Y < rhs.Y;
+            return lhs.x < rhs.x && lhs.y < rhs.y;
         }
         public static bool operator >(Vector2 lhs, Vector2 rhs)
         {
-            return lhs.X > rhs.X && lhs.Y > rhs.Y;
+            return lhs.x > rhs.x && lhs.y > rhs.y;
         }
 
         public static bool operator <=(Vector2 lhs, Vector2 rhs)
         {
-            return lhs.X <= rhs.X && lhs.Y <= rhs.Y;
+            return lhs.x <= rhs.x && lhs.y <= rhs.y;
         }
         public static bool operator >=(Vector2 lhs, Vector2 rhs)
         {
-            return lhs.X >= rhs.X && lhs.Y >= rhs.Y;
+            return lhs.x >= rhs.x && lhs.y >= rhs.y;
         }
         
         public static Vector2 operator *(Vector2 lhs, Vector2 rhs)
         {
-            return new Vector2(lhs.X * rhs.X, lhs.Y * rhs.Y);
+            return new Vector2(lhs.x * rhs.x, lhs.y * rhs.y);
         }
         public static Vector2 operator +(Vector2 lhs, Vector2 rhs)
         {
-            return new Vector2(lhs.X + rhs.X, lhs.Y + rhs.Y);
+            return new Vector2(lhs.x + rhs.x, lhs.y + rhs.y);
         }
         public static Vector2 operator -(Vector2 lhs, Vector2 rhs)
         {
-            return new Vector2(lhs.X - rhs.X, lhs.Y - rhs.Y);
+            return new Vector2(lhs.x - rhs.x, lhs.y - rhs.y);
         }
         public static Vector2 operator /(Vector2 lhs, Vector2 rhs)
         {
-            return new Vector2(lhs.X / rhs.X, lhs.Y / rhs.Y);
+            return new Vector2(lhs.x / rhs.x, lhs.y / rhs.y);
         }
 
         public static Vector2 operator *(Vector2 lhs, float rhs)
         {
-            return new Vector2(lhs.X * rhs, lhs.Y * rhs);
+            return new Vector2(lhs.x * rhs, lhs.y * rhs);
         }
         public static Vector2 operator /(Vector2 lhs, float rhs)
         {
-            return new Vector2(lhs.X / rhs, lhs.Y / rhs);
+            return new Vector2(lhs.x / rhs, lhs.y / rhs);
         }
 
         public static Vector2 operator -(Vector2 vector)
         {
-            return new Vector2(-vector.X, -vector.Y);
+            return new Vector2(-vector.x, -vector.y);
         }
 
         public override bool Equals(object obj)
@@ -184,7 +184,7 @@ namespace SaNi.Mono.Math
         }
         public override int GetHashCode()
         {
-            return X.GetHashCode() + Y.GetHashCode();
+            return x.GetHashCode() + y.GetHashCode();
         }
     }
 }

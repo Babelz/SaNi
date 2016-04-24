@@ -8,6 +8,7 @@
 #include "sani/engine/mono/mono_define.hpp"
 #include "sani/types.hpp"
 
+#include "sani/engine/mono/glib_types.hpp"
 #include <mono/metadata/object.h>
 #include <functional>
 
@@ -30,6 +31,7 @@ namespace sani {
 				MonoPropertyDefinition<MonoObject*> globalBounds	{ "GlobalBounds", PropsGet };
 				MonoPropertyDefinition<MonoObject*> textureSource	{ "TextureSource", PropsGetSet };
 				MonoPropertyDefinition<MonoObject*> texture2D		{ "Texture2D", PropsGetSet };
+				MonoPropertyDefinition<gboolean>	visible			{ "Visible", PropsGetSet };
 
 				RenderableSuperDef(const String name, const String ns);
 

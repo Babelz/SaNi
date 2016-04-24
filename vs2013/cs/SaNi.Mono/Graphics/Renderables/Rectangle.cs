@@ -85,6 +85,13 @@ namespace SaNi.Mono.Graphics.Renderables
                 return id;
             }
         }
+        public bool Visible
+        {
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            get;
+            [MethodImpl(MethodImplOptions.InternalCall)]
+            set;
+        }
         #endregion
 
         public Rectangle(float x, float y, float width, float height)
@@ -95,7 +102,7 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         public Rectangle(Vector2 position, Vector2 size)
         {
-            InternalCreateRectangle(position.X, position.Y, size.X, size.Y, ref id);
+            InternalCreateRectangle(position.x, position.y, size.x, size.y, ref id);
 
             Console.WriteLine("REC ID: " + id);
         }

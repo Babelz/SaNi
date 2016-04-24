@@ -7,6 +7,15 @@
 
 #define NO_ARGS "NO_ARGS"
 
+struct MonoFieldDefinition final {
+	const char* const name;
+
+	MonoFieldDefinition(const char* const name) : name(name) {
+	}
+
+	~MonoFieldDefinition() = default;
+};
+
 struct MonoClassDefinition final {
 	const char* const ns;
 	const char* const name;
