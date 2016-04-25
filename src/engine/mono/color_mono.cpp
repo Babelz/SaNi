@@ -12,10 +12,10 @@ namespace sani {
 			namespace color {
 
 				const MonoClassDefinition ClassDef("SaNi.Mono.Graphics", "Color");
-				const MonoFieldDefinition RDef("r");
-				const MonoFieldDefinition GDef("g");
-				const MonoFieldDefinition BDef("b");
-				const MonoFieldDefinition ADef("a");
+				const char* const FieldR = "r";
+				const char* const FieldG = "g";
+				const char* const FieldB = "b";
+				const char* const FieldA = "a";
 
 				MonoObject* create(float32 r, float32 g, float32 b, float32 a) {
 					const uint32 argc = 4;
@@ -31,16 +31,16 @@ namespace sani {
 				}
 
 				void copyData(MonoObject* from, graphics::Color* const to) {
-				/*	MONO_PROVIDER->readField(from, &ClassDef, &RDef);
-					MONO_PROVIDER->readField(from, &ClassDef, &GDef);
-					MONO_PROVIDER->readField(from, &ClassDef, &BDef);
-					MONO_PROVIDER->readField(from, &ClassDef, &ADef);
-				*/}
+					to->r = *MONO_UNBOX(MONO_PROVIDER->readField(from, FieldR), float32);
+					to->g = *MONO_UNBOX(MONO_PROVIDER->readField(from, FieldG), float32);
+					to->b = *MONO_UNBOX(MONO_PROVIDER->readField(from, FieldB), float32);
+					to->a = *MONO_UNBOX(MONO_PROVIDER->readField(from, FieldA), float32);
+				}
 				void copyData(graphics::Color* const from, MonoObject* to) {
-					//MONO_PROVIDER->writeField(to, &ClassDef, &RDef, &from->r);
-					//MONO_PROVIDER->writeField(to, &ClassDef, &GDef, &from->g);
-					//MONO_PROVIDER->writeField(to, &ClassDef, &BDef, &from->b);
-					//MONO_PROVIDER->writeField(to, &ClassDef, &ADef, &from->a);
+					MONO_PROVIDER->writeField(to, FieldR, &from->r);
+					MONO_PROVIDER->writeField(to, FieldG, &from->g);
+					MONO_PROVIDER->writeField(to, FieldB, &from->b);
+					MONO_PROVIDER->writeField(to, FieldA, &from->a);
 				}
 			}
 		}

@@ -7,6 +7,8 @@
 #include <mono/jit/jit.h>
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/appdomain.h>
+#include <mono/metadata/mono-debug.h>
+#include <mono/metadata/debug-helpers.h>
 
 #include "sani/core/logging/log.hpp"
 
@@ -57,6 +59,7 @@ namespace sani {
 			mono_set_dirs(monoLibrariesPath.c_str(), monoConfigPath.c_str());
 
 			monoDomain = mono_jit_init_version(MonoRootDomainName, MonoVersion);
+			mono_domain_set(monoDomain, false);
 			
 			std::vector<MonoAssembly*> assemblies;
 
@@ -76,7 +79,11 @@ namespace sani {
 				return false;
 			}
 
-			monoProvider = new MonoProvider(assemblies, monoDomain);
+#if _DEBUG
+			mono_debug_init(MONO_DEBUG_FORMAT_MONO);
+#endif
+
+			monoProvider = new MonoProvider(assemblies);
 
 			return true;
 		}

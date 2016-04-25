@@ -11,7 +11,8 @@ namespace SaNi.Mono.Graphics.Renderables
     public sealed class Rectangle : IRenderable
     {
         #region Fields
-        public int num;
+        private readonly int id;
+
         private bool destroyed;
         #endregion
 
@@ -79,8 +80,10 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         public int ID
         {
-            get;
-            private set;
+            get
+            {
+                return id;
+            }
         }
         public bool Visible
         {
@@ -96,11 +99,7 @@ namespace SaNi.Mono.Graphics.Renderables
 
         public Rectangle(float x, float y, float width, float height)
         {
-            ID = InternalCreateRectangle(x, y, width, height);
-
-            num = ID * 10;
-
-            Console.WriteLine("id: {0}", ID);
+            id = InternalCreateRectangle(x, y, width, height);
         }
         public Rectangle(Vector2 position, Vector2 size)
             : this(position.x, position.y, size.x, size.y)
@@ -121,8 +120,6 @@ namespace SaNi.Mono.Graphics.Renderables
         {
             if (destroyed) return;
 
-            Console.WriteLine("destr");
-
             InternalReleaseRectangle(ID);
 
             GC.SuppressFinalize(this);
@@ -132,7 +129,6 @@ namespace SaNi.Mono.Graphics.Renderables
 
         ~Rectangle()
         {
-            Console.WriteLine("dtor");
             if (!destroyed) InternalReleaseRectangle(ID);
         }
     }

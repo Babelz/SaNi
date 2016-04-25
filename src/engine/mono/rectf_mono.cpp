@@ -12,10 +12,10 @@ namespace sani {
 			namespace rectf {
 
 				const MonoClassDefinition ClassDef("SaNi.Mono.Math", "Rectf");
-				const MonoFieldDefinition XDef("x");
-				const MonoFieldDefinition YDef("y");
-				const MonoFieldDefinition WidthDef("width");
-				const MonoFieldDefinition HeightDef("height");
+				const char* const FieldX = "x";
+				const char* const FieldY = "y";
+				const char* const FieldWidth = "width";
+				const char* const FieldHeight = "height";
 
 				MonoObject* create(float32 x, float32 y, float32 width, float32 height) {
 					const uint32 argc = 4;
@@ -30,35 +30,29 @@ namespace sani {
 					return MONO_PROVIDER->createObject(&ClassDef, args, argc);
 				}
 
-				static math::Vec2f getVector(MonoObject* rectf, const MonoFieldDefinition* const xField, const MonoFieldDefinition* const yField) {
-					void* x = nullptr;
-					void* y = nullptr;
+				static math::Vec2f getVector(MonoObject* rectf, const char* const xField, const char* const yField) {
+					const float32 x = *MONO_UNBOX(MONO_PROVIDER->readField(rectf, xField), float32);
+					const float32 y = *MONO_UNBOX(MONO_PROVIDER->readField(rectf, yField), float32);
 
-					//MONO_PROVIDER->readField(rectf, &ClassDef, xField, x);
-					//MONO_PROVIDER->readField(rectf, &ClassDef, yField, y);
-
-					const float32 xVal = *static_cast<float32*>(x);
-					const float32 yVal = *static_cast<float32*>(y);
-
-					return math::Vec2f(xVal, yVal);
+					return math::Vec2f(x, y);
 				}
-				static void writeVector(MonoObject* rectf, const MonoFieldDefinition* const xField, const MonoFieldDefinition* const yField, math::Vec2f& value) {
-					MONO_PROVIDER->writeField(rectf, &ClassDef, xField, &value.x);
-					MONO_PROVIDER->writeField(rectf, &ClassDef, yField, &value.y);
+				static void writeVector(MonoObject* rectf, const char* const xField, const char* const yField, math::Vec2f& value) {
+					MONO_PROVIDER->writeField(rectf, xField, &value.x);
+					MONO_PROVIDER->writeField(rectf, yField, &value.y);
 				}
 
 				math::Vec2f getPosition(MonoObject* rectf) {
-					return getVector(rectf, &XDef, &YDef);
+					return getVector(rectf, FieldX, FieldY);
 				}
 				void setPosition(MonoObject* rectf, math::Vec2f& value) {
-					writeVector(rectf, &XDef, &YDef, value);
+					writeVector(rectf, FieldX, FieldY, value);
 				}
 
 				math::Vec2f getSize(MonoObject* rectf) {
-					return getVector(rectf, &WidthDef, &HeightDef);
+					return getVector(rectf, FieldWidth, FieldHeight);
 				}
 				void setSize(MonoObject* rectf, math::Vec2f& value) {
-					writeVector(rectf, &WidthDef, &HeightDef, value);
+					writeVector(rectf, FieldWidth, FieldHeight, value);
 				}
 
 				void copyData(MonoObject* from, math::Rect32f* const to) {
@@ -71,8 +65,8 @@ namespace sani {
 					to->h = size.y;
 				}
 				void copyData(math::Rect32f* const from, MonoObject* to) {
-					writeVector(to, &XDef, &YDef, from->position());
-					writeVector(to, &WidthDef, &HeightDef, from->position());
+					writeVector(to, FieldX, FieldY, from->position());
+					writeVector(to, FieldWidth, FieldHeight, from->position());
 				}
 			}
 		}

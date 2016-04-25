@@ -20,19 +20,16 @@ namespace sani {
 		class MonoProvider final {
 		private:
 			std::vector<MonoAssembly*> assemblies;
-
-			MonoDomain* const monoDomain;
 		public:
-			MonoProvider(std::vector<MonoAssembly*>& assemblies, MonoDomain* const monoDomain);
+			MonoProvider(std::vector<MonoAssembly*>& assemblies);
 			
-			MonoClassField* fieldFromDefinition(const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef) const;
 			MonoClass* classFromDefinition(const MonoClassDefinition* const classDef) const;
 			MonoType* typeFromDefinition(const MonoClassDefinition* const classDef) const;
 
-			MonoObject* readField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef);
-			void writeField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* value);
+			MonoObject* readField(MonoObject* instance, const char* const name);
+			void writeField(MonoObject* instance, const char* const name, void* value);
 
-			bool fieldExists(const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef);
+			bool fieldExists(const MonoClassDefinition* const classDef, const char* const name);
 			bool classExists(const MonoClassDefinition* const classDef) const;
 			bool functionExists(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;
 
@@ -43,8 +40,8 @@ namespace sani {
 
 			MonoString* createString(const char* const str) const;
 
-			MonoObject* invoke(MonoObject* instance, MonoClass* mclass, const char* const name, void** args, const int32 argc) const;
-			MonoObject* invoke(MonoObject* instance, MonoClass* mclass, const char* const name) const;
+			MonoObject* invoke(MonoObject* instance, const char* const name, void** args, const int32 argc) const;
+			MonoObject* invoke(MonoObject* instance, const char* const name) const;
 
 			~MonoProvider() = default;
 

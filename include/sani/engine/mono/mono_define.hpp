@@ -7,14 +7,9 @@
 
 #define NO_ARGS "NO_ARGS"
 
-struct MonoFieldDefinition final {
-	const char* const name;
-
-	MonoFieldDefinition(const char* const name) : name(name) {
-	}
-
-	~MonoFieldDefinition() = default;
-};
+/*
+	TODO: move to ns mono.
+*/
 
 struct MonoClassDefinition final {
 	const char* const ns;
@@ -23,8 +18,14 @@ struct MonoClassDefinition final {
 	MonoClassDefinition(const char* const ns, const char* const name) : ns(ns),
 																		name(name) {
 	}
+	MonoClassDefinition() : MonoClassDefinition(NULL, NULL) {
+	}
 
 	~MonoClassDefinition() = default;
+
+	MonoClassDefinition operator = (const MonoClassDefinition& classDef) {
+		return MonoClassDefinition(classDef.ns, classDef.name);
+	}
 };
 
 struct MonoFunctionDefinition final {
@@ -76,6 +77,8 @@ struct MonoPropertyDefinition final {
 		return false;
 	}
 };
+
+#define MONO_UNBOX(__val__, __type__) (__type__*)mono_object_unbox(__val__)
 
 #define MONO_MODULE_DEF(name) namespace sani { \
 								  namespace engine { \

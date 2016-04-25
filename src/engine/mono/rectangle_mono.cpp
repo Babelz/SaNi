@@ -34,13 +34,13 @@ namespace sani {
 		static std::vector<Rectangle*>* elements				{ nullptr };
 
 		const MonoClassDefinition ClassDef("SaNi.Mono.Graphics.Renderables", "Rectangle");
-
+		
 		static Rectangle* getInstance(MonoObject* instance) {
-			//
-			//MONO_PROVIDER->readField(reinterpret_cast<MonoObject*>(instance), &ClassDef, new MonoFieldDefinition("num"), outNum);;
-			////MonoObject* value = MONO_PROVIDER->invoke(instance, MONO_PROVIDER->classFromDefinition(&ClassDef), "get_ID");
+			//const gint32 id = *MONO_UNBOX(MONO_PROVIDER->readField(instance, &ClassDef, &IDDef), gint32);
+			
+			MonoObject* value = MONO_PROVIDER->readField(instance, "get_ID");
 
-			//gint64 id = *static_cast<gint64*>(outNum);
+			const gint32 id = *MONO_UNBOX(value, gint32);
 
 			return elements->operator[](0);
 		}

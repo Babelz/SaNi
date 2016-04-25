@@ -43,16 +43,13 @@ namespace sani {
 			}
 
 			
-			UserService::UserService(MonoObject* const instance, MonoString* const name, SaNiEngine* const engine) : EngineService(mono_string_to_utf8(name), engine),
-																													 instance(instance) {
-			}
-
-			void UserService::invoke(const char* const name, void** args) const {
+			UserService::UserService(MonoObject* const instance, MonoString* const name, SaNiEngine* const engine) 
+				: EngineService(mono_string_to_utf8(name), engine), instance(instance) {
 			}
 
 			bool UserService::onStart() {
 				if (static_cast<uint32>((flags & HookFlags::OnStart))) {
-					MonoObject* results = MONO_PROVIDER->invoke(instance, mclass, "OnStart");
+					MonoObject* results = MONO_PROVIDER->invoke(instance, "OnStart");
 
 					bool* val = static_cast<bool*>(mono_object_unbox(results));
 
@@ -64,7 +61,7 @@ namespace sani {
 			}
 			bool UserService::onResume() {
 				if (static_cast<uint32>((flags & HookFlags::OnResume))) {
-					MonoObject* results = MONO_PROVIDER->invoke(instance, mclass, "OnResume");
+					MonoObject* results = MONO_PROVIDER->invoke(instance, "OnResume");
 					
 					bool* val = static_cast<bool*>(mono_object_unbox(results));
 					
@@ -76,12 +73,12 @@ namespace sani {
 			}
 			void UserService::onSuspend() {
 				if (static_cast<uint32>((flags & HookFlags::OnSuspended))) {
-					MONO_PROVIDER->invoke(instance, mclass, "OnSuspended");
+					MONO_PROVIDER->invoke(instance, "OnSuspended");
 				}
 			}
 			void UserService::onTerminate() {
 				if (static_cast<uint32>((flags & HookFlags::OnTerminated))) {
-					MONO_PROVIDER->invoke(instance, mclass, "OnTerminated");
+					MONO_PROVIDER->invoke(instance, "OnTerminated");
 				}
 			}
 
@@ -90,9 +87,6 @@ namespace sani {
 			}
 			void UserService::setMonoHooks(const HookFlags flags) {
 				this->flags = flags;
-			}
-			void UserService::setMonoClass(MonoClass* const mclass) {
-				this->mclass = mclass;
 			}
 
 			void UserService::update(const EngineTime& time) {
@@ -115,7 +109,7 @@ namespace sani {
 
 					const uint32 updateargc = 1;
 
-					MONO_PROVIDER->invoke(instance, mclass, "OnUpdate", updateargs, updateargc);
+					MONO_PROVIDER->invoke(instance, "OnUpdate", updateargs, updateargc);
 				}
 			}
 		}

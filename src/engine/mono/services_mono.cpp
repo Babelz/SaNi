@@ -104,7 +104,6 @@ namespace sani {
 			MonoObject* instance = MONO_PROVIDER->createObject(classDef);
 
 			UserService* service = services.back();
-			service->setMonoClass(MONO_PROVIDER->classFromDefinition(classDef));
 			service->setMonoHooks(flags);
 
 			if (!service->start()) {

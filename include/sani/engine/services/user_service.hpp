@@ -1,5 +1,6 @@
 #pragma once
 
+#include "sani/engine/mono/mono_define.hpp"
 #include "sani/engine/services/engine_service.hpp"
 #include "sani/types.hpp"
 
@@ -28,12 +29,9 @@ namespace sani {
 
 			class UserService final : public EngineService {
 			private:
-				MonoClass* mclass;				// Mono class information required to invoke methods.
-				MonoObject* const instance;		// Mono instance.
+				MonoObject* const instance;					// Mono instance.
 				
 				HookFlags flags;
-
-				void invoke(const char* const name, void** args) const;
 			protected:
 				// If some one calls these inside the C++ side of the engine, 
 				// we need to invoke C# versions of the
@@ -47,8 +45,7 @@ namespace sani {
 			
 				MonoObject* const getMonoInstance() const;
 				void setMonoHooks(const HookFlags flags);
-				void setMonoClass(MonoClass* const mclass);
-
+	
 				virtual void update(const EngineTime& time) final override;
 
 				~UserService() = default;

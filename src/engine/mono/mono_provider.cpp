@@ -14,16 +14,9 @@ namespace sani {
 
 	namespace engine {
 
-		MonoProvider::MonoProvider(std::vector<MonoAssembly*>& assemblies, MonoDomain* const monoDomain) : assemblies(assemblies),
-																										   monoDomain(monoDomain) {
+		MonoProvider::MonoProvider(std::vector<MonoAssembly*>& assemblies) : assemblies(assemblies) {
 		}
 
-
-		MonoClassField* MonoProvider::fieldFromDefinition(const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef) const {
-			MonoClass* mclass = classFromDefinition(classDef);
-			
-			return mono_class_get_field_from_name(mclass, fieldDef->name);
-		}
 		MonoClass* MonoProvider::classFromDefinition(const MonoClassDefinition* const classDef) const {
 			for (auto* monoAssembly : assemblies) {
 				MonoImage* image = mono_assembly_get_image(monoAssembly);
@@ -41,19 +34,23 @@ namespace sani {
 			return mono_class_get_type(mclass);
 		}
 
-		MonoObject* MonoProvider::readField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef) {
-			MonoClassField* mfield = fieldFromDefinition(classDef, fieldDef);
-			
-			return mono_field_get_value_object(monoDomain, mfield, instance);
+		MonoObject* MonoProvider::readField(MonoObject* instance, const char* const name) {
+			MonoClass* mclass = mono_object_get_class(instance);
+
+			MonoClassField* mfield = mono_class_get_field_from_name(mclass, name);
+
+			return mono_field_get_value_object(mono_object_get_domain(instance), mfield, instance);
 		}
-		void MonoProvider::writeField(MonoObject* const instance, const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef, void* value) {
-			MonoClassField* mfield = fieldFromDefinition(classDef, fieldDef);
+		void MonoProvider::writeField(MonoObject* instance, const char* const name, void* value) {
+			MonoClass* mclass = mono_object_get_class(instance);
+
+			MonoClassField* mfield = mono_class_get_field_from_name(mclass, name);
 
 			mono_field_set_value(instance, mfield, value);
 		}
 
-		bool MonoProvider::fieldExists(const MonoClassDefinition* const classDef, const MonoFieldDefinition* const fieldDef) {
-			return fieldFromDefinition(classDef, fieldDef) != nullptr;
+		bool MonoProvider::fieldExists(const MonoClassDefinition* const classDef, const char* const name) {
+			return mono_class_get_field_from_name(classFromDefinition(classDef), name) != NULL;
 		}
 		bool MonoProvider::classExists(const MonoClassDefinition* const classDef) const {
 			return classFromDefinition(classDef) != nullptr;
@@ -90,7 +87,7 @@ namespace sani {
 		MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef) const {
 			MonoClass* mclass = classFromDefinition(classDef);
 
-			MonoObject* instance = mono_object_new(monoDomain, mclass);
+			MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
 			mono_runtime_object_init(instance);
 
 			return instance;
@@ -99,7 +96,7 @@ namespace sani {
 		MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const {
 			MonoClass* mclass = classFromDefinition(classDef);
 
-			MonoObject* instance = mono_object_new(monoDomain, mclass);
+			MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
 			
 			MonoMethod* method = nullptr;
 			void* iter = nullptr;
@@ -122,16 +119,18 @@ namespace sani {
 		}
 
 		MonoString* MonoProvider::createString(const char* const str) const {
-			return mono_string_new(monoDomain, str);
+			return mono_string_new(mono_domain_get(), str);
 		}
 
-		MonoObject* MonoProvider::invoke(MonoObject* instance, MonoClass* mclass, const char* const name, void** args, const int32 argsc) const {
+		MonoObject* MonoProvider::invoke(MonoObject* instance, const char* const name, void** args, const int32 argsc) const {
+			MonoClass* mclass = mono_object_get_class(instance);
+
 			MonoMethod* method = mono_class_get_method_from_name(mclass, name, argsc);
 
 			return mono_runtime_invoke(method, instance, args, NULL);
 		}
-		MonoObject* MonoProvider::invoke(MonoObject* instance, MonoClass* mclass, const char* const name) const {
-			return invoke(instance, mclass, name, NULL, NULL);
+		MonoObject* MonoProvider::invoke(MonoObject* instance, const char* const name) const {
+			return invoke(instance, name, NULL, NULL);
 		}
 	}
 }

@@ -13,15 +13,15 @@ namespace sani {
 			namespace transform {
 
 				const MonoClassDefinition TransformDef("SaNi.Mono.Graphics", "Transform");
-				const MonoFieldDefinition PositionDef("position");
-				const MonoFieldDefinition ScaleDef("scale");
-				const MonoFieldDefinition OriginDef("origin");
-				const MonoFieldDefinition RotationDef("rotation");
+				const char* const FieldPosition = "position";
+				const char* const FieldScale = "scale";
+				const char* const FieldOrigin = "origin";
+				const char* const FieldRotation = "rotation";
 
 				const MonoClassDefinition Vec3Def("SaNi.Mono.Math", "Vector3");
-				const MonoFieldDefinition XDef("x");
-				const MonoFieldDefinition YDef("y");
-				const MonoFieldDefinition ZDef("z");
+				const char* const FieldX = "x";
+				const char* const FieldY = "y";
+				const char* const FieldZ = "z";
 
 				MonoObject* create(math::Vec3f& position, math::Vec3f& scale, math::Vec3f& origin, float32 rotation) {
 					const uint32 argc = 10;
@@ -45,63 +45,49 @@ namespace sani {
 					return MONO_PROVIDER->createObject(&TransformDef, args, argc);
 				}
 
-				static math::Vec3f readVector(MonoObject* transform, const MonoFieldDefinition* const field) {
-					void* vector = nullptr;
-					//MONO_PROVIDER->readField(transform, &TransformDef, &PositionDef, vector);
+				static math::Vec3f readVector(MonoObject* transform, const char* const field) {
+					void* vector = MONO_PROVIDER->readField(transform, field);
 
-					void* x = nullptr;
-					void* y = nullptr;
-					void* z = nullptr;
+					const float32 x = *MONO_UNBOX(MONO_PROVIDER->readField(static_cast<MonoObject*>(vector), FieldX), float32);
+					const float32 y = *MONO_UNBOX(MONO_PROVIDER->readField(static_cast<MonoObject*>(vector), FieldY), float32);
+					const float32 z = *MONO_UNBOX(MONO_PROVIDER->readField(static_cast<MonoObject*>(vector), FieldZ), float32);
 
-					//MONO_PROVIDER->readField(static_cast<MonoObject*>(vector), &Vec3Def, &XDef, x);
-					//MONO_PROVIDER->readField(static_cast<MonoObject*>(vector), &Vec3Def, &YDef, y);
-					//MONO_PROVIDER->readField(static_cast<MonoObject*>(vector), &Vec3Def, &ZDef, z);
-
-					const float32 xVal = *static_cast<float32*>(x);
-					const float32 yVal = *static_cast<float32*>(y);
-					const float32 zVal = *static_cast<float32*>(z);
-
-					return math::Vec3f(xVal, yVal, zVal);
+					return math::Vec3f(z, y, z);
 				}
-				static void writeVector(MonoObject* transform, const MonoFieldDefinition* const field, math::Vec3f& value) {
-					void* vector = nullptr;
-					//MONO_PROVIDER->readField(transform, &TransformDef, &PositionDef, vector);
+				static void writeVector(MonoObject* transform, const char* const field, math::Vec3f& value) {
+					void* vector = MONO_PROVIDER->readField(transform, field);
 
-					//MONO_PROVIDER->writeField(static_cast<MonoObject*>(vector), &Vec3Def, &XDef, &value.x);
-					//MONO_PROVIDER->writeField(static_cast<MonoObject*>(vector), &Vec3Def, &YDef, &value.y);
-					//MONO_PROVIDER->writeField(static_cast<MonoObject*>(vector), &Vec3Def, &ZDef, &value.z);
+					MONO_PROVIDER->writeField(static_cast<MonoObject*>(vector), FieldX, &value.x);
+					MONO_PROVIDER->writeField(static_cast<MonoObject*>(vector), FieldY, &value.y);
+					MONO_PROVIDER->writeField(static_cast<MonoObject*>(vector), FieldZ, &value.z);
 				}
 
 				math::Vec3f getPosition(MonoObject* transform) {
-					return readVector(transform, &PositionDef);
+					return readVector(transform, FieldPosition);
 				}
 				void setPosition(MonoObject* transform, math::Vec3f& value) {
-					writeVector(transform, &PositionDef, value);
+					writeVector(transform, FieldPosition, value);
 				}
 
 				math::Vec3f getScale(MonoObject* transform) {
-					return readVector(transform, &ScaleDef);
+					return readVector(transform, FieldScale);
 				}
 				void setScale(MonoObject* transform, math::Vec3f& value) {
-					writeVector(transform, &ScaleDef, value);
+					writeVector(transform, FieldScale, value);
 				}
 
 				math::Vec3f getOrigin(MonoObject* transform) {
-					return readVector(transform, &OriginDef);
+					return readVector(transform, FieldOrigin);
 				}
 				void setOrigin(MonoObject* transform, math::Vec3f& value) {
-					writeVector(transform, &OriginDef, value);
+					writeVector(transform, FieldOrigin, value);
 				}
 
 				float32 getRotation(MonoObject* transform) {
-					void* rotation = nullptr;
-
-					//MONO_PROVIDER->readField(transform, &TransformDef, &RotationDef, rotation);
-
-					return *static_cast<float32*>(rotation);
+					return *MONO_UNBOX(MONO_PROVIDER->readField(transform, FieldRotation), float32);
 				}
 				void setRotation(MonoObject* transform, float32 value) {
-					MONO_PROVIDER->writeField(transform, &TransformDef, &RotationDef, &value);
+					MONO_PROVIDER->writeField(transform, FieldRotation, &value);
 				}
 			}
 		}

@@ -48,14 +48,15 @@ namespace SaNi.Mono.Sandbox
         }
         private void OnUpdate(EngineTime time)
         {
-            r1.Print();
-            r2.Print();
-            r3.Print();
-            r4.Print();
             var c = r1.LocalBounds;
             c = r2.LocalBounds;
             c = r3.LocalBounds;
             c = r4.LocalBounds;
+
+            Console.WriteLine(r1.ID);
+            Console.WriteLine(r2.ID);
+            Console.WriteLine(r3.ID);
+            Console.WriteLine(r4.ID);
         }
 
         ~EngineAsFramework()
