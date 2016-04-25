@@ -41,10 +41,10 @@ struct MonoFunctionDefinition final {
 };
 
 template<typename T>
-using MonoGetter = std::function<T(MonoString*)>;
+using MonoGetter = std::function<T(MonoObject*)>;
 
 template<typename T>
-using MonoSetter = std::function<void(MonoString*, T)>;
+using MonoSetter = std::function<void(MonoObject*, T)>;
 
 const uint32 PropsNull	 = 0;
 const uint32 PropsGet	 = 1;

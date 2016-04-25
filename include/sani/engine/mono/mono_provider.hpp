@@ -43,8 +43,8 @@ namespace sani {
 
 			MonoString* createString(const char* const str) const;
 
-			MonoObject* invoke(MonoString* instance, MonoClass* mclass, const char* const name, void** args, const int32 argc) const;
-			MonoObject* invoke(MonoString* instance, MonoClass* mclass, const char* const name) const;
+			MonoObject* invoke(MonoObject* instance, MonoClass* mclass, const char* const name, void** args, const int32 argc) const;
+			MonoObject* invoke(MonoObject* instance, MonoClass* mclass, const char* const name) const;
 
 			~MonoProvider() = default;
 

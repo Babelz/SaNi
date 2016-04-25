@@ -43,7 +43,7 @@ namespace sani {
 			}
 
 			
-			UserService::UserService(MonoString* const instance, MonoString* const name, SaNiEngine* const engine) : EngineService(mono_string_to_utf8(name), engine),
+			UserService::UserService(MonoObject* const instance, MonoString* const name, SaNiEngine* const engine) : EngineService(mono_string_to_utf8(name), engine),
 																													 instance(instance) {
 			}
 
@@ -85,7 +85,7 @@ namespace sani {
 				}
 			}
 
-			MonoString* const UserService::getMonoInstance() const {
+			MonoObject* const UserService::getMonoInstance() const {
 				return instance;
 			}
 			void UserService::setMonoHooks(const HookFlags flags) {

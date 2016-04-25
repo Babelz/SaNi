@@ -12,31 +12,31 @@ namespace sani {
 
 		struct Texture2DMono final {
 			sani::resource::Texture2D*	nativeptr;
-			MonoString*					managedptr;
+			MonoObject*					managedptr;
 
-			Texture2DMono(sani::resource::Texture2D* const nativeptr, MonoString* const managedptr) : nativeptr(nativeptr),
+			Texture2DMono(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr) : nativeptr(nativeptr),
 																									  managedptr(managedptr) {
 			}
 		};
 
 		std::vector<Texture2DMono> instances;
 
-		static Texture2DMono* getInstance(MonoString* instance) {
+		static Texture2DMono* getInstance(MonoObject* instance) {
 			for (auto& texture2DMono : instances) if (texture2DMono.managedptr == instance) return &texture2DMono;
 
 			return nullptr;
 		}
 
-		static gint32 InternalGetWidth(MonoString* instance) {
+		static gint32 InternalGetWidth(MonoObject* instance) {
 			return static_cast<gint32>(getInstance(instance)->nativeptr->getWidth());
 		}
-		static gint32 InternalGetHeight(MonoString* instance) {
+		static gint32 InternalGetHeight(MonoObject* instance) {
 			return static_cast<gint32>(getInstance(instance)->nativeptr->getHeight());
 		}
-		static gint32 InternalGetID(MonoString* instance) {
+		static gint32 InternalGetID(MonoObject* instance) {
 			return static_cast<gint32>(getInstance(instance)->nativeptr->getID());
 		}
-		static gboolean InternalGetDisposed(MonoString* instance) {
+		static gboolean InternalGetDisposed(MonoObject* instance) {
 			return static_cast<gboolean>(getInstance(instance)->nativeptr->disposed());
 		}
 
@@ -51,18 +51,18 @@ namespace sani {
 
 			return nullptr;
 		}
-		sani::resource::Texture2D* getNativePtr(MonoString* managedptr) {
+		sani::resource::Texture2D* getNativePtr(MonoObject* managedptr) {
 			for (auto& texture2DMono : instances) if (texture2DMono.managedptr == managedptr) return texture2DMono.nativeptr;
 			
 			return nullptr;
 		}
 
 		void registerTexture2D(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr) {
-			instances.push_back(Texture2DMono(nativeptr, (MonoString*)managedptr));
+			instances.push_back(Texture2DMono(nativeptr, managedptr));
 		}
 		void unregisterTexture2D(sani::resource::Texture2D* const nativeptr, MonoObject* const managedptr) {
 			auto it = std::find_if(instances.begin(), instances.end(), [&managedptr](Texture2DMono& t) {
-				return (MonoString*)managedptr == t.managedptr;
+				return managedptr == t.managedptr;
 			});
 
 			instances.erase(it);

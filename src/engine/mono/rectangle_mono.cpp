@@ -35,7 +35,7 @@ namespace sani {
 
 		const MonoClassDefinition ClassDef("SaNi.Mono.Graphics.Renderables", "Rectangle");
 
-		static Rectangle* getInstance(MonoString* instance) {
+		static Rectangle* getInstance(MonoObject* instance) {
 			//
 			//MONO_PROVIDER->readField(reinterpret_cast<MonoObject*>(instance), &ClassDef, new MonoFieldDefinition("num"), outNum);;
 			////MonoObject* value = MONO_PROVIDER->invoke(instance, MONO_PROVIDER->classFromDefinition(&ClassDef), "get_ID");
@@ -45,7 +45,7 @@ namespace sani {
 			return elements->operator[](0);
 		}
 
-		static MonoObject* GetTransform(MonoString* instance) {
+		static MonoObject* GetTransform(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			MonoObject* transform = mono::transform::create(rectangle->transform.position, 
@@ -55,7 +55,7 @@ namespace sani {
 			
 			return transform;
 		}
-		static void SetTransform(MonoString* instance, MonoObject* value) {
+		static void SetTransform(MonoObject* instance, MonoObject* value) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			const math::Vec3f position = mono::transform::getPosition(value);
@@ -72,7 +72,7 @@ namespace sani {
 			recomputeBounds(*rectangle);
 		}
 
-		static MonoObject* GetLocalBounds(MonoString* instance) {
+		static MonoObject* GetLocalBounds(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			if (rectangle == nullptr) return nullptr;
@@ -86,7 +86,7 @@ namespace sani {
 
 			return rectf;
 		}
-		static void SetLocalBounds(MonoString* instance, MonoObject* value) {
+		static void SetLocalBounds(MonoObject* instance, MonoObject* value) {
 			Rectangle* const rectangle = getInstance(instance);
 			
 			mono::rectf::copyData(value, &rectangle->localBounds);
@@ -94,7 +94,7 @@ namespace sani {
 			recomputeBounds(*rectangle);
 		}
 
-		static MonoObject* GetGlobalBounds(MonoString* instance) {
+		static MonoObject* GetGlobalBounds(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			math::Rect32f globalBounds = rectangle->globalBounds;
@@ -107,7 +107,7 @@ namespace sani {
 			return rectf;
 		}
 
-		static MonoObject* GetTextureSource(MonoString* instance) {
+		static MonoObject* GetTextureSource(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			math::Rect32f textureSource = rectangle->textureSource;
@@ -118,7 +118,7 @@ namespace sani {
 													textureSource.h);
 			return rectf;
 		}
-		static void SetTextureSource(MonoString* instance, MonoObject* value) {
+		static void SetTextureSource(MonoObject* instance, MonoObject* value) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			mono::rectf::copyData(value, &rectangle->textureSource);
@@ -126,39 +126,39 @@ namespace sani {
 			updateRenderData(*rectangle);
 		}
 
-		static MonoObject* GetTexture2D(MonoString* instance) {
+		static MonoObject* GetTexture2D(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 			
 			if (rectangle->texture == nullptr) return nullptr;
 
 			else return texture2dmonomodule::getManagedPtr(rectangle->texture->getID());
 		}
-		static void SetTexture2D(MonoString* instance, MonoObject* value) {
+		static void SetTexture2D(MonoObject* instance, MonoObject* value) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			if (value == nullptr) rectangle->texture = nullptr;
-			else				  rectangle->texture = texture2dmonomodule::getNativePtr((MonoString*)value);
+			else				  rectangle->texture = texture2dmonomodule::getNativePtr(value);
 
 			updateRenderData(*rectangle);
 		}
 
-		static gboolean GetVisible(MonoString* instance) {
+		static gboolean GetVisible(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			return rectangle->visible;
 		}
-		static void SetVisible(MonoString* instance, gboolean value) {
+		static void SetVisible(MonoObject* instance, gboolean value) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			rectangle->visible = value ? true : false;
 		}
 		
-		static gfloat GetBorderThickness(MonoString* instance) {
+		static gfloat GetBorderThickness(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			return rectangle->borderThickness;
 		}
-		static void SetBorderThickness(MonoString* instance, gfloat value) {
+		static void SetBorderThickness(MonoObject* instance, gfloat value) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			rectangle->borderThickness = value;
@@ -166,14 +166,14 @@ namespace sani {
 			recomputeVertices(*rectangle);
 		}
 
-		static MonoObject* GetFill(MonoString* instance) {
+		static MonoObject* GetFill(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 			
 			MonoObject* color = mono::color::create(rectangle->fill.r, rectangle->fill.g, rectangle->fill.b, rectangle->fill.a);
 
 			return color;
 		}
-		static void SetFill(MonoString* instance, MonoObject* value) {
+		static void SetFill(MonoObject* instance, MonoObject* value) {
 			Rectangle* const rectangle = getInstance(instance);
 			
 			mono::color::copyData(value, &rectangle->fill);
@@ -181,14 +181,14 @@ namespace sani {
 			recomputeVertices(*rectangle);
 		}
 
-		static MonoObject* GetBorderFill(MonoString* instance) {
+		static MonoObject* GetBorderFill(MonoObject* instance) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			MonoObject* color = mono::color::create(rectangle->borderFill.r, rectangle->borderFill.g, rectangle->borderFill.b, rectangle->borderFill.a);
 
 			return color;
 		}
-		static void SetBorderFill(MonoString* instance, MonoObject* value) {
+		static void SetBorderFill(MonoObject* instance, MonoObject* value) {
 			Rectangle* const rectangle = getInstance(instance);
 
 			mono::color::copyData(value, &rectangle->borderFill);
@@ -196,15 +196,7 @@ namespace sani {
 			recomputeVertices(*rectangle);
 		}
 
-		static void Print(MonoObject* o) {
-			MonoObject* val = MONO_PROVIDER->readField(o, &ClassDef, new MonoFieldDefinition("num"));
-
-			int id = *(int*)mono_object_unbox(val);
-
-			volatile int j = id;
-		}
-
-		static gint32 InternalCreateRectangle(MonoString* instance, gfloat x, gfloat y, gfloat width, gfloat height) {
+		static gint32 InternalCreateRectangle(MonoObject* instance, gfloat x, gfloat y, gfloat width, gfloat height) {
 			auto* createRectangle = engine->createEmptyMessage<messages::DocumentMessage>();
 			renderablemanager::createElement(createRectangle, ElementType::Rectangle);
 			engine->routeMessage(createRectangle);
@@ -217,7 +209,7 @@ namespace sani {
 		
 			return gint32(rectangle->id);
 		}
-		static void InternalReleaseRectangle(MonoString* instance, gint32 id) {
+		static void InternalReleaseRectangle(MonoObject* instance, gint32 id) {
 			auto* deleteElement = engine->createEmptyMessage<messages::DocumentMessage>();
 			deleteElement->setData(elements->operator[](id));
 
@@ -260,8 +252,6 @@ namespace sani {
 
  			mono::registerRenderableMembers(superDef);
 			
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, Print, Print);
-
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_LocalBounds, GetLocalBounds);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_LocalBounds, SetLocalBounds);
 

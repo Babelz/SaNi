@@ -29,7 +29,7 @@ namespace sani {
 			class UserService final : public EngineService {
 			private:
 				MonoClass* mclass;				// Mono class information required to invoke methods.
-				MonoString* const instance;		// Mono instance.
+				MonoObject* const instance;		// Mono instance.
 				
 				HookFlags flags;
 
@@ -43,9 +43,9 @@ namespace sani {
 				virtual void onSuspend() final override;
 				virtual void onTerminate() final override;
 			public:
-				UserService(MonoString* const instance, MonoString* const name, SaNiEngine* const engine);
+				UserService(MonoObject* const instance, MonoString* const name, SaNiEngine* const engine);
 			
-				MonoString* const getMonoInstance() const;
+				MonoObject* const getMonoInstance() const;
 				void setMonoHooks(const HookFlags flags);
 				void setMonoClass(MonoClass* const mclass);
 

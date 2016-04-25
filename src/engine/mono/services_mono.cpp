@@ -46,7 +46,7 @@ namespace sani {
 			engine->deallocateShared(cvars);
 		}
 
-		static UserService* const getInstance(MonoString* instance) {
+		static UserService* const getInstance(MonoObject* instance) {
 			for (auto* const userService : services) if (userService->getMonoInstance() == instance) return userService;
 			
 			return nullptr;
@@ -56,22 +56,22 @@ namespace sani {
 			CIL internal call impls.
 		*/
 
-		static void InternalCreateService(MonoString* instance, MonoString* name) {
+		static void InternalCreateService(MonoObject* instance, MonoString* name) {
 			// Create and store.
 			UserService* service = new UserService(instance, name, engine);
 
 			services.push_back(service);
 		}
 
-		static MonoBoolean Start(MonoString* instance) {	
+		static MonoBoolean Start(MonoObject* instance) {
 			return getInstance(instance)->start();
 		}
 
-		static void Suspend(MonoString* instance) {
+		static void Suspend(MonoObject* instance) {
 			getInstance(instance)->suspend();
 		}
 
-		static void Terminate(MonoString* instance) {
+		static void Terminate(MonoObject* instance) {
 			UserService* const service = getInstance(instance);
 
 			service->terminate();
@@ -81,13 +81,13 @@ namespace sani {
 			delete service;
 		}
 
-		static MonoString* InternalGetName(MonoString* instance) {
+		static MonoString* InternalGetName(MonoObject* instance) {
 			return MONO_PROVIDER->createString(getInstance(instance)->getName().c_str());
 		}
-		static gint32 InternalGetID(MonoString* instance) {
+		static gint32 InternalGetID(MonoObject* instance) {
 			return getInstance(instance)->getID();
 		}
-		static gint32 InternalGetState(MonoString* instance) {
+		static gint32 InternalGetState(MonoObject* instance) {
 			return static_cast<gint32>(getInstance(instance)->getState());
 		}
 

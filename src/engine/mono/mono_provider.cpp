@@ -125,12 +125,12 @@ namespace sani {
 			return mono_string_new(monoDomain, str);
 		}
 
-		MonoObject* MonoProvider::invoke(MonoString* instance, MonoClass* mclass, const char* const name, void** args, const int32 argsc) const {
+		MonoObject* MonoProvider::invoke(MonoObject* instance, MonoClass* mclass, const char* const name, void** args, const int32 argsc) const {
 			MonoMethod* method = mono_class_get_method_from_name(mclass, name, argsc);
 
 			return mono_runtime_invoke(method, instance, args, NULL);
 		}
-		MonoObject* MonoProvider::invoke(MonoString* instance, MonoClass* mclass, const char* const name) const {
+		MonoObject* MonoProvider::invoke(MonoObject* instance, MonoClass* mclass, const char* const name) const {
 			return invoke(instance, mclass, name, NULL, NULL);
 		}
 	}
