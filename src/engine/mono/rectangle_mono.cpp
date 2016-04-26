@@ -15,6 +15,7 @@
 #include "sani/core/math/vector2.hpp"
 #include "sani/core/math/vector3.hpp"
 
+#include <mono/metadata/appdomain.h>
 #include <iostream>
 #include <vector>
 
@@ -34,13 +35,28 @@ namespace sani {
 		static std::vector<Rectangle*>* elements				{ nullptr };
 
 		const MonoClassDefinition ClassDef("SaNi.Mono.Graphics.Renderables", "Rectangle");
-		
-		static Rectangle* getInstance(MonoObject* instance) {
-			//const gint32 id = *MONO_UNBOX(MONO_PROVIDER->readField(instance, &ClassDef, &IDDef), gint32);
-			
-			MonoObject* value = MONO_PROVIDER->readField(instance, "get_ID");
 
+		static Rectangle* getInstance(MonoObject* instance) {
+			const gint32 id = *MONO_UNBOX(MONO_PROVIDER->readField(instance, "id"), gint32);
+
+			/*MonoObject* value = MONO_PROVIDER->invoke(instance, "GetID");
+///*
 			const gint32 id = *MONO_UNBOX(value, gint32);
+*/
+
+			//MonoClassDefinition fd("SaNi.Mono", "Foo");
+			//MonoFunctionDefinition fctor(".ctor", FooCtor);
+
+			//MONO_PROVIDER->addInternalCall(&fd, &fctor);
+			//MonoObject* foo = MONO_PROVIDER->createObject(&fd);
+
+			//auto a = mono_get_root_domain();
+			//auto ia = mono_object_get_domain(instance);
+			//auto ba = mono_object_get_domain(foo);
+
+			//MonoObject* value = MONO_PROVIDER->readField(instance, "id");
+
+			//const uint32 id = *MONO_UNBOX(value, int32);
 
 			return elements->operator[](0);
 		}
@@ -73,6 +89,9 @@ namespace sani {
 		}
 
 		static MonoObject* GetLocalBounds(MonoObject* instance) {
+			MonoDomain* md = mono_object_get_domain(instance);
+			auto a = mono_domain_get();
+
 			Rectangle* const rectangle = getInstance(instance);
 
 			if (rectangle == nullptr) return nullptr;
@@ -219,6 +238,19 @@ namespace sani {
 			engine->releaseMessage(deleteElement);
 		}
 
+		static MonoObject* RectangleCtor(MonoObject* instance, gfloat x, gfloat y, gfloat width, gfloat height) {
+			gint32 id = InternalCreateRectangle(instance, x, y, width, height);
+			
+			MONO_PROVIDER->writeField(instance, "id", &id);
+			
+			MonoDomain* md = mono_object_get_domain(instance);
+			auto a = mono_domain_get();
+
+			mono_gchandle_new(instance, true);
+
+			return instance;
+		}
+
 		static void getElements() {
 			auto* getElements = engine->createEmptyMessage<messages::DocumentMessage>();
 			renderablemanager::getElements(getElements, ElementType::Rectangle);
@@ -252,6 +284,8 @@ namespace sani {
 
  			mono::registerRenderableMembers(superDef);
 			
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, .ctor, RectangleCtor);
+
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_LocalBounds, GetLocalBounds);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_LocalBounds, SetLocalBounds);
 

@@ -15,9 +15,6 @@ namespace SaNi.Mono.Sandbox
     {
         #region Fields
         private Rectangle r1;
-        private Rectangle r2;
-        private Rectangle r3;
-        private Rectangle r4;
         #endregion
 
         public EngineAsFramework() 
@@ -28,9 +25,8 @@ namespace SaNi.Mono.Sandbox
         private bool OnStart()
         {
             r1 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
-            r2 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
-            r3 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
-            r4 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
+
+            Console.WriteLine("Start called");
             return true;
         }
         private bool OnResume()
@@ -48,20 +44,11 @@ namespace SaNi.Mono.Sandbox
         }
         private void OnUpdate(EngineTime time)
         {
-            var c = r1.LocalBounds;
-            c = r2.LocalBounds;
-            c = r3.LocalBounds;
-            c = r4.LocalBounds;
-
             Console.WriteLine(r1.ID);
-            Console.WriteLine(r2.ID);
-            Console.WriteLine(r3.ID);
-            Console.WriteLine(r4.ID);
-        }
 
-        ~EngineAsFramework()
-        {
-            Console.WriteLine("easf dtor");
+            var b = r1.LocalBounds;
+
+            Console.WriteLine("FizzBuzz");
         }
     }
 }

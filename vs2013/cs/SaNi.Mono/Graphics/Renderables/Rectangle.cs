@@ -1,8 +1,10 @@
-﻿using SaNi.Mono.Math;
+﻿using SaNi.Mono.Engine;
+using SaNi.Mono.Math;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -95,19 +97,12 @@ namespace SaNi.Mono.Graphics.Renderables
         #endregion
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void Print();
+        public extern Rectangle(float x, float y, float width, float height);
 
-        public Rectangle(float x, float y, float width, float height)
-        {
-            id = InternalCreateRectangle(x, y, width, height);
-        }
         public Rectangle(Vector2 position, Vector2 size)
             : this(position.x, position.y, size.x, size.y)
         {
         }
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern int InternalCreateRectangle(float x, float y, float width, float height);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void InternalReleaseRectangle(int id);

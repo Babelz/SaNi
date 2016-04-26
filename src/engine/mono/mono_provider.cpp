@@ -38,8 +38,8 @@ namespace sani {
 			MonoClass* mclass = mono_object_get_class(instance);
 
 			MonoClassField* mfield = mono_class_get_field_from_name(mclass, name);
-
-			return mono_field_get_value_object(mono_object_get_domain(instance), mfield, instance);
+			
+			return mono_field_get_value_object(mono_domain_get(), mfield, instance);
 		}
 		void MonoProvider::writeField(MonoObject* instance, const char* const name, void* value) {
 			MonoClass* mclass = mono_object_get_class(instance);
@@ -89,7 +89,7 @@ namespace sani {
 
 			MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
 			mono_runtime_object_init(instance);
-
+		
 			return instance;
 		}
 

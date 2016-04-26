@@ -109,6 +109,11 @@ namespace sani {
 
 					const uint32 updateargc = 1;
 
+					auto a = mono_object_get_domain(instance);
+					auto md = mono_domain_get();
+
+					//const char* const name = mono_domain_get_friendly_name(a);
+
 					MONO_PROVIDER->invoke(instance, "OnUpdate", updateargs, updateargc);
 				}
 			}
