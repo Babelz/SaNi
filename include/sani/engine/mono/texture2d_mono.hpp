@@ -7,6 +7,7 @@
 
 #include <mono\metadata\object.h>
 
+
 SANI_FORWARD_DECLARE_2(sani, resource, Texture2D)
 
 MONO_MODULE_DEF_BEGIN(texture2d)

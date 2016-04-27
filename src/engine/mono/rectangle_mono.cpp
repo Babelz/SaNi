@@ -16,6 +16,7 @@
 #include "sani/core/math/vector3.hpp"
 
 #include <mono/metadata/appdomain.h>
+
 #include <iostream>
 #include <vector>
 
@@ -89,19 +90,19 @@ namespace sani {
 		}
 
 		static MonoObject* GetLocalBounds(MonoObject* instance) {
-			MonoDomain* md = mono_object_get_domain(instance);
 			auto a = mono_domain_get();
+			auto b = mono_object_get_domain(instance);
 
 			Rectangle* const rectangle = getInstance(instance);
 
-			if (rectangle == nullptr) return nullptr;
+			//if (rectangle == nullptr) return nullptr;
 
 			math::Rect32f localBounds = rectangle->localBounds;
 
 			MonoObject* rectf = mono::rectf::create(localBounds.x, 
-												  localBounds.y, 
-												  localBounds.w, 
-  												  localBounds.h);
+												    localBounds.y, 
+												    localBounds.w, 
+  												    localBounds.h);
 
 			return rectf;
 		}
@@ -215,20 +216,7 @@ namespace sani {
 			recomputeVertices(*rectangle);
 		}
 
-		static gint32 InternalCreateRectangle(MonoObject* instance, gfloat x, gfloat y, gfloat width, gfloat height) {
-			auto* createRectangle = engine->createEmptyMessage<messages::DocumentMessage>();
-			renderablemanager::createElement(createRectangle, ElementType::Rectangle);
-			engine->routeMessage(createRectangle);
-			
-			auto* rectangle = static_cast<Rectangle*>(createRectangle->getData());
-			
-			NEW_DYNAMIC(Rectangle, rectangle, x, y, width, height);
-			
-			engine->releaseMessage(createRectangle);
-		
-			return gint32(rectangle->id);
-		}
-		static void InternalReleaseRectangle(MonoObject* instance, gint32 id) {
+		static void Release(MonoObject* instance, gint32 id) {
 			auto* deleteElement = engine->createEmptyMessage<messages::DocumentMessage>();
 			deleteElement->setData(elements->operator[](id));
 
@@ -238,16 +226,27 @@ namespace sani {
 			engine->releaseMessage(deleteElement);
 		}
 
-		static MonoObject* RectangleCtor(MonoObject* instance, gfloat x, gfloat y, gfloat width, gfloat height) {
-			gint32 id = InternalCreateRectangle(instance, x, y, width, height);
-			
-			MONO_PROVIDER->writeField(instance, "id", &id);
-			
-			MonoDomain* md = mono_object_get_domain(instance);
-			auto a = mono_domain_get();
+		static MonoObject* Instantiate(gfloat x, gfloat y, gfloat width, gfloat height) {
+			auto* createRectangle = engine->createEmptyMessage<messages::DocumentMessage>();
+			renderablemanager::createElement(createRectangle, ElementType::Rectangle);
+			engine->routeMessage(createRectangle);
 
-			mono_gchandle_new(instance, true);
+			auto* rectangle = static_cast<Rectangle*>(createRectangle->getData());
 
+			NEW_DYNAMIC(Rectangle, rectangle, x, y, width, height);
+
+			engine->releaseMessage(createRectangle);
+
+			gint32 id = gint32(rectangle->id);
+
+			const uint32 argc = 1;
+			void* args[argc];
+			args[0] = &id;
+
+			MonoObject* instance = MONO_PROVIDER->createObject(&ClassDef, args, argc);
+
+			MonoObject* o = mono::color::create(1.0f, 1.0f, 1.0f, 1.0f);
+			
 			return instance;
 		}
 
@@ -261,48 +260,56 @@ namespace sani {
 			engine->releaseMessage(getElements);
 		}
 
+		static void ASD(MonoObject* instance) {
+			auto a = mono_domain_get();
+			auto b = mono_object_get_domain(instance);
+
+			volatile int j = 0;
+		}
+
 		bool initialize() {
 			getElements();
 
 			mono::RenderableSuperDef superDef("Rectangle", "SaNi.Mono.Graphics.Renderables");
-			superDef.transform.get = GetTransform;
-			superDef.transform.set = SetTransform;
+			//superDef.transform.get = GetTransform;
+			//superDef.transform.set = SetTransform;
 
-			superDef.localBounds.get = GetLocalBounds;
-			superDef.localBounds.set = SetLocalBounds;
+			////superDef.localBounds.get = GetLocalBounds;
+			////superDef.localBounds.set = SetLocalBounds;
 
-			superDef.globalBounds.get = GetGlobalBounds;
+			//superDef.globalBounds.get = GetGlobalBounds;
+			//
+			//superDef.textureSource.get = GetTextureSource;
+			//superDef.textureSource.set = SetTextureSource;
+
+			//superDef.texture2D.get = GetTexture2D;
+			//superDef.texture2D.set = SetTexture2D;
+
+			//superDef.visible.get = GetVisible;
+			//superDef.visible.set = SetVisible;
+
+ 		//	mono::registerRenderableMembers(superDef);
 			
-			superDef.textureSource.get = GetTextureSource;
-			superDef.textureSource.set = SetTextureSource;
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, Instantiate, Instantiate);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, ASD, ASD);
 
-			superDef.texture2D.get = GetTexture2D;
-			superDef.texture2D.set = SetTexture2D;
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, GetLocalBounds, GetLocalBounds);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, SetLocalBounds, SetLocalBounds);
 
-			superDef.visible.get = GetVisible;
-			superDef.visible.set = SetVisible;
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_Visible, GetVisible);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_Visible, SetVisible);
 
- 			mono::registerRenderableMembers(superDef);
-			
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, .ctor, RectangleCtor);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_Fill, GetFill);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_Fill, SetFill);
 
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_LocalBounds, GetLocalBounds);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_LocalBounds, SetLocalBounds);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_BorderFill, GetBorderFill);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_BorderFill, SetBorderFill);
 
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_Visible, GetVisible);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_Visible, SetVisible);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_BorderThickness, GetBorderThickness);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_BorderThickness, SetBorderThickness);
 
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_Fill, GetFill);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_Fill, SetFill);
-
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_BorderFill, GetBorderFill);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_BorderFill, SetBorderFill);
-
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, get_BorderThickness, GetBorderThickness);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, set_BorderThickness, SetBorderThickness);
-
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, InternalCreateRectangle, InternalCreateRectangle);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, InternalReleaseRectangle, InternalReleaseRectangle);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, Instantiate, Instantiate);
+			//MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics.Renderables, Rectangle, Release, Release);
 
 			return true;
 		}

@@ -34,6 +34,9 @@
     <PlatformTarget>x86</PlatformTarget>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,12 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\SaNiEngine.cs" />
+    <Compile Include="Graphics\Renderables\Rectangle.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
     <Compile Include="Resource\IResource.cs" />
     <Compile Include="Engine\EngineTime.cs" />
     <Compile Include="Graphics\Color.cs" />
     <Compile Include="Graphics\IGraphicsResource.cs" />
-    <Compile Include="Graphics\Renderables\Rectangle.cs" />
     <Compile Include="Graphics\Renderables\IRenderable.cs" />
     <Compile Include="Graphics\RenderTarget2D.cs" />
     <Compile Include="Graphics\ITexture.cs" />

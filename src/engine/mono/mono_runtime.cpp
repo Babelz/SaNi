@@ -56,14 +56,10 @@ namespace sani {
 		bool MonoRuntime::initializeRuntime() {
 			mono_set_assemblies_path(monoAssembliesPath.c_str());
 			mono_set_dirs(monoLibrariesPath.c_str(), monoConfigPath.c_str());
+			mono_config_parse(NULL);
 
 			monoDomain = mono_jit_init_version(MonoRootDomainName, MonoVersion);
-
 			std::vector<MonoAssembly*> assemblies;
-
-			// Load user assembly (game specific code).
-			monoAssembly = mono_domain_assembly_open(monoDomain, String(monoAssembliesPath + "\\" + monoAssemblyName).c_str());
-			assemblies.push_back(monoAssembly);
 
 			// Load dependencies (base lib + others).
 			std::vector<String> dllNames;
@@ -71,8 +67,12 @@ namespace sani {
 
 			for (const auto& dll : dllNames) assemblies.push_back(mono_domain_assembly_open(monoDomain, String(monoAssembliesPath + "\\" + dll).c_str())); 
 
+			// Load user assembly (game specific code).
+			monoAssembly = mono_domain_assembly_open(monoDomain, String(monoAssembliesPath + "\\" + monoAssemblyName).c_str());
+			assemblies.push_back(monoAssembly);
+			
  			if (monoAssembly == nullptr) {
-				RLOG_ERR(log::OutFlags::All, "MonoRuntime", "could not load sani managed.dll");
+				RLOG_ERR(log::OutFlags::All, "MonoRuntime", "could not load sani managed .dll");
 
 				return false;
 			}

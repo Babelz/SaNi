@@ -9,6 +9,7 @@
 #include "sani/types.hpp"
 
 #include <sstream>
+#include <cassert>
 
 namespace sani {
 
@@ -35,11 +36,16 @@ namespace sani {
 		}
 
 		MonoObject* MonoProvider::readField(MonoObject* instance, const char* const name) {
+			MonoDomain* currentDomain = mono_domain_get();
+			MonoDomain* objectDomain = mono_object_get_domain(instance);
+
 			MonoClass* mclass = mono_object_get_class(instance);
 
 			MonoClassField* mfield = mono_class_get_field_from_name(mclass, name);
 			
-			return mono_field_get_value_object(mono_domain_get(), mfield, instance);
+			MonoObject* value = mono_field_get_value_object(mono_domain_get(), mfield, instance);
+		
+			return value;
 		}
 		void MonoProvider::writeField(MonoObject* instance, const char* const name, void* value) {
 			MonoClass* mclass = mono_object_get_class(instance);
@@ -87,7 +93,8 @@ namespace sani {
 		MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef) const {
 			MonoClass* mclass = classFromDefinition(classDef);
 
-			MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
+			MonoObject* instance = mono_object_new(mono_domain_get(), mclass); 
+
 			mono_runtime_object_init(instance);
 		
 			return instance;
@@ -97,7 +104,8 @@ namespace sani {
 			MonoClass* mclass = classFromDefinition(classDef);
 
 			MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
-			
+			assert(mono_class_init(mclass));
+
 			MonoMethod* method = nullptr;
 			void* iter = nullptr;
 
@@ -109,7 +117,7 @@ namespace sani {
 
 					if (mono_signature_get_param_count(signature) == argc) {
 						mono_runtime_invoke(method, instance, args, NULL);
-
+						
 						return instance;
 					}
 				}
