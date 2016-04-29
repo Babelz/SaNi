@@ -3,7 +3,6 @@
 #include "sani/engine/services/renderable_manager.hpp"
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
 #include "sani/core/memory/memory.hpp"
-#include "sani/engine/mono/renderable_mono.hpp"
 #include "sani/engine/mono/mono_provider.hpp"
 
 #include "sani/engine/mono/transform_mono.hpp"
@@ -270,7 +269,7 @@ namespace sani {
 		bool initialize() {
 			getElements();
 
-			mono::RenderableSuperDef superDef("Rectangle", "SaNi.Mono.Graphics.Renderables");
+			//mono::RenderableSuperDef superDef("Rectangle", "SaNi.Mono.Graphics.Renderables");
 			//superDef.transform.get = GetTransform;
 			//superDef.transform.set = SetTransform;
 

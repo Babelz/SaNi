@@ -274,6 +274,9 @@
     <Filter Include="src\engine\mono">
       <UniqueIdentifier>{04ddf887-fab6-4378-b785-699224609441}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\mono\impl">
+      <UniqueIdentifier>{a94cd3e3-b915-4902-be8a-2f98cb7050a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -1476,9 +1479,6 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\resource_manager_handler_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono\renderable_mono.hpp">
-      <Filter>include\engine\mono</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
@@ -1487,6 +1487,12 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\color_mono.hpp">
       <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\renderable_handler_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\impl\renderable_handler_mono.hpp">
+      <Filter>include\engine\mono\impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,13 +10,20 @@ namespace SaNi.Mono.Graphics
 {
     public struct Transform
     {
-        #region Properties
+        #region Fields
+        private static Transform empty;
+
         public Vector3 position;
         public Vector3 scale;
         public Vector3 origin;
 
         public float rotation;
         #endregion
+
+        static Transform()
+        {
+            empty = new Transform(Vector3.Zero);
+        }
         
         public Transform(float px, float py, float pz, float sx, float sy, float sz, float ox, float oy, float oz, float r)
         {
@@ -47,7 +54,7 @@ namespace SaNi.Mono.Graphics
 
         public static Transform Empty()
         {
-            return new Transform(Vector3.Zero, Vector3.Zero, Vector3.Zero, 0.0f);
+            return empty;
         }
     }
 }

@@ -9,10 +9,12 @@ namespace SaNi.Mono.Math
     public struct Recti
     {
         #region Fields
-        public int X;
-        public int Y;
-        public int Width;
-        public int Height;
+        private static readonly Recti empty;
+
+        public int x;
+        public int y;
+        public int width;
+        public int height;
         #endregion
 
         #region Properties
@@ -20,38 +22,48 @@ namespace SaNi.Mono.Math
         {
             get
             {
-                return X;
+                return x;
             }
         }
         public int Right
         {
             get
             {
-                return X + Width;
+                return x + width;
             }
         }
         public int Top
         {
             get
             {
-                return Y;
+                return y;
             }
         }
         public int Bottom
         {
             get
             {
-                return Y + Height;
+                return y + height;
             }
         }
         #endregion
 
+        static Recti()
+        {
+            empty = new Recti(0, 0, 0, 0);
+        }
+
         public Recti(int x, int y, int width, int height)
         {
-            X = x;
-            Y = y;
-            Width = width;
-            Height = height;
+            this.x = x;
+            this.y = y;
+            this.width = width;
+            this.height = height;
+        }
+
+        public static Recti Empty()
+        {
+            return empty;
         }
     }
 }

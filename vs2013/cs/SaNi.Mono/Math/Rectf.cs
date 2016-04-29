@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace SaNi.Mono.Math
 {
-    [StructLayout(LayoutKind.Sequential)]
     public struct Rectf
     {   
         #region Fields
+        private static readonly Rectf empty;
+
         public float x;
         public float y;
         public float width;
@@ -48,12 +49,22 @@ namespace SaNi.Mono.Math
         }
         #endregion
 
+        static Rectf()
+        {
+            empty = new Rectf(0.0f, 0.0f, 0.0f, 0.0f);
+        }
+
         public Rectf(float x, float y, float width, float height)
         {
             this.x = x;
             this.y = y;
             this.width = width;
             this.height = height;
+        }
+
+        public static Rectf Empty()
+        {
+            return empty;
         }
     }
 }

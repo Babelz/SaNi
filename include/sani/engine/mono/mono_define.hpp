@@ -41,43 +41,6 @@ struct MonoFunctionDefinition final {
 	~MonoFunctionDefinition() = default;
 };
 
-template<typename T>
-using MonoGetter = std::function<T(MonoObject*)>;
-
-template<typename T>
-using MonoSetter = std::function<void(MonoObject*, T)>;
-
-const uint32 PropsNull	 = 0;
-const uint32 PropsGet	 = 1;
-const uint32 PropsSet	 = 2;
-const uint32 PropsGetSet = 3;
-
-template<typename T>
-struct MonoPropertyDefinition final {
-	const uint32 settings   { PropsNull };
-	const char* const name;
-
-	MonoGetter<T> get;
-	MonoSetter<T> set;
-
-	MonoPropertyDefinition(const char* const name, const uint32 settings) : name(name),
-																		    settings(settings) {
-	}
-
-	operator bool() const {
-		const bool hasGetter = get ? true : false;
-		const bool hasSetter = set ? true : false;
-		
-		if		(settings == PropsNull)	  return false;
-		else if (settings == PropsGetSet) return hasGetter && hasSetter;
-		else if (settings == PropsGet)	  return hasGetter;
-		else if (settings == PropsSet)	  return hasSetter;
-
-		// No access.
-		return false;
-	}
-};
-
 #define MONO_UNBOX(__val__, __type__) (__type__*)mono_object_unbox(__val__)
 
 #define MONO_MODULE_DEF(name) namespace sani { \
@@ -166,3 +129,13 @@ struct MonoPropertyDefinition final {
 															MONO_REGISTER_SETTER(__ns__, __class__, __pdef__) \
 
 #define MONO_BASE_DEF_CHECK_FOR_NULL(__pname__, __def__) if (!__def__.__pname__) { FNCLOG_ERR(log::OutFlags::All, String(#__pname__) + " can't be null!"); return false; }
+
+#define MONO_REGISTER_WRAPPED_GETTER(__classdef__, __name__, __ptr__) { \
+																		const MonoFunctionDefinition _getDef(#__name__, __ptr__, 1); \
+																		MONO_PROVIDER->addInternalCall(&__classdef__, &_getDef); \
+																	  } \
+
+#define MONO_REGISTER_WRAPPED_SETTER(__classdef__, __name__, __ptr__) { \
+																		const MonoFunctionDefinition _setDef(#__name__, __ptr__, 1); \
+																		MONO_PROVIDER->addInternalCall(&__classdef__, &_setDef); \
+																	  } \

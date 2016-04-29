@@ -442,9 +442,10 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\color_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\impl\renderable_handler_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\rectf_mono.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\mono\renderable_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\renderable_handler_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\resource_manager_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\mono_include.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\services_mono.hpp" />
