@@ -718,19 +718,13 @@
     <ClCompile Include="..\..\src\engine\services\contracts\resource_manager_handler_contract.cpp">
       <Filter>src\engine\services\contracts</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\mono\renderable_mono.cpp">
-      <Filter>src\engine\mono</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\engine\mono\rectangle_mono.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\mono\transform_mono.cpp">
+    <ClCompile Include="..\..\src\engine\mono\structs_mono.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\mono\rectf_mono.cpp">
-      <Filter>src\engine\mono</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\engine\mono\color_mono.cpp">
+    <ClCompile Include="..\..\src\engine\mono\mono_define.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1446,9 +1440,6 @@
     <ClInclude Include="..\..\include\sani\engine\mono\mono_runtime.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono\glib_types.hpp">
-      <Filter>include\engine\mono</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\mono_define.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
@@ -1460,9 +1451,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\user_service.hpp">
       <Filter>include\engine\services</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono\transform_mono.hpp">
-      <Filter>include\engine\mono</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\texture2d_mono.hpp">
       <Filter>include\engine\mono</Filter>
@@ -1482,16 +1470,19 @@
     <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono\rectf_mono.hpp">
-      <Filter>include\engine\mono</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono\color_mono.hpp">
-      <Filter>include\engine\mono</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\renderable_handler_mono.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\impl\renderable_handler_mono.hpp">
+      <Filter>include\engine\mono\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\structs_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\shape_handler_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\impl\shape_handler_mono.hpp">
       <Filter>include\engine\mono\impl</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SaNi.Mono.Math
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct Vector4
     {
         #region Fields
@@ -220,6 +222,11 @@ namespace SaNi.Mono.Math
         public override int GetHashCode()
         {
             return x.GetHashCode() + y.GetHashCode() + z.GetHashCode() + w.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("x: {0} - y: {1} - z: {2} - w: {3}", x, y, z, w);
         }
     }
 }

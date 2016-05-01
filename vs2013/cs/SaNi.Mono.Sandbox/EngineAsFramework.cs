@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SaNi.Mono.Graphics.Renderables;
+using SaNi.Mono.Math;
 
 namespace SaNi.Mono.Sandbox
 {
@@ -24,7 +25,7 @@ namespace SaNi.Mono.Sandbox
 
         private bool OnStart()
         {
-            r1 = Rectangle.Instantiate(32.0f, 32.0f, 32.0f, 32.0f);
+            r1 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
 
             Console.WriteLine("Start called");
             return true;
@@ -46,9 +47,13 @@ namespace SaNi.Mono.Sandbox
         {
             Console.WriteLine(r1.ID);
 
-            var b = r1.ID;
-            var a = r1.LocalBounds;
-            
+            var a = r1.Transform;
+            var b = r1.LocalBounds;
+            var c = r1.GlobalBounds;
+            var d = r1.TextureSource;
+            var e = r1.Texture;
+            var g = r1.Visible;
+
             Console.WriteLine("FizzBuzz");
         }
     }

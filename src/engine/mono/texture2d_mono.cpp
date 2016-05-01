@@ -27,17 +27,17 @@ namespace sani {
 			return nullptr;
 		}
 
-		static gint32 InternalGetWidth(MonoObject* instance) {
-			return static_cast<gint32>(getInstance(instance)->nativeptr->getWidth());
+		static int32 InternalGetWidth(MonoObject* instance) {
+			return static_cast<int32>(getInstance(instance)->nativeptr->getWidth());
 		}
-		static gint32 InternalGetHeight(MonoObject* instance) {
-			return static_cast<gint32>(getInstance(instance)->nativeptr->getHeight());
+		static int32 InternalGetHeight(MonoObject* instance) {
+			return static_cast<int32>(getInstance(instance)->nativeptr->getHeight());
 		}
-		static gint32 InternalGetID(MonoObject* instance) {
-			return static_cast<gint32>(getInstance(instance)->nativeptr->getID());
+		static int32 InternalGetID(MonoObject* instance) {
+			return static_cast<int32>(getInstance(instance)->nativeptr->getID());
 		}
-		static gboolean InternalGetDisposed(MonoObject* instance) {
-			return static_cast<gboolean>(getInstance(instance)->nativeptr->disposed());
+		static bool InternalGetDisposed(MonoObject* instance) {
+			return getInstance(instance)->nativeptr->disposed();
 		}
 
 		MonoObject* createTexture2D() {

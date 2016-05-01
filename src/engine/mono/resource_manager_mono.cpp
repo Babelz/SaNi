@@ -7,7 +7,8 @@
 #include "sani/engine/mono/texture2d_mono.hpp"
 #include "sani/resource/texture2d.hpp"
 
-#include "sani/engine/mono/mono_include.hpp"
+#include "sani/engine/mono/mono_define.hpp"
+#include "sani/engine/sani_engine.hpp"
 
 #include <functional>
 #include <unordered_map>
@@ -16,10 +17,10 @@ namespace sani {
 
 	namespace engine {
 
+		MONO_MODULE_IMPL(resourcemanager)
+
 		using namespace sani::resource;
 
-		MONO_MODULE_IMPL(resourcemanager)
-	
 		using ContentLoader = std::function<MonoObject*(MonoString*)>;
 		using ContentLoaderMappings = std::unordered_map<String, ContentLoader>;
 
@@ -40,7 +41,7 @@ namespace sani {
 		static MonoObject* loadTexture2D(MonoString* name) {
 			const String cstr(mono_string_to_utf8(name));
 
-			resource::Texture2D* texture = resources->load<resource::Texture2D>(cstr);
+			Texture2D* texture = resources->load<Texture2D>(cstr);
 			
 			MonoObject* textureMono = texture2dmonomodule::createTexture2D();
 			texture2dmonomodule::registerTexture2D(texture, textureMono);

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace SaNi.Mono.Math
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct Rectf
     {   
         #region Fields

@@ -9,64 +9,63 @@
 
 #include <vector>
 
-SANI_FORWARD_DECLARE_2(sani, engine, MonoProvider)
+SANI_FORWARD_DECLARE_3(sani, engine, mono, MonoProvider)
 
 namespace sani {
 
 	namespace engine {
 
-		/*
-		
-		*/
+		namespace mono {
 
-		/// @class MonoRuntime mono_runtime.hpp "sani/engine/mono_runtime.hpp"
-		/// @author voidbab
-		///
-		/// Contains all mono related data. Use the provider to
-		/// call mono API functions.
-		class MonoRuntime final {
-		private:
-			String monoAssemblyName;
-			String monoAssembliesPath;
-			String monoLibrariesPath;
-			String monoConfigPath;
-			String monoDependencies;
+			/// @class MonoRuntime mono_runtime.hpp "sani/engine/mono_runtime.hpp"
+			/// @author voidbab
+			///
+			/// Contains all mono related data. Use the provider to
+			/// call mono API functions.
+			class MonoRuntime final {
+			private:
+				String monoAssemblyName;
+				String monoAssembliesPath;
+				String monoLibrariesPath;
+				String monoConfigPath;
+				String monoDependencies;
 
-			MonoProvider* monoProvider;		// Provider that defines our Mono interface.
-			MonoAssembly* monoAssembly;		// Our mono assembly containing the C# code.
-			MonoDomain* monoDomain;			// Our mono domain in which all the magic happens.
+				MonoProvider* monoProvider;		// Provider that defines our Mono interface.
+				MonoAssembly* monoAssembly;		// Our mono assembly containing the C# code.
+				MonoDomain* monoDomain;			// Our mono domain in which all the magic happens.
 
-			MonoRuntime();
+				MonoRuntime();
 
-			~MonoRuntime();
+				~MonoRuntime();
 
-			bool initializeRuntime(); 
-			void logErrors(std::vector<String>& errors) const;
+				bool initializeRuntime();
+				void logErrors(std::vector<String>& errors) const;
 
-			bool monoLibrariesDirExists() const;
-			bool monoConfigDirExists() const;
-			bool assembliesDirExists() const;
-		public:
-			/// Returns the runtime instance.
-			static MonoRuntime& instance();	
-			/// Returns the runtime provider that contains 
-			/// all the mono functions.
-			MonoProvider* const provider();
+				bool monoLibrariesDirExists() const;
+				bool monoConfigDirExists() const;
+				bool assembliesDirExists() const;
+			public:
+				/// Returns the runtime instance.
+				static MonoRuntime& instance();
+				/// Returns the runtime provider that contains 
+				/// all the mono functions.
+				MonoProvider* const provider();
 
-			MonoDomain* domain();
+				MonoDomain* domain();
 
-			/// Starts the runtime.
-			/// Returns false if errors occurred
-			/// while initializing.
-			bool start(const String& monoAssembliesPath, const String& monoLibrariesPath, const String& monoConfigPath, const String& monoAssemblyName, const String& monoDependencies);
-			/// Shutdowns the runtime. Cleanups all mono related data.
-			void shutdown();
+				/// Starts the runtime.
+				/// Returns false if errors occurred
+				/// while initializing.
+				bool start(const String& monoAssembliesPath, const String& monoLibrariesPath, const String& monoConfigPath, const String& monoAssemblyName, const String& monoDependencies);
+				/// Shutdowns the runtime. Cleanups all mono related data.
+				void shutdown();
 
-			MonoRuntime& operator =(MonoRuntime& other) = delete;
-			MonoRuntime& operator =(MonoRuntime&& other) = delete;
+				MonoRuntime& operator =(MonoRuntime& other) = delete;
+				MonoRuntime& operator =(MonoRuntime&& other) = delete;
 
-			MonoRuntime(MonoRuntime& other) = delete;
-			MonoRuntime(MonoRuntime&& other) = delete;
-		};
+				MonoRuntime(MonoRuntime& other) = delete;
+				MonoRuntime(MonoRuntime&& other) = delete;
+			};
+		}
 	}
 }

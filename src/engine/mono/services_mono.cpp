@@ -84,11 +84,11 @@ namespace sani {
 		static MonoString* InternalGetName(MonoObject* instance) {
 			return MONO_PROVIDER->createString(getInstance(instance)->getName().c_str());
 		}
-		static gint32 InternalGetID(MonoObject* instance) {
+		static int32 InternalGetID(MonoObject* instance) {
 			return getInstance(instance)->getID();
 		}
-		static gint32 InternalGetState(MonoObject* instance) {
-			return static_cast<gint32>(getInstance(instance)->getState());
+		static int32 InternalGetState(MonoObject* instance) {
+			return static_cast<int32>(getInstance(instance)->getState());
 		}
 
 		static void registerKnownFunctions() {

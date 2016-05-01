@@ -21,6 +21,7 @@ namespace SaNi.Mono.Graphics.Renderables
         private Color fill;
 
         private readonly int id;
+        private readonly uint ptr;
 
         private bool destroyed;
         #endregion
@@ -36,7 +37,7 @@ namespace SaNi.Mono.Graphics.Renderables
             }
             set
             {
-                SetTransform(value);
+                SetTransform(transform);
             }
         }
         public Rectf LocalBounds
@@ -52,24 +53,42 @@ namespace SaNi.Mono.Graphics.Renderables
                 SetLocalBounds(value);
             }
         }
-        public extern Rectf GlobalBounds
+        public Rectf GlobalBounds
         {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
+            get
+            {
+                GetGlobalBounds(ref localBounds);
+
+                return localBounds;
+            }
         }
         public Rectf TextureSource
         {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
+            get
+            {
+                GetTextureSource(ref textureSource);
+
+                return textureSource;
+            }
+            set
+            {
+                SetTextureSource(textureSource);
+            }
         }
         public Texture2D Texture
         {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
+            get
+            {
+                Texture2D texture = null;
+
+                GetTexture(ref texture);
+
+                return texture;
+            }
+            set
+            {
+                SetTexture(value);
+            }
         }
         public float BorderThickness
         {
@@ -108,16 +127,24 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         public bool Visible
         {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
+            get
+            {
+                bool visible = false;
+
+                GetVisible(ref visible);
+
+                return visible;
+            }
+            set
+            {
+                SetVisible(value);
+            }
         }
         #endregion
 
         public Rectangle(float x, float y, float width, float height)
         {
-            Instantiate(x, y, width, height, ref id);
+            Instantiate(x, y, width, height, ref id, ref ptr);
 
             transform       = Transform.Empty();
             localBounds     = Rectf.Empty();
@@ -135,53 +162,51 @@ namespace SaNi.Mono.Graphics.Renderables
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetTransform(ref Transform value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetTransform(object value);
+        private extern void SetTransform(Transform value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetLocalBounds(ref Rectf value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetLocalBounds(object value);
+        private extern void SetLocalBounds(Rectf value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetGlobalBounds(ref Rectf value);
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetGlobalBounds(object value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetTextureSource(ref Rectf value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetTextureSource(object value);
+        private extern void SetTextureSource(Rectf value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetTexture(ref Texture2D value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetTexture(object value);
+        private extern void SetTexture(Texture2D value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetBorderThickness(ref float value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetBorderThickness(object value);
+        private extern void SetBorderThickness(float value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetBorderFill(ref Color value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetBorderFill(object value);
+        private extern void SetBorderFill(Color value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetFill(ref Color value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetFill(object value);
+        private extern void SetFill(Color value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetVisible(ref bool value);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetVisible(object value);
+        private extern void SetVisible(bool value);
         #endregion
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void Instantiate(float x, float y, float width, float height, ref int id);
+        private extern void Instantiate(float x, float y, float width, float height, ref int id, ref uint ptr);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void Release(int id);
+        private extern void Release(uint ptr);
 
         /// <summary>
         /// Destroys the rectangle, causing it to be 
@@ -191,7 +216,7 @@ namespace SaNi.Mono.Graphics.Renderables
         {
             if (destroyed) return;
 
-            Release(ID);
+            Release(ptr);
 
             GC.SuppressFinalize(this);
 
@@ -200,7 +225,7 @@ namespace SaNi.Mono.Graphics.Renderables
 
         ~Rectangle()
         {
-            if (!destroyed) Release(ID);
+            if (!destroyed) Release(ptr);
         }
     }
 }

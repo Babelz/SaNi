@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace SaNi.Mono.Math
 {
+    [StructLayout(LayoutKind.Sequential)]
     public struct Matrix3
     {
         #region Fields

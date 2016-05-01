@@ -4,15 +4,16 @@
 #include "sani/engine/mono/mono_provider.hpp"
 #include "sani/engine/mono/mono_define.hpp"
 
-#include "sani/engine/mono/glib_types.hpp"
-
 #include "sani/platform/time/engine_time.hpp"
+#include "sani/engine/mono/mono_provider.hpp"
 
 namespace sani {
 
 	namespace engine {
 
 		namespace services {
+
+			using namespace sani::engine::mono;
 
 			HookFlags operator &(HookFlags lhs, const HookFlags rhs) {
 				lhs &= rhs;
@@ -93,8 +94,8 @@ namespace sani {
 				if (static_cast<uint32>((flags & HookFlags::OnUpdate))) {
 					const MonoClassDefinition classDef("SaNi.Mono.Engine", "EngineTime");
 					
-					gfloat totalTime = static_cast<gfloat>(time.getTotalTime());
-					gfloat frameTime = static_cast<gfloat>(time.getFrameTime());
+					float32 totalTime = static_cast<float32>(time.getTotalTime());
+					float32 frameTime = static_cast<float32>(time.getFrameTime());
 				
 					void* args[2];
 					args[0] = &totalTime;
@@ -108,11 +109,6 @@ namespace sani {
 					updateargs[0] = engineTime;
 
 					const uint32 updateargc = 1;
-
-					auto a = mono_object_get_domain(instance);
-					auto md = mono_domain_get();
-
-					//const char* const name = mono_domain_get_friendly_name(a);
 
 					MONO_PROVIDER->invoke(instance, "OnUpdate", updateargs, updateargc);
 				}

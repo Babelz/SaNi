@@ -22,6 +22,7 @@ const int32 WordSize		= sizeof(int);
 
 using IntPtr				= uintptr_t;
 
+static_assert(sizeof(IntPtr) == 4, "sizeof(IntPtr) != 4");
 static_assert(WordSize == 4, "WORD_SIZE != 4");
 
 namespace sani {

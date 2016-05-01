@@ -1,141 +1,93 @@
 #pragma once
 
-#include "sani/core/utils/string_utils.hpp"
-
-#include <mono/metadata/object.h>
-#include <functional>
-
-#define NO_ARGS "NO_ARGS"
-
-/*
-	TODO: move to ns mono.
-*/
-
-struct MonoClassDefinition final {
-	const char* const ns;
-	const char* const name;
-
-	MonoClassDefinition(const char* const ns, const char* const name) : ns(ns),
-																		name(name) {
-	}
-	MonoClassDefinition() : MonoClassDefinition(NULL, NULL) {
-	}
-
-	~MonoClassDefinition() = default;
-
-	MonoClassDefinition operator = (const MonoClassDefinition& classDef) {
-		return MonoClassDefinition(classDef.ns, classDef.name);
-	}
-};
-
-struct MonoFunctionDefinition final {
-	const char* const name;
-	const void* const ptr;
-	const uint32 argc;
-
-	MonoFunctionDefinition(const char* const name, const void* const ptr, const uint32 argc = 0) : name(name),
-																								   ptr(ptr),
-																							       argc(argc) {
-	}
-
-	~MonoFunctionDefinition() = default;
-};
+#include "sani/engine/sani_engine.hpp"
+#include "sani/engine/mono/mono_include.hpp"
+#include "sani/types.hpp"
 
 #define MONO_UNBOX(__val__, __type__) (__type__*)mono_object_unbox(__val__)
 
 #define MONO_MODULE_DEF(name) namespace sani { \
 								  namespace engine { \
-									  class SaNiEngine; \
-									  namespace name##monomodule {	\
-											extern const char* const ModuleName; \
-											extern sani::engine::SaNiEngine* engine; \
-											bool initialize(); \
-									  } \
-								  } \
-							  } \
+									class SaNiEngine; \
+										namespace mono { \
+										  namespace name##monomodule {	\
+												extern const char* const ModuleName; \
+												extern sani::engine::SaNiEngine* engine; \
+												bool initialize(); \
+												} \
+											} \
+										} \
+									} \
 
 #define MONO_MODULE_DEF_BEGIN(name) namespace sani { \
 										namespace engine { \
 											class SaNiEngine; \
+											namespace mono {  \
 											namespace name##monomodule {	\
 												extern const char* const ModuleName; \
 												extern sani::engine::SaNiEngine* engine; \
 												bool initialize(); \
 
-#define MONO_MODULE_DEF_END	} \
+#define MONO_MODULE_DEF_END		} \
+							} \
 						} \
 					} \
 
-#define MONO_MODULE_IMPL(name) namespace name##monomodule { \
+#define MONO_MODULE_IMPL(name) namespace mono { \
+								namespace name##monomodule { \
 									const char* const ModuleName = #name; \
 									sani::engine::SaNiEngine* engine = nullptr; \
+									using namespace sani::engine::mono; \
 
-#define MONO_MODULE_IMPL_END } \
+#define MONO_MODULE_IMPL_END	} \
+							} \
 
-#define MONO_PROVIDER sani::engine::MonoRuntime::instance().provider()
-#define MONO_DOMAIN sani::engine::MonoRuntime::instance().domain()
-#define MONO_RUNTIME sani::engine::MonoRuntime::instance()
+#define MONO_PROVIDER sani::engine::mono::MonoRuntime::instance().provider()
+#define MONO_RUNTIME sani::engine::mono::MonoRuntime::instance()
 
-#define MONO_DEFINE_CLASS(__namespace__, __class__) const MonoClassDefinition __class__##Def(#__namespace__, #__class__); \
-													if (!MONO_PROVIDER->classExists(&__class__##Def)) { \
-														FNCLOG_ERR(log::OutFlags::All, "could not register mono class, class not found"); \
-														return false; \
-													} else FNCLOG_INF(log::OutFlags::All, "registering mono class") \
-													 
-
-#define MONO_DEFINE_FUNCTION(__name__) const MonoFunctionDefinition __name__##Def(#__name__, __name__##Impl); \
-
-#define MONO_REGISTER_FUNCTION(__function__, __class__) if (!MONO_PROVIDER->functionExists(&__class__##Def, &__function__##Def)) { \
-															FNCLOG_ERR(log::OutFlags::All, "could not register function, member not found"); \
-															return false; \
-														} else { FNCLOG_INF(log::OutFlags::All, "registering function"); MONO_PROVIDER->addInternalCall(&__class__##Def, &__function__##Def); }\
-
-#define MONO_FUNCTION_IMPL(__name__) __name__##Impl
-
-#define MONO_REGISTER_MODULE(__name__)  __name__##monomodule::engine = this; \
-									    if (!__name__##monomodule::initialize()) return false
-
-#define MONO_REGISTER_FUNCTION_IF_IMPL_FOUND(__ns__, __class__, __func__, ptr)	{ \
-																									const MonoClassDefinition _classDef(#__ns__, #__class__); \
-																									const MonoFunctionDefinition _funcDef(#__func__, ptr); \
-																									if (MONO_PROVIDER->functionExists(&_classDef, &_funcDef)) MONO_PROVIDER->addInternalCall(&_classDef, &_funcDef); \
-																								} \
+#define MONO_REGISTER_MODULE(__name__)  mono::__name__##monomodule::engine = this; \
+									    if (!mono::__name__##monomodule::initialize()) return false \
 
 
 #define MONO_REGISTER_KNOWN_FUNCTION(__ns__, __class__, __func__, ptr)	{ \
-																									const MonoClassDefinition _classDef(#__ns__, #__class__); \
-																									const MonoFunctionDefinition _funcDef(#__func__, ptr); \
-																									MONO_PROVIDER->addInternalCall(&_classDef, &_funcDef); \
-																						} \
+																			const MonoClassDefinition _classDef(#__ns__, #__class__); \
+																			const MonoFunctionDefinition _funcDef(#__func__, ptr); \
+																			MONO_PROVIDER->addInternalCall(&_classDef, &_funcDef); \
+																		} \
 
-#define MONO_REGISTER_GETTER(__ns__, __class__, __pdef__) if (__pdef__.get) {\
-															String fname("get_"); \
-															fname = fname.append(__pdef__.name); \
-															const MonoClassDefinition _classDef(__ns__, __class__); \
-															const MonoFunctionDefinition _getDef(fname.c_str(), (void*)&__pdef__.get); \
-															MONO_PROVIDER->addInternalCall(&_classDef, &_getDef); \
-														} \
+#define MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(__classdef__, __func__, ptr)	{ \
+																				const MonoFunctionDefinition _funcDef(#__func__, ptr); \
+																				MONO_PROVIDER->addInternalCall(&__classdef__, &_funcDef); \
+																		    } \
 
 
-#define MONO_REGISTER_SETTER(__ns__, __class__, __pdef__) if (__pdef__.set) {\
-																			String fname("set_"); \
-																			fname = fname.append(__pdef__.name); \
-																			const MonoClassDefinition _classDef(__ns__, __class__); \
-																			const MonoFunctionDefinition _setDef(fname.c_str(), (void*)&__pdef__.set); \
-																			MONO_PROVIDER->addInternalCall(&_classDef, &_setDef); \
-																		 } \
+namespace sani {
 
-#define MONO_REGISTER_PROPERTY(__ns__, __class__, __pdef__) MONO_REGISTER_GETTER(__ns__, __class__, __pdef__) \
-															MONO_REGISTER_SETTER(__ns__, __class__, __pdef__) \
+	namespace engine {
 
-#define MONO_BASE_DEF_CHECK_FOR_NULL(__pname__, __def__) if (!__def__.__pname__) { FNCLOG_ERR(log::OutFlags::All, String(#__pname__) + " can't be null!"); return false; }
+		namespace mono {
 
-#define MONO_REGISTER_WRAPPED_GETTER(__classdef__, __name__, __ptr__) { \
-																		const MonoFunctionDefinition _getDef(#__name__, __ptr__, 1); \
-																		MONO_PROVIDER->addInternalCall(&__classdef__, &_getDef); \
-																	  } \
+			struct MonoClassDefinition final {
+				const char* const ns;
+				const char* const name;
 
-#define MONO_REGISTER_WRAPPED_SETTER(__classdef__, __name__, __ptr__) { \
-																		const MonoFunctionDefinition _setDef(#__name__, __ptr__, 1); \
-																		MONO_PROVIDER->addInternalCall(&__classdef__, &_setDef); \
-																	  } \
+				MonoClassDefinition(const char* const ns, const char* const name);
+				MonoClassDefinition();
+
+				~MonoClassDefinition() = default;
+
+				MonoClassDefinition operator = (const MonoClassDefinition& classDef);
+			};
+
+			struct MonoFunctionDefinition final {
+				const char* const name;
+				const void* const ptr;
+				const uint32 argc;
+
+				MonoFunctionDefinition(const char* const name, const void* const ptr, const uint32 argc = 0);
+
+				~MonoFunctionDefinition() = default;
+			};
+		}
+	}
+}

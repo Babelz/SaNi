@@ -10,47 +10,49 @@
 
 #include <vector>
 
-SANI_FORWARD_DECLARE_STRUCT(MonoClassDefinition);
-SANI_FORWARD_DECLARE_STRUCT(MonoFunctionDefinition);
-SANI_FORWARD_DECLARE_STRUCT(MonoFieldDefinition);
+SANI_FORWARD_DECLARE_STRUCT_3(sani, engine, mono, MonoClassDefinition);
+SANI_FORWARD_DECLARE_STRUCT_3(sani, engine, mono, MonoFunctionDefinition);
 
 namespace sani {
 
 	namespace engine {
 
-		class MonoProvider final {
-		private:
-			std::vector<MonoAssembly*> assemblies;
-		public:
-			MonoProvider(std::vector<MonoAssembly*>& assemblies);
-			
-			MonoClass* classFromDefinition(const MonoClassDefinition* const classDef) const;
-			MonoType* typeFromDefinition(const MonoClassDefinition* const classDef) const;
+		namespace mono {
 
-			MonoObject* readField(MonoObject* instance, const char* const name);
-			void writeField(MonoObject* instance, const char* const name, void* value);
+			class MonoProvider final {
+			private:
+				std::vector<MonoAssembly*> assemblies;
+			public:
+				MonoProvider(std::vector<MonoAssembly*>& assemblies);
 
-			bool fieldExists(const MonoClassDefinition* const classDef, const char* const name);
-			bool classExists(const MonoClassDefinition* const classDef) const;
-			bool functionExists(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;
+				MonoClass* classFromDefinition(const MonoClassDefinition* const classDef) const;
+				MonoType* typeFromDefinition(const MonoClassDefinition* const classDef) const;
 
-			void addInternalCall(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;
+				MonoObject* readField(MonoObject* instance, const char* const name);
+				void writeField(MonoObject* instance, const char* const name, void* value);
 
-			MonoObject* createObject(const MonoClassDefinition* const classDef) const;
-			MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const;
+				bool fieldExists(const MonoClassDefinition* const classDef, const char* const name);
+				bool classExists(const MonoClassDefinition* const classDef) const;
+				bool functionExists(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;
 
-			MonoString* createString(const char* const str) const;
+				void addInternalCall(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;
 
-			MonoObject* invoke(MonoObject* instance, const char* const name, void** args, const int32 argc) const;
-			MonoObject* invoke(MonoObject* instance, const char* const name) const;
+				MonoObject* createObject(const MonoClassDefinition* const classDef) const;
+				MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const;
 
-			~MonoProvider() = default;
+				MonoString* createString(const char* const str) const;
 
-			MonoProvider& operator =(MonoProvider& other) = delete;
-			MonoProvider& operator =(MonoProvider&& other) = delete;
+				MonoObject* invoke(MonoObject* instance, const char* const name, void** args, const int32 argc) const;
+				MonoObject* invoke(MonoObject* instance, const char* const name) const;
 
-			MonoProvider(MonoProvider& other) = delete;
-			MonoProvider(MonoProvider&& other) = delete;
-		};
+				~MonoProvider() = default;
+
+				MonoProvider& operator =(MonoProvider& other) = delete;
+				MonoProvider& operator =(MonoProvider&& other) = delete;
+
+				MonoProvider(MonoProvider& other) = delete;
+				MonoProvider(MonoProvider&& other) = delete;
+			};
+		}
 	}
 }

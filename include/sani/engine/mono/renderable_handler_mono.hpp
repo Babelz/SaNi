@@ -8,7 +8,6 @@
 #include "sani/engine/mono/mono_define.hpp"
 #include "sani/types.hpp"
 
-#include "sani/engine/mono/glib_types.hpp"
 #include <mono/metadata/object.h>
 
 #include <vector>
@@ -20,17 +19,7 @@ namespace sani {
 		namespace mono {
 		
 			template<class T>
-			using HandleList = std::vector<T*>;
-
-			template<class T>
-			class RenderableHandlerMono final {
-			private:
-				HandleList<T*> const handles;
-			public:
-				RenderableHandlerMono(HandleList* const handles);
-				
-				~RenderableHandlerMono() = default;
-			};
+			void registerRenderableMembers(std::vector<T*>* handles, MonoClassDefinition* classDef);
 		}
 	}
 }

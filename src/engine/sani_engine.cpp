@@ -36,13 +36,17 @@
 
 #include "sani/core/profiling/profiler.hpp"
 #include "sani/platform/console.hpp"
+#include "sani/core/logging/log.hpp"
 
 #include "sani/core/logging/log_batcher.hpp"
-#include "sani/engine/mono/services_mono.hpp"
-#include "sani/engine/mono/texture2d_mono.hpp"
-#include "sani/engine/mono/resource_manager_mono.hpp"
 #include "sani/engine/services/resource_manager_handler_service.hpp"
+
+#include "sani/engine/mono/mono_runtime.hpp"
+#include "sani/engine/mono/mono_define.hpp"
+#include "sani/engine/mono//texture2d_mono.hpp"
+#include "sani/engine/mono/services_mono.hpp"
 #include "sani/engine/mono/rectangle_mono.hpp"
+#include "sani/engine/mono/resource_manager_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -286,7 +290,7 @@ namespace sani {
 			releaseMessage(message);
 			deallocateShared(cvars);
 			
-			if (MonoRuntime::instance().start(monoAssembliesPath, monoLibrariesPath, monoConfigPath, monoAssemblyName, monoDependencies)) {
+			if (mono::MonoRuntime::instance().start(monoAssembliesPath, monoLibrariesPath, monoConfigPath, monoAssemblyName, monoDependencies)) {
 				FNCLOG_INF(log::OutFlags::All, "mono runtime started...");
 			} else {
 				FNCLOG_ERR(log::OutFlags::All, "failed to start mono runtime!");
@@ -412,7 +416,7 @@ namespace sani {
 		}
 
 		SaNiEngine::~SaNiEngine() {
-			MonoRuntime::instance().shutdown();
+			mono::MonoRuntime::instance().shutdown();
 		}
 	}
 }
