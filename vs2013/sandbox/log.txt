@@ -2,3 +2,26 @@
 [sani::engine::SaNiEngine::initializeFilesystem(INFO)]: file system service started...
 [sani::engine::services::CVarService::initialize(INFO)]: user defined cvar configuration loaded
 [sani::engine::SaNiEngine::initializeCVarSystem(INFO)]: cvar service started...
+[sani::engine::SaNiEngine::initializeRenderService(INFO)]: render service started...
+[sani::engine::SaNiEngine::initializeResourceManagerHandler(INFO)]: resource manager handler service started...
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "sprite manager"
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "circle manager"
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "triangle manager"
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "rectangle manager"
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "sprite animation manager"
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "particle emitter manager"
+[sani::engine::SaNiEngine::initializeRenderableManagers(INFO)]: started renderable manager "text manager"
+[sani::engine::SaNiEngine::initializeEntityComponentSystem(INFO)]: entity manager started...
+[sani::engine::SaNiEngine::initializeMono(INFO)]: mono runtime started...
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::SaNiEngine::initializeMono(INFO)]: loaded all mono modules...
+[sani::engine::SaNiEngine::initialize(INFO)]: engine init ok!
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Circle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element

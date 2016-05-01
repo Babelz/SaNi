@@ -88,6 +88,17 @@ namespace sani {
 
 				~MonoFunctionDefinition() = default;
 			};
+
+			/// Returns the native instance that the managed object 
+			/// is associated with. Requires that the managed object
+			/// has a field called ptr of type uint containing the address of the
+			/// native instance.
+ 			template<typename T>
+			T* getInstance(MonoObject* object) {
+				const uint32 ptr = *MONO_UNBOX(MONO_PROVIDER->readField(object, "ptr"), uint32);
+
+				return reinterpret_cast<T*>(ptr);
+			}
 		}
 	}
 }

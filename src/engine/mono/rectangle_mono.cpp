@@ -1,16 +1,13 @@
-#include "sani/engine/mono/mono_include.hpp"
 #include "sani/graphics/renderables/rectangle.hpp"
+
+#include "sani/engine/mono/mono_include.hpp"
 #include "sani/engine/services/renderable_manager.hpp"
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
 #include "sani/engine/mono/renderable_handler_mono.hpp"
-#include "sani/core/memory/memory.hpp"
 #include "sani/engine/mono/mono_provider.hpp"
+#include "sani/engine/mono/shape_handler_mono.hpp"
 
-#include "sani/engine/mono/texture2d_mono.hpp"
-
-#include "sani/core/math/rectangle.hpp"
-#include "sani/core/math/vector2.hpp"
-#include "sani/core/math/vector3.hpp"
+#include "sani/core/memory/memory.hpp"
 
 #include <mono/metadata/appdomain.h>
 
@@ -76,6 +73,7 @@ namespace sani {
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Release, Release);
 
 			mono::registerRenderableMembers<Rectangle>(elements, classDef);
+			mono::registerShapeMembers<Rectangle>(elements, classDef);
 
 			return true;
 		}

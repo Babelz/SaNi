@@ -10,7 +10,7 @@ namespace sani {
 		namespace mono {
 
 			template<class T>
-			void registerShapeMembers(std::vector<T*>* handles, MonoClassDefinition* classDef);
+			void registerShapeMembers(std::vector<T*>* handles, MonoClassDefinition classDef);
 		}
 	}
 }

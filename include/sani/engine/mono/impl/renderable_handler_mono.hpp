@@ -9,14 +9,6 @@ namespace sani {
 
 		namespace mono {
 
-			// Lookup function.
-			template<class T>
-			static T* getInstance(MonoObject* object) {
-				const uint32 ptr = *MONO_UNBOX(MONO_PROVIDER->readField(object, "ptr"), uint32);
-
-				return reinterpret_cast<T*>(ptr);
-			}
-
 			// Transform.
 			template<class T>
 			static void GetTransform(MonoObject* object, MonoObject* value) {
@@ -120,25 +112,25 @@ namespace sani {
 			// Texture.
 			template<class T>
 			static void GetTexture(MonoObject* object, MonoObject** value) {
-				T* instance = getInstance<T>(object);
+				//T* instance = getInstance<T>(object);
 
-				if (instance->texture == nullptr) return;
+				//if (instance->texture == nullptr) return;
 
-				MonoObject* managedPtr = texture2dmonomodule::getManagedPtr(instance->texture->getID());
+				//MonoObject* managedPtr = texture2dmonomodule::getManagedPtr(instance->texture->getID());
 
-				*value = managedPtr;
+				//*value = managedPtr;
 			};
 			template<class T>
 			static void SetTexture(MonoObject* object, MonoObject* value) {
-				T* instance = getInstance<T>(object);
+				//T* instance = getInstance<T>(object);
 
-				if (value == nullptr) return;
+				//if (value == nullptr) return;
 
-				resource::Texture2D* texture = texture2dmonomodule::getNativePtr(value);
+				//resource::Texture2D* texture = mono::texture2dmonomodule::getNativePtr(value);
 
-				instance->texture = texture;
+				//instance->texture = texture;
 
-				updateRenderData(*instance);
+				//updateRenderData(*instance);
 			};
 
 			// Visible.
@@ -157,31 +149,31 @@ namespace sani {
 
 			template<class T>
 			void registerRenderableMembers(std::vector<T*>* handles, MonoClassDefinition classDef) {
-				auto TransformGetter = &GetTransform<T>;
-				auto TransformSetter = &SetTransform<T>;
+				const auto TransformGetter = &GetTransform<T>;
+				const auto TransformSetter = &SetTransform<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetTransform, TransformGetter);
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetTransform, TransformSetter);
 
-				auto LocalBoundsGetter = &GetLocalBounds<T>;
-				auto LocalBoundsSetter = &SetLocalBounds<T>;
+				const auto LocalBoundsGetter = &GetLocalBounds<T>;
+				const auto LocalBoundsSetter = &SetLocalBounds<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetLocalBounds, LocalBoundsGetter);
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetLocalBounds, LocalBoundsSetter);
 
-				auto GlobalBoundsGetter = &GetGlobalBounds<T>;
+				const auto GlobalBoundsGetter = &GetGlobalBounds<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetGlobalBounds, GlobalBoundsGetter);
 
-				auto TextureSourceGetter = &GetTextureSource<T>;
-				auto TextureSourceSetter = &SetTextureSource<T>;
+				const auto TextureSourceGetter = &GetTextureSource<T>;
+				const auto TextureSourceSetter = &SetTextureSource<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetTextureSource, TextureSourceGetter);
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetTextureSource, TextureSourceSetter);
 
-				auto TextureGetter = &GetTexture<T>;
-				auto TextureSetter = &SetTexture<T>;
+				const auto TextureGetter = &GetTexture<T>;
+				const auto TextureSetter = &SetTexture<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetTexture, TextureGetter);
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetTexture, TextureSetter);
 
-				auto VisibleGetter = &GetVisible<T>;
-				auto VisibleSetter = &SetVisible<T>;
+				const auto VisibleGetter = &GetVisible<T>;
+				const auto VisibleSetter = &SetVisible<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetVisible, VisibleGetter);
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetVisible, VisibleSetter);
 			}
