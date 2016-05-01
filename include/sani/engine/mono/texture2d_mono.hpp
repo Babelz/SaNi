@@ -7,6 +7,9 @@
 
 #include <mono\metadata\object.h>
 
+/*
+	TODO: fix to use handling instead of the current way of keeping native <-> managed references...
+*/
 
 SANI_FORWARD_DECLARE_2(sani, resource, Texture2D)
 

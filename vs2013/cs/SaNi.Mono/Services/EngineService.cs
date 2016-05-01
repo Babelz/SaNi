@@ -13,6 +13,10 @@ namespace SaNi.Mono.Services
     /// </summary>
     public abstract class EngineService
     {
+        #region Fields
+        private readonly uint ptr;
+        #endregion
+
         #region Properties
         public string Name
         {
@@ -39,7 +43,7 @@ namespace SaNi.Mono.Services
 
         public EngineService(string name)
         {
-            InternalCreateService(name);
+            Instantiate(name, ref ptr);
         }
 
         // Method hooks the service can use are:
@@ -50,7 +54,7 @@ namespace SaNi.Mono.Services
         //  void OnUpdate(EngineTime time)
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void InternalCreateService(string name);
+        private extern void Instantiate(string name, ref uint ptr);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern string InternalGetName();

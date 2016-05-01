@@ -92,24 +92,44 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         public float BorderThickness
         {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
+            get
+            {
+                var value = 0.0f;
+
+                GetBorderThickness(ref value);
+                
+                return value;
+            }
+            set
+            {
+                SetBorderThickness(value);
+            }
         }
         public Color BorderFill
         {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
+            get
+            {
+                GetBorderFill(ref borderFill);
+
+                return borderFill;
+            }
+            set
+            {
+                SetBorderFill(value);
+            }
         }
         public Color Fill
         {
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            get;
-            [MethodImpl(MethodImplOptions.InternalCall)]
-            set;
+            get
+            {
+                GetFill(ref fill);
+
+                return fill;
+            }
+            set
+            {
+                SetFill(value);
+            }
         }
         public bool Destroyed
         {

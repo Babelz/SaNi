@@ -1,4 +1,5 @@
 #include "sani/engine/mono/mono_include.hpp"
+#include "sani/engine/mono/mono_define.hpp"
 
 #include "sani/engine/services/contracts/cvar_service_contract.hpp"
 #include "sani/engine/messaging/messages/document_message.hpp"
@@ -17,8 +18,6 @@ namespace sani {
 		*/
 
 		MONO_MODULE_IMPL(services)
-
-		std::vector<UserService*> services;
 
 		/*
 			Utils.
@@ -46,56 +45,48 @@ namespace sani {
 			engine->deallocateShared(cvars);
 		}
 
-		static UserService* const getInstance(MonoObject* instance) {
-			for (auto* const userService : services) if (userService->getMonoInstance() == instance) return userService;
-			
-			return nullptr;
-		}
-
 		/*
 			CIL internal call impls.
 		*/
 
-		static void InternalCreateService(MonoObject* instance, MonoString* name) {
+		static void Instantiate(MonoObject* instance, MonoString* name, uint32* ptr) {
 			// Create and store.
 			UserService* service = new UserService(instance, name, engine);
 
-			services.push_back(service);
+			*ptr = reinterpret_cast<IntPtr>(service);
 		}
 
 		static MonoBoolean Start(MonoObject* instance) {
-			return getInstance(instance)->start();
+			return getInstance<UserService>(instance)->start();
 		}
 
 		static void Suspend(MonoObject* instance) {
-			getInstance(instance)->suspend();
+			getInstance<UserService>(instance)->suspend();
 		}
 
 		static void Terminate(MonoObject* instance) {
-			UserService* const service = getInstance(instance);
+			UserService* const service = getInstance<UserService>(instance);
 
 			service->terminate();
-
-			services.erase(std::remove(services.begin(), services.end(), service), services.end());
 
 			delete service;
 		}
 
 		static MonoString* InternalGetName(MonoObject* instance) {
-			return MONO_PROVIDER->createString(getInstance(instance)->getName().c_str());
+			return MONO_PROVIDER->createString(getInstance<UserService>(instance)->getName().c_str());
 		}
 		static int32 InternalGetID(MonoObject* instance) {
-			return getInstance(instance)->getID();
+			return getInstance<UserService>(instance)->getID();
 		}
 		static int32 InternalGetState(MonoObject* instance) {
-			return static_cast<int32>(getInstance(instance)->getState());
+			return static_cast<int32>(getInstance<UserService>(instance)->getState());
 		}
 
 		static void registerKnownFunctions() {
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetName, InternalGetName);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetID, InternalGetID);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalGetState, InternalGetState);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, InternalCreateService, InternalCreateService);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Instantiate, Instantiate);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Start, Start);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Suspend, Suspend);
 			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Services, EngineService, Terminate, Terminate);
@@ -103,13 +94,11 @@ namespace sani {
 		static void createUserService(const MonoClassDefinition* const classDef, const HookFlags flags) {
 			MonoObject* instance = MONO_PROVIDER->createObject(classDef);
 
-			UserService* service = services.back();
+			UserService* service = getInstance<UserService>(instance);
 			service->setMonoHooks(flags);
 
 			if (!service->start()) {
 				FNCLOG_ERR(log::OutFlags::All, "could not start service, not going to add to the engine...");
-
-				services.erase(services.end() - 1);
 
 				delete service;
 			}
