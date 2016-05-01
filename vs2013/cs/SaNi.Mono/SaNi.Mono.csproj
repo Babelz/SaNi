@@ -50,6 +50,7 @@
     <Compile Include="Engine\SaNiEngine.cs" />
     <Compile Include="Graphics\Layer.cs" />
     <Compile Include="Graphics\Layers.cs" />
+    <Compile Include="Graphics\LayerType.cs" />
     <Compile Include="Graphics\Renderables\Rectangle.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
     <Compile Include="Resource\IResource.cs" />

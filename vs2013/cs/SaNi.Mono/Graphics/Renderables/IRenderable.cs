@@ -68,5 +68,7 @@ namespace SaNi.Mono.Graphics.Renderables
             set;
         }
         #endregion
+
+        void Destroy();
     }
 }
