@@ -62,11 +62,11 @@ namespace SaNi.Mono.Graphics
         {
             get
             {
-                LayerType value = LayerType.Dynamic;
+                byte value = 0;
 
                 GetType(ref value);
 
-                return value;
+                return (LayerType)value;
             }
         }
         public IRenderable[] Renderables
@@ -109,7 +109,7 @@ namespace SaNi.Mono.Graphics
         private extern void SetVisible(bool value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void GetType(ref LayerType type);
+        private extern void GetType(ref byte type);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetRenderables(ref IRenderable[] renderables);

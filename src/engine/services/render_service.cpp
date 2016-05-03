@@ -43,6 +43,11 @@ namespace sani {
 				device->setViewport(viewport);
 				camera->setViewport(viewport);
 			}
+			void RenderService::layerOrderChanged(std::vector<Layer>& layers) {
+				std::sort(layers.begin(), layers.end(), [](const Layer& lhs, const Layer& rhs) {
+					return lhs.getOrder() < rhs.getOrder();
+				});
+			}
 
 			void RenderService::handleDocumentMessage(messages::DocumentMessage* const message) {
 				const RenderServiceCommands command = static_cast<RenderServiceCommands>(message->getCommand());
@@ -147,6 +152,8 @@ namespace sani {
 				
 				layers.push_back(Layer(name, type, order));
 
+				layers.back().orderChanged += SANI_EVENT_HANDLER(void(), std::bind(RenderService::layerOrderChanged, layers));;
+
 				message->markHandled();
 			}
 			void RenderService::deleteLayer(messages::CommandMessage* const message) {
@@ -157,7 +164,7 @@ namespace sani {
 				});
 
 				if (it != layers.end()) {
-					layers.remove(*it);
+					layers.erase(it);
 
 					message->markHandled();
 				}
@@ -180,7 +187,7 @@ namespace sani {
 				}));
 
 				if (it != cameras.end()) {
-					cameras.remove(*it);
+					cameras.erase(it);
 					
 					message->markHandled();
 				}

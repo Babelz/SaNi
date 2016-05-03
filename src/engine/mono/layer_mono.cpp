@@ -75,19 +75,27 @@ namespace sani {
 			layer->setOrder(value);
 		}
 		
-		static void GetVisible(MonoObject* instance) {
+		static void GetVisible(MonoObject* instance, int32* value) {
 			Layer* layer = getInstance<Layer>(instance);
+
+			*value = layer->isVisible() ? 1 : 0;
 		}
-		static void SetVisible(MonoObject* instance) {
+		static void SetVisible(MonoObject* instance, int32 value) {
 			Layer* layer = getInstance<Layer>(instance);
+
+			if (value)	layer->show();
+			else		layer->hide();
 		}
 		
-		static void GetType(MonoObject* instance) {
+		static void GetType(MonoObject* instance, uint8* value) {
 			Layer* layer = getInstance<Layer>(instance);
+
+			*value = static_cast<uint8>(layer->getType());
 		}
 		
 		static void GetRenderables(MonoObject* instance) {
 			Layer* layer = getInstance<Layer>(instance);
+
 		}
 		
 		static void Hide(MonoObject* instance) {
@@ -116,6 +124,7 @@ namespace sani {
 		}
 
 		bool initialize() {
+			return false;
 		}
 
 		MONO_MODULE_IMPL_END
