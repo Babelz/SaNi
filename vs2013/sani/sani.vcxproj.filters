@@ -1485,6 +1485,9 @@
     <ClInclude Include="..\..\include\sani\engine\mono\impl\shape_handler_mono.hpp">
       <Filter>include\engine\mono\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\layer_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

@@ -71,7 +71,7 @@ namespace SaNi.Mono.Graphics
         }
         #endregion
 
-        public Layer(string name, LayerType type)
+        private Layer(string name, LayerType type)
         {
             Instantiate(name, type, ref ptr);
         }
