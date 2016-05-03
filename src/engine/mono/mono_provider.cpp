@@ -124,6 +124,11 @@ namespace sani {
 
 				return nullptr;
 			}
+			MonoArray* MonoProvider::createArray(const MonoClassDefinition* const classDef, const uint32 size) {
+				MonoArray* marray = mono_array_new(mono_domain_get(), classFromDefinition(classDef), size);
+
+				return marray;
+			}
 
 			MonoString* MonoProvider::createString(const char* const str) const {
 				return mono_string_new(mono_domain_get(), str);

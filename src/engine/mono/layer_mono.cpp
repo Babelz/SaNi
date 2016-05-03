@@ -15,6 +15,8 @@ namespace sani {
 
 		using namespace sani::graphics;
 
+		std::vector<MonoArray*> 
+
 		static void Instantiate(MonoObject* instance, MonoString* name, int32 type, uint32* ptr) {
 			std::stringstream ss;
 			ss << mono_string_to_utf8(name);
@@ -93,9 +95,10 @@ namespace sani {
 			*value = static_cast<uint8>(layer->getType());
 		}
 		
-		static void GetRenderables(MonoObject* instance) {
+		static void GetRenderables(MonoObject* instance, MonoArray* elements) {
 			Layer* layer = getInstance<Layer>(instance);
 
+			
 		}
 		
 		static void Hide(MonoObject* instance) {
@@ -105,10 +108,10 @@ namespace sani {
 			Layer* layer = getInstance<Layer>(instance);
 		}
 
-		static void Add(MonoObject* instance) {
+		static void InternalAdd(MonoObject* instance) {
 			Layer* layer = getInstance<Layer>(instance);
 		}
-		static void Remove(MonoObject* instance) {
+		static void InternalRemove(MonoObject* instance) {
 			Layer* layer = getInstance<Layer>(instance);
 		}
 		static void Contain(MonoObject* instance) {
@@ -121,6 +124,12 @@ namespace sani {
 
 		static void MoveElementsTo(MonoObject* instance) {
 			Layer* layer = getInstance<Layer>(instance);
+		}
+
+		static void GetElementsCount(MonoObject* instance, int32* value) {
+			Layer* layer = getInstance<Layer>(instance);
+
+			*value = layer->elementsCount();
 		}
 
 		bool initialize() {

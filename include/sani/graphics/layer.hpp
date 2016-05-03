@@ -76,6 +76,9 @@ namespace sani {
 			/// Causes all the elements to be removed from this layer.
 			void moveElementsTo(Layer* const other);
 
+			void getElements(std::vector<graphics::Renderable* const>& outElements) const;
+			uint32 elementsCount() const;
+
 			~Layer();
 
 			bool operator ==(const Layer& lhs) const;

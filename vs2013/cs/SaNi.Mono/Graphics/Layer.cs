@@ -13,6 +13,8 @@ namespace SaNi.Mono.Graphics
         #region Fields
         private readonly uint ptr;
 
+        private List<IRenderable> elements;
+
         private bool destroyed;
         #endregion
 
@@ -69,22 +71,37 @@ namespace SaNi.Mono.Graphics
                 return (LayerType)value;
             }
         }
-        public IRenderable[] Renderables
+        public IEnumerable<IRenderable> Elements
         {
             get
             {
-                IRenderable[] renderables = null;
-
-                GetRenderables(ref renderables);
-
                 return renderables;
+            }
+        }
+        public int ElementsCount
+        {
+            get
+            {
+                var count = 0;
+
+                GetElementsCount(ref count);
+
+                return count;
             }
         }
         #endregion
 
+        private Layer(string name, LayerType type, IRenderable[] elements)
+        {
+            Instantiate(name, type, ref ptr);
+
+            this.elements = new List<IRenderable>(elements);
+        }
         private Layer(string name, LayerType type)
         {
             Instantiate(name, type, ref ptr);
+
+            elements = new List<IRenderable>();
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -109,33 +126,48 @@ namespace SaNi.Mono.Graphics
         private extern void SetVisible(bool value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void GetType(ref byte type);
+        private extern void GetType(ref byte value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetRenderables(ref IRenderable[] renderables);
 
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetElementsCount(ref int value);
+        #endregion
+
         private void ReleaseElements()
         {
-            foreach (var element in Renderables) element.Destroy();
+            foreach (var element in elements) element.Destroy();
         }
-        #endregion
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void InternalAdd(IRenderable element);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void InternalRemove(IRenderable element);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void Hide();
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void Show();
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void Add(IRenderable renderable);
+        public void Add(IRenderable element)
+        {
+            elements.Add(element);
 
+            InternalAdd(element);
+        }
         public void Add(IEnumerable<IRenderable> elements)
         {
             foreach (var element in elements) Add(element);
         }
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void Remove(IRenderable renderable);
+        public void Remove(IRenderable element)
+        {
+            elements.Remove(element);
 
+            InternalRemove(element);
+        }
         public void Remove(IEnumerable<IRenderable> elements, bool destroy = false)
         {
             foreach (var element in elements)

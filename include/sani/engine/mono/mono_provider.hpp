@@ -39,6 +39,7 @@ namespace sani {
 
 				MonoObject* createObject(const MonoClassDefinition* const classDef) const;
 				MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const;
+				MonoArray* createArray(const MonoClassDefinition* const classDef, const uint32 size);
 
 				MonoString* createString(const char* const str) const;
 				String toUtf8(MonoString* str) const;

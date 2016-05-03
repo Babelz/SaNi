@@ -79,6 +79,16 @@ namespace sani {
 			renderTop(renderer);
 		}
 
+		void Layer::getElements(std::vector<graphics::Renderable* const>& outElements) const {
+			outElements.reserve(top.size() + bottom.size());
+
+			for (auto element : top)	outElements.push_back(element);
+			for (auto element : bottom) outElements.push_back(element);
+		}
+		uint32 Layer::elementsCount() const {
+			return top.size() + bottom.size();
+		}
+
 		Layer::~Layer() {
 		}
 
