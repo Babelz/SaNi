@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani/core/events.hpp"
+
 #include "sani/graphics/layer_type.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
@@ -38,6 +40,8 @@ namespace sani {
 			void renderBottom(graphics::Renderer* const renderer);
 			void renderTop(graphics::Renderer* const renderer);
 		public:
+
+
 			Layer(const String& name, const LayerType type, const float32 order = 0.0f);
 			
 			/// Returns the layers type. 

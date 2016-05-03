@@ -25,8 +25,8 @@ namespace sani {
 		using namespace sani::engine::services;
 		using namespace sani::graphics;
 
-		static void Release(MonoObject* instance, uint32 ptr) {
-			Rectangle* rectangle = reinterpret_cast<Rectangle*>(ptr);
+		static void Release(MonoObject* instance) {
+			Rectangle* rectangle = getInstance<Rectangle>(instance);
 
 			auto* deleteElement = engine->createEmptyMessage<messages::DocumentMessage>();
 			deleteElement->setData(rectangle);

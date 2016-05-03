@@ -226,7 +226,7 @@ namespace SaNi.Mono.Graphics.Renderables
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Instantiate(float x, float y, float width, float height, ref int id, ref uint ptr);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void Release(uint ptr);
+        private extern void Release();
 
         /// <summary>
         /// Destroys the rectangle, causing it to be 
@@ -236,7 +236,7 @@ namespace SaNi.Mono.Graphics.Renderables
         {
             if (destroyed) return;
 
-            Release(ptr);
+            Release();
 
             GC.SuppressFinalize(this);
 
@@ -245,7 +245,7 @@ namespace SaNi.Mono.Graphics.Renderables
 
         ~Rectangle()
         {
-            if (!destroyed) Release(ptr);
+            if (!destroyed) Release();
         }
     }
 }

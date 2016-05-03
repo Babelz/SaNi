@@ -69,6 +69,17 @@ namespace SaNi.Mono.Graphics
                 return value;
             }
         }
+        public IRenderable[] Renderables
+        {
+            get
+            {
+                IRenderable[] renderables = null;
+
+                GetRenderables(ref renderables);
+
+                return renderables;
+            }
+        }
         #endregion
 
         private Layer(string name, LayerType type)
@@ -99,6 +110,14 @@ namespace SaNi.Mono.Graphics
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetType(ref LayerType type);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetRenderables(ref IRenderable[] renderables);
+
+        private void ReleaseElements()
+        {
+            foreach (var element in Renderables) element.Destroy();
+        }
         #endregion
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -108,13 +127,28 @@ namespace SaNi.Mono.Graphics
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void Add(IRenderable renderable);
+
+        public void Add(IEnumerable<IRenderable> elements)
+        {
+            foreach (var element in elements) Add(element);
+        }
+
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void Remove(IRenderable renderable);
+
+        public void Remove(IEnumerable<IRenderable> elements, bool destroy = false)
+        {
+            foreach (var element in elements)
+            {
+                Remove(element);
+
+                if (destroy) element.Destroy();
+            }
+        }
+
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void Contains(IRenderable renderable);
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern IRenderable[] Renderables();
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void MoveElementsTo(Layer target);
 

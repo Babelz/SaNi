@@ -727,6 +727,9 @@
     <ClCompile Include="..\..\src\engine\mono\mono_define.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\layer_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

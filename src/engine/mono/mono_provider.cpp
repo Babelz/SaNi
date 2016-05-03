@@ -128,6 +128,9 @@ namespace sani {
 			MonoString* MonoProvider::createString(const char* const str) const {
 				return mono_string_new(mono_domain_get(), str);
 			}
+			String MonoProvider::toUtf8(MonoString* str) const {
+				return mono_string_to_utf8(str);
+			}
 
 			MonoObject* MonoProvider::invoke(MonoObject* instance, const char* const name, void** args, const int32 argsc) const {
 				MonoClass* mclass = mono_object_get_class(instance);

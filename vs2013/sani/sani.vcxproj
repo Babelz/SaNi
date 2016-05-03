@@ -233,6 +233,7 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\layer_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\mono_define.cpp" />
     <ClCompile Include="..\..\src\engine\mono\rectangle_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\resource_manager_mono.cpp" />
