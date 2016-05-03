@@ -93,7 +93,7 @@ namespace sani {
 				MonoClass* mclass = classFromDefinition(classDef);
 
 				MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
-
+				
 				mono_runtime_object_init(instance);
 
 				return instance;
@@ -103,8 +103,7 @@ namespace sani {
 				MonoClass* mclass = classFromDefinition(classDef);
 
 				MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
-				assert(mono_class_init(mclass));
-
+				
 				MonoMethod* method = nullptr;
 				void* iter = nullptr;
 
@@ -124,10 +123,17 @@ namespace sani {
 
 				return nullptr;
 			}
+			
 			MonoArray* MonoProvider::createArray(const MonoClassDefinition* const classDef, const uint32 size) {
 				MonoArray* marray = mono_array_new(mono_domain_get(), classFromDefinition(classDef), size);
 
 				return marray;
+			}
+			MonoObject* MonoProvider::arrayElement(MonoArray* marray, const uint32 index) const {
+				return mono_array_get(marray, MonoObject*, index);
+			}
+			uint32 MonoProvider::arrayLength(MonoArray* marray) const {
+				return static_cast<uint32>(mono_array_length(marray));
 			}
 
 			MonoString* MonoProvider::createString(const char* const str) const {

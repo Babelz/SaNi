@@ -37,9 +37,16 @@ namespace sani {
 
 				void addInternalCall(const MonoClassDefinition* const classDef, const MonoFunctionDefinition* const funcDef) const;
 
+				// TODO: do these.
+
 				MonoObject* createObject(const MonoClassDefinition* const classDef) const;
+				MonoObject* createObject(const MonoClassDefinition* const classDef, uint32* handle) const;
 				MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const;
+				MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc, uint32* handle) const;
+
 				MonoArray* createArray(const MonoClassDefinition* const classDef, const uint32 size);
+				MonoObject* arrayElement(MonoArray* marray, const uint32 index) const;
+				uint32 arrayLength(MonoArray* marray) const;
 
 				MonoString* createString(const char* const str) const;
 				String toUtf8(MonoString* str) const;

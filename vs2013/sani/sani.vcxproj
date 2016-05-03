@@ -233,6 +233,7 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\layers_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\layer_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\mono_define.cpp" />
     <ClCompile Include="..\..\src\engine\mono\rectangle_mono.cpp" />
@@ -442,6 +443,7 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\impl\renderable_handler_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\impl\shape_handler_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\layers_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\layer_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\renderable_handler_mono.hpp" />

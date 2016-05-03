@@ -133,7 +133,26 @@ namespace sani {
 		}
 
 		bool initialize() {
-			return false;
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, Instantiate, Instantiate);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, Release, Release);
+
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, GetName, GetName);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, SetName, SetName);
+
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, GetOrder, GetOrder);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, SetOrder, SetOrder);
+
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, GetVisible, GetVisible);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, SetVisible, SetVisible);
+
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, GetType, GetType);
+
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, GetElementsCount, GetElementsCount);
+
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, InternalAdd, InternalAdd);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Layer, InternalRemove, InternalRemove);
+
+			return true;
 		}
 
 		MONO_MODULE_IMPL_END

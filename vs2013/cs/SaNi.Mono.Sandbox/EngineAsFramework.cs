@@ -15,6 +15,7 @@ namespace SaNi.Mono.Sandbox
     public sealed class EngineAsFramework : EngineService
     {
         #region Fields
+        private Layer layer;
         private Rectangle r1;
         #endregion
 
@@ -25,7 +26,14 @@ namespace SaNi.Mono.Sandbox
 
         private bool OnStart()
         {
-            r1 = new Rectangle(32.0f, 32.0f, 32.0f, 32.0f);
+            r1 = new Rectangle(32.0f, 32.0f, 256.0f, 256.0f);
+            
+            layer = Layers.CreateDynamic("base");
+
+            layer.Add(r1);
+
+
+            Console.WriteLine(layer.Name);
 
             Console.WriteLine("Start called");
             return true;
@@ -45,16 +53,6 @@ namespace SaNi.Mono.Sandbox
         }
         private void OnUpdate(EngineTime time)
         {
-            Console.WriteLine(r1.ID);
-
-            var a = r1.Transform;
-            var b = r1.LocalBounds;
-            var c = r1.GlobalBounds;
-            var d = r1.TextureSource;
-            var e = r1.Texture;
-            var g = r1.Visible;
-
-            Console.WriteLine("FizzBuzz");
         }
     }
 }

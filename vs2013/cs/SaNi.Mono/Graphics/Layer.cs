@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SaNi.Mono.Graphics
@@ -101,7 +102,7 @@ namespace SaNi.Mono.Graphics
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Instantiate(string name, LayerType type, ref uint ptr);
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void Release(uint ptr);
+        private extern void Release();
 
         #region Internal get/set methods
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -144,9 +145,16 @@ namespace SaNi.Mono.Graphics
 
         public void Add(IRenderable element)
         {
-            elements.Add(element);
+            Console.WriteLine("add");
 
+            Thread.Sleep(2500);
+            elements.Add(element);
+            Console.WriteLine("d add");
+
+            Console.WriteLine("i add");
             InternalAdd(element);
+
+            Console.WriteLine("d i add");
         }
         public void Add(IEnumerable<IRenderable> elements)
         {
@@ -169,7 +177,7 @@ namespace SaNi.Mono.Graphics
             }
         }
 
-        public extern void Contains(IRenderable renderable)
+        public bool Contains(IRenderable renderable)
         {
             return elements.Contains(renderable);
         }
@@ -177,21 +185,25 @@ namespace SaNi.Mono.Graphics
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void MoveElementsTo(Layer target);
 
-        void Destroy()
+        private void Destroy()
         {
             if (destroyed) return;
 
             foreach (var element in elements) element.Destroy();
 
-            Release(ptr);
+            Release();
 
             GC.SuppressFinalize(this);
+
+
+            Console.WriteLine("LAYER CTOR");
 
             destroyed = true;
         }
 
         ~Layer()
         {
+            Console.WriteLine("LAYER CTOR");
             if (destroyed) return;
 
             Destroy();
