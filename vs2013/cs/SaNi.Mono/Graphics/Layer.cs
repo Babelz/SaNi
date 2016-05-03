@@ -75,7 +75,7 @@ namespace SaNi.Mono.Graphics
         {
             get
             {
-                return renderables;
+                return elements;
             }
         }
         public int ElementsCount
@@ -91,12 +91,6 @@ namespace SaNi.Mono.Graphics
         }
         #endregion
 
-        private Layer(string name, LayerType type, IRenderable[] elements)
-        {
-            Instantiate(name, type, ref ptr);
-
-            this.elements = new List<IRenderable>(elements);
-        }
         private Layer(string name, LayerType type)
         {
             Instantiate(name, type, ref ptr);
@@ -127,9 +121,6 @@ namespace SaNi.Mono.Graphics
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetType(ref byte value);
-
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void GetRenderables(ref IRenderable[] renderables);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetElementsCount(ref int value);
@@ -178,8 +169,10 @@ namespace SaNi.Mono.Graphics
             }
         }
 
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        public extern void Contains(IRenderable renderable);
+        public extern void Contains(IRenderable renderable)
+        {
+            return elements.Contains(renderable);
+        }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         public extern void MoveElementsTo(Layer target);
@@ -188,9 +181,7 @@ namespace SaNi.Mono.Graphics
         {
             if (destroyed) return;
 
-            var elements = Renderables();
-
-            for (var i = 0; i < elements.Length; i++) elements[i].Destroy();
+            foreach (var element in elements) element.Destroy();
 
             Release(ptr);
 

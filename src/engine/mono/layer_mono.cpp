@@ -15,8 +15,6 @@ namespace sani {
 
 		using namespace sani::graphics;
 
-		std::vector<MonoArray*> 
-
 		static void Instantiate(MonoObject* instance, MonoString* name, int32 type, uint32* ptr) {
 			std::stringstream ss;
 			ss << mono_string_to_utf8(name);
@@ -95,35 +93,37 @@ namespace sani {
 			*value = static_cast<uint8>(layer->getType());
 		}
 		
-		static void GetRenderables(MonoObject* instance, MonoArray* elements) {
-			Layer* layer = getInstance<Layer>(instance);
-
-			
-		}
-		
 		static void Hide(MonoObject* instance) {
 			Layer* layer = getInstance<Layer>(instance);
+
+			layer->hide();
 		}
 		static void Show(MonoObject* instance) {
 			Layer* layer = getInstance<Layer>(instance);
+
+			layer->show();
 		}
 
-		static void InternalAdd(MonoObject* instance) {
+		static void InternalAdd(MonoObject* instance, MonoObject* element) {
 			Layer* layer = getInstance<Layer>(instance);
-		}
-		static void InternalRemove(MonoObject* instance) {
-			Layer* layer = getInstance<Layer>(instance);
-		}
-		static void Contain(MonoObject* instance) {
-			Layer* layer = getInstance<Layer>(instance);
-		}
 
-		static void Contains(MonoObject* instance) {
-			Layer* layer = getInstance<Layer>(instance);
-		}
+			Renderable* renderable = getInstance<Renderable>(element);
 
-		static void MoveElementsTo(MonoObject* instance) {
+			layer->add(renderable);
+		}
+		static void InternalRemove(MonoObject* instance, MonoObject* element) {
 			Layer* layer = getInstance<Layer>(instance);
+			
+			Renderable* renderable = getInstance<Renderable>(element);
+
+			layer->remove(renderable);
+		}
+		
+		static void MoveElementsTo(MonoObject* instance, MonoObject* other) {
+			Layer* layer = getInstance<Layer>(instance);
+			Layer* target = getInstance<Layer>(other);
+
+			layer->moveElementsTo(target);
 		}
 
 		static void GetElementsCount(MonoObject* instance, int32* value) {
