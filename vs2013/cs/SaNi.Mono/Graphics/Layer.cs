@@ -14,7 +14,7 @@ namespace SaNi.Mono.Graphics
         #region Fields
         private readonly uint ptr;
 
-        private List<IRenderable> elements;
+        private List<object> elements;
 
         private bool destroyed;
         #endregion
@@ -76,7 +76,7 @@ namespace SaNi.Mono.Graphics
         {
             get
             {
-                return elements;
+                return elements.Cast<IRenderable>();
             }
         }
         public int ElementsCount
@@ -96,7 +96,7 @@ namespace SaNi.Mono.Graphics
         {
             Instantiate(name, type, ref ptr);
 
-            elements = new List<IRenderable>();
+            elements = new List<object>();
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -129,7 +129,7 @@ namespace SaNi.Mono.Graphics
 
         private void ReleaseElements()
         {
-            foreach (var element in elements) element.Destroy();
+            //foreach (var element in elements) element.Destroy();
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
@@ -145,16 +145,9 @@ namespace SaNi.Mono.Graphics
 
         public void Add(IRenderable element)
         {
-            Console.WriteLine("add");
-
-            Thread.Sleep(2500);
             elements.Add(element);
-            Console.WriteLine("d add");
 
-            Console.WriteLine("i add");
             InternalAdd(element);
-
-            Console.WriteLine("d i add");
         }
         public void Add(IEnumerable<IRenderable> elements)
         {
@@ -189,21 +182,17 @@ namespace SaNi.Mono.Graphics
         {
             if (destroyed) return;
 
-            foreach (var element in elements) element.Destroy();
+            //foreach (var element in elements) element.Destroy();
 
             Release();
 
             GC.SuppressFinalize(this);
-
-
-            Console.WriteLine("LAYER CTOR");
 
             destroyed = true;
         }
 
         ~Layer()
         {
-            Console.WriteLine("LAYER CTOR");
             if (destroyed) return;
 
             Destroy();

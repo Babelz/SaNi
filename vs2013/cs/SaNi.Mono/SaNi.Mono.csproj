@@ -47,6 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Engine\Log.cs" />
+    <Compile Include="Engine\LogLevel.cs" />
+    <Compile Include="Engine\OutFlags.cs" />
+    <Compile Include="Engine\RuntimeHelpers.cs" />
     <Compile Include="Engine\SaNiEngine.cs" />
     <Compile Include="Graphics\Layer.cs" />
     <Compile Include="Graphics\Layers.cs" />
@@ -77,7 +81,9 @@
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY /Y $(ProjectDir)\bin\Debug\SaNi.Mono.dll $(SolutionDir)\Debug\mono\</PostBuildEvent>
+    <PostBuildEvent>XCOPY /Y $(ProjectDir)\bin\Debug\SaNi.Mono.dll $(SolutionDir)\Debug\mono\
+XCOPY /Y $(ProjectDir)\bin\Debug\SaNi.Mono.pdb $(SolutionDir)\Debug\mono\
+XCOPY /Y $(ProjectDir)\bin\Debug\SaNi.Mono.dll.mdb $(SolutionDir)\Debug\mono\</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

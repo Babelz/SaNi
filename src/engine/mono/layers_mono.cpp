@@ -11,27 +11,14 @@ namespace sani {
 		static MonoObject* Create(MonoString* name, MonoArray* elements, uint8 type) {
 			const MonoClassDefinition classDef("SaNi.Mono.Graphics", "Layer");
 			
-			MonoObject* layer = nullptr;
-
-			if (elements == nullptr) {
-				const uint32 argc = 2;
-				void* args[argc] = {
+			const uint32 argc = 2;
+			void* args[argc] = {
 					name,
 					&type
 				};
 
-				layer = MONO_PROVIDER->createObject(&classDef, args, argc);
-			} else {
-				const uint32 argc = 3;
-				void* args[argc] = {
-					name,
-					&type,
-					elements
-				};
-
-				layer = MONO_PROVIDER->createObject(&classDef, args, argc);
-			}
-
+			MonoObject*	layer = MONO_PROVIDER->createObject(&classDef, args, argc);
+		
 			layers.push_back(layer);
 
 			return layer;

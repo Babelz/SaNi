@@ -89,21 +89,25 @@ namespace sani {
 				mono_add_internal_call(funstr.c_str(), funcDef->ptr);
 			}
 
-			MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef) const {
+			MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef, uint32* handle) const {
 				MonoClass* mclass = classFromDefinition(classDef);
 
 				MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
 				
+				if (handle != nullptr) *handle = mono_gchandle_new(instance, true);
+
 				mono_runtime_object_init(instance);
 
 				return instance;
 			}
 
-			MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const {
+			MonoObject* MonoProvider::createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc, uint32* handle) const {
 				MonoClass* mclass = classFromDefinition(classDef);
 
 				MonoObject* instance = mono_object_new(mono_domain_get(), mclass);
 				
+				if (handle != nullptr) *handle = mono_gchandle_new(instance, true);
+
 				MonoMethod* method = nullptr;
 				void* iter = nullptr;
 

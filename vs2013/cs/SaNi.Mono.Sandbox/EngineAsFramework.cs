@@ -16,7 +16,6 @@ namespace SaNi.Mono.Sandbox
     {
         #region Fields
         private Layer layer;
-        private Rectangle r1;
         #endregion
 
         public EngineAsFramework() 
@@ -26,12 +25,11 @@ namespace SaNi.Mono.Sandbox
 
         private bool OnStart()
         {
-            r1 = new Rectangle(32.0f, 32.0f, 256.0f, 256.0f);
+            var r1 = new Rectangle(32.0f, 32.0f, 256.0f, 256.0f);
             
             layer = Layers.CreateDynamic("base");
 
             layer.Add(r1);
-
 
             Console.WriteLine(layer.Name);
 
@@ -51,8 +49,22 @@ namespace SaNi.Mono.Sandbox
         {
             Console.WriteLine("Terminate called");
         }
+
+        Random r = new Random();
+
         private void OnUpdate(EngineTime time)
         {
+
+            var r1 = layer.Elements.First();
+
+            var transform = r1.Transform;
+            transform.scale = new Vector3((float)r.NextDouble(), (float)r.NextDouble(), 0.0f);
+            transform.position.x = 256.0f;
+            transform.position.y = 256.0f;
+
+            transform.rotation += 0.01f * (float)time.FrameTime.TotalMilliseconds;
+            
+            r1.Transform = transform;
         }
     }
 }

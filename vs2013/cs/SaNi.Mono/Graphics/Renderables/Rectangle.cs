@@ -37,7 +37,7 @@ namespace SaNi.Mono.Graphics.Renderables
             }
             set
             {
-                SetTransform(transform);
+                SetTransform(value);
             }
         }
         public Rectf LocalBounds
@@ -57,9 +57,9 @@ namespace SaNi.Mono.Graphics.Renderables
         {
             get
             {
-                GetGlobalBounds(ref localBounds);
+                GetGlobalBounds(ref globalBounds);
 
-                return localBounds;
+                return globalBounds;
             }
         }
         public Rectf TextureSource
@@ -72,7 +72,7 @@ namespace SaNi.Mono.Graphics.Renderables
             }
             set
             {
-                SetTextureSource(textureSource);
+                SetTextureSource(value);
             }
         }
         public Texture2D Texture

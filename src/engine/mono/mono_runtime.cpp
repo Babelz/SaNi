@@ -8,6 +8,7 @@
 #include <mono/metadata/assembly.h>
 #include <mono/metadata/appdomain.h>
 #include <mono/utils/mono-error.h>
+#include <mono/metadata/debug-mono-symfile.h>
 
 #include "sani/core/logging/log.hpp"
 
@@ -58,7 +59,20 @@ namespace sani {
 			bool MonoRuntime::initializeRuntime() {
 				mono_set_assemblies_path(monoAssembliesPath.c_str());
 				mono_set_dirs(monoLibrariesPath.c_str(), monoConfigPath.c_str());
-				mono_config_parse(NULL);
+
+#ifdef _DEBUG
+				// TODO: does not work with vs?
+				// Init debug.
+				mono_debug_init(MONO_DEBUG_FORMAT_MONO);
+				mono_debug_domain_create(monoDomain);
+
+				const char* options[] = {
+					"--soft-breakpoints",
+					"--debugger-agent=transport=dt_socket,address=127.0.0.1:13001"
+				};
+
+				mono_jit_parse_options(1, (char**)options);
+#endif
 
 				monoDomain = mono_jit_init_version(MonoRootDomainName, MonoVersion);
 				std::vector<MonoAssembly*> assemblies;

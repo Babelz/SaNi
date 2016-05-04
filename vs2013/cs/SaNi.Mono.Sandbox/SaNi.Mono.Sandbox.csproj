@@ -40,6 +40,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -64,7 +67,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>MOVE /Y $(ProjectDir)\bin\Debug\SaNi.Mono.Sandbox.dll $(SolutionDir)\Debug\mono\</PostBuildEvent>
+    <PostBuildEvent>XCOPY /Y $(ProjectDir)\bin\Debug\SaNi.Mono.Sandbox.dll $(SolutionDir)\Debug\mono\</PostBuildEvent>
   </PropertyGroup>
   <Import Project="..\..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.targets" Condition="Exists('..\..\packages\MSBuild.ILMerge.Task.1.0.2\build\MSBuild.ILMerge.Task.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

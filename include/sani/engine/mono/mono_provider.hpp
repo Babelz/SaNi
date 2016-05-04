@@ -39,11 +39,9 @@ namespace sani {
 
 				// TODO: do these.
 
-				MonoObject* createObject(const MonoClassDefinition* const classDef) const;
-				MonoObject* createObject(const MonoClassDefinition* const classDef, uint32* handle) const;
-				MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc) const;
-				MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc, uint32* handle) const;
-
+				MonoObject* createObject(const MonoClassDefinition* const classDef, uint32* handle = nullptr) const;
+				MonoObject* createObject(const MonoClassDefinition* const classDef, void** args, const uint32 argc, uint32* handle = nullptr) const;
+				
 				MonoArray* createArray(const MonoClassDefinition* const classDef, const uint32 size);
 				MonoObject* arrayElement(MonoArray* marray, const uint32 index) const;
 				uint32 arrayLength(MonoArray* marray) const;
