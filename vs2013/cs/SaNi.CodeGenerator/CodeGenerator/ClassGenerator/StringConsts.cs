@@ -18,6 +18,10 @@ namespace SaNi.CodeGenerator.ClassGenerator
         public static readonly string PropertyBackingField    = "BACKING_FIELD";
 
         public static readonly string MethodDefinition        = "METHOD_DEF";
-        
+
+        public static readonly string IncludeProperties       = "INCLUDE_PROPS";
+        public static readonly string IncludeMethods          = "INCLUDE_METHODS";
+
+        public static readonly string Comment                 = "--";
     }
 }

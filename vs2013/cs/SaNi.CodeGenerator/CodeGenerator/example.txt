@@ -5,10 +5,14 @@
 	Dtor
 CLASS_DEF
 
+INCLUDE_PROPS iRenderable.txt
+
 PROP_DEF float Radius
 	GetSet
 	Reference
 PROP_DEF
+
+INCLUDE_METHODS iRenderable.txt
 
 METHOD_DEF bool Destroyed
 	Public

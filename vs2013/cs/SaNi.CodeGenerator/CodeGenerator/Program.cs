@@ -66,11 +66,92 @@ namespace CodeGenerator
         private static string[] ReadInFile(string inPath)
         {
             var lines = File.ReadAllLines(inPath);
+            lines = LinkFiles(lines.ToList());
 
             var results = lines.Where(l => !string.IsNullOrEmpty(l));
-            results = results.Select(l => l.Trim());
+            results = results.Select(l => l.Replace("\t", "").Trim());
+            results = results.Where(l => !l.StartsWith(StringConsts.Comment));
+            
+            return results.ToArray();
+        }
+        private static string[] LinkFiles(List<string> results)
+        {
+            foreach (var line in results)
+            {
+                if (line.StartsWith(StringConsts.IncludeProperties))
+                {
+                    LinkProperties(results, line);
+                    LinkFiles(results);
+
+                    break;
+                }
+                if (line.StartsWith(StringConsts.IncludeMethods))
+                {
+                    LinkMethods(results, line);
+                    LinkFiles(results);
+
+                    break;
+                }
+            }
 
             return results.ToArray();
+        }
+        private static void Link(List<string> lines, string line, string what)
+        {
+            var path = line.Split(' ').Last().Trim();
+            var includeLine = line;
+
+            if (!File.Exists(path))
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("LNK error, file not found - \"" + line + "\", skipping...");
+                Console.ResetColor();
+
+                return;
+            }
+
+            var linesToLink = File.ReadAllLines(line.Split(' ').Last().Trim())
+                .Where(l => !string.IsNullOrEmpty(l) && !l.Trim()
+                    .StartsWith(StringConsts.Comment)).ToArray();
+
+            var i = 0;
+
+            var toInsert = new List<string>();
+
+            while (i < linesToLink.Length)
+            {
+                line = linesToLink[i];
+
+                if (line.StartsWith(what))
+                {
+                    // Extract.
+                    toInsert.Add(linesToLink[i]);
+                    toInsert.Add(linesToLink[i + 1]);
+                    i++;
+
+                    while (!linesToLink[i].StartsWith(what))
+                    {
+                        toInsert.Add(linesToLink[++i]);
+                    }
+
+                    i++;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+
+            lines.InsertRange(lines.IndexOf(includeLine), toInsert);
+            lines.Remove(includeLine);
+        }
+        private static void LinkProperties(List<string> lines, string line)
+        {
+            Link(lines, line, StringConsts.PropertyDefinition);
+        }
+        private static void LinkMethods(List<string> lines, string line)
+        {
+            Link(lines, line, StringConsts.MethodDefinition);
         }
 
         private static ClassDefinition Parse(string inFile)

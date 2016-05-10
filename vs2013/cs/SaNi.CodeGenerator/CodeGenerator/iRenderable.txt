@@ -1,0 +1,13 @@
+﻿CLASS_DEF SaNi.Mono.Graphics.iRenderable
+	Public
+CLASS_DEF
+
+PROP_DEF bool Visible
+	GetSet
+	Reference
+PROP_DEF
+
+METHOD_DEF void Draw
+	Public
+	InternalCall
+METHOD_DEF
