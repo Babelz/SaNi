@@ -56,7 +56,7 @@ namespace SaNi.CodeGenerator.ClassGenerator
         }
         public override string ToString()
         {
-            var format = "{0} {1} {2}({3}){4}";
+            var format = "{0} {1} {2} {3}({4}){5}\n\n";
             
             // Check for errors.
             if (!MethodSettingsHelper.HasOneAccessModifierToggled(MethodFlags))
@@ -69,7 +69,7 @@ namespace SaNi.CodeGenerator.ClassGenerator
             var keywords        = MethodSettingsHelper.GetKeywords(MethodFlags);
             var body            = MethodSettingsHelper.GetMethodBody(MethodFlags);
 
-            var method          = string.Format(format, accessModifier, keywords, Name, Args, body);
+            var method          = string.Format(format, accessModifier, keywords, ReturnTypename, Name, Args, body);
 
             // Check if we need to append attributes to the beginning.
             if (!string.IsNullOrEmpty(attributes)) method = attributes + "\n" + method;

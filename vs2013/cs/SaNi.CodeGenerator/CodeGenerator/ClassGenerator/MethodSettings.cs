@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 namespace SaNi.CodeGenerator.ClassGenerator
 {
     [Flags()]
-    public enum MethodSettings : byte
+    public enum MethodSettings : int
     {
+        None            = 0,
+
         Private         = 1,
         
         Public          = 2,

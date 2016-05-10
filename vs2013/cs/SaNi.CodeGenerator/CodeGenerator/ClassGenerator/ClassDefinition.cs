@@ -86,8 +86,11 @@ namespace SaNi.CodeGenerator.ClassGenerator
 
             foreach (var property in properties) if (property.GenerateBackingField) fields.Append(property.GetBackingField());
 
-            sb.Append(string.Format(StringConsts.FieldsRegionFormat, fields.ToString()));
-            sb.Append("\n\n");
+            if (fields.Length != 0)
+            {
+                sb.Append(string.Format(StringConsts.FieldsRegionFormat, fields.ToString()));
+                sb.Append("\n\n");
+            }
 
             // Gen properties.
             var props = new StringBuilder();

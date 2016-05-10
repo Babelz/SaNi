@@ -12,7 +12,6 @@ namespace CodeGenerator
     {
         static void Main(string[] args)
         {
-            var a = Parse("test.txt");
             if (args.Length != 2)
             {
                 Console.WriteLine("usage:");
@@ -26,24 +25,31 @@ namespace CodeGenerator
                 var inPath = args[0];
                 var outPath = args[1];
 
+                if (!File.Exists(inPath))
+                {
+                    Console.WriteLine("in file does not exist!");
+                    return;
+                }
+
+                if (!File.Exists(outPath))
+                {
+                    Console.WriteLine("out file does not exists, creating...");
+                    CreateOutFile(outPath);
+                }
+
                 Console.WriteLine("Parsing class definition...");
+                var classDefinition = Parse(inPath);
 
                 Console.WriteLine("Generating code...");
+                var code = classDefinition.ToString();
 
                 Console.WriteLine("Saving C# class file...");
+                Write(outPath, code);
 
                 Console.WriteLine("All ok, file saved at " + outPath);
             }
         }
 
-        private static bool InFileExists(string inPath)
-        {
-            return File.Exists(inPath);
-        }
-        private static bool OutFileExists(string outPath)
-        {
-            return File.Exists(outPath);
-        }
         private static void CreateOutFile(string outPath)
         {
             File.Create(outPath);
@@ -55,7 +61,7 @@ namespace CodeGenerator
 
         private static bool IsClassDefinitionFile(string[] lines)
         {
-            return lines.First() == StringConsts.ClassDefinitionHeader;
+            return lines.First() == StringConsts.ClassDefinition;
         }
         private static string[] ReadInFile(string inPath)
         {
@@ -85,9 +91,9 @@ namespace CodeGenerator
             {
                 var line = lines[i];
 
-                if (line.StartsWith(StringConsts.ClassDefinitionHeader))            ParseClass(lines, ref name, ref ns, ref settings, ref i);
-                else if (line.StartsWith(StringConsts.PropertyDefinitionHeader))    ParseProperty(lines, properties, ref i);
-                else if (line.StartsWith(StringConsts.MethodDefinitionHeader))      ParseMethod(lines, methods, ref i);
+                if (line.StartsWith(StringConsts.ClassDefinition))            ParseClass(lines, ref name, ref ns, ref settings, ref i);
+                else if (line.StartsWith(StringConsts.PropertyDefinition))    ParseProperty(lines, properties, ref i);
+                else if (line.StartsWith(StringConsts.MethodDefinition))      ParseMethod(lines, methods, ref i);
             }
 
             return new ClassDefinition(name, ns, settings, properties, methods);
@@ -96,18 +102,19 @@ namespace CodeGenerator
         {
             var line = lines[i];
 
-            name    = line.Substring(line.LastIndexOf(" "));
-            name    = line.Substring(line.LastIndexOf(".") + 1).Trim();
-            ns      = line.Substring(line.LastIndexOf(" ")).Replace(name, "").Trim();
+            line = line.Replace(StringConsts.ClassDefinition, "").Trim();
 
-            var names   = Enum.GetNames(typeof(ClassSettings)).ToArray();
+            name    = line.Substring(line.LastIndexOf(".") + 1).Trim();
+            ns      = line.Substring(0, line.LastIndexOf(".")).Replace(name, "").Trim();
+
+            var names   = Enum.GetNames(typeof(ClassSettings));
             var values  = Enum.GetValues(typeof(ClassSettings)).Cast<int>().ToArray();
 
             while (i < lines.Length)
             {
                 line = lines[++i];
 
-                if (line == StringConsts.ClassDefinitionHeader)
+                if (line == StringConsts.ClassDefinition)
                 {
                     i++;
 
@@ -127,7 +134,7 @@ namespace CodeGenerator
         {
             var line = lines[i];
 
-            if (line == StringConsts.PropertyDefinitionHeader)
+            if (line == StringConsts.PropertyDefinition)
             {
                 // Empty header definition, normally end of an def.
                 i++;
@@ -135,16 +142,16 @@ namespace CodeGenerator
                 return;
             }
 
-            line     = line.Replace(StringConsts.PropertyDefinitionHeader, "").Trim();
+            line = line.Replace(StringConsts.PropertyDefinition, "").Trim();
 
-            var typename  = line.Substring(0, line.LastIndexOf(" ")).Trim(); ;
+            var typename        = line.Substring(0, line.LastIndexOf(" ")).Trim();
             var name            = line.Substring(line.LastIndexOf(" ")).Trim();
             var backing         = false;
 
-            var propSettingsNames  = Enum.GetNames(typeof(PropertySettings)).ToArray();
+            var propSettingsNames  = Enum.GetNames(typeof(PropertySettings));
             var propSettingsValues = Enum.GetValues(typeof(PropertySettings)).Cast<int>().ToArray();
             
-            var propReadSettingsNames  = Enum.GetNames(typeof(PropertyReadSettings)).ToArray();
+            var propReadSettingsNames  = Enum.GetNames(typeof(PropertyReadSettings));
             var propReadSettingsValues = Enum.GetValues(typeof(PropertyReadSettings)).Cast<int>().ToArray();
 
             var propSettings     = PropertySettings.None;
@@ -156,7 +163,7 @@ namespace CodeGenerator
 
                 // Do not inc i since this can be an header for new def, 
                 // not an ending!
-                if (line.StartsWith(StringConsts.PropertyDefinitionHeader)) break;
+                if (line.StartsWith(StringConsts.PropertyDefinition)) break;
 
                 // Special case.
                 if (line == StringConsts.PropertyBackingField) backing = true;
@@ -175,10 +182,49 @@ namespace CodeGenerator
         }
         private static void ParseMethod(string[] lines, List<MethodDefinition> methods, ref int i)
         {
+            var line = lines[i];
+
+            if (line == StringConsts.MethodDefinition)
+            {
+                i++;
+
+                return;
+            }
+
+            line = line.Replace(StringConsts.MethodDefinition, "").Trim();
+
+            var tokens = line.Split(' ');
+
+            var typename    = tokens[0].Trim();
+            var name        = tokens[1].Trim();
+            var args        = tokens.Length > 2 ? tokens[2].Replace("(", "").Replace(")", "").Trim() : String.Empty;
+
+            var settingNames = Enum.GetNames(typeof(MethodSettings)).ToArray();
+            var settingValues = Enum.GetValues(typeof(MethodSettings)).Cast<int>().ToArray();
+
+            var settings = MethodSettings.None;
+
+            while (i < lines.Length)
+            {
+                line = lines[++i];
+
+                if (line.StartsWith(StringConsts.MethodDefinition)) break;
+
+                if (settingNames.Contains(line)) settings |= (MethodSettings)settingValues[Array.IndexOf(settingNames, line)];
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("invalid method setting name \"" + line + "\", skipping...");
+                    Console.ResetColor();
+                }
+            }
+
+            methods.Add(new MethodDefinition(name, typename, args, settings));
         }
 
-        private static void Write(ClassDefinition classDefinition) 
+        private static void Write(string outFile, string code) 
         {
+            File.WriteAllText(outFile, code);
         }
     }
 }

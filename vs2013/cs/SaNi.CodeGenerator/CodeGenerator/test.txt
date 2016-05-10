@@ -1,11 +1,20 @@
-﻿CLASS_DEF_H SaNi.Mono.Graphics.Circle
+﻿CLASS_DEF SaNi.Mono.Graphics.Circle
 	Public
 	Sealed
 	Ctor
 	Dtor
-CLASS_DEF_H
+CLASS_DEF
 
-PROP_DEF_H float Radius
+PROP_DEF float Radius
 	GetSet
-	Default
-PROP_DEF_H
+	Reference
+PROP_DEF
+
+METHOD_DEF bool Destroyed
+	Public
+	Static
+	InternalCall
+METHOD_DEF void AmIFirst
+	Private
+	InternalCall
+METHOD_DEF
