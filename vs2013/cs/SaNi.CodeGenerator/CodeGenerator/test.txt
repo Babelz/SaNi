@@ -1,0 +1,11 @@
+﻿CLASS_DEF_H SaNi.Mono.Graphics.Circle
+	Public
+	Sealed
+	Ctor
+	Dtor
+CLASS_DEF_H
+
+PROP_DEF_H float Radius
+	GetSet
+	Default
+PROP_DEF_H

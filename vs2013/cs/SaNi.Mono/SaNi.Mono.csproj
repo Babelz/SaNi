@@ -78,7 +78,6 @@
     <Compile Include="Services\EngineService.cs" />
     <Compile Include="Services\ServiceState.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>XCOPY /Y $(ProjectDir)\bin\Debug\SaNi.Mono.dll $(SolutionDir)\Debug\mono\

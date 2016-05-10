@@ -123,5 +123,42 @@ namespace SaNi.CodeGenerator.ClassGenerator
 
             return string.Format("{0} = new {1}();\n", Name.ToLower(), Typename);
         }
+
+        public string GetInternalGet()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("[MethodImpl(MethodImplOptions.InternalCall)]\n");
+
+            var args = string.Empty;
+            
+            if ((ReadFlags & PropertyReadSettings.Default) == PropertyReadSettings.Default)          args = Typename + " value";
+            else if ((ReadFlags & PropertyReadSettings.Reference) == PropertyReadSettings.Reference) args = "ref " + Typename + " value";
+
+            sb.Append("private extern void ");
+            sb.Append("Get");
+            sb.Append(Name);
+            sb.Append("(");
+            sb.Append(args);
+            sb.Append(");\n");
+
+            return sb.ToString();
+        }
+        public string GetInternalSet()
+        {
+            var sb = new StringBuilder();
+
+            sb.Append("[MethodImpl(MethodImplOptions.InternalCall)]\n");
+            sb.Append("private extern void ");
+            sb.Append("Set");
+            sb.Append(Name);
+            sb.Append("(");
+            sb.Append(Typename);
+            sb.Append(" ");
+            sb.Append("value");
+            sb.Append(");\n");
+
+            return sb.ToString();
+        }
     }
 }

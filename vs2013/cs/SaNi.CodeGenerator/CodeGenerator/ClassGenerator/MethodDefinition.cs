@@ -29,6 +29,17 @@ namespace SaNi.CodeGenerator.ClassGenerator
             get;
             private set;
         }
+        public int Weight
+        {
+            get
+            {
+                if ((MethodFlags & MethodSettings.Private) == MethodSettings.Private)       return 1;
+                if ((MethodFlags & MethodSettings.Protected) == MethodSettings.Protected)   return 2;
+                if ((MethodFlags & MethodSettings.Public) == MethodSettings.Public)         return 3;
+
+                throw new InvalidOperationException("invalid access modifier");
+            }
+        }
         #endregion
 
         public MethodDefinition(string name, string returnTypename, string args, MethodSettings methodFlags)
