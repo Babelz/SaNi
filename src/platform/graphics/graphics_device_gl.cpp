@@ -16,7 +16,7 @@
 #include "GL/glew.h"
 
 /*
-	Remainder...
+	Reminder...
 		Func call ->
 			1) GL/Device calls
 			2) State WRITE

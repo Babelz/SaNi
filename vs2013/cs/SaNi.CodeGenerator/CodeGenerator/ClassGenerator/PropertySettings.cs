@@ -9,12 +9,16 @@ namespace SaNi.CodeGenerator.ClassGenerator
     [Flags()]
     public enum PropertySettings : int
     {
-        None    = 0,
+        None        = 0,
         
-        Get     = 1,
+        Get         = 1,
         
-        Set     = 2,
+        Set         = 2,
 
-        GetSet  = 3
+        GetSet      = 3,
+
+        Internal    = 4,
+
+        BackingField = 8
     }
 }

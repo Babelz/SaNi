@@ -1,13 +1,42 @@
-﻿CLASS_DEF SaNi.Mono.Graphics.iRenderable
+CLASS_DEF iRenderable
 	Public
 CLASS_DEF
 
-PROP_DEF bool Visible
+PROP_DEF Transform Transform
+	BackingField
 	GetSet
 	Reference
-PROP_DEF
+	Internal
+PROP_DEF Rectf LocalBounds
+	BackingField
+	GetSet
+	Reference
+	Internal
+PROP_DEF Rectf GlobalBounds
+	BackingField
+	Get
+	Reference
+	Internal
+PROP_DEF Rectf TextureSource
+	BackingField
+	GetSet
+	Reference
+	Internal
+PROP_DEF Texture2D Texture
+	BackingField
+	GetSet
+	Reference
+	Internal
+PROP_DEF int ID
+	BackingField
+	Get
+PROP_DEF bool Visible
+	BackingField
+	GetSet
+	Reference
+	Internal
+PROP_DEF 
 
-METHOD_DEF void Draw
+METHOD_DEF void Destroy
 	Public
-	InternalCall
 METHOD_DEF

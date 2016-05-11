@@ -48,6 +48,24 @@ namespace sani {
 				float32 a;
 			};
 
+			struct MonoVec2 final {
+				float32 x;
+				float32 y;
+			};
+
+			struct MonoVec3 final {
+				float32 x;
+				float32 y;
+				float32 z;
+			};
+
+			struct MonoVec4 final {
+				float32 x;
+				float32 y;
+				float32 z;
+				float32 w;
+			};
+
 			MonoObject* ceatetTransform(math::Vec3f& position, math::Vec3f& scale, math::Vec3f& origin, float32 rotation);
 			MonoObject* createRectf(float32 x, float32 y, float32 width, float32 height);
 			MonoObject* createRecti(int32 x, int32 y, int32  width, int32  height);

@@ -152,7 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\glib\include\glib-2.0\;$(SolutionDir)..\thirdparty\mono\include\;$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -243,6 +243,7 @@
     <ClCompile Include="..\..\src\engine\mono\services_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\texture2d_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\structs_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\triangle_mono.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\engine\services\circle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\component_manager_contract.cpp" />
@@ -456,6 +457,7 @@
     <ClInclude Include="..\..\include\sani\engine\mono\shape_handler_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\texture2d_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\structs_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\triangle_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\component_manager_contract.hpp" />

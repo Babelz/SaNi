@@ -6,7 +6,6 @@
 #include <mono\jit\jit.h>
 #include <mono\metadata\assembly.h>
 
-
 #include <vector>
 
 SANI_FORWARD_DECLARE_3(sani, engine, mono, MonoProvider)

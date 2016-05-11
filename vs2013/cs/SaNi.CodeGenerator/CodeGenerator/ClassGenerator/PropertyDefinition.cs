@@ -12,8 +12,6 @@ namespace SaNi.CodeGenerator.ClassGenerator
         private string name;
         private string typename;
 
-        private bool backingField;
-        
         private PropertySettings propertySettings;
         private PropertyReadSettings readSettings;
         #endregion
@@ -23,15 +21,14 @@ namespace SaNi.CodeGenerator.ClassGenerator
         {
             get
             {
-                return backingField;
+                return (propertySettings & PropertySettings.BackingField) == PropertySettings.BackingField;
             }
         }
         #endregion
 
-        public PropertyDefinition(string name, bool backingField, string typename, PropertySettings propertySettings, PropertyReadSettings readSettings)
+        public PropertyDefinition(string name, string typename, PropertySettings propertySettings, PropertyReadSettings readSettings)
         {
             this.name               = name;
-            this.backingField       = backingField;
             this.typename           = typename;
             this.propertySettings   = propertySettings;
             this.readSettings       = readSettings;
@@ -59,7 +56,7 @@ namespace SaNi.CodeGenerator.ClassGenerator
 
                 var field = string.Empty;
 
-                if (backingField)
+                if (GenerateBackingField)
                 {
                     field = name.ToLower();
                 }
@@ -105,19 +102,21 @@ namespace SaNi.CodeGenerator.ClassGenerator
 
         public string GetBackingField()
         {
-            if (!backingField) return string.Empty;
+            if (!GenerateBackingField) return string.Empty;
 
             return string.Format("{0} {1} {2};\n", "private", typename, name.ToLower());
         }
         public string GetBackingFieldInitializer()
         {
-            if (!backingField) return string.Empty;
+            if (!GenerateBackingField) return string.Empty;
 
             return string.Format("{0} = new {1}();\n", name.ToLower(), typename);
         }
 
         public string GetInternalGet()
         {
+            if ((propertySettings & PropertySettings.Internal) != PropertySettings.Internal) return string.Empty;
+
             var sb = new StringBuilder();
 
             sb.Append("[MethodImpl(MethodImplOptions.InternalCall)]\n");
@@ -138,6 +137,8 @@ namespace SaNi.CodeGenerator.ClassGenerator
         }
         public string GetInternalSet()
         {
+            if ((propertySettings & PropertySettings.Internal) != PropertySettings.Internal) return string.Empty;
+
             var sb = new StringBuilder();
 
             sb.Append("[MethodImpl(MethodImplOptions.InternalCall)]\n");

@@ -1,0 +1,40 @@
+CLASS_DEF SaNi.Mono.Graphics.Renderables.Triangle
+	Public
+	Sealed
+CLASS_DEF
+
+INCLUDE_PROPS iRenderable.txt
+
+PROP_DEF Vector2 TopPoint
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF Vector2 LeftPoint
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF Vector2 RightPoint
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF float BorderThickness
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF Color BorderFill
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF Color Fill
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF
+
+INCLUDE_METHODS iRenderable.txt

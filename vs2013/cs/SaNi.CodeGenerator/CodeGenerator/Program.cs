@@ -40,6 +40,8 @@ namespace CodeGenerator
                 Console.WriteLine("Parsing class definition...");
                 var classDefinition = Parse(inPath);
 
+                if (classDefinition == null) return;
+
                 Console.WriteLine("Generating code...");
                 var code = classDefinition.ToString();
 
@@ -47,6 +49,7 @@ namespace CodeGenerator
                 Write(outPath, code);
 
                 Console.WriteLine("All ok, file saved at " + outPath);
+                Console.WriteLine("");
             }
         }
 
@@ -68,6 +71,13 @@ namespace CodeGenerator
             var lines = File.ReadAllLines(inPath);
             lines = LinkFiles(lines.ToList());
 
+            if (lines == null)
+            {
+                Console.WriteLine("LNK errors ocurred, stopping parsing");
+
+                return null;
+            }
+
             var results = lines
                 .Where(l => !string.IsNullOrEmpty(l))
                 .Select(l => l.Replace("\t", "").Trim())
@@ -81,14 +91,20 @@ namespace CodeGenerator
             {
                 if (line.StartsWith(StringConsts.IncludeProperties))
                 {
-                    LinkProperties(results, line);
+                    Console.WriteLine("LNK: PROPS " + line.Split(' ').Last().Trim());
+                    
+                    if (!LinkProperties(results, line)) return null;
+                    
                     LinkFiles(results);
 
                     break;
                 }
                 if (line.StartsWith(StringConsts.IncludeMethods))
                 {
-                    LinkMethods(results, line);
+                    Console.WriteLine("LNK: METHODS " + line.Split(' ').Last().Trim());
+                    
+                    if (!LinkMethods(results, line)) return null;
+
                     LinkFiles(results);
 
                     break;
@@ -97,7 +113,7 @@ namespace CodeGenerator
 
             return results.ToArray();
         }
-        private static void Link(List<string> lines, string line, string what)
+        private static bool Link(List<string> lines, string line, string what)
         {
             var path = line.Split(' ').Last();
             var includeLine = line;
@@ -108,7 +124,7 @@ namespace CodeGenerator
                 Console.WriteLine("LNK error, file not found - \"" + line + "\", skipping...");
                 Console.ResetColor();
 
-                return;
+                return false;
             }
 
             var linesToLink = File.ReadAllLines(path)
@@ -148,19 +164,23 @@ namespace CodeGenerator
             lines.InsertRange(lines.IndexOf(includeLine), toInsert);
             // Remove include directive.
             lines.Remove(includeLine);
+
+            return true;
         }
-        private static void LinkProperties(List<string> lines, string line)
+        private static bool LinkProperties(List<string> lines, string line)
         {
-            Link(lines, line, StringConsts.PropertyDefinition);
+            return Link(lines, line, StringConsts.PropertyDefinition);
         }
-        private static void LinkMethods(List<string> lines, string line)
+        private static bool LinkMethods(List<string> lines, string line)
         {
-            Link(lines, line, StringConsts.MethodDefinition);
+            return Link(lines, line, StringConsts.MethodDefinition);
         }
 
         private static ClassDefinition Parse(string inFile)
         {
             var lines = ReadInFile(inFile);
+
+            if (lines == null) return null;
 
             var name = string.Empty;
             var ns   = string.Empty;
@@ -179,6 +199,14 @@ namespace CodeGenerator
                 if      (line.StartsWith(StringConsts.ClassDefinition))            ParseClass(lines, ref name, ref ns, ref settings, ref i);
                 else if (line.StartsWith(StringConsts.PropertyDefinition))         ParseProperty(lines, properties, ref i);
                 else if (line.StartsWith(StringConsts.MethodDefinition))           ParseMethod(lines, methods, ref i);
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.WriteLine("invalid line found, skipping...");
+                    Console.ResetColor();
+
+                    i++;
+                }
             }
 
             return new ClassDefinition(name, ns, settings, properties, methods);
@@ -231,7 +259,6 @@ namespace CodeGenerator
 
             var typename        = line.Substring(0, line.LastIndexOf(" ")).Trim();
             var name            = line.Substring(line.LastIndexOf(" ")).Trim();
-            var backing         = false;
 
             var propSettingsNames  = Enum.GetNames(typeof(PropertySettings));
             var propSettingsValues = Enum.GetValues(typeof(PropertySettings)).Cast<int>().ToArray();
@@ -250,9 +277,6 @@ namespace CodeGenerator
                 // not an ending!
                 if (line.StartsWith(StringConsts.PropertyDefinition)) break;
 
-                // Special case.
-                if (line == StringConsts.PropertyBackingField) backing = true;
-
                 if      (propSettingsNames.Contains(line))           propSettings |= (PropertySettings)propSettingsValues[Array.IndexOf(propSettingsNames, line)];
                 else if (propReadSettingsNames.Contains(line))       propReadSettings |= (PropertyReadSettings)propReadSettingsValues[Array.IndexOf(propReadSettingsNames, line)];
                 else
@@ -263,7 +287,16 @@ namespace CodeGenerator
                 }
             }
 
-            properties.Add(new PropertyDefinition(name, backing, typename, propSettings, propReadSettings));
+            if (propReadSettings == PropertyReadSettings.None)
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine("no read settings found for prop " + name + "!" + " using default settings..."); Console.ResetColor();
+                Console.ResetColor();
+
+                propReadSettings = PropertyReadSettings.Default;
+            }
+
+            properties.Add(new PropertyDefinition(name, typename, propSettings, propReadSettings));
         }
         private static void ParseMethod(string[] lines, List<MethodDefinition> methods, ref int i)
         {
