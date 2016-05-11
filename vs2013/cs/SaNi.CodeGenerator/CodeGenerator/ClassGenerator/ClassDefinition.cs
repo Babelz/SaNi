@@ -14,43 +14,12 @@ namespace SaNi.CodeGenerator.ClassGenerator
         private readonly string name;
         private readonly string ns;
 
-        private readonly List<WrappedProperty> properties;
+        private readonly List<PropertyDefinition> properties;
         
         private readonly List<MethodDefinition> methods;
         #endregion
 
-        #region Properties
-        public string Name
-        {
-            get
-            {
-                return name;
-            }
-        }
-        public string Namespace
-        {
-            get
-            {
-                return ns;
-            }
-        }
-        public IEnumerable<WrappedProperty> Properties
-        {
-            get
-            {
-                return properties;
-            }
-        }
-        public IEnumerable<MethodDefinition> Methods
-        {
-            get
-            {
-                return methods;
-            }
-        }
-        #endregion
-
-        public ClassDefinition(string name, string ns, ClassSettings settings, List<WrappedProperty> properties, List<MethodDefinition> methods)
+        public ClassDefinition(string name, string ns, ClassSettings settings, List<PropertyDefinition> properties, List<MethodDefinition> methods)
         {
             this.name       = name;
             this.ns         = ns;
@@ -61,7 +30,7 @@ namespace SaNi.CodeGenerator.ClassGenerator
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return name.GetHashCode();
         }
         public override string ToString()
         {
@@ -105,7 +74,11 @@ namespace SaNi.CodeGenerator.ClassGenerator
             {
                 sb.Append("public ");
                 sb.Append(name);
-                sb.Append("()\n{\n}\n\n");
+                sb.Append("()\n{\n");
+
+                foreach (var property in properties) if (property.GenerateBackingField) sb.Append(property.GetBackingFieldInitializer());
+
+                sb.Append("\n}\n");
             }
 
             // Gen property methods.

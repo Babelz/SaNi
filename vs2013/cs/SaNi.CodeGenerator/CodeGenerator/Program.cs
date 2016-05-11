@@ -68,9 +68,10 @@ namespace CodeGenerator
             var lines = File.ReadAllLines(inPath);
             lines = LinkFiles(lines.ToList());
 
-            var results = lines.Where(l => !string.IsNullOrEmpty(l));
-            results = results.Select(l => l.Replace("\t", "").Trim());
-            results = results.Where(l => !l.StartsWith(StringConsts.Comment));
+            var results = lines
+                .Where(l => !string.IsNullOrEmpty(l))
+                .Select(l => l.Replace("\t", "").Trim())
+                .Where(l => !l.StartsWith(StringConsts.Comment));
             
             return results.ToArray();
         }
@@ -98,7 +99,7 @@ namespace CodeGenerator
         }
         private static void Link(List<string> lines, string line, string what)
         {
-            var path = line.Split(' ').Last().Trim();
+            var path = line.Split(' ').Last();
             var includeLine = line;
 
             if (!File.Exists(path))
@@ -110,12 +111,13 @@ namespace CodeGenerator
                 return;
             }
 
-            var linesToLink = File.ReadAllLines(line.Split(' ').Last().Trim())
-                .Where(l => !string.IsNullOrEmpty(l) && !l.Trim()
-                    .StartsWith(StringConsts.Comment)).ToArray();
+            var linesToLink = File.ReadAllLines(path)
+                .Where(l => !string.IsNullOrEmpty(l))
+                .Select(l => l.Replace("\t", "").Trim())
+                .Where(l => !l.StartsWith(StringConsts.Comment))
+                .ToArray();
 
             var i = 0;
-
             var toInsert = new List<string>();
 
             while (i < linesToLink.Length)
@@ -127,22 +129,24 @@ namespace CodeGenerator
                     // Extract.
                     toInsert.Add(linesToLink[i]);
                     toInsert.Add(linesToLink[i + 1]);
+                    
+                    // Pre inc skip cur.
                     i++;
 
-                    while (!linesToLink[i].StartsWith(what))
-                    {
-                        toInsert.Add(linesToLink[++i]);
-                    }
+                    // Inc + get.
+                    while (!linesToLink[i].StartsWith(what)) toInsert.Add(linesToLink[++i]);
 
+                    // Post inc skip cur.
                     i++;
                 }
-                else
-                {
-                    i++;
-                }
+
+                // Next.
+                i++;
             }
 
+            // Insert lines we linked.
             lines.InsertRange(lines.IndexOf(includeLine), toInsert);
+            // Remove include directive.
             lines.Remove(includeLine);
         }
         private static void LinkProperties(List<string> lines, string line)
@@ -163,7 +167,7 @@ namespace CodeGenerator
             
             var settings = ClassSettings.None;
             
-            var properties  = new List<WrappedProperty>();
+            var properties  = new List<PropertyDefinition>();
             var methods     = new List<MethodDefinition>();
 
             var i = 0;
@@ -172,9 +176,9 @@ namespace CodeGenerator
             {
                 var line = lines[i];
 
-                if (line.StartsWith(StringConsts.ClassDefinition))            ParseClass(lines, ref name, ref ns, ref settings, ref i);
-                else if (line.StartsWith(StringConsts.PropertyDefinition))    ParseProperty(lines, properties, ref i);
-                else if (line.StartsWith(StringConsts.MethodDefinition))      ParseMethod(lines, methods, ref i);
+                if      (line.StartsWith(StringConsts.ClassDefinition))            ParseClass(lines, ref name, ref ns, ref settings, ref i);
+                else if (line.StartsWith(StringConsts.PropertyDefinition))         ParseProperty(lines, properties, ref i);
+                else if (line.StartsWith(StringConsts.MethodDefinition))           ParseMethod(lines, methods, ref i);
             }
 
             return new ClassDefinition(name, ns, settings, properties, methods);
@@ -211,7 +215,7 @@ namespace CodeGenerator
                 }
             }
         }
-        private static void ParseProperty(string[] lines, List<WrappedProperty> properties, ref int i)
+        private static void ParseProperty(string[] lines, List<PropertyDefinition> properties, ref int i)
         {
             var line = lines[i];
 
@@ -249,8 +253,8 @@ namespace CodeGenerator
                 // Special case.
                 if (line == StringConsts.PropertyBackingField) backing = true;
 
-                if (propSettingsNames.Contains(line))           propSettings |= (PropertySettings)propSettingsValues[Array.IndexOf(propSettingsNames, line)];
-                else if (propReadSettingsNames.Contains(line))  propReadSettings |= (PropertyReadSettings)propReadSettingsValues[Array.IndexOf(propReadSettingsNames, line)];
+                if      (propSettingsNames.Contains(line))           propSettings |= (PropertySettings)propSettingsValues[Array.IndexOf(propSettingsNames, line)];
+                else if (propReadSettingsNames.Contains(line))       propReadSettings |= (PropertyReadSettings)propReadSettingsValues[Array.IndexOf(propReadSettingsNames, line)];
                 else
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -259,7 +263,7 @@ namespace CodeGenerator
                 }
             }
 
-            properties.Add(new WrappedProperty(name, backing, typename, propSettings, propReadSettings));
+            properties.Add(new PropertyDefinition(name, backing, typename, propSettings, propReadSettings));
         }
         private static void ParseMethod(string[] lines, List<MethodDefinition> methods, ref int i)
         {

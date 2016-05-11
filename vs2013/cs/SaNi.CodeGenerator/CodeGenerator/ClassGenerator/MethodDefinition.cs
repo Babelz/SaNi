@@ -8,68 +8,56 @@ namespace SaNi.CodeGenerator.ClassGenerator
 {
     public sealed class MethodDefinition
     {
+        #region Fields
+        private readonly string name;
+        private readonly string returnType;
+        private readonly string args;
+
+        private MethodSettings settings;
+        #endregion
+
         #region Properties
-        public string Name
-        {
-            get;
-            private set;
-        }
-        public string ReturnTypename
-        {
-            get;
-            private set;
-        }
-        public string Args 
-        {
-            get;
-            private set;
-        }
-        public MethodSettings MethodFlags
-        {
-            get;
-            private set;
-        }
         public int Weight
         {
             get
             {
-                if ((MethodFlags & MethodSettings.Private) == MethodSettings.Private)       return 1;
-                if ((MethodFlags & MethodSettings.Protected) == MethodSettings.Protected)   return 2;
-                if ((MethodFlags & MethodSettings.Public) == MethodSettings.Public)         return 3;
+                if ((settings & MethodSettings.Private) == MethodSettings.Private)       return 1;
+                if ((settings & MethodSettings.Protected) == MethodSettings.Protected)   return 2;
+                if ((settings & MethodSettings.Public) == MethodSettings.Public)         return 3;
 
                 throw new InvalidOperationException("invalid access modifier");
             }
         }
         #endregion
 
-        public MethodDefinition(string name, string returnTypename, string args, MethodSettings methodFlags)
+        public MethodDefinition(string name, string returnTypename, string args, MethodSettings settings)
         {
-            Name            = name;
-            ReturnTypename  = returnTypename;
-            Args            = args;
-            MethodFlags     = methodFlags;
+            this.name        = name;
+            this.returnType  = returnTypename;
+            this.args        = args;
+            this.settings    = settings;
         }
 
         public override int GetHashCode()
         {
-            return Name.GetHashCode();
+            return name.GetHashCode();
         }
         public override string ToString()
         {
             var format = "{0} {1} {2} {3}({4}){5}\n\n";
             
             // Check for errors.
-            if (!MethodSettingsHelper.HasOneAccessModifierToggled(MethodFlags))
+            if (!MethodSettingsHelper.HasOneAccessModifierToggled(settings))
             {
                 throw new InvalidOperationException("too many access modifier specified");
             }
 
-            var attributes      = MethodSettingsHelper.GetAttributes(MethodFlags);
-            var accessModifier  = MethodSettingsHelper.GetAccessModifier(MethodFlags);
-            var keywords        = MethodSettingsHelper.GetKeywords(MethodFlags);
-            var body            = MethodSettingsHelper.GetMethodBody(MethodFlags);
+            var attributes      = MethodSettingsHelper.GetAttributes(settings);
+            var accessModifier  = MethodSettingsHelper.GetAccessModifier(settings);
+            var keywords        = MethodSettingsHelper.GetKeywords(settings);
+            var body            = MethodSettingsHelper.GetMethodBody(settings);
 
-            var method          = string.Format(format, accessModifier, keywords, ReturnTypename, Name, Args, body);
+            var method          = string.Format(format, accessModifier, keywords, returnType, name, args, body);
 
             // Check if we need to append attributes to the beginning.
             if (!string.IsNullOrEmpty(attributes)) method = attributes + "\n" + method;

@@ -48,7 +48,7 @@
     <Compile Include="ClassGenerator\PropertyReadWriteSettings.cs" />
     <Compile Include="ClassGenerator\PropertySettings.cs" />
     <Compile Include="ClassGenerator\StringConsts.cs" />
-    <Compile Include="ClassGenerator\WrappedProperty.cs" />
+    <Compile Include="ClassGenerator\PropertyDefinition.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
