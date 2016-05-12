@@ -57,7 +57,6 @@ namespace sani {
 			std::vector<RenderBatch> renderBatches;
 			uint32 renderBatchesCount;
 			
-			uint32 elementCounter;
 			uint32 elementsCount;
 
 			// Used while transforming indices of 

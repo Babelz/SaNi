@@ -116,6 +116,8 @@ namespace sani {
 			}
 		}
 		void Renderer::copyIndexData(const RenderElementData* const renderElementData, const RenderData* const renderData) {
+			if (renderElementData->indices == 0) return;
+
 			const uint32 indicesCount					= renderElementData->indices;
 			const uint32* indicesData					= reinterpret_cast<const uint32*>(renderData->vertexIndices.data());
 
@@ -202,7 +204,7 @@ namespace sani {
 
 			elementsCount = renderable->renderData.renderElementsCount;
 
-			for (elementCounter = 0; elementCounter < elementsCount; elementCounter++) {
+			for (uint32 elementCounter = 0; elementCounter < elementsCount; elementCounter++) {
 				const uint32 renderElementIndex						= renderable->renderData.renderElementIndices[elementCounter];
 				const RenderElementData* const renderElementData	= &renderable->renderData.renderElements[renderElementIndex];
 

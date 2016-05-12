@@ -29,7 +29,7 @@ namespace SaNi.Mono.Sandbox
             layer = Layers.CreateDynamic("base");
 
             // Create 3 rectangles.
-            //for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 400.0f, 32.0f, 32.0f));
+            for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 400.0f, 32.0f, 32.0f));
 
             // Create triangles.
             for (var i = 0; i < 3; i++)
