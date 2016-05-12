@@ -28,8 +28,8 @@ namespace SaNi.Mono.Sandbox
             // Create layer that can hold our renderable elements.
             layer = Layers.CreateDynamic("base");
 
-            //// Create 3 rectangles.
-            //for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 200.0f, 32.0f, 32.0f));
+            // Create 3 rectangles.
+            //for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 400.0f, 32.0f, 32.0f));
 
             // Create triangles.
             for (var i = 0; i < 3; i++)
@@ -63,6 +63,13 @@ namespace SaNi.Mono.Sandbox
                 var transform = triangle.Transform;
                 transform.rotation += 0.001f;
                 triangle.Transform = transform;
+            }
+
+            foreach (var rectangle in layer.Elements.Where(l => l.GetType() == typeof(Rectangle)))
+            {
+                var transform = rectangle.Transform;
+                transform.rotation -= 0.001f;
+                rectangle.Transform = transform;
             }
         }
     }
