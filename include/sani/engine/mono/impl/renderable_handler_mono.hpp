@@ -2,6 +2,7 @@
 
 #include "sani/engine/mono/structs_mono.hpp"
 #include "sani/engine/mono/renderable_handler_mono.hpp"
+#include "sani/engine/mono/texture2d_mono.hpp"
 
 namespace sani {
 
@@ -112,25 +113,25 @@ namespace sani {
 			// Texture.
 			template<class T>
 			static void GetTexture(MonoObject* object, MonoObject** value) {
-				//T* instance = getInstance<T>(object);
+				T* instance = getInstance<T>(object);
 
-				//if (instance->texture == nullptr) return;
+				if (instance->texture == nullptr) return;
 
-				//MonoObject* managedPtr = texture2dmonomodule::getManagedPtr(instance->texture->getID());
+				MonoObject* managedPtr = texture2dmonomodule::getManagedPtr(instance->texture->getID());
 
-				//*value = managedPtr;
+				*value = managedPtr;
 			};
 			template<class T>
 			static void SetTexture(MonoObject* object, MonoObject* value) {
-				//T* instance = getInstance<T>(object);
+				T* instance = getInstance<T>(object);
 
-				//if (value == nullptr) return;
+				if (value == nullptr) return;
 
-				//resource::Texture2D* texture = mono::texture2dmonomodule::getNativePtr(value);
+				resource::Texture2D* texture = mono::texture2dmonomodule::getNativePtr(value);
 
-				//instance->texture = texture;
+				instance->texture = texture;
 
-				//updateRenderData(*instance);
+				updateRenderData(*instance);
 			};
 
 			// Visible.

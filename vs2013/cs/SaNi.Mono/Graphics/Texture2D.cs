@@ -15,28 +15,44 @@ namespace SaNi.Mono.Graphics
         {
             get
             {
-                return InternalGetWidth();
+                var value = 0;
+
+                GetWidth(ref value);
+
+                return value;
             }
         }
         public int Height
         {
             get
             {
-                return InternalGetHeight();
+                var value = 0;
+
+                GetHeight(ref value);
+
+                return value;
             }
         }
         public int ID
         {
             get
             {
-                return InternalGetID();
+                var value = 0;
+
+                GetID(ref value);
+
+                return value;
             }
         }
         public bool Disposed
         {
-            get 
+            get
             {
-                return InternalGetDisposed();
+                var value = false;
+
+                GetDisposed(ref value);
+
+                return value;
             }
         }
         #endregion
@@ -46,15 +62,25 @@ namespace SaNi.Mono.Graphics
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern int InternalGetWidth();
+        private extern void GetWidth(ref int value);
         
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern int InternalGetHeight();
+        private extern void GetHeight(ref int value);
         
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern int InternalGetID();
+        private extern void GetID(ref int value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern bool InternalGetDisposed();
+        private extern void GetDisposed(ref bool value);
+
+        public override int GetHashCode()
+        {
+            return ID.GetHashCode();
+        }
+        public override string ToString()
+        {
+            Console.WriteLine("TOSTER");
+            return string.Format("TEX2D w: {0} - h: {1} - id: {2}", Width, Height, ID);
+        }
     }
 }

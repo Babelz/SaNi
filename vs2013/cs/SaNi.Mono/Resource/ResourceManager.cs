@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SaNi.Mono.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -14,7 +15,7 @@ namespace SaNi.Mono.Resource
     public static class ResourceManager
     {
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private static extern object InternalLoad(string assetName, string typeName);
+        private static extern void InternalLoad<T>(string assetName, string typeName, ref T resource) where T : class, IResource;
 
         /// <summary>
         /// Loads asset with given name.
@@ -24,7 +25,11 @@ namespace SaNi.Mono.Resource
         /// <returns>asset or null</returns>
         public static T Load<T>(string assetName) where T : class, IResource
         {
-            return InternalLoad(assetName, typeof(T).Name) as T;
+            T resource = null;
+
+            InternalLoad(assetName, typeof(T).Name, ref resource);
+            
+            return resource;
         }
 
         /// <summary>

@@ -30,7 +30,11 @@ namespace SaNi.Mono.Sandbox
 
             // Create 3 rectangles.
             for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 400.0f, 32.0f, 32.0f));
-
+            
+            // Load one texture.
+            var rectangle = layer.Elements.First();
+            rectangle.Texture = ResourceManager.Load<Texture2D>("andy");
+            Console.WriteLine(rectangle.Texture.ToString());
             // Create triangles.
             for (var i = 0; i < 3; i++)
             {

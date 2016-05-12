@@ -27,23 +27,26 @@ namespace sani {
 			return nullptr;
 		}
 
-		static int32 InternalGetWidth(MonoObject* instance) {
-			return static_cast<int32>(getInstance(instance)->nativeptr->getWidth());
+		static void GetWidth(MonoObject* instance, int32* value) {
+			*value = static_cast<int32>(getInstance(instance)->nativeptr->getWidth());
 		}
-		static int32 InternalGetHeight(MonoObject* instance) {
-			return static_cast<int32>(getInstance(instance)->nativeptr->getHeight());
+		static void GetHeight(MonoObject* instance, int32* value) {
+			*value = static_cast<int32>(getInstance(instance)->nativeptr->getHeight());
 		}
-		static int32 InternalGetID(MonoObject* instance) {
-			return static_cast<int32>(getInstance(instance)->nativeptr->getID());
+		static void GetID(MonoObject* instance, int32* value) {
+			*value = static_cast<int32>(getInstance(instance)->nativeptr->getID());
 		}
-		static bool InternalGetDisposed(MonoObject* instance) {
-			return getInstance(instance)->nativeptr->disposed();
+		static void GetDisposed(MonoObject* instance, bool* value) {
+			*value = getInstance(instance)->nativeptr->disposed();
 		}
 
 		MonoObject* createTexture2D() {
 			const MonoClassDefinition texture2DDef("SaNi.Mono.Graphics", "Texture2D");
 
-			return MONO_PROVIDER->createObject(&texture2DDef);
+			MonoObject* instance = MONO_PROVIDER->createObject(&texture2DDef);
+			MONO_PROVIDER->pin(instance);
+
+			return instance;
 		}
 
 		MonoObject* getManagedPtr(const uint32 id) {
@@ -69,10 +72,10 @@ namespace sani {
 		}
 
 		bool initialize() {
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetWidth, InternalGetWidth);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetHeight, InternalGetHeight);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetID, InternalGetID);
-			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, InternalGetDisposed, InternalGetDisposed);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, GetWidth, GetWidth);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, GetHeight, GetHeight);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, GetID, GetID);
+			MONO_REGISTER_KNOWN_FUNCTION(SaNi.Mono.Graphics, Texture2D, GetDisposed, GetDisposed);
 
 			return true;
 		}

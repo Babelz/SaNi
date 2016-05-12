@@ -27,12 +27,13 @@ namespace sani {
 		static ContentLoaderMappings mappings;
 		static ResourceManager* resources;
 
-		static MonoObject* InternalLoad(MonoString* assetName, MonoString* typeName) {
+		static void InternalLoad(MonoString* assetName, MonoString* typeName, MonoObject** asset) {
 			const String cstr(mono_string_to_utf8(typeName));
 
-			if (mappings.count(cstr)) return mappings[cstr](assetName);
-
-			return nullptr;
+			MonoObject* resource = nullptr;
+			if (mappings.count(cstr)) resource = mappings[cstr](assetName);
+		
+			*asset = resource;
 		}
 		static void Unload() {
 			resources->unload();

@@ -23,8 +23,8 @@ namespace sani {
 
 			void ResoureTypeReaderManager::registerStandardTypes() {
 				using namespace sani::resource::reader;
-				/*registerTypeReader<Texture2DReader>();
-				registerTypeReader<EffectReader>();
+				registerTypeReader<Texture2DReader>();
+				/*registerTypeReader<EffectReader>();
 				registerTypeReader<BitmapContentReader>();
 				registerTypeReader<SpriteFontReader>();
 				registerTypeReader<SceneReader>();*/
