@@ -1,3 +1,5 @@
+#pragma region
+
 //#include <iostream>
 //#include <locale>
 //#include <string>
@@ -427,6 +429,10 @@
 //
 //#endif
 
+#pragma endregion
+
+#pragma region
+
 #include <Windows.h>
 #include "sani/engine/sani_engine.hpp"
 #include "sani/platform/console.hpp"
@@ -442,3 +448,5 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 
 	return 0;
 }
+
+#pragma endregion

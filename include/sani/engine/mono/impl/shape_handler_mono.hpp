@@ -20,6 +20,9 @@ namespace sani {
 				T* instance = getInstance<T>(object);
 
 				instance->borderThickness = value;
+
+				recomputeVertices(*instance);
+				updateRenderData(*instance);
 			}
 
 			// Fill.
@@ -42,6 +45,9 @@ namespace sani {
 				instance->fill.g = color->g;
 				instance->fill.b = color->b;
 				instance->fill.a = color->a;
+
+				recomputeVertices(*instance);
+				updateRenderData(*instance);
 			}
 
 			// Border fill.
@@ -64,6 +70,9 @@ namespace sani {
 				instance->borderFill.g = color->g;
 				instance->borderFill.b = color->b;
 				instance->borderFill.a = color->a;
+
+				recomputeVertices(*instance);
+				updateRenderData(*instance);
 			}
 
 			template<class T>

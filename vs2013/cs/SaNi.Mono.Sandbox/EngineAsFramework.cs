@@ -32,9 +32,18 @@ namespace SaNi.Mono.Sandbox
             //for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 200.0f, 32.0f, 32.0f));
 
             // Create triangles.
-            for (var i = 0; i < 10; i++) layer.Add(new Triangle(new Vector2(100.0f * i, 100.0f * i), new Vector2(32.0f, 32.0f)));
+            for (var i = 0; i < 3; i++)
+            {
+                var triangle = new Triangle(Vector2.Zero, new Vector2(32.0f)) { BorderThickness = 16.0f };
 
-           return true;
+                var transform = triangle.Transform;
+                transform.position.x = 200.0f + 128.0f * i;
+                transform.position.y = 200.0f;
+                triangle.Transform = transform;
+
+                layer.Add(triangle);
+            }
+            return true;
         }
         private bool OnResume()
         {
@@ -49,6 +58,12 @@ namespace SaNi.Mono.Sandbox
 
         private void OnUpdate(EngineTime time)
         {
+            foreach (var triangle in layer.Elements.Where(l => l.GetType() == typeof(Triangle)))
+            {
+                var transform = triangle.Transform;
+                transform.rotation += 0.001f;
+                triangle.Transform = transform;
+            }
         }
     }
 }
