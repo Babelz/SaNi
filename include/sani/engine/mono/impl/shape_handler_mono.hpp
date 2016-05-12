@@ -47,7 +47,6 @@ namespace sani {
 				instance->fill.a = color->a;
 
 				recomputeVertices(*instance);
-				updateRenderData(*instance);
 			}
 
 			// Border fill.
@@ -72,7 +71,6 @@ namespace sani {
 				instance->borderFill.a = color->a;
 
 				recomputeVertices(*instance);
-				updateRenderData(*instance);
 			}
 
 			template<class T>

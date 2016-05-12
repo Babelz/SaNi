@@ -29,17 +29,17 @@ namespace SaNi.Mono.Sandbox
             layer = Layers.CreateDynamic("base");
 
             // Create 3 rectangles.
-            for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 400.0f, 32.0f, 32.0f));
-            
-            // Load one texture.
-            var rectangle = layer.Elements.First();
-            rectangle.Texture = ResourceManager.Load<Texture2D>("andy");
-            Console.WriteLine(rectangle.Texture.ToString());
-            // Create triangles.
-            for (var i = 0; i < 3; i++)
-            {
-                var triangle = new Triangle(Vector2.Zero, new Vector2(32.0f)) { BorderThickness = 16.0f };
+            for (var i = 0; i < 1; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 400.0f, 32.0f, 32.0f));
 
+            // Create triangles.
+            for (var i = 0; i < 1; i++)
+            {
+                var triangle = new Triangle(Vector2.Zero, new Vector2(32.0f));
+                //triangle.BorderThickness = 8.0f;
+                triangle.BorderFill = Color.Red;
+                triangle.Texture = ResourceManager.Load<Texture2D>("andy");
+                triangle.Fill = Color.White;
+                
                 var transform = triangle.Transform;
                 transform.position.x = 200.0f + 128.0f * i;
                 transform.position.y = 200.0f;
@@ -62,19 +62,17 @@ namespace SaNi.Mono.Sandbox
 
         private void OnUpdate(EngineTime time)
         {
-            foreach (var triangle in layer.Elements.Where(l => l.GetType() == typeof(Triangle)))
-            {
-                var transform = triangle.Transform;
-                transform.rotation += 0.001f;
-                triangle.Transform = transform;
-            }
+            //foreach (var rectangle in layer.Elements.Where(l => l.GetType() == typeof(Rectangle)))
+            //{
+            //    var transform = rectangle.Transform;
+            //    transform.rotation -= 0.001f;
+            //    var bounds = rectangle.LocalBounds;
+            //    bounds.width += 0.01f;
+            //    bounds.height += 0.01f;
 
-            foreach (var rectangle in layer.Elements.Where(l => l.GetType() == typeof(Rectangle)))
-            {
-                var transform = rectangle.Transform;
-                transform.rotation -= 0.001f;
-                rectangle.Transform = transform;
-            }
+            //    rectangle.LocalBounds = bounds;
+            //    rectangle.Transform = transform;
+            //}
         }
     }
 }

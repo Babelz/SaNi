@@ -50,6 +50,8 @@ namespace sani {
 				instance->transform.rotation = transform->r;
 
 				recomputeVertices(*instance);
+				recomputeBounds(*instance);
+				updateRenderData(*instance);
 			};
 			
 			// Localbounds.
@@ -73,6 +75,7 @@ namespace sani {
 				instance->localBounds.w = rectf->w;
 				instance->localBounds.h = rectf->h;
 
+				recomputeVertices(*instance);
 				recomputeBounds(*instance);
 			};
 
@@ -108,6 +111,8 @@ namespace sani {
 				instance->textureSource.y = rectf->y;
 				instance->textureSource.w = rectf->w;
 				instance->textureSource.h = rectf->h;
+
+				updateRenderData(*instance);
 			};
 
 			// Texture.
@@ -125,7 +130,13 @@ namespace sani {
 			static void SetTexture(MonoObject* object, MonoObject* value) {
 				T* instance = getInstance<T>(object);
 
-				if (value == nullptr) return;
+				if (value == nullptr) {
+					instance->texture = nullptr;
+
+					updateRenderData(*instance);
+
+					return;
+				}
 
 				resource::Texture2D* texture = mono::texture2dmonomodule::getNativePtr(value);
 

@@ -14,6 +14,7 @@ namespace SaNi.Mono.Graphics
         #region Fields
         private readonly uint ptr;
 
+        // ... why these need to be object?...
         private List<object> elements;
 
         private bool destroyed;
@@ -129,7 +130,7 @@ namespace SaNi.Mono.Graphics
 
         private void ReleaseElements()
         {
-            //foreach (var element in elements) element.Destroy();
+            foreach (var element in Elements) element.Destroy();
         }
 
         [MethodImpl(MethodImplOptions.InternalCall)]
