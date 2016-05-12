@@ -131,9 +131,9 @@ namespace sani {
 			}
 
 			void MonoRuntime::shutdown() {
-				mono_jit_cleanup(monoDomain);
+				if (monoDomain != nullptr) mono_jit_cleanup(monoDomain);
 
-				delete monoProvider;
+				if (monoProvider != nullptr) delete monoProvider;
 			}
 		}
 	}

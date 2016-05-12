@@ -157,6 +157,10 @@ namespace sani {
 			MonoObject* MonoProvider::invoke(MonoObject* instance, const char* const name) const {
 				return invoke(instance, name, NULL, NULL);
 			}
+
+			uint32 MonoProvider::pin(MonoObject* instance) {
+				return mono_gchandle_new(instance, true);
+			}
 		}
 	}
 }

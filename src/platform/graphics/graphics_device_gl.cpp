@@ -210,7 +210,6 @@ namespace sani {
 
 			impl->msaBackbuffer = impl->samples == NULL ? nullptr : new RenderTarget2D(this, impl->backbufferWidth, impl->backbufferHeight, impl->samples);
 			impl->backbuffer = new RenderTarget2D(this, impl->backbufferWidth, impl->backbufferHeight);
-
 			impl->currentState->viewport = viewport;
 
 			return !hasErrors();
@@ -248,9 +247,9 @@ namespace sani {
 			SANI_ASSERT(backBufferWidth != 0);
 			SANI_ASSERT(backBufferHeight != 0);
 
-			impl->samples = samples;
 			impl->backbufferWidth = backBufferWidth;
 			impl->backbufferHeight = backBufferHeight;
+			impl->samples = samples;
 
 			if (!createContext()) return;
 
@@ -281,7 +280,7 @@ namespace sani {
 		void GraphicsDevice::fullscreen() {
 			RECT wndRect;
 
-			GetWindowRect(impl->hwnd, &wndRect);
+			GetClientRect(impl->hwnd, &wndRect);
 
 			// Set style to fullscreen.
 			SetWindowLongPtr(impl->hwnd, GWL_STYLE, WS_SYSMENU | WS_POPUP | WS_CLIPCHILDREN | WS_VISIBLE);

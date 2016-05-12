@@ -53,6 +53,9 @@ namespace sani {
 			// Create and store.
 			UserService* service = new UserService(instance, name, engine);
 
+			// Pin our service, else it gets collected by the gc.
+			MONO_PROVIDER->pin(instance);
+
 			*ptr = reinterpret_cast<IntPtr>(service);
 		}
 

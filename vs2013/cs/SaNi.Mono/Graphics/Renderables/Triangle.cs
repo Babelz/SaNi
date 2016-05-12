@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace SaNi.Mono.Graphics.Renderables
 {
-    public sealed class Triangle
+    public sealed class Triangle : IRenderable
     {
         #region Fields
         private Transform transform;

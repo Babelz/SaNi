@@ -52,6 +52,8 @@ namespace sani {
 				MonoObject* invoke(MonoObject* instance, const char* const name, void** args, const int32 argc) const;
 				MonoObject* invoke(MonoObject* instance, const char* const name) const;
 
+				uint32 pin(MonoObject* instance);
+
 				~MonoProvider() = default;
 
 				MonoProvider& operator =(MonoProvider& other) = delete;

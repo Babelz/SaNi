@@ -106,7 +106,6 @@ namespace sani {
 				// Initialize default camera and layer.
 				// TODO: remove in the future.
 				cameras.push_back(Camera2D(viewport));
-				layers.push_back(Layer("def_layer", LayerType::Dynamic, 0.0f));
 
 				// Listen for window exit events so we can close the engine after
 				// the window has been closed.

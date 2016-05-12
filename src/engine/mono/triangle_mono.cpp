@@ -116,6 +116,15 @@ namespace sani {
 
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Instantiate, Instantiate);
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Release, Release);
+			
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetTopPoint, GetTopPoint);
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetTopPoint, SetTopPoint);
+
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetLeftPoint, GetLeftPoint);
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetLeftPoint, SetLeftPoint);
+
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetRightPoint, GetRightPoint);
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetRightPoint, SetRightPoint);
 
 			sani::engine::mono::registerRenderableMembers<Triangle>(elements, classDef);
 			sani::engine::mono::registerShapeMembers<Triangle>(elements, classDef);

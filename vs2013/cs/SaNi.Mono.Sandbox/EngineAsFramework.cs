@@ -25,46 +25,30 @@ namespace SaNi.Mono.Sandbox
 
         private bool OnStart()
         {
-            var r1 = new Rectangle(32.0f, 32.0f, 256.0f, 256.0f);
-            
+            // Create layer that can hold our renderable elements.
             layer = Layers.CreateDynamic("base");
 
-            layer.Add(r1);
+            //// Create 3 rectangles.
+            //for (var i = 0; i < 3; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 200.0f, 32.0f, 32.0f));
 
-            Console.WriteLine(layer.Name);
+            // Create triangles.
+            for (var i = 0; i < 10; i++) layer.Add(new Triangle(new Vector2(100.0f * i, 100.0f * i), new Vector2(32.0f, 32.0f)));
 
-            Console.WriteLine("Start called");
-            return true;
+           return true;
         }
         private bool OnResume()
         {
-            Console.WriteLine("Resume called");
             return true;
         }
         private void OnSuspended()
         {
-            Console.WriteLine("Suspend called");
         }
         private void OnTerminated()
         {
-            Console.WriteLine("Terminate called");
         }
-
-        Random r = new Random();
 
         private void OnUpdate(EngineTime time)
         {
-
-            var r1 = layer.Elements.First();
-
-            var transform = r1.Transform;
-            transform.scale = new Vector3((float)r.NextDouble(), (float)r.NextDouble(), 0.0f);
-            transform.position.x = 256.0f;
-            transform.position.y = 256.0f;
-
-            transform.rotation += 0.01f * (float)time.FrameTime.TotalMilliseconds;
-            
-            r1.Transform = transform;
         }
     }
 }

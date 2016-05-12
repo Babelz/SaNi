@@ -49,6 +49,7 @@
 #include "sani/engine/mono/resource_manager_mono.hpp"
 #include "sani/engine/mono/layers_mono.hpp"
 #include "sani/engine/mono/layer_mono.hpp"
+#include "sani/engine/mono/triangle_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -134,23 +135,11 @@ namespace sani {
 			// Read values.
 			int32 windowWidth = 0;
 			int32 windowHeight = 0;
-			int32 backbufferWidth = 0;
-			int32 backbufferHeight = 0;
-			int32 samplesCount = 0;
 
 			FIND_VAR_OR_DEFAULT(cvars, "window_width", windowWidth, 1280);
 			FIND_VAR_OR_DEFAULT(cvars, "window_height", windowHeight, 720);
-			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_width", backbufferWidth, windowWidth);
-			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_height", backbufferHeight, windowHeight);
-			FIND_VAR_OR_DEFAULT(cvars, "samples_count", samplesCount, 8);
 
 			SANI_ASSERT(windowWidth > 0 && windowHeight > 0);
-			SANI_ASSERT(backbufferWidth > 0 && backbufferHeight > 0);
-			SANI_ASSERT(samplesCount > 0);
-
-			// Cleanup.
-			releaseMessage(message);
-			deallocateShared(cvars);
 
 			// Window init.
 			graphics::Window* const window = new graphics::Window(hInstance, static_cast<uint32>(windowWidth), static_cast<uint32>(windowHeight));
@@ -163,6 +152,24 @@ namespace sani {
 
 			window->setTitle("SaNi Engine");
 			window->show();
+
+			int32 backbufferWidth = 0;
+			int32 backbufferHeight = 0;
+			int32 samplesCount = 0;
+
+			int32 clientWidth = window->getClientWidth();
+			int32 clientHeigt = window->getClientHeight();
+
+			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_width", backbufferWidth, clientWidth);
+			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_height", backbufferHeight, clientHeigt);
+			FIND_VAR_OR_DEFAULT(cvars, "samples_count", samplesCount, 8);
+
+			SANI_ASSERT(backbufferWidth > 0 && backbufferHeight > 0);
+			SANI_ASSERT(samplesCount > 0);
+
+			// Cleanup.
+			releaseMessage(message);
+			deallocateShared(cvars);
 
 			// Device init.
 			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(), hInstance);
@@ -303,6 +310,7 @@ namespace sani {
 			MONO_REGISTER_MODULE(texture2d);
 			MONO_REGISTER_MODULE(resourcemanager);
 			MONO_REGISTER_MODULE(rectangle);
+			MONO_REGISTER_MODULE(triangle);
 			MONO_REGISTER_MODULE(layer);
 			MONO_REGISTER_MODULE(layers);
 			MONO_REGISTER_MODULE(services);
