@@ -55,7 +55,9 @@
     <Compile Include="Graphics\Layer.cs" />
     <Compile Include="Graphics\Layers.cs" />
     <Compile Include="Graphics\LayerType.cs" />
+    <Compile Include="Graphics\Renderables\Circle.cs" />
     <Compile Include="Graphics\Renderables\Rectangle.cs" />
+    <Compile Include="Graphics\Renderables\Sprite.cs" />
     <Compile Include="Graphics\Renderables\Triangle.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
     <Compile Include="Resource\IResource.cs" />

@@ -160,7 +160,7 @@ namespace sani {
 			};
 
 			template<class T>
-			void registerRenderableMembers(std::vector<T*>* handles, MonoClassDefinition classDef) {
+			void registerRenderableMembers(MonoClassDefinition classDef) {
 				const auto TransformGetter = &GetTransform<T>;
 				const auto TransformSetter = &SetTransform<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetTransform, TransformGetter);

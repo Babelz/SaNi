@@ -50,6 +50,7 @@
 #include "sani/engine/mono/layers_mono.hpp"
 #include "sani/engine/mono/layer_mono.hpp"
 #include "sani/engine/mono/triangle_mono.hpp"
+#include "sani/engine/mono/circle_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -311,6 +312,7 @@ namespace sani {
 			MONO_REGISTER_MODULE(resourcemanager);
 			MONO_REGISTER_MODULE(rectangle);
 			MONO_REGISTER_MODULE(triangle);
+			MONO_REGISTER_MODULE(circle);
 			MONO_REGISTER_MODULE(layer);
 			MONO_REGISTER_MODULE(layers);
 			MONO_REGISTER_MODULE(services);

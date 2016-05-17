@@ -15,6 +15,8 @@ namespace SaNi.Mono.Sandbox
     public sealed class EngineAsFramework : EngineService
     {
         #region Fields
+        private Circle c;
+
         private Layer layer;
         #endregion
 
@@ -29,15 +31,21 @@ namespace SaNi.Mono.Sandbox
             layer = Layers.CreateDynamic("base");
 
             // Create 3 rectangles.
-            for (var i = 0; i < 12; i++) layer.Add(new Rectangle(100 + 48.0f * i, 100, 32.0f, 32.0f) { BorderThickness = 8.0f });
+            for (var i = 0; i < 1; i++) layer.Add(new Rectangle(100 + 48.0f * i, 100, 32.0f, 32.0f) { BorderThickness = 8.0f });
+
+            c = new Circle(400.0f, 400.0f, 256.0f);
+            c.Texture = ResourceManager.Load<Texture2D>("andy"); 
+            c.BorderThickness = 32.0f;
+            layer.Add(c);
 
             // Create triangles.
-            for (var i = 0; i < 8; i++)
+            for (var i = 0; i < 1; i++)
             {
-                var triangle = new Triangle(Vector2.Zero, new Vector2(32.0f));
+                var triangle = new Triangle(Vector2.Zero, new Vector2(128.0f));
                 triangle.BorderThickness = 8.0f;
-                triangle.BorderFill = Color.Red;
-                triangle.Fill = Color.Green;
+                triangle.BorderFill = Color.Blue;
+                triangle.Fill = Color.White;
+                triangle.Texture = ResourceManager.Load<Texture2D>("andy");
 
                 var transform = triangle.Transform;
                 transform.position.x = 200.0f + 128.0f * i;
@@ -46,6 +54,7 @@ namespace SaNi.Mono.Sandbox
 
                 layer.Add(triangle);
             }
+
             return true;
         }
         private bool OnResume()
@@ -72,6 +81,12 @@ namespace SaNi.Mono.Sandbox
             //    rectangle.LocalBounds = bounds;
             //    rectangle.Transform = transform;
             //}
+
+            var transform = c.Transform;
+
+            transform.rotation += 0.001f;
+
+            c.Transform = transform;
         }
     }
 }

@@ -74,7 +74,7 @@ namespace sani {
 			}
 
 			template<class T>
-			void registerShapeMembers(std::vector<T*>* handles, MonoClassDefinition classDef) {
+			void registerShapeMembers(MonoClassDefinition classDef) {
 				const auto BorderThicknessGetter = &GetBorderThickness<T>;
 				const auto BorderThicknessSetter = &SetBorderThickness<T>;
 				MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetBorderThickness, BorderThicknessGetter);

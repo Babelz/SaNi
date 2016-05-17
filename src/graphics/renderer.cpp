@@ -90,13 +90,13 @@ namespace sani {
 			const uint32 vertexElementOffset			 = renderElementData->offset;
 
 			const uint32 first							 = renderElementData->first;
-			const uint32 last							 = renderElementData->last;
+			const uint32 last							 = renderElementData->last + 1;
 
 			const uint32 firstVertexElement				 = first * (elementVertexElementsCount + vertexElementOffset);
 			const uint32 lastVertexElement				 = last * (elementVertexElementsCount + vertexElementOffset);
 
 			const uint32 vertexElementsCount			 = lastVertexElement - firstVertexElement;
-			uint32 verticesCount						 = last - first + 1;
+			uint32 verticesCount						 = last - first;
 			
 			const float32* const vertexElementsData		 = reinterpret_cast<const float32* const>(renderData->vertices.data());
 			
@@ -146,8 +146,6 @@ namespace sani {
 			else										graphicsDevice->drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin);
 
 			renderSetup->clear();
-
-			// TODO: rewrite....
 
 			graphicsDevice->bindTexture(TextureTarget::Texture2D, NULL);
 			graphicsDevice->bindEffect(NULL);

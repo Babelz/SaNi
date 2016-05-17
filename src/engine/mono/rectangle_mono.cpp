@@ -52,28 +52,14 @@ namespace sani {
 			*ptr = reinterpret_cast<IntPtr>(rectangle);
 		}
 
-		static std::vector<Rectangle*>* getElements() {
-			auto* getElements = engine->createEmptyMessage<messages::DocumentMessage>();
-			renderablemanager::getElements(getElements, ElementType::Rectangle);
-			engine->routeMessage(getElements);
-
-			auto elements = static_cast<std::vector<Rectangle*>*>(getElements->getData());
-			
-			engine->releaseMessage(getElements);
-
-			return elements;
-		}
-
 		bool initialize() {
-			std::vector<Rectangle*>* elements = getElements();
-			
 			const MonoClassDefinition classDef("SaNi.Mono.Graphics.Renderables", "Rectangle");
 
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Instantiate, Instantiate);
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Release, Release);
 
-			mono::registerRenderableMembers<Rectangle>(elements, classDef);
-			mono::registerShapeMembers<Rectangle>(elements, classDef);
+			mono::registerRenderableMembers<Rectangle>(classDef);
+			mono::registerShapeMembers<Rectangle>(classDef);
 
 			return true;
 		}

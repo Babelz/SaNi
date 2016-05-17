@@ -97,21 +97,7 @@ namespace sani {
 			*ptr = reinterpret_cast<IntPtr>(triangle);
 		}
 
-		static std::vector<Triangle*>* getElements() {
-			auto* getElements = engine->createEmptyMessage<messages::DocumentMessage>();
-			renderablemanager::getElements(getElements, ElementType::Triangle);
-			engine->routeMessage(getElements);
-
-			auto elements = static_cast<std::vector<Triangle*>*>(getElements->getData());
-
-			engine->releaseMessage(getElements);
-
-			return elements;
-		}
-
 		bool initialize() {
-			std::vector<Triangle*>* elements = getElements();
-
 			const MonoClassDefinition classDef("SaNi.Mono.Graphics.Renderables", "Triangle");
 
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Instantiate, Instantiate);
@@ -126,8 +112,8 @@ namespace sani {
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetRightPoint, GetRightPoint);
 			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetRightPoint, SetRightPoint);
 
-			sani::engine::mono::registerRenderableMembers<Triangle>(elements, classDef);
-			sani::engine::mono::registerShapeMembers<Triangle>(elements, classDef);
+			sani::engine::mono::registerRenderableMembers<Triangle>(classDef);
+			sani::engine::mono::registerShapeMembers<Triangle>(classDef);
 
 			return true;
 		}
