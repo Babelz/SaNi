@@ -29,17 +29,16 @@ namespace SaNi.Mono.Sandbox
             layer = Layers.CreateDynamic("base");
 
             // Create 3 rectangles.
-            for (var i = 0; i < 1; i++) layer.Add(new Rectangle(i * 128.0f + 32.0f, 400.0f, 32.0f, 32.0f));
+            for (var i = 0; i < 12; i++) layer.Add(new Rectangle(100 + 48.0f * i, 100, 32.0f, 32.0f) { BorderThickness = 8.0f });
 
             // Create triangles.
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 8; i++)
             {
                 var triangle = new Triangle(Vector2.Zero, new Vector2(32.0f));
-                //triangle.BorderThickness = 8.0f;
+                triangle.BorderThickness = 8.0f;
                 triangle.BorderFill = Color.Red;
-                triangle.Texture = ResourceManager.Load<Texture2D>("andy");
-                triangle.Fill = Color.White;
-                
+                triangle.Fill = Color.Green;
+
                 var transform = triangle.Transform;
                 transform.position.x = 200.0f + 128.0f * i;
                 transform.position.y = 200.0f;

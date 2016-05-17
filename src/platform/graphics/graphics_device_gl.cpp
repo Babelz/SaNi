@@ -705,8 +705,8 @@ namespace sani {
 			disableVertexPointer(VtxDescLocation);
 			disableVertexPointer(TexDescLocation);
 		}
-		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 last) {
-			CHECKED_API_CALL(glDrawArrays(static_cast<GLenum>(mode), first, last - first));
+		void GraphicsDevice::drawArrays(const RenderMode mode, const uint32 first, const uint32 count) {
+			CHECKED_API_CALL(glDrawArrays(static_cast<GLenum>(mode), first, count));
 		}
 		void GraphicsDevice::drawElements(const RenderMode mode, const PrimitiveType type, const uint32 count, const uint32 indices) {
 			CHECKED_API_CALL(glDrawElements(static_cast<GLenum>(mode), count, static_cast<GLenum>(type), (void*)indices));

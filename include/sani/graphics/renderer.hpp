@@ -30,6 +30,8 @@ namespace sani {
 		/// renderable batches that will be presented to the user.
 		class Renderer {
 		private:
+			math::Mat4f transform;
+
 			// Device and setup states.
 			GraphicsDevice* const graphicsDevice;
 
@@ -42,7 +44,7 @@ namespace sani {
 			// 0 null, 1 and 2 are valid.
 			GraphicsEffect defaultEffects[RenderStatesCount];
 
-			// API buffers.
+			// Device buffer names.
 			uint32 vertexBuffer;
 			uint32 indexBuffer;
 
@@ -54,14 +56,11 @@ namespace sani {
 			uint32 indicesSize;
 
 			RenderBatcher renderBatcher;
-			std::vector<RenderBatch> renderBatches;
 			uint32 renderBatchesCount;
 
 			// Used while transforming indices of 
 			// render elements.
 			std::vector<uint32> indexTransformBuffer;
-
-			math::Mat4f transform;
 			
 			void generateDefaultShaders();
 			void generateRenderSetups();
@@ -78,7 +77,6 @@ namespace sani {
 			void prepareFlushRenderBatch(const RenderBatch* renderBatch);
 			void flushRenderBatch(const RenderBatch* const renderBatch);
 			
-			void checkBatchEffects();
 			void updateBufferDatas();
 
 			void prepareRendering();

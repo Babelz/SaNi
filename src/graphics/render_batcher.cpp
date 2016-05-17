@@ -10,22 +10,23 @@ namespace sani {
 	namespace graphics {
 
 		RenderBatcher::RenderBatcher(GraphicsEffect* const defaultEffects, const uint32 defaultEffectsCount)
-			: renderBatches(nullptr), renderBatch(nullptr), renderBatchesCount(0), vertexElements(0), indexElements(0),
+			: renderBatch(nullptr), renderBatchesCount(0), vertexElements(0), indexElements(0),
 			  nextOffset(0), defaultEffects(defaultEffects), defaultEffectsCount(defaultEffectsCount) {
+			batches.resize(32);
 		}
 
 		void RenderBatcher::updateOffset() {
 			// No need to add offset.
 			if (renderBatchesCount <= 1) return;
 
-			const RenderBatch* const last = &renderBatches->operator[](renderBatchesCount - 2);
+			const RenderBatch* const last = &batches[renderBatchesCount - 2];
 
 			// No need to add offset, same vertex elements count.
-			if (last->elementsData->vertexElements == renderBatch->elementsData->vertexElements) return;
+			if (last->vertexElementsCount == renderBatch->vertexElementsCount) return;
 
 			// From less elements to more.
 			// Offset = vtxElemes - vetxElemsMod.
-			const uint32 vertexElementsCount	= renderBatch->elementsData->vertexElements;
+			const uint32 vertexElementsCount	= renderBatch->vertexElementsCount;
 			const uint32 vertexElementsModulo	= vertexElements % vertexElementsCount;
 			const uint32 vertexElementsOffset	= (vertexElementsCount - vertexElementsModulo);
 
@@ -40,9 +41,9 @@ namespace sani {
 		}
 		
 		void RenderBatcher::initializeBatch(const RenderElementData* const renderElementData) {
-			renderBatch->elementsData = renderElementData;
-
-			renderBatch->indicesBegin = indexElements * sizeof(uint32);
+			renderBatch->group				 = renderElementData->groupIdentifier;
+			renderBatch->vertexElementsCount = renderElementData->vertexElements;
+			renderBatch->indicesBegin		 = indexElements;
 
 			const RenderState renderState	= renderElementData->texture == 0 ? RenderState::Polygons : RenderState::TexturedPolygons;
 			renderBatch->vertexMode			= renderElementData->indices ==	0 ? VertexMode::NoIndexing : VertexMode::Indexed;
@@ -69,17 +70,16 @@ namespace sani {
 		}
 
 		void RenderBatcher::swapBatch() {
-			renderBatch = &renderBatches->operator[](renderBatchesCount);
-			renderBatch->resetBatch();
+			RenderBatch* batch = &batches[renderBatchesCount++];
+			batch->resetBatch();
 
-			renderBatchesCount++;
+			if (renderBatchesCount > batches.size()) batches.resize(batches.size() * 2);
 
-			if (renderBatchesCount == renderBatches->size()) renderBatches->resize(renderBatches->size() * 2);
+			renderBatch = batch;
 		}
 
-		void RenderBatcher::prepareBatching(std::vector<RenderBatch>* const renderBatches) {
-			this->renderBatches = renderBatches;
-			
+		void RenderBatcher::prepareBatching() {
+			batchIterator = 0;
 			renderBatchesCount = 0;
 			vertexElements = 0;
 			indexElements = 0;
@@ -97,15 +97,19 @@ namespace sani {
 
 			return offset;
 		}
+
+		const RenderBatch* const RenderBatcher::nextRenderBatch() {
+			return &batches[batchIterator++];
+		}
 		
 		void RenderBatcher::batchElement(const RenderElementData* const renderElementData, const uint32 elementCounter, const uint32 elementsCount) {
-			if (renderBatch->elementsData == nullptr) {
+			if (renderBatch->group == NULL) {
 				initializeBatch(renderElementData);
 			} else if (shouldBeBatchedAlone(renderElementData)) {
 				swapBatch();
 
 				initializeBatch(renderElementData);
-			} else if (renderElementData->groupIdentifier != renderBatch->elementsData->groupIdentifier) {
+			} else if (renderBatch->group != renderElementData->groupIdentifier) {
 				// Check if we can batch this element to some recent batch.
 				// If we can't just create new batch.
 				if (renderBatchesCount >= 1 && (elementCounter < renderBatchesCount)) {
@@ -114,9 +118,9 @@ namespace sani {
 					uint32 i = batchesBegin;
 
 					while (i < renderBatchesCount) {
-						RenderBatch* const recentRenderBatch = &renderBatches->operator[](i);
+						RenderBatch* const recentRenderBatch = &batches[i];
 
-						if (recentRenderBatch->elementsData->groupIdentifier == renderElementData->groupIdentifier) {
+						if (recentRenderBatch->group == renderElementData->groupIdentifier) {
 							RenderBatch* const temp = renderBatch;
 							renderBatch = recentRenderBatch;
 

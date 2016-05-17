@@ -145,7 +145,7 @@ namespace sani {
 			// Drawing related.
 			void clear(const float32 r, const float32 g, const float32 b, const float32 a);
 			void present(const uint32 effect);
-			void drawArrays(const RenderMode mode, const uint32 first, const uint32 last);
+			void drawArrays(const RenderMode mode, const uint32 first, const uint32 count);
 			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last, const uint32 offset);
 			void drawElements(const RenderMode mode, const PrimitiveType type, const uint32 first, const uint32 last);
 

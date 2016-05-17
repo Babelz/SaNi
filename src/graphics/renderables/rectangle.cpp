@@ -22,15 +22,6 @@ namespace sani {
 
 			localBounds.w = w;
 			localBounds.h = h;
-
-			VertexPositionColorTexture* vertices[] {
-				&renderData.vertices[0],
-				&renderData.vertices[1],
-				&renderData.vertices[2],
-				&renderData.vertices[3]
-			};
-
-			applyDefaultRectangleTextureCoordinates(vertices);
 			
 			transform.position.x = x;
 			transform.position.y = y;

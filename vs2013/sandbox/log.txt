@@ -14,6 +14,24 @@
 [sani::engine::SaNiEngine::initializeEntityComponentSystem(INFO)]: entity manager started...
 [sani::engine::SaNiEngine::initializeMono(INFO)]: mono runtime started...
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
 [sani::engine::SaNiEngine::initializeMono(INFO)]: loaded all mono modules...
 [sani::engine::SaNiEngine::initialize(INFO)]: engine init ok!
