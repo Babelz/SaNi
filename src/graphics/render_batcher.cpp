@@ -105,41 +105,49 @@ namespace sani {
 		void RenderBatcher::batchElement(const RenderElementData* const renderElementData, const uint32 elementCounter, const uint32 elementsCount) {
 			if (renderBatch->group == NULL) {
 				initializeBatch(renderElementData);
-			} else if (shouldBeBatchedAlone(renderElementData)) {
+			}
+			else if (shouldBeBatchedAlone(renderElementData)) {
 				swapBatch();
 
 				initializeBatch(renderElementData);
 			} else if (renderBatch->group != renderElementData->groupIdentifier) {
+				// INFO: batch swapping, i am pretty damn sure that 
+				//		 this is not even possible?...
+				// TODO: remove if this can't be used.
 				// Check if we can batch this element to some recent batch.
 				// If we can't just create new batch.
-				if (renderBatchesCount >= 1 && (elementCounter < renderBatchesCount)) {
-					const uint32 batchesBegin = renderBatchesCount - (elementCounter + 1);
+				//if (renderBatchesCount >= 1 && (elementCounter < renderBatchesCount)) {
+				//	const uint32 batchesBegin = renderBatchesCount - (elementCounter + 1);
 
-					uint32 i = batchesBegin;
+				//	uint32 i = batchesBegin;
 
-					while (i < renderBatchesCount) {
-						RenderBatch* const recentRenderBatch = &batches[i];
+				//	while (i < renderBatchesCount) {
+				//		RenderBatch* const recentRenderBatch = &batches[i];
 
-						if (recentRenderBatch->group == renderElementData->groupIdentifier) {
-							RenderBatch* const temp = renderBatch;
-							renderBatch = recentRenderBatch;
+				//		if (recentRenderBatch->group == renderElementData->groupIdentifier) {
+				//			RenderBatch* const temp = renderBatch;
+				//			renderBatch = recentRenderBatch;
 
-							applyToBatch(renderElementData);
+				//			applyToBatch(renderElementData);
 
-							renderBatch = temp;
+				//			renderBatch = temp;
 
-							return;
-						}
+				//			return;
+				//		}
 
-						i++;
-					}
-				}
+				//		i++;
+				//	}
 
-				// Can't batch to other batches, a new batch is required.
 				swapBatch();
 
 				initializeBatch(renderElementData);
 			}
+
+			// INFO: part of the old batch swapping version. Does not work.
+			// Can't batch to other batches, a new batch is required.
+			//swapBatch();
+
+			//initializeBatch(renderElementData);
 
 			applyToBatch(renderElementData);
 		}

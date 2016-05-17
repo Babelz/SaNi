@@ -14,7 +14,29 @@
 [sani::engine::SaNiEngine::initializeEntityComponentSystem(INFO)]: entity manager started...
 [sani::engine::SaNiEngine::initializeMono(INFO)]: mono runtime started...
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Circle>::createElement(INFO)]: created renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Triangle>::createElement(INFO)]: created renderable element
 [sani::engine::SaNiEngine::initializeMono(INFO)]: loaded all mono modules...
 [sani::engine::SaNiEngine::initialize(INFO)]: engine init ok!
+[sani::engine::services::EngineService::terminate(INFO)]: service "file system service" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "cvar service" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "render service" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "resource manager handler" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "sprite manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "circle manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "triangle manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "rectangle manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "sprite animation manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "particle emitter manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "text manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "entity manager" terminated
+[sani::engine::services::EngineService::terminate(INFO)]: service "engine as framework" terminated
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
+[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element

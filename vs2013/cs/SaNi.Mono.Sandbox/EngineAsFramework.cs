@@ -31,15 +31,16 @@ namespace SaNi.Mono.Sandbox
             layer = Layers.CreateDynamic("base");
 
             // Create 3 rectangles.
-            for (var i = 0; i < 1; i++) layer.Add(new Rectangle(100 + 48.0f * i, 100, 32.0f, 32.0f) { BorderThickness = 8.0f });
+            for (var i = 0; i < 6; i++) layer.Add(new Rectangle(100 + 48.0f * i, 100, 32.0f, 32.0f) { BorderThickness = 8.0f });
 
             c = new Circle(400.0f, 400.0f, 256.0f);
-            c.Texture = ResourceManager.Load<Texture2D>("andy"); 
+            c.Fill = Color.White;
+            //c.Texture = ResourceManager.Load<Texture2D>("andy");
             c.BorderThickness = 32.0f;
             layer.Add(c);
 
             // Create triangles.
-            for (var i = 0; i < 1; i++)
+            for (var i = 0; i < 2; i++)
             {
                 var triangle = new Triangle(Vector2.Zero, new Vector2(128.0f));
                 triangle.BorderThickness = 8.0f;
@@ -82,6 +83,7 @@ namespace SaNi.Mono.Sandbox
             //    rectangle.Transform = transform;
             //}
 
+            if (c == null) return;
             var transform = c.Transform;
 
             transform.rotation += 0.001f;
