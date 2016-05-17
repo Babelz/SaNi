@@ -63,6 +63,14 @@ namespace SaNi.Mono.Math
             this.height = height;
         }
 
+        public bool Intersects(Rectf other)
+        {
+            return this.Left < other.Right &&
+                   this.Right > other.Left &&
+                   this.Top < other.Bottom &&
+                   this.Bottom > other.Top; 
+        }
+
         public static Rectf Empty()
         {
             return empty;

@@ -1,133 +1,174 @@
-//namespace SaNi.Mono.Graphics.Renderables
-//{
-//public sealed class Sprite
-//{
-//#region Fields
-//private Transform transform;
-//private Rectf globalbounds;
-//private Texture2D texture;
-//private bool visible;
-//private Color color;
-//#endregion
+using SaNi.Mono.Math;
+using System.Runtime.CompilerServices;
+namespace SaNi.Mono.Graphics.Renderables
+{
+    public sealed class Sprite
+    {
+        #region Fields
+        private Transform transform;
+        
+        private Rectf localBounds;
+        private Rectf globalbounds;
+        private Rectf textureSource;
 
-//#region Properties
-//public Transform Transform
-//{
-//get
-//{
-//GetTransform(ref transform);
-//return transform;
-//}
-//set
-//{
-//SetTransform(value);
-//}
-//}
-//public Rectf LocalBounds
-//{
+        private Texture2D texture;
+        
+        private Color color;
 
-//}
-//public Rectf GlobalBounds
-//{
-//get
-//{
-//GetGlobalBounds(ref globalbounds);
-//return globalbounds;
-//}
+        private readonly int id;
+        private readonly uint ptr;
+        #endregion
 
-//}
-//public Rectf TextureSource
-//{
+        #region Properties
+        public Transform Transform
+        {
+            get
+            {
+                GetTransform(ref transform);
 
-//}
-//public Texture2D Texture
-//{
-//get
-//{
-//GetTexture(ref texture);
-//return texture;
-//}
-//set
-//{
-//SetTexture(value);
-//}
-//}
-//public int ID
-//{
+                return transform;
+            }
+            set
+            {
+                SetTransform(value);
+            }
+        }
+        public Rectf LocalBounds
+        {
+            get
+            {
+                GetLocalBounds(ref localBounds);
 
-//}
-//public bool Visible
-//{
-//get
-//{
-//GetVisible(ref visible);
-//return visible;
-//}
-//set
-//{
-//SetVisible(value);
-//}
-//}
-//public Color Color
-//{
-//get
-//{
-//GetColor(ref color);
-//return color;
-//}
-//set
-//{
-//SetColor(value);
-//}
-//}
-//#endregion
+                return localBounds;
+            }
+            set
+            {
+                SetLocalBounds(value);
+            }
+        }
+        public Rectf GlobalBounds
+        {
+            get
+            {
+                GetGlobalBounds(ref globalbounds);
 
-//public Sprite()
-//{
-//transform = new Transform();
-//globalbounds = new Rectf();
-//texture = new Texture2D();
-//visible = new bool();
-//color = new Color();
+                return globalbounds;
+            }
+        }
+        public Rectf TextureSource
+        {
+            get
+            {
+                GetTextureSource(ref textureSource);
 
-//}
-//#region Internal get/set methods
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void GetTransform(ref Transform value);
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void SetTransform(Transform value);
+                return textureSource;
+            }
+            set
+            {
+                SetTextureSource(textureSource);
+            }
+        }
+        public Texture2D Texture
+        {
+            get
+            {
+                GetTexture(ref texture);
 
+                return texture;
+            }
+            set
+            {
+                SetTexture(value);
+            }
+        }
+        public int ID
+        {
+            get
+            {
+                return id;
+            }
+        }
+        public bool Visible
+        {
+            get
+            {
+                var value = false;
 
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void GetGlobalBounds(ref Rectf value);
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void SetGlobalBounds(Rectf value);
+                GetVisible(ref value);
 
+                return value;
+            }
+            set
+            {
+                SetVisible(value);
+            }
+        }
+        public Color Color
+        {
+            get
+            {
+                GetColor(ref color);
 
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void GetTexture(ref Texture2D value);
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void SetTexture(Texture2D value);
+                return color;
+            }
+            set
+            {
+                SetColor(value);
+            }
+        }
+        #endregion
 
+        public Sprite()
+        {
+            transform       = Transform.Empty();
+            
+            globalbounds    = Rectf.Empty();
+            localBounds     = Rectf.Empty();
+            textureSource   = Rectf.Empty();
 
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void GetVisible(ref bool value);
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void SetVisible(bool value);
+            color           = new Color();
+        }
+        #region Internal get/set methods
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetTransform(ref Transform value);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void SetTransform(Transform value);
 
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void GetColor(ref Color value);
-//[MethodImpl(MethodImplOptions.InternalCall)]
-//private extern void SetColor(Color value);
-//#endregion
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetGlobalBounds(ref Rectf value);
 
-//public  void Destroy()
-//{
-//}
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetLocalBounds(ref Rectf value);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void SetLocalBounds(Rectf value);
 
-//~Sprite()
-//{
-//}
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetTextureSource(ref Rectf value);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void SetTextureSource(Rectf value);
 
-//}
-//}
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetTexture(ref Texture2D value);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void SetTexture(Texture2D value);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetVisible(ref bool value);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void SetVisible(bool value);
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void GetColor(ref Color value);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void SetColor(Color value);
+        #endregion
+
+        public void Destroy()
+        {
+        }
+
+        ~Sprite()
+        {
+        }
+    }
+}
