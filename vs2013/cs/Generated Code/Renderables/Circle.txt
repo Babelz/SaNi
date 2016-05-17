@@ -1,0 +1,32 @@
+CLASS_DEF SaNi.Mono.Graphics.Renderables.Circle
+	Public
+	Sealed
+	Ctor
+	Dtor
+CLASS_DEF
+
+INCLUDE_PROPS Renderables\iRenderable.txt
+
+PROP_DEF float Radius
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF float BorderThickness
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF Color BorderFill
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF Color Fill
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF
+
+INCLUDE_METHODS Renderables\iRenderable.txt
