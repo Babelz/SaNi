@@ -3,8 +3,6 @@
 #include "sani/core/profiling/impl/profiler_impl.hpp"
 #include "sani/core/profiling/profiler_module.hpp"
 
-#include <list>
-
 #define BEGIN_PROFILING		sani::profiler::__privns__::startProfiling(typeid(this).name(), __FUNCTION__)
 #define END_PROFILING		sani::profiler::__privns__::endProfiling(typeid(this).name(), __FUNCTION__)
 
@@ -21,11 +19,6 @@ namespace sani {
 
 			ProfilerImpl impl;
 		}
-
-		/*
-			TODO: should these be "hidden" or not?..
-			TODO: add models when we can present them to the user.
-		*/
 
 		namespace __privns__ {
 			

@@ -11,6 +11,9 @@
 #include "sani/graphics/layer.hpp"
 #include "sani/core/profiling/profiler.hpp"
 #include "sani/engine/services/service_logging.hpp"
+#include "sani/engine/services/contracts/cvar_service_contract.hpp"
+#include "sani/engine/messaging/messages/query_message.hpp"
+#include "sani/core/cvar/cvar.hpp"
 
 namespace sani {
 
@@ -31,6 +34,19 @@ namespace sani {
 
 			void RenderService::windowClosed(SaNiEngine* const engine) {
 				engine->quit();
+			}
+			void RenderService::windowSizeChanged(GraphicsDevice* const device, Window* const window, Camera2D* const camera) {
+				device->setBackbufferSize(window->getClientWidth(), window->getClientHeight());
+				device->applyBackbufferChanges();
+
+				const Viewport viewport(0, 0, window->getClientWidth(), window->getClientHeight());
+				device->setViewport(viewport);
+				camera->setViewport(viewport);
+			}
+			void RenderService::layerOrderChanged(std::vector<Layer>& layers) {
+				std::sort(layers.begin(), layers.end(), [](const Layer& lhs, const Layer& rhs) {
+					return lhs.getOrder() < rhs.getOrder();
+				});
 			}
 
 			void RenderService::handleDocumentMessage(messages::DocumentMessage* const message) {
@@ -90,19 +106,36 @@ namespace sani {
 				// Initialize default camera and layer.
 				// TODO: remove in the future.
 				cameras.push_back(Camera2D(viewport));
-				layers.push_back(Layer("def_layer", LayerType::Dynamic, 0.0f));
 
 				// Listen for window exit events so we can close the engine after
 				// the window has been closed.
 				window->closed += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowClosed, getEngine()));
+				
+				// Check if we need to fit backbuffer.
+				SaNiEngine* const engine = getEngine();
 
-				if (renderer.initialize()) return false;
+				auto* message = engine->createEmptyMessage<messages::QueryMessage>();
+				cvarservice::getCVar(message, "stretch_backbuffer");
+				engine->routeMessage(message);
 
-				/// Should never fail.
+				CVar* const cvar = static_cast<CVar* const>(message->getResults());
+
+				int32 stretchBackBuffer = 0;
+				VAR_OR_DEFAULT(cvar, stretchBackBuffer, 0);
+
+				if (!stretchBackBuffer) {
+					window->sizeChanged += SANI_EVENT_HANDLER(void(void), std::bind(RenderService::windowSizeChanged, graphicsDevice, window, &cameras.back()));
+				}
+
+				engine->releaseMessage(message);
+
+				if (!renderer.initialize()) return false;
+
+				// Should never fail.
 				return true;
 			}
 			void RenderService::onTerminate() {
-				graphicsDevice->cleanup();
+				graphicsDevice->dispose();
 			}
 
 			void RenderService::createLayer(messages::CommandMessage* const message) {
@@ -118,6 +151,8 @@ namespace sani {
 				
 				layers.push_back(Layer(name, type, order));
 
+				layers.back().orderChanged += SANI_EVENT_HANDLER(void(), std::bind(RenderService::layerOrderChanged, layers));;
+
 				message->markHandled();
 			}
 			void RenderService::deleteLayer(messages::CommandMessage* const message) {
@@ -128,7 +163,7 @@ namespace sani {
 				});
 
 				if (it != layers.end()) {
-					layers.remove(*it);
+					layers.erase(it);
 
 					message->markHandled();
 				}
@@ -151,15 +186,17 @@ namespace sani {
 				}));
 
 				if (it != cameras.end()) {
-					cameras.remove(*it);
+					cameras.erase(it);
 					
 					message->markHandled();
 				}
 			}
 			void RenderService::createCamera(messages::CommandMessage* const message) {
 				const String name = message->getData();
+				
+				auto viewport = graphicsDevice->getViewport();
 
-				cameras.push_back(Camera2D(graphicsDevice->getViewport()));
+				cameras.push_back(Camera2D(viewport));
 				
 				if (name.size() != 0) cameras.back().setName(name);
 			}
@@ -251,7 +288,7 @@ namespace sani {
 					renderToCamera(camera);
 				}
 
-				graphicsDevice->present();
+				graphicsDevice->present(NULL);
 				
 				END_PROFILING;
 			}

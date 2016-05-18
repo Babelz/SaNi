@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sani/core/events.hpp"
+
 #include "sani/graphics/layer_type.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
@@ -26,7 +28,7 @@ namespace sani {
 			// Top part of the layer (all elements with z value of 0.0f or greater)
 			std::vector<graphics::Renderable* const> top;
 
-			const LayerType type;
+			LayerType type;
 			
 			bool visible;
 			float32 order;
@@ -38,6 +40,8 @@ namespace sani {
 			void renderBottom(graphics::Renderer* const renderer);
 			void renderTop(graphics::Renderer* const renderer);
 		public:
+			SANI_DECLARE_EVENT(orderChanged, void());
+
 			Layer(const String& name, const LayerType type, const float32 order = 0.0f);
 			
 			/// Returns the layers type. 
@@ -72,10 +76,14 @@ namespace sani {
 			/// Causes all the elements to be removed from this layer.
 			void moveElementsTo(Layer* const other);
 
+			void getElements(std::vector<graphics::Renderable* const>& outElements);
+			uint32 elementsCount() const;
+
 			~Layer();
 
 			bool operator ==(const Layer& lhs) const;
 			bool operator !=(const Layer& lhs) const;
+			Layer& operator =(Layer& lhs);
 		};
 	}
 }

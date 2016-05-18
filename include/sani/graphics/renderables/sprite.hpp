@@ -21,7 +21,7 @@ namespace sani {
 			Sprite(Texture* const texture, const math::Rect32f& bounds);
 			Sprite(Texture* const texture, const math::Vec2f& size);
 			Sprite(Texture* const texture);
-			
+
 			virtual ~Sprite() = default;
 		};
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sani/platform/graphics/graphics_resource.hpp"
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/types.hpp"
 #include "sani/forward_declare.hpp"
 

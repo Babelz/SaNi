@@ -12,11 +12,6 @@ namespace sani {
 
 			uint32 EngineService::idGenerator = 0;
 
-			static const String initializationErrorMessage		= "initialization failed!";
-			static const String resumeErrorMessage				= "resume failed!";
-			static const String suspendErrorMessage				= "failed to suspend the service!";
-			static const String terminateErrorMessage			= "failed to terminate the service!";
-
 			EngineService::EngineService(const String& name, SaNiEngine* const engine) : name(name),
 																						 id(idGenerator++),
 																						 engine(engine),

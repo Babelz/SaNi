@@ -14,7 +14,7 @@ namespace sani {
 		
 		namespace services {
 
-			class FileSystemService : public EngineService {
+			class FileSystemService final : public EngineService {
 			private:	
 				io::FileSystem fileSystem;
 

@@ -6,7 +6,8 @@ namespace sani {
 
 		Renderable::Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements, Texture* const texture) : renderData(vertices, indices, renderElements),
 																																   texture(texture),
-																																   id(0),
+																																   id(id),			// To keep id correct when we inherit and use dyn mem.
+																																					// TODO: fix?
 																																   visible(true) {
 		}
 		Renderable::Renderable(const uint32 vertices, const uint32 indices, const uint32 renderElements) : Renderable(vertices, indices, renderElements, nullptr) {

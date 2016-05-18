@@ -37,6 +37,8 @@ namespace sani {
 				uint32 getCommand() const;
 				/// Sets the messages command.
 				void setCommand(const uint32 command);
+
+				~CommandMessage() = default;
 			};
 		}
 	}

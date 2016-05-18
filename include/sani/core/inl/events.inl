@@ -34,6 +34,7 @@ namespace sani {
 
 	template<typename T>
 	Event<T>::~Event() {
+		callbacks.clear();
 	}
 
 	template<typename T>

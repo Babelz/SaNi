@@ -12,6 +12,8 @@ namespace sani {
 																					  order(order),
 																					  visible(true) {
 			typeInitialize();
+			
+			SANI_INIT_EVENT(orderChanged, void());
 		}
 
 		void Layer::typeInitialize() {
@@ -49,6 +51,8 @@ namespace sani {
 		}
 		void Layer::setOrder(const float32 order) {
 			this->order = order;
+
+			SANI_TRIGGER_VOID_EVENT(orderChanged, void());
 		}
 
 		bool Layer::isVisible() const {
@@ -75,6 +79,24 @@ namespace sani {
 			renderTop(renderer);
 		}
 
+		void Layer::getElements(std::vector<graphics::Renderable* const>& outElements) {
+			outElements.reserve(top.size() + bottom.size());
+
+			std::move(top.begin(), top.end(), outElements.begin());
+			std::move(bottom.begin(), bottom.end(), outElements.begin() + top.size());
+
+			//// TODO: do with move.
+
+			//for (auto element : top)	outElements.push_back(element);
+			//for (auto element : bottom) outElements.push_back(element);
+
+			//top.clear();
+			//bottom.clear();
+		}
+		uint32 Layer::elementsCount() const {
+			return top.size() + bottom.size();
+		}
+
 		Layer::~Layer() {
 		}
 
@@ -83,6 +105,17 @@ namespace sani {
 		}
 		bool Layer::operator !=(const Layer& lhs) const {
 			return !(lhs.getName() == name);
+		}
+
+		Layer& Layer::operator =(Layer& lhs) {
+			std::swap(lhs.bottom, bottom);
+			std::swap(lhs.top, top);
+			std::swap(lhs.type, type);
+			std::swap(lhs.visible, visible);
+			std::swap(lhs.order, order);
+			std::swap(lhs.name, name);
+
+			return *this;
 		}
 	}
 }

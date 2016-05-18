@@ -3,12 +3,16 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525" Background="Black"
         Name="mainWindow" Loaded="mainWindow_Loaded">
-    
+
+    <Window.Resources>
+        <ResourceDictionary Source="/Themes/ExpressionDark.xaml"/>
+    </Window.Resources>
+
     <!-- Root -->
     <Grid>
         <!-- Column and row definitions -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
+            <RowDefinition Height="27"/>
             <RowDefinition Height="4*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
@@ -20,7 +24,7 @@
         
         <!-- Menu area -->
         <Menu Grid.ColumnSpan="2">
-            <MenuItem Header="Shader" Margin="3">
+            <MenuItem Header="Shader">
                 <MenuItem Header="New" Name="shaderMenuNew" Click="shaderMenuNew_Click"/>
                 <MenuItem Header="Load" Name="shaderMenuLoad" Click="shaderMenuLoad_Click"/>
                 <Separator/>
@@ -29,26 +33,38 @@
                 <Separator/>
                 <MenuItem Header="Exit editor" Name="shaderMenuExitEditor" Click="shaderMenuExitEditor_Click"/>
             </MenuItem>
-
-            <MenuItem Header="Settings" Margin="3">
+            <MenuItem Header="Settings">
                 <MenuItem Header="Preview" Name="settingsMenuPreview" Click="settingsMenuPreview_Click"/>
                 <MenuItem Header="Text editor" Name="settingsMenuTextEditor" Click="settingsMenuTextEditor_Click"/>
             </MenuItem>
-
-            <MenuItem Header="About" Name="menuAbout" Margin="3" Click="menuAbout_Click"/>
+            <MenuItem Header="About" Name="menuAbout" Click="menuAbout_Click"/>
         </Menu>
         
         <!-- GL view area -->
         <!-- Form host that gets the user control GLControl once the window is being initialized -->
-        <WindowsFormsHost Name="glHost" Grid.Row="1" Margin="0, 0, 15, -1"/>
+        <WindowsFormsHost Name="glHost" Grid.Row="1" Margin="0, 0, 5, -1"/>
         
-        <GridSplitter Grid.Row="1" Width="15"/>
+        <GridSplitter Grid.Row="1" Width="5" Foreground="Gray"/>
 
         <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="textEditor"
-                               FontFamily="Consolas" FontSize="20pt" Grid.Row="1" Grid.Column="1"
-                               Background="Black" Foreground="Yellow" Cursor="IBeam"/>
+                               FontFamily="Consolas" FontSize="13pt" Grid.Row="1" Grid.Column="1"
+                               Background="Black" Foreground="Yellow" Cursor="IBeam" TextChanged="textEditor_TextChanged"/>
         
         <!-- Output area (to print info and errors) -->
-        
+        <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="4*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Output" Grid.Row="0" Foreground="Gray" VerticalAlignment="Center" FontWeight="Bold"/>
+            <TextBox Name="outputTextBox" Grid.Row="1" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" IsReadOnly="True"
+                     Text="ASDASDASDASDasdasdsadadsasd??"/>
+        </Grid>
     </Grid>
 </Window>

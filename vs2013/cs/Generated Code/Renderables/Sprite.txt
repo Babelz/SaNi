@@ -1,0 +1,17 @@
+CLASS_DEF SaNi.Mono.Graphics.Renderables.Sprite
+	Public
+	Sealed
+	Ctor
+	Dtor
+CLASS_DEF
+
+INCLUDE_PROPS Renderables\iRenderable.txt
+
+PROP_DEF Color Color
+	BackingField
+	GetSet
+	Internal
+	Reference
+PROP_DEF
+
+INCLUDE_METHODS Renderables\iRenderable.txt

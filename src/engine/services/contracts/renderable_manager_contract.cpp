@@ -37,10 +37,6 @@ namespace sani {
 					decorateMessage(message, RenderableManagerCommands::DeleteElement, type);
 				}
 
-				void queueForUpdates(messages::DocumentMessage* const message, const ElementType type) {
-					decorateMessage(message, RenderableManagerCommands::EnqueueForUpdates, type);
-				}
-
 				void getElements(messages::DocumentMessage* const message, const ElementType type) {
 					decorateMessage(message, RenderableManagerCommands::GetElements, type);
 				}

@@ -7,6 +7,7 @@
 #include "sani/platform/graphics/viewport.hpp"
 #include "sani/platform/graphics/window.hpp"
 
+#include "sani/engine/services/contracts/cvar_service_contract.hpp"
 #include "sani/core/memory/memory.hpp"
 
 #include "sani/engine/messaging/messages/command_message.hpp"
@@ -21,6 +22,7 @@
 #include "sani/engine/services/triangle_manager.hpp"
 #include "sani/engine/services/particle_emitter_manager.hpp"
 #include "sani/engine/services/sprite_animation_manager.hpp"
+#include "sani/engine/services/text_manager.hpp"
 #include "sani/engine/services/ecs/entity_manager.hpp"
 
 #include "sani/engine/services/file_system_service.hpp"
@@ -28,14 +30,27 @@
 
 #include "sani/engine/services/cvar_service.hpp"
 #include "sani/core/cvar/cvar.hpp"
-#include "sani/engine/services/contracts/cvar_service_contract.hpp"
+#include "sani/engine/mono/mono_runtime.hpp"
 
 #include "sani/graphics/layer.hpp"
 
 #include "sani/core/profiling/profiler.hpp"
 #include "sani/platform/console.hpp"
-#include "sani/engine/services/ecs/transform_manager.hpp"
+#include "sani/core/logging/log.hpp"
+
 #include "sani/core/logging/log_batcher.hpp"
+#include "sani/engine/services/resource_manager_handler_service.hpp"
+
+#include "sani/engine/mono/mono_runtime.hpp"
+#include "sani/engine/mono/mono_define.hpp"
+#include "sani/engine/mono//texture2d_mono.hpp"
+#include "sani/engine/mono/services_mono.hpp"
+#include "sani/engine/mono/rectangle_mono.hpp"
+#include "sani/engine/mono/resource_manager_mono.hpp"
+#include "sani/engine/mono/layers_mono.hpp"
+#include "sani/engine/mono/layer_mono.hpp"
+#include "sani/engine/mono/triangle_mono.hpp"
+#include "sani/engine/mono/circle_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -49,12 +64,10 @@ namespace sani {
 		SaNiEngine::SaNiEngine(const HINSTANCE hInstance) : services(ServiceRegistry()),		// Just to make clear that in what order we initialize stuff.
 															channels(&services),
 															hInstance(hInstance),
-															sharedServiceMemory(BLOCK_1024KB, 1, DefragmentationPolicy::Automatic),
+															sharedServiceMemory(Block1024Kb, 1, DefragmentationPolicy::Automatic),
 															running(false) {
-#if 1 //_DEBUG
 			SANI_INIT_EVENT(onInitialize, void(SaNiEngine* const engine));
 			SANI_INIT_EVENT(onUpdate, void(SaNiEngine* const engine, const EngineTime&));
-#endif
 		}
 #endif
 
@@ -84,6 +97,20 @@ namespace sani {
 
 			return false;
 		}
+		bool SaNiEngine::initializeResourceManagerHandler() {
+			ResourceManagerHandlerService* resourceManagerHandler = new ResourceManagerHandlerService(this);
+			services.registerService(resourceManagerHandler);
+
+			if (resourceManagerHandler->start()) {
+				FNCLOG_INF(log::OutFlags::All, "resource manager handler service started...");
+
+				return true;
+			}
+
+			FNCLOG_ERR(log::OutFlags::All, "failed to start resource manager handler service!");
+
+			return false;
+		}
 		bool SaNiEngine::initializeCVarSystem() {
 			CVarService* cvarService = new CVarService(this);
 			services.registerService(cvarService);
@@ -99,8 +126,24 @@ namespace sani {
 			return false;
 		}
 		bool SaNiEngine::initializeGraphics() {
+			// Get cvars.
+			auto* message = createEmptyMessage<messages::DocumentMessage>();
+			cvarservice::listCVars(message);
+			routeMessage(message);
+
+			auto cvars = static_cast<std::vector<CVar* const>*>(message->getData());
+
+			// Read values.
+			int32 windowWidth = 0;
+			int32 windowHeight = 0;
+
+			FIND_VAR_OR_DEFAULT(cvars, "window_width", windowWidth, 1280);
+			FIND_VAR_OR_DEFAULT(cvars, "window_height", windowHeight, 720);
+
+			SANI_ASSERT(windowWidth > 0 && windowHeight > 0);
+
 			// Window init.
-			graphics::Window* const window = new graphics::Window(hInstance, 1280, 720);
+			graphics::Window* const window = new graphics::Window(hInstance, static_cast<uint32>(windowWidth), static_cast<uint32>(windowHeight));
 
 			if (!window->initialize()) {
 				FNCLOG_ERR(log::OutFlags::All, "could not create window");
@@ -111,15 +154,41 @@ namespace sani {
 			window->setTitle("SaNi Engine");
 			window->show();
 
-			// Device init.
-			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(),
-																						  hInstance,
-																						  1280,
-																						  720);
+			int32 backbufferWidth = 0;
+			int32 backbufferHeight = 0;
+			int32 samplesCount = 0;
 
-			if (!graphicsDevice->initialize()) {
+			int32 clientWidth = window->getClientWidth();
+			int32 clientHeigt = window->getClientHeight();
+
+			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_width", backbufferWidth, clientWidth);
+			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_height", backbufferHeight, clientHeigt);
+			FIND_VAR_OR_DEFAULT(cvars, "samples_count", samplesCount, 8);
+
+			SANI_ASSERT(backbufferWidth > 0 && backbufferHeight > 0);
+			SANI_ASSERT(samplesCount > 0);
+
+			// Cleanup.
+			releaseMessage(message);
+			deallocateShared(cvars);
+
+			// Device init.
+			graphics::GraphicsDevice* const graphicsDevice = new graphics::GraphicsDevice(window->getHandle(), hInstance);
+			graphicsDevice->initialize(static_cast<uint32>(backbufferWidth), static_cast<uint32>(backbufferHeight), static_cast<uint32>(samplesCount));
+
+			if (graphicsDevice->hasErrors()) {
 				FNCLOG_ERR(log::OutFlags::All, "graphics device initialization failed");
 
+				while (graphicsDevice->hasErrors()) {
+					const auto deviceError = graphicsDevice->nextError();
+
+					std::stringstream ss;
+					ss << "DEV ERR: ";
+					ss << deviceError.getMessage();
+
+					FNCLOG_ERR(log::OutFlags::All, ss.str());
+				}
+				
 				return false;
 			}
 
@@ -152,8 +221,9 @@ namespace sani {
 				new services::CircleManager(this),
 				new services::TriangleManager(this),
 				new services::RectangleManager(this),
-				new SpriteAnimationManager(this),
-				new ParticleEmitterManager(this)
+				new services::SpriteAnimationManager(this),
+				new services::ParticleEmitterManager(this),
+				new services::TextManager(this)
 			};
 
 			std::vector<String> errors;
@@ -192,25 +262,13 @@ namespace sani {
 		}
 		bool SaNiEngine::initializeEntityComponentSystem() {
 			EntityManager* entityManager = new EntityManager(this);
-            services::EngineService* servicesToStart[] = {
-                new services::TransformManager(this)
-            };
-            
-			registerService(entityManager);
-            for (auto* service : servicesToStart) registerService(service);
+
+			services.registerService(entityManager);
 
 			// All ok.
 			if (entityManager->start()) {
 				FNCLOG_INF(log::OutFlags::All, "entity manager started...");
-                for (auto* service : servicesToStart) {
-                    if (service->start()) {
-                        FNCLOG_INF(log::OutFlags::All, String8("Started service ") + service->getName());
-                    }
-                    else {
-                        std::abort();
-                    }
-                    
-                }
+
 				return true;
 			}
 
@@ -221,16 +279,46 @@ namespace sani {
 		}
 
 		bool SaNiEngine::initializeMono() {
-			// TODO: initialize mono.
-			return true;
-		}
+			auto* message = createEmptyMessage<messages::DocumentMessage>();
+			cvarservice::listCVars(message);
+			routeMessage(message);
 
-		bool SaNiEngine::loadUserServices() {
-			// TODO: load user services from managed dll.
-			return true;
-		}
-		bool SaNiEngine::loadScene() {
-			// TODO: load the first scene.
+			auto cvars = static_cast<std::vector<CVar* const>*>(message->getData());
+
+			String monoAssembliesPath;
+			String monoLibrariesPath;
+			String monoConfigPath;
+			String monoAssemblyName;
+			String monoDependencies;
+
+			FIND_VAR_OR_DEFAULT(cvars, "mono_assemblies_path", monoAssembliesPath, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_libraries_path", monoLibrariesPath, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_config_path", monoConfigPath, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_assembly_name", monoAssemblyName, "");
+			FIND_VAR_OR_DEFAULT(cvars, "mono_dependencies", monoDependencies, "");
+
+			releaseMessage(message);
+			deallocateShared(cvars);
+			
+			if (mono::MonoRuntime::instance().start(monoAssembliesPath, monoLibrariesPath, monoConfigPath, monoAssemblyName, monoDependencies)) {
+				FNCLOG_INF(log::OutFlags::All, "mono runtime started...");
+			} else {
+				FNCLOG_ERR(log::OutFlags::All, "failed to start mono runtime!");
+
+				return false;
+			}
+
+			MONO_REGISTER_MODULE(texture2d);
+			MONO_REGISTER_MODULE(resourcemanager);
+			MONO_REGISTER_MODULE(rectangle);
+			MONO_REGISTER_MODULE(triangle);
+			MONO_REGISTER_MODULE(circle);
+			MONO_REGISTER_MODULE(layer);
+			MONO_REGISTER_MODULE(layers);
+			MONO_REGISTER_MODULE(services);
+
+			FNCLOG_INF(log::OutFlags::All, "loaded all mono modules...");
+
 			return true;
 		}
 
@@ -242,17 +330,15 @@ namespace sani {
 			// Load game data
 			// RUN!
 
-			/*
-				TODO: add error messages.
-			*/
-
 			FNCLOG_INF(log::OutFlags::All, "engine init start...");
 
-			if (!initializeFilesystem())			return false;
-			if (!initializeCVarSystem())			return false;
-			if (!initializeGraphics())				return false;
-			if (!initializeRenderableManagers())	return false;
-			if (!initializeEntityComponentSystem()) return false;
+			if (!initializeFilesystem())				return false;
+			if (!initializeCVarSystem())				return false;
+			if (!initializeGraphics())					return false;
+			if (!initializeResourceManagerHandler())	return false;
+			if (!initializeRenderableManagers())		return false;
+			if (!initializeEntityComponentSystem())		return false;
+			if (!initializeMono())						return false;
 
 			FNCLOG_INF(log::OutFlags::All, "engine init ok!");
 
@@ -344,6 +430,7 @@ namespace sani {
 		}
 
 		SaNiEngine::~SaNiEngine() {
+			mono::MonoRuntime::instance().shutdown();
 		}
 	}
 }

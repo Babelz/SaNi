@@ -1,4 +1,3 @@
-#include "sani/platform/graphics/graphics_precompiled.hpp"
 #include "sani/platform/platform_config.hpp"
 #include "sani/types.hpp"
 
@@ -29,8 +28,8 @@ namespace sani {
 			void translate(const int32 apiErrorCode);
 		public:
 
-#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS || SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
-			GraphicsError(const GLuint apiErrorCode, const String& function, const int32 lineNumber);
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS
+			GraphicsError(const uint32 apiErrorCode, const String& function, const int32 lineNumber);
 			/// Creates new instance of the GraphicsError object with a custom error message.
 			GraphicsError(const String& message, const String& function, const int32 lineNumber);
 #endif

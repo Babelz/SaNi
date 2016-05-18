@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/graphics/vertex_mode.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
@@ -20,19 +20,23 @@ namespace sani {
 		/// rendered.
 		class RenderBatch final {
 		public:
-			// First vertex position.
+			// First vertex position in elements.
 			uint32 verticesBegin;
 			uint32 verticesCount;
 
-			// First vertex index position.
+			// First vertex index position in elements.
 			uint32 indicesBegin;
 			uint32 indicesCount;
 
 			uint32 texture;
 			uint32 effect;
 
-			// Element this batch can be used to render.
-			const RenderElementData* elementsData;
+			// Group of the batch, gets value from the first
+			// renderable the batch gets.
+			uint32 group;
+			uint32 vertexElementsCount;
+
+			// Setup/pipeline ID.
 			uint32 renderSetup;
 
 			// State elements.

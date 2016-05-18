@@ -21,6 +21,8 @@ namespace sani {
 
 				void setData(void* data);
 				void* getData();
+
+				~DocumentMessage() = default;
 			};
 		}
 	}

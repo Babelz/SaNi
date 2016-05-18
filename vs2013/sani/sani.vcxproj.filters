@@ -268,6 +268,15 @@
     <Filter Include="include\engine\impl">
       <UniqueIdentifier>{e55250a1-a76d-42e7-970b-e1e05b6125eb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\engine\mono">
+      <UniqueIdentifier>{ca61c514-8f80-4f60-bb8c-b26b49aa9604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\engine\mono">
+      <UniqueIdentifier>{04ddf887-fab6-4378-b785-699224609441}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\engine\mono\impl">
+      <UniqueIdentifier>{a94cd3e3-b915-4902-be8a-2f98cb7050a9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\platform\apple\file_system_apple.cpp">
@@ -636,7 +645,7 @@
     <ClCompile Include="..\..\src\resource\scene.cpp">
       <Filter>src\resource</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\graphics\renderables\static_text.cpp">
+    <ClCompile Include="..\..\src\graphics\renderables\text.cpp">
       <Filter>src\graphics\renderables</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\resource\reader\resource_type_reader.cpp">
@@ -644,9 +653,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\resource\reader\scene_reader.cpp">
       <Filter>src\resource\reader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\platform\graphics\graphics_device_state.cpp">
-      <Filter>src\platform\graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\platform\graphics\graphics_resource.cpp">
       <Filter>src\platform\graphics</Filter>
@@ -675,12 +681,63 @@
     <ClCompile Include="..\..\src\core\math\vector.cpp">
       <Filter>src\core\math</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\engine\mono_runtime.cpp">
-      <Filter>src\engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\types.cpp" />
     <ClCompile Include="..\..\src\ecs\components\transform_component.cpp">
       <Filter>src\esc\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\text_manager.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\mono_runtime.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\services_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\platform\win32\file_system_utils_win32.cpp">
+      <Filter>src\platform\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\user_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\texture2d_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\resource_manager_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\resource_manager_handler_service.cpp">
+      <Filter>src\engine\services</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\services\contracts\resource_manager_handler_contract.cpp">
+      <Filter>src\engine\services\contracts</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\rectangle_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\structs_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\mono_define.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\layer_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\layers_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\triangle_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\circle_mono.cpp">
+      <Filter>src\engine\mono</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -871,9 +928,6 @@
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp">
-      <Filter>include\platform\graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp">
       <Filter>include\platform\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp">
@@ -1134,9 +1188,6 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp">
       <Filter>include\engine\services\contracts</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp">
-      <Filter>src\engine\services\contracts</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
@@ -1187,9 +1238,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\logging\logger.hpp">
       <Filter>include\core\logging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\platform_functions.hpp">
-      <Filter>include\platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\core\logging\system_console_logger.hpp">
       <Filter>include\core\logging</Filter>
@@ -1314,7 +1362,7 @@
     <ClInclude Include="..\..\include\sani\resource\scene.hpp">
       <Filter>include\resource</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\graphics\renderables\static_text.hpp">
+    <ClInclude Include="..\..\include\sani\graphics\renderables\text.hpp">
       <Filter>include\graphics\renderables</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\rtti\reflectable.hpp">
@@ -1322,9 +1370,6 @@
     </ClInclude>
     <ClInclude Include="..\..\include\sani\resource\reader\scene_reader.hpp">
       <Filter>include\resource\reader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device_state.hpp">
-      <Filter>include\platform\graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\graphics\default_shader_sources.hpp">
       <Filter>include\graphics</Filter>
@@ -1386,19 +1431,87 @@
     <ClInclude Include="..\..\include\sani\engine\services\service_logging.hpp">
       <Filter>include\engine\services</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono_provider.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\include\sani\engine\mono_runtime.hpp">
-      <Filter>include\engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\include\sani\platform\console.hpp">
       <Filter>include\platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
       <Filter>include\engine\impl</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\include\sani\preprocessor\rtti_service.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\descriptions.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_enums.hpp">
+      <Filter>include\platform\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\text_manager.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_provider.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_runtime.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_define.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\services_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\platform\file\file_system_utils.hpp">
+      <Filter>include\platform\file</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\user_service.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\texture2d_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_include.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\resource_manager_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\resource_manager_handler_service.hpp">
+      <Filter>include\engine\services</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\resource_manager_handler_contract.hpp">
+      <Filter>include\engine\services\contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\renderable_handler_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\impl\renderable_handler_mono.hpp">
+      <Filter>include\engine\mono\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\structs_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\shape_handler_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\impl\shape_handler_mono.hpp">
+      <Filter>include\engine\mono\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\layer_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\layers_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\triangle_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\circle_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\sprite_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">
@@ -1506,7 +1619,7 @@
     <None Include="..\..\include\sani\rtti\inl\type.inl">
       <Filter>include\rtti\inl</Filter>
     </None>
-    <None Include="..\..\include\sani\graphics\inl\static_text.inl">
+    <None Include="..\..\include\sani\graphics\inl\text.inl">
       <Filter>include\graphics\inl</Filter>
     </None>
   </ItemGroup>

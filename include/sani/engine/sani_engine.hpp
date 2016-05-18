@@ -33,10 +33,8 @@ namespace sani {
 			const HINSTANCE hInstance;
 #endif
 
-#if 1
 			SANI_DECLARE_EVENT(onInitialize, void(SaNiEngine* const));
 			SANI_DECLARE_EVENT(onUpdate, void(SaNiEngine* const, const EngineTime&));
-#endif
 
 			bool running;
 
@@ -50,6 +48,7 @@ namespace sani {
 			static void windowSizeChanged(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 			
 			bool initializeFilesystem();
+			bool initializeResourceManagerHandler();
 			bool initializeCVarSystem();
 			bool initializeGraphics();
 			bool initializeRenderService(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
@@ -57,7 +56,6 @@ namespace sani {
 			bool initializeEntityComponentSystem();
 			bool initializeMono();
 			
-			bool loadUserServices();
 			bool loadScene();
 
 			/// Initializes the engine.

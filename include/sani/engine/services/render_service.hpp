@@ -7,7 +7,6 @@
 #include "sani/graphics/color.hpp"
 
 #include <vector>
-#include <list>
 
 SANI_FORWARD_DECLARE_3(sani, engine, messages, DocumentMessage);
 SANI_FORWARD_DECLARE_3(sani, engine, messages, CommandMessage);
@@ -29,8 +28,8 @@ namespace sani {
 
 				graphics::Renderer renderer;
 
-				std::list<graphics::Camera2D> cameras;
-				std::list<graphics::Layer> layers;
+				std::vector<graphics::Camera2D> cameras;
+				std::vector<graphics::Layer> layers;
 
 				graphics::Color clearColor;
 
@@ -39,6 +38,8 @@ namespace sani {
 				*/
 
 				static void windowClosed(SaNiEngine* const engine);
+				static void windowSizeChanged(graphics::GraphicsDevice* const device, graphics::Window* const window, graphics::Camera2D* const camera);
+				static void layerOrderChanged(std::vector<graphics::Layer>& layers);
 
 				/*
 					Message handling.

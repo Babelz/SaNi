@@ -1,6 +1,6 @@
 #pragma once
 
-#include "sani/platform/graphics/graphics_precompiled.hpp"
+#include "sani/platform/graphics/graphics_enums.hpp"
 #include "sani/forward_declare.hpp"
 #include "sani/types.hpp"
 
@@ -42,7 +42,7 @@ namespace sani {
 		///
 		/// Represents a graphics effect (shader) that can be used
 		/// while rendering.
-		class GraphicsEffect final {
+		class GraphicsEffect final  {	// TODO: inherit grom graphics resource
 		private:
 			GraphicsDevice* device;
 

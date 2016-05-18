@@ -18,7 +18,7 @@ namespace sani {
 
 			/// Contains runtime information regarding the 
 			/// current cvar configuration.
-			struct CVarConfiguration {
+			struct CVarConfiguration final {
 				// We assume we can't sync stuff while running on
 				// android so we just set it to false.
 				const bool canSync;
@@ -73,9 +73,6 @@ namespace sani {
 				/// Returns cvar with given name.
 				void getCVar(messages::QueryMessage* const message);
 				
-				/// Queries for given cvar.
-				void containsCVar(messages::QueryMessage* const message);
-
 				/// List all services.
 				void listCVars(messages::DocumentMessage* const message);
 			protected:

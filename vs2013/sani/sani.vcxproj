@@ -86,7 +86,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;GLEW_STATIC;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\mono\include\;$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;$(SolutionDir)..\thirdparty\rapidjson\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\glib\include\glib-2.0\;$(SolutionDir)..\thirdparty\mono\include\;$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;$(SolutionDir)..\thirdparty\rapidjson\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <IntrinsicFunctions>false</IntrinsicFunctions>
@@ -152,7 +152,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;GLEW_STATIC;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\thirdparty\glib\include\glib-2.0\;$(SolutionDir)..\thirdparty\mono\include\;$(SolutionDir)..\include;$(SolutionDir)..\thirdparty\rapidxml\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -233,13 +233,26 @@
     <ClCompile Include="..\..\src\engine\messaging\messages\query_message.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\recipient_list.cpp" />
     <ClCompile Include="..\..\src\engine\messaging\state_message.cpp" />
-    <ClCompile Include="..\..\src\engine\mono_runtime.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\circle_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\layers_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\layer_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\mono_define.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\rectangle_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\resource_manager_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\mono_runtime.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\services_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\texture2d_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\structs_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\triangle_mono.cpp" />
     <ClCompile Include="..\..\src\engine\sani_engine.cpp" />
     <ClCompile Include="..\..\src\engine\services\circle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\component_manager_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\entity_manager_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\file_system_service_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\contracts\renderable_manager_contract.cpp" />
+    <ClCompile Include="..\..\src\engine\services\contracts\resource_manager_handler_contract.cpp" />
     <ClCompile Include="..\..\src\engine\services\cvar_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\ecs\entity_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\ecs\transform_manager.cpp" />
@@ -247,9 +260,12 @@
     <ClCompile Include="..\..\src\engine\services\particle_emitter_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\rectangle_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\render_service.cpp" />
+    <ClCompile Include="..\..\src\engine\services\resource_manager_handler_service.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_animation_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\sprite_manager.cpp" />
+    <ClCompile Include="..\..\src\engine\services\text_manager.cpp" />
     <ClCompile Include="..\..\src\engine\services\triangle_manager.cpp" />
+    <ClCompile Include="..\..\src\engine\services\user_service.cpp" />
     <ClCompile Include="..\..\src\graphics\camera2d.cpp" />
     <ClCompile Include="..\..\src\graphics\graphics_effect.cpp" />
     <ClCompile Include="..\..\src\graphics\layer.cpp" />
@@ -261,7 +277,7 @@
     <ClCompile Include="..\..\src\graphics\renderables\renderable.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\sprite_animator.cpp" />
-    <ClCompile Include="..\..\src\graphics\renderables\static_text.cpp" />
+    <ClCompile Include="..\..\src\graphics\renderables\text.cpp" />
     <ClCompile Include="..\..\src\graphics\renderables\triangle.cpp" />
     <ClCompile Include="..\..\src\graphics\renderer.cpp" />
     <ClCompile Include="..\..\src\graphics\render_batch.cpp" />
@@ -283,7 +299,6 @@
     <ClCompile Include="..\..\src\platform\file\file_system.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\color.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_device_gl.cpp" />
-    <ClCompile Include="..\..\src\platform\graphics\graphics_device_state.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_error.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\graphics_resource.cpp" />
     <ClCompile Include="..\..\src\platform\graphics\render_target_2d.cpp" />
@@ -294,6 +309,7 @@
     <ClCompile Include="..\..\src\platform\time\engine_time.cpp" />
     <ClCompile Include="..\..\src\platform\time\time.cpp" />
     <ClCompile Include="..\..\src\platform\win32\console_win32.cpp" />
+    <ClCompile Include="..\..\src\platform\win32\file_system_utils_win32.cpp" />
     <ClCompile Include="..\..\src\platform\win32\file_system_win32.cpp" />
     <ClCompile Include="..\..\src\platform\wp\file_system_wp8.cpp" />
     <ClCompile Include="..\..\src\resource\bitmap_content.cpp" />
@@ -427,9 +443,25 @@
     <ClInclude Include="..\..\include\sani\engine\messaging\recipients_count.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\recipient_list.hpp" />
     <ClInclude Include="..\..\include\sani\engine\messaging\state_message.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\mono_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\circle_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\impl\renderable_handler_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\impl\shape_handler_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\layers_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\layer_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\rectangle_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\renderable_handler_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\resource_manager_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_include.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\services_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_define.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_provider.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\mono_runtime.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\shape_handler_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\sprite_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\texture2d_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\structs_mono.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\triangle_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\sani_engine.hpp" />
-    <ClInclude Include="..\..\include\sani\engine\mono_runtime.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\circle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\component_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\cvar_service_contract.hpp" />
@@ -437,6 +469,7 @@
     <ClInclude Include="..\..\include\sani\engine\services\contracts\file_system_service_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\renderable_manager_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\contracts\render_service_contract.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\contracts\resource_manager_handler_contract.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\cvar_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\ecs\component_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\ecs\entity_manager.hpp" />
@@ -450,11 +483,14 @@
     <ClInclude Include="..\..\include\sani\engine\services\rectangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\renderable_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\render_service.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\resource_manager_handler_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\service_logging.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\sprite_animation_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\sprite_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\text_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\triangle_manager.hpp" />
     <ClInclude Include="..\..\include\sani\engine\services\updating_renderable_manager.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\services\user_service.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_registry.hpp" />
     <ClInclude Include="..\..\include\sani\engine\service_state.hpp" />
     <ClInclude Include="..\..\include\sani\forward_declare.hpp" />
@@ -464,7 +500,7 @@
     <ClInclude Include="..\..\include\sani\graphics\default_shader_sources.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\graphics_effect.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\particle_generator_flags.hpp" />
-    <ClInclude Include="..\..\include\sani\graphics\renderables\static_text.hpp" />
+    <ClInclude Include="..\..\include\sani\graphics\renderables\text.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\sprite_animation.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\sprite_sheet.hpp" />
     <ClInclude Include="..\..\include\sani\graphics\impl\buffer.hpp" />
@@ -504,12 +540,13 @@
     <ClInclude Include="..\..\include\sani\platform\console.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_reader.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\binary_writer.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\file\file_system_utils.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_stream.hpp" />
     <ClInclude Include="..\..\include\sani\platform\file\file_system.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device_state.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\descriptions.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_device.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_error.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_precompiled.hpp" />
+    <ClInclude Include="..\..\include\sani\platform\graphics\graphics_enums.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\graphics_resource.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\render_target_2d.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\screen_shader_source.hpp" />
@@ -517,7 +554,6 @@
     <ClInclude Include="..\..\include\sani\platform\graphics\viewport.hpp" />
     <ClInclude Include="..\..\include\sani\platform\graphics\window.hpp" />
     <ClInclude Include="..\..\include\sani\platform\platform_config.hpp" />
-    <ClInclude Include="..\..\include\sani\platform\platform_functions.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\engine_time.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\impl\stopwatch.hpp" />
     <ClInclude Include="..\..\include\sani\platform\time\stopwatch.hpp" />
@@ -566,7 +602,6 @@
     <ClInclude Include="..\..\include\sani\rtti\type_database.hpp" />
     <ClInclude Include="..\..\include\sani\rtti\type_info.hpp" />
     <ClInclude Include="..\..\include\sani\types.hpp" />
-    <ClInclude Include="..\..\src\engine\services\contracts\cvar_service_contract.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\cvar\impl\cvar_lang.inl" />
@@ -591,7 +626,7 @@
     <None Include="..\..\include\sani\graphics\inl\sprite.inl" />
     <None Include="..\..\include\sani\graphics\inl\sprite_animation.inl" />
     <None Include="..\..\include\sani\graphics\inl\sprite_animator.inl" />
-    <None Include="..\..\include\sani\graphics\inl\static_text.inl" />
+    <None Include="..\..\include\sani\graphics\inl\text.inl" />
     <None Include="..\..\include\sani\graphics\inl\triangle.inl" />
     <None Include="..\..\include\sani\graphics\inl\vertex_helper.inl" />
     <None Include="..\..\include\sani\platform\file\inl\file_stream.inl" />

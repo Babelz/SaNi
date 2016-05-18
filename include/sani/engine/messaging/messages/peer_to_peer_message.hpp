@@ -23,6 +23,8 @@ namespace sani {
 				const String& getContents() const;
 				/// Sets this messages contents.
 				void setContents(const String& contents);
+
+				~PeerToPeerMessage() = default;
 			};
 		}
 	}

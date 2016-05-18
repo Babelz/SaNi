@@ -1,11 +1,11 @@
 #pragma once
+
 #include "sani/platform/platform_config.hpp"
 #if SANI_TARGET_PLATFORM == SANI_PLATFORM_WINDOWS || SANI_TARGET_PLATFORM == SANI_PLATFORM_WP8
 #include <windows.h>
+
 #elif SANI_TARGET_PLATFORM == SANI_PLATFORM_IOS || SANI_TARGET_PLATFORM == SANI_PLATFORM_MAC
 #include <CoreFoundation/CoreFoundation.h>
-#elif SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
-#include <android/asset_manager.h>
 #endif
 
 #include "sani/forward_declare.hpp"
@@ -27,10 +27,10 @@ namespace sani {
 		private:
 			std::map<String, FileStream*> handles;
 
-		#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
+#if SANI_TARGET_PLATFORM == SANI_PLATFORM_ANDROID
 			AAssetManager* androidAssetManager;
 			std::map<String, AAsset*> assetHandles;
-		#endif
+#endif
 
 		public:
 			/// Default constructor

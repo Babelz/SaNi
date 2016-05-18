@@ -41,6 +41,8 @@ namespace sani {
 
 				/// Returns true if the message contains result data.
 				bool success() const;
+
+				~QueryMessage() = default;
 			};
 		}
 	}

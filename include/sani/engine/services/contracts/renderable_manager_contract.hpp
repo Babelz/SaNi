@@ -39,11 +39,8 @@ namespace sani {
 					/// Deletes given element of a given type.
 					DeleteElement = 1,
 
-					/// Updates given elements vertex and render data.
-					EnqueueForUpdates = 2,
-
 					/// Returns all elements of a given type to the user.
-					GetElements = 3
+					GetElements = 2
 				};
 
 				enum class ElementType : uint32 {
@@ -57,14 +54,14 @@ namespace sani {
 
 					SpriteAnimation,
 
-					ParticleEmitter
+					ParticleEmitter,
+					
+					Text
 				};
 
 				void createElement(messages::DocumentMessage* const message, const ElementType type);
 
 				void deleteElement(messages::DocumentMessage* const message, const ElementType type);
-
-				void queueForUpdates(messages::DocumentMessage* const message, const ElementType type);
 
 				void getElements(messages::DocumentMessage* const message, const ElementType type);
 			}

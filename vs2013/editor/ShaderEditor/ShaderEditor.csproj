@@ -109,12 +109,24 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Assert.cs" />
-    <Compile Include="Editor\Project.cs" />
-    <Compile Include="Scenes\Scene.cs" />
-    <Compile Include="Scenes\SpriteScene.cs" />
-    <Compile Include="Scenes\Scenes.cs" />
+    <Compile Include="Drawables\IDrawable.cs" />
+    <Compile Include="Drawables\OpenGL\Plane.cs" />
+    <Compile Include="Drawing\ITexture2D.cs" />
+    <Compile Include="Drawing\Texture2D.cs" />
+    <Compile Include="Drawing\Transform.cs" />
+    <Compile Include="Drawing\VertexPositionColorTexture.cs" />
+    <Compile Include="Models\ShaderEditModel.cs" />
+    <Compile Include="Scenes\BaseGLSCene.cs" />
+    <Compile Include="Scenes\OpenGL\GLPlaneScene.cs" />
+    <Compile Include="Scenes\IScene.cs" />
     <Compile Include="Shaders\DefaultShaderSources.cs" />
-    <Compile Include="Shaders\Effect.cs" />
+    <Compile Include="Shaders\OpenGL\GLEffect.cs" />
+    <Compile Include="Shaders\OpenGL\GLEffectCompiler.cs" />
+    <Compile Include="Shaders\IEffect.cs" />
+    <Compile Include="Shaders\EffectCompilers.cs" />
+    <Compile Include="Shaders\IEffectCompiler.cs" />
+    <Compile Include="ShadingLanguages.cs" />
+    <Compile Include="SourceEditTimer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -129,6 +141,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Themes\ExpressionDark.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -143,7 +159,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Default shaders\default vertex.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Languages\GLSL Desktop.xshd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -166,6 +182,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -107,5 +107,13 @@ namespace sani {
 
 			return out;
 		}
+
+		inline uint32 count(const String& str, const char token) {
+			uint32 matches = 0;
+
+			for (const auto ch : str) if (ch == token) matches++;
+
+			return matches;
+		}
 	}
 }

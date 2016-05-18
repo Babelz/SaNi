@@ -1,7 +1,10 @@
+#include "sani/core/logging/log.hpp"
 #include "sani/platform/graphics/graphics_device.hpp"
 #include "sani/graphics/graphics_effect.hpp"
 #include "sani/debug.hpp"
+
 #include <algorithm>
+#include <sstream>
 
 namespace sani {
 
@@ -25,7 +28,11 @@ namespace sani {
 			return location;
 		}
 		void EffectUniform::setData(void* data) {
-			device->setShaderUniform(effect, name.c_str(), data, type);
+			device->bindEffect(effect);
+
+			device->setUniformValue(name, data, type);
+		
+			device->bindEffect(NULL);
 		}
 
 		/*
@@ -47,18 +54,22 @@ namespace sani {
 		}
 
 		void GraphicsEffect::locateEffectUniforms() {
-			const int32 count = device->getUniformsCount(effect);
+			device->bindEffect(effect);
+
+			const int32 count = device->getUniformsCount();
 
 			for (int32 i = 0; i < count; i++) {
 				String	name;
-				int32	location;
+				uint32	location;
 				uint32	type;
 				int32	valuesCount;
 
-				device->getUniformInformation(effect, i, location, name, type, valuesCount);
-				
+				device->getUniformInformation(i, location, name, type, valuesCount);
+
 				uniforms.push_back(EffectUniform(device, effect, static_cast<UniformType>(type), location, name));
 			}
+
+			device->bindEffect(NULL);
 		}
 		
 		uint32 GraphicsEffect::getEffect() const {
@@ -85,12 +96,12 @@ namespace sani {
 		void GraphicsEffect::bind() {
 			if (device == nullptr) return;
 
-			device->useProgram(effect);
+			device->bindEffect(effect);
 		}
 		void GraphicsEffect::unbind() {
 			if (device == nullptr) return;
 
-			device->useProgram(0);
+			device->bindEffect(NULL);
 		}
 
 		GraphicsEffect::~GraphicsEffect() {
@@ -99,21 +110,16 @@ namespace sani {
 		GraphicsEffect GraphicsEffect::compile(GraphicsDevice* const device, const String& vertexSource, const String& fragmentSource) {
 			SANI_ASSERT(device != nullptr);
 
-			uint32 vertex	= 0;
-			uint32 fragment = 0;
-			uint32 effect	= 0;
+			String errors;
+			const auto effect = device->compileEffect(vertexSource.c_str(), fragmentSource.c_str(), errors);
 
-			device->compileShader(vertex, vertexSource.c_str(), ShaderType::Vertex);
-			SANI_ASSERT(!device->hasErrors());
-			
-			device->compileShader(fragment, fragmentSource.c_str(), ShaderType::Fragment);
-			SANI_ASSERT(!device->hasErrors());
+			if (!errors.empty()) {
+				std::stringstream ss;
+				ss << "errors occurred while compiling effect, message: ";
+				ss << errors;
 
-			device->createProgram(effect);
-			device->linkToProgram(effect, vertex, true);
-			device->linkToProgram(effect, fragment, true);
-			device->linkProgram(effect);
-			SANI_ASSERT(!device->hasErrors());
+				FNCLOG_ERR(log::OutFlags::All, ss.str());
+			}
 
 			return GraphicsEffect(device, effect);
 		}

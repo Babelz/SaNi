@@ -41,7 +41,7 @@ namespace sani {
 	}
 
 	void CVarCompiler::checkIfIsRedeclaration(CVarList& cvars, CVarToken& token, IntermediateCVar& intermediateCVar) {
-		if (containsCVar(cvars,intermediateCVar.name)) {
+		if (containsCVar(cvars, intermediateCVar.name)) {
 			const String message = SANI_ERROR_MESSAGE("redeclaration of cvar " + intermediateCVar.name + " at file " + token.getFilename() +
 													  " at line " + std::to_string(token.getLineNumber()));
 
