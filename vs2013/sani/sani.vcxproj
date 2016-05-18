@@ -524,6 +524,7 @@
     <ClInclude Include="..\..\include\sani\platform\time\time.hpp" />
     <ClInclude Include="..\..\include\sani\preprocessor\rtti.hpp" />
     <ClInclude Include="..\..\include\sani\preprocessor\rtti_runtime.hpp" />
+    <ClInclude Include="..\..\include\sani\preprocessor\rtti_service.hpp" />
     <ClInclude Include="..\..\include\sani\resource\bitmap_content.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect.hpp" />
     <ClInclude Include="..\..\include\sani\resource\effect_content.hpp" />

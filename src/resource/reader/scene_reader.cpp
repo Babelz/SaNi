@@ -79,7 +79,7 @@ namespace sani {
                 }
             }
 
-            void parseComponent(r::Value::ConstValueIterator componentItr) {
+            void parseComponent(engine::SaNiEngine* const engine, r::Value::ConstValueIterator componentItr) {
                 auto m = componentItr->MemberBegin();
                 // the first one should be name
                 String componentTypename(m->value.GetString());
@@ -87,24 +87,30 @@ namespace sani {
                 String8 componentManagerName(componentTypename.substr(componentTypename.rfind(":") + 1) + " manager");
                 std::transform(componentManagerName.begin(), componentManagerName.begin() + 1, componentManagerName.begin(), ::tolower);
 
+                // append * so we are creating pointer
+                componentTypename.append("*");
+
                 auto& db = sani::rtti::TypeDatabase::getInstance();
 #if _DEBUG
                 SANI_ASSERT(db.ids.count(componentTypename));
 #endif
                 
+                auto createComponentMsg = engine->createEmptyMessage<messages::DocumentMessage>();
+                componentmanager::createComponent(componentManagerName, createComponentMsg);
+
                 sani::rtti::Type componentType = db.ids[componentTypename];
-                sani::rtti::Object componentInstance = componentType.create(sani::rtti::Arguments{});
+                sani::rtti::Object componentInstance = componentType.createUsingService(sani::rtti::Arguments{ engine, createComponentMsg });
                 // advance
                 ++m;
                 setFieldData(componentType, componentInstance, m, componentItr->MemberEnd());
                 
             }
 
-            void parseComponents(const r::Value& componentObjects) {
+            void parseComponents(engine::SaNiEngine* const engine, const r::Value& componentObjects) {
                 for (r::Value::ConstValueIterator componentIt = componentObjects.Begin();
                     componentIt != componentObjects.End(); ++componentIt) {
 
-                    parseComponent(componentIt);
+                    parseComponent(engine, componentIt);
 
                 }
             }
@@ -121,7 +127,7 @@ namespace sani {
 
                     engine->releaseMessage(createEntityMsg);
 
-                    parseComponents(entityIt->GetObject()["components"]);
+                    parseComponents(engine, entityIt->GetObject()["components"]);
                 }
             }
 
@@ -139,13 +145,6 @@ namespace sani {
                 String8 json(reader->readString());
 
                 auto engine = reader->getResourceManager().getEngine();
-
-                auto createComponentMsg = engine->createEmptyMessage<messages::DocumentMessage>();
-                componentmanager::createComponent("transform manager", createComponentMsg);
-                engine->routeMessage(createComponentMsg);
-                sani::rtti::Object asd(static_cast<Transform*>(createComponentMsg->getData()));
-                auto type = asd.getType();
-                engine->releaseMessage(createComponentMsg);
 
                 r::Document document;
                 document.Parse<0>(json);

@@ -25,7 +25,13 @@ namespace sani {
 			return s->second;
 		}
 
-		const Method& TypeData::getMethod(const String8& name) const {
+        const Constructor& TypeData::getServiceConstructor(const Signature& signature) {
+            auto s = serviceConstructors.find(signature);
+            if (s == serviceConstructors.end()) return Constructor::invalid();
+            return s->second;
+        }
+
+        const Method& TypeData::getMethod(const String8& name) const {
 			auto& base = methods.at(name);
 
 			if (!base.size())

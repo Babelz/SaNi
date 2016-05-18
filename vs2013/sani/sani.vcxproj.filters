@@ -1398,6 +1398,7 @@
     <ClInclude Include="..\..\include\sani\engine\impl\sani_engine.hpp">
       <Filter>include\engine\impl</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\include\sani\preprocessor\rtti_service.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\include\sani\core\math\func\geometric_func.inl">

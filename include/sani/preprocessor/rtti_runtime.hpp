@@ -1,6 +1,8 @@
 #pragma once
 #include "sani/rtti/type_database.hpp"
 #include "sani/rtti/type_info.hpp"
+#include "sani/engine/sani_engine.hpp"
+
 
 #define RTTI_REGISTER_TYPE_VARIANT(type)                           \
 {                                                                  \

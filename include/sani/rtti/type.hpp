@@ -8,6 +8,8 @@
 SANI_FORWARD_DECLARE_2(sani, rtti, Object);
 SANI_FORWARD_DECLARE_2(sani, rtti, Field);
 SANI_FORWARD_DECLARE_2(sani, rtti, Method);
+SANI_FORWARD_DECLARE_2(sani, engine, SaNiEngine);
+
 namespace sani {
 	namespace rtti {
 		/// Class that represents type in RTTI
@@ -44,6 +46,8 @@ namespace sani {
 
 			/// Invokes dynamic constructor with specified args
 			Object createDynamic(Arguments& args) const;
+
+            Object createUsingService(Arguments& args) const;
 
 			// these are needed for algorithms to work
 			bool operator<(const Type& rhs) const;

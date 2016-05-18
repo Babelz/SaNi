@@ -18,6 +18,18 @@ namespace sani {
 				dynamicConstructors.emplace(signature, ctor);
 		}
 
+        template <class Class, typename ...Args>
+        void TypeData::addServiceConstructor(Constructor::CreateInstance func) {
+            Signature signature = Invokable::createSignature<Args...>();
+            Constructor ctor{
+                Type(TypeInfo<PureType<Class> >::id),
+                signature,
+                func,
+                true
+            };
+            serviceConstructors.emplace(signature, ctor);
+        }
+
 		template <class ClassType, class FieldType>
 		void TypeData::addField(const String8& name, Field::Getter getter, Field::Setter setter) {
 			Field field(

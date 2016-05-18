@@ -56,6 +56,14 @@ namespace sani {
 			return ctor.invoke(args);
 		}
 
+        Object Type::createUsingService(Arguments& args) const {
+            Signature sig;
+            for (auto& arg : args)
+                sig.emplace_back(arg.getType());
+            auto& ctor = db.types[id].getServiceConstructor(sig);
+            return ctor.invoke(args);
+        }
+
 		bool Type::operator<(const Type& rhs) const {
 			return id < rhs.id;
 		}

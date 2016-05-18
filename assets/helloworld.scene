@@ -1,10 +1,11 @@
 <scene>
 	<name>Test scene</name>
-	<folder id=0 name="">
-		<asset id=0 name="tuksu" />
-		<asset id=1 name="font" />
-		<asset id=2 name="fire particle" />
+	<folder id="0">
+		<asset id="0" name="tuksu" />
+		<asset id="1" name="font" />
+		<asset id="2" name="fire particle" />
 	</folder>
 	<entities>
 	</entities>
 </scene>
+

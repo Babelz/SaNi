@@ -30,6 +30,7 @@ namespace sani {
 
 			Constructors constructors;
 			Constructors dynamicConstructors;
+            Constructors serviceConstructors;
 			Fields fields;
 			Methods methods;
 			/// Gets constructor which matches the signature
@@ -39,6 +40,10 @@ namespace sani {
 			/// Gets dynamic constructor which matches the signature
 			/// @param signature The signature to search for
 			const Constructor& getDynamicConstructor(const Signature& signature);
+
+            /// Gets service constructor which matches the signature
+            /// @param signature The signature to search for
+            const Constructor& getServiceConstructor(const Signature& signature);
 
 			/// Gets the first method by specified name
 			/// @param name The name of the method
@@ -57,6 +62,9 @@ namespace sani {
 			/// @param isDynamic Is this dynamic constructor
 			template <class Class, typename ...Args>
 			void addConstructor(Constructor::CreateInstance func, bool isDynamic);
+
+            template <class Class, typename ...Args>
+            void addServiceConstructor(Constructor::CreateInstance func);
 
 			template <class Class, class FieldType>
 			void addField(const String8& name, Field::Getter getter, Field::Setter setter);
