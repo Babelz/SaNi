@@ -739,6 +739,9 @@
     <ClCompile Include="..\..\src\engine\mono\circle_mono.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\sprite_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">

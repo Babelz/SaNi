@@ -5,14 +5,11 @@ namespace sani {
 	namespace graphics {
 
 		Circle::Circle(const float32 x, const float32 y, const float32 radius, const uint32 vertices) : Renderable((vertices * 2) + 2, 2),
-																									    vertices(vertices) {
-			this->radius = radius;
-
-			borderThickness = 0.0f;
-			borderFill = color::Green;
-
-			fill = color::Red;
-
+																									    vertices(vertices),
+																										radius(radius),
+																										borderThickness(0.0f),
+																										borderFill(color::Green),
+																										fill(color::Red) {
 			transform.position.x = x;
 			transform.position.y = y;
 			transform.origin.x = radius;

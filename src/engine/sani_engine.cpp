@@ -51,6 +51,7 @@
 #include "sani/engine/mono/layer_mono.hpp"
 #include "sani/engine/mono/triangle_mono.hpp"
 #include "sani/engine/mono/circle_mono.hpp"
+#include "sani/engine/mono/sprite_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -163,7 +164,7 @@ namespace sani {
 
 			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_width", backbufferWidth, clientWidth);
 			FIND_VAR_OR_DEFAULT(cvars, "backbuffer_height", backbufferHeight, clientHeigt);
-			FIND_VAR_OR_DEFAULT(cvars, "samples_count", samplesCount, 8);
+			FIND_VAR_OR_DEFAULT(cvars, "samples_count", samplesCount, 0);
 
 			SANI_ASSERT(backbufferWidth > 0 && backbufferHeight > 0);
 			SANI_ASSERT(samplesCount > 0);
@@ -313,6 +314,7 @@ namespace sani {
 			MONO_REGISTER_MODULE(rectangle);
 			MONO_REGISTER_MODULE(triangle);
 			MONO_REGISTER_MODULE(circle);
+			MONO_REGISTER_MODULE(sprite);
 			MONO_REGISTER_MODULE(layer);
 			MONO_REGISTER_MODULE(layers);
 			MONO_REGISTER_MODULE(services);

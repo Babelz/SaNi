@@ -242,6 +242,7 @@
     <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp" />
     <ClCompile Include="..\..\src\engine\mono\mono_runtime.cpp" />
     <ClCompile Include="..\..\src\engine\mono\services_mono.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\sprite_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\texture2d_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\structs_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\triangle_mono.cpp" />

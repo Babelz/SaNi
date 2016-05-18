@@ -30,8 +30,8 @@ namespace SaNi.Mono.Sandbox
             // Create layer that can hold our renderable elements.
             layer = Layers.CreateDynamic("base");
 
-            // Create 3 rectangles.
-            for (var i = 0; i < 6; i++) layer.Add(new Rectangle(100 + 48.0f * i, 100, 32.0f, 32.0f) { BorderThickness = 8.0f });
+            var autoscales = new Sprite(300.0f, 300.0f, ResourceManager.Load<Texture2D>("andy"));
+            layer.Add(autoscales);
 
             c = new Circle(400.0f, 400.0f, 256.0f);
             c.Fill = Color.White;
@@ -56,6 +56,13 @@ namespace SaNi.Mono.Sandbox
                 layer.Add(triangle);
             }
 
+            // Test sprite..
+            var manscales = new Sprite(new Vector2(300.0f), new Vector2(128.0f), ResourceManager.Load<Texture2D>("andy"));
+            layer.Add(manscales);
+
+            // Create 3 rectangles.
+            for (var i = 0; i < 3; i++) layer.Add(new Rectangle(100 + 48.0f * i, 100, 32.0f, 32.0f) { BorderThickness = 8.0f });
+
             return true;
         }
         private bool OnResume()
@@ -69,6 +76,8 @@ namespace SaNi.Mono.Sandbox
         {
         }
 
+        private static Random rand = new Random();
+
         private void OnUpdate(EngineTime time)
         {
             //foreach (var rectangle in layer.Elements.Where(l => l.GetType() == typeof(Rectangle)))
@@ -76,19 +85,22 @@ namespace SaNi.Mono.Sandbox
             //    var transform = rectangle.Transform;
             //    transform.rotation -= 0.001f;
             //    var bounds = rectangle.LocalBounds;
-            //    bounds.width += 0.01f;
-            //    bounds.height += 0.01f;
 
             //    rectangle.LocalBounds = bounds;
             //    rectangle.Transform = transform;
             //}
 
-            if (c == null) return;
-            var transform = c.Transform;
+            //foreach (var triangle in layer.Elements.Where(l => l.GetType() == typeof(Triangle)))
+            //{
+            //    var transform = triangle.Transform;
+            //    transform.rotation += 0.001f;
+            //    var bounds = triangle.LocalBounds;
 
-            transform.rotation += 0.001f;
+            //    triangle.LocalBounds = bounds;
+            //    triangle.Transform =transform;
+            //}
 
-            c.Transform = transform;
+            //c.Radius = (float)rand.NextDouble() * 64.0f;
         }
     }
 }

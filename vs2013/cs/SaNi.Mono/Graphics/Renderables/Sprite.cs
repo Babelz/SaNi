@@ -1,8 +1,10 @@
 using SaNi.Mono.Math;
+using System;
 using System.Runtime.CompilerServices;
+
 namespace SaNi.Mono.Graphics.Renderables
 {
-    public sealed class Sprite
+    public sealed class Sprite : IRenderable
     {
         #region Fields
         private Transform transform;
@@ -17,6 +19,8 @@ namespace SaNi.Mono.Graphics.Renderables
 
         private readonly int id;
         private readonly uint ptr;
+
+        private bool destroyed;
         #endregion
 
         #region Properties
@@ -118,7 +122,7 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         #endregion
 
-        public Sprite()
+        public Sprite(float x, float y, float width, float height, Texture2D texture)
         {
             transform       = Transform.Empty();
             
@@ -127,7 +131,27 @@ namespace SaNi.Mono.Graphics.Renderables
             textureSource   = Rectf.Empty();
 
             color           = new Color();
+
+            Instantiate(x, y, width, height, texture, ref id, ref ptr);
         }
+        public Sprite(float x, float y, Texture2D texture)
+            : this(x, y, texture.Width, texture.Height, texture)
+        {
+        }
+        public Sprite(Vector2 position, Vector2 size, Texture2D texture)
+            : this(position.x, position.y, size.x, size.y, texture)
+        {
+        }
+        public Sprite(Vector2 position, Texture2D texture)
+            : this(position.x, position.y, texture.Width, texture.Height, texture)
+        {
+        }
+
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void Instantiate(float x, float y, float width, float height, Texture2D texture, ref int id, ref uint ptr);
+        [MethodImpl(MethodImplOptions.InternalCall)]
+        private extern void Release();
+
         #region Internal get/set methods
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetTransform(ref Transform value);
@@ -165,10 +189,18 @@ namespace SaNi.Mono.Graphics.Renderables
 
         public void Destroy()
         {
+            if (destroyed) return;
+
+            Release();
+
+            GC.SuppressFinalize(this);
+
+            destroyed = true;
         }
 
         ~Sprite()
         {
+            if (!destroyed) Release();
         }
     }
 }

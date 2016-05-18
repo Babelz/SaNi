@@ -143,7 +143,7 @@ namespace sani {
 			graphicsDevice->bindEffect(renderBatch->effect);
 
 			if (vertexMode == VertexMode::NoIndexing)	graphicsDevice->drawArrays(renderMode, renderBatch->verticesBegin, renderBatch->verticesCount);
-			else										graphicsDevice->drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin);
+			else										graphicsDevice->drawElements(renderMode, PrimitiveType::UInt, renderBatch->indicesCount, renderBatch->indicesBegin * sizeof(uint32));
 
 			renderSetup->clear();
 

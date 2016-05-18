@@ -1,9 +1,12 @@
-#include "sani/graphics/renderables/triangle.hpp"
+#include "sani/graphics/renderables/circle.hpp"
 
 #include "sani/engine/mono/mono_include.hpp"
+
 #include "sani/engine/services/renderable_manager.hpp"
 #include "sani/engine/services/contracts/renderable_manager_contract.hpp"
+
 #include "sani/engine/mono/mono_provider.hpp"
+
 #include "sani/engine/mono/renderable_handler_mono.hpp"
 #include "sani/engine/mono/shape_handler_mono.hpp"
 
@@ -15,6 +18,8 @@
 #include <vector>
 
 #include "sani/types.hpp"
+
+#include "sani/engine/mono/circle_mono.hpp"
 
 namespace sani {
 
