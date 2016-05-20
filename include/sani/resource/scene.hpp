@@ -23,11 +23,16 @@ namespace sani {
 		};
 
 		struct SceneDescription : public ResourceItem {
-			String8 name;
 			String8 json;
 
-			SceneDescription(const String8& name, const String8& json);
+			SceneDescription(const String8& json);
 		};
+
+        struct EntityDescription : public ResourceItem {
+            String8 json;
+            EntityDescription(const String8& json)
+                : json(json) {}
+        };
 
 		class Scene : public Resource {
 		public:

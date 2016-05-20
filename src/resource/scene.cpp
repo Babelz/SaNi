@@ -3,8 +3,8 @@
 namespace sani {
 	namespace resource {
 
-		SceneDescription::SceneDescription(const String8& name, const String8& json) 
-			: name(name), json(json) {
+		SceneDescription::SceneDescription(const String8& json) 
+			: json(json) {
 		}
 
         Scene::Scene(const String8& name)

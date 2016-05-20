@@ -9,7 +9,7 @@
 					"rotation": 0
 				}
 			},
-			"prefab": "rectangle"
+			"prefab": "entities/rectangle"
 		},
 		"right_paddle": {
 			"override": {
@@ -20,7 +20,7 @@
 					"rotation": 0
 				}
 			},
-			"prefab": "rectangle"
+			"prefab": "entities/rectangle"
 		}
 	}	
 }

@@ -18,7 +18,6 @@ namespace sani {
 
 			void SceneDescriptionWriter::write(ResourceWriter* writer, const void* value) {
 				const SceneDescription* content = static_cast<const SceneDescription*>(value);
-				writer->write(content->name);
 				writer->write(content->json);
 			}
 		}

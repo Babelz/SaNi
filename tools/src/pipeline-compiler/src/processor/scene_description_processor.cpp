@@ -8,6 +8,7 @@
 #include "sani/debug.hpp"
 #include <algorithm>
 #include <iostream>
+#include "rapidjson/document.h"
 
 namespace sani {
 	namespace resource {
@@ -15,8 +16,10 @@ namespace sani {
 
 			ResourceItem* SceneDescriptionProcessor::process(ResourceItem* input) {
 				using namespace rtti;
+                using namespace rapidjson;
 				auto content = static_cast<SceneDescription*>(input);
-                
+               
+
 				return input;
 			}
 

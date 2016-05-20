@@ -4,6 +4,7 @@
 #include "sani/resource/scene.hpp"
 #include "sani/core/logging/log.hpp"
 #include <memory>
+#include "sani/debug.hpp"
 
 namespace sani {
 	namespace resource {
@@ -17,6 +18,30 @@ namespace sani {
 
 			}
 
+            void processEntity(io::FileSystem* fileSystem, const String8& root, const String8& name, const rapidjson::Value& v) {
+                const auto& entity = v.GetObjectW();
+                static const char Extension[] = ".entity";
+
+                const uint32_t MaxPrefabs = 1;
+                rapidjson::Document prefabs[MaxPrefabs];
+                uint32_t numPrefabs = 1;
+                
+                for (uint32_t i = 0; i < MaxPrefabs; ++i) {
+                    SANI_ASSERT(entity.HasMember("prefab"));
+                    String8 path(root + entity["prefab"].GetString());
+                    path += Extension;
+                    io::FileStream* file;
+                    if (!fileSystem->openFile(path, io::Filemode::Read, &file)) {
+                        std::cerr << "Failed to prefab file: " << path << std::endl;
+                        std::abort();
+                    }
+                    String8 prefabJson(fileSystem->getFileDataString(path));
+                    prefabs[i].Parse<0>(prefabJson);
+                    fileSystem->closeFile(path);
+                }
+
+                
+            }
 
 			ResourceItem* SceneDescriptionImporter::import(const String& filename, io::FileSystem* fileSystem) const {
 				using namespace sani::io;
@@ -28,6 +53,8 @@ namespace sani {
 
 				fileSystem->closeFile(filename);
 
+                const String root(filename.substr(0, filename.rfind("\\") + 1));
+
 				Document document;
 				if (document.Parse<0>(json).HasParseError()) {
                     FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is not valid JSON!"));
@@ -35,61 +62,34 @@ namespace sani {
 				}
 
 				bool isValid = 1
-					&& document.HasMember("scene");
+					&& document.HasMember("entities"); // every scene needs at least entites (can be empty) 
 
 				if (!isValid) {
-					FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is missing scene object!"));
-					std::abort();
-				}
-				Value& scene = document["scene"];
-				isValid = scene.HasMember("name"); 
-				
-				if (!isValid) {
-					FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is missing scene attribute name!"));
+					FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is missing entites!"));
 					std::abort();
 				}
 
-				isValid = scene.HasMember("entities") // todo what if it's empty?
-					   && scene["entities"].IsArray();
+                isValid = document["entities"].IsObject();
 
-				SceneDescription* descriptor = new SceneDescription(scene["name"].GetString(), json);
+                if (!isValid) {
+                    FNCLOG_ERR(log::OutFlags::All, String8("Entities file ") + filename + String(": Entities isn't object"));
+                    std::abort();
+                }
 
-			/*	for (Value::ConstValueIterator it = entities.Begin(); it != entities.End(); ++it) {
-					auto& entity = it->GetObjectW();
-					std::cout << "Entity has components?" << std::boolalpha << entity.HasMember("components") << std::endl;
-					auto& components = entity["components"];
-					std::cout << "components is array: " << std::boolalpha << components.IsArray() << std::endl;
+                const Value& entities = document["entities"];
+               
+                auto entitiesBegin = entities.MemberBegin();
+                auto entitiesEnd = entities.MemberEnd();
 
-					for (Value::ConstValueIterator componentIt = components.Begin(); componentIt != components.End(); ++componentIt) {
-						auto& componentObject = componentIt->GetObjectW();
-						
-                        auto memberIt = componentObject.MemberBegin();
+                std::vector<unsigned char> data;
+                data.reserve(1024 * 1024);
 
-						SceneDescription::Component component;
-                        component.name = memberIt->value.GetString();
-                        ++memberIt;
-                   
-                        for (; memberIt != componentObject.MemberEnd(); ++memberIt) {
-                            // it's object
-                            if (memberIt->value.IsObject()) {
-                                String8 fieldName(memberIt->name.GetString());
-                                SceneDescription::ObjectField objField{ fieldName };
-                                objField.fields.reserve(memberIt->value.MemberCount());
-                                // TODO recursion?
-                                for (auto it = memberIt->value.MemberBegin(); it != memberIt->value.MemberEnd(); ++it) {
-                                    objField.fields.emplace_back(it->name.GetString(), it->value.GetString());
-                                }
-                                component.objectFields.emplace_back(objField);
-                            }
-                            // it's primitive
-                            else {
-                                component.primitiveFields.emplace_back(memberIt->name.GetString(), memberIt->value.GetString());
-                            }
-                        }
-                        descriptor->components.emplace_back(component);
-					}
+                for (auto it = entitiesBegin; it != entitiesEnd; ++it) {
+                    processEntity(fileSystem, root, it->name.GetString(), it->value);
+                }
 
-				}*/
+                SceneDescription* descriptor = new SceneDescription(json);
+
 				
 				return descriptor;
 			}
