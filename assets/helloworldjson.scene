@@ -1,27 +1,26 @@
 {
-	"scene": {
-		"name": "Test scene",
-		"entities": [
-		{ 
-				"id": 1,
-				"components": [ 
-				{
-					"name": "sani::Transform",
-					"position": { "x": "1", "y": "2", "z": "3" },
-					"scale": { "x": "4", "y": "5" },
-					"rotation": "6"
-				}]
+	"entities": {
+		"left_paddle": {
+			"override": {
+				"type": "transform", 
+				"data": {
+					"position": [0, 360, 0],
+					"scale": [1, 1],
+					"rotation": 0
+				}
 			},
-			{
-				"id": 2,
-				"components": [
-				{
-					"name": "sani::Transform",
-					"position": { "x": "1337", "y": "1337", "z": "1337" },
-					"scale": { "x": "715517", "y": "715517" },
-					"rotation": "80085"
-				}]
-			}
-		]
-	}
+			"prefab": "rectangle"
+		},
+		"right_paddle": {
+			"override": {
+				"type": "transform",
+				"data": {
+					"position": [600, 360, 0],
+					"scale": [1, 1],
+					"rotation": 0
+				}
+			},
+			"prefab": "rectangle"
+		}
+	}	
 }
