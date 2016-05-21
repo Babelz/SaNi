@@ -18,17 +18,25 @@ namespace sani {
 
 			}
 
-            void processEntity(io::FileSystem* fileSystem, const String8& root, const String8& name, const rapidjson::Value& v) {
-                const auto& entity = v.GetObjectW();
+            void processEntity(io::FileSystem* fileSystem, const String8& root, const String8& name, rapidjson::Value& v) {
                 static const char Extension[] = ".entity";
 
-                const uint32_t MaxPrefabs = 1;
-                rapidjson::Document prefabs[MaxPrefabs];
+                const uint32_t MaxPrefabs = 2;
+                rapidjson::Value prefabs[MaxPrefabs];
+                rapidjson::Document docs[MaxPrefabs - 1];
+                prefabs[0] = v;
+                // itself 
                 uint32_t numPrefabs = 1;
                 
-                for (uint32_t i = 0; i < MaxPrefabs; ++i) {
-                    SANI_ASSERT(entity.HasMember("prefab"));
-                    String8 path(root + entity["prefab"].GetString());
+                for (uint32_t i = 0; i < MaxPrefabs; ++i, ++numPrefabs) {
+
+                    const rapidjson::Value& prefab = prefabs[i];
+                    // we must go deeper ":D"
+                    if (!prefab.HasMember("prefab")) {
+                        break;
+                    }
+
+                    String8 path(root + prefab["prefab"].GetString());
                     path += Extension;
                     io::FileStream* file;
                     if (!fileSystem->openFile(path, io::Filemode::Read, &file)) {
@@ -36,11 +44,28 @@ namespace sani {
                         std::abort();
                     }
                     String8 prefabJson(fileSystem->getFileDataString(path));
-                    prefabs[i].Parse<0>(prefabJson);
+                    docs[i].Parse(prefabJson);
                     fileSystem->closeFile(path);
+                    prefabs[i + 1] = docs[i].GetObjectW();
                 }
 
+                rapidjson::Value& prefabObject = prefabs[numPrefabs - 1];
+                rapidjson::Value& prefabComponents = prefabObject["components"];
                 
+                // merge prefab components to actual entity json
+                if (numPrefabs > 1) {
+
+                    for (uint32_t i = 0; i < numPrefabs; ++i) {
+                        // from last to first
+                        rapidjson::Value& prefab = prefabs[numPrefabs - i - 1];
+                        // this prefab doesn't have any overrided components
+                        if (!prefab.HasMember("override")) continue;
+
+                        rapidjson::Value& overridedComponents = prefab["override"];
+
+                    }
+                }
+
             }
 
 			ResourceItem* SceneDescriptionImporter::import(const String& filename, io::FileSystem* fileSystem) const {
@@ -62,7 +87,7 @@ namespace sani {
 				}
 
 				bool isValid = 1
-					&& document.HasMember("entities"); // every scene needs at least entites (can be empty) 
+					&& document.HasMember("entities"); // every scene needs at least entities (can be empty) 
 
 				if (!isValid) {
 					FNCLOG_ERR(log::OutFlags::All, String8("Scene file ") + filename + String(" is missing entites!"));
@@ -76,13 +101,10 @@ namespace sani {
                     std::abort();
                 }
 
-                const Value& entities = document["entities"];
+                Value& entities = document["entities"];
                
                 auto entitiesBegin = entities.MemberBegin();
                 auto entitiesEnd = entities.MemberEnd();
-
-                std::vector<unsigned char> data;
-                data.reserve(1024 * 1024);
 
                 for (auto it = entitiesBegin; it != entitiesEnd; ++it) {
                     processEntity(fileSystem, root, it->name.GetString(), it->value);
