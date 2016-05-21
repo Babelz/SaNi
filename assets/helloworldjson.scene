@@ -2,22 +2,26 @@
 	"entities": {
 		"left_paddle": {
 			"override": {
-				"type": "transform", 
-				"data": {
-					"position": [0, 360, 0],
-					"scale": [1, 1],
-					"rotation": 0
+				"transform_id": {
+					"type": "transform", 
+					"data": {
+						"position": [0, 360, 0],
+						"scale": [1, 1],
+						"rotation": 0
+					}
 				}
 			},
 			"prefab": "entities/rectangle"
 		},
 		"right_paddle": {
 			"override": {
-				"type": "transform",
-				"data": {
-					"position": [600, 360, 0],
-					"scale": [1, 1],
-					"rotation": 0
+				"transform_id": {
+					"type": "transform",
+					"data": {
+						"position": [600, 360, 0],
+						"scale": [1, 1],
+						"rotation": 0
+					}
 				}
 			},
 			"prefab": "entities/rectangle"

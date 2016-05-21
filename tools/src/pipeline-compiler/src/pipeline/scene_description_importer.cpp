@@ -18,13 +18,13 @@ namespace sani {
 
 			}
 
-            void processEntity(io::FileSystem* fileSystem, const String8& root, const String8& name, rapidjson::Value& v) {
+            void processEntity(io::FileSystem* fileSystem, const String8& root, const String8& name, rapidjson::Value& value, rapidjson::Document& document) {
                 static const char Extension[] = ".entity";
 
                 const uint32_t MaxPrefabs = 2;
                 rapidjson::Value prefabs[MaxPrefabs];
                 rapidjson::Document docs[MaxPrefabs - 1];
-                prefabs[0] = v;
+                prefabs[0] = value;
                 // itself 
                 uint32_t numPrefabs = 1;
                 
@@ -63,6 +63,15 @@ namespace sani {
 
                         rapidjson::Value& overridedComponents = prefab["override"];
 
+                        auto begin = overridedComponents.MemberBegin();
+                        auto end = overridedComponents.MemberEnd();
+
+                        for (; begin != end; ++begin) {
+                            String8 id(begin->name.GetString());
+                            rapidjson::Value value = begin->value.GetObjectW();
+                            prefabComponents.RemoveMember(id);
+                            prefabComponents.AddMember(rapidjson::Value(id, document.GetAllocator()), value, document.GetAllocator());
+                        }
                     }
                 }
 
@@ -107,7 +116,7 @@ namespace sani {
                 auto entitiesEnd = entities.MemberEnd();
 
                 for (auto it = entitiesBegin; it != entitiesEnd; ++it) {
-                    processEntity(fileSystem, root, it->name.GetString(), it->value);
+                    processEntity(fileSystem, root, it->name.GetString(), it->value, document);
                 }
 
                 SceneDescription* descriptor = new SceneDescription(json);
