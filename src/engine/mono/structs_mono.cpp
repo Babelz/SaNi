@@ -74,6 +74,12 @@ namespace sani {
 
 				return MONO_PROVIDER->createObject(&classDef, args, argc);
 			}
+
+			MonoObject* createParticleGenerator() {
+				const MonoClassDefinition classDef("SaNi.Mono.Graphics", "ParticleGenerator");
+
+				return MONO_PROVIDER->createObject(&classDef);
+			}
 		}
 	}
 }

@@ -23,10 +23,10 @@ namespace sani {
 		void defaultVelocityFunction(Particle& particle, const ParticleEmitter& emitter, const float32 delta);
 
 		/// How the emitter is intended to function.
-		enum class EmitFunction {
+		enum class EmitFunction : int32 {
 			/// Emitting particles is stopped when the emitter
 			/// is destroyed or when user stops it.
-			Continuous,
+			Continuous = 0,
 
 			/// Emitter will emit particles once and 
 			// requires a user called reset.
@@ -38,10 +38,6 @@ namespace sani {
 		};
 
 		struct ParticleGenerator final {
-			std::vector<ParticleRenderAttributeList> attributeLists;
-
-			VelocityFunction velocityFunction;
-
 			math::Vec2f spawnLocationMinOffset;
 			math::Vec2f spawnLocationMaxOffset;
 
@@ -81,6 +77,10 @@ namespace sani {
 			
 			uint32 framesToFade						{ 0 };
 			uint32 framesToFadeVariance				{ 0 };
+
+			std::vector<ParticleRenderAttributeList> attributeLists;
+
+			VelocityFunction velocityFunction;
 		};
 
 		class ParticleEmitter final : public Renderable {

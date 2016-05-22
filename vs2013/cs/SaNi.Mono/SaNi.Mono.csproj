@@ -56,6 +56,11 @@
     <Compile Include="Graphics\Layers.cs" />
     <Compile Include="Graphics\LayerType.cs" />
     <Compile Include="Graphics\Renderables\Circle.cs" />
+    <Compile Include="Graphics\Renderables\EmitFunction.cs" />
+    <Compile Include="Graphics\Renderables\GeneratorFlags.cs" />
+    <Compile Include="Graphics\Renderables\Particle.cs" />
+    <Compile Include="Graphics\Renderables\ParticleEmitter.cs" />
+    <Compile Include="Graphics\Renderables\ParticleGenerator.cs" />
     <Compile Include="Graphics\Renderables\Rectangle.cs" />
     <Compile Include="Graphics\Renderables\Sprite.cs" />
     <Compile Include="Graphics\Renderables\Triangle.cs" />

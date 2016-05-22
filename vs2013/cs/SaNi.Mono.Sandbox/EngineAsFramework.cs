@@ -80,27 +80,27 @@ namespace SaNi.Mono.Sandbox
 
         private void OnUpdate(EngineTime time)
         {
-            //foreach (var rectangle in layer.Elements.Where(l => l.GetType() == typeof(Rectangle)))
-            //{
-            //    var transform = rectangle.Transform;
-            //    transform.rotation -= 0.001f;
-            //    var bounds = rectangle.LocalBounds;
+            foreach (var rectangle in layer.Elements.Where(l => l.GetType() == typeof(Rectangle)))
+            {
+                var transform = rectangle.Transform;
+                transform.rotation -= 0.001f;
+                var bounds = rectangle.LocalBounds;
 
-            //    rectangle.LocalBounds = bounds;
-            //    rectangle.Transform = transform;
-            //}
+                rectangle.LocalBounds = bounds;
+                rectangle.Transform = transform;
+            }
 
-            //foreach (var triangle in layer.Elements.Where(l => l.GetType() == typeof(Triangle)))
-            //{
-            //    var transform = triangle.Transform;
-            //    transform.rotation += 0.001f;
-            //    var bounds = triangle.LocalBounds;
+            foreach (var triangle in layer.Elements.Where(l => l.GetType() == typeof(Triangle)))
+            {
+                var transform = triangle.Transform;
+                transform.rotation += 0.001f;
+                var bounds = triangle.LocalBounds;
 
-            //    triangle.LocalBounds = bounds;
-            //    triangle.Transform =transform;
-            //}
+                triangle.LocalBounds = bounds;
+                triangle.Transform = transform;
+            }
 
-            //c.Radius = (float)rand.NextDouble() * 64.0f;
+            c.Radius = (float)rand.NextDouble() * 64.0f;
         }
     }
 }
