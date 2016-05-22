@@ -18,16 +18,6 @@ namespace SaNi.Mono.Graphics.Renderables
         #endregion
 
         #region Properties
-        public Sprite Sprite
-        {
-            get
-            {
-                Sprite sprite = null;
-
-                return GetSprite(ref sprite);
-            }
-        }
-
         public Vector2 Acceleration
         {
             get
@@ -40,7 +30,7 @@ namespace SaNi.Mono.Graphics.Renderables
             }
             set
             {
-                SetAcceleraion(value);
+                SetAcceleration(value);
             }
         }
         public Vector2 Velocity
@@ -204,10 +194,7 @@ namespace SaNi.Mono.Graphics.Renderables
 
         #region Internal get/set methods
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern Sprite GetSprite(ref Sprite sprite);
-        
-        [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void SetAcceleraion(Vector2 value);
+        private extern void SetAcceleration(Vector2 value);
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void GetAcceleration(ref Vector2 value);
             
