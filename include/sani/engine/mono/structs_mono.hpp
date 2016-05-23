@@ -67,6 +67,9 @@ namespace sani {
 			};
 
 			struct MonoParticleGenerator final {
+				MonoColor color;
+				MonoColor colorVariance;
+
 				MonoVec2 spawnLocationMinOffset;
 				MonoVec2 spawnLocationMaxOffset;
 
@@ -87,11 +90,6 @@ namespace sani {
 				MonoVec2 baseScaleVelocity;
 				MonoVec2 scaleVelocityVariance;
 
-				MonoColor color;
-				MonoColor colorVariance;
-
-				int16 flags;
-
 				float32 baseAngularVelocity;
 				float32 angularVelocityVariance;
 
@@ -106,6 +104,8 @@ namespace sani {
 
 				uint32 framesToFade;
 				uint32 framesToFadeVariance;
+			
+				int16 flags;
 			};
 
 			MonoObject* ceatetTransform(math::Vec3f& position, math::Vec3f& scale, math::Vec3f& origin, float32 rotation);

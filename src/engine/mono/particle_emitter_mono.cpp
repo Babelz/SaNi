@@ -31,13 +31,13 @@ namespace sani {
 										value->y = p->__fname__.y; \
 									} \
 
-		#define GET_VFIELD(__fname__) { \
+		#define GET_FIELD(__fname__) { \
 										auto* p = getInstance<Particle>(instance); \
 										*value = p->__fname__; \
 									  } \
 
 		
-		#define SET_VFIELD(__fname__) { \
+		#define SET_FIELD(__fname__) { \
 										auto* p = getInstance<Particle>(instance); \
 										p->__fname__ = value; \
 									  } \
@@ -57,10 +57,10 @@ namespace sani {
 		}
 
 		static void SetDecayTime(MonoObject* instance, float32 value) {
-			SET_VFIELD(decayTime);
+			SET_FIELD(decayTime);
 		}
 		static void GetDecayTime(MonoObject* instance, float32* value) {
-			GET_VFIELD(decayTime);
+			GET_FIELD(decayTime);
 		}
 
 		static void SetScaleAcceleration(MonoObject* instance, MonoVec2 value) {
@@ -78,21 +78,21 @@ namespace sani {
 		}
 
 		static void GetFrames(MonoObject* instance, uint32* value) {
-			GET_VFIELD(frames);
+			GET_FIELD(frames);
 		}
 
 		static void SetFramesBeforeFade(MonoObject* instance, uint32 value) {
-			SET_VFIELD(framesBeforeFade);
+			SET_FIELD(framesBeforeFade);
 		}
 		static void GetFramesBeforeFade(MonoObject* instance, uint32* value) {
-			GET_VFIELD(framesBeforeFade);
+			GET_FIELD(framesBeforeFade);
 		}
 
 		static void SetFadeDelta(MonoObject* instance, float32 value) {
-			SET_VFIELD(fadeDelta);
+			SET_FIELD(fadeDelta);
 		}
 		static void GetFadeDelta(MonoObject* instance, float32* value) {
-			GET_VFIELD(fadeDelta);
+			GET_FIELD(fadeDelta);
 		}
 
 		static MonoObject* create(const Particle* const particle) {
@@ -104,7 +104,7 @@ namespace sani {
 				&ptr
 			};
 
-			const MonoClassDefinition classDef("SaNi.Mono.Graphics", "Particle");
+			const MonoClassDefinition classDef("SaNi.Mono.Graphics.Renderables", "Particle");
 
 			return MONO_PROVIDER->createObject(&classDef, args, argc);
 		}
@@ -146,29 +146,106 @@ namespace sani {
 		using namespace sani::engine::services;
 		using namespace sani::graphics;
 
-		static void Instantiate(float32 x, float32 y, float32 width, float32 height, MonoObject* texture, MonoParticleGenerator generator, int32* id, uint32* ptr) {
+		static void Instantiate(MonoObject* instance, float32 x, float32 y, float32 width, float32 height, MonoObject* texture, MonoParticleGenerator generator, uint32 maxParticles, int32* id, uint32* ptr) {
+			auto* createEmitter = engine->createEmptyMessage<messages::DocumentMessage>();
+			renderablemanager::createElement(createEmitter, ElementType::ParticleEmitter);
+			engine->routeMessage(createEmitter);
+
+			auto* emitter = static_cast<ParticleEmitter*>(createEmitter->getData());
+
+			NEW_DYNAMIC(ParticleEmitter, emitter, texture2dmonomodule::getNativePtr(texture), maxParticles);
+			emitter->transform.position.x = x;
+			emitter->transform.position.y = y;
+			emitter->localBounds.w = width;
+			emitter->localBounds.h = height;
+
+			// Copy data.
+			std::memcpy(&emitter->generator, &generator, sizeof(MonoParticleGenerator));
+
+			engine->releaseMessage(createEmitter);
+
+			*id = emitter->id;
+			*ptr = reinterpret_cast<IntPtr>(emitter);
+
+			initializeParticles(*emitter);
 		}
-		static void Release() {
+		static void Release(MonoObject* instance) {
+			ParticleEmitter* emitter = getInstance<ParticleEmitter>(instance);
+
+			auto* deleteElement = engine->createEmptyMessage<messages::DocumentMessage>();
+			deleteElement->setData(emitter);
+
+			renderablemanager::deleteElement(deleteElement, ElementType::ParticleEmitter);
+			engine->routeMessage(deleteElement);
+
+			engine->releaseMessage(deleteElement);
 		}
 
-		static void GetGenerator(MonoParticleGenerator* value) {
+		static void GetGenerator(MonoObject* instance, MonoParticleGenerator* value) {
+			ParticleEmitter* emitter = getInstance<ParticleEmitter>(instance);
+
+			std::memcpy(value, &emitter->generator, sizeof(MonoParticleGenerator));
 		}
-		static void SetGenerator(MonoParticleGenerator value) {
+		static void SetGenerator(MonoObject* instance, MonoParticleGenerator value) {
+			ParticleEmitter* emitter = getInstance<ParticleEmitter>(instance);
+
+			std::memcpy(&emitter->generator, &value, sizeof(MonoParticleGenerator));
+		
+			initializeParticles(*emitter);
 		}
 
-		static void GetMaxParticles(int32* value) {
+		static void GetMaxParticles(MonoObject* instance, int32* value) {
+			ParticleEmitter* emitter = getInstance<ParticleEmitter>(instance);
+
+			*value = emitter->maxParticles;
 		}
 
-		static MonoArray* GetParticles() {
+		static MonoArray* GetParticles(MonoObject* instance) {
+			ParticleEmitter* emitter = getInstance<ParticleEmitter>(instance);
+
+			const uint32 arraySize = emitter->particles.size();
+			
+			MonoClassDefinition particleClass("SaNi.Mono.Graphics.Renderables", "Particle");
+
+			MonoArray* particles = MONO_PROVIDER->createArray(&particleClass, arraySize);
+			
+			for (uint32 i = 0; i < arraySize; i++) {
+				const uint32 argc = 1;
+
+				uint32 ptr = reinterpret_cast<IntPtr>(&emitter->particles[i]);
+
+				void* args[argc] = {
+					&ptr
+				};
+
+				MonoObject* particle = MONO_PROVIDER->createObject(&particleClass, args, argc);
+				
+				mono_array_set(particles, MonoObject*, i, particle);
+			}
+
+			return particles;
 		}
 
-		static void Reset() {
+		static void Reset(MonoObject* instance) {
+			ParticleEmitter* emitter = getInstance<ParticleEmitter>(instance);
+
+			initializeParticles(*emitter);
 		}
 
 		bool initialize() {
-			const MonoClassDefinition classDef("SaNi.Mono.Graphics", "ParticleEmitter");
+			const MonoClassDefinition classDef("SaNi.Mono.Graphics.Renderables", "ParticleEmitter");
 
 			sani::engine::mono::registerRenderableMembers<ParticleEmitter>(classDef);
+
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Instantiate, Instantiate);
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Release, Release);
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, Reset, Reset);
+
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetGenerator, GetGenerator);
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, SetGenerator, SetGenerator);
+
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetMaxParticles, GetMaxParticles);
+			MONO_REGISTER_KNOWN_FUNCTION_FROM_DEF(classDef, GetParticles, GetParticles);
 
 			return true;
 		}

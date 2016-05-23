@@ -25,7 +25,8 @@ namespace sani {
 				while (it != renderables->end()) {
 					T* renderable = *it;
 
-					graphics::update(*renderable, time);
+					// Pass by pointer.
+					graphics::update(renderable, time);
 
 					it++;
 				}

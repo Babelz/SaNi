@@ -52,6 +52,7 @@
 #include "sani/engine/mono/triangle_mono.hpp"
 #include "sani/engine/mono/circle_mono.hpp"
 #include "sani/engine/mono/sprite_mono.hpp"
+#include "sani/engine/mono/particle_emitter_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -315,6 +316,8 @@ namespace sani {
 			MONO_REGISTER_MODULE(triangle);
 			MONO_REGISTER_MODULE(circle);
 			MONO_REGISTER_MODULE(sprite);
+			MONO_REGISTER_MODULE(particle);
+			MONO_REGISTER_MODULE(particleemitter);
 			MONO_REGISTER_MODULE(layer);
 			MONO_REGISTER_MODULE(layers);
 			MONO_REGISTER_MODULE(services);

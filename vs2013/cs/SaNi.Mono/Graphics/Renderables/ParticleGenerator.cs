@@ -9,52 +9,59 @@ using System.Threading.Tasks;
 namespace SaNi.Mono.Graphics.Renderables
 {
     [StructLayout(LayoutKind.Sequential)]
-    public sealed class ParticleGenerator
+    public struct ParticleGenerator
     {
         #region Fields
-        Vector2 spawnLocationMinOffset      = Vector2.Zero;
-        Vector2 spawnLocationMaxOffset      = Vector2.Zero;
+        public Color color;
+        public Color colorVariance;
 
-        Vector2 startVelocity               = Vector2.Zero;
-        Vector2 velocityVariance            = Vector2.Zero;
+        public Vector2 spawnLocationMinOffset      ; //= Vector2.Zero;
+        public Vector2 spawnLocationMaxOffset      ; //= Vector2.Zero;
 
-        Vector2 baseAcceleration            = Vector2.Zero;
-        Vector2 accelerationVariance        = Vector2.Zero;
+        public Vector2 startVelocity               ; //= Vector2.Zero;
+        public Vector2 velocityVariance            ; //= Vector2.Zero;
 
-        Vector2 startSize                   = new Vector2(32.0f, 32.0f);
+        public Vector2 baseAcceleration            ; //= Vector2.Zero;
+        public Vector2 accelerationVariance        ; //= Vector2.Zero;
 
-        Vector2 baseScale                   = new Vector2(1.0f, 1.0f);
-        Vector2 scaleVariance               = Vector2.Zero;
+        public Vector2 startSize                   ; //= new Vector2(32.0f, 32.0f);
 
-        Vector2 baseScaleAcceleration       = Vector2.Zero;
-        Vector2 scaleAccelerationVariance   = Vector2.Zero;
+        public Vector2 baseScale                   ; //= new Vector2(1.0f, 1.0f);
+        public Vector2 scaleVariance               ; //= Vector2.Zero;
 
-        Vector2 baseScaleVelocity           = Vector2.Zero;
-        Vector2 scaleVelocityVariance       = Vector2.Zero;
+        public Vector2 baseScaleAcceleration       ; //= Vector2.Zero;
+        public Vector2 scaleAccelerationVariance   ; //= Vector2.Zero;
 
-        Color color;
-        Color colorVariance;
+        public Vector2 baseScaleVelocity           ; //= Vector2.Zero;
+        public Vector2 scaleVelocityVariance       ; //= Vector2.Zero;
 
-        GeneratorFlags flags;
+        public float baseAngularVelocity;
+        public float angularVelocityVariance;
 
-        float baseAngularVelocity;
-        float angularVelocityVariance;
+        public float baseAngularAcceleration;
+        public float angularAccelerationVariance;
 
-        float baseAngularAcceleration;
-        float angularAccelerationVariance;
+        public float baseDecayTime;
+        public float decayTimeVariance;
 
-        float baseDecayTime;
-        float decayTimeVariance;
+        public uint firstAttributeListIndex ; //= 0;
+        public uint lastAttributeListIndex  ; //= 0;
 
-        uint firstAttributeListIndex;
-        uint lastAttributeListIndex;
+        public uint framesToFade;
+        public uint framesToFadeVariance;
 
-        uint framesToFade;
-        uint framesToFadeVariance;
+        public GeneratorFlags flags;
         #endregion
 
-        public ParticleGenerator()
+        public static ParticleGenerator Empty()
         {
+            ParticleGenerator generator = new ParticleGenerator();
+
+            generator.startSize     = new Vector2(32.0f);
+            generator.baseScale     = new Vector2(1.0f);
+            generator.color         = Color.White;
+
+            return generator;
         }
     }
 }

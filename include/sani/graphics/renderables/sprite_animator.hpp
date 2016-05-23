@@ -33,7 +33,7 @@ namespace sani {
 
 		inline bool changeAnimation(SpriteAnimator& animator, const String& name);
 
-		inline void update(SpriteAnimator& animator, const sani::EngineTime& time);
+		inline void update(SpriteAnimator* animator, const sani::EngineTime& time);
 		
 		inline void recomputeVertices(SpriteAnimator& animator);
 		inline void recomputeBounds(SpriteAnimator& animator);

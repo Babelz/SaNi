@@ -37,7 +37,10 @@ namespace sani {
 			math::Rect32f source;
 		};
 
-		struct ParticleGenerator final {
+		struct ParticleGenerator final {			
+			Color color								{ color::White };
+			Color colorVariance						{ color::White };
+
 			math::Vec2f spawnLocationMinOffset;
 			math::Vec2f spawnLocationMaxOffset;
 
@@ -58,11 +61,6 @@ namespace sani {
 			math::Vec2f baseScaleVelocity;
 			math::Vec2f scaleVelocityVariance;
 			
-			Color color								{ color::White };
-			Color colorVariance						{ color::White };
-
-			GeneratorFlags flags;
-
 			float32 baseAngularVelocity				{ 0.0f };
 			float32 angularVelocityVariance			{ 0.0f };
 
@@ -77,6 +75,8 @@ namespace sani {
 			
 			uint32 framesToFade						{ 0 };
 			uint32 framesToFadeVariance				{ 0 };
+
+			GeneratorFlags flags;
 
 			std::vector<ParticleRenderAttributeList> attributeLists;
 
@@ -98,7 +98,7 @@ namespace sani {
 
 			ParticleEmitter(resource::Texture2D* const texture, const uint32 maxParticles);
 
-			~ParticleEmitter() = default;
+			~ParticleEmitter();
 		};
 
 		inline void recomputeVertices(ParticleEmitter& emitter);
@@ -106,7 +106,7 @@ namespace sani {
 
 		inline void updateRenderData(ParticleEmitter& emitter);
 		
-		inline void update(ParticleEmitter& emitter, const EngineTime& time);
+		inline void update(ParticleEmitter* emitter, const EngineTime& time);
 
 		inline void initializeParticles(ParticleEmitter& emitter);
 

@@ -67,28 +67,30 @@ namespace sani {
 			particle.sprite.transform.scale.y += particle.scaleVelocity.y * delta;
 		}
 
-		void update(ParticleEmitter& emitter, const EngineTime& time) {
+		void update(ParticleEmitter* emitter, const EngineTime& time) {
+			if (emitter == nullptr) return;
+
 			const float32 delta = static_cast<float32>(time.getFrameTime());
 
-			emitter.visible = (emitter.decayedParticles < emitter.maxParticles);
+			emitter->visible = (emitter->decayedParticles < emitter->maxParticles);
 
-			if (!emitter.visible) return;
+			if (!emitter->visible) return;
 
-			for (Particle& particle : emitter.particles) {
+			for (Particle& particle : emitter->particles) {
 				particle.frames++;
 
-				if (particle.frames >= particle.framesBeforeFade) particle.sprite.color.a -= particle.fadeDelta;
+				if (particle.frames >= particle.framesBeforeFade) particle.sprite.color.a -= particle.fadeDelta * delta;
 				
 				// Particle is "dead", reset it.
 				if (particle.elapsedTime > particle.decayTime) {
-					if (emitter.emitting)  { 
-						resetParticle(emitter, particle);  
+					if (emitter->emitting)  {
+						resetParticle(*emitter, particle);  
 						
-						if (emitter.decayedParticles != 0) emitter.decayedParticles--;
+						if (emitter->decayedParticles != 0) emitter->decayedParticles--;
 					} else { 
 						particle.sprite.color = color::Transparent; 
 						
-						emitter.decayedParticles++; 
+						emitter->decayedParticles++;
 					}
 					
 					continue;
@@ -99,13 +101,16 @@ namespace sani {
 				updateVelocity(particle, delta);
 				updateAngularVelocity(particle, delta);
 				
-				if (isGeneratorFlagOn(emitter.generator.flags, GeneratorFlags::UseScaleAcceleration)) updateScaleVelocity(particle, delta);
+				if (isGeneratorFlagOn(emitter->generator.flags, GeneratorFlags::UseScaleAcceleration)) updateScaleVelocity(particle, delta);
 				
-				applyVelocity(particle, emitter, delta);
+				applyVelocity(particle, *emitter, delta);
 				applyAngularVelocity(particle, delta);
 
-				if (isGeneratorFlagOn(emitter.generator.flags, GeneratorFlags::UseScaleVelocity)) applyScaleVelocity(particle, delta);
+				if (isGeneratorFlagOn(emitter->generator.flags, GeneratorFlags::UseScaleVelocity)) applyScaleVelocity(particle, delta);
 			}
+
+			recomputeVertices(*emitter);
+			updateRenderData(*emitter);
 		}
 
 		// Static helpers.

@@ -15,8 +15,9 @@ namespace sani {
 					"triangle manager",					// Triangle.
 					"sprite manager",					// Sprite.
 					"circle manager",					// Circle.
+					"sprite animation manager",			// Sprite animations.
 					"particle emitter manager",			// Particle emitters.
-					"sprite animation manager"			// Sprite animations.
+					"text manager"						// Text elements.
 				};
 
 				static void decorateMessage(messages::DocumentMessage* const message, const RenderableManagerCommands renderableManagerCommand, const ElementType type) {

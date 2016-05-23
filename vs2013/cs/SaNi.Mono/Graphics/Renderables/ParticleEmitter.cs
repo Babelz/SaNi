@@ -168,7 +168,7 @@ namespace SaNi.Mono.Graphics.Renderables
         }
         #endregion
 
-        public ParticleEmitter(ParticleGenerator generator, Texture2D texture, float x, float y, float width, float height)
+        public ParticleEmitter(ParticleGenerator generator, Texture2D texture, float x, float y, float width, float height, uint maxParticles)
         {
             this.generator  = generator;
             
@@ -180,23 +180,23 @@ namespace SaNi.Mono.Graphics.Renderables
 
             color           = Color.White;
 
-            Instantiate(x, y, width, height, texture, generator, ref id, ref ptr);
+            Instantiate(x, y, width, height, texture, generator, maxParticles, ref id, ref ptr);
         }
-        public ParticleEmitter(ParticleGenerator generator, Texture2D texture, Vector2 position, Vector2 size)
-            : this(generator, texture, position.x, position.y, size.x, size.y)
+        public ParticleEmitter(ParticleGenerator generator, Texture2D texture, Vector2 position, Vector2 size, uint maxParticles)
+            : this(generator, texture, position.x, position.y, size.x, size.y, maxParticles)
         {
         }
-        public ParticleEmitter(ParticleGenerator generator, Texture2D texture, Vector2 position)
-            : this(generator, texture, position, Vector2.Zero)
+        public ParticleEmitter(ParticleGenerator generator, Texture2D texture, Vector2 position, uint maxParticles)
+            : this(generator, texture, position, Vector2.Zero, maxParticles)
         {
         }
-        public ParticleEmitter(ParticleGenerator generator, Texture2D texture)
-            : this(generator, texture, Vector2.Zero, Vector2.Zero)
+        public ParticleEmitter(ParticleGenerator generator, Texture2D texture, uint maxParticles)
+            : this(generator, texture, Vector2.Zero, Vector2.Zero, maxParticles)
         {
         }
    
         [MethodImpl(MethodImplOptions.InternalCall)]
-        private extern void Instantiate(float x, float y, float width, float height, Texture2D texture, ParticleGenerator generator, ref int id, ref uint ptr);
+        private extern void Instantiate(float x, float y, float width, float height, Texture2D texture, ParticleGenerator generator, uint maxParticles, ref int id, ref uint ptr);
         [MethodImpl(MethodImplOptions.InternalCall)]
         private extern void Release();
 

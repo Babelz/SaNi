@@ -57,5 +57,8 @@ namespace sani {
 			renderData.renderElementsCount = 1;
 			// No need to compute bounds yet and no need to copy vertex data.
 		}
+
+		ParticleEmitter::~ParticleEmitter() {
+		}
 	}
 }
