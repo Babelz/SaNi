@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SaNi.Mono.Graphics.Renderables;
 using SaNi.Mono.Math;
+using System.Windows.Input;
 
 namespace SaNi.Mono.Sandbox
 {
@@ -35,7 +36,7 @@ namespace SaNi.Mono.Sandbox
             var autoscales = new Sprite(300.0f, 300.0f, andy);
             layer.Add(autoscales);
 
-            c = new Circle(400.0f, 400.0f, 256.0f);
+            c = new Circle(400.0f, 400.0f, 128.0f, Circle.RoughCircle);
             c.Fill = Color.White;
             //c.Texture = ResourceManager.Load<Texture2D>("andy");
             c.BorderThickness = 32.0f;
@@ -140,7 +141,28 @@ namespace SaNi.Mono.Sandbox
                 triangle.Transform = transform;
             }
 
-            c.Radius = (float)rand.NextDouble() * 64.0f;
+            var ctransform = c.Transform;
+
+            ctransform.rotation += 0.001f * (float)time.FrameTime.TotalMilliseconds;
+
+            if (Keyboard.IsKeyDown(Keyboard.Key.W))
+            {
+                ctransform.position.y -= 1.0f;
+            }
+            if (Keyboard.IsKeyDown(Keyboard.Key.A))
+            {
+                ctransform.position.x -= 1.0f;
+            }
+            if (Keyboard.IsKeyDown(Keyboard.Key.S))
+            {
+                ctransform.position.y += 1.0f;
+            }
+            if (Keyboard.IsKeyDown(Keyboard.Key.D))
+            {
+                ctransform.position.x += 1.0f;
+            }
+
+            c.Transform = ctransform;
         }
     }
 }
