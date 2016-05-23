@@ -10,6 +10,11 @@ namespace SaNi.Mono.Graphics.Renderables
 {
     public sealed class ParticleEmitter : IRenderable
     {   
+        // TODO:
+        //      - particle iterator
+        //      - emit function
+        //      - attrib list
+
         #region Fields
         private ParticleGenerator generator;
 
