@@ -47,6 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\CVar.cs" />
+    <Compile Include="Configuration\CVars.cs" />
+    <Compile Include="Configuration\CVarValueType.cs" />
+    <Compile Include="Configuration\EngineCVars.cs" />
     <Compile Include="Engine\Log.cs" />
     <Compile Include="Engine\LogLevel.cs" />
     <Compile Include="Engine\OutFlags.cs" />

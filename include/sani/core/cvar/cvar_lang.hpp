@@ -44,8 +44,8 @@ namespace sani {
 			GreaterOrEqual
 		};
 
-		enum class ValueType {
-			NoValue,
+		enum class ValueType : int8{
+			NoValue = 0,
 
 			StringVal,
 
