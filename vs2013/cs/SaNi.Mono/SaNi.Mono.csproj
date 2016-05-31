@@ -56,6 +56,7 @@
     <Compile Include="Engine\OutFlags.cs" />
     <Compile Include="Engine\RuntimeHelpers.cs" />
     <Compile Include="Engine\SaNiEngine.cs" />
+    <Compile Include="Graphics\GraphicsDevice.cs" />
     <Compile Include="Graphics\Layer.cs" />
     <Compile Include="Graphics\Layers.cs" />
     <Compile Include="Graphics\LayerType.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Graphics\Renderables\Rectangle.cs" />
     <Compile Include="Graphics\Renderables\Sprite.cs" />
     <Compile Include="Graphics\Renderables\Triangle.cs" />
+    <Compile Include="Graphics\Viewport.cs" />
     <Compile Include="Resource\ResourceManager.cs" />
     <Compile Include="Resource\IResource.cs" />
     <Compile Include="Engine\EngineTime.cs" />

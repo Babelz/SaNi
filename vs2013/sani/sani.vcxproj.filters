@@ -748,6 +748,9 @@
     <ClCompile Include="..\..\src\engine\mono\cvars_mono.cpp">
       <Filter>src\engine\mono</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\engine\mono\graphics_device_mono.cpp">
+      <Filter>src\engine\mono</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\include\sani\forward_declare.hpp">
@@ -1525,6 +1528,9 @@
       <Filter>include\engine\mono</Filter>
     </ClInclude>
     <ClInclude Include="..\..\include\sani\engine\mono\cvars_mono.hpp">
+      <Filter>include\engine\mono</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\include\sani\engine\mono\graphics_device_mono.hpp">
       <Filter>include\engine\mono</Filter>
     </ClInclude>
   </ItemGroup>
