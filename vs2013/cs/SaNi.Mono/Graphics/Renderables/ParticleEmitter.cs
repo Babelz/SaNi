@@ -274,10 +274,5 @@ namespace SaNi.Mono.Graphics.Renderables
 
             destroyed = true;
         }
-
-        ~ParticleEmitter()
-        {
-            if (!destroyed) Release();
-        }
     }
 }

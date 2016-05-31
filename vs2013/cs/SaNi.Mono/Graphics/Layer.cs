@@ -191,12 +191,5 @@ namespace SaNi.Mono.Graphics
 
             destroyed = true;
         }
-
-        ~Layer()
-        {
-            if (destroyed) return;
-
-            Destroy();
-        }
     }
 }

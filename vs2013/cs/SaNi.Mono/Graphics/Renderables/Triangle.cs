@@ -315,10 +315,5 @@ namespace SaNi.Mono.Graphics.Renderables
 
             destroyed = true;
         }
-
-        ~Triangle()
-        {
-            if (!destroyed) Release();
-        }
     }
 }

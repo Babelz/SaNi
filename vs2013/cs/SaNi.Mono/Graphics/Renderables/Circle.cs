@@ -258,10 +258,5 @@ namespace SaNi.Mono.Graphics.Renderables
 
             destroyed = true;
         }
-
-        ~Circle()
-        {
-            if (!destroyed) Release();
-        }
     }
 }

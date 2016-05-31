@@ -242,10 +242,5 @@ namespace SaNi.Mono.Graphics.Renderables
 
             destroyed = true;
         }
-
-        ~Rectangle()
-        {
-            if (!destroyed) Release();
-        }
     }
 }

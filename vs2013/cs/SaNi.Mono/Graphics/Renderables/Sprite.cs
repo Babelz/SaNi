@@ -197,10 +197,5 @@ namespace SaNi.Mono.Graphics.Renderables
 
             destroyed = true;
         }
-
-        ~Sprite()
-        {
-            if (!destroyed) Release();
-        }
     }
 }

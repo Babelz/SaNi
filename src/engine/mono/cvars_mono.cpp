@@ -64,32 +64,24 @@ namespace sani {
 				int32 ival = *MONO_UNBOX(*value, int32);
 				
 				cvar->write(ival);
-
-				return true;
 			}
 			if (str == "float") {
 				float32 fval = *MONO_UNBOX(*value, float32);
 
 				cvar->write(fval);
-
-				return true;
 			}
 			if (str == "double") {
 				float64 fval = *MONO_UNBOX(*value, float64);
 
 				cvar->write(fval);
-
-				return true;
 			}
 			if (str == "string") {
 				const auto str = String(mono_string_to_utf8(MONO_UNBOX(*value, MonoString)));
 
 				cvar->write(str);
-
-				return true;
 			}
 
-			return false;
+			return true;
 		}
 
 		static void GetValueType(MonoObject* instance, int8* value) {

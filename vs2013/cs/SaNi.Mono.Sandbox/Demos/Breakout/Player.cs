@@ -17,6 +17,10 @@ namespace SaNi.Mono.Sandbox.Demos.Breakout
 
     public sealed class Player
     {
+        #region Fields
+        private readonly Rectf area;
+        #endregion
+
         #region Properties
         /// <summary>
         /// Visible part of the player. 
@@ -43,28 +47,42 @@ namespace SaNi.Mono.Sandbox.Demos.Breakout
         /// </summary>
         /// <param name="position">start position of the player</param>
         /// <param name="size">size of the player (the paddle)</param>
-        public Player(Vector2 position, Vector2 size)
+        /// <param name="area">player area</param>
+        public Player(Vector2 position, Vector2 size, Rectf area)
         {
             // Init rect and vel.
-            Rect        = new Rectangle(position, size);
-            Velocity    = new Vector2(1.0f);
+            Rect = new Rectangle(position, size);
+            
+            var transform = Rect.Transform;
+            
+            transform.origin = Vector3.Zero;
+            
+            Rect.Transform = transform;
+
+            Velocity = new Vector2(1.0f);
+            
+            this.area = area;
         }
 
         private Vector2 GetDirectionFromInput()
         {
-            if      (Keyboard.IsKeyDown(Keyboard.Key.A)) return new Vector2(-1.0f);
-            else if (Keyboard.IsKeyDown(Keyboard.Key.D)) return new Vector2(1.0f);
-            else                                         return Vector2.Zero;
+            if (Keyboard.IsKeyDown(Keyboard.Key.A))         return new Vector2(-1.0f);
+            else if (Keyboard.IsKeyDown(Keyboard.Key.D))    return new Vector2(1.0f);
+            else                                            return Vector2.Zero;
         }
 
         private void Move(Vector2 direction, float delta)
         {
+            // Check that we are in bounds.
+            if (direction.x > 0.0f && Rect.GlobalBounds.Right >= area.Right)    return;
+            if (direction.x < 0.0f && Rect.GlobalBounds.Left <= area.Left)      return;
+
             // "Capture" current transform.
             var transform = Rect.Transform;
 
             // Apply all changes.
             transform.position.x += delta * Velocity.x * direction.x;
-            
+
             // Apply all changes.
             Rect.Transform = transform;
         }
