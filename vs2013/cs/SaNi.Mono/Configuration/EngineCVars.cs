@@ -24,6 +24,11 @@ namespace SaNi.Mono.Configuration
         public static readonly string MonoAssembliesPath    = "mono_assemblies_path";
         public static readonly string MonoLibrariesPath     = "mono_libraries_path";
         public static readonly string MonoConfigPath        = "mono_config_path";
+
+        public static readonly string ConsoleAtStartup      = "sys_console_at_startup";
+        public static readonly string ConsoleVisible        = "sys_console_visible";
+        public static readonly string ConsoleWidth          = "sys_console_width";
+        public static readonly string ConsoleHeight         = "sys_console_height";
         #endregion
     }
 }

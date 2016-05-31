@@ -438,10 +438,6 @@
 #include "sani/platform/console.hpp"
 
 int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-
-	sani::console::create(720, 600);
-	sani::console::show();
-
 	SaNiEngine engine(hInstance);
 
 	engine.start();

@@ -14,6 +14,8 @@
 
 #include <mono/metadata/appdomain.h>
 
+#include "sani/graphics/layer.hpp"
+
 #include <iostream>
 #include <vector>
 
@@ -51,6 +53,11 @@ namespace sani {
 			deleteElement->setData(circle);
 
 			renderablemanager::deleteElement(deleteElement, ElementType::Circle);
+
+			// Remove from layer if the element is located inside one.
+			uint32 layer = *MONO_UNBOX(MONO_PROVIDER->readField(instance, "layer"), uint32);
+			if (layer != NULL) reinterpret_cast<Layer*>(layer)->remove(circle);
+
 			engine->routeMessage(deleteElement);
 
 			engine->releaseMessage(deleteElement);

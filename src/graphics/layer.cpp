@@ -69,9 +69,19 @@ namespace sani {
 			if (element->transform.position.z < 0.0f)	bottom.push_back(element);
 			else										top.push_back(element);
 		}
-		void Layer::remove(graphics::Renderable* const element) {
-			if (element->transform.position.z < 0.0f)	bottom.erase(std::find(bottom.begin(), bottom.end(), element));
-			else										top.erase(std::find(top.begin(), top.end(), element));
+		bool Layer::remove(graphics::Renderable* const element) {
+			std::vector<Renderable* const>* container = nullptr;
+
+			if (element->transform.position.z < 0.0f)	container = &bottom;
+			else										container = &top;
+			
+			auto it = std::find(container->begin(), container->end(), element);
+
+			if (it == container->end()) return false;
+
+			container->erase(it);
+
+			return true;
 		}
 
 		void Layer::render(graphics::Renderer* const renderer) {

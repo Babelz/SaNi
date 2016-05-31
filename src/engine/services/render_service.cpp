@@ -33,7 +33,7 @@ namespace sani {
 			}
 
 			void RenderService::windowClosed(SaNiEngine* const engine) {
-				engine->quit();
+				engine->exit();
 			}
 			void RenderService::windowSizeChanged(GraphicsDevice* const device, Window* const window, Camera2D* const camera) {
 				device->setBackbufferSize(window->getClientWidth(), window->getClientHeight());

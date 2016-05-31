@@ -52,7 +52,7 @@ namespace sani {
 	*/
 
 	template<typename T>
-	EventCaller<T>::EventCaller(const Event<T>* e) : event(e) {
+	EventCaller<T>::EventCaller(Event<T>* e) : event(e) {
 	}
 	template<typename T>
 	EventCaller<T>::EventCaller() : event(nullptr) {

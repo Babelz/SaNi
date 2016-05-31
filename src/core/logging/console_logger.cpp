@@ -5,17 +5,14 @@
 namespace sani {
 
 	SystemConsoleLogger::SystemConsoleLogger() : Logger<SystemConsoleLogger>("system console logger") {
-		// Open and show console if it has 
-		// not been created yet.
-		if (!console::created()) {
-			console::create(800, 600);
-			console::show();
-		} 
-
-		if (!console::visible()) console::show();
+		// Do not force console window creation when
+		// the logger gets instantiated.
+		// Console properties are defined at the engine init via cvar cfg.
 	}	
 	
 	void SystemConsoleLogger::internalLog(const String& from, const String& message, const LogLevel level, const console::ConsoleColor color) const {
+		if (!console::created() || !console::visible()) return;
+
 		console::textColor(color);
 
 		// Format out.

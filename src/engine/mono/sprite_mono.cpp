@@ -21,6 +21,8 @@
 
 #include "sani/engine/mono/sprite_mono.hpp"
 
+#include "sani/graphics/layer.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -51,6 +53,11 @@ namespace sani {
 			deleteElement->setData(sprite);
 
 			renderablemanager::deleteElement(deleteElement, ElementType::Sprite);
+
+			// Remove from layer if the element is located inside one.
+			uint32 layer = *MONO_UNBOX(MONO_PROVIDER->readField(instance, "layer"), uint32);
+			if (layer != NULL) reinterpret_cast<Layer*>(layer)->remove(sprite);
+
 			engine->routeMessage(deleteElement);
 
 			engine->releaseMessage(deleteElement);

@@ -9,12 +9,15 @@ namespace SaNi.Mono.Sandbox
 {
     public static class Keyboard
     {
-        public enum Key
+        public enum Key : byte
         {
-            W = (int)'W',
-            A = (int)'A',
-            S = (int)'S',
-            D = (int)'D',
+            W = (byte)'W',
+            A = (byte)'A',
+            S = (byte)'S',
+            D = (byte)'D',
+            Y = (byte)'Y',
+            U = (byte)'U',
+
             ESC = 27
         }
 

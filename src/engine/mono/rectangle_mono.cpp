@@ -6,10 +6,13 @@
 #include "sani/engine/mono/renderable_handler_mono.hpp"
 #include "sani/engine/mono/mono_provider.hpp"
 #include "sani/engine/mono/shape_handler_mono.hpp"
+#include "sani/engine/services/contracts/render_service_contract.hpp"
 
 #include "sani/core/memory/memory.hpp"
 
 #include <mono/metadata/appdomain.h>
+
+#include "sani/graphics/layer.hpp"
 
 #include <iostream>
 #include <vector>
@@ -32,6 +35,11 @@ namespace sani {
 			deleteElement->setData(rectangle);
 
 			renderablemanager::deleteElement(deleteElement, ElementType::Rectangle);
+			
+			// Remove from layer if the element is located inside one.
+			uint32 layer = *MONO_UNBOX(MONO_PROVIDER->readField(instance, "layer"), uint32);
+			if (layer != NULL) reinterpret_cast<Layer*>(layer)->remove(rectangle);
+
 			engine->routeMessage(deleteElement);
 			
 			engine->releaseMessage(deleteElement);

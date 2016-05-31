@@ -1,6 +1,6 @@
 #pragma once
 
-#include <list>
+#include <vector>
 #include <functional>
 
 /*
@@ -41,7 +41,7 @@ namespace sani {
 	class Event {
 	friend class EventCaller<T>;
 	private:
-		std::list<std::function<T>> callbacks;
+		std::vector<std::function<T>> callbacks;
 	public:
 		Event();
 
@@ -65,9 +65,9 @@ namespace sani {
 	template<typename T>
 	class EventCaller {	
 	private:
-		const Event<T>* event;
+		Event<T>* event;
 	public:
-		EventCaller(const Event<T>* e);
+		EventCaller(Event<T>* e);
 		EventCaller();
 
 		~EventCaller();

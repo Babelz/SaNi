@@ -24,8 +24,10 @@ namespace SaNi.Mono.Graphics.Renderables
         private float borderthickness;
 
         private int id;
-        private uint ptr;
+        private readonly uint ptr;
 
+        private uint layer;
+        
         private bool destroyed;
         #endregion
 

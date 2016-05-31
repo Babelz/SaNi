@@ -55,6 +55,7 @@
 #include "sani/engine/mono/particle_emitter_mono.hpp"
 #include "sani/engine/mono/cvars_mono.hpp"
 #include "sani/engine/mono/graphics_device_mono.hpp"
+#include "sani/engine/mono/sani_engine_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -129,7 +130,37 @@ namespace sani {
 
 			return false;
 		}
-		bool SaNiEngine::initializeGraphics() {
+		bool SaNiEngine::initializeSystemConsole() {
+			auto* message = createEmptyMessage<messages::DocumentMessage>();
+			cvarservice::listCVars(message);
+			routeMessage(message);
+
+			auto cvars = static_cast<std::vector<CVar* const>*>(message->getData());
+
+			int32 createConsole;
+
+			FIND_VAR_OR_DEFAULT(cvars, "sys_console_at_startup", createConsole, 0);
+
+			if (createConsole) {
+				int32 consoleWidth;
+				int32 consoleHeight;
+				int32 consoleVisible;
+
+				FIND_VAR_OR_DEFAULT(cvars, "sys_console_width", consoleHeight, 720);
+				FIND_VAR_OR_DEFAULT(cvars, "sys_console_height", consoleWidth, 600);
+				FIND_VAR_OR_DEFAULT(cvars, "sys_console_visible", consoleVisible, 0);
+
+				sani::console::create(consoleWidth, consoleHeight);
+
+				if (consoleVisible) sani::console::show();
+			}
+
+			releaseMessage(message);
+			deallocateShared(cvars);
+
+			return true;
+		}
+ 		bool SaNiEngine::initializeGraphics() {
 			// Get cvars.
 			auto* message = createEmptyMessage<messages::DocumentMessage>();
 			cvarservice::listCVars(message);
@@ -313,6 +344,7 @@ namespace sani {
 			}
 
 			MONO_REGISTER_MODULE(graphicsdevice);
+			MONO_REGISTER_MODULE(saniengine);
 			MONO_REGISTER_MODULE(texture2d);
 			MONO_REGISTER_MODULE(cvars);
 			MONO_REGISTER_MODULE(resourcemanager);
@@ -343,6 +375,7 @@ namespace sani {
 
 			if (!initializeFilesystem())				return false;
 			if (!initializeCVarSystem())				return false;
+			if (!initializeSystemConsole())				return false;
 			if (!initializeGraphics())					return false;
 			if (!initializeResourceManagerHandler())	return false;
 			if (!initializeRenderableManagers())		return false;
@@ -434,7 +467,7 @@ namespace sani {
 
 			services.terminate();
 		}
-		void SaNiEngine::quit() {
+		void SaNiEngine::exit() {
 			running = false;
 		}
 

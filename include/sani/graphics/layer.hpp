@@ -67,7 +67,7 @@ namespace sani {
 			/// Add new element to this layer.
 			void add(graphics::Renderable* const element);
 			/// Remove given element from this layer.
-			void remove(graphics::Renderable* const element);
+			bool remove(graphics::Renderable* const element);
 			
 			/// Draws this layer to the screen.
 			void render(graphics::Renderer* const renderer);

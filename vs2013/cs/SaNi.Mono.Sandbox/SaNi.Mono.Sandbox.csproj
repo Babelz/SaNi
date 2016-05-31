@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Demos\Breakout\Ball.cs" />
     <Compile Include="Demos\Breakout\BreakoutGame.cs" />
     <Compile Include="Demos\Breakout\Player.cs" />
     <Compile Include="EngineAsFramework.cs" />

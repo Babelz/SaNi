@@ -16,6 +16,8 @@
 
 #include "sani/types.hpp"
 
+#include "sani/graphics/layer.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -77,6 +79,11 @@ namespace sani {
 			deleteElement->setData(triangle);
 
 			renderablemanager::deleteElement(deleteElement, ElementType::Triangle);
+
+			// Remove from layer if the element is located inside one.
+			uint32 layer = *MONO_UNBOX(MONO_PROVIDER->readField(instance, "layer"), uint32);
+			if (layer != NULL) reinterpret_cast<Layer*>(layer)->remove(triangle);
+
 			engine->routeMessage(deleteElement);
 
 			engine->releaseMessage(deleteElement);

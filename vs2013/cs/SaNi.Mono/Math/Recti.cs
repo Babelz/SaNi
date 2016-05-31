@@ -65,10 +65,16 @@ namespace SaNi.Mono.Math
 
         public bool Intersects(Recti other)
         {
-            return this.Left < other.Right &&
-                   this.Right > other.Left &&
-                   this.Top < other.Bottom &&
-                   this.Bottom > other.Top;
+            return !(other.Left > Right || other.Right < Left || other.Top > Bottom || other.Bottom < Top);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("RECTI: x: {0} - y: {1} - w: {2} - h: {3}", x, y, width, height);
+        }
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
         }
 
         public static Recti Empty()

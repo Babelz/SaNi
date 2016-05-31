@@ -50,6 +50,7 @@ namespace sani {
 			bool initializeFilesystem();
 			bool initializeResourceManagerHandler();
 			bool initializeCVarSystem();
+			bool initializeSystemConsole();
 			bool initializeGraphics();
 			bool initializeRenderService(graphics::GraphicsDevice* const graphicsDevice, graphics::Window* const window);
 			bool initializeRenderableManagers();
@@ -88,8 +89,8 @@ namespace sani {
 
 			/// Starts the engine.
 			void start();
-			/// Causes the engine to quit.
-			void quit();
+			/// Causes the engine to exit.
+			void exit();
 
 			template<typename T>
 			T* allocateShared();

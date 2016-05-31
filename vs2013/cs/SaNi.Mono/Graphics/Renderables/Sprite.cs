@@ -20,6 +20,8 @@ namespace SaNi.Mono.Graphics.Renderables
         private readonly int id;
         private readonly uint ptr;
 
+        private uint layer;
+
         private bool destroyed;
         #endregion
 

@@ -23,6 +23,8 @@ namespace SaNi.Mono.Graphics.Renderables
         private readonly int id;
         private readonly uint ptr;
 
+        private uint layer;
+
         private bool destroyed;
         #endregion
 
@@ -172,6 +174,10 @@ namespace SaNi.Mono.Graphics.Renderables
             textureSource   = Rectf.Empty();
             borderFill      = Color.White;
             fill            = Color.White;
+        }
+        public Rectangle(Rectf rect)
+            : this(rect.x, rect.y, rect.width, rect.height)
+        {
         }
         public Rectangle(Vector2 position, Vector2 size)
             : this(position.x, position.y, size.x, size.y)

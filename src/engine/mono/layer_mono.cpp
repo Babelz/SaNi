@@ -109,14 +109,20 @@ namespace sani {
 
 			Renderable* renderable = getInstance<Renderable>(element);
 
+			IntPtr layerptr = reinterpret_cast<IntPtr>(layer);
+
+			// Store layer address.
+			MONO_PROVIDER->writeField(element, "layer", &layerptr);
+
 			layer->add(renderable);
 		}
 		static void InternalRemove(MonoObject* instance, MonoObject* element) {
 			Layer* layer = getInstance<Layer>(instance);
 			
 			Renderable* renderable = getInstance<Renderable>(element);
-
-			layer->remove(renderable);
+			
+			// Write 0 to layer (NULL).
+			if (layer->remove(renderable)) MONO_PROVIDER->writeField(element, "layer", NULL);
 		}
 		
 		static void MoveElementsTo(MonoObject* instance, MonoObject* other) {

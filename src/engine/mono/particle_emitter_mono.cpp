@@ -10,6 +10,8 @@
 #include "sani/graphics/renderables/particle_emitter.hpp"
 #include "sani/graphics/renderables/particle.hpp"
 
+#include "sani/graphics/layer.hpp"
+
 namespace sani {
 
 	namespace engine {
@@ -176,6 +178,11 @@ namespace sani {
 			deleteElement->setData(emitter);
 
 			renderablemanager::deleteElement(deleteElement, ElementType::ParticleEmitter);
+
+			// Remove from layer if the element is located inside one.
+			uint32 layer = *MONO_UNBOX(MONO_PROVIDER->readField(instance, "layer"), uint32);
+			if (layer != NULL) reinterpret_cast<Layer*>(layer)->remove(emitter);
+
 			engine->routeMessage(deleteElement);
 
 			engine->releaseMessage(deleteElement);
