@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using SaNi.Mono.Graphics.Renderables;
 using SaNi.Mono.Math;
 using System.Windows.Input;
+using SaNi.Mono.Configuration;
 
 namespace SaNi.Mono.Sandbox
 {
@@ -103,6 +104,12 @@ namespace SaNi.Mono.Sandbox
 
             ParticleEmitter emitter = new ParticleEmitter(gen, andy, new Vector2(x, y), 1024);
             layer.Add(emitter);
+
+            var vars = CVars.GetCVars();
+
+            Console.WriteLine("CVARS C: {0}", vars.Length);
+
+            foreach (var cvar in vars) Console.WriteLine(cvar.ToString() + "\n");
 
             return true;
         }

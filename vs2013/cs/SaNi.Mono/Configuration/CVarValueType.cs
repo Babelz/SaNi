@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SaNi.Mono.Configuration
 {
-    public enum CVarValueType
+    public enum CVarValueType : byte
     {
-        Null,
+        Null = 0,
         StringVal,
         IntVal,
         FloatVal,
