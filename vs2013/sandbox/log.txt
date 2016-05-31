@@ -139,16 +139,6 @@
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
 [sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
-[sani::engine::services::RenderableManager<class sani::graphics::Rectangle>::deleteElement(INFO)]: deleted renderable element
 [sani::engine::services::EngineService::terminate(INFO)]: service "file system service" terminated
 [sani::engine::services::EngineService::terminate(INFO)]: service "cvar service" terminated
 [sani::engine::services::EngineService::terminate(INFO)]: service "render service" terminated
