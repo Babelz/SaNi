@@ -75,6 +75,21 @@ namespace sani {
 				return MONO_PROVIDER->createObject(&classDef, args, argc);
 			}
 
+			MonoObject* createViewport(int32 x, int32 y, uint32 w, uint32 h) {
+				const uint32 argc = 4;
+
+				void* args[argc] = {
+					&x, 
+					&y,
+					&w,
+					&h
+				};
+
+				const MonoClassDefinition classDef("SaNi.Mono.Graphics", "Viewport");
+
+				return MONO_PROVIDER->createObject(&classDef, args, argc);
+			}
+
 			MonoObject* createParticleGenerator() {
 				const MonoClassDefinition classDef("SaNi.Mono.Graphics", "ParticleGenerator");
 

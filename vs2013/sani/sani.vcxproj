@@ -244,6 +244,7 @@
     <ClCompile Include="..\..\src\engine\mono\resource_manager_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\mono_provider.cpp" />
     <ClCompile Include="..\..\src\engine\mono\mono_runtime.cpp" />
+    <ClCompile Include="..\..\src\engine\mono\sani_engine_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\services_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\sprite_mono.cpp" />
     <ClCompile Include="..\..\src\engine\mono\texture2d_mono.cpp" />
@@ -459,6 +460,7 @@
     <ClInclude Include="..\..\include\sani\engine\mono\renderable_handler_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\resource_manager_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\mono_include.hpp" />
+    <ClInclude Include="..\..\include\sani\engine\mono\sani_engine_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\services_mono.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\mono_define.hpp" />
     <ClInclude Include="..\..\include\sani\engine\mono\mono_provider.hpp" />

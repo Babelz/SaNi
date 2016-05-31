@@ -42,8 +42,9 @@ namespace SaNi.Mono.Sandbox.Demos.Breakout
             //var cvarWindowWidth = cvars.FirstOrDefault(c => c.Name == EngineCVars.WindowWidth);
             //var cvarWindowHeight = cvars.FirstOrDefault(c => c.Name == EngineCVars.WindowHeight);
 
-            var windowWidth = 1270;
-            var windowHeight = 680;
+            var backbufferWidth = (float)GraphicsDevice.BackbufferWidth();
+            var backbufferHeight = (float)GraphicsDevice.BackbufferHeight();
+            GraphicsDevice.Fullscreen();
 
             //Console.WriteLine(cvarWindowWidth == null);
             //Console.WriteLine(cvarWindowHeight == null);
@@ -56,8 +57,8 @@ namespace SaNi.Mono.Sandbox.Demos.Breakout
 
             var area = new Rectf(borderThickness,
                                  borderThickness,
-                                 windowWidth - borderThickness * 2.0f,
-                                 windowHeight - borderThickness);
+                                 backbufferWidth - borderThickness * 2.0f,
+                                 backbufferHeight - borderThickness);
 
             // Create player.
             var playerSize = new Vector2(128.0f, 32.0f);
@@ -72,16 +73,16 @@ namespace SaNi.Mono.Sandbox.Demos.Breakout
             var borderElements = new Rectangle[4];
 
             // Left.
-            borderElements[0] = new Rectangle(new Vector2(windowWidth - borderThickness / 2.0f, windowHeight / 2.0f), new Vector2(borderThickness, windowHeight));
+            borderElements[0] = new Rectangle(new Vector2(backbufferWidth - borderThickness / 2.0f, backbufferHeight / 2.0f), new Vector2(borderThickness, backbufferHeight));
             
             // Right.
-            borderElements[1] = new Rectangle(new Vector2(borderThickness / 2.0f, windowHeight / 2.0f), new Vector2(borderThickness, windowHeight));
+            borderElements[1] = new Rectangle(new Vector2(borderThickness / 2.0f, backbufferHeight / 2.0f), new Vector2(borderThickness, backbufferHeight));
             
             // Top.
-            borderElements[2] = new Rectangle(new Vector2(windowWidth / 2.0f, borderThickness / 2.0f), new Vector2(windowWidth - borderThickness, borderThickness));
+            borderElements[2] = new Rectangle(new Vector2(backbufferWidth / 2.0f, borderThickness / 2.0f), new Vector2(backbufferWidth - borderThickness, borderThickness));
 
             // Bottom.
-            borderElements[3] = new Rectangle(new Vector2(windowWidth / 2.0f, windowHeight - borderThickness / 2.0f), new Vector2(windowWidth - borderThickness, borderThickness));
+            borderElements[3] = new Rectangle(new Vector2(backbufferWidth / 2.0f, backbufferHeight - borderThickness / 2.0f), new Vector2(backbufferWidth - borderThickness, borderThickness));
 
             // Create bricks.
             bricks = new List<Rectangle>();
@@ -98,6 +99,13 @@ namespace SaNi.Mono.Sandbox.Demos.Breakout
 
         private void OnUpdate(EngineTime time)
         {
+            if (Keyboard.IsKeyDown(Keyboard.Key.ESC))
+            {
+                SaNiEngine.Exit();
+
+                return;
+            }
+
             player.Update(time);
         }
     }

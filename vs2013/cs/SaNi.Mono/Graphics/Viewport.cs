@@ -18,5 +18,19 @@ namespace SaNi.Mono.Graphics
         public uint width;
         public uint height;
         #endregion
+
+        public Viewport(int x, int y, uint width, uint height)
+        {
+            this.x = x;
+            this.y = y;
+
+            this.width = width;
+            this.height = height;
+        }
+
+        public static Viewport Empty()
+        {
+            return new Viewport(0, 0, 0, 0);
+        }
     }
 }

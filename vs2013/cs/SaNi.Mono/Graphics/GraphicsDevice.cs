@@ -19,17 +19,17 @@ namespace SaNi.Mono.Graphics
             /// <summary>
             /// 8 samples, best quality.
             /// </summary>
-            public const int BestQuality        = 8;
+            public const uint BestQuality        = 8;
 
             /// <summary>
             /// 4 samples, balanced between quality and performance.
             /// </summary>
-            public const int Balanced           = 4;
+            public const uint Balanced           = 4;
 
             /// <summary>
             /// 0 samples, worst quality, best performance.
             /// </summary>
-            public const int BestPerformance    = 0;
+            public const uint BestPerformance    = 0;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace SaNi.Mono.Graphics
         /// </summary>
         /// <param name="samples">count of samples</param>
         [MethodImpl(MethodImplOptions.InternalCall)]
-        public static extern void SetSamplesCount(int samples);
+        public static extern void SetSamplesCount(uint samples);
         /// <summary>
         /// Returns the current count of samples.
         /// </summary>

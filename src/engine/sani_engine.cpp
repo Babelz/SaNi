@@ -54,6 +54,7 @@
 #include "sani/engine/mono/sprite_mono.hpp"
 #include "sani/engine/mono/particle_emitter_mono.hpp"
 #include "sani/engine/mono/cvars_mono.hpp"
+#include "sani/engine/mono/graphics_device_mono.hpp"
 
 #include <sstream>
 #include <vector>
@@ -311,6 +312,7 @@ namespace sani {
 				return false;
 			}
 
+			MONO_REGISTER_MODULE(graphicsdevice);
 			MONO_REGISTER_MODULE(texture2d);
 			MONO_REGISTER_MODULE(cvars);
 			MONO_REGISTER_MODULE(resourcemanager);

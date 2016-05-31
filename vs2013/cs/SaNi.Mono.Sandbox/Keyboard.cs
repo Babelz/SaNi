@@ -15,6 +15,7 @@ namespace SaNi.Mono.Sandbox
             A = (int)'A',
             S = (int)'S',
             D = (int)'D',
+            ESC = 27
         }
 
         public enum KeyStates

@@ -108,10 +108,19 @@ namespace sani {
 				int16 flags;
 			};
 
+			struct MonoViewport final {
+				int32 x;
+				int32 y;
+
+				uint32 w;
+				uint32 h;
+			};
+
 			MonoObject* ceatetTransform(math::Vec3f& position, math::Vec3f& scale, math::Vec3f& origin, float32 rotation);
 			MonoObject* createRectf(float32 x, float32 y, float32 width, float32 height);
 			MonoObject* createRecti(int32 x, int32 y, int32  width, int32  height);
 			MonoObject* createColor(float32 r, float32 g, float32 b, float32 a);
+			MonoObject* createViewport(int32 x, int32 y, uint32 w, uint32 h);
 
 			MonoObject* createParticleGenerator(const MonoParticleGenerator* const generator);
 		}
